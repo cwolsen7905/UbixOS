@@ -31,8 +31,9 @@
 #include <stdlib.h>
 
 int main(int argc,char **argv) {
-  extern char *environ;
+  extern char **environ;
   FILE *out;
+  int offset;
   printf("UbixOS Text Editor\n");
   printf("V1.0\n");
 #ifdef DEBUG
@@ -48,9 +49,12 @@ int main(int argc,char **argv) {
     }
 
   //printf("[%S]",getenv("TEST"));
-  printf("\nENV TEST: [0x%X]\n",environ);
+  printf("\nENV TEST: [0x%X:0x%X]\n",&environ,offset);
+  __findenv("TEST",&offset);
+  printf("\nENV TEST: [0x%X:0x%X]\n",environ,offset);
   setenv("BLAH","WOOT",1);
   printf("[%s]",getenv("BLAH"));
+  __findenv("TEST",&offset);
 
   return(0);
   }

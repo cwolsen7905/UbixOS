@@ -7,8 +7,7 @@
 #include ../Makefile.inc
 include ../libc.inc
 
-CFLAGS = -fpic -DPIC -O2 -fno-strict-aliasing -pipe  -DPTHREAD_KERNEL -D_LOCK_DEBUG -D_PTHREADS_INVARIANTS
-
+CFLAGS = $(CFLAGS_UTHREAD) 
 
 INCLUDES += -I../locale/ -I.
 

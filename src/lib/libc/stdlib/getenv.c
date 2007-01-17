@@ -37,6 +37,10 @@ static char sccsid[] = "@(#)getenv.c	8.1 (Berkeley) 6/4/93";
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD: src/lib/libc/stdlib/getenv.c,v 1.4 2002/03/21 22:48:41 obrien Exp $");
 
+//TMP
+#include <stdio.h>
+
+
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
@@ -52,6 +56,7 @@ inline char *__findenv(const char *, int *);
  *
  *	This routine *should* be a static; don't use it.
  */
+
 inline char *
 __findenv(name, offset)
 	const char *name;
@@ -64,6 +69,7 @@ __findenv(name, offset)
 	char **p, *cp;
 
 /* HACK */
+        *offset = (int)environ;
         return(0x0);
 
 	if (name == NULL || environ == NULL)

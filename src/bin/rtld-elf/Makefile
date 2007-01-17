@@ -7,7 +7,7 @@ include ../Makefile.inc
 
 INCLUDES = -I../../include.new -I./
 
-CFLAGS+=        -Wall -DFREEBSD_ELF -DIN_RTLD -DPIC 
+CFLAGS+=        -Wall -DFREEBSD_ELF -DIN_RTLD -DPIC
 CFLAGS = -O2 -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -fpic -elf -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -Werror -DDEBUG
 
 
@@ -45,7 +45,7 @@ $(OUTPUT) : $(OBJS)
 	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 .c.s:
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<

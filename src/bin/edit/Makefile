@@ -36,7 +36,7 @@ $(BINARY) : $(OBJS)
 	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  -Wall -O -ggdb $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 .c.s:
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<

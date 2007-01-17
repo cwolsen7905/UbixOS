@@ -8,6 +8,8 @@ include ../Makefile.inc
 
 INCLUDES += -I../
 
+CFLAGS += -fpic -DPIC
+
 #Objects 
 OBJS = bcmp.o bcopy.o bzero.o ffs.o index.o memchr.o memcmp.o memcpy.o memmove.o memset.o rindex.o strcat.o strchr.o strcmp.o strcpy.o strlen.o strncmp.o strrchr.o swab.o wcschr.o wcscmp.o wcslen.o wmemchr.o
 

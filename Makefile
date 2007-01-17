@@ -54,7 +54,6 @@ clean:
 	(cd src/lib/libc;make clean)
 	(cd src/bin;make clean)
 	(cd src/lib/ubix;make clean)
-	(cd src/lib/objgfx40;make clean)
 	(cd src/lib/libcpp;make clean)
 	(cd src/lib/views/sunlight;make clean)
 	(cd src/lib/libstdc++;make clean)

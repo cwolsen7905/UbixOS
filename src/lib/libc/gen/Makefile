@@ -2,9 +2,10 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
-include ../Makefile.inc
+#include ../../../Makefile.inc
+#include ../../Makefile.inc
+#include ../Makefile.inc
+include ../libc.inc
 
 INCLUDES += -I../locale/ -I../i386
 
@@ -21,7 +22,7 @@ all: $(OBJS)
 	$(CXX) $(CFLAGS) -Wall -nostdlib -O $(INCLUDES) -S -o $@ $<
  
 .c.o:
-	$(CC) $(CFLAGS) -Wall -nostdlib -O $(INCLUDES) -c $<
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<
 
 .c.s:
 	$(CC) $(CFLAGS) -Wall -nostdlib -O $(INCLUDES) -S -o $@ $<

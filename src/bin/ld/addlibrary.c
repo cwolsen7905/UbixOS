@@ -27,7 +27,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
     //if ((tmpLib->output = (char *)malloc((linkerFd->size+0x4000))) == 0x0) {
     //if ((tmpLib->output = (char *)malloc(0x111000)) == 0x0) {
 //HELP
-    if ((tmpLib->output = (char *)getPage((0x110000/0x1000),2)) == 0x0) {
+    if ((tmpLib->output = (char *)getPage((0x10F000/0x1000),2)) == 0x0) {
       printf("malloc failed: tmpLib->output\n");
       exit(0x1);
       }
@@ -116,7 +116,6 @@ ldLibrary *ldAddLibrary(const char *lib) {
           switch (ELF32_R_TYPE(tmpLib->linkerElfRel[x].pltInfo)) {
             case R_386_32:
               *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
-              //printf("[0x%X]",*reMap);
               break;
             case R_386_PC32:
               *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uInt32)reMap;
@@ -125,8 +124,9 @@ ldLibrary *ldAddLibrary(const char *lib) {
               *reMap += (uInt32)tmpLib->output;
               break;
             case R_386_JMP_SLOT:
+              *reMap = ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
               //*reMap += (uInt32)tmpLib->output;
-              //break;
+              break;
             case R_386_GLOB_DAT:
               *reMap = ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
               break;

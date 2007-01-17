@@ -261,7 +261,6 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
      * init_rtld has returned.  It is OK to reference file-scope statics
      * and string constants, and to call static and global functions.
      */
-
     /* Find the auxiliary vector on the stack. */
     argc = *sp++;
     argv = (char **) sp;
@@ -272,6 +271,7 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
     while (*sp++ != 0); /* Skip over environment, and NULL terminator */
 
     aux = (Elf_Auxinfo *) sp;
+
 
 
     /* Digest the auxiliary vector. */
@@ -1066,12 +1066,16 @@ init_rtld(caddr_t mapbase)
 #ifdef PIC
     objtmp.relocbase = mapbase;
 #endif
+debug =  1;
+while (1);
+dbg("SDF");
     if (RTLD_IS_DYNAMIC()) {
 	objtmp.dynamic = rtld_dynamic(&objtmp);
 	digest_dynamic(&objtmp, 1);
 	assert(objtmp.needed == NULL);
 	assert(!objtmp.textrel);
 
+while (1);
 	/*
 	 * Temporarily put the dynamic linker entry into the object list, so
 	 * that symbols can be found.
