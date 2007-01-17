@@ -1,0 +1,14 @@
+$Id$
+
+Bugs:
+
+10/27/06 - NEED TO IMPLIMENT ENV!!!!
+
+10/12/06 -
+  Tempermental Keyboard Driver
+
+10/12/06 -
+  UFS is hacked to get correct file size
+
+10/12/06 - 
+  usrland ld.so forces path sys:/lib/ must make more automated
