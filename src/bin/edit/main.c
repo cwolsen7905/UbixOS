@@ -33,7 +33,7 @@
 int main(int argc,char **argv) {
   extern char **environ;
   FILE *out;
-  int offset;
+  int offset = 0xFF;
   printf("UbixOS Text Editor\n");
   printf("V1.0\n");
 #ifdef DEBUG

@@ -115,7 +115,7 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
       spinUnlock(&pageFaultSpinLock);
       /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
       kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n",memAddr,esp,_current->id,eip);
-      kprintf("Out Of Stack Space: [0x%X]\n",memAddr & 0xFF0000);
+      //kprintf("Out Of Stack Space: [0x%X]\n",memAddr & 0xFF0000);
       spinUnlock(&pageFaultSpinLock);
       endTask(_current->id);
       }
@@ -132,6 +132,9 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
   
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
+ UbixOS
+
  Revision 1.6  2006/12/05 14:10:21  reddawg
  Workign Distro
 

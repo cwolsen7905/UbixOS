@@ -46,7 +46,8 @@ lib.so: $(OBJS)
 	(cd gdtoa;make)
 	(cd db;make)
 	(cd compat-43;make)
-	$(CC) -nostdlib -shared -Wl,-soname,libc.so -o $(OUTPUT) $(OBJS) $(SUBS)
+	$(CC) -nostdlib -shared -Wl,-x -o $(OUTPUT) -Wl,-soname,$(OUTPUT) `lorder $(OBJS) $(SUBS) | tsort -q`
+	(rm pic.a;ar cq pic.a ./i386/*/*.o ./stdio/*.o ./stdlib/*.o ./uthread/*.o ./string/*.o ./sys/*.o ./xdr/*.o ./yp/*.o ./locale/*.o ./gen/*.o ; ranlib ./pic.a)
 
 pic.a: $(OBJS)
 	(make clean)

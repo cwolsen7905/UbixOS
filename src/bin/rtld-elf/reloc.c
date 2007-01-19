@@ -125,6 +125,7 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld)
 	 * limited amounts of stack available so we cannot use alloca().
 	 */
 	cache = mmap(NULL, bytes, PROT_READ|PROT_WRITE, MAP_ANON, -1, 0);
+
 	if (cache == MAP_FAILED)
 	    cache = NULL;
 
@@ -338,6 +339,7 @@ allocate_initial_tls(Obj_Entry *objs)
      */
     tls_static_space = tls_last_offset + RTLD_STATIC_TLS_EXTRA;
     tls = allocate_tls(objs, NULL, 2*sizeof(Elf_Addr), sizeof(Elf_Addr));
+dbg("tls: [0x%X]",(u_int32_t)tls);
     i386_set_gsbase(tls);
 }
 

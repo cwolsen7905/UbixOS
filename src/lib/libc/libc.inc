@@ -10,5 +10,5 @@ CFLAGS = -fpic -DPIC -O2 -fno-strict-aliasing -pipe  -D__DBINTERFACE_PRIVATE -DI
 CFLAGS_UTHREAD = -fpic -DPIC -O2 -fno-strict-aliasing -pipe  -DPTHREAD_KERNEL -D_LOCK_DEBUG -D_PTHREADS_INVARIANTS
 .endif
 
-INCLUDES = -I/usr/home/reddawg/source/ubix2/src/include.new -I/usr/home/reddawg/source/ubix2/src/lib/libc/include -I/home/reddawg/source/ubix2/src/lib/libc/i386 -I/home/reddawg/source/ubix2/src/contrib/gdtoa -I/home/reddawg/source/ubix2/src/lib/libc  -I/home/reddawg/source/ubix2/src/lib/libc/resolv -I/home/reddawg/source/ubix2/src/lib/libc/locale -I/home/reddawg/source/ubix2/src/lib/libc/rpc
+INCLUDES = -I/usr/home/reddawg/source/ubixos/src/include.new -I/usr/home/reddawg/source/ubixos/src/lib/libc/include -I/home/reddawg/source/ubixos/src/lib/libc/i386 -I/home/reddawg/source/ubixos/src/contrib/gdtoa -I/home/reddawg/source/ubixos/src/lib/libc  -I/home/reddawg/source/ubixos/src/lib/libc/resolv -I/home/reddawg/source/ubixos/src/lib/libc/locale -I/home/reddawg/source/ubixos/src/lib/libc/rpc
 

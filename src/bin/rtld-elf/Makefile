@@ -45,13 +45,13 @@ $(OUTPUT) : $(OBJS)
 	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .c.o:
-	$(CC)  $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 .c.s:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .S.o:
-	$(CC)  -Wall $(CLFAGS) $(INCLUDES) -c -o $@ $<
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 # Clean Up The junk
 clean:

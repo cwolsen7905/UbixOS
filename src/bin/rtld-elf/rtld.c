@@ -287,6 +287,9 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
     /* Initialize and relocate ourselves. */
     assert(aux_info[AT_BASE] != NULL);
 
+   if ((u_int32_t)aux_info[AT_BASE]->a_un.a_ptr != 0x1000000)
+     while (1);
+
     init_rtld((caddr_t) aux_info[AT_BASE]->a_un.a_ptr);
 
     __progname = obj_rtld.path;
@@ -311,6 +314,7 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
 
     if (ld_debug != NULL && *ld_debug != '\0')
 	debug = 1;
+
 
     dbg("%s is initialized, base address = %p", __progname,
 	(caddr_t) aux_info[AT_BASE]->a_un.a_ptr);
@@ -386,10 +390,12 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
     if (load_preload_objects() == -1)
 	die();
     preload_tail = obj_tail;
+debug = 1;
 
-    dbg("loading needed objects");
-    if (load_needed_objects(obj_main) == -1)
-	die();
+
+  dbg("loading needed objects");
+  if (load_needed_objects(obj_main) == -1)
+    die();
 
     /* Make a list of all objects loaded at startup. */
     for (obj = obj_list;  obj != NULL;  obj = obj->next) {
@@ -418,11 +424,11 @@ _rtld(Elf_Addr *sp, func_ptr_type *exit_proc, Obj_Entry **objp)
     }
 
     allocate_initial_tls(obj_list);
+//while (1);
 
-debug = 1;
-    if (relocate_objects(obj_main,
-	ld_bind_now != NULL && *ld_bind_now != '\0', &obj_rtld) == -1)
-	die();
+    if (relocate_objects(obj_main, ld_bind_now != NULL && *ld_bind_now != '\0', &obj_rtld) == -1)
+      die();
+
 
     dbg("doing copy relocations");
     if (do_copy_relocations(obj_main) == -1)
@@ -708,8 +714,7 @@ digest_dynamic(Obj_Entry *obj, int early)
 
 	default:
 	    if (!early) {
-		dbg("Ignoring d_tag %ld = %#lx", (long)dynp->d_tag,
-		    (long)dynp->d_tag);
+		dbg("Ignoring d_tag %ld = %#lx", (long)dynp->d_tag, (long)dynp->d_tag);
 	    }
 	    break;
 	}
@@ -1066,16 +1071,12 @@ init_rtld(caddr_t mapbase)
 #ifdef PIC
     objtmp.relocbase = mapbase;
 #endif
-debug =  1;
-while (1);
-dbg("SDF");
     if (RTLD_IS_DYNAMIC()) {
 	objtmp.dynamic = rtld_dynamic(&objtmp);
 	digest_dynamic(&objtmp, 1);
 	assert(objtmp.needed == NULL);
 	assert(!objtmp.textrel);
 
-while (1);
 	/*
 	 * Temporarily put the dynamic linker entry into the object list, so
 	 * that symbols can be found.
@@ -1170,32 +1171,33 @@ is_exported(const Elf_Sym *def)
  * each of them.  Returns 0 on success.  Generates an error message and
  * returns -1 on failure.
  */
-static int
-load_needed_objects(Obj_Entry *first)
-{
-    Obj_Entry *obj;
+static int load_needed_objects(Obj_Entry *first) {
+  Obj_Entry *obj;
 
-    for (obj = first;  obj != NULL;  obj = obj->next) {
-	Needed_Entry *needed;
+  for (obj = first;  obj != NULL;  obj = obj->next) {
+    Needed_Entry *needed;
 
-	for (needed = obj->needed;  needed != NULL;  needed = needed->next) {
-	    const char *name = obj->strtab + needed->name;
-	    char *path = find_library(name, obj);
+    for (needed = obj->needed;  needed != NULL;  needed = needed->next) {
+      const char *name = obj->strtab + needed->name;
+      char       *path = find_library(name, obj);
 
-	    needed->obj = NULL;
-	    if (path == NULL && !ld_tracing)
-		return -1;
-printf("\n\nPATH: [%s]\n",path);
-	    if (path) {
-		needed->obj = load_object(path);
-		if (needed->obj == NULL && !ld_tracing)
-		    return -1;		/* XXX - cleanup */
-	    }
-	}
+      needed->obj = NULL;
+
+      if (path == NULL && !ld_tracing)
+        return -1;
+
+      printf("\n\nPATH: [%s]\n",path);
+
+      if (path) {
+        needed->obj = load_object(path);
+        if (needed->obj == NULL && !ld_tracing)
+          return(-1);  /* XXX - cleanup */
+        }
+      }
     }
 
-    return 0;
-}
+  return 0;
+  }
 
 static int
 load_preload_objects(void)
@@ -1289,8 +1291,9 @@ load_object(char *path)
 	    }
 	}
 	dbg("loading \"%s\"", path);
-        printf("\n\n loading \"%s\"\n", path);
+
 	obj = map_object(fd, path, &sb);
+
         printf("\nmapped object\n");
 	close(fd);
 	if (obj == NULL) {
@@ -1299,7 +1302,9 @@ load_object(char *path)
 	}
 
 	obj->path = path;
+
 	digest_dynamic(obj, 0);
+//while(1);
 
 	*obj_tail = obj;
 	obj_tail = &obj->next;
@@ -1508,6 +1513,7 @@ relocate_objects(Obj_Entry *first, bool bind_now, Obj_Entry *rtldobj)
 	/* Process the PLT relocations. */
 	if (reloc_plt(obj) == -1)
 	    return -1;
+
 	/* Relocate the jump slots if we are doing immediate binding. */
 	if (obj->bind_now || bind_now)
 	    if (reloc_jmpslots(obj) == -1)

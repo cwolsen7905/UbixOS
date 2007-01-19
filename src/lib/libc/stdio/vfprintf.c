@@ -476,7 +476,6 @@ __vfprintf(FILE *fp, const char *fmt0, va_list ap)
 		__use_xprintf = 1;
 	if (__use_xprintf > 0)
 		return (__xvprintf(fp, fmt0, ap));
-
 #ifndef NO_FLOATING_POINT
 	/*
 	 * We can decompose the printed representation of floating
@@ -648,6 +647,7 @@ __vfprintf(FILE *fp, const char *fmt0, va_list ap)
 	dtoaresult = NULL;
 	decimal_point = localeconv()->decimal_point;
 #endif
+
 	/* sorry, fprintf(read_only_file, "") returns EOF, not 0 */
 	if (prepwrite(fp) != 0)
 		return (EOF);

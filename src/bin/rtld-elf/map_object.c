@@ -53,6 +53,7 @@ static int convert_flags(int); /* Elf flags -> mmap flags */
 Obj_Entry *
 map_object(int fd, const char *path, const struct stat *sb)
 {
+  Elf_Dyn *dynp = 0x0;
     Obj_Entry *obj;
     Elf_Ehdr *hdr;
     int i;
@@ -99,6 +100,8 @@ map_object(int fd, const char *path, const struct stat *sb)
     nsegs = -1;
     phdyn = phphdr = phinterp = phtls = NULL;
     segs = alloca(sizeof(segs[0]) * hdr->e_phnum);
+dbg("SDF: %i",hdr->e_phnum);
+
     while (phdr < phlimit) {
 	switch (phdr->p_type) {
 
@@ -225,6 +228,8 @@ map_object(int fd, const char *path, const struct stat *sb)
     obj->vaddrbase = base_vaddr;
     obj->relocbase = mapbase - base_vaddr;
     obj->dynamic = (const Elf_Dyn *) (obj->relocbase + phdyn->p_vaddr);
+    dynp = (Elf_Dyn *) (obj->relocbase + phdyn->p_vaddr);
+    dbg("TEST: [0x%X:0x%X:0x%X]",dynp->d_tag,phdyn->p_vaddr,(u_int32_t)mapbase);
     if (hdr->e_entry != 0)
 	obj->entry = (caddr_t) (obj->relocbase + hdr->e_entry);
     if (phphdr != NULL) {

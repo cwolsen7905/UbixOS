@@ -10,7 +10,7 @@ CFLAGS = -nostdlib -nostdinc -fno-builtin -Wno-uninitialized -O2 -fno-strict-ali
 INCLUDES = -I../libc/include -I../../include.new
 
 #Objects
-OBJS = crtn.o crti.o crt1.o
+OBJS = crtn.o crti.o crt1.o #crtbegin.o crtend.o
 
 all: $(OBJS)
 

@@ -44,7 +44,8 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
   #endif
 
   if (td->o_files[uap->fd] == 0x0) {
-    kprintf("ERROR!!!\n");
+    kprintf("ERROR: No %i\n",uap->fd);
+while(1);
     return(-1);
     }
 
