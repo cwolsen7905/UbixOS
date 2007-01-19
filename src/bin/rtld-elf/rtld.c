@@ -424,11 +424,9 @@ debug = 1;
     }
 
     allocate_initial_tls(obj_list);
-//while (1);
 
     if (relocate_objects(obj_main, ld_bind_now != NULL && *ld_bind_now != '\0', &obj_rtld) == -1)
       die();
-
 
     dbg("doing copy relocations");
     if (do_copy_relocations(obj_main) == -1)
@@ -1479,7 +1477,7 @@ relocate_objects(Obj_Entry *first, bool bind_now, Obj_Entry *rtldobj)
 
     for (obj = first;  obj != NULL;  obj = obj->next) {
 	if (obj != rtldobj)
-	    dbg("relocating \"%s\"", obj->path);
+	    dbg("relocating (\"%s\")", obj->path);
 	if (obj->nbuckets == 0 || obj->nchains == 0 || obj->buckets == NULL ||
 	    obj->symtab == NULL || obj->strtab == NULL) {
 	    _rtld_error("%s: Shared object has no run-time symbol table",
