@@ -2,12 +2,13 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../../Makefile.inc
-include ../../../Makefile.inc
-include ../Makefile.inc
+#include ../../../../Makefile.inc
+#include ../../../Makefile.inc
+#include ../Makefile.inc
+include ../../libc.inc
 
 INCLUDES += -I../
-CFLAGS += -fpic -DPIC
+#CFLAGS += -fpic -DPIC
 
 #Objects
 OBJS = htonl.o htons.o ntohl.o ntohs.o

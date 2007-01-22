@@ -1,7 +1,7 @@
 # $Id$
 # The System Makefile (C) 2002 The UbixOS Project
 
-# Include Global 'Source' Options
+#Include Global 'Source' Options
 include ../../../Makefile.inc
 include ../../Makefile.inc
 include ../Makefile.inc

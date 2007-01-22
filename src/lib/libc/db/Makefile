@@ -2,11 +2,11 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 all: 
-	(cd btree;make)
-	(cd db;make)
-	(cd hash;make)
-	(cd mpool;make)
-	(cd recno;make)
+	(cd btree;make LIBPATH=${LIBPATH})
+	(cd db;make LIBPATH=${LIBPATH})
+	(cd hash;make LIBPATH=${LIBPATH})
+	(cd mpool;make LIBPATH=${LIBPATH})
+	(cd recno;make LIBPATH=${LIBPATH})
 
 # Clean up the junk
 clean:

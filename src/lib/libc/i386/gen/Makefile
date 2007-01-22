@@ -2,13 +2,14 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../../Makefile.inc
-include ../../../Makefile.inc
-include ../Makefile.inc
+#include ../../../../Makefile.inc
+#include ../../../Makefile.inc
+#include ../Makefile.inc
+include ../../libc.inc
 
 INCLUDES += -I../
 
-CFLAGS += -fpic -DPIC
+#CFLAGS += -fpic -DPIC
 
 #Objects
 OBJS = _ctx_start.o _set_tp.o _setjmp.o alloca.o fabs.o flt_rounds.o infinity.o ldexp.o makecontext.o modf.o rfork_thread.o setjmp.o signalcontext.o sigsetjmp.o

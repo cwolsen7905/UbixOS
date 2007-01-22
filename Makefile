@@ -14,7 +14,7 @@ libc_old: src
 	(cd src/lib/libc_old;make)
 
 libc: src
-	(cd src/lib/libc;make)
+	(cd src/lib/libc;make LIBPATH=${.CURDIR})
 
 objgfx40: src
 	(cd src/lib/objgfx40;make)

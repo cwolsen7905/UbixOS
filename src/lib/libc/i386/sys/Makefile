@@ -7,10 +7,7 @@
 #include ../Makefile.inc
 include ../../libc.inc
 
-#INCLUDES += -I../
-
-#CFLAGS += -fpic -DPIC
-#CFLAGS = -fpic -DPIC -O2 -fno-strict-aliasing -pipe  -D__DBINTERFACE_PRIVATE -DINET6 -DPOSIX_MISTAKE -DBROKEN_DES -DPORTMAP -DDES_BUILTIN -DYP -DHESIOD -Wsystem-headers -Werror -Wall -Wno-format-y2k -Wno-uninitialized -nostdinc -nostdlib
+INCLUDES += -I../
 
 #Objects
 OBJS = Ovfork.o brk.o cerror.o exect.o getcontext.o i386_clr_watch.o i386_get_fsbase.o i386_get_gsbase.o i386_get_ioperm.o i386_get_ldt.o i386_set_fsbase.o i386_set_gsbase.o i386_set_ioperm.o i386_set_ldt.o i386_set_watch.o i386_vm86.o pipe.o ptrace.o reboot.o sbrk.o setlogin.o sigreturn.o syscall.o

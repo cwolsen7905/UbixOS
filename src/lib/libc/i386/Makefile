@@ -2,12 +2,12 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 all: 
-	(cd gen;make)
-	(cd net;make)
-	(cd stdlib;make)
-	(cd string;make)
-	(cd sys;make)
-	(cd syscalls;make)
+	(cd gen;make LIBPATH=${LIBPATH})
+	(cd net;make LIBPATH=${LIBPATH})
+	(cd stdlib;make LIBPATH=${LIBPATH})
+	(cd string;make LIBPATH=${LIBPATH})
+	(cd sys;make LIBPATH=${LIBPATH})
+	(cd syscalls;make LIBPATH=${LIBPATH})
 
 # Clean up the junk
 clean:
