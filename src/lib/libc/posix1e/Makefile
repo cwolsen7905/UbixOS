@@ -10,7 +10,9 @@ include ../libc.inc
 #INCLUDES += -I../locale/
 
 #Objects
-OBJS = acl_calc_mask.o acl_copy.o acl_delete.o acl_delete_entry.o acl_entry.o acl_free.o acl_from_text.o acl_get.o acl_init.o acl_perm.o acl_set.o acl_size.o acl_support.o acl_to_text.o acl_valid.o extattr.o mac.o mac_exec.o mac_get.o mac_set.o
+#OBJS = acl_calc_mask.o acl_copy.o acl_delete.o acl_delete_entry.o acl_entry.o acl_free.o acl_from_text.o acl_get.o acl_init.o acl_perm.o acl_set.o acl_size.o acl_support.o acl_to_text.o acl_valid.o extattr.o mac.o mac_exec.o mac_get.o mac_set.o
+
+OBJS = acl_calc_mask.o acl_copy.o acl_delete.o acl_delete_entry.o acl_entry.o acl_free.o acl_from_text.o acl_get.o acl_init.o acl_perm.o acl_set.o acl_support.o acl_to_text.o acl_valid.o extattr.o mac.o mac_exec.o mac_get.o mac_set.o
 
 all: $(OBJS)
 

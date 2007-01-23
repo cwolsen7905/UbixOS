@@ -31,30 +31,18 @@
 #include <stdlib.h>
 
 int main(int argc,char **argv) {
-  extern char **environ;
   FILE *out;
-  int offset = 0xFF;
   printf("UbixOS Text Editor\n");
   printf("V1.0\n");
-#ifdef DEBUG
-  printf("ARGC: [%i]\n",argc);
-  printf("ARGV[0]: [%s]\n",argv[0]);
-  return(0x0);
-#endif
 
   out = fopen("/test.txt","r");
 
   while (!feof(out)) {
     printf("%c",fgetc(out));
     }
+ 
 
-  //printf("[%S]",getenv("TEST"));
-  printf("\nENV TEST: [0x%X:0x%X]\n",&environ,offset);
-  __findenv("TEST",&offset);
-  printf("\nENV TEST: [0x%X:0x%X]\n",environ,offset);
-  setenv("BLAH","WOOT",1);
-  printf("[%s]",getenv("BLAH"));
-  __findenv("TEST",&offset);
+  printf("The End\n");
 
   return(0);
   }

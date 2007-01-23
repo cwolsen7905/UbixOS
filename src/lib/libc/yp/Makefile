@@ -10,22 +10,22 @@ include ../libc.inc
 #Objects
 OBJS = xdryp.o yp_xdr.o yplib.o
 
-all: $(OBJS)
+all: ${OBJS}
 
 # Compile the source files
-.cc.o:
+.cc.So:
 	$(CXX) $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
-.cc.s:
-	$(CXX) $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
-.c.o:
-	$(CC) $(CFLAGS) $(INCLUDES) -c $<
+#.cc.s:
+#	$(CXX) $(CFLAGS) $(INCLUDES) -S -o $@ $<
 
-.c.s:
-	$(CC) $(CFLAGS) $(INCLUDES) -S -o $@ $<
+.c.o:
+	${CC} ${CFLAGS} ${INCLUDES} -c $< -o $@
+
+#.c.s:
+#	$(CC) $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
-.S.o:
+.S.So:
 	$(CC) $(CFLAGS) -c -o $@ $<
  
 # Clean up the junk

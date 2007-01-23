@@ -34,18 +34,12 @@
  * SUCH DAMAGE.
  */
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)printf.c	8.1 (Berkeley) 6/4/93";
-#endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/printf.c,v 1.10 2002/09/06 11:23:55 tjr Exp $");
 
 #include <stdio.h>
 #include <stdarg.h>
 
-int
-printf(char const * __restrict fmt, ...)
-{
+int printf(char const * __restrict fmt, ...) {
 	int ret;
 	va_list ap;
 
@@ -53,4 +47,4 @@ printf(char const * __restrict fmt, ...)
 	ret = vfprintf(stdout, fmt, ap);
 	va_end(ap);
 	return (ret);
-}
+  }

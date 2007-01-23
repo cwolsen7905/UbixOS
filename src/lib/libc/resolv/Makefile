@@ -10,7 +10,8 @@ include ../libc.inc
 #INCLUDES += -I../locale/
 
 #Objects
-OBJS = h_errno.o herror.o mtctxres.o res_comp.o res_data.o res_debug.o res_init.o res_mkquery.o res_query.o res_send.o res_state.o
+#OBJS = h_errno.o herror.o mtctxres.o res_comp.o res_data.o res_debug.o res_init.o res_mkquery.o res_query.o res_send.o res_state.o
+OBJS = herror.o h_errno.o mtctxres.o res_comp.o res_data.o res_debug.o res_init.o res_mkquery.o res_query.o res_send.o res_state.o 
 
 all: $(OBJS)
 

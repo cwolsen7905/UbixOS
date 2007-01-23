@@ -10,6 +10,7 @@ include ../libc.inc
 #INCLUDES += -I../locale/
 
 #Objects
+#OBJS = creat.o gethostid.o getwd.o killpg.o sethostid.o setpgrp.o setrgid.o setruid.o sigcompat.o
 OBJS = creat.o gethostid.o getwd.o killpg.o sethostid.o setpgrp.o setrgid.o setruid.o sigcompat.o
 
 all: $(OBJS)
