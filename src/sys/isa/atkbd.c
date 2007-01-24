@@ -282,7 +282,8 @@ void keyboardHandler() {
       case 0x3:
         //if (tty_foreground != 0x0)
         //  endTask(tty_foreground->owner);
-        K_PANIC("CTRL-C pressed\n");
+        //K_PANIC("CTRL-C pressed\n");
+        kprintf("CTRL-C pressed\n");
         kprintf("FreePages: [0x%X]\n",systemVitals->freePages);
         break;
       case 0x9:
@@ -305,8 +306,10 @@ void keyboardHandler() {
   else {
     switch ((keyboardMap[key][keyMap] >> 8)) {
       case 0x30:
+        #ifdef DEBUG
+        kprintf("Changing Consoles[0x%X:0x%X]\n",_current->id,_current);
+        #endif
         tty_change(keyboardMap[key][keyMap] & 0xFF);
-        //kprintf("Changing Consoles[0x%X:0x%X]\n",_current->id,_current);
         break;
       default:
         break;
@@ -375,122 +378,6 @@ unsigned char getch() {
   }
 
 /***
-
- $Log$
- Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
- UbixOS
-
- Revision 1.5  2006/12/05 17:01:15  reddawg
- Modified kpanic
-
- Revision 1.4  2006/12/05 14:10:21  reddawg
- Workign Distro
-
- Revision 1.3  2006/12/01 05:12:35  reddawg
- We're almost there... :)
-
- Revision 1.2  2006/10/19 17:52:17  reddawg
- Working On Userland
-
- Revision 1.1.1.1  2006/06/01 12:46:12  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:01  reddawg
- no message
-
- Revision 1.29  2004/09/11 21:38:00  reddawg
- Fixed a few problems
-
- Revision 1.28  2004/09/08 23:19:58  reddawg
- hmm
-
- Revision 1.27  2004/09/07 21:54:38  reddawg
- ok reverted back to old scheduling for now....
-
- Revision 1.26  2004/09/06 22:18:52  reddawg
- ok bed time
-
- Revision 1.25  2004/09/06 22:11:29  reddawg
- tty: now each tty has a stdin....
-
- Revision 1.24  2004/09/06 15:13:25  reddawg
- Last commit before FreeBSD 6.0
-
- Revision 1.23  2004/08/21 23:47:50  reddawg
- *** empty log message ***
-
- Revision 1.22  2004/08/09 12:58:05  reddawg
- let me know when you got the surce
-
- Revision 1.21  2004/08/06 22:32:16  reddawg
- Ubix Works Again
-
- Revision 1.19  2004/08/03 18:31:19  reddawg
- virtual terms
-
- Revision 1.18  2004/07/29 21:32:16  reddawg
- My quick lunchs breaks worth of updates....
-
- Revision 1.17  2004/07/28 18:45:39  reddawg
- movement of files
-
- Revision 1.16  2004/07/28 17:07:25  reddawg
- MPI: moved the syscalls
-
- Revision 1.15  2004/07/26 19:15:49  reddawg
- test code, fixes and the like
-
- Revision 1.14  2004/07/25 05:32:58  reddawg
- fixed
-
- Revision 1.13  2004/07/25 05:24:39  reddawg
- atkbd: removed sti... does it still miss keys
-
- Revision 1.12  2004/07/24 20:00:51  reddawg
- Lots of changes to the vmm subsystem.... Page faults have been adjust to now be blocking on a per thread basis not system wide. This has resulted in no more deadlocks.. also the addition of per thread locking has removed segfaults as a result of COW in which two tasks fault the same COW page and try to modify it.
-
- Revision 1.11  2004/07/24 15:12:56  reddawg
- Now I'm current
-
- Revision 1.10  2004/07/23 17:49:58  reddawg
- atkbd: adjust the timing issue on the driver hopefully it will work fine now
-
- Revision 1.9  2004/07/23 17:37:35  reddawg
- Fix
-
- Revision 1.8  2004/07/23 09:10:06  reddawg
- ubixfs: cleaned up some functions played with the caching a bit
- vfs:    renamed a bunch of functions
- cleaned up a few misc bugs
-
- Revision 1.7  2004/07/22 20:53:07  reddawg
- atkbd: fixed problem
-
- Revision 1.6  2004/07/09 13:34:51  reddawg
- keyboard: keyboardInit to atkbd_init
- Adjusted initialization routines
-
- Revision 1.5  2004/06/17 14:49:14  reddawg
- atkbd: converted some variables to static
-
- Revision 1.4  2004/06/04 10:19:42  reddawg
- notes: we compile again, thank g-d anyways i was about to cry
-
- Revision 1.3  2004/05/19 04:07:42  reddawg
- kmalloc(size,pid) no more it is no kmalloc(size); the way it should of been
-
- Revision 1.2  2004/05/10 02:23:24  reddawg
- Minor Changes To Source Code To Prepare It For Open Source Release
-
- Revision 1.1.1.1  2004/04/15 12:07:09  reddawg
- UbixOS v1.0
-
- Revision 1.19  2004/04/13 16:36:33  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
  END
  ***/
 

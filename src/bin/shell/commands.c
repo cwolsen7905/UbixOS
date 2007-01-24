@@ -52,7 +52,7 @@ printf("WEST\n\n");
   if (data->args->arg == NULL) return 1;
 
   if (0 == memcmp(data->args->arg, "uname", 5)) {
-    printf("UbixOS v0.87  " __DATE__" " __TIME__ " \n");
+    printf("UbixOS v1.00  " __DATE__" " __TIME__ " \n");
     return(1);
     }
   else if (0 == memcmp(data->args->arg, "exit", 4)) {

@@ -110,10 +110,10 @@ void systemTask() {
       vmmFreeProcessPages(tmpTask->id);
       kfree(tmpTask);
       }
-    videoBuffer[0] = systemVitals->sysTicks;     
+    videoBuffer[0] = systemVitals->sysTicks;
     sched_yield();
-    }    
-  
+    }
+
   return;
   }
 
