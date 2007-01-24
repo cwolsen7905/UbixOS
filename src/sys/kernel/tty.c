@@ -89,6 +89,8 @@ int tty_change(uInt16 tty) {
   if (tty > TTY_MAX_TERMS)
     kpanic("Error: Changing to an invalid tty. File: %s, Line: %i\n",__FILE__,__LINE__);
 
+  spinLock(&Master);
+
   /* Copy display buffer to tty buffer */
   memcpy(tty_foreground->tty_buffer,(char *)0xB8000,(80*60*2));
 
@@ -111,6 +113,8 @@ int tty_change(uInt16 tty) {
   outportByte(0x3D5, tty_foreground->tty_x);
   outportByte(0x3D4, 0x0E);
   outportByte(0x3D5, tty_foreground->tty_y);
+
+  spinUnlock(&Master);
 
   return(0x0);
   }
@@ -167,7 +171,7 @@ int tty_print(char *string,tty_term *term) {
   return(0x0);
   }
 
-tty_term *tty_find(uInt16 tty) {
+tty_term *tty_find(u_int16_t tty) {
   return(&terms[tty]);
   }
 

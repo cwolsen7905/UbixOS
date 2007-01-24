@@ -32,7 +32,7 @@
 
 #include <ubixos/types.h>
 
-#define TTY_MAX_TERMS 5
+#define TTY_MAX_TERMS 12
 
 typedef struct tty_termNode {
   char    *tty_buffer;
@@ -47,7 +47,7 @@ typedef struct tty_termNode {
 
 int tty_init();
 int tty_change(uInt16);
-tty_term *tty_find(uInt16);
+tty_term *tty_find(u_int16_t tty);
 int tty_print(char *,tty_term *);
 
 extern tty_term *tty_foreground;
@@ -55,38 +55,5 @@ extern tty_term *tty_foreground;
 #endif
 
 /***
- $Log$
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:57  reddawg
- no message
-
- Revision 1.8  2004/09/06 22:11:29  reddawg
- tty: now each tty has a stdin....
-
- Revision 1.7  2004/08/14 11:23:02  reddawg
- Changes
-
- Revision 1.6  2004/08/09 12:58:05  reddawg
- let me know when you got the surce
-
- Revision 1.5  2004/08/09 05:40:31  reddawg
- tty: removed current and made a foreground
-
- Revision 1.4  2004/08/06 22:32:16  reddawg
- Ubix Works Again
-
- Revision 1.2  2004/08/04 08:17:57  reddawg
- tty: we have primative ttys try f1-f5 so it is easier to use and debug
-      ubixos
-
- Revision 1.1  2004/08/03 21:44:24  reddawg
- ttys
-
  END
  ***/
-

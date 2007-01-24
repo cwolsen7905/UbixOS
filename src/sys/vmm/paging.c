@@ -450,7 +450,10 @@ void *vmm_getFreeMallocPage(uInt16 count) {
   spinUnlock(&fkpSpinLock);
   return (0x0);
   }
-  
+
+/*!
+ \brief sdf
+ */
 int mmap(struct thread *td,struct mmap_args *uap) {
   vm_offset_t  addr = 0x0;
   char        *tmp  = 0x0;
@@ -487,9 +490,9 @@ int mmap(struct thread *td,struct mmap_args *uap) {
     #endif
     getfd(td,&fd,uap->fd);
     if (uap->addr == 0x0)
-      tmp = (char *)vmmGetFreeVirtualPage(_current->id,uap->len/0x1000,VM_TASK);
+      tmp = (char *)vmmGetFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK);
     else {
-      tmp = (char *)vmmGetFreeVirtualPage_new(_current->id,uap->len/0x1000,VM_TASK,uap->addr);
+      tmp = (char *)vmmGetFreeVirtualPage_new(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK,uap->addr);
       }
 
     fd->fd->offset = uap->pos;
@@ -528,6 +531,7 @@ int obreak(struct thread *td,struct obreak_args *uap) {
     for (i = old;i < new;i+= 0x1000) {
       if (vmm_remapPage(vmmFindFreePage(_current->id),i,PAGE_DEFAULT) == 0x0)
         K_PANIC("remap Failed");
+      /* Clear Page */
       }
     td->vm_dsize += btoc(new - old);
     }
@@ -542,7 +546,7 @@ int obreak(struct thread *td,struct obreak_args *uap) {
 
 int munmap(struct thread *td,struct munmap_args *uap) {
   /* HACK */
-  kprintf("munmap");
+  //kprintf("munmap: [0x%X:0x%X]",uap->addr,uap->len);
   return(0x0);
   }
 

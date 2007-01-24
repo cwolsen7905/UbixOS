@@ -87,7 +87,7 @@ int  sys_write(struct thread *td, struct write_args *uap) {
     in = (char *)uap->buf;
     buffer = kmalloc(1024);
     memcpy(buffer,uap->buf,uap->nbyte);
-    kprintf("%s",buffer); 
+    kprint(buffer); 
     kfree(buffer);
     td->td_retval[0] = uap->nbyte;
     }

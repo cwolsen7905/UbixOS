@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002 The UbixOS Project
+ Copyright (c) 2002,2007 The UbixOS Project
  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -81,19 +81,6 @@ void *memset(void *dst0, int c0, size_t length) {
 
 
 /***
- $Log$
- Revision 1.1.1.1  2006/06/01 12:46:16  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:12  reddawg
- no message
-
- Revision 1.1  2004/07/28 16:20:10  reddawg
- forgot this file
-
- END
+END
  ***/
 
