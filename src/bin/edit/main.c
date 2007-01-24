@@ -41,6 +41,8 @@ int main(int argc,char **argv) {
     printf("%c",fgetc(out));
     }
 
+  printf("argc: [%i]\n",argc);
+
   return(0);
   }
 

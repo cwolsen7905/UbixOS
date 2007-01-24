@@ -28,6 +28,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 
 void parseInput(inputBuffer *buffer,char *data) {
   int                 i       = 0x0;
+  char               *tmpDat  = data;
   char               *arg     = 0x0;
   char              **argv    = 0x0;
   struct argsStruct  *tmpArgs = 0x0;
@@ -43,9 +44,9 @@ void parseInput(inputBuffer *buffer,char *data) {
 
   tmpArgs = buffer->args;
 
-  while(data != 0x0) {
-    arg = strtok(data," ");
-    data = strtok(NULL,"\n");
+  while(tmpDat != 0x0) {
+    arg = strtok(tmpDat," ");
+    tmpDat = strtok(NULL,"\n");
 
     //printf("sh[%s:%s]",arg,data);
     if (arg[0] == '&') {
@@ -54,7 +55,7 @@ void parseInput(inputBuffer *buffer,char *data) {
     else {
       buffer->argc++;
       tmpArgs->arg = arg;
-      if (data != 0x0) {
+      if (tmpDat != 0x0) {
         tmpArgs->next = (struct argsStruct *)malloc(sizeof(struct argsStruct));
         }
       tmpArgs = tmpArgs->next;
@@ -74,10 +75,10 @@ void parseInput(inputBuffer *buffer,char *data) {
 
   for (i=0x1;i <= buffer->argc;i++) {
     argv[i] = tmpArgs->arg;
-    //printf("argv[%i]: %s\n",i,argv[i]);
+    printf("argv[%i]: %s\n",i,argv[i]);
     tmpArgs = tmpArgs->next;
     }
-  argv[0] = buffer->argc;
+  argv[0] = (char *)buffer->argc;
   //argv[buffer->argc+1] = buffer->envp;
   }
 
