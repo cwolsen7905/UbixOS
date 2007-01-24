@@ -1,7 +1,7 @@
 # $Id$
 # The System Makefile (C) 2002 The UbixOS Project
 
-all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin edit-bin ld-bin ttyd-bin stat-bin  cat-bin rtld-elf-bin
+all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin edit-bin ld-bin ttyd-bin stat-bin  cat-bin rtld-elf-bin tcc-bin
 # test-bin pwd-bin cat-bin de-bin ls-bin goofball-bin mount-bin
 
 init-bin: init 
@@ -73,6 +73,9 @@ mount-bin: mount
 rtld-elf-bin: rtld-elf
 	(cd rtld-elf;make)
 
+tcc-bin: tcc
+	(cd tcc;make)
+
 clean:
 	(cd cp;make clean)
 	(cd fdisk;make clean)
@@ -91,3 +94,4 @@ clean:
 	(cd stat;make clean)
 	(cd mount;make clean)
 	(cd rtld-elf;make clean)
+	(cd tcc;make clean)
