@@ -7,6 +7,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
   int        x        = 0x0;
   int        rel      = 0x0;
   uInt32    *reMap    = 0x0;
+  uInt32    *funcPtr  = 0x0;
   char      *newLoc   = 0x0;
   FILE      *linkerFd = 0x0;
   char       tmpFile[1024];
@@ -149,6 +150,17 @@ ldLibrary *ldAddLibrary(const char *lib) {
       }
     }
   }
+printf("Looking For Environ: [%i]\n\n",tmpLib->linkerSectionHeader[tmpLib->sym].shSize/sizeof(elfDynSym));
+  /* Sync environ __progname */
+    for (i=0x0;i<tmpLib->linkerSectionHeader[tmpLib->sym].shSize/sizeof(elfDynSym);i++) {
+      if (!strcmp("environ",(tmpLib->linkerDynStr + tmpLib->linkerRelSymTab[i].dynName))) {
+        funcPtr = (uInt32 *)((uInt32)(tmpLib->linkerRelSymTab[i].dynValue) + (uInt32)tmpLib->output);
+        *funcPtr = 0x0;
+        printf("[envion:0x%X:0x%X]\n",funcPtr,*funcPtr);
+        //break;
+        }
+      }
+
   if (libs != 0x0)
     libs->prev    = tmpLib;
   tmpLib->prev  = 0x0;

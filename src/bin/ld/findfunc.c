@@ -13,7 +13,7 @@ uInt32 ldFindFunc(const char *func,const char *lib) {
     if (libPtr == 0x0) {
       libPtr = ldAddLibrary(lib + lib_s[x]);
       }
-  
+
     for (i=0x0;i<libPtr->linkerSectionHeader[libPtr->sym].shSize/sizeof(elfDynSym);i++) {
       if (!strcmp(func,(libPtr->linkerDynStr + libPtr->linkerRelSymTab[i].dynName))) {
         funcPtr = (uInt32 *)((uInt32)(libPtr->linkerRelSymTab[i].dynValue) + (uInt32)libPtr->output);

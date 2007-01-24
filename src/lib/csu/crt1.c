@@ -85,7 +85,7 @@ _start(char *ap, ...)
 	argv = &ap;
 	argc = *(long *)(void *)(argv - 1);
 	env = argv + argc + 1;
-	environ = 0x0;//env;
+	environ = env;
 
 	if (argc > 0 && argv[0] != NULL) {
 		__progname = argv[0];

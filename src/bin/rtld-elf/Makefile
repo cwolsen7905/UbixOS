@@ -36,13 +36,13 @@ $(OUTPUT) : $(OBJS)
 
 # Compile the source files
 .cpp.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX)  $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 .cc.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX)  $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 .cc.s:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
+	$(CXX)  $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<

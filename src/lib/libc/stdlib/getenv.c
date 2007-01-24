@@ -69,8 +69,7 @@ __findenv(name, offset)
 	char **p, *cp;
 
 /* HACK */
-        *offset = 0xFA;
-        return(0x0);
+        *offset = (int)environ;
 
 	if (name == NULL || environ == NULL)
 		return (NULL);

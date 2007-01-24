@@ -46,7 +46,7 @@ lib.so: $(OBJS)
 	(cd gdtoa;make LIBPATH=${LIBPATH})
 	(cd db;make LIBPATH=${LIBPATH})
 	(cd compat-43;make LIBPATH=${LIBPATH})
-	$(CC) -nostdlib -shared -Wl,-x -o $(OUTPUT) -Wl,-soname,$(OUTPUT) `lorder $(OBJS) $(SUBS) | tsort -q`
+	$(CC) -shared -Wl,-x -o $(OUTPUT) -Wl,-soname,$(OUTPUT) `lorder $(OBJS) $(SUBS) | tsort -q`
 	(rm -fr pic.a;ar cq pic.a ./i386/*/*.o ./stdio/*.o ./stdlib/*.o ./string/*.o ./sys/*.o ./xdr/*.o ./yp/*.o ./locale/*.o ./gen/*.o ; ranlib ./pic.a)
 
 pic.a: $(OBJS)
