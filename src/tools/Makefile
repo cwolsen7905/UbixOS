@@ -47,6 +47,7 @@ install-ubix:
 	(cp ../bin/cat/cat /mnts/ubix/bin)
 	(cp ../bin/ld/ld.so /mnts/ubix/lib)
 	(cp ../bin/rtld-elf/ld-elf.so.1 /mnts/ubix/libexec)
+	(cp ../bin/tcc/tcc /mnts/ubix/bin)
 	(cp ../lib/libc_old/libc_old.so /mnts/ubix/lib)
 	(cp ../lib/libc/libc.so /mnts/ubix/lib)
 	(cp ../lib/ubix_api/ubix_api.so /mnts/ubix/lib)
