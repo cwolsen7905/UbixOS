@@ -120,7 +120,9 @@ int fstat(struct thread *td,struct fstat_args *uap) {
   fp = (struct file *)_current->td.o_files[uap->fd];
   uap->sb->st_mode    = 0x2180;
   uap->sb->st_blksize = 0x1000;
+  #ifdef DEBUG
   kprintf("fstat: %i",uap->fd);
+  #endif
   return(0x0);
   }
 

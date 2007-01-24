@@ -258,7 +258,9 @@ void execFile(char *file,int argc,char **argv,int console) {
       fseek(tmpFd,programHeader[i].phOffset,0);
       fread((void *)programHeader[i].phVaddr,programHeader[i].phFilesz,1,tmpFd);
       if ((programHeader[i].phFlags & 0x2) != 0x2) {
+        #ifdef DEBUG
         kprintf("pH: [0x%X]\n",programHeader[i].phMemsz);
+        #endif
         for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
           if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x,PAGE_PRESENT | PAGE_USER)) != 0x0)
 	    kpanic("Error: vmm_setPageAttributes failed, File: %s, Line: %i\n",__FILE__,__LINE__);
@@ -318,10 +320,11 @@ void execFile(char *file,int argc,char **argv,int console) {
   tmp[3] = STACK_ADDR - 12;
 
   tmp = (uInt32 *)STACK_ADDR - 2;
-
+  /*
   if (_current->id > 4)
   kprintf("argv[0]: [%s]\n",argv[0]);
   kprintf("argv: [0x%X]\n",argv);
+  */
   tmp[0] = (u_int32_t)argv;
   tmp[1] = (u_int32_t)argv;
 
@@ -448,7 +451,9 @@ void sysExec(char *file,char *ap) {
 	      kpanic("Error: vmm_setPageAttributes failed, File: %s,Line: %i\n",__FILE__,__LINE__);
 	    }
           }
+        #ifdef DEBUG
         kprintf("setting daddr\n");
+        #endif
         if (binaryHeader->eEntry >= programHeader[i].phVaddr && binaryHeader->eEntry < (programHeader[i].phVaddr + programHeader[i].phMemsz)) {
           /* We're suposed to do something here? */
           }
@@ -469,7 +474,9 @@ void sysExec(char *file,char *ap) {
         interp = (char *)kmalloc(programHeader[i].phFilesz);
         fseek(tmpFd,programHeader[i].phOffset,0);
         fread((void *)interp,programHeader[i].phFilesz,1,tmpFd);
+        #ifdef DEBUG
         kprintf("Interp: [%s]\n",interp);
+        #endif
         ldAddr = ldEnable();
         break;
       default:
@@ -504,7 +511,8 @@ void sysExec(char *file,char *ap) {
   if (argv[1] != 0x0) {
     argc = argv[0];
     args = (char *)vmmGetFreeVirtualPage(_current->id,1,VM_TASK);
-memset(args,0x0,0x1000);
+    //! do we need this?
+    memset(args,0x0,0x1000);
     x = 0x0;
     argvNew = (char **)kmalloc(sizeof(char *) * argc);
     for (i = 0x0;i < argc;i++) {
@@ -644,7 +652,9 @@ void sys_exec(char *file,char *ap) {
 
         fseek(_current->imageFd,programHeader[i].phOffset,0);
         fread((void *)interp,programHeader[i].phFilesz,1,_current->imageFd);
+        #ifdef DEBUG
         kprintf("Interp: [%s]\n",interp);
+        #endif
         //ldAddr = ldEnable();
         break;
       case PT_PHDR:
@@ -696,7 +706,9 @@ void sys_exec(char *file,char *ap) {
   //if (_current->id > 3) {
 
   iFrame->user_esp = ((u_int32_t)STACK_ADDR) - (sizeof(u_int32_t) * (argc + 4 + (sizeof(Elf_Auxargs) * 2)));
+  #ifdef DEBUG
   kprintf("\n\n\nuser_esp: [0x%X]\n",iFrame->user_esp);
+  #endif
   tmp = iFrame->user_esp;
 
   //! build argc and argv[]
@@ -710,9 +722,13 @@ void sys_exec(char *file,char *ap) {
 
   strcpy(args,"LIBRARY_PATH=/lib");
   tmp[argc + 2] = args;
+  #ifdef DEBUG
   kprintf("env: [0x%X][0x%X]\n",(uInt32)tmp + argc + 2,tmp[argc + 2]);
+  #endif
   tmp[argc + 3] = 0x0;
+  #ifdef DEBUG
   kprintf("env: [0x%X][0x%X]\n",(uInt32)tmp + argc + 2,tmp[argc + 2]);
+  #endif
 
   tmp = iFrame->user_esp;
   tmp += argc + 4;
@@ -737,7 +753,9 @@ void sys_exec(char *file,char *ap) {
   AUXARGS_ENTRY(tmp, AT_BASE, auxargs->base);
   AUXARGS_ENTRY(tmp, AT_NULL, 0);
 
+  #ifdef DEBUG
   kprintf("AT_BASE: [0x%X]\n",auxargs->base);
+  #endif
 
   return;
   }

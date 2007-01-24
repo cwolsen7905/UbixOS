@@ -34,7 +34,9 @@ ldLibrary *ldAddLibrary(const char *lib) {
       }
     sprintf(tmpLib->name,lib);
     }
+  #ifdef DEBUG
   printf("Base: {0x%X}\n",tmpLib->output);
+  #endif
   if (tmpLib->linkerHeader == 0x0) {
     fseek(linkerFd,0x0,0x0);
     if ((tmpLib->linkerHeader = (elfHeader *)malloc(sizeof(elfHeader))) == 0x0) {
@@ -150,13 +152,34 @@ ldLibrary *ldAddLibrary(const char *lib) {
       }
     }
   }
-printf("Looking For Environ: [%i]\n\n",tmpLib->linkerSectionHeader[tmpLib->sym].shSize/sizeof(elfDynSym));
+//printf("Looking For Environ: [%i]\n\n",tmpLib->linkerSectionHeader[tmpLib->sym].shSize/sizeof(elfDynSym));
   /* Sync environ __progname */
     for (i=0x0;i<tmpLib->linkerSectionHeader[tmpLib->sym].shSize/sizeof(elfDynSym);i++) {
       if (!strcmp("environ",(tmpLib->linkerDynStr + tmpLib->linkerRelSymTab[i].dynName))) {
         funcPtr = (uInt32 *)((uInt32)(tmpLib->linkerRelSymTab[i].dynValue) + (uInt32)tmpLib->output);
-        *funcPtr = 0x0;
-        printf("[envion:0x%X:0x%X]\n",funcPtr,*funcPtr);
+        //printf("[envion:0x%X:0x%X]\n",funcPtr,*funcPtr);
+        for (x = 0x0;x < binarySectionHeader[binarySym].shSize/sizeof(elfDynSym);x++) {
+          if (!strcmp("environ",(binaryDynStr + binaryRelSymTab[x].dynName))) {
+            *funcPtr = (uInt32 *)((uInt32)(binaryRelSymTab[x].dynValue));// + (uInt32)tmpLib->output);
+            //printf("[envion:0x%X:0x%X]\n",funcPtr,*funcPtr);
+            }
+          }
+        //break;
+        }
+      }
+
+//printf("Looking For __progname: [%i]\n\n",tmpLib->linkerSectionHeader[tmpLib->sym].shSize/sizeof(elfDynSym));
+  /* Sync environ __progname */
+    for (i=0x0;i<tmpLib->linkerSectionHeader[tmpLib->sym].shSize/sizeof(elfDynSym);i++) {
+      if (!strcmp("__progname",(tmpLib->linkerDynStr + tmpLib->linkerRelSymTab[i].dynName))) {
+        funcPtr = (uInt32 *)((uInt32)(tmpLib->linkerRelSymTab[i].dynValue) + (uInt32)tmpLib->output);
+        //printf("[__progname:0x%X:0x%X]\n",funcPtr,*funcPtr);
+        for (x = 0x0;x < binarySectionHeader[binarySym].shSize/sizeof(elfDynSym);x++) {
+          if (!strcmp("__progname",(binaryDynStr + binaryRelSymTab[x].dynName))) {
+            *funcPtr = (uInt32 *)((uInt32)(binaryRelSymTab[x].dynValue));// + (uInt32)tmpLib->output);
+            //printf("[__progname:0x%X:0x%X]\n",funcPtr,*funcPtr);
+            }
+          }
         //break;
         }
       }

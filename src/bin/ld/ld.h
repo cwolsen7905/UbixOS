@@ -20,6 +20,10 @@ typedef struct ldLibrary_s {
 extern ldLibrary *libs;
 extern int       lib_c;
 extern int       lib_s[10];
+extern int       binarySym;
+extern elfSectionHeader *binarySectionHeader;
+extern char             *binaryDynStr;
+extern elfDynSym        *binaryRelSymTab;
 
 uInt32 ldFindFunc(const char *,const char *);
 ldLibrary *ldFindLibrary(const char *);

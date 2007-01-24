@@ -101,9 +101,11 @@ int kmain(uInt32 rootdev) {
 
   /* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
   clearScreen();
+  #ifdef DEBUG
   kprint("AAA");
   kprint("BBB");
-kprintf("TEST");
+  kprintf("TEST");
+  #endif
   /* Modify src/sys/include/ubixos/init.h to add a startup routine */
   for (i=0x0;i<init_tasksTotal;i++) {
     if (init_tasks[i]() != 0x0) {
@@ -113,7 +115,9 @@ kprintf("TEST");
 
   /* New Root Mount Point */
   //Old 2 new 10
+  #ifdef DEBUG
   kprintf("[0xX][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n",B_ADAPTOR(rootdev),B_CONTROLLER(rootdev),B_SLICE(rootdev),B_UNIT(rootdev),B_PARTITION(rootdev),B_TYPE(rootdev));
+  #endif
   if (vfs_mount(0x1,B_PARTITION(rootdev)+2,0x0,0xAA,"sys","rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
     }

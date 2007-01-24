@@ -104,7 +104,8 @@ int  sys_write(struct thread *td, struct write_args *uap) {
   }
 
 int issetugid(register struct thread *td, struct issetugid_args *uap) {
-  #ifdef DEBUG
+  #ifdef NOTIMP
+  kprintf("Not Implimented: issetugid\n");
   kprintf("[%s:%i]",__FILE__,__LINE__);
   #endif
   td->td_retval[0] = 0;
@@ -112,17 +113,18 @@ int issetugid(register struct thread *td, struct issetugid_args *uap) {
   }
 
 int readlink(struct thread *td,struct readlink_args *uap) {
-  #ifdef DEBUG
+  #ifdef NOTIMP
   kprintf("[%s:%i]",__FILE__,__LINE__);
-  #endif
   kprintf("readlink: [%s:%i]\n",uap->path,uap->count);
+  #endif
   td->td_retval[0] = -1;
   td->td_retval[1] = 0x0;
   return(0x0);
   }
 
 int gettimeofday_new(struct thread *td, struct gettimeofday_args *uap) {
-  #ifdef DEBUG
+  #ifdef NOTIMP
+  kprintf("Not Implimented: gettimeofday\n");
   kprintf("[%s:%i]",__FILE__,__LINE__);
   #endif
   return(0x0);
@@ -143,7 +145,9 @@ int read(struct thread *td,struct read_args *uap) {
     return(error);
 
   count = fread(uap->buf,uap->nbyte,0x1,fd->fd);
+  #ifdef DEBUG
   kprintf("count: %i\n",count);
+  #endif
   td->td_retval[0] = count;
 
   return(error);
@@ -155,17 +159,34 @@ int read(struct thread *td,struct read_args *uap) {
 int setitimer(struct thread *td, struct setitimer_args *uap) {
   int error = 0x0;
 
+  #ifdef NOTIMP
+  kprintf("Not Implimented: setitimer\n");
+  kprintf("[%s:%i]",__FILE__,__LINE__);
+  #endif
+
   return(error);
   }
 
 int access(struct thread *td, struct access_args *uap) {
   int error = 0x0;
+
+  #ifdef NOTIMP
+  kprintf("Not Implimented: access\n");
   kprintf("name: [%s]\n",uap->path);
+  kprintf("[%s:%i]",__FILE__,__LINE__);
+  #endif
+
   return(error);
   }
 
 int mprotect(struct thread *td, struct mprotect_args *uap) {
   int error = 0x0;
+
+  #ifdef NOTIMP
+  kprintf("Not Implimented: mprotect\n");
+  kprintf("[%s:%i]",__FILE__,__LINE__);
+  #endif
+
   return(error);
   }
 

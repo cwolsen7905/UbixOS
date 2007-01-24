@@ -32,8 +32,6 @@
 
 int main(int argc,char **argv) {
   FILE *out;
-  int offset;
-  extern char **environ;
   printf("UbixOS Text Editor\n");
   printf("V1.0\n");
 
@@ -42,13 +40,6 @@ int main(int argc,char **argv) {
   while (!feof(out)) {
     printf("%c",fgetc(out));
     }
-  printf("[0x%X:0x%X]\n",environ,offset); 
-  __findenv("term",&offset);
-  printf("[0x%X:0x%X]\n",environ,offset); 
-  putenv("bryce=good");
-  printf("[%s]\n",getenv("bryce"));
-  printf("[0x%X:0x%X]\n",environ,offset); 
-  printf("The End\n");
 
   return(0);
   }

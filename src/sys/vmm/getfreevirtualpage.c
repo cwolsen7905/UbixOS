@@ -62,8 +62,10 @@ void *vmmGetFreeVirtualPage(pidType pid, int count,int type) {
 
   if (type == VM_THRD) {
     start_page = (u_int32_t)(_current->td.vm_daddr + ctob(_current->td.vm_dsize));
-kprintf(".%i.",count);
-   //count--; 
+    #ifdef DEBUG
+    kprintf(".%i.",count);
+    #endif
+    //count--;
     }
   else if (type == VM_TASK) {
     //kprintf("vmStart");
@@ -97,7 +99,9 @@ kprintf(".%i.",count);
     for (y = 0; y < 1024; y++) {
       /* Loop Through The Page Table Find An UnAllocated Page */
       if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-        kprintf("PAGE_COW");
+        #ifdef DEBUG
+        kprintf("PAGE_COW-1");
+        #endif
         //_current->td.vm_dsize += btoc(0x1000);
         /* HACK MEMORY LEAK */
         //pageTableSrc[y] = 0x0;
@@ -107,7 +111,9 @@ kprintf(".%i.",count);
           for (c = 0; c < count; c++) {
             if (y + c < 1024) {
       if ((pageTableSrc[y + c] & PAGE_COW) == PAGE_COW) {
-        kprintf("PAGE-COW");
+        #ifdef DEBUG
+        kprintf("PAGE-COW-2");
+        #endif
         //_current->td.vm_dsize += btoc(0x1000);
         /* HACK MEMORY LEAK */
         //pageTableSrc[y + c] = 0x0;
@@ -146,7 +152,9 @@ kprintf(".%i.",count);
 	  /* Return The Address Of The Newly Allocate Page */
           if (type == VM_THRD) {
             _current->td.vm_dsize += btoc(count * 0x1000);
+            #ifdef DEBUG
             kprintf("vm_dsize: [0x%X]][0x%X]\n",ctob(_current->td.vm_dsize),_current->td.vm_dsize);
+            #endif
             }
           //kprintf("(0x%X:0x%X)",_current->td.vm_dsize,vmm_getPhysicalAddr(((x * (1024 * 4096)) + (y * 4096))));
 //          kprintf("(0x%X:0x%X)",_current->td.vm_dsize + _current->td.vm_daddr,((x * (1024 * 4096)) + (y * 4096)));
@@ -262,7 +270,9 @@ start_page = start_addr;
 	  /* Return The Address Of The Newly Allocate Page */
           if (type == VM_THRD) {
             _current->td.vm_dsize += btoc(count * 0x1000);
+            #ifdef DEBUG
             kprintf("vm_dsize: [0x%X]][0x%X]\n",ctob(_current->td.vm_dsize),_current->td.vm_dsize);
+            #endif
             }
           //kprintf("(0x%X:0x%X)",_current->td.vm_dsize,vmm_getPhysicalAddr(((x * (1024 * 4096)) + (y * 4096))));
 //          kprintf("(0x%X:0x%X)",_current->td.vm_dsize + _current->td.vm_daddr,((x * (1024 * 4096)) + (y * 4096)));

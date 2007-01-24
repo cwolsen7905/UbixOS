@@ -7,7 +7,7 @@ uInt32 ldFindFunc(const char *func,const char *lib) {
   int        x        = 0x0;
   uInt32    *funcPtr  = 0x0;
   ldLibrary *libPtr   = 0x0;
-  
+
   for (x = 0; x < lib_c;x++) {
     libPtr = ldFindLibrary(lib + lib_s[x]); 
     if (libPtr == 0x0) {

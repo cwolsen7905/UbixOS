@@ -5,3 +5,5 @@ src/sys/vmm/getfreepage.c
 src/sys/lib/memset.c
 src/sys/vmm/paging.c
 src/sys/kernel/tty.c
+src/sys/vmm/getfreevirtualpage.c
+src/sys/kernel/exec.c

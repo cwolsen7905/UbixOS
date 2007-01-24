@@ -44,7 +44,9 @@ int commands(inputBuffer *data) {
 
   mpi_message_t cmdMsg;
 
+#ifdef DEBUG
 printf("WEST\n\n");
+#endif
 
   if (data == NULL) return 1;
   if (data->args->arg == NULL) return 1;
