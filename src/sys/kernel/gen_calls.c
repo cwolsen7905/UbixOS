@@ -34,6 +34,7 @@
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <ubixos/kpanic.h>
 #include <string.h>
 #include <assert.h>
 
@@ -186,6 +187,29 @@ int mprotect(struct thread *td, struct mprotect_args *uap) {
   kprintf("Not Implimented: mprotect\n");
   kprintf("[%s:%i]",__FILE__,__LINE__);
   #endif
+
+  return(error);
+  }
+
+int lseek(struct thread *td, struct lseek_args *uap) {
+  int error = 0x0;
+  struct file *fd    = 0x0;
+
+  getfd(td,&fd,uap->fd);
+  switch (uap->whence) {
+    case 2:
+      K_PANIC("UNHANDLED WHENCE");
+      break;
+    case 1:
+      fd->fd->offset += uap->offset;
+      break;
+    case 0:
+      fd->fd->offset = uap->offset;
+      break;
+    default:
+      kprintf("offset: [%i], whence: [%i]\n",uap->offset,uap->whence);
+      break;
+    }
 
   return(error);
   }

@@ -263,7 +263,7 @@ functionPTR systemCalls_new[] = {
   invalid_call,		/** 196 **/
   mmap,			/** 197 **/
   invalid_call,		/** 198 **/
-  invalid_call,		/** 199 **/
+  lseek,		/** 199 **/
   invalid_call,		/** 200 **/
   invalid_call,		/** 201 **/
   __sysctl,		/** 202 **/

@@ -78,6 +78,12 @@ struct mprotect_args {
   char len_l_[PADL_(size_t)]; size_t len; char len_r_[PADR_(size_t)];
   char prot_l_[PADL_(int)]; int prot; char prot_r_[PADR_(int)];
   };
+struct lseek_args {
+  char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+  char pad_l_[PADL_(int)]; int pad; char pad_r_[PADR_(int)];
+  char offset_l_[PADL_(off_t)]; off_t offset; char offset_r_[PADR_(off_t)];
+  char whence_l_[PADL_(int)]; int whence; char whence_r_[PADR_(int)];
+  };
 
 
 
@@ -187,6 +193,7 @@ int setitimer(struct thread *td, struct setitimer_args *uap);
 int access(struct thread *td, struct access_args *uap);
 int fstatfs(struct thread *td, struct fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
+int lseek(struct thread *td, struct lseek_args *uap);
 
 #endif
 
