@@ -47,7 +47,7 @@ void parseInput(inputBuffer *buffer,char *data) {
     arg = strtok(data," ");
     data = strtok(NULL,"\n");
 
-    printf("sh[%s:%s]",arg,data);
+    //printf("sh[%s:%s]",arg,data);
     if (arg[0] == '&') {
       buffer->bg = 0x1;
       }
@@ -70,11 +70,11 @@ void parseInput(inputBuffer *buffer,char *data) {
   tmpArgs = buffer->args;
   argv = &buffer->argv;
 
-  printf("argc: [%i]\n",buffer->argc);
+  //printf("argc: [%i]\n",buffer->argc);
 
   for (i=0x1;i <= buffer->argc;i++) {
     argv[i] = tmpArgs->arg;
-    printf("argv[%i]: %s\n",i,argv[i]);
+    //printf("argv[%i]: %s\n",i,argv[i]);
     tmpArgs = tmpArgs->next;
     }
   argv[0] = buffer->argc;

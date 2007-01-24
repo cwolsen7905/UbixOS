@@ -12,7 +12,7 @@ void _start(char *ap, ...) {
         env = argv + argc + 1;
         environ = env;
 
-  printf("env[0]: 0x%X\n",env[0]);
+//  printf("env[0]: 0x%X\n",env[0]);
   /*
   printf("(&ap: 0x%X)\n",&ap);
   printf("(argv[0]: 0x%X\n",argv[0]);
@@ -31,5 +31,4 @@ void _start(char *ap, ...) {
     }
 
   exit(main(argc, argv, env));
-
   }

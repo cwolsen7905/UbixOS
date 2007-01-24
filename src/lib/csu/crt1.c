@@ -99,6 +99,7 @@ _start(char *ap, ...)
 	else
 		_init_tls();
 
+
 #ifdef GCRT
 	atexit(_mcleanup);
 #endif
