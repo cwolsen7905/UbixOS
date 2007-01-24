@@ -1,0 +1,7 @@
+# KDevelop Custom Project File List
+src/sys/vmm/copyvirtualspace.c
+src/sys/vmm/createvirtualspace.c
+src/sys/vmm/getfreepage.c
+src/sys/lib/memset.c
+src/sys/vmm/paging.c
+src/sys/kernel/tty.c
