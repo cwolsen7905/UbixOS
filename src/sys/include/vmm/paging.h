@@ -34,14 +34,15 @@
 #include <sys/sysproto.h>
 #include <sys/thread.h>
 
-#define VM_THRD           0
-#define VM_TASK           1
+#define VM_THRD             0
+#define VM_TASK             1
 
-#define pageLength        0x00000400
-#define pageSize          4096
-#define pageEntries       (pageSize/4)
+#define pageLength          0x00000400
+#define pageSize            4096
+#define pageEntries         (pageSize/4)
 #define tablesBaseAddress   0xBFC00000
 #define parentPageDirAddr   0x100000
+#define PARENT_PAGEDIR_ADDR 0x100000   /* Address at which the page directory is stored */
 
 #define PAGE_COW            0x00000200
 #define PAGE_STACK          0x00000400
@@ -52,14 +53,14 @@
 #define PAGE_DEFAULT        (PAGE_PRESENT|PAGE_WRITE|PAGE_USER)
 #define KERNEL_PAGE_DEFAULT (PAGE_PRESENT|PAGE_WRITE)
 
-#define PAGE_SHIFT      12              /* LOG2(PAGE_SIZE) */
-#define PAGE_SIZE       (1<<PAGE_SHIFT) /* bytes/page */
-#define PAGE_MASK       (PAGE_SIZE-1)
+#define PAGE_SHIFT          12              /* LOG2(PAGE_SIZE) */
+#define PAGE_SIZE           (1<<PAGE_SHIFT) /* bytes/page */
+#define PAGE_MASK           (PAGE_SIZE-1)
 
-#define trunc_page(x)           ((x) & ~PAGE_MASK)
-#define round_page(x)   (((x) + PAGE_MASK) & ~PAGE_MASK)
-#define ctob(x)                 ((x)<<PAGE_SHIFT)
-#define btoc(x)                 (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
+#define trunc_page(x)       ((x) & ~PAGE_MASK)
+#define round_page(x)       (((x) + PAGE_MASK) & ~PAGE_MASK)
+#define ctob(x)             ((x)<<PAGE_SHIFT)
+#define btoc(x)             (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
 
 int vmmClearVirtualPage(uInt32 pageAddr);

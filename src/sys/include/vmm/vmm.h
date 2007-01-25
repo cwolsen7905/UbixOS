@@ -60,31 +60,5 @@ void vmmFreeProcessPages(pidType pid);
 #endif
 
 /***
- $Log$
- Revision 1.2  2006/12/05 14:10:21  reddawg
- Workign Distro
-
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:59  reddawg
- no message
-
- Revision 1.6  2004/07/21 17:39:04  reddawg
- removed device
-
- Revision 1.5  2004/07/19 02:08:28  reddawg
- Cleaned out the rest of debuging code also temporarily disabled the ip stack to improve boot time
-
- Revision 1.4  2004/07/09 12:18:19  reddawg
- Updating Initialization Procedures
-
- Revision 1.3  2004/05/21 15:21:04  reddawg
- Cleaned up
-
-
  END
  ***/
