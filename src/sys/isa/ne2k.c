@@ -110,7 +110,7 @@ int ne2k_init() {
   kprintf("Initialized");
   /* Return so we know everything went well */
   return(0x0);
-  }
+  } /* ne2k_init */
 
 int PCtoNIC(struct device *dev,void *packet,int length) {
   int     i        = 0x0;
@@ -186,20 +186,20 @@ int NICtoPC(struct device *dev,void *packet,int length,int nic_addr) {
 
   outportByte(dev->ioAddr+EN0_ISR,0x40);
   return(length);
-  }
+  } /* PCtoNIC */
 
 void ne2kHandler() {
   uInt16 isr    = 0x0;
   uInt16 status = 0x0;
-  
+
   irqDisable(10);
   outportByte(mPic, eoi);
   outportByte(sPic, eoi);
-  
+
   asm("sti");
 
   isr = inportByte(mDev->ioAddr + NE_ISR);
-  
+
   if ((isr & 0x02) == 0x02) {
     outportByte(mDev->ioAddr + NE_ISR, 0x0A);
     status = inportByte(0x280 + NE_TPSR);
@@ -210,15 +210,15 @@ void ne2kHandler() {
       }
     outportByte(mDev->ioAddr + NE_ISR, 0x05);
     }
-    
+
   outportByte(mDev->ioAddr + NE_IMR,0x0);
   outportByte(mDev->ioAddr + NE_IMR,0x0B);
-  
+
   asm("cli");
   irqEnable(10);
 
   return;
-  }
+  } /* ne2kHandler */
 
 static int dp_recv(struct device *dev) {
   dp_rcvhdr_t header;
@@ -274,7 +274,7 @@ static int dp_recv(struct device *dev) {
 
     } while (packet_processed == 0x0);
   return(0x0);
-  }
+  } /* dp_recv */
 
 static void getblock(struct device *dev,int page,size_t offset,size_t size,void *dst) {
         uInt16 *ha = 0x0;
@@ -292,12 +292,12 @@ static void getblock(struct device *dev,int page,size_t offset,size_t size,void 
         for (i= 0; i<size; i++)
                 ha[i]= inportWord(dev->ioAddr + NE_DATAPORT);
   outportByte(dev->ioAddr+EN0_ISR,0x40);
-  }
-  
+  } /* getblock */
+
 static int dp_pkt2user(struct device *dev,int page,int length) {
   int last = 0x0;
   struct nicBuffer *tmpBuf = 0x0;
- 
+
   last = page + (length - 1) / DP_PAGESIZE;
 
   if (last >= stopPage) {
@@ -308,13 +308,13 @@ static int dp_pkt2user(struct device *dev,int page,int length) {
     NICtoPC(dev,tmpBuf->buffer,length,page * DP_PAGESIZE + sizeof(dp_rcvhdr_t));
     }
   return(OK);
-  }
+  } /* db_pkt2user */
 
 struct nicBuffer *ne2kAllocBuffer(int length) {
   struct nicBuffer *tmpBuf = 0x0;
-  
+
   spinLock(&ne2k_spinLock);
-  
+
   if (ne2kBuffer == 0x0) {
     ne2kBuffer = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
     ne2kBuffer->next   = 0x0;
@@ -325,7 +325,7 @@ struct nicBuffer *ne2kAllocBuffer(int length) {
     }
   else {
     for (tmpBuf = ne2kBuffer;tmpBuf->next != 0x0;tmpBuf = tmpBuf->next);
-    
+
     tmpBuf->next   = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
     tmpBuf         = tmpBuf->next;
     tmpBuf->next   = 0x0;
@@ -336,84 +336,26 @@ struct nicBuffer *ne2kAllocBuffer(int length) {
     }
   spinUnlock(&ne2k_spinLock);
   return(0x0);
-  }
+  } /* ne2kAllocBuffer */
 
 struct nicBuffer *ne2kGetBuffer() {
   struct nicBuffer *tmpBuf = 0x0;
-  
+
   if (ne2k_spinLock == 0x1)
     return(0x0);
-    
+
   tmpBuf     = ne2kBuffer;
   if (ne2kBuffer != 0x0)
     ne2kBuffer = ne2kBuffer->next;
   return(tmpBuf);
-  }
+  } /* nicBuffer */
 
 void ne2kFreeBuffer(struct nicBuffer *buf) {
   kfree(buf->buffer);
   kfree(buf);
   return;
-  }
+  } /* ne2kFreeBuffer */
 
 /***
-
- $Log$
- Revision 1.1.1.1  2006/06/01 12:46:12  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:02  reddawg
- no message
-
- Revision 1.24  2004/09/28 21:47:56  reddawg
- Fixed deadlock now safe to use in bochs
-
- Revision 1.23  2004/09/16 22:35:28  reddawg
- Demo Release
-
- Revision 1.22  2004/09/15 21:25:33  reddawg
- Fixens
-
- Revision 1.21  2004/09/11 19:15:37  reddawg
- here you go irq 10 io 240 for your ne2k nic
-
- Revision 1.20  2004/09/07 22:26:04  reddawg
- synced in
-
- Revision 1.19  2004/09/07 21:54:38  reddawg
- ok reverted back to old scheduling for now....
-
- Revision 1.18  2004/09/06 15:13:25  reddawg
- Last commit before FreeBSD 6.0
-
- Revision 1.17  2004/08/01 20:40:45  reddawg
- Net related fixes
-
- Revision 1.16  2004/07/28 22:23:02  reddawg
- make sure it still works before I goto bed
-
- Revision 1.15  2004/07/17 17:04:47  reddawg
- ne2k: added assert hopefully it will help me solve this dma size 0 random error
-
- Revision 1.14  2004/07/14 12:03:50  reddawg
- ne2k: ne2kInit to ne2k_init
- Changed Startup Routines
-
- Revision 1.13  2004/06/04 10:19:42  reddawg
- notes: we compile again, thank g-d anyways i was about to cry
-
- Revision 1.12  2004/05/21 12:48:22  reddawg
- Cleaned up
-
- Revision 1.11  2004/05/19 04:07:42  reddawg
- kmalloc(size,pid) no more it is no kmalloc(size); the way it should of been
-
- Revision 1.10  2004/05/10 02:23:24  reddawg
- Minor Changes To Source Code To Prepare It For Open Source Release
-
  END
  ***/
-
