@@ -2,3 +2,7 @@ $Id$
 
 fd offset - 
 This will be adjusted by the read and write calls inside the FS module
+
+Unless you call lseek which stays in the VFS layer and this will adjust the offset
+
+Potential bug: we do not lock the fd... but lseek should not be called on the descriptor while the descirptor is in read/write
