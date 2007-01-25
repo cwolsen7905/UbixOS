@@ -461,7 +461,7 @@ int mmap(struct thread *td,struct mmap_args *uap) {
 
   addr = (vm_offset_t) uap->addr;
 
-  #ifdef DEBUG
+  #ifdef VMMDEBUG
   if (uap->addr != 0x0) {
     kprintf("Address hints are not supported yet.\n");
     }
@@ -479,7 +479,7 @@ int mmap(struct thread *td,struct mmap_args *uap) {
     td->td_retval[0] = vmmGetFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK);
     }
   else {
-    #ifdef DEBUG
+    #ifdef VMMDEBUG
     kprintf("uap->flags: [0x%X]\n",uap->flags);
     kprintf("uap->addr:  [0x%X]\n",uap->addr);
     kprintf("uap->len:   [0x%X]\n",uap->len);
@@ -509,8 +509,8 @@ int obreak(struct thread *td,struct obreak_args *uap) {
   vm_offset_t base = 0x0;
   vm_offset_t new  = 0x0;
 
-  #ifdef DEBUG
-  kprintf("obreak");
+  #ifdef VMMDEBUG
+  kprintf("obreak\n");
   kprintf("vm_offset_t: [%i]\n",sizeof(vm_offset_t));
   kprintf("nsize:    [0x%X]\n",uap->nsize);
   kprintf("vm_daddr: [0x%X]\n",td->vm_daddr);

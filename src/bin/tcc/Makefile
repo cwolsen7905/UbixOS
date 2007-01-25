@@ -17,6 +17,8 @@ REMOVE = rm -f
 #Objects
 OBJS = tcc.o
 
+CFLAGS = -O2 -g -Wall -mpreferred-stack-boundary=2 -march=i386 -falign-functions=0 -fno-strict-aliasing -nostdlib -nostdinc
+
 INCLUDES = -I../../include.new -I./
 
 LIBRARIES = ../../lib/libc/libc.so
@@ -26,7 +28,10 @@ STARTUP = ../../lib/csu/*.o
 # Link The Binary
 $(BINARY) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	#strip $(BINARY)
+	$(CC) -DLIBTCC -c -o libtcc.o tcc.c
+	ar rcs libtcc.a libtcc.o
+	$(CC) -O2 -Wall -c -o libtcc1.o libtcc1.c
+	ar rcs libtcc1.a libtcc1.o
 
 # Compile the source files
 .cc.o:
@@ -36,7 +41,7 @@ $(BINARY) : $(OBJS)
 	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .c.o:
-	$(CC)  -Wall -O -ggdb $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 .c.s:
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<

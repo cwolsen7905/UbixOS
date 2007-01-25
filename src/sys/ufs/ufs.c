@@ -97,6 +97,10 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,fileDescriptor *fd) {
         indbuf = fd->dmadat->indbuf;
         fs = (struct fs *)fd->dmadat->sbbuf;
 
+#ifdef DEBUG
+kprintf("fsread!\n");
+#endif
+
         if (!fd->dsk_meta) {
                 inomap = 0;
                 for (n = 0; sblock_try[n] != -1; n++) {
@@ -125,10 +129,17 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,fileDescriptor *fd) {
                 fd->dsk_meta++;
         }
 
-  if (!inode)
+  if (!inode) {
+#ifdef DEBUG
+    kprintf("!node\n");
+#endif
     return(0x0);
+    }
 
         if (inomap != inode) {
+#ifdef DEBUG
+   kprintf("inomap != inode\n");
+#endif
                 n = IPERVBLK(fs);
                 if (dskread(blkbuf, INO_TO_VBA(fs, n, inode), DBPERVBLK,fd))
                         return -1;
@@ -152,6 +163,9 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,fileDescriptor *fd) {
         size = DIP(di_size);
         fd->size = size;
         n = size - fd->offset;
+#ifdef DEBUG
+  kprintf("n: [0x%X:0x%X:0x%X]\n",n,fd->offset,size);
+#endif
  //Why?
         if (n < 0)
           return(0x0);

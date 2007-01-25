@@ -38,7 +38,8 @@
 #include <lib/string.h>
 #include <assert.h>
 
-#define STACK_ADDR 0xC800000
+/* WHERE SHOULD THE STACK BE? */
+#define STACK_ADDR 0x80000000 //0xC800000
 
 #define AT_NULL         0       /* Terminates the vector. */
 #define AT_IGNORE       1       /* Ignored entry. */

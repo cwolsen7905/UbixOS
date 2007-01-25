@@ -157,6 +157,12 @@ int sys_open(struct thread *td, struct open_args *uap) {
 
   strcpy(nfp->path,uap->path);
 
+  //kprintf("OPEN FLAGS: [0x%X],Path: [%s]\n",uap->flags,uap->path);
+  if (uap->flags != 0x0) {
+    kprintf("BAD!\n");
+    while (1);
+    }
+
   nfp->fd = fopen(uap->path,"r");
   if (nfp->fd == 0x0)
     td->td_retval[0] = -1;

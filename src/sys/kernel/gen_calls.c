@@ -50,7 +50,7 @@ int getpid(struct thread *td, struct getpid_args *uap) {
 /* return the process user id */
 int getuid(struct thread *td, struct getuid_args *uap) {
   #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i]\n",__FILE__,__LINE__);
   #endif
   td->td_retval[0] = _current->uid;
   return (0);
@@ -59,7 +59,7 @@ int getuid(struct thread *td, struct getuid_args *uap) {
 /* return the process group id */
 int getgid(struct thread *td, struct getgid_args *uap) {
   #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i]\n",__FILE__,__LINE__);
   #endif
   td->td_retval[0] = _current->gid;
   return (0);
@@ -68,11 +68,6 @@ int getgid(struct thread *td, struct getgid_args *uap) {
 int  sys_write(struct thread *td, struct write_args *uap) {
   char *buffer = 0x0;
   char *in     = 0x0;
-
-  #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
-  kprintf("sw[%i]",uap->fd);
-  #endif
 
   if (uap->fd == 2) {
     in = (char *)uap->buf;
@@ -85,10 +80,9 @@ int  sys_write(struct thread *td, struct write_args *uap) {
     td->td_retval[0] = uap->nbyte;
     }
   else if (uap->fd == 1) {
-    in = (char *)uap->buf;
-    buffer = kmalloc(1024);
+    buffer = kmalloc(uap->nbyte);
     memcpy(buffer,uap->buf,uap->nbyte);
-    kprint(buffer); 
+    kprint(buffer);
     kfree(buffer);
     td->td_retval[0] = uap->nbyte;
     }
@@ -107,7 +101,7 @@ int  sys_write(struct thread *td, struct write_args *uap) {
 int issetugid(register struct thread *td, struct issetugid_args *uap) {
   #ifdef NOTIMP
   kprintf("Not Implimented: issetugid\n");
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i]\n",__FILE__,__LINE__);
   #endif
   td->td_retval[0] = 0;
   return (0);
@@ -115,7 +109,7 @@ int issetugid(register struct thread *td, struct issetugid_args *uap) {
 
 int readlink(struct thread *td,struct readlink_args *uap) {
   #ifdef NOTIMP
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i]\n",__FILE__,__LINE__);
   kprintf("readlink: [%s:%i]\n",uap->path,uap->count);
   #endif
   td->td_retval[0] = -1;
@@ -126,7 +120,7 @@ int readlink(struct thread *td,struct readlink_args *uap) {
 int gettimeofday_new(struct thread *td, struct gettimeofday_args *uap) {
   #ifdef NOTIMP
   kprintf("Not Implimented: gettimeofday\n");
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i]\n",__FILE__,__LINE__);
   #endif
   return(0x0);
   }
@@ -135,6 +129,7 @@ int read(struct thread *td,struct read_args *uap) {
   int          error = 0x0;
   size_t       count = 0x0;
   struct file *fd    = 0x0;
+  char        *data  = 0x0;
 
   #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
@@ -146,8 +141,9 @@ int read(struct thread *td,struct read_args *uap) {
     return(error);
 
   count = fread(uap->buf,uap->nbyte,0x1,fd->fd);
+
   #ifdef DEBUG
-  kprintf("count: %i\n",count);
+  kprintf("count: %i - %i\n",count,uap->nbyte);
   #endif
   td->td_retval[0] = count;
 

@@ -2,5 +2,5 @@
 # global 'sys' options
 
 INCLUDES = -I../include
-CFLAGS = -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -O
+CFLAGS = -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -O -DNOTIMP #-DVMMDEBUG -DDEBUG
 KERNEL = ubix.elf

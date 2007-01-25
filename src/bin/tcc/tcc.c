@@ -38,13 +38,8 @@
 #include <fcntl.h>
 #include <setjmp.h>
 #include <time.h>
-#ifdef WIN32
-#include <sys/timeb.h>
-#endif
-#ifndef WIN32
 #include <sys/time.h>
 #include <sys/ucontext.h>
-#endif
 
 #endif /* !CONFIG_TCCBOOT */
 
@@ -1841,43 +1836,46 @@ BufferedFile *tcc_open(TCCState *s1, const char *filename)
     return bf;
 }
 
-void tcc_close(BufferedFile *bf)
-{
-    total_lines += bf->line_num;
-    close(bf->fd);
-    tcc_free(bf);
-}
+void tcc_close(BufferedFile *bf) {
+  total_lines += bf->line_num;
+  close(bf->fd);
+  tcc_free(bf);
+  }
 
 /* fill input buffer and peek next char */
-static int tcc_peekc_slow(BufferedFile *bf)
-{
-    int len;
-    /* only tries to read if really end of buffer */
-    if (bf->buf_ptr >= bf->buf_end) {
-        if (bf->fd != -1) {
-#if defined(PARSE_DEBUG)
-            len = 8;
-#else
-            len = IO_BUF_SIZE;
-#endif
-            len = read(bf->fd, bf->buffer, len);
-            if (len < 0)
-                len = 0;
-        } else {
-            len = 0;
-        }
-        total_bytes += len;
-        bf->buf_ptr = bf->buffer;
-        bf->buf_end = bf->buffer + len;
-        *bf->buf_end = CH_EOB;
+static int tcc_peekc_slow(BufferedFile *bf) {
+  int len;
+
+  /* only tries to read if really end of buffer */
+  if (bf->buf_ptr >= bf->buf_end) {
+    if (bf->fd != -1) {
+      #if defined(PARSE_DEBUG)
+      len = 8;
+      #else
+      len = IO_BUF_SIZE;
+      #endif
+      len = read(bf->fd, bf->buffer, len);
+      if (len < 0)
+        len = 0;
+      }
+    else {
+      len = 0;
+      }
+    total_bytes += len;
+    bf->buf_ptr = bf->buffer;
+    bf->buf_end = bf->buffer + len;
+    *bf->buf_end = CH_EOB;
     }
-    if (bf->buf_ptr < bf->buf_end) {
-        return bf->buf_ptr[0];
-    } else {
-        bf->buf_ptr = bf->buf_end;
-        return CH_EOF;
+
+  if (bf->buf_ptr < bf->buf_end) {
+    return bf->buf_ptr[0];
     }
-}
+  else {
+    bf->buf_ptr = bf->buf_end;
+    return CH_EOF;
+    }
+
+  }
 
 /* return the current character, handling end of block if necessary
    (but not stray) */
@@ -2347,8 +2345,10 @@ static void tok_str_add2(TokenString *s, int t, CValue *cv)
     str = s->str;
 
     /* allocate space for worst case */
-    if (len + TOK_MAX_SIZE > s->allocated_len)
+    if (len + TOK_MAX_SIZE > s->allocated_len) {
         str = tok_str_realloc(s);
+      }
+
     str[len++] = t;
     switch(t) {
     case TOK_CINT:
@@ -4019,7 +4019,7 @@ static int macro_subst_tok(TokenString *tok_str,
     CValue cval;
     CString cstr;
     char buf[32];
-    
+
     /* if symbol is a macro, prepare substitution */
     /* special macros */
     if (tok == TOK___LINE__) {
@@ -4101,10 +4101,7 @@ static int macro_subst_tok(TokenString *tok_str,
                 tok_str_new(&str);
                 parlevel = 0;
                 /* NOTE: non zero sa->t indicates VA_ARGS */
-                while ((parlevel > 0 || 
-                        (tok != ')' && 
-                         (tok != ',' || sa->type.t))) && 
-                       tok != -1) {
+                while ((parlevel > 0 || (tok != ')' && (tok != ',' || sa->type.t))) && tok != -1) {
                     if (tok == '(')
                         parlevel++;
                     else if (tok == ')')
@@ -4353,8 +4350,7 @@ static void next(void)
     if (!macro_ptr) {
         /* if not reading from macro substituted string, then try
            to substitute macros */
-        if (tok >= TOK_IDENT &&
-            (parse_flags & PARSE_FLAG_PREPROCESS)) {
+        if (tok >= TOK_IDENT && (parse_flags & PARSE_FLAG_PREPROCESS)) {
             s = define_find(tok);
             if (s) {
                 /* we have a macro: we try to substitute */
@@ -8952,6 +8948,9 @@ static void decl(int l)
     CType type, btype;
     Sym *sym;
     AttributeDef ad;
+
+
+printf("decl\n");
     
     while (1) {
         if (!parse_btype(&btype, &ad)) {
@@ -8973,9 +8972,7 @@ static void decl(int l)
                 break;
             btype.t = VT_INT;
         }
-        if (((btype.t & VT_BTYPE) == VT_ENUM ||
-             (btype.t & VT_BTYPE) == VT_STRUCT) && 
-            tok == ';') {
+        if (((btype.t & VT_BTYPE) == VT_ENUM || (btype.t & VT_BTYPE) == VT_STRUCT) && tok == ';') {
             /* we accept no variable after */
             next();
             continue;
@@ -9153,7 +9150,9 @@ static int tcc_compile(TCCState *s1)
 #ifdef INC_DEBUG
     printf("%s: **** new file\n", file->filename);
 #endif
+    printf("sb: [%i]\n",s1->nb_errors);
     preprocess_init(s1);
+    printf("sb: [%i]\n",s1->nb_errors);
 
     funcname = "";
     anon_sym = SYM_FIRST_ANOM; 
@@ -9209,27 +9208,37 @@ static int tcc_compile(TCCState *s1)
         ch = file->buf_ptr[0];
         tok_flags = TOK_FLAG_BOL | TOK_FLAG_BOF;
         parse_flags = PARSE_FLAG_PREPROCESS | PARSE_FLAG_TOK_NUM;
+    printf("sb9: [%i]\n",s1->nb_errors);
         next();
+    printf("sb8: [%i]\n",s1->nb_errors);
         decl(VT_CONST);
+    printf("sb7: [%i]\n",s1->nb_errors);
         if (tok != TOK_EOF)
             expect("declaration");
 
+    printf("sb6: [%i]\n",s1->nb_errors);
         /* end of translation unit info */
         if (do_debug) {
             put_stabs_r(NULL, N_SO, 0, 0, 
                         text_section->data_offset, text_section, section_sym);
         }
     }
+    printf("sb5: [%i]\n",s1->nb_errors);
     s1->error_set_jmp_enabled = 0;
 
     /* reset define stack, but leave -Dsymbols (may be incorrect if
        they are undefined) */
+    printf("sb4: [%i]\n",s1->nb_errors);
     free_defines(define_start); 
 
+    printf("sb3: [%i]\n",s1->nb_errors);
     gen_inline_functions();
 
+    printf("sb2: [%i]\n",s1->nb_errors);
     sym_pop(&global_stack, NULL);
 
+    printf("sb1: [%i]\n",s1->nb_errors);
+    while(1);
     return s1->nb_errors != 0 ? -1 : 0;
 }
 
@@ -9869,7 +9878,6 @@ static int tcc_add_file_internal(TCCState *s1, const char *filename, int flags)
         ret = -1;
         goto fail1;
     }
-
     if (!ext || !strcmp(ext, "c")) {
         /* C file assumed */
         ret = tcc_compile(s1);
@@ -10536,6 +10544,9 @@ int parse_args(TCCState *s, int argc, char **argv)
             }
         }
     }
+                   multiple_files = 0;
+                    output_type = TCC_OUTPUT_MEMORY;
+
     return optind;
 }
 
@@ -10546,25 +10557,6 @@ int main(int argc, char **argv)
     int nb_objfiles, ret, optind;
     char objfilename[1024];
     int64_t start_time = 0;
-
-#ifdef WIN32
-    /* on win32, we suppose the lib and includes are at the location
-       of 'tcc.exe' */
-    {
-        static char path[1024];
-        char *p, *d;
-        
-        GetModuleFileNameA(NULL, path, sizeof path);
-        p = d = strlwr(path);
-        while (*d)
-        {
-            if (*d == '\\') *d = '/', p = d;
-            ++d;
-        }
-        *p = '\0';
-        tcc_lib_path = path;
-    }
-#endif
 
     s = tcc_new();
     output_type = TCC_OUTPUT_EXE;
@@ -10606,9 +10598,6 @@ int main(int argc, char **argv)
             pstrcpy(objfilename, sizeof(objfilename) - 1, 
                     /* strip path */
                     tcc_basename(files[0]));
-#ifdef TCC_TARGET_PE
-            pe_guess_outfile(objfilename, output_type);
-#else
             if (output_type == TCC_OUTPUT_OBJ && !reloc_output) {
                 char *ext = strrchr(objfilename, '.');
             if (!ext)
@@ -10619,7 +10608,6 @@ int main(int argc, char **argv)
         default_outfile:
             pstrcpy(objfilename, sizeof(objfilename), "a.out");
         }
-#endif
         outfile = objfilename;
         }
     }
@@ -10636,18 +10624,23 @@ int main(int argc, char **argv)
 
         filename = files[i];
         if (filename[0] == '-') {
+          printf("AL\n");
             if (tcc_add_library(s, filename + 2) < 0)
                 error("cannot find %s", filename);
         } else {
+            printf("AF\n");
             if (tcc_add_file(s, filename) < 0) {
+printf("BSDF\n");
+while (1);
                 ret = 1;
                 goto the_end;
             }
         }
     }
-
+    printf("BOOBS2\n");
     /* free all files */
     tcc_free(files);
+    printf("BOOBS3\n");
 
     if (do_bench) {
         double total_time;
@@ -10661,19 +10654,16 @@ int main(int argc, char **argv)
                total_time, (int)(total_lines / total_time), 
                total_bytes / total_time / 1000000.0); 
     }
+    printf("BOOBS4\n");
 
     if (s->output_type == TCC_OUTPUT_MEMORY) {
         ret = tcc_run(s, argc - optind, argv + optind);
     } else
-#ifdef TCC_TARGET_PE
-    if (s->output_type != TCC_OUTPUT_OBJ) {
-        ret = tcc_output_pe(s, outfile);
-    } else
-#endif
     {
         tcc_output_file(s, outfile);
         ret = 0;
     }
+    printf("BOOBS5\n");
  the_end:
     /* XXX: cannot do it with bound checking because of the malloc hooks */
     if (!do_bounds_check)

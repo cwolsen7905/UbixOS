@@ -102,7 +102,7 @@ int close(struct thread *td,struct close_args *uap) {
  * \brief return data table size
  */
 int getdtablesize(struct thread *td, struct getdtablesize_args *uap) {
-  #ifdef DEBUG
+  #ifdef NOTIMP
   kprintf("[%s:%i]",__FILE__,__LINE__);
   #endif
   td->td_retval[0] = O_FILES;
@@ -113,14 +113,14 @@ int getdtablesize(struct thread *td, struct getdtablesize_args *uap) {
 int fstat(struct thread *td,struct fstat_args *uap) {
   struct file *fp = 0x0;
 
-  #ifdef DEBUG
+  #ifdef NOTIMP
   kprintf("[%s:%i]",__FILE__,__LINE__);
   #endif
 
   fp = (struct file *)_current->td.o_files[uap->fd];
   uap->sb->st_mode    = 0x2180;
   uap->sb->st_blksize = 0x1000;
-  #ifdef DEBUG
+  #ifdef NOTIMP
   kprintf("fstat: %i",uap->fd);
   #endif
   return(0x0);
