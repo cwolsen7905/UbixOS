@@ -1,0 +1,4 @@
+$Id$
+
+fd offset - 
+This will be adjusted by the read and write calls inside the FS module

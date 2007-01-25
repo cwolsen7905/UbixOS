@@ -49,9 +49,9 @@ void execProgram(inputBuffer *data) {
     exit(-1);
     }
   else {
-    if (data->bg == 0x0) {
+    //if (data->bg == 0x0) {
       while (pidStatus(cPid) > 0)
         sched_yield();
-      }
+      //}
     }
   }

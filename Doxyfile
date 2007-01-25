@@ -22,20 +22,20 @@ ABBREVIATE_BRIEF       = "The $name class" \
                          a \
                          an \
                          the
-ALWAYS_DETAILED_SEC    = NO
-INLINE_INHERITED_MEMB  = NO
+ALWAYS_DETAILED_SEC    = YES
+INLINE_INHERITED_MEMB  = YES
 FULL_PATH_NAMES        = YES
 STRIP_FROM_PATH        = /usr/home/reddawg/
 STRIP_FROM_INC_PATH    = 
 SHORT_NAMES            = NO
 JAVADOC_AUTOBRIEF      = NO
 MULTILINE_CPP_IS_BRIEF = NO
-DETAILS_AT_TOP         = NO
+DETAILS_AT_TOP         = YES
 INHERIT_DOCS           = YES
 DISTRIBUTE_GROUP_DOC   = NO
 TAB_SIZE               = 8
 ALIASES                = 
-OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
 OPTIMIZE_OUTPUT_JAVA   = NO
 SUBGROUPING            = YES
 #---------------------------------------------------------------------------
@@ -166,9 +166,9 @@ HTML_ALIGN_MEMBERS     = YES
 GENERATE_HTMLHELP      = NO
 CHM_FILE               = 
 HHC_LOCATION           = 
-GENERATE_CHI           = NO
-BINARY_TOC             = NO
-TOC_EXPAND             = NO
+GENERATE_CHI           = YES
+BINARY_TOC             = YES
+TOC_EXPAND             = YES
 DISABLE_INDEX          = NO
 ENUM_VALUES_PER_LINE   = 4
 GENERATE_TREEVIEW      = YES
@@ -184,8 +184,8 @@ COMPACT_LATEX          = NO
 PAPER_TYPE             = a4wide
 EXTRA_PACKAGES         = 
 LATEX_HEADER           = 
-PDF_HYPERLINKS         = NO
-USE_PDFLATEX           = NO
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
 LATEX_BATCHMODE        = NO
 LATEX_HIDE_INDICES     = NO
 #---------------------------------------------------------------------------
@@ -248,15 +248,15 @@ PERL_PATH              = /usr/bin/perl
 #---------------------------------------------------------------------------
 CLASS_DIAGRAMS         = YES
 HIDE_UNDOC_RELATIONS   = YES
-HAVE_DOT               = NO
+HAVE_DOT               = YES
 CLASS_GRAPH            = YES
 COLLABORATION_GRAPH    = YES
 GROUP_GRAPHS           = YES
-UML_LOOK               = NO
-TEMPLATE_RELATIONS     = NO
+UML_LOOK               = YES
+TEMPLATE_RELATIONS     = YES
 INCLUDE_GRAPH          = YES
 INCLUDED_BY_GRAPH      = YES
-CALL_GRAPH             = NO
+CALL_GRAPH             = YES
 GRAPHICAL_HIERARCHY    = YES
 DIRECTORY_GRAPH        = YES
 DOT_IMAGE_FORMAT       = png
@@ -272,4 +272,4 @@ DOT_CLEANUP            = YES
 #---------------------------------------------------------------------------
 # Configuration::additions related to the search engine   
 #---------------------------------------------------------------------------
-SEARCHENGINE           = NO
+SEARCHENGINE           = YES

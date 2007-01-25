@@ -19857,12 +19857,26 @@
       <anchor>1bb2a92794cb2bb4f6409ba76fe6450b</anchor>
       <arglist>(const char *)</arglist>
     </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual int</type>
+      <name>read</name>
+      <anchorfile>classFileSystemAbstract.html</anchorfile>
+      <anchor>7b429977060959206ff6f741a063062d</anchor>
+      <arglist>(char *, long, long)=0</arglist>
+    </member>
     <member kind="function" virtualness="virtual">
       <type>virtual int</type>
       <name>read</name>
       <anchorfile>classDiskFS.html</anchorfile>
       <anchor>de8d72587494f9d7505574e9afe4ab0b</anchor>
       <arglist>(void *, long, long)</arglist>
+    </member>
+    <member kind="function" virtualness="pure">
+      <type>virtual int</type>
+      <name>write</name>
+      <anchorfile>classFileSystemAbstract.html</anchorfile>
+      <anchor>2f1993d9e8bf9cde4e6f2d60cdccc58f</anchor>
+      <arglist>(char *, long, long)=0</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual int</type>
@@ -27578,6 +27592,20 @@
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual int</type>
+      <name>vfs_close</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>4d5773ba4f9449ca6f53a284e46319ba</anchor>
+      <arglist>(fileDescriptor *)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>vfs_closedir</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>c051cfe1b772bc4340bf9218d28f1d10</anchor>
+      <arglist>(DIR *)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
       <name>vfs_format</name>
       <anchorfile>classUbixFS.html</anchorfile>
       <anchor>e1266337d259778b1404601184d75028</anchor>
@@ -27612,11 +27640,46 @@
       <arglist>(const char *, fileDescriptor *, int,...)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>vfs_opendir</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>f7f49919b29ae23be0b500691bd7489b</anchor>
+      <arglist>(DIR *, const char *)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>vfs_purge</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>44b94c11ccc71b299022b24e4810273f</anchor>
+      <arglist>(void)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
       <type>virtual size_t</type>
       <name>vfs_read</name>
       <anchorfile>classUbixFS.html</anchorfile>
       <anchor>0fce9a3abd07c65fa9af38e51517310a</anchor>
       <arglist>(fileDescriptor *, void *, off_t, size_t)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>vfs_readdir</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>e0e736281f7a5c7f6ba6c2fcc1606537</anchor>
+      <arglist>(DIR *, struct dirent *)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>vfs_rename</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>566f42818133f3151b79409bfcc0a086</anchor>
+      <arglist>(const char *, const char *)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>vfs_rmdir</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>2ad911bc4b4ad0867e0b1037a0bafd6e</anchor>
+      <arglist>(const char *)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual int</type>
@@ -27631,6 +27694,13 @@
       <anchorfile>classUbixFS.html</anchorfile>
       <anchor>5610078343779a3c5e3046283d482766</anchor>
       <arglist>(void)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual int</type>
+      <name>vfs_unlink</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>0b409654c320cf8724e83d403bcf1099</anchor>
+      <arglist>(const char *)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual size_t</type>
@@ -27710,10 +27780,31 @@
       <arglist>(blockRun)</arglist>
     </member>
     <member kind="variable" protection="protected">
+      <type>device_t *</type>
+      <name>device</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>e10cade4827cea8db0f94e517d82dcfd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
       <type>signed char *</type>
       <name>freeBlockList</name>
       <anchorfile>classUbixFS.html</anchorfile>
       <anchor>910425153882d145e2af0ae30bdec9a6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>vfs_abstract *</type>
+      <name>next</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>45ce75cdedbdca884f4d7d965ce91802</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="protected">
+      <type>vfs_abstract *</type>
+      <name>prev</name>
+      <anchorfile>classvfs__abstract.html</anchorfile>
+      <anchor>b766870262f3d41bbf21326abf40cad8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="protected">

@@ -179,8 +179,11 @@ void sysExit(int status)
 void sysCheckPid(int pid,int *ptr)
 {
 	kTask_t *tmpTask = schedFindTask(pid);
-	if ((tmpTask != 0x0) && (ptr != 0x0))
+	if ((tmpTask != 0x0) && (ptr != 0x0)) {
 		*ptr = tmpTask->state;
+          if (*ptr != 1)
+            kprintf("[%i]",*ptr);
+          }
 	else
 		*ptr = 0x0;
 	return;
