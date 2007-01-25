@@ -1,0 +1,5 @@
+2007-01-25 Christopher Olsen <cwolsen@domainatlantic.com>
+	Cleaning up the ne2k driver for future network support. 
+	 
+	Previous version of UbixOS had LwIP functioning, I hope this will be true in this case. 
+
