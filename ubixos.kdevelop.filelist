@@ -10,3 +10,4 @@ src/sys/kernel/exec.c
 src/sys/vmm/vmm_virtual.c
 src/sys/include/vmm/vmm.h
 src/sys/include/vmm/paging.h
+src/sys/vfs/vfs_syscalls.c

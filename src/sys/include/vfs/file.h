@@ -28,8 +28,6 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #include <ubixfs/dirCache.h>
 #include <vfs/mount.h>
 
-#define SEEK_SET 0x0
-
 #define VBLKSHIFT       12
 #define VBLKSIZE        (1 << VBLKSHIFT)
 #define SBLOCKSIZE      8192

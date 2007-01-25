@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2007 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -27,63 +27,34 @@
 
 *****************************************************************************************/
 
-#ifndef _VFS_H
-#define _VFS_H
+#include <vfs/vfs.h>
+#include <sys/kern_descrip.h>
+#include <ubixos/kpanic.h>
+#include <lib/kprint.h>
 
-#include <ubixos/types.h>
-#include <vfs/file.h>
-#include <vfs/mount.h>
-#include <sys/sysproto.h>
-#include <sys/thread.h>
+int lseek(struct thread *td, struct lseek_args *uap) {
+  int error = 0x0;
+  struct file *fd    = 0x0;
 
-#define maxFd   32
-#define fdAvail 1
-#define fdOpen  2
-#define fdRead  3
-#define fdEof   4
+  getfd(td,&fd,uap->fd);
+  switch (uap->whence) {
+    case SEEK_END:
+      K_PANIC("UNHANDLED WHENCE");
+      break;
+    case SEEK_CUR:
+      fd->fd->offset += uap->offset;
+      break;
+    case SEEK_SET:
+      fd->fd->offset = uap->offset;
+      break;
+    default:
+      kprintf("offset: [%i], whence: [%i]\n",uap->offset,uap->whence);
+      K_PANIC("Invalid whence");
+      break;
+    }
 
-
-#define fileRead    0x0001
-#define fileWrite   0x0002
-#define fileBinary  0x0004
-#define fileAppend  0x0008
-
-/* New Stuff */
-
-/* whence values for lseek(2) */
-#ifndef SEEK_SET
-#define SEEK_SET        0       /* set file offset to offset */
-#define SEEK_CUR        1       /* set file offset to current plus offset */
-#define SEEK_END        2       /* set file offset to EOF plus offset */
-#endif
-
-
-/*!
-  \brief filesSystem Structure
-
-  not sure if we should allow function to point to NULL
-*/
-struct fileSystem {
-  struct fileSystem *prev;
-  struct fileSystem *next;
-  int               (*vfsInitFS)(void *); /*!< pointer to inialization routine */
-  int               (*vfsRead)(void *,char *,long,long); /*!< pointer to read routine */
-  int               (*vfsWrite)(void *,char *,long,long); /*!< pointer to write routine */
-  int               (*vfsOpenFile)(void *,void *); /*!< pointer to openfile routine */
-  int               (*vfsUnlink)(char *,void *); /*!< pointer to unlink routine */
-  int               (*vfsMakeDir)(char *,void *); /*!< pointer to makedir routine */
-  int               (*vfsRemDir)(char *); /*!< pointer to remdir routine */
-  int               (*vfsSync)(void); /*!< pointer to sync routine */
-  int               vfsType; /*!< vfs type id */
-  };
-
-
-/* VFS Functions */
-int vfs_init();
-int vfsRegisterFS(struct fileSystem);
-struct fileSystem *vfs_findFS(int);
-
-#endif
+  return(error);
+  } /* end func */
 
 /***
  END
