@@ -32,6 +32,14 @@
 #include <ubixos/kpanic.h>
 #include <lib/kprint.h>
 
+/*!
+ * \brief entry point for lseek syscall
+ *
+ * \param *td pointer to callers thread
+ * \param *uap pointer to user space arguements for call
+ *
+ * \return new offset
+ */
 int lseek(struct thread *td, struct lseek_args *uap) {
   int error = 0x0;
   struct file *fd    = 0x0;
@@ -53,8 +61,130 @@ int lseek(struct thread *td, struct lseek_args *uap) {
       break;
     }
 
+  td->td_retval[0] = fd->fd->offset;
+
   return(error);
   } /* end func */
+
+/*!
+ * \brief entry point for read syscall
+ *
+ * \param *td pointer to callers thread
+ * \param *uap pointer to user space arguements for call
+ *
+ * \return bytes read
+ */
+int read(struct thread *td,struct read_args *uap) {
+  int          error = 0x0;
+  size_t       count = 0x0;
+  struct file *fd    = 0x0;
+  char        *data  = 0x0;
+
+  #ifdef VFSDEBUG
+  kprintf("[%s:%i]",__FILE__,__LINE__);
+  #endif
+
+  error = getfd(td,&fd,uap->fd);
+
+  if (error)
+    return(error);
+
+  count = fread(uap->buf,uap->nbyte,0x1,fd->fd);
+
+  #ifdef VFSDEBUG
+  kprintf("count: %i - %i\n",count,uap->nbyte);
+  #endif
+  td->td_retval[0] = count;
+
+  return(error);
+  } /* end func */
+
+/*!
+ * \brief entry point for write syscall
+ *
+ * \param *td pointer to callers thread
+ * \param *uap pointer to user space arguements for call
+ *
+ * \return bytes written
+ */
+int write(struct thread *td, struct write_args *uap) {
+  char *buffer = 0x0;
+  char *in     = 0x0;
+
+  if (uap->fd == 2) {
+    in = (char *)uap->buf;
+    if (uap->nbyte > 1) {
+      buffer = kmalloc(1024);
+      memcpy(buffer,uap->buf,uap->nbyte);
+      kprintf("STDERR: %s\n",buffer); 
+      kfree(buffer);
+      }
+    td->td_retval[0] = uap->nbyte;
+    }
+  else if (uap->fd == 1) {
+    buffer = kmalloc(uap->nbyte);
+    memcpy(buffer,uap->buf,uap->nbyte);
+    kprint(buffer);
+    kfree(buffer);
+    td->td_retval[0] = uap->nbyte;
+    }
+  else {
+    kprintf("[%i]",uap->nbyte);
+    buffer = kmalloc(uap->nbyte);
+    memcpy(buffer,uap->buf,uap->nbyte);
+    //kprint(buffer);
+    kfree(buffer);
+    kprintf("(%i) %s",uap->fd,uap->buf);
+    td->td_retval[0] = uap->nbyte;
+    }
+  return(0x0);
+  } /* end func */
+
+/*!
+ * \brief entry point for open syscall
+ *
+ * \param *td pointer to callers thread
+ * \param *uap pointer to user space arguements for call
+ *
+ * \return index to file descriptor
+ */
+int open(struct thread *td, struct open_args *uap) {
+  int          error = 0x0;
+  int          index = 0x0;
+  struct file *nfp   = 0x0;
+
+  error = falloc(td,&nfp,&index);
+
+  if (error)
+     return(error);
+
+  strcpy(nfp->path,uap->path);
+
+  #ifdef VFSDEBUG
+  kprintf("OPEN FLAGS: [0x%X],Path: [%s]\n",uap->flags,uap->path);
+  #endif
+  if (uap->flags != 0x0) {
+    kprintf("BAD!\n");
+    while (1);
+    }
+
+  nfp->fd = fopen(uap->path,"r");
+  if (nfp->fd == 0x0)
+    td->td_retval[0] = -1;
+  else
+    td->td_retval[0] = index;
+  return (error);
+  } /* end func open */
+
+int close(struct thread *td,struct close_args *uap) {
+  #ifdef DEBUG
+  kprintf("[%s:%i]",__FILE__,__LINE__);
+  #endif
+  kfree((void *)td->o_files[uap->fd]);
+  td->o_files[uap->fd] = 0x0;
+  td->td_retval[0] = 0x0;  
+  return(0x0);
+  } /* end func close */
 
 /***
  END

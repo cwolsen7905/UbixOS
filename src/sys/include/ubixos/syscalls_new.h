@@ -33,7 +33,6 @@
 #include <sys/sysproto.h>
 
 int sysExit();
-int read();
 int getpid();
 int fcntl();
 int issetugid();
@@ -42,7 +41,6 @@ int pipe();
 int readlink();
 int getuid();
 int getgid();
-int close();
 int mmap();
 int obreak();
 int sigaction();
@@ -68,8 +66,8 @@ functionPTR systemCalls_new[] = {
   sysExit,		/**   1 **/
   invalid_call,		/**   2 **/
   read,			/**   3 **/
-  sys_write,		/**   4 **/
-  sys_open,		/**   5 **/
+  write,		/**   4 **/
+  open,			/**   5 **/
   close,		/**   6 **/
   invalid_call,		/**   7 **/
   invalid_call,		/** 8 **/

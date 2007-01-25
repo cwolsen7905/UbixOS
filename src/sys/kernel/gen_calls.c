@@ -65,39 +65,6 @@ int getgid(struct thread *td, struct getgid_args *uap) {
   return (0);
   }
 
-int  sys_write(struct thread *td, struct write_args *uap) {
-  char *buffer = 0x0;
-  char *in     = 0x0;
-
-  if (uap->fd == 2) {
-    in = (char *)uap->buf;
-    if (uap->nbyte > 1) {
-      buffer = kmalloc(1024);
-      memcpy(buffer,uap->buf,uap->nbyte);
-      kprintf("STDERR: %s\n",buffer); 
-      kfree(buffer);
-      }
-    td->td_retval[0] = uap->nbyte;
-    }
-  else if (uap->fd == 1) {
-    buffer = kmalloc(uap->nbyte);
-    memcpy(buffer,uap->buf,uap->nbyte);
-    kprint(buffer);
-    kfree(buffer);
-    td->td_retval[0] = uap->nbyte;
-    }
-  else {
-    kprintf("[%i]",uap->nbyte);
-    buffer = kmalloc(uap->nbyte);
-    memcpy(buffer,uap->buf,uap->nbyte);
-    //kprint(buffer);
-    kfree(buffer);
-    kprintf("(%i) %s",uap->fd,uap->buf);
-    td->td_retval[0] = uap->nbyte;
-    }
-  return(0x0);
-  }
-
 int issetugid(register struct thread *td, struct issetugid_args *uap) {
   #ifdef NOTIMP
   kprintf("Not Implimented: issetugid\n");
@@ -123,31 +90,6 @@ int gettimeofday_new(struct thread *td, struct gettimeofday_args *uap) {
   kprintf("[%s:%i]\n",__FILE__,__LINE__);
   #endif
   return(0x0);
-  }
-
-int read(struct thread *td,struct read_args *uap) {
-  int          error = 0x0;
-  size_t       count = 0x0;
-  struct file *fd    = 0x0;
-  char        *data  = 0x0;
-
-  #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
-  #endif
-
-  error = getfd(td,&fd,uap->fd);
-
-  if (error)
-    return(error);
-
-  count = fread(uap->buf,uap->nbyte,0x1,fd->fd);
-
-  #ifdef DEBUG
-  kprintf("count: %i - %i\n",count,uap->nbyte);
-  #endif
-  td->td_retval[0] = count;
-
-  return(error);
   }
 
 /*!

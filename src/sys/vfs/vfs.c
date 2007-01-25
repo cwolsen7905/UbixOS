@@ -137,40 +137,6 @@ void *vfsSync) {
   return(0x0);
   }
 
-/*!
- * \brief entry point for open syscall
- *
- * \param *td pointer to callers thread
- * \param *uap pointer to user space arguements for call
- *
- * \return index to file descriptor
- */
-int sys_open(struct thread *td, struct open_args *uap) {
-  int          error = 0x0;
-  int          index = 0x0;
-  struct file *nfp   = 0x0;
-
-  error = falloc(td,&nfp,&index);
-
-  if (error)
-     return(error);
-
-  strcpy(nfp->path,uap->path);
-
-  //kprintf("OPEN FLAGS: [0x%X],Path: [%s]\n",uap->flags,uap->path);
-  if (uap->flags != 0x0) {
-    kprintf("BAD!\n");
-    while (1);
-    }
-
-  nfp->fd = fopen(uap->path,"r");
-  if (nfp->fd == 0x0)
-    td->td_retval[0] = -1;
-  else
-    td->td_retval[0] = index;
-  return (error);
-  }
-
 /* HACK */
 int fstatfs(struct thread *td, struct fstatfs_args *uap) {
   int error = 0x0;

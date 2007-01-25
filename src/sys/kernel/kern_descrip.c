@@ -88,16 +88,6 @@ int falloc(struct thread *td,struct file **resultfp, int *resultfd) {
   return(0x0);
   }
 
-int close(struct thread *td,struct close_args *uap) {
-  #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
-  #endif
-  kfree((void *)td->o_files[uap->fd]);
-  td->o_files[uap->fd] = 0x0;
-  td->td_retval[0] = 0x0;  
-  return(0x0);
-  }
-
 /*!
  * \brief return data table size
  */

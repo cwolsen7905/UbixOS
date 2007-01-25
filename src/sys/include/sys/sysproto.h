@@ -47,17 +47,24 @@ typedef int register_t;
 #endif
 
 //Protos
+struct read_args {
+  char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+  char buf_l_[PADL_(void *)]; void * buf; char buf_r_[PADR_(void *)];
+  char nbyte_l_[PADL_(size_t)]; size_t nbyte; char nbyte_r_[PADR_(size_t)];
+  };
 struct write_args {
   char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
   char buf_l_[PADL_(const void *)]; const void * buf; char buf_r_[PADR_(const void *)];
   char nbyte_l_[PADL_(size_t)]; size_t nbyte; char nbyte_r_[PADR_(size_t)];
   };
-
 struct open_args {
   char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
   char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
   char mode_l_[PADL_(int)]; int mode; char mode_r_[PADR_(int)];
   };
+struct close_args {
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+};
 
 struct setitimer_args {
   char which_l_[PADL_(u_int)]; u_int which; char which_r_[PADR_(u_int)];
@@ -128,9 +135,6 @@ struct getuid_args {
 struct getgid_args {
         register_t dummy;
 };
-struct close_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-};
 
 struct mmap_args {
    char addr_l_[PADL_(caddr_t)]; caddr_t addr; char addr_r_[PADR_(caddr_t)];
@@ -180,15 +184,11 @@ struct ioctl_args {
         char data_l_[PADL_(caddr_t)]; caddr_t data; char data_r_[PADR_(caddr_t)];
 };
 
-struct read_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-        char buf_l_[PADL_(void *)]; void * buf; char buf_r_[PADR_(void *)];
-        char nbyte_l_[PADL_(size_t)]; size_t nbyte; char nbyte_r_[PADR_(size_t)];
-};
-
 //Func Defs
-int sys_write(struct thread *td, struct write_args *uap);
-int sys_open(struct thread *td, struct open_args *uap);
+int read(struct thread *td,struct read_args *uap);
+int write(struct thread *td, struct write_args *uap);
+int open(struct thread *td, struct open_args *uap);
+int close(struct thread *td, struct close_args *uap);
 int setitimer(struct thread *td, struct setitimer_args *uap);
 int access(struct thread *td, struct access_args *uap);
 int fstatfs(struct thread *td, struct fstatfs_args *uap);
