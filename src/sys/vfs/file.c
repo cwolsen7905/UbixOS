@@ -287,7 +287,7 @@ struct file *fopen(struct file *tmpFd,const char *file,const char *flags) {
       return(NULL);
     }
 
-  tmpFd->fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  //tmpFd->fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
 
   strcpy(fileName,file);
 

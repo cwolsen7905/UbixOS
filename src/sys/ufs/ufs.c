@@ -92,17 +92,17 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,struct file *fd) {
         ufs2_daddr_t addr, vbaddr;
         static ufs2_daddr_t blkmap, indmap;
         u_int u;
+        struct ufs_obj *ufsObj = fd->fsObj;
 
-
-        blkbuf = fd->fd->dmadat->blkbuf;
-        indbuf = fd->fd->dmadat->indbuf;
-        fs = (struct fs *)fd->fd->dmadat->sbbuf;
+        blkbuf = ufsObj->dmadat->blkbuf;
+        indbuf = ufsObj->dmadat->indbuf;
+        fs = (struct fs *)ufsObj->dmadat->sbbuf;
 
 #ifdef DEBUG
 kprintf("fsread!\n");
 #endif
 
-        if (!fd->fd->dsk_meta) {
+        if (!ufsObj->dsk_meta) {
                 inomap = 0;
                 for (n = 0; sblock_try[n] != -1; n++) {
                         if (dskread(fs, sblock_try[n] / DEV_BSIZE, 16,fd))
@@ -127,7 +127,7 @@ kprintf("fsread!\n");
                         kprintf("Not ufs\n");
                         return -1;
                 }
-                fd->fd->dsk_meta++;
+                ufsObj->dsk_meta++;
         }
 
   if (!inode) {
@@ -287,16 +287,21 @@ static ino_t lookup(const char *path,struct file *fd) {
 static int ufs_openFile(const char *file,struct file *fd) {
   char tmp[2];
   int ino = 0;
-  fd->fd->dmadat = (struct dmadat *)kmalloc(sizeof(struct dmadat));
+  struct ufs_obj *ufsObj = 0x0;
+
+  ufsObj = (struct ufs_obj *)kmalloc(sizeof(struct ufs_obj));
+  fd->fsObj = ufsObj;
+
+  ufsObj->dmadat = (struct dmadat *)kmalloc(sizeof(struct dmadat));
   ino = lookup(file,fd);
   fd->offset = 0x0;
-  fd->fd->ino = ino;
+  ufsObj->ino = ino;
   if (ino == 0x0) {
     return(-1);
     }
 
   /* Quick Hack for file size */
-  fsread(fd->fd->ino,&tmp,1,fd);
+  fsread(ufsObj->ino,&tmp,1,fd);
   fd->offset = 0;
   /* Return */
   fd->perms = 0x1;
@@ -304,7 +309,8 @@ static int ufs_openFile(const char *file,struct file *fd) {
   }
 
 int ufs_readFile(struct file *fd,char *data,uInt32 offset,long size) {
-  return(fsread(fd->fd->ino,data,size,fd));
+  struct ufs_obj *ufsObj = fd->fsObj;
+  return(fsread(ufsObj->ino,data,size,fd));
   }
 
 int ufs_writeFile(fileDescriptor *fd, char *data,uInt32 offset,long size) {

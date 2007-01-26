@@ -290,6 +290,13 @@ struct fs {
         int32_t  fs_magic;              /* magic number */
 };
 
+struct ufs_obj {
+  u_int32_t                       ino;
+  struct cacheNode            *cacheNode;
+  struct dmadat               *dmadat;
+  int                          dsk_meta;
+  u_int32_t                       resid;
+  };
 
 int ufs_init();
 int ufs_initialize();

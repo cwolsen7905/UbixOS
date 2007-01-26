@@ -204,9 +204,9 @@ int open(struct thread *td, struct open_args *uap) {
     kprintf("BAD!\n");
     while (1);
     }
-
+  //BUG make fopen return 0 or -1 if error;
   fopen(nfp,uap->path,"r");
-  if (nfp->fd == 0x0)
+  if (nfp == 0x0)
     td->td_retval[0] = -1;
   else
     td->td_retval[0] = index;

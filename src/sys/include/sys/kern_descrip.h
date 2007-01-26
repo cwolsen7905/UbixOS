@@ -100,7 +100,6 @@ struct file {
   int                    f_flag;
   char                  *buffer;
   char                   path[1024];
-  fileDescriptor        *fd;
   void                  *fsObj;
   };
 

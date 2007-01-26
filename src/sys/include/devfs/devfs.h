@@ -46,6 +46,11 @@ struct devfs_info {
   struct devfs_devices *deviceList;
   };
 
+struct devfs_obj {
+  uInt16                       length;
+  uInt32                       start;
+  };
+
 int devfs_init();
 int devfs_makeNode(char *name,uInt8 type,uInt16 major,uInt16 minor);
 /*
@@ -59,6 +64,9 @@ int devfs_write(fileDescriptor *fd,char *data,long offset,long size);
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:52  reddawg
+ UbixOS
+
  Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
  ubix2
 

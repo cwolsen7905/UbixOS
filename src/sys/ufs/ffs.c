@@ -11,8 +11,9 @@
 
 int ffs_read(struct file *fd,char *data,uInt32 offset,long size) {
   struct fs  *fs;
+  struct ufs_obj *ufsObj = fd->fsObj;
 
-  fs = (struct fs *)fd->fd->dmadat->sbbuf;
+  fs = (struct fs *)ufsObj->dmadat->sbbuf;
 
   if (offset < fd->size && offset >= fs->fs_maxfilesize) {
     //return (EOVERFLOW);
