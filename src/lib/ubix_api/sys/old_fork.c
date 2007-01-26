@@ -27,16 +27,51 @@
 
 *****************************************************************************************/
 
-#ifndef _KPANIC_H
-#define _KPANIC_H
+#include <sys/types.h>
+#include <fcntl.h>
 
-#define K_PANIC(msg) kpanic("\nKernel Panic!!!!\nError: (%s), File: %s, Function: %s, Line: %i\n",msg ,__FILE__,__FUNCTION__,__LINE__);
-
-void kpanic(const char *fmt, ...);
-
-#endif
-
+pid_t old_fork() {
+  volatile pid_t pid = 0x0;
+  asm volatile(
+    "pushl %%eax\n"
+    "pushl %%ecx\n"
+    "movl $4,%%eax\n"
+    "push %%ss\n"
+    "movl %%esp,%%ecx\n"
+    "sub $4,%%ecx\n"
+    "pushl %%ecx\n"
+    "int $0x80  \n"
+    "popl %%esp\n"
+    "pop %%ax\n"
+    "popl %%ecx\n"
+    "popl %%eax\n"
+    :
+    : "b" (&pid)
+    );
+  return(pid);
+  }
+  
 /***
+ $Log$
+ Revision 1.1.1.1  2007/01/17 03:30:21  reddawg
+ UbixOS
+
+ Revision 1.6  2004/08/25 22:02:41  reddawg
+ task switching - We now are using software switching to be consistant with the rest of the world because all of this open source freaks gave me a hard time about something I liked. There doesn't seem to be any gain in performance but it is working fine and flawlessly
+
+ Revision 1.5  2004/08/24 23:33:45  reddawg
+ Fixed
+
+ Revision 1.4  2004/08/02 18:50:13  reddawg
+ Updates to make some variable volatile to make work with gcc 3.3. However there are still some issues but we have not caused new issues with gcc 2.95
+
+ Revision 1.3  2004/08/01 20:14:18  reddawg
+ Fixens
+
+ Revision 1.2  2004/08/01 19:59:19  reddawg
+ *** empty log message ***
+
  END
  ***/
+
 

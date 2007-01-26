@@ -47,6 +47,9 @@ typedef int register_t;
 #endif
 
 //Protos
+struct fork_args {
+  register_t dummy;
+  };
 struct read_args {
   char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
   char buf_l_[PADL_(void *)]; void * buf; char buf_r_[PADR_(void *)];
@@ -63,8 +66,8 @@ struct open_args {
   char mode_l_[PADL_(int)]; int mode; char mode_r_[PADR_(int)];
   };
 struct close_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-};
+  char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+  };
 
 struct setitimer_args {
   char which_l_[PADL_(u_int)]; u_int which; char which_r_[PADR_(u_int)];
@@ -185,6 +188,7 @@ struct ioctl_args {
 };
 
 //Func Defs
+int fork(struct thread *td,struct fork_args *uap);
 int read(struct thread *td,struct read_args *uap);
 int write(struct thread *td, struct write_args *uap);
 int open(struct thread *td, struct open_args *uap);

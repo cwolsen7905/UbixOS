@@ -49,7 +49,7 @@ void kpanic(const char *fmt, ...) {
 
   /* It's important that we print on the current terminal so let's reset foreground */
   tty_foreground = NULL;
-  kprintf("kPanic: %s", buf);
+  kprint(buf);
 
   /* Halt The System */
   //asm("cli");

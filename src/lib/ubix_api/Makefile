@@ -9,13 +9,14 @@ include ../Makefile.inc
 OBJS =
 
 #Sub Sections
-SUBS = ./test/*.o
+SUBS = ./test/*.o ./sys/*.o
 
 #Output
 OUTPUT = ubix_api.so
 
 lib.so: $(OBJS)
 	(cd test;make)
+	(cd sys;make)
 	$(CC) -nostdlib -shared -Wl,-soname,ubix_api.so -o $(OUTPUT) $(OBJS) $(SUBS)
 
 # Compile the source files
@@ -38,3 +39,4 @@ lib.so: $(OBJS)
 clean:
 	$(REMOVE) $(OBJS) $(OUTPUT)
 	(cd test;make clean)
+	(cd sys;make clean)

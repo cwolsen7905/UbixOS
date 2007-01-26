@@ -104,7 +104,7 @@ int fstat(struct thread *td,struct fstat_args *uap) {
   struct file *fp = 0x0;
 
   #ifdef NOTIMP
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i]",__FILE__,__LINE__,__FUNCTION__);
   #endif
 
   fp = (struct file *)_current->td.o_files[uap->fd];
@@ -136,7 +136,13 @@ int getfd(struct thread *td,struct file **fp,int fd) {
 
   #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("GetFD: [%i]\n",fd);
   #endif
+
+  if (fd < 5) {
+    kprintf("Trying to open a system descriptor\n");
+    while (1);
+    }
 
   *fp = (struct file *)td->o_files[fd];
 

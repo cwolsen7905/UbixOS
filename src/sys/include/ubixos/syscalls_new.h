@@ -64,7 +64,7 @@ typedef int (*functionPTR)();
 functionPTR systemCalls_new[] = {
   invalid_call,		/**   0 **/
   sysExit,		/**   1 **/
-  invalid_call,		/**   2 **/
+  fork,			/**   2 **/
   read,			/**   3 **/
   write,		/**   4 **/
   open,			/**   5 **/

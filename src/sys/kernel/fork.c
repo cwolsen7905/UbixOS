@@ -32,6 +32,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/tty.h>
 #include <ubixos/vitals.h>
+#include <ubixos/kpanic.h>
 #include <vmm/vmm.h>
 #include <string.h>
 #include <assert.h>
@@ -40,7 +41,7 @@
  Functoin: static int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,
              long esi, long none,long ebx,long ecx,long edx,long eip,long cs,long eflags,
              long esp,long ss)
- 
+
  Desc: This function will copy a process
 
  Notes:
@@ -51,10 +52,10 @@ int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,long esi,lo
   volatile struct taskStruct * tmpProcPtr = newProcess;
   assert(newProcess);
   assert(_current);
-  
+
   /* Set Up New Tasks Information */
   memcpy(newProcess->oInfo.cwd,_current->oInfo.cwd,1024);
-  
+
   newProcess->tss.eip          = eip;
   newProcess->oInfo.vmStart    = _current->oInfo.vmStart;
   newProcess->term             = _current->term;
@@ -89,21 +90,22 @@ int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,long esi,lo
   /* Create A Copy Of The VM Space For New Task */
   newProcess->tss.cr3 = (uInt32)vmmCopyVirtualSpace(newProcess->id);
   newProcess->state = FORK;
- 
+
   /* Fix gcc optimization problems */
   while (tmpProcPtr->state == FORK) sched_yield();
 
   /* Return Id of Proccess */
   return(newProcess->id);
   }
-  
+
 /*****************************************************************************************
  Functoin: void sysFork();
- 
- Desc: This function will fork a new task
+
+ Desc: This function
+ will fork a new task
 
  Notes:
- 
+
    08/01/02 - This Seems To Be Working Fine However I'm Not Sure If I
               Chose The Best Path To Impliment It I Guess We Will See
               What The Future May Bring 
@@ -127,7 +129,13 @@ asm(
   "  ret                    \n"
   );
 
+int fork(struct thread *td,struct fork_args *uap) {
+  td->td_retval[0] = 0x0;
+  td->td_retval[1] = 0x0;
+  return(0x0);
+  K_PANIC("Error: The new fork syscall is not yet implimented");
+  }
+
 /***
  END
  ***/
-

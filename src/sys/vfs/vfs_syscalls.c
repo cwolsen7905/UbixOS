@@ -44,6 +44,10 @@ int lseek(struct thread *td, struct lseek_args *uap) {
   int error = 0x0;
   struct file *fd    = 0x0;
 
+  #ifdef VFSDEBUG
+  kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
+  #endif
+
   getfd(td,&fd,uap->fd);
   switch (uap->whence) {
     case SEEK_END:
@@ -76,26 +80,51 @@ int lseek(struct thread *td, struct lseek_args *uap) {
  */
 int read(struct thread *td,struct read_args *uap) {
   int          error = 0x0;
+  int          ch    = 0x0;
+  int          i     = 0x0;
   size_t       count = 0x0;
   struct file *fd    = 0x0;
   char        *data  = 0x0;
 
   #ifdef VFSDEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
   #endif
 
-  error = getfd(td,&fd,uap->fd);
+  if (uap->fd < 5) {
+    /* Special File Descriptors */
+    switch (uap->fd) {
+      case 0:
+        data = uap->buf;
+        for (i = 0x0;i < uap->nbyte;i++) {
+          while ((ch = getch()) == 0x0);
+          data[i] = ch;
+          kprintf("%c",ch);
+          if (data[i] == '\n')
+             break;
+          }
+        //kprintf("Read: [%i]\n",i + 1);
+        count = i + 1;
+        break;
+      default:
+        kprintf("Invalid Descriptor\n");
+        count = 0;
+        break;
+      }
+    }
+  else {
+    /* Standard File Descriptors */
+    error = getfd(td,&fd,uap->fd);
 
-  if (error)
-    return(error);
+    if (error)
+      return(error);
 
-  count = fread(uap->buf,uap->nbyte,0x1,fd->fd);
+    count = fread(uap->buf,uap->nbyte,0x1,fd->fd);
+    }
 
   #ifdef VFSDEBUG
   kprintf("count: %i - %i\n",count,uap->nbyte);
   #endif
   td->td_retval[0] = count;
-
   return(error);
   } /* end func */
 
@@ -110,6 +139,10 @@ int read(struct thread *td,struct read_args *uap) {
 int write(struct thread *td, struct write_args *uap) {
   char *buffer = 0x0;
   char *in     = 0x0;
+
+  #ifdef VFSDEBUG
+  kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
+  #endif
 
   if (uap->fd == 2) {
     in = (char *)uap->buf;
@@ -153,6 +186,10 @@ int open(struct thread *td, struct open_args *uap) {
   int          index = 0x0;
   struct file *nfp   = 0x0;
 
+  #ifdef VFSDEBUG
+  kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
+  #endif
+
   error = falloc(td,&nfp,&index);
 
   if (error)
@@ -177,9 +214,10 @@ int open(struct thread *td, struct open_args *uap) {
   } /* end func open */
 
 int close(struct thread *td,struct close_args *uap) {
-  #ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  #ifdef VFSDEBUG
+  kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
   #endif
+
   kfree((void *)td->o_files[uap->fd]);
   td->o_files[uap->fd] = 0x0;
   td->td_retval[0] = 0x0;  
