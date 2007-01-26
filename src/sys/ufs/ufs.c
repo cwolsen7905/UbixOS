@@ -332,26 +332,37 @@ int ufs_initialize(struct vfs_mountPoint *mp) {
   return(0x1);
   }
 
+static int ufs_closeFile(const char *file,struct file *fd) {
+  kfree(fd->fsObj);
+  return(0x0);
+  }
+
+static int ufs_dummy() {
+  kprintf("Dummy Func\n");
+  }
+
 int ufs_init() {
   /* Build our ufs struct */
-  struct fileSystem ufs =
-   {NULL,                         /* prev        */
-    NULL,                         /* next        */
-    (void *)ufs_initialize,       /* vfsInitFS   */
-    (void *)ufs_readFile,         /* vfsRead     */
-    (void *)ufs_writeFile,        /* vfsWrite    */
-    (void *)ufs_openFile,         /* vfsOpenFile */
-    NULL,                         /* vfsUnlink   */
-    NULL,                         /* vfsMakeDir  */
-    NULL,                         /* vfsRemDir   */
-    NULL,                         /* vfsSync     */
-    0xAA,                         /* vfsType     */
+  struct fileSystem ufs = {
+    NULL,                         /* prev         */
+    NULL,                         /* next         */
+    (void *)ufs_initialize,       /* vfsInitFS    */
+    (void *)ufs_readFile,         /* vfsRead      */
+    (void *)ufs_writeFile,        /* vfsWrite     */
+    (void *)ufs_openFile,         /* vfsOpenFile  */
+    (void *)ufs_dummy,            /* vfsCloseFile */
+    (void *)ufs_dummy,            /* vfsUnlink    */
+    (void *)ufs_dummy,            /* vfsMakeDir   */
+    (void *)ufs_dummy,            /* vfsRemDir    */
+    (void *)ufs_dummy,            /* vfsSync      */
+    0xAA,                         /* vfsType      */
    }; /* UFS */
 
   if (vfsRegisterFS(ufs) != 0x0) {
     kpanic("Unable To Enable UFS");
     return(0x1);
     }
+
    //dmadat = (struct dmadat *)kmalloc(sizeof(struct dmadat)); 
   /* Return */
   return(0x0);

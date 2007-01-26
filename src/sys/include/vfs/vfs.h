@@ -70,6 +70,7 @@ struct fileSystem {
   int               (*vfsRead)(void *,char *,long,long); /*!< pointer to read routine */
   int               (*vfsWrite)(void *,char *,long,long); /*!< pointer to write routine */
   int               (*vfsOpenFile)(void *,void *); /*!< pointer to openfile routine */
+  int               (*vfsCloseFile)(void *,void *); /*!< pointer to closefile routine */
   int               (*vfsUnlink)(char *,void *); /*!< pointer to unlink routine */
   int               (*vfsMakeDir)(char *,void *); /*!< pointer to makedir routine */
   int               (*vfsRemDir)(char *); /*!< pointer to remdir routine */

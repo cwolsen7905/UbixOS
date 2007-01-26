@@ -218,22 +218,28 @@ int devfs_makeNode(char *name,uInt8 type,uInt16 major,uInt16 minor) {
   
   spinUnlock(&devfsSpinLock);
   return(0x0);
-  }  
-  
+  }
+
+int devfs_dummy() {
+  kprintf("PLACE HOLDER\n");
+  return(0x0);
+  }
+
 int devfs_init() {
   /* Build our devfs struct */
-  struct fileSystem devFS =
-   {NULL,                         /* prev        */
+  struct fileSystem devFS = {
+    NULL,                         /* prev        */
     NULL,                         /* next        */
-    (void *)devfs_initialize,     /* vfsInitFS   */
+    (void *)devfs_initialize, /* vfsInitFS   */
     (void *)devfs_read,           /* vfsRead     */
     (void *)devfs_write,          /* vfsWrite    */
     (void *)devfs_open,           /* vfsOpenFile */
-    NULL,                         /* vfsUnlink   */
-    NULL,                         /* vfsMakeDir  */
-    NULL,                         /* vfsRemDir   */
-    NULL,                         /* vfsSync     */
-    1                             /* vfsType     */
+    devfs_dummy,                         /* vfsCloseFile */
+    devfs_dummy,                         /* vfsUnlink   */
+    devfs_dummy,                         /* vfsMakeDir  */
+    devfs_dummy,                         /* vfsRemDir   */
+    devfs_dummy,                         /* vfsSync     */
+    0x1                             /* vfsType     */
    }; /* devFS */
 
     if (vfsRegisterFS(devFS) != 0x0) {

@@ -97,6 +97,13 @@ void *vfsSync) {
     return(0x1);
     }
 
+  /*! verify that we have all required methods */
+  if ((newFS.vfsCloseFile == 0x0) || (newFS.vfsInitFS == 0x0) || (newFS.vfsMakeDir == 0x0) || (newFS.vfsOpenFile == 0x0) || (newFS.vfsRead == 0x0) || (newFS.vfsRemDir == 0x0) || (newFS.vfsSync == 0x0)) {
+    kprintf("Missing Methods\n");
+    return(0x1);
+    }
+
+
   /* Allocate Memory */
   tmpFs = (struct fileSystem *)kmalloc(sizeof(struct fileSystem));
   if (tmpFs == NULL) {

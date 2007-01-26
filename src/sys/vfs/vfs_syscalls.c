@@ -205,7 +205,9 @@ int open(struct thread *td, struct open_args *uap) {
     while (1);
     }
   //BUG make fopen return 0 or -1 if error;
+  kprintf("[0x%X]-234\n",nfp->buffer);
   fopen(nfp,uap->path,"r");
+  kprintf("[0x%X]-sdf\n",nfp->buffer);
   if (nfp == 0x0)
     td->td_retval[0] = -1;
   else
@@ -214,13 +216,17 @@ int open(struct thread *td, struct open_args *uap) {
   } /* end func open */
 
 int close(struct thread *td,struct close_args *uap) {
+  struct  file *fd = 0x0;
   #ifdef VFSDEBUG
   kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
   #endif
 
+  getfd(td,&fd,uap->fd);
+  kprintf("BuffeR: [0x%X]\n",fd->buffer);
+  kfree(fd->buffer);
   kfree((void *)td->o_files[uap->fd]);
   td->o_files[uap->fd] = 0x0;
-  td->td_retval[0] = 0x0;  
+  td->td_retval[0] = 0x0;
   return(0x0);
   } /* end func close */
 
