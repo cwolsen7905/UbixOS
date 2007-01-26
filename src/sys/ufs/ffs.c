@@ -6,12 +6,13 @@
 #include <ubixos/kpanic.h>
 #include <lib/string.h>
 #include <sys/buf.h>
+#include <sys/kern_descrip.h>
 
 
-int ffs_read(fileDescriptor *fd,char *data,uInt32 offset,long size) {
+int ffs_read(struct file *fd,char *data,uInt32 offset,long size) {
   struct fs  *fs;
 
-  fs = (struct fs *)fd->dmadat->sbbuf;
+  fs = (struct fs *)fd->fd->dmadat->sbbuf;
 
   if (offset < fd->size && offset >= fs->fs_maxfilesize) {
     //return (EOVERFLOW);

@@ -33,6 +33,7 @@
 #include <ubixos/types.h>
 #include <vfs/vfs.h>
 #include <sys/device.h>
+#include <sys/kern_descrip.h>
 
 
 #define      DT_REG           8

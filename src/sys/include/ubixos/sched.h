@@ -58,7 +58,7 @@ typedef struct taskStruct {
   struct tssStruct   tss;
   struct i387Struct  i387;
   struct osInfo      oInfo;
-  fileDescriptor    *imageFd;
+  struct file       *imageFd;
   tState             state;
   uInt32             gid;
   uInt32             uid;
@@ -88,6 +88,9 @@ extern kTask_t *_usedMath;
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:52  reddawg
+ UbixOS
+
  Revision 1.3  2006/12/15 15:43:46  reddawg
  Changes
 

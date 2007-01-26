@@ -34,6 +34,7 @@
 #include <lib/kmalloc.h>
 #include <ubixos/kpanic.h>
 #include <lib/string.h>
+#include <sys/kern_descrip.h>
 
 #define VBLKSHIFT       12
 #define VBLKSIZE        (1 << VBLKSHIFT)
@@ -48,7 +49,7 @@
 #define INO_TO_VBO(ipervblk, x) ((x) % ipervblk)
 
 
-static int dskread(void *buf, u_int64_t block,size_t count,fileDescriptor *fd) {
+static int dskread(void *buf, u_int64_t block,size_t count,struct file *fd) {
   fd->mp->device->devInfo->read(fd->mp->device->devInfo->info,buf,block,count);
   return(0x0);
   }
@@ -74,7 +75,7 @@ static int sblock_try[] = SBLOCKSEARCH;
 #endif
 
 
-static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,fileDescriptor *fd) {
+static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,struct file *fd) {
 #ifndef UFS2_ONLY
         static struct ufs1_dinode dp1;
 #endif
@@ -93,15 +94,15 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,fileDescriptor *fd) {
         u_int u;
 
 
-        blkbuf = fd->dmadat->blkbuf;
-        indbuf = fd->dmadat->indbuf;
-        fs = (struct fs *)fd->dmadat->sbbuf;
+        blkbuf = fd->fd->dmadat->blkbuf;
+        indbuf = fd->fd->dmadat->indbuf;
+        fs = (struct fs *)fd->fd->dmadat->sbbuf;
 
 #ifdef DEBUG
 kprintf("fsread!\n");
 #endif
 
-        if (!fd->dsk_meta) {
+        if (!fd->fd->dsk_meta) {
                 inomap = 0;
                 for (n = 0; sblock_try[n] != -1; n++) {
                         if (dskread(fs, sblock_try[n] / DEV_BSIZE, 16,fd))
@@ -126,7 +127,7 @@ kprintf("fsread!\n");
                         kprintf("Not ufs\n");
                         return -1;
                 }
-                fd->dsk_meta++;
+                fd->fd->dsk_meta++;
         }
 
   if (!inode) {
@@ -225,7 +226,7 @@ kprintf("fsread!\n");
 
 
 
-static __inline int fsfind(const char *name, ino_t * ino,fileDescriptor *fd) {
+static __inline int fsfind(const char *name, ino_t * ino,struct file *fd) {
   char buf[DEV_BSIZE];
   struct dirent *d;
   char *s;
@@ -247,7 +248,7 @@ static __inline int fsfind(const char *name, ino_t * ino,fileDescriptor *fd) {
     }
 
 
-static ino_t lookup(const char *path,fileDescriptor *fd) {
+static ino_t lookup(const char *path,struct file *fd) {
   char name[MAXNAMLEN + 1];
         const char *s;
         ino_t ino;
@@ -283,27 +284,27 @@ static ino_t lookup(const char *path,fileDescriptor *fd) {
   }
 
 
-static int ufs_openFile(const char *file, fileDescriptor *fd) {
+static int ufs_openFile(const char *file,struct file *fd) {
   char tmp[2];
   int ino = 0;
-  fd->dmadat = (struct dmadat *)kmalloc(sizeof(struct dmadat));
+  fd->fd->dmadat = (struct dmadat *)kmalloc(sizeof(struct dmadat));
   ino = lookup(file,fd);
   fd->offset = 0x0;
-  fd->ino = ino;
+  fd->fd->ino = ino;
   if (ino == 0x0) {
     return(-1);
     }
 
   /* Quick Hack for file size */
-  fsread(fd->ino,&tmp,1,fd);
+  fsread(fd->fd->ino,&tmp,1,fd);
   fd->offset = 0;
   /* Return */
   fd->perms = 0x1;
   return(0x1);
   }
 
-int ufs_readFile(fileDescriptor *fd,char *data,uInt32 offset,long size) {
-  return(fsread(fd->ino,data,size,fd));
+int ufs_readFile(struct file *fd,char *data,uInt32 offset,long size) {
+  return(fsread(fd->fd->ino,data,size,fd));
   }
 
 int ufs_writeFile(fileDescriptor *fd, char *data,uInt32 offset,long size) {

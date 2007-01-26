@@ -81,7 +81,7 @@ uInt32 kmod_load(const char *kmod_file) {
   char             *shStr         = 0x0;
   char             *dynStr        = 0x0;
   uInt32           *reMap         = 0x0;
-  fileDescriptor   *kmod_fd       = 0x0;
+  struct file      *kmod_fd       = 0x0;
   elfHeader        *binaryHeader  = 0x0;
   elfProgramHeader *programHeader = 0x0;
   elfSectionHeader *sectionHeader = 0x0;
@@ -89,7 +89,8 @@ uInt32 kmod_load(const char *kmod_file) {
   elfPltInfo       *elfRel        = 0x0;
 
   /* Open kernel module */
-  kmod_fd = fopen(kmod_file,"rb");
+  kmod_fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  fopen(kmod_fd,kmod_file,"rb");
   if (kmod_fd == 0x0) {
     kprintf("Can not open %s\n",kmod_file);
       return 0x0;

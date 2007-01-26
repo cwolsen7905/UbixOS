@@ -55,9 +55,9 @@ void sysFwrite(char *ptr,int size,userFileDescriptor *userFd) {
     }
   return;
   }
-  
+
 void sysFgetc(int *ptr,userFileDescriptor *userFd) {
-  fileDescriptor *tmpFd = 0x0;
+  struct file *tmpFd = 0x0;
   tmpFd = userFd->fd;
   if (userFd->fd == 0x0) {
     while (1) {
@@ -122,7 +122,8 @@ Notes:
 void sysFopen(const char *file,char *flags,userFileDescriptor *userFd) {
   if (userFd == NULL)
     kprintf("Error: userFd == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
-  userFd->fd = fopen(file,flags);
+  userFd->fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  fopen(userFd->fd,file,flags);
   if (userFd->fd != 0x0) {
     userFd->fdSize = userFd->fd->size;
     }
@@ -175,7 +176,7 @@ void sysFclose(userFileDescriptor *userFd,int *status) {
 /* KERNEL */
 
 
-size_t fread(void *ptr,size_t size,size_t nmemb,fileDescriptor *fd) {
+size_t fread(void *ptr,size_t size,size_t nmemb,struct file *fd) {
   size_t i = 0x0;
 
   if (fd == 0x0)
@@ -197,7 +198,7 @@ size_t fread(void *ptr,size_t size,size_t nmemb,fileDescriptor *fd) {
    return(i);
   }
 
-size_t fwrite(void *ptr,int size,int nmemb,fileDescriptor *fd) {
+size_t fwrite(void *ptr,int size,int nmemb,struct file *fd) {
   if (fd != 0x0) {
     fd->mp->fs->vfsWrite(fd,ptr,fd->offset,size * nmemb);
     fd->offset += size * nmemb;
@@ -205,7 +206,7 @@ size_t fwrite(void *ptr,int size,int nmemb,fileDescriptor *fd) {
   return(0x0);
   }
 
-int fseek(fileDescriptor *tmpFd,long offset,int whence) {
+int fseek(struct file *tmpFd,long offset,int whence) {
   #ifdef DEBUG
   kprintf("FSEEK\n");
   #endif
@@ -220,7 +221,7 @@ Description: Check A File Descriptor For EOF And Return Result
 Notes:
 
 ************************************************************************/  
-int feof(fileDescriptor *fd) {
+int feof(struct file *fd) {
   if (fd->status == fdEof) {
     return(-1);
     }
@@ -234,7 +235,7 @@ Description: This Will Write Character To FD
 Notes:
 
 ************************************************************************/
-int fputc(int ch,fileDescriptor *fd) {
+int fputc(int ch,struct file *fd) {
   if (fd != 0x0) {
     ch = fd->mp->fs->vfsWrite(fd,(char *)ch,fd->offset,1);
     fd->offset++;
@@ -243,15 +244,15 @@ int fputc(int ch,fileDescriptor *fd) {
   /* Return NULL If FD Is Not Found */
   return(0x0);
   }
-  
+
 /************************************************************************
 
 Function: int fgetc(fileDescriptor *fd)
 Description: This Will Return The Next Character In A FD Stream
 Notes:
 
-************************************************************************/  
-int fgetc(fileDescriptor *fd) {
+************************************************************************/
+int fgetc(struct file *fd) {
   int ch = 0x0;
   /* If Found Return Next Char */
   if (fd != 0x0) {
@@ -274,18 +275,19 @@ Notes:
 
 ************************************************************************/
 
-fileDescriptor *fopen(const char *file,const char *flags) {
+struct file *fopen(struct file *tmpFd,const char *file,const char *flags) {
   int             i          = 0x0;
   char           *path       = 0x0;
   char           *mountPoint = 0x0;
   char            fileName[1024];
-  fileDescriptor *tmpFd      = 0x0;
 
   /* Allocate Memory For File Descriptor */
-    if((tmpFd = (fileDescriptor *)kmalloc(sizeof(fileDescriptor))) == 0x0) {
+    if(tmpFd == 0x0) {
       kprintf("Error: tmpFd == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
       return(NULL);
     }
+
+  tmpFd->fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
 
   strcpy(fileName,file);
 
@@ -296,11 +298,11 @@ fileDescriptor *fopen(const char *file,const char *flags) {
   else {
     path = fileName;
     }
- 
+
   if (path[0] == '/')
-    strcpy(tmpFd->fileName, path);
+    strcpy(tmpFd->path, path);
   else
-    sprintf(tmpFd->fileName,"/%s",path);
+    sprintf(tmpFd->path,"/%s",path);
 
   /* Find our mount point or set default to sys */
   if (mountPoint == 0x0)
@@ -339,7 +341,7 @@ fileDescriptor *fopen(const char *file,const char *flags) {
       }
     }
   /* Search For The File */
-  if (tmpFd->mp->fs->vfsOpenFile(tmpFd->fileName,tmpFd) == 0x1) {
+  if (tmpFd->mp->fs->vfsOpenFile(tmpFd->path,tmpFd) == 0x1) {
     /* If The File Is Found Then Set Up The Descriptor */
 
 
@@ -350,31 +352,30 @@ fileDescriptor *fopen(const char *file,const char *flags) {
     {
       kfree(tmpFd);
       kprintf("Error: tmpFd->buffer == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
-      spinUnlock(&fdTable_lock);
-      return 0x1;
+      return(0x0);
     }
     /* Set Its Status To Open */
     tmpFd->status = fdOpen;
 
     /* Initial File Offset Is Zero */
-    tmpFd->offset = 0;
-    tmpFd->prev = 0x0;
+    tmpFd->offset = 0x0;
+    //tmpFd->prev = 0x0;
 
    /* we do not want to be in a spinlock longer than we need to, so
      it has been moved to here. */
-      spinLock(&fdTable_lock);
+      //spinLock(&fdTable_lock);
 
     /* Increment Number Of Open Files */
     systemVitals->openFiles++;
 
-    tmpFd->next = fdTable;
+    //tmpFd->next = fdTable;
 
-    if (fdTable != 0x0)
-      fdTable->prev = tmpFd;
+    //if (fdTable != 0x0)
+      //fdTable->prev = tmpFd;
 
-     fdTable = tmpFd;
+     //fdTable = tmpFd;
 
-      spinUnlock(&fdTable_lock);
+      //spinUnlock(&fdTable_lock);
 
     /* Return The FD */
     return(tmpFd);
@@ -382,7 +383,7 @@ fileDescriptor *fopen(const char *file,const char *flags) {
   else {
     kfree(tmpFd->buffer);
     kfree(tmpFd);
-    spinUnlock(&fdTable_lock);
+    //spinUnlock(&fdTable_lock);
     kprintf("File Not Found? %s\n",file);
     return (NULL);
     }
@@ -398,10 +399,13 @@ Description: This Will Close And Free A File Descriptor
 Notes:
 
 ************************************************************************/
-int fclose(fileDescriptor *fd) {
-  fileDescriptor *tmpFd = 0x0;
+int fclose(struct file *fd) {
+  struct file *tmpFd = 0x0;
   assert(fd);
-  
+kprintf("must complete this!\n");
+//K_PANIC("HMM?");
+
+  /*
   spinLock(&fdTable_lock);
   
   for (tmpFd = fdTable;tmpFd != 0x0;tmpFd = tmpFd->next) {
@@ -424,7 +428,9 @@ int fclose(fileDescriptor *fd) {
     }
   
   spinUnlock(&fdTable_lock);
-  return(0x1);
+  
+  */
+  return(0x0);
   }
 
 /* UBU */
@@ -437,7 +443,7 @@ Notes:
 
 ************************************************************************/
 void sysMkDir(const char *path) {
-  fileDescriptor *tmpFD = 0x0; 
+  struct file *tmpFD = 0x0; 
   char tmpDir[1024];
   char rootPath[256];
   char *dir = 0x0;//UBU*mountPoint = 0x0;
@@ -459,7 +465,8 @@ void sysMkDir(const char *path) {
     }
 
   //kprintf("rootPath: [%s]\n",rootPath);
-  tmpFD = fopen(rootPath,"rb");
+  tmpFD = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  fopen(tmpFD,rootPath,"rb");
 
   if (tmpFD->mp == 0x0) {
     kprintf("Invalid Mount Point\n");

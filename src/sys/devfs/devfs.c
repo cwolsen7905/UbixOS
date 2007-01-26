@@ -68,7 +68,7 @@ static void devfs_initialize(struct vfs_mountPoint *mp) {
 
   This format will be changing down the road
 */
-static int devfs_open(char *file,fileDescriptor *fd) {
+static int devfs_open(char *file,struct file *fd) {
   struct devfs_info    *fsInfo  = fd->mp->fsInfo;
   struct devfs_devices *tmpDev = 0x0;
   struct device_node   *device = 0x0;
@@ -76,7 +76,7 @@ static int devfs_open(char *file,fileDescriptor *fd) {
   spinLock(&devfsSpinLock);
 
   if (strcmp(file,"/") == 0x0) {
-    fd->start = -1;
+    fd->fd->start = -1;
     fd->size  = devfs_len;
     spinUnlock(&devfsSpinLock);
     return(0x1);
@@ -89,7 +89,7 @@ static int devfs_open(char *file,fileDescriptor *fd) {
         case 0:
         case 1:
           device = device_find(tmpDev->devMajor,tmpDev->devMinor);
-          (void *)fd->start = tmpDev;
+          (void *)fd->fd->start = tmpDev;
           fd->size  = device->devInfo->size;
           break;
         default:
@@ -111,12 +111,12 @@ static int devfs_open(char *file,fileDescriptor *fd) {
   Description: Read File Into Data
   Notes:
 */
-static int devfs_read(fileDescriptor *fd,char *data,long offset,long size) {
+static int devfs_read(struct file *fd,char *data,long offset,long size) {
   int i = 0x0,x = 0x0;
   uInt32 sectors = 0x0;
   uInt16 diff    = 0x0;
   struct device_node   *device = 0x0;
-  struct devfs_devices *tmpDev = (void *)fd->start;
+  struct devfs_devices *tmpDev = (void *)fd->fd->start;
 
   if (tmpDev == -1) {
     kprintf("Hi Ubie [%i]!!!\n", size);
@@ -157,10 +157,10 @@ Description: Write Data Into File
 Notes:
 
 ************************************************************************/
-static int devfs_write(fileDescriptor *fd,char *data,long offset,long size) {
+static int devfs_write(struct file *fd,char *data,long offset,long size) {
   int i = 0x0,x = 0x0;
   struct device_node   *device = 0x0;
-  struct devfs_devices *tmpDev = (void *)fd->start;
+  struct devfs_devices *tmpDev = (void *)fd->fd->start;
 
   device = device_find(tmpDev->devMajor,tmpDev->devMinor);
   for (i=0x0;i<((size+511)/512);i++) {

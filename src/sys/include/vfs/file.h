@@ -44,43 +44,36 @@ struct dmadat {
 typedef struct fileDescriptorStruct {
   struct fileDescriptorStruct *prev;
   struct fileDescriptorStruct *next;
-  struct vfs_mountPoint       *mp;
-  uInt16                       status;
-  uInt16                       mode;
-  uInt32                       offset;
-  uInt32                       size;
   uInt16                       length;
   uInt32                       start;
-  char                         fileName[512];
-  char                        *buffer;
   uInt32                       ino;
   struct cacheNode            *cacheNode;
-  uInt32                       perms;
   struct dmadat               *dmadat;
   int                          dsk_meta;
   uInt32                       resid;
   } fileDescriptor;
 
+#include <sys/kern_descrip.h>
 
 typedef struct userFileDescriptorStruct {
-  struct fileDescriptorStruct *fd;
+  struct file *fd;
   uInt32                       fdSize;
   } userFileDescriptor;
 
 extern fileDescriptor *fdTable;
 
-fileDescriptor *fopen(const char *,const char *);
-int             fclose(fileDescriptor *);
+struct file *fopen(struct file *,const char *,const char *);
+int             fclose(struct file *);
 
 /* UBU */
 
 
 int unlink(const char *path);
-int feof(fileDescriptor *fd);
-int fgetc(fileDescriptor *fd);
-size_t fread(void *ptr,size_t size,size_t nmemb,fileDescriptor *fd);
-size_t fwrite(void *ptr,int size,int nmemb,fileDescriptor *fd);
-int fseek(fileDescriptor *,long,int);
+int feof(struct file *fd);
+int fgetc(struct file *fd);
+size_t fread(void *ptr,size_t size,size_t nmemb,struct file *fd);
+size_t fwrite(void *ptr,int size,int nmemb,struct file *fd);
+int fseek(struct file *,long,int);
 
 void sysFseek(userFileDescriptor *,long,int);
 

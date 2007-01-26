@@ -54,10 +54,10 @@ int lseek(struct thread *td, struct lseek_args *uap) {
       K_PANIC("UNHANDLED WHENCE");
       break;
     case SEEK_CUR:
-      fd->fd->offset += uap->offset;
+      fd->offset += uap->offset;
       break;
     case SEEK_SET:
-      fd->fd->offset = uap->offset;
+      fd->offset = uap->offset;
       break;
     default:
       kprintf("offset: [%i], whence: [%i]\n",uap->offset,uap->whence);
@@ -65,7 +65,7 @@ int lseek(struct thread *td, struct lseek_args *uap) {
       break;
     }
 
-  td->td_retval[0] = fd->fd->offset;
+  td->td_retval[0] = fd->offset;
 
   return(error);
   } /* end func */
@@ -118,7 +118,7 @@ int read(struct thread *td,struct read_args *uap) {
     if (error)
       return(error);
 
-    count = fread(uap->buf,uap->nbyte,0x1,fd->fd);
+    count = fread(uap->buf,uap->nbyte,0x1,fd);
     }
 
   #ifdef VFSDEBUG
@@ -205,7 +205,7 @@ int open(struct thread *td, struct open_args *uap) {
     while (1);
     }
 
-  nfp->fd = fopen(uap->path,"r");
+  fopen(nfp,uap->path,"r");
   if (nfp->fd == 0x0)
     td->td_retval[0] = -1;
   else

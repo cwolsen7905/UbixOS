@@ -91,9 +91,17 @@ typedef  __nlink_t       nlink_t;
 #define OFLAGS(fflags)  ((fflags) - 1)
 
 struct file {
-  int f_flag;
-  char path[1024];
-  fileDescriptor *fd;
+  struct vfs_mountPoint *mp;
+  u_int16_t              status;
+  u_int16_t              mode;
+  u_int32_t              offset;
+  u_int32_t              size;
+  u_int32_t              perms;
+  int                    f_flag;
+  char                  *buffer;
+  char                   path[1024];
+  fileDescriptor        *fd;
+  void                  *fsObj;
   };
 
 /* TEMP */

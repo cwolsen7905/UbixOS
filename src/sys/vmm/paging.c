@@ -514,8 +514,8 @@ int mmap(struct thread *td,struct mmap_args *uap) {
       tmp = (char *)vmmGetFreeVirtualPage_new(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK,uap->addr);
       }
 
-    fd->fd->offset = uap->pos;
-    fread(tmp,uap->len,0x1,fd->fd);
+    fd->offset = uap->pos;
+    fread(tmp,uap->len,0x1,fd);
 
     td->td_retval[0] = tmp;
     }

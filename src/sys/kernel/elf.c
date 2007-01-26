@@ -116,9 +116,10 @@ int elf_loadfile(kTask_t *p,const char *file,u_int32_t *addr,u_int32_t *entry) {
   u_int32_t          base_addr     = 0x0;
   elfHeader         *binaryHeader  = 0x0;
   elfProgramHeader  *programHeader = 0x0;
-  fileDescriptor    *exec_fd       = 0x0;
+  struct file       *exec_fd       = 0x0;
 
-  exec_fd = fopen(file,"r");
+  exec_fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  fopen(exec_fd,file,"r");
   if (exec_fd == 0x0)
     return(-1);
 kprintf("MOO");

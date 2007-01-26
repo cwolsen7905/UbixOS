@@ -33,8 +33,9 @@
 #include <ubixos/types.h>
 #include <vfs/vfs.h>
 #include <sys/device.h>
+#include <sys/kern_descrip.h>
 
-int ffs_read(fileDescriptor *,char *,uInt32,long);
+int ffs_read(struct file *,char *,uInt32,long);
 
 #endif
 

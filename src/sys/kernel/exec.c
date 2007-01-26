@@ -162,7 +162,7 @@ void execFile(char *file,int argc,char **argv,int console) {
   int        x         = 0x0;
   u_int32_t *tmp       = 0x0;
 
-  fileDescriptor   *tmpFd         = 0x0;
+  struct file      *tmpFd         = 0x0;
   elfHeader        *binaryHeader  = 0x0;
   elfProgramHeader *programHeader = 0x0;
 
@@ -189,7 +189,8 @@ void execFile(char *file,int argc,char **argv,int console) {
     );
 
   /* Lets Find The File */
-  tmpFd = fopen(file,"r");
+  tmpFd = (struct file *)kmalloc(sizeof(struct file));
+  fopen(tmpFd,file,"r");
 
   /* If We Dont Find the File Return */
   if (tmpFd == 0x0) {
@@ -363,14 +364,15 @@ void sysExec(char *file,char *ap) {
   char   **argvNew  = 0x0;
   char    *args     = 0x0;
 
-  fileDescriptor    *tmpFd         = 0x0;
+  struct file       *tmpFd         = 0x0;
   elfHeader         *binaryHeader  = 0x0;
   elfProgramHeader  *programHeader = 0x0;
   elfSectionHeader  *sectionHeader = 0x0;
   elfDynamic        *elfDynamicS   = 0x0;
   struct i386_frame *iFrame        = 0x0;
 
-  tmpFd = fopen(file,"r");
+  tmpFd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  fopen(tmpFd,file,"r");
   _current->imageFd = tmpFd;
   /* If We Dont Find the File Return */
   if (tmpFd == 0x0) {
@@ -587,7 +589,9 @@ void sys_exec(char *file,char *ap) {
   struct i386_frame  *iFrame        = 0x0;
   Elf_Auxargs        *auxargs       = 0x0;
 
-  _current->imageFd = fopen(file,"r");
+
+  _current->imageFd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  fopen(_current->imageFd,file,"r");
   if (_current->imageFd == 0x0)
     return(-1);
 
