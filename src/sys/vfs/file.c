@@ -191,10 +191,6 @@ size_t fread(void *ptr,size_t size,size_t nmemb,struct file *fd) {
 
    i = fd->mp->fs->vfsRead(fd,ptr,fd->offset,size * nmemb);
 
-   //fd->offset += size * nmemb;
-
-   //kprintf("fread: %i:%i",i,size *nmemb);
-
    return(i);
   }
 

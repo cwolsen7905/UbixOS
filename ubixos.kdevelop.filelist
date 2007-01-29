@@ -12,3 +12,13 @@ src/sys/include/vmm/vmm.h
 src/sys/include/vmm/paging.h
 src/sys/vfs/vfs_syscalls.c
 src/sys/isa/ne2k.c
+src/sys/mpi/message.c
+src/sys/mpi/system.c
+src/sys/lib/assert.c
+src/sys/lib/string.c
+src/sys/vfs/file.c
+src/sys/vfs/mount.c
+src/sys/vfs/vfs.c
+src/sys/include/vfs/vfs.h
+src/sys/include/vfs/file.h
+src/sys/include/sys/kern_descrip.h

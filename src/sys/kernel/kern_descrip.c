@@ -99,17 +99,18 @@ int getdtablesize(struct thread *td, struct getdtablesize_args *uap) {
   return (0);
   }
 
-/* HACK */
+/* BUGS: Getting closer*/
 int fstat(struct thread *td,struct fstat_args *uap) {
   struct file *fp = 0x0;
 
-  #ifdef NOTIMP
+  #ifdef VFSDEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__,__FUNCTION__);
   #endif
 
   fp = (struct file *)_current->td.o_files[uap->fd];
   uap->sb->st_mode    = 0x2180;
   uap->sb->st_blksize = 0x1000;
+  uap->sb->st_size    = fp->size;
   #ifdef NOTIMP
   kprintf("fstat: %i",uap->fd);
   #endif

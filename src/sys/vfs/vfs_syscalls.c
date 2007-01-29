@@ -222,8 +222,13 @@ int close(struct thread *td,struct close_args *uap) {
   #endif
 
   getfd(td,&fd,uap->fd);
-  kprintf("BuffeR: [0x%X]\n",fd->buffer);
-  kfree(fd->buffer);
+
+  if (fd->buffer != 0x0)
+    kfree(fd->buffer);
+
+  if (fd->fsObj != 0x0)
+    kfree(fd->fsObj);
+
   kfree((void *)td->o_files[uap->fd]);
   td->o_files[uap->fd] = 0x0;
   td->td_retval[0] = 0x0;

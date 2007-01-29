@@ -33,12 +33,15 @@
 #include <ubixos/types.h>
 
 #define O_FILES 64
+#define S_GID   0x1
+#define S_UID   0x3
 
 struct thread {
   int         td_retval[2];
   u_int32_t   o_files[O_FILES];
   char *      vm_daddr;
   int32_t     vm_dsize;
+  u_int8_t    mode;
   };
 
 #endif

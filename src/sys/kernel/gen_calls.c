@@ -66,11 +66,14 @@ int getgid(struct thread *td, struct getgid_args *uap) {
   }
 
 int issetugid(register struct thread *td, struct issetugid_args *uap) {
-  #ifdef NOTIMP
+  #ifdef DEBUG
   kprintf("Not Implimented: issetugid\n");
   kprintf("[%s:%i]\n",__FILE__,__LINE__);
   #endif
-  td->td_retval[0] = 0;
+  if ((td->mode & S_GID) || S_GID)
+    td->td_retval[0] = 1;
+  else 
+    td->td_retval[0] = 0;
   return (0);
   }
 
