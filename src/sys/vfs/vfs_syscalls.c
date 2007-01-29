@@ -227,11 +227,11 @@ int close(struct thread *td,struct close_args *uap) {
 
   getfd(td,&fd,uap->fd);
 
+  //! Call the fs close function first
+  fd->mp->fs->vfsCloseFile(fd);
+
   if (fd->buffer != 0x0)
     kfree(fd->buffer);
-
-  if (fd->fsObj != 0x0)
-    kfree(fd->fsObj);
 
   kfree((void *)td->o_files[uap->fd]);
   td->o_files[uap->fd] = 0x0;
