@@ -92,7 +92,6 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,struct file *fd) {
         ufs2_daddr_t addr, vbaddr;
         static ufs2_daddr_t blkmap, indmap;
         u_int u;
-        size_t offset = fd->offset;
         struct ufs_obj *ufsObj = fd->fsObj;
 
         blkbuf = ufsObj->dmadat->blkbuf;
@@ -157,15 +156,14 @@ kprintf("fsread!\n");
                         dp2 = ((struct ufs2_dinode *)blkbuf)[n];
 #endif
                 inomap = inode;
-                //fd->offset = 0;
-                offset = 0x0;
+                fd->offset = 0;
                 blkmap = indmap = 0;
         }
 
         s = buf;
         size = DIP(di_size);
         fd->size = size;
-        n = size - offset;//fd->offset;
+        n = size - fd->offset;
 #ifdef DEBUG
   kprintf("n: [0x%X:0x%X:0x%X]\n",n,fd->offset,size);
 #endif
@@ -176,8 +174,8 @@ kprintf("fsread!\n");
                 nbyte = n;
         nb = nbyte;
         while (nb) {
-                lbn = lblkno(fs, offset);// fd->offset);
-                off = blkoff(fs, offset);//fd->offset);
+                lbn = lblkno(fs, fd->offset);
+                off = blkoff(fs, fd->offset);
                 if (lbn < NDADDR) {
                         addr = DIP(di_db[lbn]);
                 } else if (lbn < NDADDR + NINDIR(fs)) {
@@ -219,8 +217,7 @@ kprintf("fsread!\n");
                         n = nb;
                 memcpy(s, blkbuf + vboff, n);
                 s += n;
-                //fd->offset += n;
-                offset += n;
+                fd->offset += n;
                 nb -= n;
         }
         return nbyte;

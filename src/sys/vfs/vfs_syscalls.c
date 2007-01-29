@@ -119,7 +119,7 @@ int read(struct thread *td,struct read_args *uap) {
       return(error);
 
     count = fread(uap->buf,uap->nbyte,0x1,fd);
-    fd->offset += count;
+    //fd->offset += count;
     }
 
   #ifdef VFSDEBUG
