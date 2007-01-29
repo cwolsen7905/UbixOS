@@ -344,7 +344,9 @@ struct file *fopen(struct file *tmpFd,const char *file,const char *flags) {
    /* in order to save resources we will allocate the buffer later when it is needed */
 
     tmpFd->buffer = (char *)kmalloc(4096);
-kprintf("meep meep [0x%X]\n",tmpFd->buffer);
+    #ifdef VFSDEBUG
+    kprintf("meep meep [0x%X]\n",tmpFd->buffer);
+    #endif
     if(tmpFd->buffer == 0x0)
     {
       kfree(tmpFd);
@@ -400,8 +402,9 @@ int fclose(struct file *fd) {
   struct file *tmpFd = 0x0;
   assert(fd);
 
-  //kfree(fd->fsObj);
-  kfree(fd->buffer);
+  //BUG FCLOSE BROKEN!!
+  if ((fd->buffer != 0x0) || (fd->buffer != 0xBEBEBEBE))
+    kfree(fd->buffer);
   kfree(fd);
 //BUG think i'm missing things
 //K_PANIC("HMM?");

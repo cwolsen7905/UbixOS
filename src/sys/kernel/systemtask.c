@@ -103,10 +103,11 @@ void systemTask() {
      we first check to see if it has an fd attached for the binary and after that 
      we free the pages for the process and then free the task 
     */
-    tmpTask = sched_getDelTask();    
+    tmpTask = sched_getDelTask();
     if (tmpTask != 0x0) {
-      if (tmpTask->imageFd != 0x0)
+      if ((tmpTask->imageFd != 0x0) || (tmpTask->imageFd != 0xBEBEBEBE)) {
         fclose(tmpTask->imageFd);
+        }
       vmmFreeProcessPages(tmpTask->id);
       kfree(tmpTask);
       }

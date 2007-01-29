@@ -171,10 +171,9 @@ void sysSetGid(int gid,int *status) {
   return;
   }  
 
-void sysExit(int status)
-{
-	endTask(_current->id);
-}
+void sysExit(int status) {
+  endTask(_current->id);
+  }
 
 void sysCheckPid(int pid,int *ptr)
 {

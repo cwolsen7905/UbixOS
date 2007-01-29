@@ -62,6 +62,8 @@
   \brief filesSystem Structure
 
   not sure if we should allow function to point to NULL
+
+  We don't as of 1/28/07
 */
 struct fileSystem {
   struct fileSystem *prev;

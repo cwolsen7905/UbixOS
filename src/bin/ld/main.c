@@ -150,10 +150,11 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
 //printf("\nld(%s:0x%X)",binaryDynStr + binaryRelSymTab[x].dynName,*reMap);
   //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));
 
-
+/*
   if (binaryFd) {
     fclose(binaryFd);
     }
+*/
 
   return(*reMap);
   }

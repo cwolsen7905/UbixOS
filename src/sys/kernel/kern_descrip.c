@@ -93,7 +93,7 @@ int falloc(struct thread *td,struct file **resultfp, int *resultfd) {
  */
 int getdtablesize(struct thread *td, struct getdtablesize_args *uap) {
   #ifdef NOTIMP
-  kprintf("[%s:%i]",__FILE__,__LINE__);
+  kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
   #endif
   td->td_retval[0] = O_FILES;
   return (0);
@@ -123,6 +123,9 @@ int fstat(struct thread *td,struct fstat_args *uap) {
  * \returns NULL for now
  */
 int ioctl(struct thread *td, struct ioctl_args *uap) {
+  #ifdef NOTIMP
+  kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
+  #endif
   td->td_retval[0] = 0x0;
   return(0x0);
   }

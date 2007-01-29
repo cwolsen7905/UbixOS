@@ -205,9 +205,13 @@ int open(struct thread *td, struct open_args *uap) {
     while (1);
     }
   //BUG make fopen return 0 or -1 if error;
+  #ifdef VFSDEBUG
   kprintf("[0x%X]-234\n",nfp->buffer);
+  #endif
   fopen(nfp,uap->path,"r");
+  #ifdef VFSDEBUG
   kprintf("[0x%X]-sdf\n",nfp->buffer);
+  #endif
   if (nfp == 0x0)
     td->td_retval[0] = -1;
   else
