@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004, 2005 The UbixOS Project
+ Copyright (c) 2002-2004, 2005, 2007 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -99,13 +99,9 @@ int kmain(uInt32 rootdev) {
   int i = 0x0;
   uInt32 *sysTask = 0x0;
 
-  /* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
-  clearScreen();
-  #ifdef DEBUG
-  kprint("AAA");
-  kprint("BBB");
-  kprintf("TEST");
-  #endif
+  /* We preform a clearScreen to make the TEXT buffer nice and empty */
+  screenClear();
+
   /* Modify src/sys/include/ubixos/init.h to add a startup routine */
   for (i=0x0;i<init_tasksTotal;i++) {
     if (init_tasks[i]() != 0x0) {

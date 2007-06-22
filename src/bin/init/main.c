@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2007 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -66,7 +66,7 @@ int main(int argc,char **argv) {
     sched_yield();
 #endif
     
-/*
+#if 0
   i = fork();
   if (0x0 == i) {
     printf("Starting Ubix Registry (ubistry)\n");
@@ -78,7 +78,8 @@ int main(int argc,char **argv) {
   while (pidStatus(i) > 0x0) {
     sched_yield();
     } 
-*/
+#endif
+
   startup:
   i = fork();
   if (0 == i) {
@@ -103,7 +104,8 @@ int main(int argc,char **argv) {
       }
     sched_yield();
     }
-  printf("login exited?");
+    
+  printf("Error: login exited!");
 
   goto startup;
 
@@ -113,4 +115,3 @@ int main(int argc,char **argv) {
 /***
  END
  ***/
-

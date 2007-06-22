@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2005 The UbixOS Project
+ Copyright (c) 2002-2005,2007 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -112,13 +112,15 @@ kprint(char *string)
 }
 
 /* Clears The Screen */
-void clearScreen() {
+void screenClear() {
   short i = 0x0;
 
   for (i = 0x0; i < (80 * 25); i++) {
     videoBuffer[i * 2] = 0x20;
     videoBuffer[i * 2 + 1] = defaultColor;
     }
+  
+  /* This sets the blinking cursor to the top left */
   outportByte(0x3D4, 0x0f);
   outportByte(0x3D5, 0);
   outportByte(0x3D4, 0x0e);
