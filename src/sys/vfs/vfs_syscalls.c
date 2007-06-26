@@ -209,7 +209,8 @@ int open(struct thread *td, struct open_args *uap) {
   #ifdef VFSDEBUG
   kprintf("[0x%X]-234\n",nfp->buffer);
   #endif
-  fopen(nfp,uap->path,"r");
+  //fopen(nfp,uap->path,"r");
+  kprintf("[0x%X]\n",fopen(nfp,uap->path,"r"));
   #ifdef VFSDEBUG
   kprintf("[0x%X]-sdf\n",nfp->buffer);
   #endif

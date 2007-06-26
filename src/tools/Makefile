@@ -37,7 +37,7 @@ clean:
 	$(REMOVE) $(OBJS) $(BINARY) *.core
 
 install-ubix:
-	(cp ../sys/compile/ubix.elf /mnts/ubix/boot/loader)
+	(cp ../sys/compile/ubix.elf /mnts/ubix/boot/kernel/kernel)
 	(cp ../bin/init/init /mnts/ubix/bin)
 	(cp ../bin/login/login /mnts/ubix/bin)
 	(cp ../bin/shell/shell /mnts/ubix/bin)

@@ -111,9 +111,9 @@ int kmain(uInt32 rootdev) {
 
   /* New Root Mount Point */
   //Old 2 new 10
-  #ifdef DEBUG
-  kprintf("[0xX][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n",B_ADAPTOR(rootdev),B_CONTROLLER(rootdev),B_SLICE(rootdev),B_UNIT(rootdev),B_PARTITION(rootdev),B_TYPE(rootdev));
-  #endif
+  //#ifdef DEBUG
+  kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n",B_ADAPTOR(rootdev),B_CONTROLLER(rootdev),B_SLICE(rootdev),B_UNIT(rootdev),B_PARTITION(rootdev),B_TYPE(rootdev));
+  //#endif
   if (vfs_mount(0x1,B_PARTITION(rootdev)+2,0x0,0xAA,"sys","rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
     }

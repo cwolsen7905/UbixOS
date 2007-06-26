@@ -371,8 +371,14 @@ void sysExec(char *file,char *ap) {
   elfDynamic        *elfDynamicS   = 0x0;
   struct i386_frame *iFrame        = 0x0;
 
+  /* Need to rewrite this routine? */
   tmpFd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
-  fopen(tmpFd,file,"r");
+  if (fopen(tmpFd,file,"r") == 0x0) {
+    //kprintf("[0x%X]\n",tmpFd);
+    //kfree(tmpFd); //We need this but it's being done in fopen right now
+    return(0x0);
+    _current->imageFd = 0x0;
+    }
   _current->imageFd = tmpFd;
   /* If We Dont Find the File Return */
   if (tmpFd == 0x0) {
