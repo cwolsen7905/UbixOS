@@ -290,7 +290,7 @@ void *kmalloc(uInt32 len) {
         }
       buf = (char *)tmpDesc1->baseAddr;
       for (i=0;i<tmpDesc1->limit;i++) {
-        (char)buf[i] = (char)0x0;
+        buf[i] = 0x0;
         }
       spinUnlock(&mallocSpinLock);
       //kprintf("m1[%i:%i:0x%X]",tmpDesc1->limit,len,tmpDesc1->baseAddr);
@@ -324,7 +324,7 @@ void *kmalloc(uInt32 len) {
 
       buf = (char *)tmpDesc1->baseAddr;
       for (i=0;i<tmpDesc1->limit;i++) {
-        (char)buf[i] = (char)0x0;
+        buf[i] = 0x0;
         }
     spinUnlock(&mallocSpinLock);
     //kprintf("baseAddr2[0x%X:0x%X]",tmpDesc1,tmpDesc1->baseAddr);
@@ -392,6 +392,9 @@ void kfree(void *baseAddr) {
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:54  reddawg
+ UbixOS
+
  Revision 1.3  2006/12/05 14:10:21  reddawg
  Workign Distro
 

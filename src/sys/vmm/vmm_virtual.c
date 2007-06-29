@@ -555,7 +555,7 @@ vmmCreateVirtualSpace(pid_t pid)
   newPageDirectoryAddress = (void *)vmm_getPhysicalAddr((uInt32) newPageDirectory);
   /* First Set Up A Flushed Page Directory */
   for (x = 0; x < pageEntries; x++) {
-    (uInt32) newPageDirectory[x] = (uInt32) 0x0;
+    newPageDirectory[x] = 0x0;
   }
   /* Map The Top 1GB Region Of The VM Space */
   for (x = 768; x < pageEntries; x++) {
@@ -568,7 +568,7 @@ vmmCreateVirtualSpace(pid_t pid)
   newPageTable = (uInt32 *) vmmGetFreePage(pid);
   /* Flush The Page From Garbage In Memory */
   for (x = 0; x < pageEntries; x++) {
-    (uInt32) newPageTable[x] = (uInt32) 0x0;
+    newPageTable[x] = 0x0;
   }
   /* Map This Into The Page Directory */
   newPageDirectory[0] = (vmm_getPhysicalAddr((uInt32) newPageTable) | PAGE_DEFAULT);

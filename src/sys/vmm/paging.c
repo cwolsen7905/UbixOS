@@ -69,7 +69,7 @@ int vmm_pagingInit(){
 
   /* Clear The Memory To Ensure There Is No Garbage */
   for (i = 0; i < pageEntries; i++) {
-    (uInt32) kernelPageDirectory[i] = (uInt32) 0x0;
+    kernelPageDirectory[i] = 0x0;
     } /* end for */
 
   /* Allocate a page for the first 4MB of memory */
@@ -341,7 +341,7 @@ vmmClearVirtualPage(uInt32 pageAddr)
 
   /* Clear Out The Page */
   for (counter = 0x0; counter < pageEntries; counter++) {
-    (uInt32) src[counter] = (uInt32) 0x0;
+    src[counter] = 0x0;
   }
 
   /* Return */

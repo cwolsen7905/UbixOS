@@ -92,7 +92,7 @@ static int devfs_open(char *file,struct file *fd) {
           devfsObj = (struct devfs_obj *)kmalloc(sizeof(struct devfs_obj));
           fd->fsObj = devfsObj;
           device = device_find(tmpDev->devMajor,tmpDev->devMinor);
-          (void *)devfsObj->start = tmpDev;
+          devfsObj->start = tmpDev;
           fd->size  = device->devInfo->size;
           break;
         default:
