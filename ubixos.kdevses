@@ -1,36 +1,29 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="8" >
-  <Doc0 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/ufs/ufs.c" >
-   <View0 line="335" Type="Source" />
+ <DocsAndViews NumberOfDocuments="4" >
+  <Doc0 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/vmm/vmm_virtual.c" >
+   <View0 Encoding="" line="362" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/include/vfs/vfs.h" >
-   <View0 line="72" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/vmm/paging.c" >
+   <View0 Encoding="" line="40" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/vfs/vfs.c" >
-   <View0 line="100" Type="Source" />
+  <Doc2 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/vmm/getfreepage.c" >
+   <View0 Encoding="" line="33" Type="Source" />
   </Doc2>
-  <Doc3 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/devfs/devfs.c" >
-   <View0 line="230" Type="Source" />
+  <Doc3 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/init/main.c" >
+   <View0 Encoding="" line="0" Type="Source" />
   </Doc3>
-  <Doc4 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/vfs/file.c" >
-   <View0 line="406" Type="Source" />
-  </Doc4>
-  <Doc5 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/vfs/vfs_syscalls.c" >
-   <View0 line="225" Type="Source" />
-  </Doc5>
-  <Doc6 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/include/sys/kern_descrip.h" >
-   <View0 line="124" Type="Source" />
-  </Doc6>
-  <Doc7 NumberOfViews="1" URL="file:///usr/home/reddawg/source/ubixos/src/sys/kernel/kern_descrip.c" >
-   <View0 line="142" Type="Source" />
-  </Doc7>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList/>
+   <showInternalCommands value="0" />
   </kdevdebugger>
+  <kdevastyle>
+   <Extensions ext="*.cpp *.h,*.c *.h,*.cxx *.hxx,*.c++ *.h++,*.cc *.hh,*.C *.H,*.diff,*.inl,*.java,*.moc,*.patch,*.tlh,*.xpm" />
+   <AStyle IndentPreprocessors="0" FillCount="4" PadParenthesesOut="1" IndentNamespaces="1" IndentLabels="1" Fill="Tabs" MaxStatement="40" Brackets="Break" MinConditional="-1" IndentBrackets="0" PadParenthesesUn="1" BlockBreak="0" KeepStatements="1" KeepBlocks="1" BlockIfElse="0" IndentSwitches="1" PadOperators="0" FStyle="UserDefined" IndentCases="0" FillEmptyLines="0" BracketsCloseHeaders="0" BlockBreakAll="0" PadParenthesesIn="1" IndentClasses="1" IndentBlocks="0" FillForce="0" />
+  </kdevastyle>
   <kdevbookmarks>
    <bookmarks/>
   </kdevbookmarks>

@@ -127,6 +127,7 @@ int main() {
           fclose(fd);          
           //chdir(data[i].path);
           chdir("sys:/bin/");
+          printf("[%s]\n",data[i].shell);
           exec(data[i].shell,0x0);
           printf("Error: Problem Starting Shell\n");
           exit(-1);

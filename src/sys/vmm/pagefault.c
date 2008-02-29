@@ -104,7 +104,7 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
     else if (pageTable[pageTableIndex] != 0x0) {
       kprintf("Security failed pagetable not user permission\n");
       kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n",pageTable[pageTableIndex],pageTableIndex,pageDirectoryIndex,eip);
-      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n",memAddr,esp,_current->id,eip);
+      kprintf("Segfault At Address: [0x%X], Stack Address: [0x%X], Proc: [%i],EIP: [0x%X] Non Mapped\n",memAddr,esp,_current->id,eip);
       spinUnlock(&pageFaultSpinLock);
       endTask(_current->id);
       }
@@ -132,6 +132,9 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
   
 /***
  $Log$
+ Revision 1.2  2007/01/19 17:08:29  reddawg
+ Lots of fixes
+
  Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
  UbixOS
 

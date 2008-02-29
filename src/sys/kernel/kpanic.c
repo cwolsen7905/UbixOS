@@ -32,6 +32,7 @@
 #include <isa/8259.h>
 #include <stdarg.h>
 #include <ubixos/tty.h>
+#include <sys/video.h>
 
 /*!
  * \brief print panic message and halt system

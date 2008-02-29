@@ -50,7 +50,7 @@ __FBSDID("$FreeBSD: src/lib/libc/isc/ev_timers.c,v 1.2.2.1 2006/07/17 10:09:56 u
 /* Forward. */
 
 #ifdef _LIBC
-static int	__evOptMonoTime;
+int	__evOptMonoTime;
 #else
 static int due_sooner(void *, void *);
 static void set_index(void *, int);

@@ -89,7 +89,7 @@ uInt32 kmod_load(const char *kmod_file) {
   elfPltInfo       *elfRel        = 0x0;
 
   /* Open kernel module */
-  kmod_fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  kmod_fd = (struct file *)kmalloc(sizeof(struct fileDescriptorStruct));
   fopen(kmod_fd,kmod_file,"rb");
   if (kmod_fd == 0x0) {
     kprintf("Can not open %s\n",kmod_file);

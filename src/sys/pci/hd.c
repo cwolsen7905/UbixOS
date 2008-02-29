@@ -213,7 +213,7 @@ int hdInit(struct device_node *dev) {
   hdd->hdMask = retVal;
   hdd->hdSize = (hdd->hdSector[0x7B] * 256 * 256 * 256) + (hdd->hdSector[0x7A] * 256 * 256) + (hdd->hdSector[0x79] * 256) + hdd->hdSector[0x78];
   hdd->hdEnable = 1;
-  kprintf("Drive: [0x%X/0x%X], Size: [%iSectors/%iKBytes]\n",hdd->hdPort,hdd->hdDev,hdd->hdSize,((hdd->hdSize*512)/1024));
+  kprintf("Drive: [0x%X/0x%X], Size: [0x%X Sectors/0x%X KBytes]\n",hdd->hdPort,hdd->hdDev,hdd->hdSize,((hdd->hdSize*512)/1024));
   dev->devInfo->size        = hdd->hdSize*512;
   dev->devInfo->initialized = 0x1;
   return(0x0);
@@ -347,6 +347,9 @@ void hdRead(struct driveInfo *hdd,void *baseAddr,uInt32 startSector,uInt32 secto
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:55  reddawg
+ UbixOS
+
  Revision 1.5  2006/10/12 15:00:26  reddawg
  More changes
 

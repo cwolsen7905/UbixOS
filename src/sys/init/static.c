@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2007 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -27,18 +27,16 @@
 
 *****************************************************************************************/
 
-#include <lib/kprintf.h>
-
 /**
  * \brief Sets up the ctors
  */
 
 int static_constructors(void) {
+
   extern void (* __ctor_list)();
   void (** l_ctor)() = &__ctor_list;
   int l_ctorCount = *(int *)l_ctor;
 
-//  kprintf("Calling static constructors\n");
   l_ctor++;
   while(l_ctorCount) {
     (*l_ctor)();

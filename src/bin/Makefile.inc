@@ -1,6 +1,6 @@
 # 'bin' options
 
-CFLAGS = -nostdlib -nostdinc -fno-builtin
+CFLAGS = -nostdlib -nostdinc -fno-builtin -O2
 
 INCLUDES = -I../../include 
 

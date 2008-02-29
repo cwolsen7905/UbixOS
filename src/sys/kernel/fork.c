@@ -87,9 +87,11 @@ int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,long esi,lo
   newProcess->tss.ldt          = 0x18;
   newProcess->tss.trace_bitmap = 0x0000;
   newProcess->tss.io_map       = 0x8000;
+
   /* Create A Copy Of The VM Space For New Task */
   newProcess->tss.cr3 = (uInt32)vmmCopyVirtualSpace(newProcess->id);
   newProcess->state = FORK;
+
 
   /* Fix gcc optimization problems */
   while (tmpProcPtr->state == FORK) sched_yield();
@@ -132,8 +134,8 @@ asm(
 int fork(struct thread *td,struct fork_args *uap) {
   td->td_retval[0] = 0x0;
   td->td_retval[1] = 0x0;
-  return(0x0);
   K_PANIC("Error: The new fork syscall is not yet implimented");
+  return(0x0);
   }
 
 /***

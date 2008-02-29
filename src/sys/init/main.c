@@ -112,9 +112,9 @@ int kmain(uInt32 rootdev) {
   /* New Root Mount Point */
   //Old 2 new 10
   //#ifdef DEBUG
-  kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n",B_ADAPTOR(rootdev),B_CONTROLLER(rootdev),B_SLICE(rootdev),B_UNIT(rootdev),B_PARTITION(rootdev),B_TYPE(rootdev));
+  kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n",rootdev,B_ADAPTOR(rootdev),B_CONTROLLER(rootdev),B_SLICE(rootdev),B_UNIT(rootdev),B_PARTITION(rootdev),B_TYPE(rootdev));
   //#endif
-  if (vfs_mount(0x1,B_PARTITION(rootdev)+2,0x0,0xAA,"sys","rw") != 0x0) {
+  if (vfs_mount(0x3,B_PARTITION(rootdev)+2,0x0,0xAA,"sys","rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
     }
 
@@ -132,7 +132,7 @@ int kmain(uInt32 rootdev) {
   kprintf("Free Pages: [%i]\n",systemVitals->freePages); 
 
   kprintf("MemoryMap:  [0x%X]\n",vmmMemoryMap);
-  kprintf("Starting OS\n");
+  kprintf("Starting UbixOS\n");
   
 	sysTask = kmalloc(0x2000);
 	if(sysTask == NULL)

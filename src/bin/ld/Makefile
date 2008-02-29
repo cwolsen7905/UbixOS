@@ -8,6 +8,8 @@ include ../Makefile.inc
 #Linker
 LD = ld
 
+CFLAGS += -fpic
+
 #Binary File Name
 OUTPUT = ld.so
 
@@ -24,16 +26,16 @@ $(OUTPUT) : $(OBJS)
 
 # Compile the source files
 .cpp.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 .cc.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CXX)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 .cc.s:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
+	$(CXX)  -Wall $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 .c.s:
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<

@@ -128,8 +128,8 @@ int getByte() {
 
 bool fdcRw(int block,Int8 *blockBuffer,bool read,unsigned long numSectors) {
   int head = 0x0,track = 0x0,sector = 0x0,tries= 0x0, copyCount = 0x0;
-  unsigned char *p_tbaddr = (char *)0x80000;
-  unsigned char *p_blockbuff = blockBuffer;
+  unsigned char *p_tbaddr = (unsigned char *)0x80000;
+  unsigned char *p_blockbuff = (unsigned char *)blockBuffer;
   //kprintf("Block: [%i]\n",block);
   block2Hts(block,&head,&track,&sector);
   motorOn();
@@ -187,8 +187,8 @@ bool fdcRw(int block,Int8 *blockBuffer,bool read,unsigned long numSectors) {
     }
   motorOff();
   if (read && blockBuffer) {
-    p_blockbuff = blockBuffer;
-    p_tbaddr = (char *) 0x80000;
+    p_blockbuff = (unsigned char *)blockBuffer;
+    p_tbaddr = (unsigned char *) 0x80000;
     for (copyCount=0x0; copyCount<(numSectors*512); copyCount++) {
       *p_blockbuff = *p_tbaddr;
       p_blockbuff++;
@@ -314,6 +314,9 @@ void fdcWrite(void *info,void *baseAddr,uInt32 startSector,uInt32 sectorCount){
 /***
 
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
+ UbixOS
+
  Revision 1.1.1.1  2006/06/01 12:46:12  reddawg
  ubix2
 

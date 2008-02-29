@@ -92,7 +92,7 @@ static int devfs_open(char *file,struct file *fd) {
           devfsObj = (struct devfs_obj *)kmalloc(sizeof(struct devfs_obj));
           fd->fsObj = devfsObj;
           device = device_find(tmpDev->devMajor,tmpDev->devMinor);
-          devfsObj->start = tmpDev;
+          devfsObj->start = (int)tmpDev;
           fd->size  = device->devInfo->size;
           break;
         default:
@@ -124,7 +124,7 @@ static int devfs_read(struct file *fd,char *data,long offset,long size) {
 
   tmpDev   = (void *)devfsObj->start;
 
-  if (tmpDev == -1) {
+  if ((u_int32_t)tmpDev == -1) {
     kprintf("Hi Ubie [%i]!!!\n", size);
     for (i = 0;i < size;i++) {
       data[i] = 'a';

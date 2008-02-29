@@ -36,7 +36,7 @@
 
 extern int printColor;
 
-void clearScreen();
+void screenClear();
 void kprint(char *string);
 void backSpace();
 
@@ -44,6 +44,9 @@ void backSpace();
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:53  reddawg
+ UbixOS
+
  Revision 1.1.1.1  2006/06/01 12:46:15  reddawg
  ubix2
 

@@ -11,6 +11,7 @@ uInt32 ldFindFunc(const char *func,const char *lib) {
   for (x = 0; x < lib_c;x++) {
     libPtr = ldFindLibrary(lib + lib_s[x]); 
     if (libPtr == 0x0) {
+      printf("[%s][%s]\n",func,lib);
       libPtr = ldAddLibrary(lib + lib_s[x]);
       }
 
@@ -18,7 +19,7 @@ uInt32 ldFindFunc(const char *func,const char *lib) {
       if (!strcmp(func,(libPtr->linkerDynStr + libPtr->linkerRelSymTab[i].dynName))) {
         funcPtr = (uInt32 *)((uInt32)(libPtr->linkerRelSymTab[i].dynValue) + (uInt32)libPtr->output);
         if (funcPtr == 0x0) {
-            printf("[%s:0x%X]\n",func,funcPtr);
+            printf("[%s:0x%X]\n",func,(uInt32)funcPtr);
           }
         return((uInt32)funcPtr);
         break;

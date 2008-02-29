@@ -62,6 +62,8 @@ uInt32 ldEnable() {
   if (ldFd == 0x0) {
     kprintf("Can not open ld.so\n");
     }
+
+  kprintf("Loading LD\n");
  
   fseek(ldFd,0x0,0x0);
   binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader));
@@ -96,6 +98,7 @@ uInt32 ldEnable() {
 	    K_PANIC("vmmRemapPage: ld");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START),0x0,0x1000);
           }
+        kprintf("X: 0x%X\n",x);
         /* Now Load Section To Memory */
         fseek(ldFd,programHeader[i].phOffset,0x0);
         fread(newLoc,programHeader[i].phFilesz,1,ldFd);
@@ -132,13 +135,14 @@ uInt32 ldEnable() {
         elfRel = (elfPltInfo *)kmalloc(sectionHeader[i].shSize);
         fseek(ldFd,sectionHeader[i].shOffset,0x0);
         fread(elfRel,sectionHeader[i].shSize,1,ldFd);
-
+kprintf("LD_START: 0x%X\n",LD_START);
         for (x=0x0;x<sectionHeader[i].shSize/sizeof(elfPltInfo);x++) {
           rel = ELF32_R_SYM(elfRel[x].pltInfo);
           reMap = (uInt32 *)((uInt32)LD_START + elfRel[x].pltOffset);
           switch (ELF32_R_TYPE(elfRel[x].pltInfo)) {
             case R_386_32:
               *reMap += ((uInt32)LD_START + relSymTab[rel].dynValue);
+//              kprintf("R: [0x%X:0x%X]",reMap,*reMap);
               break;
             case R_386_PC32:
               *reMap += ((uInt32)LD_START + relSymTab[rel].dynValue) - (uInt32)reMap;
@@ -154,11 +158,16 @@ uInt32 ldEnable() {
           }
         kfree(elfRel);
         break;
+      case 8:
+        break;
       case 11:
         relSymTab = (elfDynSym *)kmalloc(sectionHeader[i].shSize);
         fseek(ldFd,sectionHeader[i].shOffset,0x0);
         fread(relSymTab,sectionHeader[i].shSize,1,ldFd);
         sym = i;
+        break;
+      default:
+        //kprintf("Unhandled Section: %s, 0x%X",shStr + sectionHeader[i].shName,sectionHeader[i].shType);
         break;
       }
     }

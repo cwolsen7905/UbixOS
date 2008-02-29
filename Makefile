@@ -1,7 +1,7 @@
 # $Id$
 # The System Makefile (C) 2002 The UbixOS Project
 
-all: kernel tools ubix_api libc_old ubix bin#csu libc libcpp
+all: kernel tools ubix_api libc_old ubix csu libc libcpp bin
 # depend kernel tools
 
 csu: src

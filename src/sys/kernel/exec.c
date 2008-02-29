@@ -371,6 +371,8 @@ void sysExec(char *file,char *ap) {
   elfDynamic        *elfDynamicS   = 0x0;
   struct i386_frame *iFrame        = 0x0;
 
+  kprint("Sys EXEC\n");
+
   /* Need to rewrite this routine? */
   tmpFd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
   if (fopen(tmpFd,file,"r") == 0x0) {
@@ -394,8 +396,9 @@ void sysExec(char *file,char *ap) {
 
   if ((binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader))) == 0x0) 
     endTask(_current->id);
-    fread(binaryHeader,sizeof(elfHeader),1,tmpFd);
-    /* Set sectionHeader To Point To Loaded Binary To We Can Gather Info */
+
+  fread(binaryHeader,sizeof(elfHeader),1,tmpFd);
+  /* Set sectionHeader To Point To Loaded Binary To We Can Gather Info */
 
   /* Check If App Is A Real Application */
   if ((binaryHeader->eIdent[1] != 'E') && (binaryHeader->eIdent[2] != 'L') && (binaryHeader->eIdent[3] != 'F')) {
@@ -575,8 +578,7 @@ void sysExec(char *file,char *ap) {
  * \brief New exec...
  *
  */
-void sys_exec(char *file,char *ap) {
-  int                 error         = 0x0;
+int sys_exec(char *file,char *ap) {
   int                 i             = 0x0;
   int                 x             = 0x0;
   int                 argc          = 0x0;
@@ -689,10 +691,10 @@ void sys_exec(char *file,char *ap) {
   _current->td.vm_daddr = (char *)seg_addr;
 
   //! copy in arg strings
-  argv = ap;
+  argv = (char **)ap;
 
   if (argv[1] != 0x0) {
-    argc = argv[0];
+    argc = (int)argv[0];
     args = (char *)vmmGetFreeVirtualPage(_current->id,1,VM_TASK);
     memset(args,0x0,0x1000);
     x = 0x0;
@@ -710,7 +712,7 @@ void sys_exec(char *file,char *ap) {
 
 
   //! Adjust iframe
-  iFrame = _current->tss.esp0 - sizeof(struct i386_frame);
+  iFrame = (struct i386_frame *)_current->tss.esp0 - sizeof(struct i386_frame);
   iFrame->ebp = STACK_ADDR;
   iFrame->eip = eip;
 
@@ -720,19 +722,19 @@ void sys_exec(char *file,char *ap) {
   #ifdef DEBUG
   kprintf("\n\n\nuser_esp: [0x%X]\n",iFrame->user_esp);
   #endif
-  tmp = iFrame->user_esp;
+  tmp = (u_int32_t *)iFrame->user_esp;
 
   //! build argc and argv[]
   tmp[0] = argc;
   for (i = 0;i < argc;i++) {
-    tmp[i + 1] = argv[i];
+    tmp[i + 1] = (u_int32_t)argv[i];
     }
   //! Build ENV
   args = (char *)vmmGetFreeVirtualPage(_current->id,1,VM_TASK);
   memset(args,0x0,0x1000);
 
   strcpy(args,"LIBRARY_PATH=/lib");
-  tmp[argc + 2] = args;
+  tmp[argc + 2] = (u_int32_t)args;
   #ifdef DEBUG
   kprintf("env: [0x%X][0x%X]\n",(uInt32)tmp + argc + 2,tmp[argc + 2]);
   #endif
@@ -741,7 +743,7 @@ void sys_exec(char *file,char *ap) {
   kprintf("env: [0x%X][0x%X]\n",(uInt32)tmp + argc + 2,tmp[argc + 2]);
   #endif
 
-  tmp = iFrame->user_esp;
+  tmp = (u_int32_t *)iFrame->user_esp;
   tmp += argc + 4;
 
 
@@ -768,7 +770,7 @@ void sys_exec(char *file,char *ap) {
   kprintf("AT_BASE: [0x%X]\n",auxargs->base);
   #endif
 
-  return;
+  return(0);
   }
 
 /***

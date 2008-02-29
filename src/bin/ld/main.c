@@ -43,17 +43,19 @@ static char             *binaryShStr         = 0x0;
 char             *binaryDynStr        = 0x0;
 elfDynSym        *binaryRelSymTab     = 0x0;
 static Elf32_Dyn        *binaryElf32_Dyn     = 0x0;
-static elfPltInfo       *binaryElfRelDyn     = 0x0;
+//static elfPltInfo       *binaryElfRelDyn     = 0x0;
 static elfPltInfo       *binaryElfRel        = 0x0;
 
 uInt32 ld(uInt32 got2,uInt32 entry) {
   int  i             = 0x0;
   int  x             = 0x0;
-  int  y             = 0x0;
+  //int  y             = 0x0;
   int  rel           = 0x0;
-  int  relDyn        = 0x0;
+  //int  relDyn        = 0x0;
   uInt32 *reMap      = 0x0;
   FILE *binaryFd     = 0x0;
+
+   printf("here?\n");
 
   if (binaryHeader == 0x0) {
     binaryFd = malloc(sizeof(FILE));
@@ -63,17 +65,21 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
     fread(binaryHeader,sizeof(elfHeader),1,binaryFd);
     }
 
+  printf("binarySectionHeader: [0x%X]\n",(uInt32)binarySectionHeader);
+
   if (binarySectionHeader == 0x0) {
+  printf("b\n");
     binarySectionHeader = (elfSectionHeader *)malloc(sizeof(elfSectionHeader)*binaryHeader->eShnum);
     fseek(binaryFd,binaryHeader->eShoff,0);
     fread(binarySectionHeader,sizeof(elfSectionHeader),binaryHeader->eShnum,binaryFd);
 
-  if (binaryShStr == 0x0) {
-    binaryShStr = (char *)malloc(binarySectionHeader[binaryHeader->eShstrndx].shSize);
-    fseek(binaryFd,binarySectionHeader[binaryHeader->eShstrndx].shOffset,0);
-    fread(binaryShStr,binarySectionHeader[binaryHeader->eShstrndx].shSize,1,binaryFd);
-    }
+    if (binaryShStr == 0x0) {
+      binaryShStr = (char *)malloc(binarySectionHeader[binaryHeader->eShstrndx].shSize);
+      fseek(binaryFd,binarySectionHeader[binaryHeader->eShstrndx].shOffset,0);
+      fread(binaryShStr,binarySectionHeader[binaryHeader->eShstrndx].shSize,1,binaryFd);
+      }
 
+    printf("eShnum: [%i]\n",binaryHeader->eShnum);
     for (i=0x0;i<binaryHeader->eShnum;i++) {
       switch (binarySectionHeader[i].shType) {
         case 3:
@@ -89,8 +95,10 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
           binaryElf32_Dyn = (Elf32_Dyn *)malloc(binarySectionHeader[i].shSize);
           fseek(binaryFd,binarySectionHeader[i].shOffset,0);
           fread(binaryElf32_Dyn,binarySectionHeader[i].shSize,1,binaryFd);
+          printf("SHT_DYNAMIC\n");
           for (x = 0;x < binarySectionHeader[i].shSize / sizeof(Elf32_Dyn);x++) {
             if (binaryElf32_Dyn[x].d_tag == 1) {
+              printf("[%s]\n",(uInt32)binaryElf32_Dyn[x].d_un.d_ptr);
               lib_s[lib_c] = binaryElf32_Dyn[x].d_un.d_ptr;
               lib_c++;
               }

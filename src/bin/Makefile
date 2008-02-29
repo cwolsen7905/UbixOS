@@ -1,7 +1,7 @@
 # $Id$
 # The System Makefile (C) 2002 The UbixOS Project
 
-all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin #edit-bin ld-bin ttyd-bin stat-bin  cat-bin rtld-elf-bin tcc-bin
+all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin edit-bin ld-bin ttyd-bin stat-bin  cat-bin rtld-elf-bin tcc-bin
 # test-bin pwd-bin cat-bin de-bin ls-bin goofball-bin mount-bin
 
 init-bin: init 

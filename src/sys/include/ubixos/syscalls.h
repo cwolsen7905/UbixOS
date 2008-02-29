@@ -40,7 +40,7 @@ void sysRmModule();
 void sysGetpid();
 void sysExit();
 void sysExec();
-void sys_exec();
+int sys_exec();
 void sysFork();
 void sysCheckPid();
 void sysGetFreePage();
@@ -139,6 +139,9 @@ int totalCalls = sizeof(systemCalls)/sizeof(functionPTR);
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:52  reddawg
+ UbixOS
+
  Revision 1.3  2006/12/19 14:12:54  reddawg
  rtld-elf almost workign
 

@@ -1,4 +1,4 @@
-CC = cc
+CC = gcc32
 
 REMOVE = rm -fr
 .if defined(PICA)

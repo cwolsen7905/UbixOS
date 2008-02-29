@@ -20,6 +20,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
   if (tmpLib->output == 0x0) {
     /* Hack because we have no ld path set */
     sprintf(tmpFile,"sys:/lib/%s",lib);
+     printf("tmpFile: [%s]\n",tmpFile);
     linkerFd = fopen(tmpFile,"rb");
     if (linkerFd->fd == 0x0) {
       printf("Could not open library: %s\n",lib);

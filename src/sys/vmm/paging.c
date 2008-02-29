@@ -38,7 +38,7 @@
 #include <string.h>
 #include <assert.h>
 
-uInt32         *kernelPageDirectory = 0x0;
+u_int32_t  *kernelPageDirectory = 0x0;
 
 static spinLock_t fkpSpinLock = SPIN_LOCK_INITIALIZER;
 static spinLock_t rmpSpinLock = SPIN_LOCK_INITIALIZER;
@@ -56,9 +56,9 @@ static spinLock_t rmpSpinLock = SPIN_LOCK_INITIALIZER;
 
 *****************************************************************************************/
 
-int vmm_pagingInit(){
-  uInt32          i = 0x0;
-  uInt32         *pageTable = 0x0;
+int vmm_pagingInit() {
+  u_int32_t  i         = 0x0;
+  u_int32_t *pageTable = 0x0;
 
   /* Allocate A Page Of Memory For Kernels Page Directory */
   kernelPageDirectory = (uInt32 *) vmmFindFreePage(sysID);
@@ -68,15 +68,15 @@ int vmm_pagingInit(){
     } /* end if */
 
   /* Clear The Memory To Ensure There Is No Garbage */
-  for (i = 0; i < pageEntries; i++) {
-    kernelPageDirectory[i] = 0x0;
+  for (i = 0x0; i < pageEntries; i++) {
+    kernelPageDirectory[i] = (u_int32_t)0x0;
     } /* end for */
 
   /* Allocate a page for the first 4MB of memory */
-  if ((pageTable = (uInt32 *) vmmFindFreePage(sysID)) == 0x0)
+  if ((pageTable = (u_int32_t *) vmmFindFreePage(sysID)) == 0x0)
     K_PANIC("Error: vmmFindFreePage Failed");
 
-  kernelPageDirectory[0] = (uInt32) ((uInt32) (pageTable) | KERNEL_PAGE_DEFAULT);
+  kernelPageDirectory[0x0] = (u_int32_t) ((u_int32_t)pageTable | KERNEL_PAGE_DEFAULT);
 
   /* Make Sure The Page Table Is Clean */
   memset(pageTable,0x0,0x1000);
@@ -121,6 +121,7 @@ int vmm_pagingInit(){
   /* Also Set Up Page Directory To Be The The First Page In 0xE0400000 */
   pageTable = (uInt32 *) (kernelPageDirectory[0] & 0xFFFFF000);
   pageTable[256] = (uInt32) ((uInt32) (kernelPageDirectory) | KERNEL_PAGE_DEFAULT);
+
 
   /* Now Lets Turn On Paging With This Initial Page Table */
   asm volatile(
@@ -495,7 +496,7 @@ int mmap(struct thread *td,struct mmap_args *uap) {
 
   if (uap->fd == -1) {
     /* NEED ROUND PAGE */
-    td->td_retval[0] = vmmGetFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK);
+    td->td_retval[0] = (int)vmmGetFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK);
     }
   else {
     #ifdef VMMDEBUG
@@ -517,7 +518,7 @@ int mmap(struct thread *td,struct mmap_args *uap) {
     fd->offset = uap->pos;
     fread(tmp,uap->len,0x1,fd);
 
-    td->td_retval[0] = tmp;
+    td->td_retval[0] = (int)tmp;
     }
   return(0x0);
   }
