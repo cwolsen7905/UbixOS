@@ -45,7 +45,6 @@ elfDynSym        *binaryRelSymTab     = 0x0;
 static Elf32_Dyn        *binaryElf32_Dyn     = 0x0;
 //static elfPltInfo       *binaryElfRelDyn     = 0x0;
 static elfPltInfo       *binaryElfRel        = 0x0;
-int fTime = 0x0;
 
 uInt32 ld(uInt32 got2,uInt32 entry) {
   int  i             = 0x0;
@@ -56,8 +55,6 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
   uInt32 *reMap      = 0x0;
   FILE *binaryFd     = 0x0;
 
-   printf("here? [%i]\n",fTime);
-   fTime = 0xBA;
 
   if (binaryHeader == 0x0) {
     binaryFd = malloc(sizeof(FILE));
@@ -67,12 +64,8 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
     fread(binaryHeader,sizeof(elfHeader),1,binaryFd);
     }
 
-  printf("binarySectionHeader: [0x%X]\n",(uInt32)binarySectionHeader);
-  if (binarySectionHeader <= 0x5)
-    binarySectionHeader = 0;
 
   if (binarySectionHeader == 0x0) {
-  printf("b\n");
     binarySectionHeader = (elfSectionHeader *)malloc(sizeof(elfSectionHeader)*binaryHeader->eShnum);
     fseek(binaryFd,binaryHeader->eShoff,0);
     fread(binarySectionHeader,sizeof(elfSectionHeader),binaryHeader->eShnum,binaryFd);
@@ -125,7 +118,6 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
         }
       }
     }
-  printf("Here2\n");
 
   /*
   if ((binaryElfRelDyn == 0x0) && (relDyn != 0)) {
@@ -149,7 +141,6 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
     }
   */
 
-  printf("Here3\n");
 
   if (binaryElfRel == 0x0) {
     binaryElfRel = (elfPltInfo *)malloc(binarySectionHeader[rel].shSize);
@@ -171,8 +162,6 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
     fclose(binaryFd);
     }
 */
-
-  printf("Here4\n");
 
   return(*reMap);
   }

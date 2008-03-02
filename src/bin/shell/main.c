@@ -35,13 +35,8 @@ char *cwc     = 0x0;
 
 int main() {
 
-  printf("Test\n");
-while(1);
-
   char *buffer = (char *)malloc(512);
   inputBuffer *inBuf = (inputBuffer *)malloc(sizeof(inputBuffer));
-
-  while (1);
 
   machine = (char *)malloc(32);
   cwd     = (char *)malloc(1024);

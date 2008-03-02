@@ -98,20 +98,22 @@ uInt32 ldEnable() {
 	    K_PANIC("vmmRemapPage: ld");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START),0x0,0x1000);
           }
-        kprintf("X: 0x%X\n",x);
+        //kprintf("X: 0x%X\n",x);
         /* Now Load Section To Memory */
         fseek(ldFd,programHeader[i].phOffset,0x0);
         fread(newLoc,programHeader[i].phFilesz,1,ldFd);
-
+        //kprintf("Z:[0x%X - 0x%X]\n",programHeader[i].phOffset,programHeader[i].phFilesz);
         break;
       case PT_DYNAMIC:
+        newLoc = (char *)programHeader[i].phVaddr + LD_START;
         /* Now Load Section To Memory */
         fseek(ldFd,programHeader[i].phOffset,0x0);
-        fread(newLoc,programHeader[i].phFilesz,1,ldFd);
+        //kprintf("fread: [0x%X - 0x%X]",newLoc,fread(newLoc,programHeader[i].phFilesz,1,ldFd));
         break;
       case PT_GNU_STACK:
         /* Tells us if the stack should be executable.  Failsafe to executable
 	   until we add checking */
+        kprintf("WTF!");
       	break;
       case PT_PAX_FLAGS:
       	/* Not sure... */
