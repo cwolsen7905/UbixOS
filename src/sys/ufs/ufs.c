@@ -50,6 +50,14 @@
 
 
 static int dskread(void *buf, u_int64_t block,size_t count,struct file *fd) {
+  /*
+  kprintf("Buf:   [0x%X]\n",buf);
+  kprintf("Block: [0x%X]\n",block);
+  kprintf("Count: [0x%X]\n",count);
+  kprintf("FD:    [0x%X]\n",fd);
+  kprintf("MP:    [0x%X]\n",fd->mp);
+  kprintf("Device: [0x%X]\n",fd->mp->device);
+  */
   fd->mp->device->devInfo->read(fd->mp->device->devInfo->info,buf,block,count);
   return(0x0);
   }

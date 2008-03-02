@@ -85,6 +85,9 @@ int device_add(int minor,char type,struct device_interface *devInfo) {
 *****************************************************************************************/
 struct device_node *device_find(int major,int minor) {
   struct device_node *tmpDev = 0x0;
+
+  if (major == -1)
+    return(-1);
  
   spinLock(&deviceSpinLock);
 

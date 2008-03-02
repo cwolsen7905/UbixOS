@@ -247,7 +247,9 @@ int devfs_init() {
     return(0x1);
     }
   /* Mount our devfs this will build the devfs container node */
-  vfs_mount(0x0,0x0,0x0,0x1,"devfs","rw"); // Mount Device File System
+  vfs_mount(-1,0x0,0x0,0x1,"devfs","rw"); // Mount Device File System
+
+  kprintf("Devfs\n");
   
   /* Return */
   return(0x0);
