@@ -92,9 +92,10 @@ int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,long esi,lo
   newProcess->tss.cr3 = (uInt32)vmmCopyVirtualSpace(newProcess->id);
   newProcess->state = FORK;
 
-
   /* Fix gcc optimization problems */
   while (tmpProcPtr->state == FORK) sched_yield();
+
+  kprintf("Copied Space\n: [%i]",newProcess->id);
 
   /* Return Id of Proccess */
   return(newProcess->id);

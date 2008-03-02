@@ -80,6 +80,8 @@ int main(int argc,char **argv) {
     } 
 #endif
 
+  printf("Forking");
+
   startup:
   i = fork();
   printf("We Forked\n");

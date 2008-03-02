@@ -32,6 +32,7 @@
 
 pid_t fork() {
   volatile pid_t pid = 0x0;
+
   asm volatile(
     "pushl %%eax\n"
     "pushl %%ecx\n"
@@ -53,6 +54,9 @@ pid_t fork() {
   
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:30:21  reddawg
+ UbixOS
+
  Revision 1.6  2004/08/25 22:02:41  reddawg
  task switching - We now are using software switching to be consistant with the rest of the world because all of this open source freaks gave me a hard time about something I liked. There doesn't seem to be any gain in performance but it is working fine and flawlessly
 
