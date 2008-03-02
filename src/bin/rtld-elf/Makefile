@@ -9,7 +9,7 @@ INCLUDES = -I../../include.new -I./
 
 #-Werror
 CFLAGS+=        -Wall -DFREEBSD_ELF -DIN_RTLD -DPIC
-CFLAGS = -O2 -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -fpic -elf -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -DDEBUG
+CFLAGS = -O -fpic -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -elf -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -DDEBUG
 
 
 #Linker

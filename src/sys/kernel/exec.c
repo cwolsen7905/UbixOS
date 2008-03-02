@@ -489,6 +489,7 @@ void sysExec(char *file,char *ap) {
         #ifdef DEBUG
         kprintf("Interp: [%s]\n",interp);
         #endif
+        kprintf("Interp: [%s]\n",interp);
         ldAddr = ldEnable();
         break;
       default:

@@ -45,6 +45,7 @@ elfDynSym        *binaryRelSymTab     = 0x0;
 static Elf32_Dyn        *binaryElf32_Dyn     = 0x0;
 //static elfPltInfo       *binaryElfRelDyn     = 0x0;
 static elfPltInfo       *binaryElfRel        = 0x0;
+int fTime = 0x0;
 
 uInt32 ld(uInt32 got2,uInt32 entry) {
   int  i             = 0x0;
@@ -55,7 +56,8 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
   uInt32 *reMap      = 0x0;
   FILE *binaryFd     = 0x0;
 
-   printf("here?\n");
+   printf("here? [%i]\n",fTime);
+   fTime = 0xBA;
 
   if (binaryHeader == 0x0) {
     binaryFd = malloc(sizeof(FILE));
@@ -66,6 +68,8 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
     }
 
   printf("binarySectionHeader: [0x%X]\n",(uInt32)binarySectionHeader);
+  if (binarySectionHeader <= 0x5)
+    binarySectionHeader = 0;
 
   if (binarySectionHeader == 0x0) {
   printf("b\n");
@@ -121,8 +125,9 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
         }
       }
     }
+  printf("Here2\n");
 
-/*
+  /*
   if ((binaryElfRelDyn == 0x0) && (relDyn != 0)) {
     binaryElfRelDyn = (elfPltInfo *)malloc(binarySectionHeader[i].shSize);
     fseek(binaryFd,binarySectionHeader[relDyn].shOffset,0x0);
@@ -142,7 +147,9 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
       printf("y: [%i:0x%X]",y,binaryElfRelDyn[x].pltOffset);
       }
     }
-*/
+  */
+
+  printf("Here3\n");
 
   if (binaryElfRel == 0x0) {
     binaryElfRel = (elfPltInfo *)malloc(binarySectionHeader[rel].shSize);
@@ -154,6 +161,7 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
   i = (entry/sizeof(elfPltInfo));
   x = ELF32_R_SYM(binaryElfRel[i].pltInfo);
   reMap = (uInt32 *)binaryElfRel[i].pltOffset;
+  printf("[0x%X]",binaryRelSymTab[x].dynName);
   *reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,binaryDynStr);
 //printf("\nld(%s:0x%X)",binaryDynStr + binaryRelSymTab[x].dynName,*reMap);
   //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));
@@ -163,6 +171,8 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
     fclose(binaryFd);
     }
 */
+
+  printf("Here4\n");
 
   return(*reMap);
   }

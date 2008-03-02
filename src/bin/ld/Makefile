@@ -8,7 +8,7 @@ include ../Makefile.inc
 #Linker
 LD = ld
 
-CFLAGS += -fpic
+CFLAGS = -Wall -nostdlib -nostdinc -fno-builtin -O -fpic
 
 #Binary File Name
 OUTPUT = ld.so
@@ -21,7 +21,7 @@ OBJS = main.o findlibrary.o findfunc.o addlibrary.o entry.o
 
 # Link The Binary
 $(OUTPUT) : $(OBJS)
-	$(CC) -nostdlib -shared -Wl,-soname,$(OUTPUT) -e _ld -o $(OUTPUT) $(OBJS) $(LIBRARIES) $(SUBS)
+	$(CC) -O -fpic -nostdlib -shared -Wl,-soname,$(OUTPUT) -e _ld -o $(OUTPUT) $(OBJS) $(LIBRARIES) $(SUBS)
 #	strip $(OUTPUT)
 
 # Compile the source files

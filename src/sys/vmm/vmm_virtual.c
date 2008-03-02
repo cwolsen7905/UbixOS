@@ -413,8 +413,6 @@ void *vmmCopyVirtualSpace(pidType pid) {
 	    if ((newStackPage = (uInt32 *) vmmGetFreeKernelPage(pid,1)) == 0x0)
 	      kpanic("Error: newStackPage == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
 
-            memset(newStackPage,0x0,0x1000);
-	      
 	    /* Set Pointer To Parents Stack Page */
 	    parentStackPage = (uInt32 *) (((1024 * 4096) * x) + (4096 * i));
 	    

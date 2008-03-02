@@ -150,15 +150,19 @@ kprintf("LD_START: 0x%X\n",LD_START);
             case R_386_RELATIVE:
               *reMap += (uInt32)LD_START;
               break;
+            case R_386_JMP_SLOT:
+              *reMap = ((uInt32)LD_START + relSymTab[rel].dynValue);
+              break;
+            case R_386_GLOB_DAT:
+              //kprintf("relTab [%s][0x%X][0x%X]\n",dynStr + relSymTab[rel].dynName,relSymTab[rel].dynValue,relSymTab[rel].dynName);
+              *reMap = ((uInt32)LD_START + relSymTab[rel].dynValue);
+              break;
             default:
               kprintf("[0x%X][0x%X](%i)[%s]\n",elfRel[x].pltOffset,elfRel[x].pltInfo,rel,elfGetRelType(ELF32_R_TYPE(elfRel[x].pltInfo)));
-              kprintf("relTab [%s][0x%X][0x%X]\n",dynStr + relSymTab[rel].dynName,relSymTab[rel].dynValue,relSymTab[rel].dynName);
               break;
             }
           }
         kfree(elfRel);
-        break;
-      case 8:
         break;
       case 11:
         relSymTab = (elfDynSym *)kmalloc(sectionHeader[i].shSize);
@@ -167,7 +171,7 @@ kprintf("LD_START: 0x%X\n",LD_START);
         sym = i;
         break;
       default:
-        //kprintf("Unhandled Section: %s, 0x%X",shStr + sectionHeader[i].shName,sectionHeader[i].shType);
+        kprintf("Unhandled Section: %s, 0x%X",shStr + sectionHeader[i].shName,sectionHeader[i].shType);
         break;
       }
     }
