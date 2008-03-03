@@ -76,7 +76,7 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
       fread(binaryShStr,binarySectionHeader[binaryHeader->eShstrndx].shSize,1,binaryFd);
       }
 
-    printf("eShnum: [%i]\n",binaryHeader->eShnum);
+    //printf("eShnum: [%i]\n",binaryHeader->eShnum);
     for (i=0x0;i<binaryHeader->eShnum;i++) {
       switch (binarySectionHeader[i].shType) {
         case 3:
@@ -92,7 +92,7 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
           binaryElf32_Dyn = (Elf32_Dyn *)malloc(binarySectionHeader[i].shSize);
           fseek(binaryFd,binarySectionHeader[i].shOffset,0);
           fread(binaryElf32_Dyn,binarySectionHeader[i].shSize,1,binaryFd);
-          printf("SHT_DYNAMIC\n");
+          //printf("SHT_DYNAMIC\n");
           for (x = 0;x < binarySectionHeader[i].shSize / sizeof(Elf32_Dyn);x++) {
             if (binaryElf32_Dyn[x].d_tag == 1) {
               printf("[%s]\n",(uInt32)binaryElf32_Dyn[x].d_un.d_ptr);
@@ -152,7 +152,7 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
   i = (entry/sizeof(elfPltInfo));
   x = ELF32_R_SYM(binaryElfRel[i].pltInfo);
   reMap = (uInt32 *)binaryElfRel[i].pltOffset;
-  printf("[0x%X]",binaryRelSymTab[x].dynName);
+  //printf("[0x%X]",binaryRelSymTab[x].dynName);
   *reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,binaryDynStr);
 //printf("\nld(%s:0x%X)",binaryDynStr + binaryRelSymTab[x].dynName,*reMap);
   //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));

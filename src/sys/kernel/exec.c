@@ -518,6 +518,7 @@ void sysExec(char *file,char *ap) {
 
   _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
   _current->td.vm_daddr = (char *)seg_addr;
+  kprintf("STATING: [0x%X][0x%X]\n",_current->td.vm_dsize,_current->td.vm_daddr);
 
   argv = ap;
 

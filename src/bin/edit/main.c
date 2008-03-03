@@ -34,7 +34,7 @@ int main(int argc,char **argv) {
   FILE *out;
   printf("UbixOS Text Editor\n");
   printf("V1.0\n");
-
+  return(1);
   out = fopen("/test.txt","r");
 
   while (!feof(out)) {

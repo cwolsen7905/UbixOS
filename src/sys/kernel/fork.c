@@ -95,8 +95,6 @@ int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,long esi,lo
   /* Fix gcc optimization problems */
   while (tmpProcPtr->state == FORK) sched_yield();
 
-  kprintf("Copied Space\n: [%i]",newProcess->id);
-
   /* Return Id of Proccess */
   return(newProcess->id);
   }

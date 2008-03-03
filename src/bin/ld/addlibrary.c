@@ -29,7 +29,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
     //if ((tmpLib->output = (char *)malloc((linkerFd->size+0x4000))) == 0x0) {
     //if ((tmpLib->output = (char *)malloc(0x111000)) == 0x0) {
 //HELP
-    if ((tmpLib->output = (char *)getPage((0x0E6000/0x1000),2)) == 0x0) {
+    if ((tmpLib->output = (char *)getPage((0x0E4000/0x1000),2)) == 0x0) {
       printf("malloc failed: tmpLib->output\n");
       exit(0x1);
       }

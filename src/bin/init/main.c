@@ -80,11 +80,9 @@ int main(int argc,char **argv) {
     } 
 #endif
 
-  printf("Forking");
-
   startup:
   i = fork();
-  printf("We Forked\n");
+
   if (0 == i) {
     printf("Starting Login Daemon.\n");
     exec("sys:/bin/login",0x0);

@@ -210,7 +210,7 @@ void *vmmGetFreeVirtualPage(pidType pid, int count,int type) {
 	  /* Return The Address Of The Newly Allocate Page */
           if (type == VM_THRD) {
             _current->td.vm_dsize += btoc(count * 0x1000);
-            #ifdef VMMDEBUG
+            #ifdef VMMDEBUG2
             kprintf("vm_dsize: [0x%X]][0x%X]\n",ctob(_current->td.vm_dsize),_current->td.vm_dsize);
             #endif
             }

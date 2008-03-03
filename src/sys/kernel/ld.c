@@ -119,7 +119,7 @@ uInt32 ldEnable() {
       	/* Not sure... */
 	break;
       default:
-        kprintf("Unhandled Header (kernel) : %08x\n", programHeader[i].phType);
+        //kprintf("Unhandled Header (kernel) : %08x\n", programHeader[i].phType);
         break;
       }
     }
@@ -173,7 +173,7 @@ kprintf("LD_START: 0x%X\n",LD_START);
         sym = i;
         break;
       default:
-        kprintf("Unhandled Section: %s, 0x%X",shStr + sectionHeader[i].shName,sectionHeader[i].shType);
+        //kprintf("Unhandled Section: %s, 0x%X",shStr + sectionHeader[i].shName,sectionHeader[i].shType);
         break;
       }
     }
