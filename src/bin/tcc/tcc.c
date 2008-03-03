@@ -1023,7 +1023,9 @@ static inline void tcc_free(void *ptr)
 static void *tcc_malloc(unsigned long size)
 {
     void *ptr;
+    printf("[");
     ptr = malloc(size);
+    printf("0x%X]\n",ptr);
     if (!ptr && size)
         error("memory full");
 #ifdef MEM_DEBUG
@@ -1832,7 +1834,7 @@ BufferedFile *tcc_open(TCCState *s1, const char *filename)
     bf->line_num = 1;
     bf->ifndef_macro = 0;
     bf->ifdef_stack_ptr = s1->ifdef_stack_ptr;
-    //    printf("opening '%s'\n", filename);
+        printf("opening '%s'\n", filename);
     return bf;
 }
 
@@ -1840,6 +1842,7 @@ void tcc_close(BufferedFile *bf) {
   total_lines += bf->line_num;
   close(bf->fd);
   tcc_free(bf);
+  printf("TCC_CLOSE");
   }
 
 /* fill input buffer and peek next char */
@@ -9238,7 +9241,6 @@ static int tcc_compile(TCCState *s1)
     sym_pop(&global_stack, NULL);
 
     printf("sb1: [%i]\n",s1->nb_errors);
-    while(1);
     return s1->nb_errors != 0 ? -1 : 0;
 }
 
@@ -9631,9 +9633,12 @@ int tcc_relocate(TCCState *s1)
 int tcc_run(TCCState *s1, int argc, char **argv)
 {
     int (*prog_main)(int, char **);
+  printf("REL\n");
 
     if (tcc_relocate(s1) < 0)
         return -1;
+
+   printf("OCATED\n");
 
     prog_main = tcc_get_symbol_err(s1, "main");
     
@@ -9898,8 +9903,10 @@ static int tcc_add_file_internal(TCCState *s1, const char *filename, int flags)
 #endif
     {
         fd = file->fd;
+printf("WOOT");
         /* assume executable format: auto guess file type */
         ret = read(fd, &ehdr, sizeof(ehdr));
+        printf("read: [0x%X]\n",ret);
         lseek(fd, 0, SEEK_SET);
         if (ret <= 0) {
             error_noabort("could not read header");
@@ -9907,6 +9914,7 @@ static int tcc_add_file_internal(TCCState *s1, const char *filename, int flags)
         } else if (ret != sizeof(ehdr)) {
             goto try_load_script;
         }
+printf("CHECKMAG");
 
         if (ehdr.e_ident[0] == ELFMAG0 &&
             ehdr.e_ident[1] == ELFMAG1 &&
@@ -9915,7 +9923,9 @@ static int tcc_add_file_internal(TCCState *s1, const char *filename, int flags)
             file->line_num = 0; /* do not display line number if error */
             if (ehdr.e_type == ET_REL) {
                 ret = tcc_load_object_file(s1, fd, 0);
+printf("wET_REL");
             } else if (ehdr.e_type == ET_DYN) {
+printf("wET_DYN");
                 if (s1->output_type == TCC_OUTPUT_MEMORY) {
 #ifdef TCC_TARGET_PE
                     ret = -1;
@@ -9932,12 +9942,15 @@ static int tcc_add_file_internal(TCCState *s1, const char *filename, int flags)
                                        (flags & AFF_REFERENCED_DLL) != 0);
                 }
             } else {
+printf("wET_UNR");
                 error_noabort("unrecognized ELF file");
                 goto fail;
             }
         } else if (memcmp((char *)&ehdr, ARMAG, 8) == 0) {
             file->line_num = 0; /* do not display line number if error */
+printf("wET_ARCH");
             ret = tcc_load_archive(s1, fd);
+printf("wET_ARCH2");
         } else 
 #ifdef TCC_TARGET_COFF
         if (*(uint16_t *)(&ehdr) == COFF_C67_MAGIC) {
@@ -10638,6 +10651,7 @@ while (1);
         }
     }
     printf("BOOBS2\n");
+while(1);
     /* free all files */
     tcc_free(files);
     printf("BOOBS3\n");
@@ -10657,9 +10671,11 @@ while (1);
     printf("BOOBS4\n");
 
     if (s->output_type == TCC_OUTPUT_MEMORY) {
+        printf("A\n");
         ret = tcc_run(s, argc - optind, argv + optind);
     } else
     {
+        printf("B\n");
         tcc_output_file(s, outfile);
         ret = 0;
     }

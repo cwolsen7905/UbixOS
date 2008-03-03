@@ -17,7 +17,7 @@ REMOVE = rm -f
 #Objects
 OBJS = tcc.o
 
-CFLAGS = -O2 -g -Wall -mpreferred-stack-boundary=2 -march=i386 -falign-functions=0 -fno-strict-aliasing -nostdlib -nostdinc
+CFLAGS = -O -g -Wall -mpreferred-stack-boundary=2 -march=i386 -falign-functions=0 -fno-strict-aliasing -nostdlib -nostdinc
 
 INCLUDES = -I../../include.new -I./
 

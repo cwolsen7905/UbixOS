@@ -2002,9 +2002,11 @@ static int tcc_load_alacarte(TCCState *s1, int fd, int size)
     Elf32_Sym *sym;
 
     data = tcc_malloc(size);
+     printf("ALA:[%i]",size);
     if (read(fd, data, size) != size)
         goto fail;
     nsyms = get_be32(data);
+    printf("NSYMS: [%i]\n",nsyms);
     ar_index = data + 4;
     ar_names = ar_index + nsyms * 4;
 
@@ -2012,6 +2014,7 @@ static int tcc_load_alacarte(TCCState *s1, int fd, int size)
 	bound = 0;
 	for(p = ar_names, i = 0; i < nsyms; i++, p += strlen(p)+1) {
 	    sym_index = find_elf_sym(symtab_section, p);
+printf("SI: [%i]",sym_index);
 	    if(sym_index) {
 		sym = &((Elf32_Sym *)symtab_section->data)[sym_index];
 		if(sym->st_shndx == SHN_UNDEF) {
@@ -2051,6 +2054,7 @@ static int tcc_load_archive(TCCState *s1, int fd)
     
     for(;;) {
         len = read(fd, &hdr, sizeof(hdr));
+        printf("TLA: %i\n",len);
         if (len == 0)
             break;
         if (len != sizeof(hdr)) {
@@ -2066,20 +2070,24 @@ static int tcc_load_archive(TCCState *s1, int fd)
                 break;
         }
         ar_name[i + 1] = '\0';
-        //        printf("name='%s' size=%d %s\n", ar_name, size, ar_size);
+                printf("name='%s' size=%d %s\n", ar_name, size, ar_size);
         file_offset = lseek(fd, 0, SEEK_CUR);
         /* align to even */
         size = (size + 1) & ~1;
         if (!strcmp(ar_name, "/")) {
+  printf("CST");
             /* coff symbol table : we handle it */
-	    if(s1->alacarte_link)
+	    if(s1->alacarte_link) {
+printf("LA");
 		return tcc_load_alacarte(s1, fd, size);
+                }
         } else if (!strcmp(ar_name, "//") ||
                    !strcmp(ar_name, "__.SYMDEF") ||
                    !strcmp(ar_name, "__.SYMDEF/") ||
                    !strcmp(ar_name, "ARFILENAMES/")) {
             /* skip symbol table or archive names */
         } else {
+printf("LOF");
             if (tcc_load_object_file(s1, fd, file_offset) < 0)
                 return -1;
         }

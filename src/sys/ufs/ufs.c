@@ -341,7 +341,8 @@ int ufs_initialize(struct vfs_mountPoint *mp) {
   }
 
 static int ufs_closeFile(const char *file,struct file *fd) {
-  kfree(fd->fsObj);
+  //kfree(fd->fsObj);
+  kprintf("Close file\n");
   return(0x0);
   }
 
@@ -358,7 +359,7 @@ int ufs_init() {
     (void *)ufs_readFile,         /* vfsRead      */
     (void *)ufs_writeFile,        /* vfsWrite     */
     (void *)ufs_openFile,         /* vfsOpenFile  */
-    (void *)ufs_dummy,            /* vfsCloseFile */
+    (void *)ufs_closeFile,        /* vfsCloseFile */
     (void *)ufs_dummy,            /* vfsUnlink    */
     (void *)ufs_dummy,            /* vfsMakeDir   */
     (void *)ufs_dummy,            /* vfsRemDir    */

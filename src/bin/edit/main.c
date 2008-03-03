@@ -31,10 +31,11 @@
 #include <stdlib.h>
 
 int main(int argc,char **argv) {
+  char *a,*b;
   FILE *out;
   printf("UbixOS Text Editor\n");
   printf("V1.0\n");
-  return(1);
+
   out = fopen("/test.txt","r");
 
   while (!feof(out)) {
@@ -44,6 +45,15 @@ int main(int argc,char **argv) {
   fclose(out);
 
   printf("argc: [%i]\n",argc);
+
+  a = malloc(512);
+  b = malloc(512);
+
+  printf("[0x%X]\n",a);
+  printf("[0x%X]\n",b);
+  free(a);
+  a = malloc(512);
+  printf("[0x%X]\n",a);
 
   return(0);
   }

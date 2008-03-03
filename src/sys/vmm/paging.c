@@ -529,7 +529,7 @@ int obreak(struct thread *td,struct obreak_args *uap) {
   vm_offset_t base = 0x0;
   vm_offset_t new  = 0x0;
 
-  #ifdef VMMDEBUG2
+  #ifdef VMMDEBUG
   kprintf("obreak\n");
   kprintf("vm_offset_t: [%i]\n",sizeof(vm_offset_t));
   kprintf("nsize:    [0x%X]\n",uap->nsize);

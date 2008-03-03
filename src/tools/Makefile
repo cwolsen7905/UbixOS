@@ -43,7 +43,7 @@ install-ubix:
 	(cp ../bin/shell/shell /mnts/ubix/bin)
 	(cp ../bin/clock/clock /mnts/ubix/bin)
 	(cp ../bin/fdisk/fdisk /mnts/ubix/bin)
-	#(cp ../bin/edit/edit /mnts/ubix/bin)
+	(cp ../bin/edit/edit /mnts/ubix/bin)
 	(cp ../bin/cat/cat /mnts/ubix/bin)
 	(cp ../bin/ld/ld.so /mnts/ubix/lib)
 	#(cp ../bin/rtld-elf/ld-elf.so.1 /mnts/ubix/libexec)
