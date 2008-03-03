@@ -62,8 +62,9 @@ uInt32 ldEnable() {
   if (ldFd == 0x0) {
     kprintf("Can not open ld.so\n");
     }
-
+  #ifdef LD_DEBUG
   kprintf("Loading LD\n");
+  #endif
  
   fseek(ldFd,0x0,0x0);
   binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader));
@@ -137,7 +138,9 @@ uInt32 ldEnable() {
         elfRel = (elfPltInfo *)kmalloc(sectionHeader[i].shSize);
         fseek(ldFd,sectionHeader[i].shOffset,0x0);
         fread(elfRel,sectionHeader[i].shSize,1,ldFd);
+#ifdef LD_DEBUG
 kprintf("LD_START: 0x%X\n",LD_START);
+#endif
         for (x=0x0;x<sectionHeader[i].shSize/sizeof(elfPltInfo);x++) {
           rel = ELF32_R_SYM(elfRel[x].pltInfo);
           reMap = (uInt32 *)((uInt32)LD_START + elfRel[x].pltOffset);

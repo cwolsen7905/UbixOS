@@ -11,7 +11,7 @@ uInt32 ldFindFunc(const char *func,const char *lib) {
   for (x = 0; x < lib_c;x++) {
     libPtr = ldFindLibrary(lib + lib_s[x]); 
     if (libPtr == 0x0) {
-      printf("[%s][%s]\n",func,lib);
+      //printf("[%s][%s]\n",func,lib);
       libPtr = ldAddLibrary(lib + lib_s[x]);
       }
 

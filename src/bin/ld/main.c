@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2008 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -32,28 +32,24 @@
 #include <sys/types.h>
 #include "ld.h"
 
-ldLibrary *libs = 0x0;
-int        lib_c               = 0x0;
-int        lib_s[10];
-int        binarySym           = 0x0;
-
-static elfHeader        *binaryHeader        = 0x0;
-elfSectionHeader *binarySectionHeader = 0x0;
-static char             *binaryShStr         = 0x0;
-char             *binaryDynStr        = 0x0;
-elfDynSym        *binaryRelSymTab     = 0x0;
-static Elf32_Dyn        *binaryElf32_Dyn     = 0x0;
-//static elfPltInfo       *binaryElfRelDyn     = 0x0;
-static elfPltInfo       *binaryElfRel        = 0x0;
+ldLibrary         *libs                = 0x0;
+int                lib_c               = 0x0;
+int                lib_s[10];
+int                binarySym           = 0x0;
+static elfHeader  *binaryHeader        = 0x0;
+elfSectionHeader  *binarySectionHeader = 0x0;
+static char       *binaryShStr         = 0x0;
+char              *binaryDynStr        = 0x0;
+elfDynSym         *binaryRelSymTab     = 0x0;
+static Elf32_Dyn  *binaryElf32_Dyn     = 0x0;
+static elfPltInfo *binaryElfRel        = 0x0;
 
 uInt32 ld(uInt32 got2,uInt32 entry) {
-  int  i             = 0x0;
-  int  x             = 0x0;
-  //int  y             = 0x0;
-  int  rel           = 0x0;
-  //int  relDyn        = 0x0;
-  uInt32 *reMap      = 0x0;
-  FILE *binaryFd     = 0x0;
+  int     i        = 0x0;
+  int     x        = 0x0;
+  int     rel      = 0x0;
+  uInt32 *reMap    = 0x0;
+  FILE   *binaryFd = 0x0;
 
 
   if (binaryHeader == 0x0) {
@@ -63,7 +59,6 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
     binaryHeader = (elfHeader *)malloc(sizeof(elfHeader));
     fread(binaryHeader,sizeof(elfHeader),1,binaryFd);
     }
-
 
   if (binarySectionHeader == 0x0) {
     binarySectionHeader = (elfSectionHeader *)malloc(sizeof(elfSectionHeader)*binaryHeader->eShnum);
@@ -76,7 +71,6 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
       fread(binaryShStr,binarySectionHeader[binaryHeader->eShstrndx].shSize,1,binaryFd);
       }
 
-    //printf("eShnum: [%i]\n",binaryHeader->eShnum);
     for (i=0x0;i<binaryHeader->eShnum;i++) {
       switch (binarySectionHeader[i].shType) {
         case 3:
@@ -92,10 +86,8 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
           binaryElf32_Dyn = (Elf32_Dyn *)malloc(binarySectionHeader[i].shSize);
           fseek(binaryFd,binarySectionHeader[i].shOffset,0);
           fread(binaryElf32_Dyn,binarySectionHeader[i].shSize,1,binaryFd);
-          //printf("SHT_DYNAMIC\n");
           for (x = 0;x < binarySectionHeader[i].shSize / sizeof(Elf32_Dyn);x++) {
             if (binaryElf32_Dyn[x].d_tag == 1) {
-              printf("[%s]\n",(uInt32)binaryElf32_Dyn[x].d_un.d_ptr);
               lib_s[lib_c] = binaryElf32_Dyn[x].d_un.d_ptr;
               lib_c++;
               }
@@ -152,16 +144,7 @@ uInt32 ld(uInt32 got2,uInt32 entry) {
   i = (entry/sizeof(elfPltInfo));
   x = ELF32_R_SYM(binaryElfRel[i].pltInfo);
   reMap = (uInt32 *)binaryElfRel[i].pltOffset;
-  //printf("[0x%X]",binaryRelSymTab[x].dynName);
   *reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,binaryDynStr);
-//printf("\nld(%s:0x%X)",binaryDynStr + binaryRelSymTab[x].dynName,*reMap);
-  //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));
-
-/*
-  if (binaryFd) {
-    fclose(binaryFd);
-    }
-*/
 
   return(*reMap);
   }

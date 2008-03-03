@@ -486,10 +486,9 @@ void sysExec(char *file,char *ap) {
         interp = (char *)kmalloc(programHeader[i].phFilesz);
         fseek(tmpFd,programHeader[i].phOffset,0);
         fread((void *)interp,programHeader[i].phFilesz,1,tmpFd);
-        #ifdef DEBUG
+        #ifdef LD_DEBUG
         kprintf("Interp: [%s]\n",interp);
         #endif
-        kprintf("Interp: [%s]\n",interp);
         ldAddr = ldEnable();
         break;
       default:
@@ -667,7 +666,7 @@ int sys_exec(char *file,char *ap) {
 
         fseek(_current->imageFd,programHeader[i].phOffset,0);
         fread((void *)interp,programHeader[i].phFilesz,1,_current->imageFd);
-        #ifdef DEBUG
+        #ifdef LD_DEBUG
         kprintf("Interp: [%s]\n",interp);
         #endif
         //ldAddr = ldEnable();

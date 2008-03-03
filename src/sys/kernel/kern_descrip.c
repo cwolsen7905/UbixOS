@@ -126,6 +126,9 @@ int ioctl(struct thread *td, struct ioctl_args *uap) {
   #ifdef NOTIMP
   kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
   #endif
+
+  kprintf("ioctl: %i, 0x%X\n",uap->fd,uap->com);
+ 
   td->td_retval[0] = 0x0;
   return(0x0);
   }

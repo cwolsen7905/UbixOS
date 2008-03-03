@@ -1023,9 +1023,7 @@ static inline void tcc_free(void *ptr)
 static void *tcc_malloc(unsigned long size)
 {
     void *ptr;
-    printf("[");
     ptr = malloc(size);
-    printf("0x%X]\n",ptr);
     if (!ptr && size)
         error("memory full");
 #ifdef MEM_DEBUG
@@ -9211,7 +9209,6 @@ static int tcc_compile(TCCState *s1)
         ch = file->buf_ptr[0];
         tok_flags = TOK_FLAG_BOL | TOK_FLAG_BOF;
         parse_flags = PARSE_FLAG_PREPROCESS | PARSE_FLAG_TOK_NUM;
-    printf("sb9: [%i]\n",s1->nb_errors);
         next();
     printf("sb8: [%i]\n",s1->nb_errors);
         decl(VT_CONST);
@@ -10641,17 +10638,16 @@ int main(int argc, char **argv)
             if (tcc_add_library(s, filename + 2) < 0)
                 error("cannot find %s", filename);
         } else {
-            printf("AF\n");
+            printf("AF: %s\n", filename);
             if (tcc_add_file(s, filename) < 0) {
 printf("BSDF\n");
-while (1);
                 ret = 1;
                 goto the_end;
             }
         }
     }
     printf("BOOBS2\n");
-while(1);
+
     /* free all files */
     tcc_free(files);
     printf("BOOBS3\n");
