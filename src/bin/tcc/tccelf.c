@@ -1062,7 +1062,7 @@ static void tcc_add_linker_symbols(TCCState *s1)
 
 /* name of ELF interpreter */
 #ifdef __FreeBSD__
-static char elf_interp[] = "/usr/libexec/ld-elf.so.1";
+static char elf_interp[] = "/tcc/lib/ld.so";
 #else
 static char elf_interp[] = "/lib/ld-linux.so.2";
 #endif

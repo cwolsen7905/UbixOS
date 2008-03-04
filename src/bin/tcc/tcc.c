@@ -102,7 +102,7 @@ typedef int BOOL;
 
 /* path to find crt1.o, crti.o and crtn.o. Only needed when generating
    executables or dlls */
-#define CONFIG_TCC_CRT_PREFIX "/usr/lib"
+#define CONFIG_TCC_CRT_PREFIX "/tcc/lib"
 
 #define INCLUDE_STACK_SIZE  32
 #define IFDEF_STACK_SIZE    64
@@ -9186,20 +9186,6 @@ static int tcc_compile(TCCState *s1)
     func_old_type.t = VT_FUNC;
     func_old_type.ref = sym_push(SYM_FIELD, &int_type, FUNC_CDECL, FUNC_OLD);
 
-#if 0
-    /* define 'void *alloca(unsigned int)' builtin function */
-    {
-        Sym *s1;
-
-        p = anon_sym++;
-        sym = sym_push(p, mk_pointer(VT_VOID), FUNC_CDECL, FUNC_NEW);
-        s1 = sym_push(SYM_FIELD, VT_UNSIGNED | VT_INT, 0, 0);
-        s1->next = NULL;
-        sym->next = s1;
-        sym_push(TOK_alloca, VT_FUNC | (p << VT_STRUCT_SHIFT), VT_CONST, 0);
-    }
-#endif
-
     define_start = define_stack;
 
     if (setjmp(s1->error_jmp_buf) == 0) {
@@ -9749,9 +9735,10 @@ TCCState *tcc_new(void)
         tcc_add_library_path(s, buf);
     }
 #else
-    tcc_add_library_path(s, "/usr/local/lib");
-    tcc_add_library_path(s, "/usr/lib");
-    tcc_add_library_path(s, "/lib");
+    //tcc_add_library_path(s, "/usr/local/lib");
+    //tcc_add_library_path(s, "/usr/lib");
+    //tcc_add_library_path(s, "/lib");
+    tcc_add_library_path(s, "/tcc/lib");
 #endif
 
     /* no section zero */
@@ -10049,8 +10036,9 @@ int tcc_set_output_type(TCCState *s, int output_type)
         /* default include paths */
         /* XXX: reverse order needed if -isystem support */
 #ifndef TCC_TARGET_PE
-        tcc_add_sysinclude_path(s, "/usr/local/include");
-        tcc_add_sysinclude_path(s, "/usr/include");
+        //tcc_add_sysinclude_path(s, "/usr/local/include");
+        //tcc_add_sysinclude_path(s, "/usr/include");
+        tcc_add_sysinclude_path(s, "/tcc/include");
 #endif
         snprintf(buf, sizeof(buf), "%s/include", tcc_lib_path);
         tcc_add_sysinclude_path(s, buf);
