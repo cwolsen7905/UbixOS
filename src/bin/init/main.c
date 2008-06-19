@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004,2007 The UbixOS Project
+ Copyright (c) 2002-2004,2007,2008 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -85,7 +85,7 @@ int main(int argc,char **argv) {
 
   if (0 == i) {
     printf("Starting Login Daemon.\n");
-    exec("sys:/bin/login",0x0);
+    exec("sys:/bin/login",0x0,0x0);
     printf("Error Starting System\n");
     exit(0x0);
     }

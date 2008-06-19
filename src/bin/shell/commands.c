@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2008 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -40,13 +40,9 @@
 
 int commands(inputBuffer *data) {
   int cPid = 0x0,i = 0x0,x = 0x0;
-  char **argv = &data->argv;
+  char **argv = data->argv;
 
   mpi_message_t cmdMsg;
-
-#ifdef DEBUG
-printf("WEST\n\n");
-#endif
 
   if (data == NULL) return 1;
   if (data->args->arg == NULL) return 1;
@@ -68,7 +64,7 @@ printf("WEST\n\n");
  /*     printf("Starting Clock\n"); */
       cPid = fork();
       if (cPid == 0x0) {
-        exec("clock",0x0);
+        exec("clock",0x0,0x0);
         exit(0x1);
         } else {
         printf("Childs Pid: [%i]\n",cPid);
@@ -77,7 +73,7 @@ printf("WEST\n\n");
         }
       cPid = fork();
       if (cPid == 0x0) {
-        exec("ls", 0x0);
+        exec("ls", 0x0,0x0);
         exit(0x1);
       } else {
         printf("Childs Pid: [%i]\n",cPid);
@@ -91,7 +87,7 @@ printf("WEST\n\n");
       cPid = fork();
       if (cPid == 0x0) {
         printf("Pid: [%i:%i]\n",cPid,i);
-        exec("clock",0x0);
+        exec("clock",0x0,0x0);
         exit(0x1);
         }
       else {

@@ -1374,6 +1374,7 @@ void error1(TCCState *s1, int is_warning, const char *fmt, va_list ap)
     }
     if (!is_warning || s1->warn_error)
         s1->nb_errors++;
+  printf("error1(): [%s]",buf);
 }
 
 #ifdef LIBTCC
@@ -1846,6 +1847,14 @@ void tcc_close(BufferedFile *bf) {
 /* fill input buffer and peek next char */
 static int tcc_peekc_slow(BufferedFile *bf) {
   int len;
+  int x,i;
+  printf("peekc: (%s:%i)",bf->filename,bf->fd);
+
+/*
+  for (i=0;i<50000;i++)
+    for (x=0;x<10000;x++)
+      asm("nop");
+*/
 
   /* only tries to read if really end of buffer */
   if (bf->buf_ptr >= bf->buf_end) {
@@ -1855,7 +1864,9 @@ static int tcc_peekc_slow(BufferedFile *bf) {
       #else
       len = IO_BUF_SIZE;
       #endif
+      printf("readl1: [%i]\n",len);
       len = read(bf->fd, bf->buffer, len);
+      printf("readl2: [%i](%c%c%c%c)\n",len,bf->buffer[0],bf->buffer[1],bf->buffer[2],bf->buffer[3]);
       if (len < 0)
         len = 0;
       }
@@ -2893,6 +2904,7 @@ static void preprocess(int is_bof)
                 buf1[size] = '\0';
                 pstrcat(buf1, sizeof(buf1), buf);
                 f = tcc_open(s1, buf1);
+                printf("to1");
                 if (f) {
                     if (tok == TOK_INCLUDE_NEXT)
                         tok = TOK_INCLUDE;
@@ -2914,6 +2926,7 @@ static void preprocess(int is_bof)
                 pstrcat(buf1, sizeof(buf1), "/");
                 pstrcat(buf1, sizeof(buf1), buf);
                 f = tcc_open(s1, buf1);
+                printf("to2");
                 if (f) {
                     if (tok == TOK_INCLUDE_NEXT)
                         tok = TOK_INCLUDE;
@@ -2939,6 +2952,7 @@ static void preprocess(int is_bof)
             }
             tok_flags |= TOK_FLAG_BOF | TOK_FLAG_BOL;
             ch = file->buf_ptr[0];
+            printf("gte");
             goto the_end;
         }
         break;
@@ -6454,7 +6468,7 @@ static void struct_decl(CType *type, int u)
         s = struct_find(v);
         if (s) {
             if (s->type.t != a)
-                error("invalid type");
+                error("invalid type-1");
             goto do_decl;
         }
     } else {
@@ -6821,7 +6835,7 @@ static void post_type(CType *type, AttributeDef *ad)
             if (l != FUNC_OLD) {
                 if (!parse_btype(&pt, &ad1)) {
                     if (l) {
-                        error("invalid type");
+                        error("invalid type-2");
                     } else {
                         l = FUNC_OLD;
                         goto old_proto;
@@ -8980,11 +8994,13 @@ printf("decl\n");
         }
         while (1) { /* iterate thru each declaration */
             type = btype;
+            printf("btype (%s)",get_tok_str(v,NULL));
             type_decl(&type, &ad, &v, TYPE_DIRECT);
+            printf("BTYPE");
 #if 0
             {
                 char buf[500];
-                type_to_str(buf, sizeof(buf), t, get_tok_str(v, NULL));
+                type_to_str(buf, sizeof(buf), t,get_tok_str(v, NULL));
                 printf("type = '%s'\n", buf);
             }
 #endif
@@ -9123,6 +9139,7 @@ printf("decl\n");
             }
         }
     }
+printf("END_DECL");
 }
 
 /* better than nothing, but needs extension to handle '-E' option
@@ -9860,6 +9877,7 @@ static int tcc_add_file_internal(TCCState *s1, const char *filename, int flags)
     /* open the file */
     saved_file = file;
     file = tcc_open(s1, filename);
+    printf("OF-1");
     if (!file) {
         if (flags & AFF_PRINT_ERROR) {
             error_noabort("file '%s' not found", filename);

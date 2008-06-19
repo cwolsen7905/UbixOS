@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2008 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -70,7 +70,7 @@ void ubistryProcessMessages() {
         mpi_destroyMbox("ubistry");
         if (fork() == 0x0) {
           printf("ubistry: Restarting\n");
-          exec("ubistry@sys",0x0);
+          exec("ubistry@sys",0x0,0x0);
           }
         else {
           exit(0x0);
@@ -87,6 +87,9 @@ void ubistryProcessMessages() {
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:30:20  reddawg
+ UbixOS
+
  Revision 1.2  2006/12/12 14:09:17  reddawg
  Changes
 

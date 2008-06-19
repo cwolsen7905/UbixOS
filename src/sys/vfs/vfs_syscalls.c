@@ -123,7 +123,7 @@ int read(struct thread *td,struct read_args *uap) {
     }
 
   #ifdef VFSDEBUG
-  kprintf("count: %i - %i\n",count,uap->nbyte);
+  kprintf("count(%i): %i - %i\n",fd->offset,count,uap->nbyte);
   #endif
   td->td_retval[0] = count;
   return(error);

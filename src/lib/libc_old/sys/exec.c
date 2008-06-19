@@ -27,12 +27,12 @@
 
 *****************************************************************************************/
 
-int exec(char *file,char *argv) {
+int exec(char *file,char *argv,char *envp) {
   volatile int status = 0x1;
 
   asm volatile(
     "int %0  \n"
-    : : "i" (0x80),"a" (3),"b" (file),"c" (argv)
+    : : "i" (0x80),"a" (3),"b" (file),"c" (argv),"d" (envp)
     );
   return(status);
   }

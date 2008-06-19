@@ -1,5 +1,5 @@
 /**************************************************************************************
- Copyright (c) 2002 The UbixOS Project
+ Copyright (c) 2002,2008 The UbixOS Project
  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -63,26 +63,24 @@ void parseInput(inputBuffer *buffer,char *data) {
     }
 
   /* Alloc memory for argv[] */
-  buffer->argv = (char *)malloc(sizeof(char *) * (buffer->argc + 1));
-  //buffer->envp = (char **)malloc(sizeof(char));
+  buffer->argv = (char *)malloc(sizeof(char *) * (buffer->argc + 2));
+  buffer->envp = (char *)malloc(sizeof(char *));
 
-  //buffer->envp[0] = 0x1;
+  buffer->envp[0] = 0x0;
 
   tmpArgs = buffer->args;
-  argv = &buffer->argv;
-
-  //printf("argc: [%i]\n",buffer->argc);
+  argv = buffer->argv;
 
   for (i=0x1;i <= buffer->argc;i++) {
     argv[i] = tmpArgs->arg;
-    printf("argv[%i]: %s\n",i,argv[i]);
     tmpArgs = tmpArgs->next;
     }
   argv[0] = (char *)buffer->argc;
-  //argv[buffer->argc+1] = buffer->envp;
   }
 
 void freeArgs(inputBuffer *ptr) {
    free(ptr->args);
+   free(ptr->argv);
+   free(ptr->envp);
   //free(tmpArgs->argv);
   }

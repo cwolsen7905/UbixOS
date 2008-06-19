@@ -33,16 +33,23 @@
 int main(int argc,char **argv) {
   char *a,*b;
   FILE *out;
+  char buf[8192];
+  int fd;
+  int len = -1;
   printf("UbixOS Text Editor\n");
   printf("V1.0\n");
 
-  out = fopen("/test.txt","r");
+  //out = fopen("/test.txt","r");
+  fd = open("/usr/include/stdio.h");
 
-  while (!feof(out)) {
-    printf("%c",fgetc(out));
+  //while (!feof(out)) {
+  while (len != 0) {
+    len = read(fd,&buf,8192);
+    printf("[%i](%c%c%c%c)",len,buf[0],buf[1],buf[2],buf[3]);
+    //printf("%c",fgetc(out));
     }
 
-  fclose(out);
+  //fclose(out);
 
   printf("argc: [%i]\n",argc);
 

@@ -351,7 +351,7 @@ void execFile(char *file,int argc,char **argv,int console) {
  04-22-03 - It Now Loads Sections Not The Full File
 
 *****************************************************************************************/
-void sysExec(char *file,char *ap) {
+void sysExec(char *file,char *ap,char *ep) {
   int      i        = 0x0;
   int      x        = 0x0;
   int      argc     = 0x0;
@@ -361,6 +361,7 @@ void sysExec(char *file,char *ap) {
   uInt32   seg_addr = 0x0;
   char    *interp   = 0x0;
   char   **argv     = 0x0;
+  char   **envp     = 0x0;
   char   **argvNew  = 0x0;
   char    *args     = 0x0;
 
@@ -520,6 +521,10 @@ void sysExec(char *file,char *ap) {
   kprintf("STATING: [0x%X][0x%X]\n",_current->td.vm_dsize,_current->td.vm_daddr);
 
   argv = ap;
+  envp = ep;
+
+  if ((ep != 0x0) && (envp[0] != 0x0))
+    kprintf("ENV SIZE: [0x%X]\n",envp[0]);
 
   if (argv[1] != 0x0) {
     argc = argv[0];

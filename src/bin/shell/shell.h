@@ -9,11 +9,11 @@ struct argsStruct {
   };
   
 typedef struct {
+  uInt8 bg;
+  struct argsStruct *args;
   int argc;
   char *argv;
   char **envp;
-  uInt8 bg;
-  struct argsStruct *args;
   } inputBuffer;
 
 void parseInput(inputBuffer *,char *);

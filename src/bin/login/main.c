@@ -1,5 +1,5 @@
 /**************************************************************************************
- Copyright (c) 2002 The UbixOS Project
+ Copyright (c) 2002,2008 The UbixOS Project
  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -128,7 +128,7 @@ int main() {
           //chdir(data[i].path);
           chdir("sys:/bin/");
           printf("[%s]\n",data[i].shell);
-          exec(data[i].shell,0x0);
+          exec(data[i].shell,0x0,0x0);
           printf("Error: Problem Starting Shell\n");
           exit(-1);
           }

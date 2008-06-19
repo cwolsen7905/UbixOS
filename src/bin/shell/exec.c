@@ -32,17 +32,17 @@ int boo = 0x0;
 
 void execProgram(inputBuffer *data) {
   char file[1024];
-  char **argv = &data->argv;
+  char **argv = data->argv;
   int cPid = 0x0;
 
-  printf("Executing App\n");
+  printf("Executing App: %s\n",argv[1]);
 
   cPid = fork();
 
   if (!cPid) {
     sprintf(file,"%s%s",cwd,argv[1]);
     if (boo == 0)
-      exec(file,&data->argv);
+      exec(file,data->argv,data->envp);
     else
       execn(file,&data->argv);
     printf("%s: Command Not Found.\n",argv[1]);
