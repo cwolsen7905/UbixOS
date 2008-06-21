@@ -15,19 +15,20 @@ BINARY = ls
 REMOVE = rm -f
 
 #Objects
-OBJS = main.o
+OBJS = cmp.o util.o print.o ls.o
 
-LIBRARIES = ../../lib/libc_old/libc_old.so
+INCLUDES = -I../../include.new
+
+LIBRARIES = ../../lib/libc/libc.so ../../lib/libutil/libutil.so
+
+STARTUP = ../../lib/csu/*.o
 
 # Link The Binary
 $(BINARY) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	strip $(BINARY)
+	#strip $(BINARY)
 
 # Compile the source files
-.cpp.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
-
 .cc.o:
 	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
@@ -35,7 +36,7 @@ $(BINARY) : $(OBJS)
 	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  -Wall -O -ggdb $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 .c.s:
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
