@@ -121,6 +121,7 @@ printscol(const DISPLAY *dp)
 int
 printname(const char *name)
 {
+printf("printname\n");
 	if (f_octal || f_octal_escape)
 		return prn_octal(name);
 	else if (f_nonprint)
@@ -141,6 +142,8 @@ printlong(const DISPLAY *dp)
 #endif
 	int haveacls;
 	dev_t prevdev;
+
+        printf("PRINTLONG\n");
 
 	if ((dp->list == NULL || dp->list->fts_level != FTS_ROOTLEVEL) &&
 	    (f_longform || f_size)) {
@@ -218,6 +221,7 @@ printstream(const DISPLAY *dp)
 {
 	FTSENT *p;
 	int chcnt;
+printf("printstream\n");
 
 	for (p = dp->list, chcnt = 0; p; p = p->fts_link) {
 		if (p->fts_number == NO_PRINT)
@@ -256,6 +260,8 @@ printcol(const DISPLAY *dp)
 	int numrows;
 	int row;
 	int tabwidth;
+
+printf("printcol");
 
 	if (f_notabs)
 		tabwidth = 1;
@@ -322,6 +328,8 @@ printcol(const DISPLAY *dp)
 				if (f_sortacross && col + 1 >= numcols)
 					break;
 				(void)putchar(f_notabs ? ' ' : '\t');
+                                 //Hack
+                                 printf("%s",f_notabs ? ' ' : '\t');
 				chcnt = cnt;
 			}
 			endcol += colwidth;
@@ -342,6 +350,8 @@ printaname(const FTSENT *p, u_long inodefield, u_long sizefield)
 #ifdef COLORLS
 	int color_printed = 0;
 #endif
+
+printf("printaname:\n");
 
 	sp = p->fts_statp;
 	chcnt = 0;
@@ -372,6 +382,7 @@ printtime(time_t ftime)
 	const char *format;
 	static int d_first = -1;
 
+printf("printtime\n");
 	if (d_first < 0)
 		d_first = (*nl_langinfo(D_MD_ORDER) == 'd');
 	if (now == 0)
@@ -394,6 +405,7 @@ printtime(time_t ftime)
 static int
 printtype(u_int mode)
 {
+printf("printtype\n");
 
 	if (f_slash) {
 		if ((mode & S_IFMT) == S_IFDIR) {
@@ -433,6 +445,7 @@ printtype(u_int mode)
 static int
 putch(int c)
 {
+printf("putch\n");
 	(void)putchar(c);
 	return 0;
 }
@@ -441,6 +454,8 @@ static int
 writech(int c)
 {
 	char tmp = (char)c;
+
+printf("writech\n");
 
 	(void)write(STDOUT_FILENO, &tmp, 1);
 	return 0;

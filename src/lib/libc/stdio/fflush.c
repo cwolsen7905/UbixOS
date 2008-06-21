@@ -58,6 +58,8 @@ fflush(FILE *fp)
 {
 	int retval;
 
+printf("fflush\n");
+
 	if (fp == NULL)
 		return (_fwalk(sflush_locked));
 	FLOCKFILE(fp);

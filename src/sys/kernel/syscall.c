@@ -181,7 +181,7 @@ void sysCheckPid(int pid,int *ptr)
 	if ((tmpTask != 0x0) && (ptr != 0x0)) {
 		*ptr = tmpTask->state;
           if (*ptr != 1)
-            kprintf("[%i]",*ptr);
+            kprintf("CP: [%i]\n",*ptr);
           }
 	else
 		*ptr = 0x0;

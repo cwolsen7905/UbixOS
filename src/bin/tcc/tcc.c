@@ -1847,14 +1847,7 @@ void tcc_close(BufferedFile *bf) {
 /* fill input buffer and peek next char */
 static int tcc_peekc_slow(BufferedFile *bf) {
   int len;
-  int x,i;
   //printf("peekc: (%s:%i)",bf->filename,bf->fd);
-
-/*
-  for (i=0;i<50000;i++)
-    for (x=0;x<10000;x++)
-      asm("nop");
-*/
 
   /* only tries to read if really end of buffer */
   if (bf->buf_ptr >= bf->buf_end) {
@@ -2904,7 +2897,6 @@ static void preprocess(int is_bof)
                 buf1[size] = '\0';
                 pstrcat(buf1, sizeof(buf1), buf);
                 f = tcc_open(s1, buf1);
-                printf("to1");
                 if (f) {
                     if (tok == TOK_INCLUDE_NEXT)
                         tok = TOK_INCLUDE;
@@ -2926,7 +2918,6 @@ static void preprocess(int is_bof)
                 pstrcat(buf1, sizeof(buf1), "/");
                 pstrcat(buf1, sizeof(buf1), buf);
                 f = tcc_open(s1, buf1);
-                printf("to2");
                 if (f) {
                     if (tok == TOK_INCLUDE_NEXT)
                         tok = TOK_INCLUDE;
@@ -2952,7 +2943,6 @@ static void preprocess(int is_bof)
             }
             tok_flags |= TOK_FLAG_BOF | TOK_FLAG_BOL;
             ch = file->buf_ptr[0];
-            printf("gte");
             goto the_end;
         }
         break;
@@ -9627,50 +9617,43 @@ int tcc_relocate(TCCState *s1)
 }
 
 /* launch the compiled program with the given arguments */
-int tcc_run(TCCState *s1, int argc, char **argv)
-{
-  printf("PROG_MAIN\n");
-    int (*prog_main)(int, char **);
-  printf("REL\n");
+int tcc_run(TCCState *s1, int argc, char **argv) {
+  int (*prog_main)(int, char **);
 
-    if (tcc_relocate(s1) < 0)
-        return -1;
+  if (tcc_relocate(s1) < 0)
+    return -1;
 
-   printf("OCATED\n");
-
-    prog_main = tcc_get_symbol_err(s1, "main");
-printf("TCC_GET_SYM\n");
+  prog_main = tcc_get_symbol_err(s1, "main");
+  printf("TCC_GET_SYM\n");
     
-    if (do_debug) {
-        struct sigaction sigact;
-        /* install TCC signal handlers to print debug info on fatal
-           runtime errors */
-        sigact.sa_flags = SA_SIGINFO | SA_RESETHAND;
-        sigact.sa_sigaction = sig_error;
-        sigemptyset(&sigact.sa_mask);
-        sigaction(SIGFPE, &sigact, NULL);
-        sigaction(SIGILL, &sigact, NULL);
-        sigaction(SIGSEGV, &sigact, NULL);
-        sigaction(SIGBUS, &sigact, NULL);
-        sigaction(SIGABRT, &sigact, NULL);
+  if (do_debug) {
+    struct sigaction sigact;
+    /* install TCC signal handlers to print debug info on fatal
+    runtime errors */
+    sigact.sa_flags = SA_SIGINFO | SA_RESETHAND;
+    sigact.sa_sigaction = sig_error;
+    sigemptyset(&sigact.sa_mask);
+    sigaction(SIGFPE, &sigact, NULL);
+    sigaction(SIGILL, &sigact, NULL);
+    sigaction(SIGSEGV, &sigact, NULL);
+    sigaction(SIGBUS, &sigact, NULL);
+    sigaction(SIGABRT, &sigact, NULL);
     }
 
-#ifdef CONFIG_TCC_BCHECK
-    if (do_bounds_check) {
-        void (*bound_init)(void);
+  #ifdef CONFIG_TCC_BCHECK
+  if (do_bounds_check) {
+    void (*bound_init)(void);
 
-        /* set error function */
-        rt_bound_error_msg = (void *)tcc_get_symbol_err(s1, 
-                                                        "__bound_error_msg");
-
-        /* XXX: use .init section so that it also work in binary ? */
-        bound_init = (void *)tcc_get_symbol_err(s1, "__bound_init");
-        bound_init();
+    /* set error function */
+    rt_bound_error_msg = (void *)tcc_get_symbol_err(s1,"__bound_error_msg");
+    /* XXX: use .init section so that it also work in binary ? */
+    bound_init = (void *)tcc_get_symbol_err(s1, "__bound_init");
+    bound_init();
     }
-#endif
-printf("HI!: [0x%X]\n",prog_main);
-    return (*prog_main)(argc, argv);
-}
+  #endif
+  printf("HI!: [0x%X][0x%X][%s]\n",prog_main,argv,argv[0]);
+  return (*prog_main)(argc, argv);
+  }
 
 TCCState *tcc_new(void)
 {

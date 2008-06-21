@@ -45,6 +45,7 @@ void execProgram(inputBuffer *data) {
       exec(file,data->argv,data->envp);
     else
       execn(file,&data->argv);
+
     printf("%s: Command Not Found.\n",argv[1]);
     exit(-1);
     }

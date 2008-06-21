@@ -557,7 +557,7 @@ int obreak(struct thread *td,struct obreak_args *uap) {
     }
   else if (new < old) {
     kprintf("0x%X < 0x%X\n",new,old);
-    K_PANIC("new < old"); 
+    //K_PANIC("new < old"); 
     td->vm_dsize -= btoc(old - new);
     }
 

@@ -163,7 +163,7 @@ int write(struct thread *td, struct write_args *uap) {
     td->td_retval[0] = uap->nbyte;
     }
   else {
-    kprintf("[%i]",uap->nbyte);
+    kprintf("WUAP[%i]",uap->nbyte);
     buffer = kmalloc(uap->nbyte);
     memcpy(buffer,uap->buf,uap->nbyte);
     //kprint(buffer);
@@ -196,14 +196,20 @@ int open(struct thread *td, struct open_args *uap) {
   if (error)
      return(error);
 
-  strcpy(nfp->path,uap->path);
+  kprintf("opening: %s\n",uap->path);
+
+  if (!strcmp(".",uap->path)) {
+    kprintf("GOTCHA!\n");
+    strcpy(nfp->path,"/bin");
+    }
+  else
+    strcpy(nfp->path,uap->path);
 
   if (uap->flags != 0x0) {
     kprintf("BAD!\n");
     while (1);
     }
-
-  if (fopen(nfp,uap->path,"r") == 0x0) {
+  if (fopen(nfp,nfp->path,"r") == 0x0) {
     td->td_retval[0] = -1;
     td->o_files[index] = 0x0;
     }

@@ -177,10 +177,22 @@ struct gettimeofday_args {
   char tp_l_[PADL_(struct timeval *)]; struct timeval * tp; char tp_r_[PADR_(struct timeval *)];
   char tzp_l_[PADL_(struct timezone *)]; struct timezone * tzp; char tzp_r_[PADR_(struct timezone *)];
   };
+
+struct stat_args {
+        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
+        char ub_l_[PADL_(struct stat *)]; struct stat * ub; char ub_r_[PADR_(struct stat *)];
+};
+
 struct fstat_args {
         char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
         char sb_l_[PADL_(struct stat *)]; struct stat * sb; char sb_r_[PADR_(struct stat *)];
 };
+
+struct lstat_args {
+        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
+        char ub_l_[PADL_(struct stat *)]; struct stat * ub; char ub_r_[PADR_(struct stat *)];
+};
+
 struct ioctl_args {
         char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
         char com_l_[PADL_(u_long)]; u_long com; char com_r_[PADR_(u_long)];

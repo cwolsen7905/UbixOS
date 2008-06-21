@@ -458,6 +458,7 @@ main(int argc, char *argv[])
 		traverse(argc, argv, fts_options);
 	else
 		traverse(1, dotav, fts_options);
+        printf("EXITING: [%i]\n",rval);
 	exit(rval);
 }
 

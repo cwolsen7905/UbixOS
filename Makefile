@@ -13,6 +13,9 @@ ubix_api: src
 libc_old: src
 	(cd src/lib/libc_old;make)
 
+libc_a: src
+	(cd src/lib/libc;make LIBPATH=${.CURDIR} lib.a)
+
 libc: src
 	(cd src/lib/libc;make LIBPATH=${.CURDIR})
 

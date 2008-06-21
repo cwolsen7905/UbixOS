@@ -59,7 +59,6 @@ int main() {
     inBuf->bg   = 0x0;
 
     parseInput(inBuf,buffer);
-    printf("parsed: [0x%X]",inBuf->args->arg);
 
     if (inBuf->args->arg != 0x0) {
       if (!commands(inBuf))

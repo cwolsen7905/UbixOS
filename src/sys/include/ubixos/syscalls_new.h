@@ -48,7 +48,9 @@ int getdtablesize();
 int munmap();
 int sigprocmask();
 int gettimeofday_new();
+int stat();
 int fstat();
+int lstat();
 int ioctl();
 
 #define  invalid_call    0x0
@@ -250,9 +252,9 @@ functionPTR systemCalls_new[] = {
   invalid_call,		/** 185 **/
   invalid_call,		/** 186 **/
   invalid_call,		/** 187 **/
-  invalid_call,		/** 188 **/
+  stat,			/** 188 **/
   fstat,		/** 189 **/
-  invalid_call,		/** 190 **/
+  lstat,		/** 190 **/
   invalid_call,		/** 191 **/
   invalid_call,		/** 192 **/
   invalid_call,		/** 193 **/

@@ -100,6 +100,36 @@ int getdtablesize(struct thread *td, struct getdtablesize_args *uap) {
   }
 
 /* BUGS: Getting closer*/
+int stat(struct thread *td,struct stat_args *uap) {
+  #ifdef VFSDEBUG
+  kprintf("[%s:%i]",__FILE__,__LINE__,__FUNCTION__);
+  #endif
+
+  #ifdef NOTIMP
+  kprintf("stat: %s\n",uap->path);
+  #endif
+
+  if (!strcmp(uap->path,"ls")) {
+    kprintf("LS: [%i]\n",td->td_retval[0]);
+    uap->ub->st_dev       = 81;
+    uap->ub->st_ino       = 31;
+    uap->ub->st_nlink     = 1;
+    uap->ub->st_atime     = 1213841701;
+    uap->ub->st_mtime     = 1213841701;
+    uap->ub->st_ctime     = 1213841701;
+    uap->ub->st_birthtime = 1213841701; 
+    uap->ub->st_size      = 25228;
+    uap->ub->st_rdev      = 2496;
+    uap->ub->st_mode      = 33133;
+    uap->ub->st_blocks    = 52;
+    uap->ub->st_blksize    = 4096;
+    return(0x0);
+    }
+  td->td_retval[0] = -1;
+  return(0x0);
+  }
+
+
 int fstat(struct thread *td,struct fstat_args *uap) {
   struct file *fp = 0x0;
 
@@ -112,10 +142,40 @@ int fstat(struct thread *td,struct fstat_args *uap) {
   uap->sb->st_blksize = 0x1000;
   uap->sb->st_size    = fp->size;
   #ifdef NOTIMP
-  kprintf("fstat: %i",uap->fd);
+  kprintf("fstat: %i\n",uap->fd);
   #endif
   return(0x0);
   }
+
+int lstat(struct thread *td,struct lstat_args *uap) {
+  #ifdef VFSDEBUG
+  kprintf("[%s:%i]",__FILE__,__LINE__,__FUNCTION__);
+  #endif
+
+  #ifdef NOTIMP
+  kprintf("lstat: %s\n",uap->path);
+  #endif
+
+  if (!strcmp(uap->path,"ls")) {
+    kprintf("LS: [%i]\n",td->td_retval[0]);
+    uap->ub->st_dev       = 81;
+    uap->ub->st_ino       = 31;
+    uap->ub->st_nlink     = 1;
+    uap->ub->st_atime     = 1213841701;
+    uap->ub->st_mtime     = 1213841701;
+    uap->ub->st_ctime     = 1213841701;
+    uap->ub->st_birthtime = 1213841701;
+    uap->ub->st_size      = 25228;
+    uap->ub->st_rdev      = 2496;
+    uap->ub->st_mode      = 33133;
+    uap->ub->st_blocks    = 52;
+    uap->ub->st_blksize    = 4096;
+    return(0x0);
+    }
+  td->td_retval[0] = -1;
+  return(0);
+  }
+
 
 /*!
  * \brief ioctl functionality not implimented yet

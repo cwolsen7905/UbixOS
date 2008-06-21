@@ -18,6 +18,7 @@ SUBS = ./*/*.o ./db/*/*.o ./i386/*/*.o ../csu/*.o
 
 #Output
 OUTPUT = libc.so
+OUTPUT2 = libc.a
 
 lib.so: $(OBJS)
 	(cd yp;make LIBPATH=${LIBPATH})
@@ -49,7 +50,39 @@ lib.so: $(OBJS)
 	$(CC) -nostdlib -shared -Wl,-x -o $(OUTPUT) -Wl,-soname,$(OUTPUT) `lorder $(OBJS) $(SUBS) | tsort -q`
 	#$(CC) -nostdlib -shared -Wl,-x -o lib-c.so -Wl,-soname,lib-c.so `lorder $(OBJS) $(SUBS) | tsort -q`
 	#(rm -fr pic.a;ar cq pic.a ./i386/*/*.o ./stdio/*.o ./stdlib/*.o ./string/*.o ./sys/*.o ./xdr/*.o ./yp/*.o ./locale/*.o ./gen/*.o ; ranlib ./pic.a)
-	(rm pic.a)
+	#(rm pic.a)
+	#$(AR) cq $(LPIC) `lorder $(OBJS) $(SUBS) | tsort -q`
+	#ranlib $(LPIC)
+
+lib.a: $(OBJS)
+#	(make clean)
+	(cd yp;make LIBPATH=${LIBPATH} PICA=true)
+	(cd xdr;make LIBPATH=${LIBPATH} PICA=true)
+	(cd uuid;make LIBPATH=${LIBPATH} PICA=true)
+#       (cd uthread;make LIBPATH=${LIBPATH} PICA=true)
+	(cd sys;make LIBPATH=${LIBPATH} PICA=true)
+	(cd string;make LIBPATH=${LIBPATH} PICA=true)
+	(cd stdtime;make LIBPATH=${LIBPATH} PICA=true)
+	(cd stdlib;make LIBPATH=${LIBPATH} PICA=true)
+	(cd stdio;make LIBPATH=${LIBPATH} PICA=true)
+	(cd rpc;make LIBPATH=${LIBPATH} PICA=true)
+	(cd resolv;make LIBPATH=${LIBPATH} PICA=true)
+	(cd regex;make LIBPATH=${LIBPATH} PICA=true)
+	(cd quad;make LIBPATH=${LIBPATH} PICA=true)
+	(cd posix1e;make LIBPATH=${LIBPATH} PICA=true)
+	(cd nls;make LIBPATH=${LIBPATH} PICA=true)
+	(cd net;make LIBPATH=${LIBPATH})
+	(cd nameser;make LIBPATH=${LIBPATH})
+	(cd locale;make LIBPATH=${LIBPATH})
+	(cd isc;make LIBPATH=${LIBPATH})
+	(cd inet;make LIBPATH=${LIBPATH})
+	(cd i386;make LIBPATH=${LIBPATH})
+	(cd gmon;make LIBPATH=${LIBPATH})
+	(cd gen;make LIBPATH=${LIBPATH})
+	(cd gdtoa;make LIBPATH=${LIBPATH})
+	(cd db;make LIBPATH=${LIBPATH})
+	(cd compat-43;make LIBPATH=${LIBPATH})
+	(rm -fr libc.a)
 	$(AR) cq $(LPIC) `lorder $(OBJS) $(SUBS) | tsort -q`
 	ranlib $(LPIC)
 
