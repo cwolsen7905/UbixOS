@@ -120,8 +120,8 @@ int commands(inputBuffer *data) {
     printf("Base Command Line Interface\n");   
     }
   else if (memcmp(data->args->arg,"cd",2) == 0) {
-    if (argv[1]) {
-      chdir(argv[1]);
+    if (argv[2]) {
+      chdir(argv[2]);
       getcwd(cwd,1024);
       }
     }

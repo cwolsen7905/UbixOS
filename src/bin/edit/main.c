@@ -40,12 +40,18 @@ int main(int argc,char **argv) {
   printf("V1.0\n");
 
   //out = fopen("/test.txt","r");
-  fd = open("/usr/include/stdio.h");
+
+  if (argc > 1)
+    fd = open(argv[1]);
+  else
+    fd = open("/usr/include/stdio.h");
+
+  printf("FD: %i\n",fd);
 
   //while (!feof(out)) {
   while (len != 0) {
     len = read(fd,&buf,8192);
-    printf("[%i](%c%c%c%c)",len,buf[0],buf[1],buf[2],buf[3]);
+    printf("[%i](%c%c%c%c)\n",len,buf[0],buf[1],buf[2],buf[3]);
     //printf("%c",fgetc(out));
     }
 

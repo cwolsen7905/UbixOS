@@ -14,7 +14,7 @@ AR = ar
 LPIC = pic.a
 
 #Sub Sections
-SUBS = ./*/*.o ./db/*/*.o ./i386/*/*.o
+SUBS = ./*/*.o ./db/*/*.o ./i386/*/*.o ../csu/*.o
 
 #Output
 OUTPUT = libc.so
@@ -46,12 +46,15 @@ lib.so: $(OBJS)
 	(cd gdtoa;make LIBPATH=${LIBPATH})
 	(cd db;make LIBPATH=${LIBPATH})
 	(cd compat-43;make LIBPATH=${LIBPATH})
-	$(CC) -shared -Wl,-x -o $(OUTPUT) -Wl,-soname,$(OUTPUT) `lorder $(OBJS) $(SUBS) | tsort -q`
-	(rm -fr pic.a;ar cq pic.a ./i386/*/*.o ./stdio/*.o ./stdlib/*.o ./string/*.o ./sys/*.o ./xdr/*.o ./yp/*.o ./locale/*.o ./gen/*.o ; ranlib ./pic.a)
+	$(CC) -nostdlib -shared -Wl,-x -o $(OUTPUT) -Wl,-soname,$(OUTPUT) `lorder $(OBJS) $(SUBS) | tsort -q`
+	#$(CC) -nostdlib -shared -Wl,-x -o lib-c.so -Wl,-soname,lib-c.so `lorder $(OBJS) $(SUBS) | tsort -q`
+	#(rm -fr pic.a;ar cq pic.a ./i386/*/*.o ./stdio/*.o ./stdlib/*.o ./string/*.o ./sys/*.o ./xdr/*.o ./yp/*.o ./locale/*.o ./gen/*.o ; ranlib ./pic.a)
+	(rm pic.a)
+	$(AR) cq $(LPIC) `lorder $(OBJS) $(SUBS) | tsort -q`
+	ranlib $(LPIC)
 
 pic.a: $(OBJS)
-	(make clean)
-	(cd yp;make PICA=true)
+	(cd yp;make PICA=true LIBPATH=${LIBPATH})
 	(cd xdr;make PICA=true)
 	(cd uuid;make PICA=true)
 	(cd uthread;make PICA=true)
@@ -77,9 +80,9 @@ pic.a: $(OBJS)
 	(cd gdtoa;make)
 	(cd db;make)
 	(cd compat-43;make)
-pic_a: $(OBJS)
-	$(AR) cq $(LPIC) $(OBJS) $(SUBS)
-	ranlib $(LPIC)
+#pic_a: $(OBJS)
+#	$(AR) cq $(LPIC) $(OBJS) $(SUBS)
+#	ranlib $(LPIC)
 
 # Compile the source files
 .cc.o:

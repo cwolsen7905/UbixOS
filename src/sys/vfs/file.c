@@ -383,7 +383,9 @@ struct file *fopen(struct file *tmpFd,const char *file,const char *flags) {
     kfree(tmpFd->buffer);
     kfree(tmpFd);
     //spinUnlock(&fdTable_lock);
-    kprintf("File Not Found? %s\n\n",file);
+    #ifdef VFSDEBUG
+    kprintf("File Not Found? (%s)\n\n",file);
+    #endif
     return (NULL);
     }
 

@@ -1848,7 +1848,7 @@ void tcc_close(BufferedFile *bf) {
 static int tcc_peekc_slow(BufferedFile *bf) {
   int len;
   int x,i;
-  printf("peekc: (%s:%i)",bf->filename,bf->fd);
+  //printf("peekc: (%s:%i)",bf->filename,bf->fd);
 
 /*
   for (i=0;i<50000;i++)
@@ -1864,9 +1864,9 @@ static int tcc_peekc_slow(BufferedFile *bf) {
       #else
       len = IO_BUF_SIZE;
       #endif
-      printf("readl1: [%i]\n",len);
+      //printf("readl1: [%i]\n",len);
       len = read(bf->fd, bf->buffer, len);
-      printf("readl2: [%i](%c%c%c%c)\n",len,bf->buffer[0],bf->buffer[1],bf->buffer[2],bf->buffer[3]);
+      //printf("readl2: [%i](%c%c%c%c)\n",len,bf->buffer[0],bf->buffer[1],bf->buffer[2],bf->buffer[3]);
       if (len < 0)
         len = 0;
       }
@@ -8996,7 +8996,6 @@ printf("decl\n");
             type = btype;
             printf("btype (%s)",get_tok_str(v,NULL));
             type_decl(&type, &ad, &v, TYPE_DIRECT);
-            printf("BTYPE");
 #if 0
             {
                 char buf[500];
@@ -9591,12 +9590,8 @@ int tcc_relocate(TCCState *s1)
     int i;
 
     s1->nb_errors = 0;
-    
-#ifdef TCC_TARGET_PE
-    pe_add_runtime(s1);
-#else
+
     tcc_add_runtime(s1);
-#endif
 
     relocate_common_syms();
 
@@ -9615,7 +9610,9 @@ int tcc_relocate(TCCState *s1)
         }
     }
 
+    printf("RELOCATING");
     relocate_syms(s1, 1);
+    printf("RELOCATED: %i",s1->nb_errors);
 
     if (s1->nb_errors != 0)
         return -1;
@@ -9632,6 +9629,7 @@ int tcc_relocate(TCCState *s1)
 /* launch the compiled program with the given arguments */
 int tcc_run(TCCState *s1, int argc, char **argv)
 {
+  printf("PROG_MAIN\n");
     int (*prog_main)(int, char **);
   printf("REL\n");
 
@@ -9641,11 +9639,9 @@ int tcc_run(TCCState *s1, int argc, char **argv)
    printf("OCATED\n");
 
     prog_main = tcc_get_symbol_err(s1, "main");
+printf("TCC_GET_SYM\n");
     
     if (do_debug) {
-#if defined(WIN32) || defined(CONFIG_TCCBOOT)
-        error("debug mode currently not available for Windows");
-#else        
         struct sigaction sigact;
         /* install TCC signal handlers to print debug info on fatal
            runtime errors */
@@ -9657,7 +9653,6 @@ int tcc_run(TCCState *s1, int argc, char **argv)
         sigaction(SIGSEGV, &sigact, NULL);
         sigaction(SIGBUS, &sigact, NULL);
         sigaction(SIGABRT, &sigact, NULL);
-#endif
     }
 
 #ifdef CONFIG_TCC_BCHECK
@@ -9673,6 +9668,7 @@ int tcc_run(TCCState *s1, int argc, char **argv)
         bound_init();
     }
 #endif
+printf("HI!: [0x%X]\n",prog_main);
     return (*prog_main)(argc, argv);
 }
 
@@ -10686,12 +10682,14 @@ printf("BSDF\n");
     /* XXX: cannot do it with bound checking because of the malloc hooks */
     if (!do_bounds_check)
         tcc_delete(s);
+    printf("BOOBS6\n");
 
 #ifdef MEM_DEBUG
     if (do_bench) {
         printf("memory: %d bytes, max = %d bytes\n", mem_cur_size, mem_max_size);
     }
 #endif
+    printf("BOOBS7\n");
     return ret;
 }
 

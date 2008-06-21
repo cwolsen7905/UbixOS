@@ -45,8 +45,7 @@ __FBSDID("$FreeBSD: src/lib/libc/stdlib/abort.c,v 1.9 2003/08/16 11:43:57 davidx
 #include <pthread.h>
 #include "un-namespace.h"
 
-void (*__cleanup)();
-
+#include "libc_private.h"
 void
 abort()
 {

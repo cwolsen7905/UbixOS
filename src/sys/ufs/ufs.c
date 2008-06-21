@@ -161,7 +161,6 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,struct file *fd) {
 
     inomap = inode;
     fd->offset = 0;
-    //kprintf("RSOF");
     blkmap = indmap = 0;
     }
 
@@ -225,7 +224,6 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,struct file *fd) {
     memcpy(s, blkbuf + vboff, n);
     s += n;
     fd->offset += n;
-    //kprintf("UPOFST");
     nb -= n;
     }
   return nbyte;

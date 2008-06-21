@@ -428,7 +428,7 @@ static void relocate_syms(TCCState *s1, int do_resolve)
             if (sym_bind == STB_WEAK) {
                 sym->st_value = 0;
             } else {
-                error_noabort("undefined symbol '%s'", name);
+                error_noabort("undefined symbol '%s','%i'", name,sym_bind);
             }
         } else if (sh_num < SHN_LORESERVE) {
             /* add section base */
@@ -988,6 +988,8 @@ static void tcc_add_runtime(TCCState *s1)
     }
 #endif
     /* add libc */
+
+printf("ADD-LIBC");
     if (!s1->nostdlib) {
         tcc_add_library(s1, "c");
 
@@ -998,6 +1000,7 @@ static void tcc_add_runtime(TCCState *s1)
     if (s1->output_type != TCC_OUTPUT_MEMORY && !s1->nostdlib) {
         tcc_add_file(s1, CONFIG_TCC_CRT_PREFIX "/crtn.o");
     }
+printf("ADDED\n");
 }
 
 /* add various standard linker symbols (must be done after the
@@ -2014,7 +2017,11 @@ static int tcc_load_alacarte(TCCState *s1, int fd, int size)
 	bound = 0;
 	for(p = ar_names, i = 0; i < nsyms; i++, p += strlen(p)+1) {
 	    sym_index = find_elf_sym(symtab_section, p);
-printf("SI: [%i]",sym_index);
+/*
+  if (sym_index > 0)
+      printf("SI: [%i]",sym_index);
+  UBU
+*/
 	    if(sym_index) {
 		sym = &((Elf32_Sym *)symtab_section->data)[sym_index];
 		if(sym->st_shndx == SHN_UNDEF) {

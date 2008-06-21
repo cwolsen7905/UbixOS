@@ -28,9 +28,9 @@ STARTUP = ../../lib/csu/*.o
 # Link The Binary
 $(BINARY) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	$(CC) -DLIBTCC -c -o libtcc.o tcc.c
+	$(CC) -nostdlib -DLIBTCC -c -o libtcc.o tcc.c
 	ar rcs libtcc.a libtcc.o
-	$(CC) -O2 -Wall -c -o libtcc1.o libtcc1.c
+	$(CC) -nostdlib -O2 -Wall -c -o libtcc1.o libtcc1.c
 	ar rcs libtcc1.a libtcc1.o
 
 # Compile the source files

@@ -1,7 +1,7 @@
 # $Id$
 # The System Makefile (C) 2002 The UbixOS Project
 
-all: kernel tools ubix_api libc_old ubix csu libc libcpp bin
+all: kernel tools ubix_api libc_old ubix csu libc libcpp libutil bin
 # depend kernel tools
 
 csu: src
@@ -28,6 +28,9 @@ ubix: src
 libcpp: src
 	(cd src/lib/libcpp;make)
 
+libutil: src
+	(cd src/lib/libutil;make)
+
 depend: src
 	(cd src/lib/ubix;make)
 
@@ -52,6 +55,7 @@ clean:
 	(cd src/lib/ubix_api;make clean)
 	(cd src/lib/libc_old;make clean)
 	(cd src/lib/libc;make clean)
+	(cd src/lib/libutil;make clean)
 	(cd src/bin;make clean)
 	(cd src/lib/ubix;make clean)
 	(cd src/lib/libcpp;make clean)

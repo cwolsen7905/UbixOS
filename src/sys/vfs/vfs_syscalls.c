@@ -168,7 +168,7 @@ int write(struct thread *td, struct write_args *uap) {
     memcpy(buffer,uap->buf,uap->nbyte);
     //kprint(buffer);
     kfree(buffer);
-    kprintf("(%i) %s",uap->fd,uap->buf);
+    kprintf("(%i) [%s]",uap->fd,uap->buf);
     td->td_retval[0] = uap->nbyte;
     }
   return(0x0);
@@ -198,26 +198,18 @@ int open(struct thread *td, struct open_args *uap) {
 
   strcpy(nfp->path,uap->path);
 
-  #ifdef VFSDEBUG
-  kprintf("OPEN FLAGS: [0x%X],Path: [%s]\n",uap->flags,uap->path);
-  #endif
   if (uap->flags != 0x0) {
     kprintf("BAD!\n");
     while (1);
     }
-  //BUG make fopen return 0 or -1 if error;
-  #ifdef VFSDEBUG
-  kprintf("[0x%X]-234\n",nfp->buffer);
-  #endif
-  //fopen(nfp,uap->path,"r");
-  kprintf("vfs_open: [0x%X]\n",fopen(nfp,uap->path,"r"));
-  #ifdef VFSDEBUG
-  kprintf("[0x%X]-sdf\n",nfp->buffer);
-  #endif
-  if (nfp == 0x0)
+
+  if (fopen(nfp,uap->path,"r") == 0x0) {
     td->td_retval[0] = -1;
+    td->o_files[index] = 0x0;
+    }
   else
     td->td_retval[0] = index;
+
   return (error);
   } /* end func open */
 
