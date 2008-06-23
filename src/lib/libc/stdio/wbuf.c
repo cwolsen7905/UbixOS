@@ -56,7 +56,10 @@ __swbuf(c, fp)
 	FILE *fp;
 {
 	int n;
-
+/* HACK MUST FIX */
+printf("(%c)",c);
+return(c);
+printf("__swbuf!\n");
 	/*
 	 * In case we cannot write, or longjmp takes us out early,
 	 * make sure _w is 0 (if fully- or un-buffered) or -_bf._size

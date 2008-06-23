@@ -23,6 +23,8 @@ LIBRARIES = ../../lib/libc/libc.so ../../lib/libutil/libutil.so
 
 STARTUP = ../../lib/csu/*.o
 
+CFLAGS += -fno-strict-aliasing -pipe
+
 # Link The Binary
 $(BINARY) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(OBJS)

@@ -57,7 +57,8 @@ putchar(c)
 {
 	int retval;
 	FILE *so = stdout;
-printf("putchar\n");
+
+printf("[%c]",c);
 
 	FLOCKFILE(so);
 	/* Orientation set by __sputc() when buffer is full. */

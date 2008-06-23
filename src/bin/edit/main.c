@@ -67,6 +67,7 @@ int main(int argc,char **argv) {
   free(a);
   a = malloc(512);
   printf("[0x%X]\n",a);
+  putchar('A');
 
   return(0);
   }

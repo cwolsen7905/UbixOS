@@ -183,11 +183,27 @@ int lstat(struct thread *td,struct lstat_args *uap) {
  * \returns NULL for now
  */
 int ioctl(struct thread *td, struct ioctl_args *uap) {
+  short *tmpShort = 0x0;
   #ifdef NOTIMP
   kprintf("[%s:%i:%s]",__FILE__,__LINE__,__FUNCTION__);
   #endif
 
-  kprintf("ioctl: %i, 0x%X\n",uap->fd,uap->com);
+  if (uap->fd == 1) {
+    switch  (uap->com) {
+      case 0x40087468:
+        tmpShort = uap->data;
+        tmpShort[0] = 0x25;
+        tmpShort[1] = 0x9B;
+        tmpShort[2] = 0x0;
+        tmpShort[3] = 0x0;
+        break;
+      default:
+        kprintf("Unknown Com: 0x%X\n",uap->com);
+      }
+    }
+  else {
+    kprintf("ioctl: %i, 0x%X\n",uap->fd,uap->com);
+    }
  
   td->td_retval[0] = 0x0;
   return(0x0);

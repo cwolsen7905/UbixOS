@@ -177,6 +177,8 @@ main(int argc, char *argv[])
 			termwidth = atoi(p);
 	}
 
+       printf("termwidth: %i\n",termwidth);
+
 	fts_options = FTS_PHYSICAL;
  	while ((ch = getopt(argc, argv,
 	    "1ABCFGHILPRSTUWZabcdfghiklmnopqrstuwx")) != -1) {

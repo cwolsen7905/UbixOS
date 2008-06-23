@@ -96,6 +96,7 @@ prn_printable(const char *s)
 	memset(&mbs, 0, sizeof(mbs));
 	n = 0;
 	while ((clen = mbrtowc(&wc, s, MB_LEN_MAX, &mbs)) != 0) {
+          printf("CLEN: %i - %i - %i\n",clen,(size_t)-1,(size_t)-2);
 		if (clen == (size_t)-1) {
 			putchar('?');
 			s++;
@@ -109,11 +110,13 @@ prn_printable(const char *s)
 			break;
 		}
 		if (!iswprint(wc)) {
+                  printf("WTF?\n");
 			putchar('?');
 			s += clen;
 			n++;
 			continue;
 		}
+                printf("HERE?\n");
 		for (i = 0; i < (int)clen; i++)
 			putchar((unsigned char)s[i]);
 		s += clen;

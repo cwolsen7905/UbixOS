@@ -295,10 +295,13 @@ printf("printcol");
 		colwidth += 1;
 
 	colwidth = (colwidth + tabwidth) & ~(tabwidth - 1);
+        printf("colwidth: %i\n",colwidth);
 	if (termwidth < 2 * colwidth) {
 		printscol(dp);
 		return;
 	}
+
+        printf("termwidth: %i\n",termwidth);
 	numcols = termwidth / colwidth;
 	numrows = num / numcols;
 	if (num % numcols)
@@ -328,8 +331,6 @@ printf("printcol");
 				if (f_sortacross && col + 1 >= numcols)
 					break;
 				(void)putchar(f_notabs ? ' ' : '\t');
-                                 //Hack
-                                 printf("%s",f_notabs ? ' ' : '\t');
 				chcnt = cnt;
 			}
 			endcol += colwidth;
@@ -360,6 +361,8 @@ printf("printaname:\n");
 	if (f_size)
 		chcnt += printf("%*jd ",
 		    (int)sizefield, howmany(sp->st_blocks, blocksize));
+
+printf("f_size: %i\n",f_size);
 #ifdef COLORLS
 	if (f_color)
 		color_printed = colortype(sp->st_mode);

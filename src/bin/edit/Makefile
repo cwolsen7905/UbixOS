@@ -23,6 +23,8 @@ LIBRARIES = ../../lib/libc/libc.so
 
 STARTUP = ../../lib/csu/*.o
 
+CFLAGS += -ggdb
+
 # Link The Binary
 $(BINARY) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(OBJS)

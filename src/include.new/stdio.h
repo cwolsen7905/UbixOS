@@ -385,7 +385,9 @@ int	__swbuf(int, FILE *);
  * The __sfoo macros are here so that we can
  * define function versions in the C library.
  */
+
 #define	__sgetc(p) (--(p)->_r < 0 ? __srget(p) : (int)(*(p)->_p++))
+/*
 #if defined(__GNUC__) && defined(__STDC__)
 static __inline int __sputc(int _c, FILE *_p) {
 	if (--_p->_w >= 0 || (_p->_w >= _p->_lbfsize && (char)_c != '\n'))
@@ -394,6 +396,7 @@ static __inline int __sputc(int _c, FILE *_p) {
 		return (__swbuf(_c, _p));
 }
 #else
+*/
 /*
  * This has been tuned to generate reasonable code on the vax using pcc.
  */
@@ -405,7 +408,9 @@ static __inline int __sputc(int _c, FILE *_p) {
 				__swbuf('\n', p) : \
 			__swbuf((int)(c), p) : \
 		(*(p)->_p = (c), (int)*(p)->_p++))
+/*
 #endif
+*/
 
 #define	__sfeof(p)	(((p)->_flags & __SEOF) != 0)
 #define	__sferror(p)	(((p)->_flags & __SERR) != 0)
