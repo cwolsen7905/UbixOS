@@ -1,3 +1,10 @@
+$Id$
+
+2007-11-26
+As of REL_2 UbixOS is now using the UFS/FFS filesystem.. UbixFS is currently depreciated..
+
+
+
 Installation:
 
   make all install <- This will build the kernel and components and put them onto a floppy
