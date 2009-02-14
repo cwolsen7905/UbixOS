@@ -6,7 +6,7 @@ include ../../Makefile.inc
 include ../Makefile.inc
 
 #  Objects
-OBJS = page_fault.o pagefault.o setpageattributes.o unmappage.o getphysicaladdr.o getfreepage.o vmm_memory.o paging.o vmm_init.o vmm_virtual.o
+OBJS = page_fault.o pagefault.o setpageattributes.o unmappage.o getphysicaladdr.o getfreekernelpage.o vmm_memory.o paging.o vmm_init.o vmm_virtual.o
 
 all: $(OBJS)
 

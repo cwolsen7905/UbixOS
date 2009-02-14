@@ -84,7 +84,7 @@ static void *getEmptyDesc() {
     return(tmpDesc);
     }
   if ((emptyKernDesc = (struct memDescriptor *)vmm_getFreeMallocPage(4)) == 0x0)
-    kpanic("Error: vmmGetFreeKernelPage returned NULL\n");
+    kpanic("Error: vmm_getFreeKernelPage returned NULL\n");
     
   /* zero out the memory so we know there is no garbage */
   memset(emptyKernDesc,0x0,0x4000);
@@ -392,6 +392,9 @@ void kfree(void *baseAddr) {
 
 /***
  $Log$
+ Revision 1.2  2007/06/29 11:31:47  reddawg
+ Cleaning
+
  Revision 1.1.1.1  2007/01/17 03:31:54  reddawg
  UbixOS
 

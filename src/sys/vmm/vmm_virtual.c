@@ -374,7 +374,7 @@ void *vmmCopyVirtualSpace(pidType pid) {
   /* Set Address Of Parent Page Directory */
   parentPageDirectory = (uInt32 *) parentPageDirAddr;
   /* Allocate A New Page For The New Page Directory */
-  if ((newPageDirectory = (uInt32 *) vmmGetFreeKernelPage(pid,1)) == 0x0)
+  if ((newPageDirectory = (uInt32 *) vmm_getFreeKernelPage(pid,1)) == 0x0)
     kpanic("Error: newPageDirectory == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
 
   /* Set newPageDirectoryAddress To The Newly Created Page Directories Page */
@@ -399,7 +399,7 @@ void *vmmCopyVirtualSpace(pidType pid) {
       /* Set Parent  To Propper Page Table */
       parentPageTable = (uInt32 *) (tablesBaseAddress + (0x1000 * x));
       /* Allocate A New Page Table */
-      if ((newPageTable = (uInt32 *) vmmGetFreeKernelPage(pid,1)) == 0x0)
+      if ((newPageTable = (uInt32 *) vmm_getFreeKernelPage(pid,1)) == 0x0)
         kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
 
       /* Set Parent And New Pages To COW */
@@ -410,7 +410,7 @@ void *vmmCopyVirtualSpace(pidType pid) {
 	  /* Check To See If Its A Stack Page */
 	  if (((uInt32) parentPageTable[i] & PAGE_STACK) == PAGE_STACK) {
 	    /* Alloc A New Page For This Stack Page */
-	    if ((newStackPage = (uInt32 *) vmmGetFreeKernelPage(pid,1)) == 0x0)
+	    if ((newStackPage = (uInt32 *) vmm_getFreeKernelPage(pid,1)) == 0x0)
 	      kpanic("Error: newStackPage == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
 
 	    /* Set Pointer To Parents Stack Page */
@@ -455,7 +455,7 @@ void *vmmCopyVirtualSpace(pidType pid) {
    * Allocate A New Page For The The First Page Table Where We Will Map The
    * Lower Region
    */
-  if ((newPageTable = (uInt32 *) vmmGetFreeKernelPage(pid,1)) == 0x0)
+  if ((newPageTable = (uInt32 *) vmm_getFreeKernelPage(pid,1)) == 0x0)
     kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
 
   /* Flush The Page From Garbage In Memory */
@@ -497,7 +497,7 @@ void *vmmCopyVirtualSpace(pidType pid) {
   /* First Lets Unmap The Previously Allocated Page Table */
   vmmUnmapPage((uInt32) newPageTable, 1);
   /* Allocate A New Page Table */
-  if ((newPageTable = (uInt32 *) vmmGetFreeKernelPage(pid,1)) == 0x0)
+  if ((newPageTable = (uInt32 *) vmm_getFreeKernelPage(pid,1)) == 0x0)
     kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
   /* First Set Our Page Directory To Contain This */
   newPageDirectory[767] = vmm_getPhysicalAddr((uInt32) newPageTable) | PAGE_DEFAULT;
@@ -548,7 +548,7 @@ void *vmmCreateVirtualSpace(pid_t pid) {
   /* Set Address Of Parent Page Directory */
   parentPageDirectory = (uInt32 *) parentPageDirAddr;
   /* Allocate A New Page For The New Page Directory */
-  newPageDirectory = (uInt32 *) vmmGetFreeKernelPage(pid);
+  newPageDirectory = (uInt32 *) vmm_getFreeKernelPage(pid);
   /* Set newPageDirectoryAddress To The Newly Created Page Directories Page */
   newPageDirectoryAddress = (void *)vmm_getPhysicalAddr((uInt32) newPageDirectory);
   /* First Set Up A Flushed Page Directory */
@@ -563,7 +563,7 @@ void *vmmCreateVirtualSpace(pid_t pid) {
    * Allocate A New Page For The The First Page Table Where We Will Map The
    * Lower Region
    */
-  newPageTable = (uInt32 *) vmmGetFreeKernelPage(pid);
+  newPageTable = (uInt32 *) vmm_getFreeKernelPage(pid);
   /* Flush The Page From Garbage In Memory */
   for (x = 0; x < pageEntries; x++) {
     newPageTable[x] = 0x0;
@@ -587,7 +587,7 @@ void *vmmCreateVirtualSpace(pid_t pid) {
   /* First Lets Unmap The Previously Allocated Page Table */
   vmmUnmapPage((uInt32) newPageTable, 1);
   /* Allocate A New Page Table */
-  newPageTable = (uInt32 *) vmmGetFreeKernelPage(pid);
+  newPageTable = (uInt32 *) vmm_getFreeKernelPage(pid);
   /* First Set Our Page Directory To Contain This */
   newPageDirectory[767] = vmm_getPhysicalAddr((uInt32) newPageTable) | PAGE_DEFAULT;
   /* Now Lets Build The Page Table */

@@ -258,14 +258,14 @@ int vmm_remapPage(uInt32 source,uInt32 dest,uInt16 perms) {
 
 /************************************************************************
 
-Function: void *vmmGetFreeKernelPage(pidType pid);
+Function: void *vmm_getFreeKernelPage(pidType pid);
 Description: Returns A Free Page Mapped To The VM Space
 Notes:
 
 07/30/02 - This Returns A Free Page In The Top 1GB For The Kernel
 
 ************************************************************************/
-void *vmmGetFreeKernelPage(pidType pid, uInt16 count) {
+void *vmm_getFreeKernelPage(pidType pid, uInt16 count) {
   int             x = 0, y = 0, c = 0;
   uInt32         *pageTableSrc = 0x0;
 
