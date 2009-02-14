@@ -69,7 +69,7 @@ void vmmUnmapPage(uInt32,int);
 void vmmUnmapPages(void *,uInt32);
 void *vmmMapFromTask(pidType,void *,uInt32);
 void *vmmCopyVirtualSpace(pidType);
-void *vmmGetFreePage(pidType);
+void *vmmGetFreeKernelPage(pidType);
 void *vmmGetFreeKernelPage(pidType pid,uInt16 count);
 void *vmmCreateVirtualSpace(pidType);
 void *vmmGetFreeVirtualPage(pidType,int,int);

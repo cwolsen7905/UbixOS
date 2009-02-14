@@ -35,7 +35,7 @@ static spinLock_t vmmGFPlock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 
-Function: void *vmmGetFreePage(pidType pid);
+Function: void *vmmGetFreeKernelPage(pidType pid);
 
 Description: Returns A Free Page Mapped To The VM Space
 
@@ -45,7 +45,7 @@ Notes:
 
 ************************************************************************/
 void           *
-vmmGetFreePage(pidType pid)
+vmmGetFreeKernelPage(pidType pid)
 {
   uInt16             x = 0x0, y = 0x0;
   uInt32         *pageTableSrc = 0x0;
@@ -62,7 +62,7 @@ vmmGetFreePage(pidType pid)
       if ((uInt32) pageTableSrc[y] == (uInt32) 0x0) {
 	/* Map A Physical Page To The Virtual Page */
 	if ((vmm_remapPage(vmmFindFreePage(pid), ((x * 0x400000) + (y * 0x1000)),KERNEL_PAGE_DEFAULT)) == 0x0)
-	  kpanic("vmmRemapPage: vmmGetFreePage\n");
+	  kpanic("vmmRemapPage: vmmGetFreeKernelPage\n");
 	/* Clear This Page So No Garbage Is There */
 	vmmClearVirtualPage((uInt32) ((x * 0x400000) + (y * 0x1000)));
 	/* Return The Address Of The Newly Allocate Page */
