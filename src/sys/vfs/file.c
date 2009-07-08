@@ -122,7 +122,7 @@ Notes:
 void sysFopen(const char *file,char *flags,userFileDescriptor *userFd) {
   if (userFd == NULL)
     kprintf("Error: userFd == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
-  userFd->fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  userFd->fd = (struct file *)kmalloc(sizeof(struct file));
   fopen(userFd->fd,file,flags);
   if (userFd->fd != 0x0) {
     userFd->fdSize = userFd->fd->size;
@@ -263,10 +263,11 @@ int fgetc(struct file *fd) {
 
 /************************************************************************
 
-Function: fileDescriptor *fopen(const char *file,cont char *flags)
+Function: struct file *fopen(const char *file,cont char *flags)
 Description: This Will Open A File And Return A File Descriptor
 Notes:
 
+06/30/09 - Changed to struct file
 08/05/02 - Just Started A Rewrite Of This Function Should Work Out Well
 
 ************************************************************************/
@@ -306,6 +307,7 @@ struct file *fopen(struct file *tmpFd,const char *file,const char *flags) {
   else
     tmpFd->mp = vfs_findMount(mountPoint);
 
+
   if (tmpFd->mp == 0x0) {
     kprintf("Mount Point Bad\n");
     return(0x0);
@@ -339,7 +341,6 @@ struct file *fopen(struct file *tmpFd,const char *file,const char *flags) {
   /* Search For The File */
   if (tmpFd->mp->fs->vfsOpenFile(tmpFd->path,tmpFd) == 0x1) {
     /* If The File Is Found Then Set Up The Descriptor */
-
 
    /* in order to save resources we will allocate the buffer later when it is needed */
 
@@ -380,7 +381,9 @@ struct file *fopen(struct file *tmpFd,const char *file,const char *flags) {
     return(tmpFd);
     }
   else {
-    kfree(tmpFd->buffer);
+    kprintf("File Not Found!");
+    //Why did we free this we didn't set it?
+    /* kfree(tmpFd->buffer); */
     kfree(tmpFd);
     //spinUnlock(&fdTable_lock);
     #ifdef VFSDEBUG
@@ -401,12 +404,14 @@ Notes:
 
 ************************************************************************/
 int fclose(struct file *fd) {
-  struct file *tmpFd = 0x0;
+  //struct file *tmpFd = 0x0;
   assert(fd);
+  assert((u_int32_t)fd->buffer != 0xBEBEBEBE);
 
   //BUG FCLOSE BROKEN!!
-  if ((fd->buffer != 0x0) || (fd->buffer != 0xBEBEBEBE))
+  if ((u_int32_t)fd->buffer != 0x0)
     kfree(fd->buffer);
+
   kfree(fd);
 //BUG think i'm missing things
 //K_PANIC("HMM?");
@@ -471,7 +476,7 @@ void sysMkDir(const char *path) {
     }
 
   //kprintf("rootPath: [%s]\n",rootPath);
-  tmpFD = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  tmpFD = (struct file *)kmalloc(sizeof(struct file));
   fopen(tmpFD,rootPath,"rb");
 
   if (tmpFD->mp == 0x0) {

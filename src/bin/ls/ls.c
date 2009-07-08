@@ -158,6 +158,9 @@ main(int argc, char *argv[])
 	char *bp = tcapbuf;
 #endif
 
+//NOTE Fix
+return(0x0);
+
 	(void)setlocale(LC_ALL, "");
 
 	/* Terminal defaults to -Cq, non-terminal defaults to -1. */

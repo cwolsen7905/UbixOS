@@ -1,3 +1,9 @@
-#Fri Jun 22 08:01:43 EDT 2007
+#Thu Jun 18 07:39:49 EDT 2009
 eclipse.preferences.version=1
+indexer/filesToParseUpFront=stdarg.h, stddef.h, sys/types.h
+indexer/indexAllFiles=true
+indexer/indexerId=org.eclipse.cdt.core.fastIndexer
+indexer/skipMacroReferences=false
+indexer/skipReferences=false
+indexer/skipTypeReferences=false
 indexerId=org.eclipse.cdt.core.fastIndexer

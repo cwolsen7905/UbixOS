@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -66,29 +66,35 @@ Notes:
 ************************************************************************/
 
 
-int sched_init() {        
+int sched_init() {
   taskList = (kTask_t *)kmalloc(sizeof(kTask_t));
   if(taskList == 0x0)
 	kpanic("Unable to create task list");
-   
+
   taskList->id = nextID++;
 
   /* Print out information on scheduler */
   kprintf("sched0 - Address: [0x%X]\n", taskList);
-        
+
   /* Return so we know everything went well */
-  return(0x0); 
+  return(0x0);
   }
 
 
+/*
+ *
+ *
+ * Notes
+ * 06/29/2009 - Problems?
+ */
 void sched(){
-  uInt32 memAddr   = 0x0;
-  kTask_t *tmpTask = 0x0;
-  kTask_t *delTask = 0x0;
-  
+  uInt32   memAddr  = 0x0;
+  kTask_t *tmpTask  = 0x0;
+  kTask_t *delTask  = 0x0;
+
   if (!spinTryLock(&schedulerSpinLock))
-  	return;
-  
+    return;
+
   tmpTask = _current->next;
   //outportByte(0xE9,_current->id + '0');
   schedStart:
@@ -101,8 +107,8 @@ void sched(){
         _current->state = READY;
       break;
       }
-    else if (tmpTask->state == DEAD)
-      {
+    else if (tmpTask->state == DEAD) {
+    	kprintf("WTF");
         delTask  = tmpTask;
         tmpTask  = tmpTask->next;
         sched_deleteTask(delTask->id);
@@ -116,8 +122,8 @@ void sched(){
                 tmpTask = taskList;
                 goto schedStart;
         }
-        
-        
+
+
         if (_current->state > 0x0) {
                 if (_current->oInfo.v86Task == 0x1)
                         irqDisable(0x0);
@@ -135,7 +141,7 @@ void sched(){
 	{
 		spinUnlock(&schedulerSpinLock);
 	}
-	
+
         return;
 }
 
@@ -147,7 +153,7 @@ kTask_t *schedNewTask() {
   if (tmpTask == 0x0)
     kpanic("Error: schedNewTask() - kmalloc failed trying to initialize a new task struct\n");
 
-  memset(tmpTask,0x0,sizeof(kTask_t)); 
+  memset(tmpTask,0x0,sizeof(kTask_t));
   /* Filling in tasks attrs */
   tmpTask->usedMath   = 0x0;
   tmpTask->state      = NEW;
@@ -167,13 +173,13 @@ kTask_t *schedNewTask() {
   taskList       = tmpTask;
 
   spinUnlock(&schedulerSpinLock);
-  
+
   return(tmpTask);
   }
 
 
 int sched_deleteTask(pidType id) {
-  kTask_t *tmpTask = 0x0; 
+  kTask_t *tmpTask = 0x0;
 
   /* Checking each task from the prio queue */
   for (tmpTask = taskList; tmpTask != 0x0; tmpTask = tmpTask->next) {
@@ -184,13 +190,13 @@ int sched_deleteTask(pidType id) {
        tmpTask->next->prev = tmpTask->prev;
      if (taskList == tmpTask)
        taskList = tmpTask->next;
-      
+
      return(0x0);
      }
    }
   return(0x1);
   }
-  
+
 int  sched_addDelTask(kTask_t *tmpTask) {
   tmpTask->next = delList;
   tmpTask->prev = 0x0;
@@ -199,23 +205,23 @@ int  sched_addDelTask(kTask_t *tmpTask) {
   delList       = tmpTask;
   return(0x0);
   }
-  
+
 kTask_t *sched_getDelTask() {
   kTask_t *tmpTask = 0x0;
-  
+
   if (delList == 0x0)
     return(0x0);
-    
+
   tmpTask = delList;
   delList = delList->next;
   return(tmpTask);
   }
 
 
-kTask_t * 
-schedFindTask(uInt32 id) 
+kTask_t *
+schedFindTask(uInt32 id)
 {
-        kTask_t *tmpTask = 0x0; 
+        kTask_t *tmpTask = 0x0;
 
         for (tmpTask = taskList; tmpTask; tmpTask = tmpTask->next) {
                 if (tmpTask->id == id)
@@ -237,7 +243,7 @@ schedFindTask(uInt32 id)
   02/20/2004 - Approved for quality
 
 ************************************************************************/
-void 
+void
 schedEndTask(pidType pid) {
         endTask(_current->id);
         sched_yield();
@@ -247,7 +253,7 @@ schedEndTask(pidType pid) {
 
 Function: int schedEndTask()
 
-Description: This function will yield a task 
+Description: This function will yield a task
 
 Notes:
 
@@ -255,7 +261,7 @@ Notes:
 
 ************************************************************************/
 
-void 
+void
 sched_yield() {
   sched();
   }

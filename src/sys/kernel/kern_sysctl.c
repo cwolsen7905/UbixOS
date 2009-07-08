@@ -138,7 +138,7 @@ int sysctl_init() {
   tmpCtl->children   = 0x0;
   sprintf(tmpCtl->name,"p1003_1b");
 
-  tmpCtl->next = (struct sysctl_enctry *)kmalloc(sizeof(struct sysctl_entry));
+  tmpCtl->next = (struct sysctl_entry *)kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
   tmpCtl             = tmpCtl->next;
   tmpCtl->id         = CTL_UBIX;

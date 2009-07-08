@@ -40,7 +40,7 @@ void sysRmModule();
 void sysGetpid();
 void sysExit();
 void sysExec();
-int sys_exec();
+void sys_exec();
 void sysFork();
 void sysCheckPid();
 void sysGetFreePage();
@@ -90,7 +90,7 @@ functionPTR systemCalls[] = {
   invalidCall,      /**  12 **/
   invalidCall,      /**  13 **/
   invalidCall,      /**  14 **/
-  sys_exec,      /**  15 **/
+  sys_exec,         /**  15 **/
   invalidCall,      /**  16 **/
   invalidCall,      /**  17 **/
   invalidCall,      /**  18 **/
@@ -139,6 +139,9 @@ int totalCalls = sizeof(systemCalls)/sizeof(functionPTR);
 
 /***
  $Log$
+ Revision 1.2  2008/02/29 14:56:31  reddawg
+ Sync - Working On Getting It To Boot Again
+
  Revision 1.1.1.1  2007/01/17 03:31:52  reddawg
  UbixOS
 

@@ -29,36 +29,39 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <vmm/vmm.h>
 #include <ubixos/kpanic.h>
+#include <lib/kprintf.h>
 
 /************************************************************************
 
-Function: void vmmSetPageAttributes(uInt32 pageAddr,int attributes;
+Function: void vmmSetPageAttributes(u_int32_t pageAddr,int attributes;
 Description: This Function Will Set The Page Attributes Such As
              A Read Only Page, Stack Page, COW Page, ETC.
 Notes:
 
 ************************************************************************/
-int vmm_setPageAttributes(uInt32 memAddr,uInt16 attributes) {
-  uInt16          directoryIndex = 0x0, tableIndex = 0x0;
-  uInt32         *pageTable = 0x0;
+void vmm_setPageAttributes(u_int32_t memAddr,u_int16_t attributes) {
+  u_int16_t          directoryIndex = 0x0, tableIndex = 0x0;
+  u_int32_t         *pageTable = 0x0;
 
 #ifdef VMMDEBUG
   kprintf("vmm_getPageAttributes");
 #endif
 
   /* Calculate The Page Directory Index */
-  directoryIndex = (memAddr >> 22);
+  directoryIndex = PDI(memAddr);;
   
   /* Calculate The Page Table Index */
-  tableIndex = ((memAddr >> 12) & 0x3FF);
+  tableIndex = PTI(memAddr);
 
   /* Set Table Pointer */
-  if ((pageTable = (uInt32 *) (PAGE_TABLES_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
+  if ((pageTable = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
     kpanic("Error: pageTable == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
     
   /* Set Attribute If Page Is Mapped */
   if (pageTable[tableIndex] != 0x0)
     pageTable[tableIndex] = ((pageTable[tableIndex] & 0xFFFFF000) | attributes);
+  else
+    kpanic("WTF NON MAPPED");
 
   /* Reload The Page Table; */
   asm volatile(
@@ -68,11 +71,13 @@ int vmm_setPageAttributes(uInt32 memAddr,uInt16 attributes) {
       "pop  %eax     \n"
     );
   /* Return */
-  return(0x0);
   }
 
 /***
  $Log$
+ Revision 1.2  2009/07/08 16:05:56  reddawg
+ Sync
+
  Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
  UbixOS
 

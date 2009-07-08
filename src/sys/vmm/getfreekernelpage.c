@@ -30,6 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <vmm/vmm.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
+#include <lib/kprintf.h>
 
 static spinLock_t vmmGFPlock = SPIN_LOCK_INITIALIZER;
 
@@ -78,7 +79,8 @@ void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
             for (c = 0; c < count; c++) {
               if ((vmm_remapPage((u_int32_t) vmm_findFreePage(pid), ((x * (1024 * 4096)) + ((y + c) * 4096)),KERNEL_PAGE_DEFAULT)) == 0x0)
                 K_PANIC("vmmRemapPage failed: gfkp-1\n");
-              vmm_clearVirtualPage((u_int32_t) ((x * (1024 * 4096)) + ((y + c) * 4096)));
+              if (vmm_zeroVirtualPage((u_int32_t) ((x * (1024 * 4096)) + ((y + c) * 4096))) == 0x1)
+                K_PANIC("vmm_zeroVirtualPage: failed\n");
               }
 
             spinUnlock(&vmmGFPlock);
@@ -91,7 +93,8 @@ void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
             K_PANIC("vmmRemapPage failed: gfkp-2\n");
 
           /* Clear This Page So No Garbage Is There */
-          vmm_clearVirtualPage((u_int32_t) ((x * (1024 * 4096)) + (y * 4096)));
+          if (vmm_zeroVirtualPage((u_int32_t) ((x * (1024 * 4096)) + (y * 4096))) == 0x1)
+            K_PANIC("vmm_zeroVirtualPage: Failed\n");
           /* Return The Address Of The Newly Allocate Page */
           spinUnlock(&vmmGFPlock);
           return ((void *)((x * (1024 * 4096)) + (y * 4096)));
@@ -108,6 +111,9 @@ void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
 
 /***
  $Log$
+ Revision 1.2  2009/07/08 16:05:56  reddawg
+ Sync
+
 
  END
  ***/

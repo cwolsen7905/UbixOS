@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -63,7 +63,7 @@
  Description: This function will create a thread from code in the current memory space
 
  Notes:
- 
+
  05/19/04 - This does not work the way I want it to it still makes a copy of kernel space
             so do not use out side of kernel space
 
@@ -72,7 +72,7 @@ uInt32 execThread(void (* tproc)(void),uInt32 stack,char *arg) {
   kTask_t * newProcess = 0x0;
   /* Find A New Thread */
   newProcess = schedNewTask();
-  assert(newProcess); 
+  assert(newProcess);
   if (stack < 0x100000)
     kpanic("exec: stack not in valid area: [0x%X]\n",stack);
 
@@ -113,7 +113,7 @@ uInt32 execThread(void (* tproc)(void),uInt32 stack,char *arg) {
   newProcess->tss.trace_bitmap = 0x0000;
   newProcess->tss.io_map       = 0x8000;
   newProcess->oInfo.vmStart    = 0x6400000;
-  
+
   newProcess->imageFd          = 0x0;
 
   /* Set up default stack for thread here filled with arg list 3 times */
@@ -158,15 +158,16 @@ uInt32 execThread(void (* tproc)(void),uInt32 stack,char *arg) {
 *****************************************************************************************/
 void execFile(char *file,int argc,char **argv,int console) {
 
-  int        i         = 0x0;
-  int        x         = 0x0;
-  u_int32_t *tmp       = 0x0;
+  int        i                    = 0x0;
+  int        x                    = 0x0;
+  u_int32_t *tmp                  = 0x0;
 
   struct file      *tmpFd         = 0x0;
   elfHeader        *binaryHeader  = 0x0;
   elfProgramHeader *programHeader = 0x0;
 
   /* Get A New Task For This Proccess */
+  kprintf("execFile: %s",file);
   _current = schedNewTask();
   assert(_current);
   _current->gid  = 0x0;
@@ -190,6 +191,8 @@ void execFile(char *file,int argc,char **argv,int console) {
 
   /* Lets Find The File */
   tmpFd = (struct file *)kmalloc(sizeof(struct file));
+  //KUBU
+  memset(tmpFd,0x0,sizeof(struct file));
   fopen(tmpFd,file,"r");
 
   /* If We Dont Find the File Return */
@@ -207,9 +210,11 @@ void execFile(char *file,int argc,char **argv,int console) {
   /* Load ELF Header */
   binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader));
 
-
   //kprintf(">a:%i:0x%X:0x%X<",sizeof(elfHeader),binaryHeader,tmpFd);
   fread(binaryHeader,sizeof(elfHeader),1,tmpFd);
+
+  //UBU
+  kprintf("2");
 
 
   /* Check If App Is A Real Application */
@@ -239,6 +244,7 @@ void execFile(char *file,int argc,char **argv,int console) {
   //kprintf(">c:%i:0x%X:0x%X<",sizeof(elfProgramHeader)*binaryHeader->ePhnum,programHeader,tmpFd);
   fread(programHeader,(sizeof(elfProgramHeader)*binaryHeader->ePhnum),1,tmpFd);
   //kprintf(">d<");
+  kprintf("1");
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
   for (i=0;i<binaryHeader->ePhnum;i++) {
@@ -249,13 +255,13 @@ void execFile(char *file,int argc,char **argv,int console) {
       */
       for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
           K_PANIC("Remap Page Failed");
 
         memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x),0x0,0x1000);
         }
       _current->oInfo.vmStart = 0x80000000;
-      _current->td.vm_daddr = (char *)(programHeader[i].phVaddr & 0xFFFFF000);
+      _current->td.vm_daddr = (programHeader[i].phVaddr & 0xFFFFF000);
       /* Now Load Section To Memory */
       fseek(tmpFd,programHeader[i].phOffset,0);
       fread((void *)programHeader[i].phVaddr,programHeader[i].phFilesz,1,tmpFd);
@@ -264,8 +270,7 @@ void execFile(char *file,int argc,char **argv,int console) {
         kprintf("pH: [0x%X]\n",programHeader[i].phMemsz);
         #endif
         for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
-          if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x,PAGE_PRESENT | PAGE_USER)) != 0x0)
-	    kpanic("Error: vmm_setPageAttributes failed, File: %s, Line: %i\n",__FILE__,__LINE__);
+          vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x,PAGE_PRESENT | PAGE_USER);
 	  }
         }
       }
@@ -273,16 +278,16 @@ void execFile(char *file,int argc,char **argv,int console) {
 
   /* Set Virtual Memory Start */
   _current->oInfo.vmStart = 0x80000000;
-  _current->td.vm_daddr = (char *)(programHeader[i].phVaddr & 0xFFFFF000);
+  _current->td.vm_daddr = (programHeader[i].phVaddr & 0xFFFFF000);
 
   /* Set Up Stack Space */
   for (x = 1;x < 100;x++) {
-    vmm_remapPage(vmmFindFreePage(_current->id),STACK_ADDR - (x * 0x1000),PAGE_DEFAULT | PAGE_STACK);
+    vmm_remapPage(vmm_findFreePage(_current->id),STACK_ADDR - (x * 0x1000),PAGE_DEFAULT | PAGE_STACK);
     }
 
   /* Kernel Stack 0x2000 bytes long */
-  vmm_remapPage(vmmFindFreePage(_current->id),0x5BC000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
-  vmm_remapPage(vmmFindFreePage(_current->id),0x5BB000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remapPage(vmm_findFreePage(_current->id),0x5BC000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remapPage(vmm_findFreePage(_current->id),0x5BB000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
 
   /* Set All The Proper Information For The Task */
   _current->tss.back_link    = 0x0;
@@ -372,33 +377,39 @@ void sysExec(char *file,char *ap,char *ep) {
   elfDynamic        *elfDynamicS   = 0x0;
   struct i386_frame *iFrame        = 0x0;
 
-  kprint("Sys EXEC\n");
 
   /* Need to rewrite this routine? */
-  tmpFd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  tmpFd = (struct file *)kmalloc(sizeof(struct file));
   if (fopen(tmpFd,file,"r") == 0x0) {
     //kprintf("[0x%X]\n",tmpFd);
     //kfree(tmpFd); //We need this but it's being done in fopen right now
-    return(0x0);
+    //UBU WHY?
+    kpanic("WTF!");
+    return;
     _current->imageFd = 0x0;
     }
+
+  kprintf("Sys EXEC: %i 0x%X 0x%X\n",tmpFd->size,ap,ep);
+
+  /* Set tasks FD for binary */
   _current->imageFd = tmpFd;
-  /* If We Dont Find the File Return */
-  if (tmpFd == 0x0) {
-    return;
-    }
+
   if (tmpFd->perms == 0) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     fclose(tmpFd);
     return;
     }
 
+
+  /* FIX - Putting In Extra Sanity Checks While Kernel Is Buggy */
+
   /* Load ELF Header */
+  if ((binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader))) == 0x0)
+    K_PANIC("kmalloc: Filed to allocate for elfHeader");
 
-  if ((binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader))) == 0x0) 
-    endTask(_current->id);
+  if (fread(binaryHeader,sizeof(elfHeader),1,tmpFd) != sizeof(elfHeader))
+    K_PANIC("fread: Read more then specified\n");
 
-  fread(binaryHeader,sizeof(elfHeader),1,tmpFd);
   /* Set sectionHeader To Point To Loaded Binary To We Can Gather Info */
 
   /* Check If App Is A Real Application */
@@ -406,7 +417,6 @@ void sysExec(char *file,char *ap,char *ep) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
     fclose(tmpFd);
-
     return;
     }
   else if (binaryHeader->eType != 2) {
@@ -424,44 +434,51 @@ void sysExec(char *file,char *ap,char *ep) {
 
   /* Load The Program Header(s) */
   if ((programHeader = (elfProgramHeader *)kmalloc(sizeof(elfProgramHeader)*binaryHeader->ePhnum)) == 0x0)
-    endTask(_current->id);
+    K_PANIC("kmalloc: failed to allocate memory");
 
   assert(programHeader);
   fseek(tmpFd,binaryHeader->ePhoff,0);
-  fread(programHeader,(sizeof(elfProgramHeader)*binaryHeader->ePhnum),1,tmpFd);
+  if (fread(programHeader,(sizeof(elfProgramHeader)*binaryHeader->ePhnum),1,tmpFd) != (sizeof(elfProgramHeader)*binaryHeader->ePhnum))
+    K_PANIC("fread: Read more than specified");
 
   if ((sectionHeader = (elfSectionHeader *)kmalloc(sizeof(elfSectionHeader)*binaryHeader->eShnum)) == 0x0)
-    endTask(_current->id);
+    K_PANIC("kmalloc: failed to allocate memory");
 
   assert(sectionHeader);
   fseek(tmpFd,binaryHeader->eShoff,0);
-  fread(sectionHeader,sizeof(elfSectionHeader)*binaryHeader->eShnum,1,tmpFd);
+  if (fread(sectionHeader,sizeof(elfSectionHeader)*binaryHeader->eShnum,1,tmpFd) != (sizeof(elfSectionHeader)*binaryHeader->eShnum))
+    K_PANIC("fread: read more than specified");
 
+  kprintf("This Loop SegFaults HERE: [%i]\n",binaryHeader->ePhnum);
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
   for (i=0;i<binaryHeader->ePhnum;i++) {
+    kprintf("phType: 0x%X, PT_LOAD: 0x%X\n",programHeader[i].phType,PT_LOAD);
     switch (programHeader[i].phType) {
       case PT_LOAD:
         seg_addr = trunc_page(programHeader[i].phVaddr);
         seg_size = round_page(programHeader[i].phMemsz + programHeader[i].phVaddr - seg_addr);
+        kprintf("seg_addr: 0x%X, seg_size: 0x%X\n",seg_addr,seg_size);
 
         /*
         Allocate Memory Im Going To Have To Make This Load Memory With Correct
         Settings so it helps us in the future
         */
-        for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
+        for (x = 0x0;x < seg_size;x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x),0x0,0x1000);
+          kprintf(".");
           }
+
+kprintf("A");
 
         /* Now Load Section To Memory */
         fseek(tmpFd,programHeader[i].phOffset,0);
         fread((void *)programHeader[i].phVaddr,programHeader[i].phFilesz,1,tmpFd);
         if ((programHeader[i].phFlags & 0x2) != 0x2) {
-          for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
-            if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x,PAGE_PRESENT | PAGE_USER)) != 0x0)
-	      kpanic("Error: vmm_setPageAttributes failed, File: %s,Line: %i\n",__FILE__,__LINE__);
+          for (x = 0x0;x < seg_size;x += 0x1000) {
+            vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x,PAGE_PRESENT | PAGE_USER);
 	    }
           }
         #ifdef DEBUG
@@ -472,7 +489,7 @@ void sysExec(char *file,char *ap,char *ep) {
           }
         else {
           _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-          _current->td.vm_daddr = (char *)seg_addr;
+          _current->td.vm_daddr = seg_addr;
           }
 
         _current->oInfo.vmStart = ((programHeader[i].phVaddr & 0xFFFFF000) + 0xA900000);
@@ -482,11 +499,12 @@ void sysExec(char *file,char *ap,char *ep) {
         elfDynamicS = (elfDynamic *)programHeader[i].phVaddr;
         fseek(tmpFd,programHeader[i].phOffset,0);
         fread((void *)programHeader[i].phVaddr,programHeader[i].phFilesz,1,tmpFd);
+        kprintf(".DYN.\n");
         break;
       case PT_INTERP:
         interp = (char *)kmalloc(programHeader[i].phFilesz);
         fseek(tmpFd,programHeader[i].phOffset,0);
-        fread((void *)interp,programHeader[i].phFilesz,1,tmpFd);
+        kprintf("R: %i, %i\n",fread((void *)interp,programHeader[i].phFilesz,1,tmpFd),programHeader[i].phFilesz);
         #ifdef LD_DEBUG
         kprintf("Interp: [%s]\n",interp);
         #endif
@@ -497,6 +515,7 @@ void sysExec(char *file,char *ap,char *ep) {
       }
     }
 
+  kprintf("What is this doing?\n");
   /* What is this doing? 11/23/06 */
   if (elfDynamicS != 0x0) {
     for (i=0;i<12;i++) {
@@ -517,17 +536,18 @@ void sysExec(char *file,char *ap,char *ep) {
     }
 
   _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-  _current->td.vm_daddr = (char *)seg_addr;
+  _current->td.vm_daddr = seg_addr;
   kprintf("STATING: [0x%X][0x%X]\n",_current->td.vm_dsize,_current->td.vm_daddr);
 
-  argv = ap;
-  envp = ep;
+  argv = (char **)ap;
+  envp = (char **)ep;
 
   if ((ep != 0x0) && (envp[0] != 0x0))
     kprintf("ENV SIZE: [0x%X]\n",envp[0]);
 
   if (argv[1] != 0x0) {
-    argc = argv[0];
+    //UBU
+    argc = (int)argv[0];
     args = (char *)vmmGetFreeVirtualPage(_current->id,1,VM_TASK);
     //! do we need this?
     memset(args,0x0,0x1000);
@@ -544,11 +564,14 @@ void sysExec(char *file,char *ap,char *ep) {
     }
 
   //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace(_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SIZE));
+
+  //QUESTION Why did I feel a need to add vm_dsize to vm_daddr
+  kprintf("First: 0x%X, 0x%X\n",_current->td.vm_dsize,_current->td.vm_daddr);
+  vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr);// + (_current->td.vm_dsize << PAGE_SIZE));
 
 
   //! Adjust iframe
-  iFrame = _current->tss.esp0 - sizeof(struct i386_frame);
+  iFrame = (struct i386_frame *)(_current->tss.esp0 - sizeof(struct i386_frame));
   iFrame->ebp = STACK_ADDR;
   iFrame->eip = binaryHeader->eEntry;
   iFrame->user_esp = STACK_ADDR - 12;
@@ -556,12 +579,12 @@ void sysExec(char *file,char *ap,char *ep) {
   //if (_current->id > 3) {
 
     iFrame->user_esp = ((u_int32_t)STACK_ADDR) - (sizeof(u_int32_t) * (argc + 3));
-    tmp = iFrame->user_esp;
+    tmp = (u_int32_t *)iFrame->user_esp;
 
     //! build argc and argv[]
     tmp[0] = argc;
     for (i = 0;i < argc;i++) {
-      tmp[i + 1] = argv[i];
+      tmp[i + 1] = (u_int32_t)argv[i];
       }
     tmp[argc + 1] = 0x0;
     tmp[argc + 2] = 0x1;
@@ -584,7 +607,7 @@ void sysExec(char *file,char *ap,char *ep) {
  * \brief New exec...
  *
  */
-int sys_exec(char *file,char *ap) {
+void sys_exec(char *file,char *ap) {
   int                 i             = 0x0;
   int                 x             = 0x0;
   int                 argc          = 0x0;
@@ -604,13 +627,13 @@ int sys_exec(char *file,char *ap) {
   Elf_Auxargs        *auxargs       = 0x0;
 
 
-  _current->imageFd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  _current->imageFd = (struct file *)kmalloc(sizeof(struct file));
   fopen(_current->imageFd,file,"r");
   if (_current->imageFd == 0x0)
-    return(-1);
+    K_PANIC("sys_exec");
 
   /* Load the ELF header */
-  if ((binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader))) == 0x0) 
+  if ((binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader))) == 0x0)
     K_PANIC("malloc failed!");
   fread(binaryHeader,sizeof(elfHeader),1,_current->imageFd);
 
@@ -618,7 +641,7 @@ int sys_exec(char *file,char *ap) {
   if (((binaryHeader->eIdent[1] != 'E') && (binaryHeader->eIdent[2] != 'L') && (binaryHeader->eIdent[3] != 'F')) || (binaryHeader->eType != ET_EXEC)) {
     kfree(binaryHeader);
     fclose(_current->imageFd);
-    return(-1);
+    K_PANIC("sys_exec");
     }
 
   /* Load The Program Header(s) */
@@ -640,7 +663,7 @@ int sys_exec(char *file,char *ap) {
         */
         for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x),0x0,0x1000);
           }
@@ -650,8 +673,7 @@ int sys_exec(char *file,char *ap) {
         fread((void *)programHeader[i].phVaddr,programHeader[i].phFilesz,1,_current->imageFd);
         if ((programHeader[i].phFlags & 0x2) != 0x2) {
           for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
-            if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x,PAGE_PRESENT | PAGE_USER)) != 0x0)
-              K_PANIC("vmm_setPageAttributes failed");
+            vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x,PAGE_PRESENT | PAGE_USER);
             }
           }
         if (binaryHeader->eEntry >= programHeader[i].phVaddr && binaryHeader->eEntry < (programHeader[i].phVaddr + programHeader[i].phMemsz)) {
@@ -659,7 +681,7 @@ int sys_exec(char *file,char *ap) {
           }
         else {
           _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-          _current->td.vm_daddr = (char *)seg_addr;
+          _current->td.vm_daddr = seg_addr;
           }
 
         _current->oInfo.vmStart = ((programHeader[i].phVaddr & 0xFFFFF000) + 0xA900000);
@@ -677,7 +699,8 @@ int sys_exec(char *file,char *ap) {
         //ldAddr = ldEnable();
         break;
       case PT_PHDR:
-        proghdr = programHeader[i].phVaddr; 
+        proghdr = programHeader[i].phVaddr;
+        kprintf("proghdr: 0x%X\n",proghdr);
         break;
       default:
         break;
@@ -694,7 +717,7 @@ int sys_exec(char *file,char *ap) {
   //kprintf("[0x%X][0x%X]\n",eip,addr);
 
   _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-  _current->td.vm_daddr = (char *)seg_addr;
+  _current->td.vm_daddr = seg_addr;
 
   //! copy in arg strings
   argv = (char **)ap;
@@ -714,7 +737,10 @@ int sys_exec(char *file,char *ap) {
     }
 
   //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace(_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SIZE));
+
+  //QUESTION Why did I add dsize to daddr?
+  kprintf("Second: 0x%X, 0x%X\n",_current->td.vm_dsize,_current->td.vm_daddr);
+  vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr);// + (_current->td.vm_dsize << PAGE_SIZE));
 
 
   //! Adjust iframe
@@ -775,8 +801,6 @@ int sys_exec(char *file,char *ap) {
   #ifdef DEBUG
   kprintf("AT_BASE: [0x%X]\n",auxargs->base);
   #endif
-
-  return(0);
   }
 
 /***

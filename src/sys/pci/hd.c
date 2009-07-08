@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -35,7 +35,7 @@
 #include <lib/kprintf.h>
 #include <devfs/devfs.h>
 #include <string.h>
-  
+
 int initHardDisk() {
   int                      i        = 0x0;
   int                      x        = 0x0;
@@ -49,8 +49,8 @@ int initHardDisk() {
   char                    *data2    = 0x0;
   char                     name[16];
   struct bsd_disklabel     *bsdd     = 0x0;
-  
-  hdd            = (struct driveInfo *)kmalloc(sizeof(struct driveInfo));  
+
+  hdd            = (struct driveInfo *)kmalloc(sizeof(struct driveInfo));
   hdd->hdPort    = 0x1F0;
   hdd->hdDev     = 0x40;
   hdd->parOffset = 0x0;
@@ -67,9 +67,9 @@ int initHardDisk() {
   devInfo->start   = (void *)&hdStart;
   devInfo->standby = (void *)&hdStandby;
   devInfo->info    = hdd;
-  
+
   devInfo->major   = 0x1;
-  
+
   data = (char *)kmalloc(512);
   d = (struct dos_partition *)(data + 0x1BE);
 
@@ -81,7 +81,7 @@ int initHardDisk() {
     devfs_makeNode("ad0",'b',0x1,0x0);
     hdRead(devInfo->info,data,0x0,0x1);
     for (i = 0x0;i < 0x4;i++) {
-      if (d[i].dp_type != 0x0) {  
+      if (d[i].dp_type != 0x0) {
         devInfo2 = (struct device_interface *)kmalloc(sizeof(struct device_interface));
         hdd2     = (struct driveInfo *)kmalloc(sizeof(struct driveInfo));
         memcpy(devInfo2,devInfo,sizeof(struct device_interface));
@@ -89,6 +89,7 @@ int initHardDisk() {
         hdd2->parOffset = d[i].dp_start;
         devInfo2->info  = hdd2;
         minor++;
+
         if (device_add(minor,'c',devInfo2) == 0x0) {
           sprintf(name,"ad0s%i",i + 1);
           kprintf("%s - Type: [0x%X], Start: [0x%X], Size: [0x%X]\n",name,d[i].dp_type,d[i].dp_start,d[i].dp_size);
@@ -108,6 +109,7 @@ int initHardDisk() {
                 hdd2->parOffset = bsdd->d_partitions[x].p_offset;
                 devInfo2->info   = hdd2;
                 minor++;
+
                 device_add(minor,'c',devInfo2);
                 devfs_makeNode(name,'c',0x1,minor);
                 kprintf("%s - Type: [%s], Start: [0x%X], Size: [0x%X], MM: [%i:%i]\n",name,fstypenames[bsdd->d_partitions[x].p_fstype],bsdd->d_partitions[x].p_offset,bsdd->d_partitions[x].p_size,devInfo->major,minor);
@@ -141,7 +143,7 @@ int hdIoctl() {
 int hdReset() {
   return(0x0);
   }
-  
+
 int hdInit(struct device_node *dev) {
   char retVal  = 0x0;
   long counter = 0x0;
@@ -282,16 +284,18 @@ void hdWrite(struct driveInfo *hdd,void *baseAddr,uInt32 startSector,uInt32 sect
   }
 
 void hdRead(struct driveInfo *hdd,void *baseAddr,uInt32 startSector,uInt32 sectorCount) {
-  long counter           = 0x0;
-  long retVal            = 0x0;
+  long counter                 = 0x0;
+  long retVal                    = 0x0;
   short transactionCount = 0x0;
-  short *tmp             = (short *)baseAddr;
+  short *tmp                   = (short *)baseAddr;
+
   startSector += hdd->parOffset;
 
   if (hdd->hdEnable == 0x0) {
     kprintf("Invalid Drive\n");
     return;
     }
+
   if ((sectorCount >> hdd->hdShift) == 0x0) {
     hdd->hdCalc = sectorCount; /* hdd->hdMask); */
     transactionCount = 1;
@@ -300,11 +304,14 @@ void hdRead(struct driveInfo *hdd,void *baseAddr,uInt32 startSector,uInt32 secto
     hdd->hdCalc = hdd->hdMulti;
     transactionCount = sectorCount >> hdd->hdShift;
     }
+
   for (;transactionCount > 0;transactionCount--) {
     for (counter = 1000000;counter >= 0;counter--) {
-      retVal = inportByte(hdd->hdPort + hdStat) & 0x80;
-      if (!retVal) goto ready;
+       retVal = inportByte(hdd->hdPort + hdStat) & 0x80;
+       if (!retVal)
+         goto ready;
       }
+
     kprintf("Time Out Waiting On Drive\n");
     return;
     ready:
@@ -317,22 +324,25 @@ void hdRead(struct driveInfo *hdd,void *baseAddr,uInt32 startSector,uInt32 secto
     retVal >>= 8;
     retVal &= 0x0F;
     retVal |= (hdd->hdDev | 0xA0); //Test as per TJ
-    //retVal |= hdd->hdDev; //retVal |= (hdd->hdDev | 0xA0); //Test as per TJ
     outportByte(hdd->hdPort + hdHead,(retVal & 0xFF));
+
     if (hdd->hdShift > 0)
       outportByte(hdd->hdPort + hdCmd,0xC4);
-    else 
+    else
       outportByte(hdd->hdPort + hdCmd,0x20);
+
     for (counter = 1000000;counter >= 0;counter--) {
       retVal = inportByte(hdd->hdPort + hdStat);
+
       if ((retVal & 1) != 0x0) {
-        kprintf("HD Read Error: [%i:0x%X:%i]\n",counter,(uInt32)baseAddr,startSector);
+        kprintf("HD Read Error: [%i:0x%X:%i(0x%X):0x%X]\n",counter,(uInt32)baseAddr,startSector,startSector,retVal);
         return;
         }
       if ((retVal & 8) != 0x0) {
         goto go;
         }
       }
+
     kprintf("Error: Time Out Waiting On Drive\n");
     return;
     go:
@@ -343,10 +353,13 @@ void hdRead(struct driveInfo *hdd,void *baseAddr,uInt32 startSector,uInt32 secto
     startSector += hdd->hdCalc;
     }
   return;
-  }  
+  }
 
 /***
  $Log$
+ Revision 1.2  2008/02/29 14:56:31  reddawg
+ Sync - Working On Getting It To Boot Again
+
  Revision 1.1.1.1  2007/01/17 03:31:55  reddawg
  UbixOS
 

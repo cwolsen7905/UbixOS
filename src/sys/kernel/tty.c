@@ -35,8 +35,8 @@
 #include <sys/io.h>
 #include <string.h>
 
-static tty_term  *terms          = 0x0;
-tty_term         *tty_foreground = 0x0;
+static tty_term  *terms            = 0x0;
+tty_term         *tty_foreground   = 0x0;
 static spinLock_t tty_spinLock   = SPIN_LOCK_INITIALIZER;
 
 int tty_init() {
@@ -98,7 +98,7 @@ int tty_change(uInt16 tty) {
   memcpy((char *)0xB8000,terms[tty].tty_buffer,(80*60*2));
 
   /*
-   Set the tty_pointer to the internal buffer so I can continue 
+   Set the tty_pointer to the internal buffer so I can continue
    writing to what it believes is the screen
   */
   tty_foreground->tty_pointer = tty_foreground->tty_buffer;

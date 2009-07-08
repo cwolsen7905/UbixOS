@@ -50,9 +50,9 @@ lib.so: $(OBJS)
 	$(CC) -nostdlib -shared -Wl,-x -o $(OUTPUT) -Wl,-soname,$(OUTPUT) `lorder $(OBJS) $(SUBS) | tsort -q`
 	#$(CC) -nostdlib -shared -Wl,-x -o lib-c.so -Wl,-soname,lib-c.so `lorder $(OBJS) $(SUBS) | tsort -q`
 	#(rm -fr pic.a;ar cq pic.a ./i386/*/*.o ./stdio/*.o ./stdlib/*.o ./string/*.o ./sys/*.o ./xdr/*.o ./yp/*.o ./locale/*.o ./gen/*.o ; ranlib ./pic.a)
-	#(rm pic.a)
-	#$(AR) cq $(LPIC) `lorder $(OBJS) $(SUBS) | tsort -q`
-	#ranlib $(LPIC)
+	(rm -fr pic.a)
+	$(AR) cq $(LPIC) `lorder $(OBJS) $(SUBS) | tsort -q`
+	ranlib $(LPIC)
 
 lib.a: $(OBJS)
 #	(make clean)

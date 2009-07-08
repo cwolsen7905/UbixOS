@@ -34,19 +34,19 @@
 #include <assert.h>
 
 static int month[12] = {
-        0,
-        DAY*(31),
-        DAY*(31+29),
-        DAY*(31+29+31),
-        DAY*(31+29+31+30),
-        DAY*(31+29+31+30+31),
-        DAY*(31+29+31+30+31+30),
-        DAY*(31+29+31+30+31+30+31),
-        DAY*(31+29+31+30+31+30+31+31),
-        DAY*(31+29+31+30+31+30+31+31+30),
-        DAY*(31+29+31+30+31+30+31+31+30+31),
-        DAY*(31+29+31+30+31+30+31+31+30+31+30)
-};
+  0,
+  DAY*(31),
+  DAY*(31+29),
+  DAY*(31+29+31),
+  DAY*(31+29+31+30),
+  DAY*(31+29+31+30+31),
+  DAY*(31+29+31+30+31+30),
+  DAY*(31+29+31+30+31+30+31),
+  DAY*(31+29+31+30+31+30+31+31),
+  DAY*(31+29+31+30+31+30+31+31+30),
+  DAY*(31+29+31+30+31+30+31+31+30+31),
+  DAY*(31+29+31+30+31+30+31+31+30+31+30)
+  };
 
 static int timeCmosRead(int addr) {
   outportByteP(0x70,addr);
@@ -56,7 +56,7 @@ static int timeCmosRead(int addr) {
 int time_init() {
   int i;
   struct timeStruct time;
- 
+
   for (i = 0 ; i < 1000000 ; i++) {
     if (!(timeCmosRead(10) & 0x80)) {
       break;
@@ -84,7 +84,7 @@ int time_init() {
 
   kprintf("%i/%i/%i %i:%i.%i\n",time.mon,time.day,time.year,time.hour,time.min,time.sec);
 
-  
+
   /* Return so we know all went well */
   return(0x0);
   }

@@ -91,11 +91,11 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
       /* USE vmInfo */
       dst = (u_int32_t *) vmmGetFreeVirtualPage(_current->id,1,0x1);
       /* Copy Memory */
-      for (i=0;i<pageEntries;i++) {
+      for (i = 0;i < PAGE_ENTRIES;i++) {
         dst[i] = src[i];
         }
       /* Adjust The COW Counter For Physical Page */
-      adjustCowCounter(((u_int32_t)pageTable[pageTableIndex] & 0xFFFFF000),-1);
+      vmm_adjustCowCounter(((u_int32_t)pageTable[pageTableIndex] & 0xFFFFF000),-1);
       /* Remap In New Page */
       pageTable[pageTableIndex] = (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)dst)|(memAddr & 0xFFF));
       /* Unlink From Memory Map Allocated Page */
@@ -135,6 +135,9 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
 
 /***
  $Log$
+ Revision 1.4  2009/07/08 16:05:56  reddawg
+ Sync
+
  Revision 1.3  2008/02/29 14:56:31  reddawg
  Sync - Working On Getting It To Boot Again
 

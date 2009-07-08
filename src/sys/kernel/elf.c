@@ -30,7 +30,9 @@
 #include <ubixos/elf.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
+#include <lib/kprintf.h>
 #include <vmm/vmm.h>
+#include <string.h>
 
 const struct {
   char  *elfTypeName;
@@ -118,11 +120,12 @@ int elf_loadfile(kTask_t *p,const char *file,u_int32_t *addr,u_int32_t *entry) {
   elfProgramHeader  *programHeader = 0x0;
   struct file       *exec_fd       = 0x0;
 
-  exec_fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  exec_fd = (struct file *)kmalloc(sizeof(struct file));
+  //exec_fd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
   fopen(exec_fd,file,"r");
   if (exec_fd == 0x0)
     return(-1);
-kprintf("MOO");
+
   /* Load the ELF header */
   if ((binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader))) == 0x0) 
     K_PANIC("malloc failed!");
@@ -147,7 +150,6 @@ kprintf("MOO");
     K_PANIC("malloc failed!");
   fseek(exec_fd,binaryHeader->ePhoff,0);
   fread(programHeader,(sizeof(elfProgramHeader)*binaryHeader->ePhnum),1,exec_fd);
-kprintf("MEW: [0x%X]",base);
   for (i = 0x0;i < binaryHeader->ePhnum;i++) {
     switch (programHeader[i].phType) {
       case PT_LOAD:
@@ -157,8 +159,9 @@ kprintf("MEW: [0x%X]",base);
         */
         for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* Make readonly and read/write */
-          if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x + base),PAGE_DEFAULT) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x + base),PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
+
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x + base),0x0,0x1000);
           }
 
@@ -168,8 +171,7 @@ kprintf("MEW: [0x%X]",base);
 
         if ((programHeader[i].phFlags & 0x2) != 0x2) {
           for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
-            if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x + base,PAGE_PRESENT | PAGE_USER)) != 0x0)
-              K_PANIC("vmm_setPageAttributes failed");
+            vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x + base,PAGE_PRESENT | PAGE_USER);
             }
           }
         if (numsegs == 0x0)

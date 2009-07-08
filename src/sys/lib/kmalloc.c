@@ -295,6 +295,8 @@ void *kmalloc(uInt32 len) {
       spinUnlock(&mallocSpinLock);
       //kprintf("m1[%i:%i:0x%X]",tmpDesc1->limit,len,tmpDesc1->baseAddr);
 	assert(tmpDesc1->baseAddr);
+      //UBU
+      memset(tmpDesc1->baseAddr,0x0,len);
       return(tmpDesc1->baseAddr);
       }
     }
@@ -330,6 +332,8 @@ void *kmalloc(uInt32 len) {
     //kprintf("baseAddr2[0x%X:0x%X]",tmpDesc1,tmpDesc1->baseAddr);
     //kprintf("m2[%i:%i:0x%X]",tmpDesc1->limit,len,tmpDesc1->baseAddr);
 	assert(tmpDesc1->baseAddr);
+    //UBU
+    memset(tmpDesc1->baseAddr,0x0,len);
     return(tmpDesc1->baseAddr);
     }
   //Return Null If Unable To Malloc
@@ -392,6 +396,9 @@ void kfree(void *baseAddr) {
 
 /***
  $Log$
+ Revision 1.3  2009/02/14 02:03:24  reddawg
+ Fixed up vmm_getFreeKernelPage
+
  Revision 1.2  2007/06/29 11:31:47  reddawg
  Cleaning
 

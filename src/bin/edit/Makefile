@@ -28,7 +28,7 @@ CFLAGS += -ggdb
 # Link The Binary
 $(BINARY) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	#strip $(BINARY)
+	strip $(BINARY)
 
 # Compile the source files
 .cc.o:

@@ -306,7 +306,7 @@ static int ufs_openFile(const char *file,struct file *fd) {
     return(-1);
     }
 
-  /* Quick Hack for file size */
+  /* FIX - Quick Hack for file size */
   fsread(ufsObj->ino,&tmp,1,fd);
   fd->offset = 0;
   /* Return */
@@ -345,7 +345,8 @@ static int ufs_closeFile(const char *file,struct file *fd) {
   }
 
 static int ufs_dummy() {
-  kprintf("Dummy Func\n");
+  K_PANIC("Dummy Func\n");
+  return(0x0);
   }
 
 int ufs_init() {

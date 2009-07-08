@@ -39,7 +39,7 @@
 struct thread {
   int         td_retval[2];
   u_int32_t   o_files[O_FILES];
-  char *      vm_daddr;
+  u_int32_t   vm_daddr;
   int32_t     vm_dsize;
   u_int8_t    mode;
   };

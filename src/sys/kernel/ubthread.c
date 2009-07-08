@@ -45,7 +45,7 @@ kTask_t *ubthread_self() {
   return(_current);
   }
 
-int ubthread_cond_init(ubthread_cond_t *cond,const uInt32 attr) { 
+int ubthread_cond_init(ubthread_cond_t *cond,const uInt32 attr) {
   ubthread_cond_t  ubcond = kmalloc(sizeof(struct ubthread_cond));
   ubcond->id     = (int)cond;
   ubcond->locked = UNLOCKED;
@@ -53,7 +53,7 @@ int ubthread_cond_init(ubthread_cond_t *cond,const uInt32 attr) {
   return(0x0);
   }
 
-int ubthread_mutex_init(ubthread_mutex_t *mutex,const uInt32 attr) { 
+int ubthread_mutex_init(ubthread_mutex_t *mutex,const uInt32 attr) {
   ubthread_mutex_t ubmutex = kmalloc(sizeof(struct ubthread_mutex));
   ubmutex->id     = (int)mutex;
   ubmutex->locked = UNLOCKED;
@@ -131,4 +131,3 @@ int ubthread_cond_signal(ubthread_cond_t *cond) {
 /***
  END
  ***/
-

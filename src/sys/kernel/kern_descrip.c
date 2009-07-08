@@ -35,6 +35,7 @@
 #include <ubixos/endtask.h>
 #include <lib/kmalloc.h>
 #include <assert.h>
+#include <lib/string.h>
 
 int fcntl(struct thread *td, struct fcntl_args *uap) {
   struct file *fp = 0x0;
@@ -191,7 +192,7 @@ int ioctl(struct thread *td, struct ioctl_args *uap) {
   if (uap->fd == 1) {
     switch  (uap->com) {
       case 0x40087468:
-        tmpShort = uap->data;
+        tmpShort = (short *)uap->data;
         tmpShort[0] = 0x25;
         tmpShort[1] = 0x9B;
         tmpShort[2] = 0x0;

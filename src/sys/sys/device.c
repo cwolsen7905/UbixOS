@@ -31,6 +31,7 @@
 #include <ubixos/spinlock.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
+#include <ubixos/kpanic.h>
 #include <assert.h>
 
 /* Linked list of drivers loaded in the system accessable by the subsystem only */
@@ -87,7 +88,7 @@ struct device_node *device_find(int major,int minor) {
   struct device_node *tmpDev = 0x0;
 
   if (major == -1)
-    return(-1);
+    kprintf("major == -1");
  
   spinLock(&deviceSpinLock);
 

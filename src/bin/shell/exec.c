@@ -41,6 +41,7 @@ void execProgram(inputBuffer *data) {
 
   if (!cPid) {
     sprintf(file,"%s%s",cwd,argv[1]);
+    printf("Forked And Ready To Roll: %s\n",file);
     if (boo == 0)
       exec(file,data->argv,data->envp);
     else

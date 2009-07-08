@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -46,29 +46,27 @@ Notes:
 
 ************************************************************************/
 int vitals_init() {
-	/* Initialize Memory For The System Vitals Node */
-	systemVitals = (vitalsNode *) kmalloc(sizeof(vitalsNode));
+  /* Initialize Memory For The System Vitals Node */
+  systemVitals = (vitalsNode *) kmalloc(sizeof(vitalsNode));
 
-	/* If malloc Failed Then Error */
-	if (systemVitals == 0x0)
-	{
-		kpanic("Error: kmalloc Failed In initVitals\n");
-	}
+  /* If malloc Failed Then Error */
+  if (systemVitals == 0x0) {
+    kpanic("Error: kmalloc Failed In initVitals\n");
+    }
 
-	/* Set all default values */
-	memset(systemVitals,0x0,sizeof(vitalsNode));
-  
-	systemVitals->quantum     = 8;
-	systemVitals->dQuantum    = 8;
+  /* Set all default values */
+  memset(systemVitals,0x0,sizeof(vitalsNode));
 
-	/* Print Out Info For Vitals: */
-	kprintf("vitals0 - Address: [0x%X]\n",systemVitals);
+  systemVitals->quantum       = 8;
+  systemVitals->dQuantum     = 8;
 
-	/* Return so kernel knows that there is no problem */
-	return(0x0);
-}
+  /* Print Out Info For Vitals: */
+  kprintf("vitals0 - Address: [0x%X]\n",systemVitals);
+
+  /* Return so kernel knows that there is no problem */
+  return(0x0);
+  }
 
 /***
  END
  ***/
-

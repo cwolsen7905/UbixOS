@@ -229,6 +229,7 @@ u_int32_t vmm_findFreePage(pidType pid) {
 void vmm_freePage(u_int32_t pageAddr) {
   int pageIndex = 0x0;
   assert((pageAddr & 0xFFF) == 0x0);
+
   spinLock(&vmmSpinLock);
 
   /* Find The Page Index To The Memory Map */
@@ -241,13 +242,16 @@ void vmm_freePage(u_int32_t pageAddr) {
     vmmMemoryMap[pageIndex].cowCounter = 0x0;
     vmmMemoryMap[pageIndex].pid = -2;
     freePages++;
+    spinUnlock(&vmmSpinLock);
     systemVitals->freePages = freePages;
     }
   else {
+    /* Prevent Dead Lock */
+    spinUnlock(&vmmSpinLock);
+
     /* Adjust The COW Counter */
-    adjustCowCounter(((u_int32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
+    vmm_adjustCowCounter(((u_int32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
     }
-  spinUnlock(&vmmSpinLock);
   }
 
 /************************************************************************
@@ -262,10 +266,11 @@ void vmm_freePage(u_int32_t pageAddr) {
   08/01/02 - I Think If Counter Gets To 0 I Should Free The Page
 
 ************************************************************************/
-int adjustCowCounter(u_int32_t baseAddr, int adjustment) {
+void vmm_adjustCowCounter(u_int32_t baseAddr, int adjustment) {
   int vmmMemoryMapIndex = (baseAddr / 4096);
   assert((baseAddr & 0xFFF) == 0x0);
-  spinLock(&vmmCowSpinLock);
+  spinLock(&vmmSpinLock);
+
   /* Adjust COW Counter */
   vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
 
@@ -276,14 +281,13 @@ int adjustCowCounter(u_int32_t baseAddr, int adjustment) {
     freePages++;
     systemVitals->freePages = freePages;
     }
-  spinUnlock(&vmmCowSpinLock);
-  /* Return */
-  return (0);
+
+  spinUnlock(&vmmSpinLock);
   }
 
 /************************************************************************
 
- Function: void vmmFreeProcessPages(pid_t pid);
+ Function: void vmm_freeProcessPages(pid_t pid);
 
  Description: This Function Will Free Up Memory For The Exiting Process
 
@@ -292,10 +296,12 @@ int adjustCowCounter(u_int32_t baseAddr, int adjustment) {
   08/04/02 - Added Checking For COW Pages First
 
 ************************************************************************/
-void vmmFreeProcessPages(pidType pid) {
-  int i=0,x=0;
+void vmm_freeProcessPages(pidType pid) {
+  int i=0;
+  int x=0;
   u_int32_t *tmpPageTable = 0x0;
   u_int32_t *tmpPageDir   = (uInt32 *)PARENT_PAGEDIR_ADDR;
+
   spinLock(&vmmSpinLock);
   /* Check Page Directory For An Avail Page Table */
   for (i=0;i<=0x300;i++) {
@@ -303,10 +309,10 @@ void vmmFreeProcessPages(pidType pid) {
       /* Set Up Page Table Pointer */
       tmpPageTable = (u_int32_t *)(PAGE_TABLES_BASE_ADDR + (i * 0x1000));
       /* Check The Page Table For COW Pages */
-      for (x=0;x<pageEntries;x++) {
+      for (x = 0;x < PAGE_ENTRIES;x++) {
         /* If The Page Is COW Adjust COW Counter */
         if (((u_int32_t)tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
-          adjustCowCounter(((u_int32_t)tmpPageTable[x] & 0xFFFFF000),-1);
+          vmm_adjustCowCounter(((u_int32_t)tmpPageTable[x] & 0xFFFFF000),-1);
           }
         }
       }
@@ -332,6 +338,9 @@ void vmmFreeProcessPages(pidType pid) {
 
 /***
  $Log$
+ Revision 1.2  2009/07/08 16:05:56  reddawg
+ Sync
+
  Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
  UbixOS
 
@@ -412,7 +421,6 @@ void vmmFreeProcessPages(pidType pid) {
 
  Revision 1.27  2004/04/13 16:36:34  reddawg
  Changed our copyright, it is all now under a BSD-Style license
-
 
  END
  ***/

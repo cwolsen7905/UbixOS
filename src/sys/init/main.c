@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004, 2005, 2007, 2008 The UbixOS Project
+ Copyright (c) 2002-2004, 2005, 2007, 2008,2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -37,6 +37,7 @@
 #include <vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <lib/string.h>
 
 #define B_ADAPTORSHIFT          24
 #define B_ADAPTORMASK           0x0f
@@ -62,7 +63,7 @@
  Desc: The Kernels Descriptor table:
        0x00 - Dummy Entry
        0x08 - Ring 0 CS
-       0x10 - Ring 0 DS 
+       0x10 - Ring 0 DS
        0x18 - Dummy LDT
        0x20 - Scheduler TSS
        0x28 - Ring 3 CS
@@ -70,7 +71,7 @@
        0x38 - GPF TSS
        0x40 - Stack Fault TSS
 
- Notes: 
+ Notes:
 
 *****************************************************************************************/
 ubixDescriptorTable(ubixGDT,9) {
@@ -90,7 +91,7 @@ struct {
   } loadGDT = { (9 * sizeof(union descriptorTableUnion) - 1), ubixGDT };
 
 /**
- * \brief This is the entry point into the os where all of the kernels sub systems are started up. 
+ * \brief This is the entry point into the os where all of the kernels sub systems are started up.
  *
  * \param rootdev address of root device structure
  */
@@ -116,41 +117,44 @@ int kmain(uInt32 rootdev) {
   //#endif
   //if (vfs_mount(0x1,B_PARTITION(rootdev)+2,0x0,0xAA,"sys","rw") != 0x0) {
 
-  if (vfs_mount(0x1,0x1,0x0,0xAA,"sys","rw") != 0x0) {
+
+  /* Mount Root */
+  if (vfs_mount(0x1,0x2,0x0,0xAA,"sys","rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
     }
 
-  /* Do our mounting */
- /* 
-  if (vfs_mount(0x0,0x0,0x0,0x0,"sys","rw") != 0x0) {
-    kprintf("Problem Mounting sys Mount Point\n");
-    }
-  if (vfs_mount(0x0,0x0,0x1,0x0,"tmp","rw") != 0x0) {
-    kprintf("Problem Mounting tmp Mount Point\n");
-    }
-  */
-  
   /* Initialize the system */
-  kprintf("Free Pages: [%i]\n",systemVitals->freePages); 
+  kprintf("Free Pages: [%i]\n",systemVitals->freePages);
 
   kprintf("MemoryMap:  [0x%X]\n",vmmMemoryMap);
   kprintf("Starting UbixOS\n");
-  
-	sysTask = kmalloc(0x2000);
-	if(sysTask == NULL)
-		kprintf("OS: Unable to allocate memory\n");
 
-	execThread(systemTask, (uInt32)sysTask+0x2000,0x0);
+  /* Create Stack Space For System Task */
+  sysTask = kmalloc(0x2000);
+  if(sysTask == NULL)
+    kprintf("OS: Unable to allocate memory\n");
 
-	execFile("sys:/bin/init",0x0,0x0,0x0); /* OS Initializer    */
+  kprintf("T");
+
+  /* Execute System Task */
+  // Send stack size to app zero there?
+  memset(sysTask,0x0,0x2000);
+  execThread(systemTask, (uInt32)sysTask+0x2000,0x0);
+
+  kprintf("P");
+
+  /* Execute Init Process */
+  execFile("sys:/bin/init",0x0,0x0,0x0); /* OS Initializer    */
+
+  kprintf("BOO\n");
 //        execFile("sys:/bin/login",0x0,0x0,0x1);
 //        execFile("sys:/bin/login",0x0,0x0,0x2);
-  
+
 	irqEnable(0x0);
-  
+
 	while (0x1)
 		asm("hlt"); /* Keep haulting until the scheduler reacts */
-  
+
 	/* Return to start however we should never get this far */
 	return(0x0);
 }

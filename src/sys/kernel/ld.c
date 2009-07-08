@@ -48,7 +48,7 @@ uInt32 ldEnable() {
   char             *shStr         = 0x0;
   char             *dynStr        = 0x0;
   uInt32           *reMap         = 0x0;
-  fileDescriptor   *ldFd          = 0x0;
+  struct file      *ldFd          = 0x0;
   elfHeader        *binaryHeader  = 0x0;
   elfProgramHeader *programHeader = 0x0;
   elfSectionHeader *sectionHeader = 0x0;
@@ -56,12 +56,14 @@ uInt32 ldEnable() {
   elfPltInfo       *elfRel        = 0x0;
 
   /* Open our dynamic linker */
-  ldFd = (struct fileDescriptorStruct *)kmalloc(sizeof(struct fileDescriptorStruct));
+  ldFd = (struct file *)kmalloc(sizeof(struct file));
   fopen(ldFd,"sys:/lib/ld.so","rb");
+
 
   if (ldFd == 0x0) {
     kprintf("Can not open ld.so\n");
     }
+
   #ifdef LD_DEBUG
   kprintf("Loading LD\n");
   #endif
@@ -81,21 +83,28 @@ uInt32 ldEnable() {
   fseek(ldFd,binaryHeader->eShoff,0);
   fread(sectionHeader,sizeof(elfSectionHeader),binaryHeader->eShnum,ldFd);
 
+
   shStr = (char *)kmalloc(sectionHeader[binaryHeader->eShstrndx].shSize);
   fseek(ldFd,sectionHeader[binaryHeader->eShstrndx].shOffset,0);
   fread(shStr,sectionHeader[binaryHeader->eShstrndx].shSize,1,ldFd);
 
+
   for (i = 0x0;i < binaryHeader->ePhnum;i++) {
+    //kprintf("LD.phType: %i\n",programHeader[i].phType);
     switch (programHeader[i].phType) {
       case PT_LOAD:
         newLoc = (char *)programHeader[i].phVaddr + LD_START;
+        //kprintf("LD.newLoc: 0x%X\n",newLoc);
         /*
         Allocate Memory Im Going To Have To Make This Load Memory With Correct
         Settings so it helps us in the future
         */
+        //kprintf("LD.phMemsz: 0x%X\n",programHeader[i].phMemsz);
         for (x=0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* make r/w or ro */
-          if ((vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START),PAGE_DEFAULT)) == 0x0) 
+          if (((programHeader[i].phVaddr & 0xFFFFF00) + x + LD_START) > 0xC0000000)
+            K_PANIC("OVER 4GB");
+          if ((vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START),PAGE_DEFAULT)) == 0x0) 
 	    K_PANIC("vmmRemapPage: ld");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x + LD_START),0x0,0x1000);
           }
@@ -125,6 +134,7 @@ uInt32 ldEnable() {
       }
     }
 
+  //assert(_current->id != 4);
   for (i=0x0;i<binaryHeader->eShnum;i++) {
     switch (sectionHeader[i].shType) {
      case 3:

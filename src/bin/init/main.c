@@ -38,6 +38,8 @@ int main(int argc,char **argv) {
   int i=0x0;
   mpi_message_t myMsg;
 
+  printf("A");
+
   /* Create a mailbox for this task */
   if (mpi_createMbox("init") != 0x0) {
     printf("Error: Failed to creating mail box: init\n");

@@ -28,6 +28,7 @@
 *****************************************************************************************/
 
 #include <vmm/vmm.h>
+#include <lib/kprintf.h>
 
 /*!
 
@@ -60,6 +61,9 @@ u_int32_t vmm_getPhysicalAddr(u_int32_t pageAddr) {
 
 /***
  $Log$
+ Revision 1.2  2009/07/08 16:05:56  reddawg
+ Sync
+
 
  END
  ***/

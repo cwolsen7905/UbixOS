@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -38,11 +38,8 @@
 #define VM_TASK             1
 
 #define pageLength          0x00000400
-#define pageSize            4096
-#define pageEntries         (pageSize/4)
-#define tablesBaseAddress   0xBFC00000
-#define parentPageDirAddr   0x100000
-#define PARENT_PAGEDIR_ADDR 0x100000   /* Address at which the page directory is stored */
+#define PAGE_TABLES_BASE_ADDR 0xBFC00000 /* Base address of page tables in virtual area 3GB - 4MB */ 
+#define PARENT_PAGEDIR_ADDR   0x100000   /* Address at which the page directory is stored */
 
 #define PAGE_COW            0x00000200
 #define PAGE_STACK          0x00000400
@@ -56,37 +53,37 @@
 #define PAGE_SHIFT          12              /* LOG2(PAGE_SIZE) */
 #define PAGE_SIZE           (1<<PAGE_SHIFT) /* bytes/page */
 #define PAGE_MASK           (PAGE_SIZE-1)
+#define PAGE_ENTRIES        (PAGE_SIZE/4)
 
+#define PTI(x)              ((x >> 12) & 0x3FF)
+#define PDI(x)              (x >> 22)
 #define trunc_page(x)       ((x) & ~PAGE_MASK)
 #define round_page(x)       (((x) + PAGE_MASK) & ~PAGE_MASK)
 #define ctob(x)             ((x)<<PAGE_SHIFT)
 #define btoc(x)             (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
 
-int vmmClearVirtualPage(uInt32 pageAddr);
-
-void vmmUnmapPage(uInt32,int);
-void vmmUnmapPages(void *,uInt32);
-void *vmmMapFromTask(pidType,void *,uInt32);
+int   vmm_zeroVirtualPage(u_int32_t pageAddr);
+void  vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags);
+void *vmm_mapFromTask(pidType pid,u_int32_t baseAddr,u_int32_t size);
 void *vmmCopyVirtualSpace(pidType);
-void *vmmGetFreeKernelPage(pidType);
-void *vmmGetFreeKernelPage(pidType pid,uInt16 count);
 void *vmmCreateVirtualSpace(pidType);
 void *vmmGetFreeVirtualPage(pidType,int,int);
 
-uInt32 vmm_getPhysicalAddr(uInt32);
-int    vmm_setPageAttributes(uInt32,uInt16);
-int    vmm_remapPage(uInt32,uInt32,uInt16);
+void *vmm_getFreeKernelPage(pidType pid,u_int32_t count);
+u_int32_t vmm_getPhysicalAddr(u_int32_t);
+void    vmm_setPageAttributes(u_int32_t,u_int16_t);
+int    vmm_remapPage(u_int32_t,u_int32_t,u_int16_t);
 int    vmm_pagingInit();
-void  *vmm_getFreeMallocPage(uInt16 count);
-void   vmm_pageFault(uInt32,uInt32,uInt32);
+void  *vmm_getFreeMallocPage(u_int16_t count);
+void   vmm_pageFault(u_int32_t,u_int32_t,u_int32_t);
 void  _vmm_pageFault();
 int mmap(struct thread *,struct mmap_args *);
 int obreak(struct thread *,struct obreak_args *);
 int munmap(struct thread *,struct munmap_args *);
 
 
-extern uInt32 *kernelPageDirectory;
+extern u_int32_t *kernelPageDirectory;
 
 #endif
 

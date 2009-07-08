@@ -30,7 +30,9 @@
 #include <vfs/vfs.h>
 #include <sys/kern_descrip.h>
 #include <ubixos/kpanic.h>
-#include <lib/kprint.h>
+#include <lib/kprintf.h>
+#include <lib/kmalloc.h>
+#include <lib/string.h>
 
 /*!
  * \brief entry point for lseek syscall
@@ -158,7 +160,7 @@ int write(struct thread *td, struct write_args *uap) {
   else if (uap->fd == 1) {
     buffer = kmalloc(uap->nbyte);
     memcpy(buffer,uap->buf,uap->nbyte);
-    kprint(buffer);
+    kprintf("Buffer: 0x%X\n",buffer);
     kfree(buffer);
     td->td_retval[0] = uap->nbyte;
     }

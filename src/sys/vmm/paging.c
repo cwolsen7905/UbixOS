@@ -70,7 +70,7 @@ int vmm_pagingInit() {
 
   /* Clear The Memory To Ensure There Is No Garbage */
   //QUESTION Can't we do a memset here?
-  for (i = 0x0; i < pageEntries; i++) {
+  for (i = 0x0; i < PAGE_ENTRIES; i++) {
     kernelPageDirectory[i] = (u_int32_t)0x0;
     } /* end for */
 
@@ -88,7 +88,7 @@ int vmm_pagingInit() {
    * at 0x30000
    * Do not map page at address 0x0 this is reserved for null...
    */
-  for (i = 0x1; i < (pageEntries / 0x4); i++) {
+  for (i = 0x1; i < (PAGE_ENTRIES / 0x4); i++) {
     pageTable[i] = (u_int32_t) ((i * 0x1000) | KERNEL_PAGE_DEFAULT);
     } /* end for */
 
@@ -96,7 +96,7 @@ int vmm_pagingInit() {
    * Create page tables for the top 1GB of VM space. This space is set aside
    * for kernel space and will be shared with each process
    */
-  for (i = 768; i < pageEntries; i++) {
+  for (i = 768; i < PAGE_ENTRIES; i++) {
     if ((pageTable = (u_int32_t *) vmm_findFreePage(sysID)) == 0x0)
       K_PANIC("Error: vmm_findFreePage Failed");
 
@@ -116,7 +116,7 @@ int vmm_pagingInit() {
 
   kernelPageDirectory[767] = ((u_int32_t) pageTable | KERNEL_PAGE_DEFAULT);
 
-  for (i = 0; i < pageEntries; i++) {
+  for (i = 0; i < PAGE_ENTRIES; i++) {
     pageTable[i] = kernelPageDirectory[i];
     } /* end for */
 
@@ -184,6 +184,7 @@ kprintf("vmm_remapPage");
   /* Lock this function so to avoid race conditions */
   spinLock(&rmpSpinLock);
 
+
   /* Set default permissions if not spedified */
   if (perms == 0x0)
     perms = KERNEL_PAGE_DEFAULT;
@@ -218,7 +219,7 @@ kprintf("vmm_remapPage");
     pageTable = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * destPageDirectoryIndex));
 
     /* Zero out the page table */
-    for (i = 0x0;i < pageEntries;i++)
+    for (i = 0x0;i < PAGE_ENTRIES;i++)
       pageTable[i] = 0x0;
     }
 
@@ -267,7 +268,7 @@ kprintf("vmm_remapPage");
 
 /************************************************************************
 
-Function: void vmm_clearVirtualPage(u_int32_t pageAddr);
+Function: int vmm_zeroVirtualPage(u_int32_t pageAddr);
 
 Description: This Will Null Out A Page Of Memory
 
@@ -277,35 +278,47 @@ Notes:
 07/08/2009 - renamed and cleaned up function
 
 ************************************************************************/
-void vmm_clearVirtualPage(u_int32_t pageAddr) {
+int vmm_zeroVirtualPage(u_int32_t pageAddr) {
   u_int32_t *src     = 0x0;
   int        counter = 0x0;
+
+  if ((pageAddr & 0xFFF) != 0x0)
+    return(0x1); 
 
   /* Set Source Pointer To Virtual Page Address */
   src = (u_int32_t *) pageAddr;
 
   /* Clear Out The Page */
-  for (counter = 0x0; counter < pageEntries; counter++) {
+  for (counter = 0x0; counter < PAGE_ENTRIES; counter++) {
     src[counter] = 0x0;
     }
-
+  return(0x0);
   }
 
 
-void *vmmMapFromTask(pidType pid,void *ptr,u_int32_t size) {
-  kTask_t *child = 0x0;
-  u_int32_t i = 0x0,x = 0x0,y = 0x0,count = ((size+4095)/0x1000),c = 0x0;
-  uInt16 dI = 0x0,tI = 0x0;
-  u_int32_t baseAddr = 0x0,offset = 0x0;
+void *vmm_mapFromTask(pidType pid,u_int32_t baseAddr,u_int32_t size) {
+  kTask_t   *child = 0x0;
+  u_int32_t  i     = 0x0;
+  u_int32_t  x     = 0x0;
+  u_int32_t  y     = 0x0;
+  u_int32_t  count = ((size+4095)/0x1000);
+  u_int32_t  c     = 0x0;
+  u_int16_t  dI    = 0x0;
+  u_int16_t  tI    = 0x0;
+  u_int32_t  offset = 0x0;
   u_int32_t *childPageDir   = (u_int32_t *)0x5A00000;
   u_int32_t *childPageTable = 0x0;
   u_int32_t *pageTableSrc   = 0x0;
-  offset = (u_int32_t)ptr & 0xFFF;
-  baseAddr = (u_int32_t)ptr & 0xFFFFF000;
+
+  offset = baseAddr & 0xFFF;
+  baseAddr &= 0xFFFFF000;
+
   child = schedFindTask(pid);
+
   //Calculate The Page Table Index And Page Directory Index
-  dI = (baseAddr/(1024*4096));
-  tI = ((baseAddr-(dI*(1024*4096)))/4096);
+  dI = PDI(baseAddr);
+  tI = PTI(baseAddr);
+
   if (vmm_remapPage(child->tss.cr3,0x5A00000,KERNEL_PAGE_DEFAULT) == 0x0)
     K_PANIC("vmmFailed");
 
@@ -361,12 +374,14 @@ void *vmmMapFromTask(pidType pid,void *ptr,u_int32_t size) {
   return(0x0);
   }
 
-void *vmm_getFreeMallocPage(uInt16 count) {
-  uInt16  x = 0x0, y = 0x0;
-  int     c = 0x0;
+void *vmm_getFreeMallocPage(u_int16_t count) {
+  int        c            = 0x0;
   u_int32_t *pageTableSrc = 0x0;
+  u_int16_t  x            = 0x0;
+  u_int16_t  y            = 0x0;
 
   spinLock(&fkpSpinLock);
+
   /* Lets Search For A Free Page */
   for (x = 960; x < 1024; x++) {
     /* Set Page Table Address */
@@ -388,7 +403,8 @@ void *vmm_getFreeMallocPage(uInt16 count) {
               if (vmm_remapPage((u_int32_t) vmm_findFreePage(sysID), ((x * 0x400000) + ((y + c) * 0x1000)),KERNEL_PAGE_DEFAULT) == 0x0)
                 K_PANIC("remap Failed");
 
-              vmm_clearVirtualPage((u_int32_t) ((x * 0x400000) + ((y + c) * 0x1000)));
+              if (vmm_zeroVirtualPage((u_int32_t) ((x * 0x400000) + ((y + c) * 0x1000))) == 0x1)
+                K_PANIC("vmm_zeroVirtualPage failed");
               }
 
             spinUnlock(&fkpSpinLock);
@@ -401,7 +417,8 @@ void *vmm_getFreeMallocPage(uInt16 count) {
             K_PANIC("Failed");
 
           /* Clear This Page So No Garbage Is There */
-          vmm_clearVirtualPage((u_int32_t) ((x * 0x400000) + (y * 0x1000)));
+          if (vmm_zeroVirtualPage((u_int32_t) ((x * 0x400000) + (y * 0x1000))) == 0x1)
+            K_PANIC("vmm_zeroVirtualPage: Failed");
           /* Return The Address Of The Newly Allocate Page */
           spinUnlock(&fkpSpinLock);
           return ((void *)((x * 0x400000) + (y * 0x1000)));

@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -52,13 +52,15 @@ extern mMap *vmmMemoryMap;
 int vmm_init();
 int vmmMemMapInit();
 int countMemory();
-u_int32_t vmmFindFreePage(pidType pid);
-int freePage(uInt32 pageAddr);
-int adjustCowCounter(uInt32 baseAddr,int adjustment);
-void vmmFreeProcessPages(pidType pid);
+u_int32_t vmm_findFreePage(pidType pid);
+void vmm_freePage(u_int32_t pageAddr);
+void vmm_adjustCowCounter(u_int32_t pageAddr,int adjustment);
+void vmm_freeProcessPages(pidType pid);
 
 #endif
 
 /***
+ $Log$
+
  END
  ***/

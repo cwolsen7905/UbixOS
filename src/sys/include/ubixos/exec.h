@@ -35,7 +35,7 @@
 
 uInt32 execThread(void (* tproc)(void),uInt32,char *);
 void execFile(char *file,int argc,char **argv,int console);
-int sys_exec(char *file,char *ap);
+void sys_exec(char *file,char *ap);
 
 #endif
 

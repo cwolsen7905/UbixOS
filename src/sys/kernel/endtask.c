@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -33,6 +33,7 @@
 #include <vmm/vmm.h>
 #include <lib/kprintf.h>
 #include <isa/8259.h>
+#include <ubixos/kpanic.h>
 
 /************************************************************************
 
@@ -42,13 +43,14 @@ Description: This will do cleanup for an ending task
 
 Notes:
 
-************************************************************************/ 
+************************************************************************/
 void endTask(pidType pid) {
   //kTask_t *tmpTask = 0x0;
 
   /* Don't mess with scheduler structures from outside the scheduler! */
   /* Just set status to dead, and let the scheduler clean up itself */
-  sched_setStatus(pid,DEAD);
+  if (sched_setStatus(pid,DEAD) != 0x0)
+    kpanic("sched_setStatus: Failed\n");
   //tmpTask = schedFindTask(pid);
   //if (sched_deleteTask(pid) != 0x0)
   //  kpanic("sched_deleteTask: Failed\n");
@@ -57,6 +59,8 @@ void endTask(pidType pid) {
   //tmpTask->state = DEAD;
 
   //tmpTask->term->owner = tmpTask->parentPid;
+  //kprintf("wtf?");
+  //return;
 
   if (pid == _current->id)
     while(1)

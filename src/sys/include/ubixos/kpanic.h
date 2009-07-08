@@ -30,7 +30,7 @@
 #ifndef _KPANIC_H
 #define _KPANIC_H
 
-#define K_PANIC(msg) kpanic("\nKernel Panic!!!!\nError: (%s), File: %s, Function: %s, Line: %i\n",msg ,__FILE__,__FUNCTION__,__LINE__);
+#define K_PANIC(msg) kpanic("\nError: (%s), File: %s, Function: %s, Line: %i\n",msg ,__FILE__,__FUNCTION__,__LINE__);
 
 void kpanic(const char *fmt, ...);
 
