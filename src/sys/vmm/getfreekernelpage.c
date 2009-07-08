@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002,2009 The UbixOS Project
+ Copyright (c) 2002, 2009 The UbixOS Project
  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -33,48 +33,81 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 static spinLock_t vmmGFPlock = SPIN_LOCK_INITIALIZER;
 
+
 /************************************************************************
 
 Function: void *vmm_getFreeKernelPage(pidType pid);
-
 Description: Returns A Free Page Mapped To The VM Space
-
 Notes:
 
-02/13/09 - Renamed function to vmm_getFreeKernelPage
+06/12/09 - Moved Function From paging.c To Replace This One
 07/30/02 - This Returns A Free Page In The Top 1GB For The Kernel
 
 ************************************************************************/
-void *vmm_getFreeKernelPage(pidType pid) {
-  u_int16  x = 0x0, y = 0x0;
-  u_int32 *pageTableSrc = 0x0;
+void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
+  int        x = 0;
+  int        y = 0;
+  int        c = 0;
+  u_int32_t *pageTableSrc = 0x0;
+
+  #ifdef VMMDEBUG
+  kprintf("vmm_getFreeKErnelPage");
+  #endif
 
   spinLock(&vmmGFPlock);
 
   /* Lets Search For A Free Page */
   for (x = 768; x < 1024; x++) {
-
     /* Set Page Table Address */
-    pageTableSrc = (uInt32 *) (tablesBaseAddress + (0x1000 * x));
-    for (y = 0x0; y < 1024; y++) {
+    pageTableSrc = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (4096 * x));
+
+    for (y = 0; y < 1024; y++) {
       /* Loop Through The Page Table Find An UnAllocated Page */
-      if ((uInt32) pageTableSrc[y] == (uInt32) 0x0) {
-	/* Map A Physical Page To The Virtual Page */
-	if ((vmm_remapPage(vmmFindFreePage(pid), ((x * 0x400000) + (y * 0x1000)),KERNEL_PAGE_DEFAULT)) == 0x0)
-	  kpanic("vmmRemapPage: vmm_getFreeKernelPage\n");
-	/* Clear This Page So No Garbage Is There */
-	vmmClearVirtualPage((uInt32) ((x * 0x400000) + (y * 0x1000)));
-	/* Return The Address Of The Newly Allocate Page */
-	spinUnlock(&vmmGFPlock);
-	return ((void *)((x * 0x400000) + (y * 0x1000)));
+      if ((u_int32_t) pageTableSrc[y] == (u_int32_t) 0x0) {
+        if (count > 1) {
+          for (c = 0; c < count; c++) {
+            if (y + c < 1024) {
+              if ((u_int32_t) pageTableSrc[y + c] != (u_int32_t) 0x0) {
+                c = -1;
+                break;
+                }
+              }
+            }
+
+          if (c != -1) {
+            for (c = 0; c < count; c++) {
+              if ((vmm_remapPage((u_int32_t) vmm_findFreePage(pid), ((x * (1024 * 4096)) + ((y + c) * 4096)),KERNEL_PAGE_DEFAULT)) == 0x0)
+                K_PANIC("vmmRemapPage failed: gfkp-1\n");
+              vmm_clearVirtualPage((u_int32_t) ((x * (1024 * 4096)) + ((y + c) * 4096)));
+              }
+
+            spinUnlock(&vmmGFPlock);
+            return ((void *)((x * (1024 * 4096)) + (y * 4096)));
+            }
+          }
+        else {
+          /* Map A Physical Page To The Virtual Page */
+          if ((vmm_remapPage((u_int32_t) vmm_findFreePage(pid), ((x * (1024 * 4096)) + (y * 4096)),KERNEL_PAGE_DEFAULT)) == 0x0)
+            K_PANIC("vmmRemapPage failed: gfkp-2\n");
+
+          /* Clear This Page So No Garbage Is There */
+          vmm_clearVirtualPage((u_int32_t) ((x * (1024 * 4096)) + (y * 4096)));
+          /* Return The Address Of The Newly Allocate Page */
+          spinUnlock(&vmmGFPlock);
+          return ((void *)((x * (1024 * 4096)) + (y * 4096)));
+          }
+        }
       }
     }
-  }
+
   /* If No Free Page Was Found Return NULL */
   spinUnlock(&vmmGFPlock);
   return (0x0);
-}
+  } /* end func */
+
 
 /***
+ $Log$
+
  END
  ***/

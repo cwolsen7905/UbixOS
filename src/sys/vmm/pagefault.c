@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002 The UbixOS Project
+ Copyright (c) 2002, 2009 The UbixOS Project
  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -37,29 +37,29 @@ static spinLock_t pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
 
 /*****************************************************************************************
 
- Function:    void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp);
+ Function:    void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp);
  Description: This is the page fault handler, it will handle COW and trap all other
               exceptions and segfault the thread.
 
  Notes:
- 
+
 07/30/02 - Fixed COW However I Need To Think Of A Way To Impliment
            A Paging System Also Start To Add Security Levels
-    
-07/27/04 - Added spin locking to ensure that we are thread safe. I know that spining a 
+
+07/27/04 - Added spin locking to ensure that we are thread safe. I know that spining a
            cpu is a waste of resources but for now it prevents errors.
 
 *****************************************************************************************/
-void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
-  uInt32 i = 0x0, pageTableIndex = 0x0,pageDirectoryIndex = 0x0;
-  uInt32 *pageDir = 0x0,*pageTable = 0x0;
-  uInt32 *src = 0x0,*dst = 0x0;
+void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
+  u_int32_t i = 0x0, pageTableIndex = 0x0,pageDirectoryIndex = 0x0;
+  u_int32_t *pageDir = 0x0,*pageTable = 0x0;
+  u_int32_t *src = 0x0,*dst = 0x0;
 
   /* Try to aquire lock otherwise spin till we do */
   spinLock(&pageFaultSpinLock);
 
   /* Set page dir pointer to the address of the visable page directory */
-  pageDir = (uInt32 *)parentPageDirAddr;
+  pageDir = (u_int32_t *)PARENT_PAGEDIR_ADDR;
 
   /* UBU - This is a temp panic for 0x0 read write later on I will handle this differently */
   if (memAddr == 0x0) {
@@ -68,10 +68,10 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
     }
 
   /* Calculate The Page Directory Index */
-  pageDirectoryIndex = (memAddr >> 22);
-  
+  pageDirectoryIndex = PDI(memAddr);
+
   /* Calculate The Page Table Index     */
-  pageTableIndex = ((memAddr >> 12) & 0x3FF);
+  pageTableIndex = PTI(memAddr);
 
   /* UBU - This is a temporary routine for handling access to a page of a non existant page table */
   if (pageDir[pageDirectoryIndex] == 0x0) {
@@ -81,25 +81,25 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
     }
   else {
     /* Set pageTable To Point To Virtual Address Of Page Table */
-    pageTable = (uInt32 *)(tablesBaseAddress + (0x1000 * pageDirectoryIndex));
-    
+    pageTable = (u_int32_t *)(PAGE_TABLES_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+
     /* Test if this is a COW on page */
-    if (((uInt32)pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW) {
+    if (((u_int32_t)pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW) {
       /* Set Src To Base Address Of Page To Copy */
-      src = (uInt32 *)(memAddr & 0xFFFFF000);
+      src = (u_int32_t *)(memAddr & 0xFFFFF000);
       /* Allocate A Free Page For Destination */
       /* USE vmInfo */
-      dst = (uInt32 *) vmmGetFreeVirtualPage(_current->id,1,0x1);
+      dst = (u_int32_t *) vmmGetFreeVirtualPage(_current->id,1,0x1);
       /* Copy Memory */
       for (i=0;i<pageEntries;i++) {
         dst[i] = src[i];
         }
       /* Adjust The COW Counter For Physical Page */
-      adjustCowCounter(((uInt32)pageTable[pageTableIndex] & 0xFFFFF000),-1);
+      adjustCowCounter(((u_int32_t)pageTable[pageTableIndex] & 0xFFFFF000),-1);
       /* Remap In New Page */
-      pageTable[pageTableIndex] = (uInt32)(vmm_getPhysicalAddr((uInt32)dst)|(memAddr & 0xFFF));
+      pageTable[pageTableIndex] = (u_int32_t)(vmm_getPhysicalAddr((u_int32_t)dst)|(memAddr & 0xFFF));
       /* Unlink From Memory Map Allocated Page */
-      vmmUnmapPage((uInt32)dst,1);
+      vmm_unmapPages((u_int32_t)dst,1,1);
       }
     else if (pageTable[pageTableIndex] != 0x0) {
       kprintf("Security failed pagetable not user permission\n");
@@ -109,14 +109,17 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
       endTask(_current->id);
       }
     else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
-      pageTable[pageTableIndex] = (uInt32)vmmFindFreePage(_current->id) | PAGE_DEFAULT;
+      pageTable[pageTableIndex] = (u_int32_t)vmm_findFreePage(_current->id) | PAGE_DEFAULT;
       }
     else {
       spinUnlock(&pageFaultSpinLock);
+
       /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
-      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n",memAddr,esp,_current->id,eip);
-      //kprintf("Out Of Stack Space: [0x%X]\n",memAddr & 0xFF0000);
+      kprintf("Segfault @: 0x%X, ESP: 0x%X, PID: %i, EIP: 0x%X Non Mapped\n",memAddr,esp,_current->id,eip);
+
       spinUnlock(&pageFaultSpinLock);
+
+      /* End this task */
       endTask(_current->id);
       }
     }
@@ -124,14 +127,17 @@ void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) {
     "movl %cr3,%eax\n"
     "movl %eax,%cr3\n"
     );
-  
+
   /* Release the spin lock */
   spinUnlock(&pageFaultSpinLock);
   return;
   }
-  
+
 /***
  $Log$
+ Revision 1.3  2008/02/29 14:56:31  reddawg
+ Sync - Working On Getting It To Boot Again
+
  Revision 1.2  2007/01/19 17:08:29  reddawg
  Lots of fixes
 

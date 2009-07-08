@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -36,7 +36,7 @@
 #include <ubixos/spinlock.h>
 #include <assert.h>
 
-static uInt32          freePages = 0;
+static u_int32_t          freePages = 0;
 static spinLock_t vmmSpinLock    = SPIN_LOCK_INITIALIZER;
 static spinLock_t vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
@@ -102,7 +102,7 @@ int vmmMemMapInit() {
 
 ************************************************************************/
 int countMemory() {
-  register uInt32 *mem = 0x0;
+  register u_int32_t *mem = 0x0;
   unsigned long    memCount = -1, tempMemory = 0x0;
   unsigned short   memKb = 0;
   unsigned char    irq1State, irq2State;
@@ -140,7 +140,7 @@ int countMemory() {
     if (memCount == -1)
       memCount = 0;
     memCount += 1024 * 1024;
-    mem = (uInt32 *)memCount;
+    mem = (u_int32_t *)memCount;
     tempMemory = *mem;
     *mem = 0x55AA55AA;
     asm("": : :"memory");
@@ -175,7 +175,7 @@ int countMemory() {
 
 /************************************************************************
 
- Function: uInt32 vmmFindFreePage(pid_t pid);
+ Function: u_int32_t vmmFindFreePage(pid_t pid);
 
  Description: This Returns A Free  Physical Page Address Then Marks It
               Not Available As Well As Setting The PID To The Proccess
@@ -183,7 +183,7 @@ int countMemory() {
  Notes:
 
 ************************************************************************/
-uInt32 vmmFindFreePage(pidType pid) {
+u_int32_t vmm_findFreePage(pidType pid) {
   int i = 0x0;
 
   /* Lets Look For A Free Page */
@@ -211,21 +211,22 @@ uInt32 vmmFindFreePage(pidType pid) {
     }
 
   /* If No Free Memory Is Found Return NULL */
-  kpanic("Out Of Memory!!!!");
+  K_PANIC("Out Of Memory!!!!");
+  spinUnlock(&vmmSpinLock);
   return (0x0);
   }
 
 
 /************************************************************************
 
- Function: int freePage(uInt32 pageAddr);
+ Function: int freePage(u_int32_t pageAddr);
 
  Description: This Function Marks The Page As Free
 
  Notes:
 
 ************************************************************************/
-int freePage(uInt32 pageAddr) {
+void vmm_freePage(u_int32_t pageAddr) {
   int pageIndex = 0x0;
   assert((pageAddr & 0xFFF) == 0x0);
   spinLock(&vmmSpinLock);
@@ -244,16 +245,14 @@ int freePage(uInt32 pageAddr) {
     }
   else {
     /* Adjust The COW Counter */
-    adjustCowCounter(((uInt32) vmmMemoryMap[pageIndex].pageAddr), -1);
+    adjustCowCounter(((u_int32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
     }
   spinUnlock(&vmmSpinLock);
-  /* Return */
-  return (0);
   }
 
 /************************************************************************
 
- Function: int adjustCowCounter(uInt32 baseAddr,int adjustment);
+ Function: int adjustCowCounter(u_int32_t baseAddr,int adjustment);
 
  Description: This Adjust The COW Counter For Page At baseAddr It Will
               Error If The Count Goes Below 0
@@ -263,7 +262,7 @@ int freePage(uInt32 pageAddr) {
   08/01/02 - I Think If Counter Gets To 0 I Should Free The Page
 
 ************************************************************************/
-int adjustCowCounter(uInt32 baseAddr, int adjustment) {
+int adjustCowCounter(u_int32_t baseAddr, int adjustment) {
   int vmmMemoryMapIndex = (baseAddr / 4096);
   assert((baseAddr & 0xFFF) == 0x0);
   spinLock(&vmmCowSpinLock);
@@ -295,19 +294,19 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
 ************************************************************************/
 void vmmFreeProcessPages(pidType pid) {
   int i=0,x=0;
-  uInt32 *tmpPageTable = 0x0;
-  uInt32 *tmpPageDir   = (uInt32 *)parentPageDirAddr;
+  u_int32_t *tmpPageTable = 0x0;
+  u_int32_t *tmpPageDir   = (uInt32 *)PARENT_PAGEDIR_ADDR;
   spinLock(&vmmSpinLock);
   /* Check Page Directory For An Avail Page Table */
   for (i=0;i<=0x300;i++) {
     if (tmpPageDir[i] != 0) {
       /* Set Up Page Table Pointer */
-      tmpPageTable = (uInt32 *)(tablesBaseAddress + (i * 0x1000));
+      tmpPageTable = (u_int32_t *)(PAGE_TABLES_BASE_ADDR + (i * 0x1000));
       /* Check The Page Table For COW Pages */
       for (x=0;x<pageEntries;x++) {
         /* If The Page Is COW Adjust COW Counter */
-        if (((uInt32)tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
-          adjustCowCounter(((uInt32)tmpPageTable[x] & 0xFFFFF000),-1);
+        if (((u_int32_t)tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
+          adjustCowCounter(((u_int32_t)tmpPageTable[x] & 0xFFFFF000),-1);
           }
         }
       }
@@ -333,6 +332,9 @@ void vmmFreeProcessPages(pidType pid) {
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
+ UbixOS
+
  Revision 1.1  2006/12/01 18:46:19  reddawg
  renaming files
 
@@ -403,7 +405,7 @@ void vmmFreeProcessPages(pidType pid) {
  Added the correct endTask Procedure
 
  Revision 1.2  2004/04/30 14:16:04  reddawg
- Fixed all the datatypes to be consistant uInt8,uInt16,uInt32,Int8,Int16,Int32
+ Fixed all the datatypes to be consistant uInt8,uInt16,u_int32_t,Int8,Int16,Int32
 
  Revision 1.1.1.1  2004/04/15 12:06:52  reddawg
  UbixOS v1.0

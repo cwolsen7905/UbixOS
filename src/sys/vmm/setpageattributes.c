@@ -42,6 +42,10 @@ int vmm_setPageAttributes(uInt32 memAddr,uInt16 attributes) {
   uInt16          directoryIndex = 0x0, tableIndex = 0x0;
   uInt32         *pageTable = 0x0;
 
+#ifdef VMMDEBUG
+  kprintf("vmm_getPageAttributes");
+#endif
+
   /* Calculate The Page Directory Index */
   directoryIndex = (memAddr >> 22);
   
@@ -49,7 +53,7 @@ int vmm_setPageAttributes(uInt32 memAddr,uInt16 attributes) {
   tableIndex = ((memAddr >> 12) & 0x3FF);
 
   /* Set Table Pointer */
-  if ((pageTable = (uInt32 *) (tablesBaseAddress + (0x1000 * directoryIndex))) == 0x0)
+  if ((pageTable = (uInt32 *) (PAGE_TABLES_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
     kpanic("Error: pageTable == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
     
   /* Set Attribute If Page Is Mapped */
@@ -69,6 +73,9 @@ int vmm_setPageAttributes(uInt32 memAddr,uInt16 attributes) {
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
+ UbixOS
+
  Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
  ubix2
 

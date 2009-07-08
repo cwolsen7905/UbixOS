@@ -31,7 +31,7 @@
 
 /************************************************************************
 
-Function: void vmmUnmapPage(uInt32 pageAddr,int flags);
+Function: void vmmUnmapPage(u_int32_t pageAddr,int flags);
 Description: This Function Will Unmap A Page From The Kernel VM Space
              The Flags Variable Decides If Its To Free The Page Or Not
              A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
@@ -46,26 +46,28 @@ Notes:
            To Create A New Virtual Space So Now It Has A Flag
 
 ************************************************************************/
+#ifdef BOO
+
 void 
-vmmUnmapPage(uInt32 pageAddr, int flags)
+vmmUnmapPage(u_int32_t pageAddr, int flags)
 {
   int             pageDirectoryIndex = 0, pageTableIndex = 0;
-  uInt32         *pageTable = 0x0;
+  u_int32_t         *pageTable = 0x0;
 
   /* Get The Index To The Page Directory */
-  pageDirectoryIndex = (pageAddr >> 22);
+  pageDirectoryIndex = PDI(pageAddr);
   
   //Calculate The Page Table Index
-  pageTableIndex = ((pageAddr >> 12) & 0x3FF);
+  pageTableIndex = PTI(pageAddr);
 
   /* Set pageTable To The Virtual Address Of Table */
-  pageTable = (uInt32 *) (tablesBaseAddress + (0x1000 * pageDirectoryIndex));
+  pageTable = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * pageDirectoryIndex));
   /* Free The Physical Page If Flags Is 0 */
   if (flags == 0) {
 
     /*
      * This is temp i think its still an issue clearVirtualPage(pageAddr);
-     * freePage((uInt32)(pageTable[pageTableIndex] & 0xFFFFF000));
+     * freePage((u_int32_t)(pageTable[pageTableIndex] & 0xFFFFF000));
      */
   }
   /* Unmap The Page */
@@ -78,12 +80,13 @@ vmmUnmapPage(uInt32 pageAddr, int flags)
   /* Return */
   return;
 }
+#endif
 
 
 
 /************************************************************************
 
-Function: void vmmUnmapPages(uInt32 pageAddr,int flags);
+Function: void vmmUnmapPages(u_int32_t pageAddr,int flags);
 Description: This Function Will Unmap A Page From The Kernel VM Space
              The Flags Variable Decides If Its To Free The Page Or Not
              A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
@@ -98,23 +101,37 @@ Notes:
            To Create A New Virtual Space So Now It Has A Flag
 
 ************************************************************************/
-void vmmUnmapPages(void *ptr,uInt32 size) {
-  uInt32 baseAddr = (uInt32)ptr & 0xFFFFF000;
-  uInt32 dI = 0x0,tI = 0x0;
-  uInt32 y = 0x0;
-  uInt32 *pageTable = 0x0;
+void vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags) {
+  u_int32_t  baseAddr  = (u_int32_t)addr & 0xFFFFF000;
+  u_int32_t  dI        = 0x0;
+  u_int32_t  tI        = 0x0;
+  u_int32_t  y         = 0x0;
+  u_int32_t *pageTable = 0x0;
 
-  dI = (baseAddr/(1024*4096));
-  tI = ((baseAddr-(dI*(1024*4096)))/4096);
-  pageTable = (uInt32 *)(tablesBaseAddress + (4096*dI));
-  for (y=tI;y<(tI+((size+4095)/4096));y++) {
+  dI = PDI(baseAddr);
+  tI = PTI(baseAddr);
+
+  pageTable = (u_int32_t *)(PAGE_TABLES_BASE_ADDR + (4096*dI));
+
+  for (y=tI;y<(tI + count);y++) {
+    if (flags == 0)
+      vmm_freePage((u_int32_t)(pageTable[y] & 0xFFFFF000));
     pageTable[y] = 0x0;
     }
+
+  /* Rehash The Page Directory */
+  asm volatile(
+      "movl %cr3,%eax\n"
+      "movl %eax,%cr3\n"
+    );
   return;
   }
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
+ UbixOS
+
  Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
  ubix2
 

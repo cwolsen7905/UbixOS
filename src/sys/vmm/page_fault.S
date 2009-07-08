@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -35,24 +35,24 @@
 .text
 .code32
 _vmm_pageFault:
-  xchgl %eax,(%esp)   /* Save EAX                                         */
-  movl  4(%esp),%eax  /* Move EIP into EAX to use later                   */
-  pushl %ebx          /* Save EBX                                         */
-  movl  20(%esp),%ebx /* Save ESP for ring 3 to use later                 */ 
-  pushl %ecx          /* Save ECX,EDX                                     */
-  pushl %edx             
-  push  %ebx          /* Push ESP                                         */
-  push  %eax          /* Push EIP                                         */
-  movl  %cr2,%eax     /* Push the faulted address                         */
+  xchgl %eax,(%esp)     /* Save EAX                                         */
+  movl  4(%esp),%eax   /* Move EIP into EAX to use later                   */
+  pushl %ebx                  /* Save EBX                                         */
+  movl  20(%esp),%ebx /* Save ESP for ring 3 to use later                 */
+  pushl %ecx                  /* Save ECX,EDX                                     */
+  pushl %edx
+  push  %ebx                 /* Push ESP                                         */
+  push  %eax                 /* Push EIP                                         */
+  movl  %cr2,%eax        /* Push the faulted address                         */
   pushl %eax
-  sti                 /* Turn interrupts back on we are now entrant safe  */
-  call  vmm_pageFault /* Call our page fault handler                      */
-  addl  $0xC,%esp     /* Adjust the stack to compensate for pushed values */
-  popl  %edx          /* Restore EAX,EBX,ECX,EDX                          */
+  sti                                /* Turn interrupts back on we are now entrant safe  */
+  call  vmm_pageFault     /* Call our page fault handler                      */
+  addl  $0xC,%esp         /* Adjust the stack to compensate for pushed values */
+  popl  %edx                  /* Restore EAX,EBX,ECX,EDX                          */
   popl  %ecx
   popl  %ebx
   popl  %eax
-  iret                /* Return from the interrupt                        */        
+  iret                               /* Return from the interrupt                        */
 
 
 /***
