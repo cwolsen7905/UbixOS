@@ -31,61 +31,6 @@
 
 /************************************************************************
 
-Function: void vmmUnmapPage(u_int32_t pageAddr,int flags);
-Description: This Function Will Unmap A Page From The Kernel VM Space
-             The Flags Variable Decides If Its To Free The Page Or Not
-             A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
-Notes:
-
-07/30/02 - I Have Decided That This Should Free The Physical Page There
-           Is No Reason To Keep It Marked As Not Available
-
-07/30/02 - Ok A Found A Reason To Keep It Marked As Available I Admit
-           Even I Am Not Perfect Ok The Case Where You Wouldn't Want To
-           Free It Would Be On Something Like Where I Allocated A Page
-           To Create A New Virtual Space So Now It Has A Flag
-
-************************************************************************/
-#ifdef BOO
-
-void 
-vmmUnmapPage(u_int32_t pageAddr, int flags)
-{
-  int             pageDirectoryIndex = 0, pageTableIndex = 0;
-  u_int32_t         *pageTable = 0x0;
-
-  /* Get The Index To The Page Directory */
-  pageDirectoryIndex = PDI(pageAddr);
-  
-  //Calculate The Page Table Index
-  pageTableIndex = PTI(pageAddr);
-
-  /* Set pageTable To The Virtual Address Of Table */
-  pageTable = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * pageDirectoryIndex));
-  /* Free The Physical Page If Flags Is 0 */
-  if (flags == 0) {
-
-    /*
-     * This is temp i think its still an issue clearVirtualPage(pageAddr);
-     * freePage((u_int32_t)(pageTable[pageTableIndex] & 0xFFFFF000));
-     */
-  }
-  /* Unmap The Page */
-  pageTable[pageTableIndex] = 0x0;
-  /* Rehash The Page Directory */
-  asm volatile(
-      "movl %cr3,%eax\n"
-      "movl %eax,%cr3\n"
-    );
-  /* Return */
-  return;
-}
-#endif
-
-
-
-/************************************************************************
-
 Function: void vmmUnmapPages(u_int32_t pageAddr,int flags);
 Description: This Function Will Unmap A Page From The Kernel VM Space
              The Flags Variable Decides If Its To Free The Page Or Not
@@ -129,6 +74,9 @@ void vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags) {
 
 /***
  $Log$
+ Revision 1.2  2009/07/08 16:05:56  reddawg
+ Sync
+
  Revision 1.1.1.1  2007/01/17 03:31:51  reddawg
  UbixOS
 
