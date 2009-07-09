@@ -37,16 +37,15 @@
 #define VM_THRD             0
 #define VM_TASK             1
 
-#define pageLength          0x00000400
+#define pageLength            0x00000400
 #define PAGE_TABLES_BASE_ADDR 0xBFC00000 /* Base address of page tables in virtual area 3GB - 4MB */ 
 #define PARENT_PAGEDIR_ADDR   0x100000   /* Address at which the page directory is stored */
-
-#define PAGE_COW            0x00000200
-#define PAGE_STACK          0x00000400
-#define PAGE_WIRED          0x00000600
-#define PAGE_PRESENT        0x00000001
-#define PAGE_WRITE          0x00000002
-#define PAGE_USER           0x00000004
+#define PAGE_COW              0x00000200
+#define PAGE_STACK            0x00000400
+#define PAGE_WIRED            0x00000600
+#define PAGE_PRESENT          0x00000001
+#define PAGE_WRITE            0x00000002
+#define PAGE_USER             0x00000004
 #define PAGE_DEFAULT        (PAGE_PRESENT|PAGE_WRITE|PAGE_USER)
 #define KERNEL_PAGE_DEFAULT (PAGE_PRESENT|PAGE_WRITE)
 
@@ -54,6 +53,7 @@
 #define PAGE_SIZE           (1<<PAGE_SHIFT) /* bytes/page */
 #define PAGE_MASK           (PAGE_SIZE-1)
 #define PAGE_ENTRIES        (PAGE_SIZE/4)
+#define PAGE_UNMASK         0xFFFFF000
 
 #define PTI(x)              ((x >> 12) & 0x3FF)
 #define PDI(x)              (x >> 22)
@@ -62,13 +62,14 @@
 #define ctob(x)             ((x)<<PAGE_SHIFT)
 #define btoc(x)             (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
-
+int   vmm_cleanVirtualSpace(u_int32_t addr);
 int   vmm_zeroVirtualPage(u_int32_t pageAddr);
 void  vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags);
 void *vmm_mapFromTask(pidType pid,u_int32_t baseAddr,u_int32_t size);
-void *vmmCopyVirtualSpace(pidType);
+void *vmm_copyVirtualSpace(pidType);
 void *vmmCreateVirtualSpace(pidType);
-void *vmmGetFreeVirtualPage(pidType,int,int);
+void *vmm_getFreeVirtualPage_old(pidType,int,int);
+void *vmm_getFreeVirtualPage(pidType,int,int,u_int32_t);
 
 void *vmm_getFreeKernelPage(pidType pid,u_int32_t count);
 u_int32_t vmm_getPhysicalAddr(u_int32_t);

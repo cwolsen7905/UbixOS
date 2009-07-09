@@ -89,7 +89,7 @@ int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,long esi,lo
   newProcess->tss.io_map       = 0x8000;
 
   /* Create A Copy Of The VM Space For New Task */
-  newProcess->tss.cr3 = (uInt32)vmmCopyVirtualSpace(newProcess->id);
+  newProcess->tss.cr3 = (uInt32)vmm_copyVirtualSpace(newProcess->id);
   newProcess->state = FORK;
 
   /* Fix gcc optimization problems */

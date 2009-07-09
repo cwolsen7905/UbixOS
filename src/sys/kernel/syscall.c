@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -198,9 +198,9 @@ Notes:
 void sysGetFreePage(long *ptr,int count,int type) {
   if (ptr) {
     if (type == 2)
-      *ptr = (long) vmmGetFreeVirtualPage(_current->id,count,VM_THRD);
+      *ptr = (long) vmm_getFreeVirtualPage(_current->id,count,VM_THRD,-1);
     else
-      *ptr = (long) vmmGetFreeVirtualPage(_current->id,count,VM_TASK);
+      *ptr = (long) vmm_getFreeVirtualPage(_current->id,count,VM_TASK,-1);
     }
   return;
   }
@@ -256,6 +256,8 @@ void invalidCall(int sys_call) {
   }
 
 /***
+ $Log$
+
  END
  ***/
 

@@ -33,13 +33,16 @@
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprint.h>
-#include <string.h>
+#include <lib/string.h>
+#include <assert.h>
 
 int vmm_cleanVirtualSpace(u_int32_t addr) {
   int         x            = 0x0;
   int         y            = 0x0;
   u_int32_t  *pageTableSrc = 0x0;
   u_int32_t  *pageDir      = 0x0;
+
+  assert((addr & 0xFFF) == 0x0);
 
   pageDir = (u_int32_t *) PARENT_PAGEDIR_ADDR;
 
@@ -49,21 +52,25 @@ int vmm_cleanVirtualSpace(u_int32_t addr) {
 
   /* Loop through the users virtual space flushing out COW pages */
   /* BUG memory leak this does not update COW counter on master page */
-  for (x = (addr / (1024 * 4096)); x < 770; x++) {
+  for (x = PDI(addr); x < 770; x++) {
     if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT) {
       pageTableSrc = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * x));
       for (y = 0;y < 1024;y++) {
         if (pageTableSrc[y] != 0x0) {
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-            //kprintf("COWi*");
+            vmm_adjustCowCounter(pageTableSrc[y] & PAGE_UNMASK,-1);
             pageTableSrc[y] = 0x0;
             }
           else if ((pageTableSrc[y] & PAGE_STACK) == PAGE_STACK) {
             //pageTableSrc[y] = 0x0;
-            //kprintf("STACK: (%i:%i)",x,y);
+            #ifdef VMMDEBUG2
+            kprintf("STACK: (%i:%i)",x,y);
+            #endif
             }
           else {
-            //kprintf("+");
+            #ifdef VMMDEBUG2
+            kprintf("[0x%X]",pageTableSrc[y] & PAGE_MASK);
+            #endif
             }
           }
         }
@@ -90,11 +97,13 @@ Notes:
 ************************************************************************/
 static spinLock_t fvpSpinLock = SPIN_LOCK_INITIALIZER;
 
-void *vmmGetFreeVirtualPage(pidType pid, int count,int type) {
-  int             x = 0, y = 0, c = 0;
-  u_int32_t         *pageTableSrc = 0x0;
-  u_int32_t         *pageDir = 0x0;
-  u_int32_t          start_page = 0x0;
+void *vmm_getFreeVirtualPage_old(pidType pid, int count,int type) {
+  int        x            = 0x0;
+  int        y            = 0x0;
+  int        c            = 0x0;
+  u_int32_t *pageTableSrc = 0x0;
+  u_int32_t *pageDir      = 0x0;
+  u_int32_t  start_page   = 0x0;
 
 
   spinLock(&fvpSpinLock);
@@ -121,7 +130,7 @@ void *vmmGetFreeVirtualPage(pidType pid, int count,int type) {
   else
     K_PANIC("Invalid Type");
 
-  for (x = (start_page / (1024 * 4096)); x < 1024; x++) {
+  for (x = PDI(start_page); x < 1024; x++) {
 
     /* Set Page Table Address */
     if ((pageDir[x] & PAGE_PRESENT) != PAGE_PRESENT) {
@@ -143,11 +152,8 @@ void *vmmGetFreeVirtualPage(pidType pid, int count,int type) {
 
     pageTableSrc = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * x));
 
-    if (y != 0x0) {
-      for (y = 0x0;y < PAGE_ENTRIES;y++) {
-        pageTableSrc[y] = (u_int32_t)0x0;
-        }
-      }
+    if (y != 0x0)
+      vmm_zeroVirtualPage((u_int32_t)pageTableSrc);
 
     for (y = 0; y < 1024; y++) {
 
@@ -231,7 +237,7 @@ void *vmmGetFreeVirtualPage(pidType pid, int count,int type) {
   return (0x0);
   } /* end func */
 
-void *vmmGetFreeVirtualPage_new(pidType pid, int count,int type,u_int32_t start_addr) {
+void *vmm_getFreeVirtualPage(pidType pid, int count,int type,u_int32_t start_addr) {
   int             x = 0, y = 0, c = 0;
   u_int32_t         *pageTableSrc = 0x0;
   u_int32_t         *pageDir = 0x0;
@@ -256,10 +262,14 @@ void *vmmGetFreeVirtualPage_new(pidType pid, int count,int type,u_int32_t start_
   else
     K_PANIC("Invalid Type");
 
-start_page = start_addr;
+  if (start_addr != -1) {
+    start_page = start_addr;
+    #ifdef VMM_DEBUG
+      kprintf("Start_ADDR");
+    #endif
+    }
 
-  //for (x = ((_current->td.vm_daddr + _current->td.vm_dsize) / (1024 * 4096)); x < 1024; x++) {
-  for (x = (start_page / (1024 * 4096)); x < 1024; x++) {
+  for (x = PDI(start_page); x < 1024; x++) {
     /* Set Page Table Address */
     if ((pageDir[x] & PAGE_PRESENT) != PAGE_PRESENT) {
       /* If Page Table Is Non Existant Then Set It Up */
@@ -367,20 +377,26 @@ Notes:
 ************************************************************************/
 static spinLock_t cvsSpinLock = SPIN_LOCK_INITIALIZER;
 
-void *vmmCopyVirtualSpace(pidType pid) {
-  void           *newPageDirectoryAddress = 0x0;
-  u_int32_t         *parentPageDirectory = 0x0, *newPageDirectory = 0x0;
-  u_int32_t         *parentPageTable = 0x0, *newPageTable = 0x0;
-  u_int32_t         *parentStackPage = 0x0, *newStackPage = 0x0;
-  uInt16          x = 0, i = 0, s = 0;
+void *vmm_copyVirtualSpace(pidType pid) {
+  void      *newPageDirectoryAddress = 0x0;
+  u_int32_t *parentPageDirectory     = 0x0;
+  u_int32_t *newPageDirectory        = 0x0;
+  u_int32_t *parentPageTable         = 0x0;
+  u_int32_t *newPageTable            = 0x0;
+  u_int32_t *parentStackPage         = 0x0;
+  u_int32_t *newStackPage            = 0x0;
+  u_int16_t  x                       = 0x0;
+  u_int16_t  i                       = 0x0;
+  u_int16_t  s                       = 0x0;
 
   spinLock(&cvsSpinLock);
 
   /* Set Address Of Parent Page Directory */
   parentPageDirectory = (u_int32_t *) PARENT_PAGEDIR_ADDR;
+
   /* Allocate A New Page For The New Page Directory */
-  if ((newPageDirectory = (u_int32_t *) vmm_getFreeKernelPage(pid,1)) == 0x0)
-    kpanic("Error: newPageDirectory == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
+  if ((newPageDirectory = (u_int32_t *)vmm_getFreeKernelPage(pid,1)) == 0x0)
+    K_PANIC("Error: newPageDirectory == NULL");
 
   /* Set newPageDirectoryAddress To The Newly Created Page Directories Page */
   newPageDirectoryAddress = (void *)vmm_getPhysicalAddr((u_int32_t) newPageDirectory);
@@ -615,5 +631,7 @@ void *vmmCreateVirtualSpace(pid_t pid) {
   } /* End Func */
 
 /*
+ $Log$
+
  END
  */

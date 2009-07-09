@@ -171,9 +171,8 @@ int vmm_remapPage(u_int32_t sourceAddr,u_int32_t destAddr,u_int16_t perms) {
   u_int32_t *pageTable              = 0x0;
   short      i                      = 0x0;
 
-#ifdef VMMDEBUG
-kprintf("vmm_remapPage");
-#endif
+  assert((sourceAddr & 0xFFF) == 0x0);
+  assert((destAddr & 0xFFF) == 0x0);
 
   if (sourceAddr == 0x0)
     K_PANIC("source == 0x0");
@@ -456,7 +455,7 @@ int mmap(struct thread *td,struct mmap_args *uap) {
 
   if (uap->fd == -1) {
     /* NEED ROUND PAGE */
-    td->td_retval[0] = (int)vmmGetFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK);
+    td->td_retval[0] = (int)vmm_getFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK,-1);
     }
   else {
     #ifdef VMMDEBUG
@@ -470,9 +469,9 @@ int mmap(struct thread *td,struct mmap_args *uap) {
     #endif
     getfd(td,&fd,uap->fd);
     if (uap->addr == 0x0)
-      tmp = (char *)vmmGetFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK);
+      tmp = (char *)vmm_getFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK,-1);
     else {
-      tmp = (char *)vmmGetFreeVirtualPage_new(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK,uap->addr);
+      tmp = (char *)vmm_getFreeVirtualPage(_current->id,(uap->len + 0xFFF)/0x1000,VM_TASK,(u_int32_t)uap->addr);
       }
 
     fd->offset = uap->pos;

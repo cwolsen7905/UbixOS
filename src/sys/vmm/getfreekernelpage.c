@@ -51,10 +51,6 @@ void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
   int        c = 0;
   u_int32_t *pageTableSrc = 0x0;
 
-  #ifdef VMMDEBUG
-  kprintf("vmm_getFreeKErnelPage");
-  #endif
-
   spinLock(&vmmGFPlock);
 
   /* Lets Search For A Free Page */
@@ -111,6 +107,9 @@ void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
 
 /***
  $Log$
+ Revision 1.3  2009/07/08 21:20:13  reddawg
+ Getting There
+
  Revision 1.2  2009/07/08 16:05:56  reddawg
  Sync
 

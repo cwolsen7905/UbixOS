@@ -89,7 +89,7 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
       src = (u_int32_t *)(memAddr & 0xFFFFF000);
       /* Allocate A Free Page For Destination */
       /* USE vmInfo */
-      dst = (u_int32_t *) vmmGetFreeVirtualPage(_current->id,1,0x1);
+      dst = (u_int32_t *) vmm_getFreeVirtualPage(_current->id,1,0x1,-1);
       /* Copy Memory */
       for (i = 0;i < PAGE_ENTRIES;i++) {
         dst[i] = src[i];
@@ -135,6 +135,9 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
 
 /***
  $Log$
+ Revision 1.5  2009/07/08 21:20:13  reddawg
+ Getting There
+
  Revision 1.4  2009/07/08 16:05:56  reddawg
  Sync
 

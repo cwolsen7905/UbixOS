@@ -43,10 +43,6 @@ u_int32_t vmm_getPhysicalAddr(u_int32_t pageAddr) {
   int        pageTableIndex     = 0x0;
   u_int32_t *pageTable          = 0x0;
 
-#ifdef VMMDEBUG
-  kprintf("vmm_getPhysicalAddr");
-#endif
-
   //Calculate The Page Directory Index
   pageDirectoryIndex = PDI(pageAddr);
   
@@ -61,6 +57,9 @@ u_int32_t vmm_getPhysicalAddr(u_int32_t pageAddr) {
 
 /***
  $Log$
+ Revision 1.3  2009/07/08 21:20:13  reddawg
+ Getting There
+
  Revision 1.2  2009/07/08 16:05:56  reddawg
  Sync
 

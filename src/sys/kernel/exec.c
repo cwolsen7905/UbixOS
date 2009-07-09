@@ -548,7 +548,7 @@ kprintf("A");
   if (argv[1] != 0x0) {
     //UBU
     argc = (int)argv[0];
-    args = (char *)vmmGetFreeVirtualPage(_current->id,1,VM_TASK);
+    args = (char *)vmm_getFreeVirtualPage(_current->id,1,VM_TASK,-1);
     //! do we need this?
     memset(args,0x0,0x1000);
     x = 0x0;
@@ -724,7 +724,7 @@ void sys_exec(char *file,char *ap) {
 
   if (argv[1] != 0x0) {
     argc = (int)argv[0];
-    args = (char *)vmmGetFreeVirtualPage(_current->id,1,VM_TASK);
+    args = (char *)vmm_getFreeVirtualPage(_current->id,1,VM_TASK,-1);
     memset(args,0x0,0x1000);
     x = 0x0;
     argvNew = (char **)kmalloc(sizeof(char *) * argc);
@@ -762,7 +762,7 @@ void sys_exec(char *file,char *ap) {
     tmp[i + 1] = (u_int32_t)argv[i];
     }
   //! Build ENV
-  args = (char *)vmmGetFreeVirtualPage(_current->id,1,VM_TASK);
+  args = (char *)vmm_getFreeVirtualPage(_current->id,1,VM_TASK,-1);
   memset(args,0x0,0x1000);
 
   strcpy(args,"LIBRARY_PATH=/lib");
