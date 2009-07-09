@@ -33,8 +33,6 @@
 #include <vmm/paging.h>
 #include <ubixos/types.h>
 
-#define memAvail     1
-#define memNotavail  2
 #define vmmID       -3
 #define vmmMemoryMapAddr 0xE6667000
 
@@ -46,21 +44,47 @@ typedef struct {
   int    cowCounter;
   } mMap;
 
+/* Externs */
 extern int numPages;
 extern mMap *vmmMemoryMap;
+extern u_int32_t *kernelPageDirectory;
 
-int vmm_init();
-int vmmMemMapInit();
-int countMemory();
+/* Callable Functions */
+void      *vmm_getFreeVirtualPage_old(pidType,int,int);
+void      *vmm_getFreeVirtualPage(pidType pid,int count,int type,u_int32_t startAddr); /* Returns free virtual page */
+void      *vmm_getFreeKernelPage(pidType pid,u_int32_t count);
+void      *vmm_getFreeMallocPage(u_int16_t count);
 u_int32_t vmm_findFreePage(pidType pid);
+int        vmm_cleanVirtualSpace(u_int32_t addr);
+int        vmm_zeroVirtualPage(u_int32_t pageAddr);
+void       vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags);
+void      *vmm_mapFromTask(pidType pid,u_int32_t baseAddr,u_int32_t size);
+void      *vmm_copyVirtualSpace(pidType);
+void      *vmmCreateVirtualSpace(pidType);
+u_int32_t  vmm_getPhysicalAddr(u_int32_t);
+void       vmm_setPageAttributes(u_int32_t,u_int16_t);
+int        vmm_remapPage(u_int32_t,u_int32_t,u_int16_t);
 void vmm_freePage(u_int32_t pageAddr);
 void vmm_adjustCowCounter(u_int32_t pageAddr,int adjustment);
 void vmm_freeProcessPages(pidType pid);
+
+/* Interrupt Functions */
+void vmm_pageFault(u_int32_t,u_int32_t,u_int32_t);
+void _vmm_pageFault();
+
+/* Initialization Functions */
+int vmm_pagingInit();
+int vmm_init();
+int vmm_memMapInit();
+int vmm_countMemory();
 
 #endif
 
 /***
  $Log$
+ Revision 1.3  2009/07/08 21:20:13  reddawg
+ Getting There
+
 
  END
  ***/

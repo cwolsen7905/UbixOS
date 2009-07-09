@@ -51,40 +51,26 @@
 
 #define PAGE_SHIFT          12              /* LOG2(PAGE_SIZE) */
 #define PAGE_SIZE           (1<<PAGE_SHIFT) /* bytes/page */
-#define PAGE_MASK           (PAGE_SIZE-1)
-#define PAGE_ENTRIES        (PAGE_SIZE/4)
-#define PAGE_UNMASK         0xFFFFF000
+#define PAGE_ENTRIES        (PAGE_SIZE/4)   /* Entries in a page */
+#define PAGE_MASK           (PAGE_SIZE-1)   /* Unset all but the 0xFFF Bits */
+#define PAGE_UNMASK         0xFFFFF000      /* Unset the 0xFFF Bits */
+#define PAGE_AVAILABLE      0x1             /* Set the page to be available */
+#define PAGE_UNAVAILABLE    0x2             /* Set the page to be in use */
 
-#define PTI(x)              ((x >> 12) & 0x3FF)
-#define PDI(x)              (x >> 22)
+#define PAGE_KERNEL_ENTRY   0x300           /* First kernel page entry */
+#define PAGE_DIR_SPACE      0x2FF           /* Virtual Area For Pages 4MB */
+
+#define PTI(x)              ((x >> 12) & 0x3FF) /* Return page directory index of address */
+#define PDI(x)              (x >> 22)           /* Return page table index of address     */
 #define trunc_page(x)       ((x) & ~PAGE_MASK)
 #define round_page(x)       (((x) + PAGE_MASK) & ~PAGE_MASK)
 #define ctob(x)             ((x)<<PAGE_SHIFT)
 #define btoc(x)             (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
-int   vmm_cleanVirtualSpace(u_int32_t addr);
-int   vmm_zeroVirtualPage(u_int32_t pageAddr);
-void  vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags);
-void *vmm_mapFromTask(pidType pid,u_int32_t baseAddr,u_int32_t size);
-void *vmm_copyVirtualSpace(pidType);
-void *vmmCreateVirtualSpace(pidType);
-void *vmm_getFreeVirtualPage_old(pidType,int,int);
-void *vmm_getFreeVirtualPage(pidType,int,int,u_int32_t);
 
-void *vmm_getFreeKernelPage(pidType pid,u_int32_t count);
-u_int32_t vmm_getPhysicalAddr(u_int32_t);
-void    vmm_setPageAttributes(u_int32_t,u_int16_t);
-int    vmm_remapPage(u_int32_t,u_int32_t,u_int16_t);
-int    vmm_pagingInit();
-void  *vmm_getFreeMallocPage(u_int16_t count);
-void   vmm_pageFault(u_int32_t,u_int32_t,u_int32_t);
-void  _vmm_pageFault();
 int mmap(struct thread *,struct mmap_args *);
 int obreak(struct thread *,struct obreak_args *);
 int munmap(struct thread *,struct munmap_args *);
-
-
-extern u_int32_t *kernelPageDirectory;
 
 #endif
 

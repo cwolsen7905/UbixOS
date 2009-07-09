@@ -56,11 +56,21 @@ void vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags) {
   dI = PDI(baseAddr);
   tI = PTI(baseAddr);
 
+  pageTable = (u_int32_t *)PARENT_PAGEDIR_ADDR;
+
+  if ((pageTable[dI] & PAGE_PRESENT) != PAGE_PRESENT) {
+    #ifdef VMMDEBUG
+    kprintf("vmm_unmapPages: page not present");
+    #endif 
+    return;
+    }
+
   pageTable = (u_int32_t *)(PAGE_TABLES_BASE_ADDR + (4096*dI));
 
-  for (y=tI;y<(tI + count);y++) {
+  for (y = tI;y <= (tI + count);y++) {
     if (flags == 0)
-      vmm_freePage((u_int32_t)(pageTable[y] & 0xFFFFF000));
+      if ((pageTable[y] & PAGE_PRESENT) == PAGE_PRESENT) 
+        vmm_freePage((u_int32_t)(pageTable[y] & 0xFFFFF000));
     pageTable[y] = 0x0;
     }
 
@@ -74,6 +84,9 @@ void vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags) {
 
 /***
  $Log$
+ Revision 1.3  2009/07/08 16:06:37  reddawg
+ Trying To Hunt Down Bugs
+
  Revision 1.2  2009/07/08 16:05:56  reddawg
  Sync
 

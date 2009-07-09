@@ -39,7 +39,7 @@
 
 */
 int vmm_init() {
-  if (vmmMemMapInit() != 0x0)
+  if (vmm_memMapInit() != 0x0)
     K_PANIC("Couldn't Initialize vmmMemMap");
 
   if (vmm_pagingInit() != 0x0)

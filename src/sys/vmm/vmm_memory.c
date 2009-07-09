@@ -36,13 +36,11 @@
 #include <ubixos/spinlock.h>
 #include <assert.h>
 
-static u_int32_t          freePages = 0;
-static spinLock_t vmmSpinLock    = SPIN_LOCK_INITIALIZER;
-static spinLock_t vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
-
-
-int             numPages = 0x0;
-mMap           *vmmMemoryMap = (mMap *) 0x101000;
+static u_int32_t   freePages      = 0x0;
+static spinLock_t  vmmSpinLock    = SPIN_LOCK_INITIALIZER;
+static spinLock_t  vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
+int                numPages       = 0x0;
+mMap              *vmmMemoryMap   = (mMap *) 0x101000;
 
 
 /************************************************************************
@@ -54,12 +52,12 @@ mMap           *vmmMemoryMap = (mMap *) 0x101000;
   02/20/2004 - Made It Report Real And Available Memory
 
 ************************************************************************/
-int vmmMemMapInit() {
+int vmm_memMapInit() {
   int i        = 0x0;
   int memStart = 0x0;
 
   /* Count System Memory */
-  numPages = countMemory();
+  numPages = vmm_countMemory();
 
   /* Set Memory Map To Point To First Physical Page That We Will Use */
   vmmMemoryMap = (mMap *) 0x101000;
@@ -67,9 +65,9 @@ int vmmMemMapInit() {
   /* Initialize Map Make All Pages Not Available */
   for (i = 0x0; i < numPages; i++) {
     vmmMemoryMap[i].cowCounter = 0x0;
-    vmmMemoryMap[i].status     = memNotavail;
+    vmmMemoryMap[i].status     = PAGE_UNAVAILABLE;
     vmmMemoryMap[i].pid        = vmmID;
-    vmmMemoryMap[i].pageAddr   = i * 4096;
+    vmmMemoryMap[i].pageAddr   = i * 0x1000;
     }
 
   /* Calculate Start Of Free Memory */
@@ -77,10 +75,10 @@ int vmmMemMapInit() {
   memStart += (((sizeof(mMap) * numPages) + (sizeof(mMap) - 1)) / 0x1000);
 
   /* Initialize All Free Pages To Available */
-  vmmMemoryMap[(0x100000 / 0x1000)].status = memAvail;
+  vmmMemoryMap[(0x100000 / 0x1000)].status = PAGE_AVAILABLE;
   freePages++;
   for (i = memStart; i < numPages; i++) {
-    vmmMemoryMap[i].status = memAvail;
+    vmmMemoryMap[i].status = PAGE_AVAILABLE;
     freePages++;
     }
 
@@ -94,19 +92,22 @@ int vmmMemMapInit() {
 
 /************************************************************************
 
- Function: int countMemory();
+ Function: int vmm_countMemory();
  Description: This Function Counts The Systems Physical Memory
  Notes:
 
   02/20/2004 - Inspect For Quality And Approved
+  07/09/2009 - Renamed Function
 
 ************************************************************************/
-int countMemory() {
-  register u_int32_t *mem = 0x0;
-  unsigned long    memCount = -1, tempMemory = 0x0;
-  unsigned short   memKb = 0;
-  unsigned char    irq1State, irq2State;
-  unsigned long    cr0 = 0x0;
+int vmm_countMemory() {
+  register u_int32_t *mem        = 0x0;
+  unsigned long       memCount   = -1;
+  unsigned long       tempMemory = 0x0;
+  unsigned long       cr0        = 0x0;
+  unsigned short      memKb      = 0x0;
+  unsigned char       irq1State;
+  unsigned char       irq2State;
 
   /*
    * Save The States Of Both IRQ 1 And 2 So We Can Turn Them Off And Restore
@@ -122,17 +123,18 @@ int countMemory() {
   /* Save The State Of Register CR0 */
   asm volatile (
     "movl %%cr0, %%ebx\n"
-    :               "=a" (cr0)
+    : "=a" (cr0)
     :
-    :               "ebx"
+    : "ebx"
     );
 
   asm volatile ("wbinvd");
+
   asm volatile (
     "movl %%ebx, %%cr0\n"
     :
-    :               "a" (cr0 | 0x00000001 | 0x40000000 | 0x20000000)
-    :               "ebx"
+    : "a" (cr0 | 0x00000001 | 0x40000000 | 0x20000000)
+    : "ebx"
     );
 
   while (memKb < 4096 && memCount != 0) {
@@ -198,8 +200,8 @@ u_int32_t vmm_findFreePage(pidType pid) {
      * If We Found A Free Page Set It To Not Available After That Set Its Own
      * And Return The Address
      */
-    if ((vmmMemoryMap[i].status == memAvail) && (vmmMemoryMap[i].cowCounter == 0)) {
-      vmmMemoryMap[i].status = memNotavail;
+    if ((vmmMemoryMap[i].status == PAGE_AVAILABLE) && (vmmMemoryMap[i].cowCounter == 0)) {
+      vmmMemoryMap[i].status = PAGE_UNAVAILABLE;
       vmmMemoryMap[i].pid = pid;
       freePages--;
       if (systemVitals)
@@ -219,7 +221,7 @@ u_int32_t vmm_findFreePage(pidType pid) {
 
 /************************************************************************
 
- Function: int freePage(u_int32_t pageAddr);
+ Function: int vmm_freePage(u_int32_t pageAddr);
 
  Description: This Function Marks The Page As Free
 
@@ -228,6 +230,7 @@ u_int32_t vmm_findFreePage(pidType pid) {
 ************************************************************************/
 void vmm_freePage(u_int32_t pageAddr) {
   int pageIndex = 0x0;
+
   assert((pageAddr & 0xFFF) == 0x0);
 
   spinLock(&vmmSpinLock);
@@ -238,7 +241,7 @@ void vmm_freePage(u_int32_t pageAddr) {
   /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
   if (vmmMemoryMap[pageIndex].cowCounter == 0) {
     /* Set Page As Avail So It Can Be Used Again */
-    vmmMemoryMap[pageIndex].status = memAvail;
+    vmmMemoryMap[pageIndex].status = PAGE_AVAILABLE;
     vmmMemoryMap[pageIndex].cowCounter = 0x0;
     vmmMemoryMap[pageIndex].pid = -2;
     freePages++;
@@ -268,16 +271,20 @@ void vmm_freePage(u_int32_t pageAddr) {
 ************************************************************************/
 void vmm_adjustCowCounter(u_int32_t baseAddr, int adjustment) {
   int vmmMemoryMapIndex = (baseAddr / 4096);
+
   assert((baseAddr & 0xFFF) == 0x0);
+
   spinLock(&vmmSpinLock);
 
   /* Adjust COW Counter */
   vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
 
-  if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter == 0) {
+  assert(vmmMemoryMap[vmmMemoryMapIndex].cowCounter >= 0x0);
+
+  if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter == 0x0) {
     vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
     vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
-    vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
+    vmmMemoryMap[vmmMemoryMapIndex].status = PAGE_AVAILABLE;
     freePages++;
     systemVitals->freePages = freePages;
     }
@@ -323,7 +330,7 @@ void vmm_freeProcessPages(pidType pid) {
     if (vmmMemoryMap[i].pid == pid) {
       /* Check To See If The cowCounter Is Zero If So We Can Ree It */
       if (vmmMemoryMap[i].cowCounter == 0) {
-        vmmMemoryMap[i].status = memAvail;
+        vmmMemoryMap[i].status = PAGE_AVAILABLE;
         vmmMemoryMap[i].cowCounter = 0x0;
         vmmMemoryMap[i].pid = vmmID;
         freePages++;
@@ -338,6 +345,9 @@ void vmm_freeProcessPages(pidType pid) {
 
 /***
  $Log$
+ Revision 1.3  2009/07/08 21:20:13  reddawg
+ Getting There
+
  Revision 1.2  2009/07/08 16:05:56  reddawg
  Sync
 

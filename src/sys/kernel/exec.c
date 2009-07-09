@@ -381,12 +381,7 @@ void sysExec(char *file,char *ap,char *ep) {
   /* Need to rewrite this routine? */
   tmpFd = (struct file *)kmalloc(sizeof(struct file));
   if (fopen(tmpFd,file,"r") == 0x0) {
-    //kprintf("[0x%X]\n",tmpFd);
-    //kfree(tmpFd); //We need this but it's being done in fopen right now
-    //UBU WHY?
-    kpanic("WTF!");
     return;
-    _current->imageFd = 0x0;
     }
 
   kprintf("Sys EXEC: %i 0x%X 0x%X\n",tmpFd->size,ap,ep);
@@ -463,6 +458,10 @@ void sysExec(char *file,char *ap,char *ep) {
         Allocate Memory Im Going To Have To Make This Load Memory With Correct
         Settings so it helps us in the future
         */
+        
+        /* Lets Release Any Pages That Might Be Already Mapped */
+        vmm_unmapPages(programHeader[i].phVaddr,seg_size >> PAGE_SHIFT,0x0);
+
         for (x = 0x0;x < seg_size;x += 0x1000) {
           /* Make readonly and read/write !!! */
           if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
@@ -537,7 +536,7 @@ kprintf("A");
 
   _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
   _current->td.vm_daddr = seg_addr;
-  kprintf("STATING: [0x%X][0x%X]\n",_current->td.vm_dsize,_current->td.vm_daddr);
+  kprintf("STARTING-*: [0x%X][0x%X]\n",_current->td.vm_dsize,_current->td.vm_daddr);
 
   argv = (char **)ap;
   envp = (char **)ep;
@@ -548,7 +547,7 @@ kprintf("A");
   if (argv[1] != 0x0) {
     //UBU
     argc = (int)argv[0];
-    args = (char *)vmm_getFreeVirtualPage(_current->id,1,VM_TASK,-1);
+    args = (char *)vmm_getFreeVirtualPage(_current->id,1,VM_TASK,0x300000);
     //! do we need this?
     memset(args,0x0,0x1000);
     x = 0x0;
@@ -567,7 +566,7 @@ kprintf("A");
 
   //QUESTION Why did I feel a need to add vm_dsize to vm_daddr
   kprintf("First: 0x%X, 0x%X\n",_current->td.vm_dsize,_current->td.vm_daddr);
-  vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr);// + (_current->td.vm_dsize << PAGE_SIZE));
+  vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT));
 
 
   //! Adjust iframe
@@ -740,7 +739,7 @@ void sys_exec(char *file,char *ap) {
 
   //QUESTION Why did I add dsize to daddr?
   kprintf("Second: 0x%X, 0x%X\n",_current->td.vm_dsize,_current->td.vm_daddr);
-  vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr);// + (_current->td.vm_dsize << PAGE_SIZE));
+  vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT));
 
 
   //! Adjust iframe

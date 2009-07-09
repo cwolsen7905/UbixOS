@@ -28,7 +28,6 @@
 *****************************************************************************************/
 
 #include <vmm/vmm.h>
-#include <vmm/paging.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/types.h>
@@ -63,16 +62,12 @@ int vmm_pagingInit() {
 
   /* Allocate A Page Of Memory For Kernels Page Directory */
   kernelPageDirectory = (u_int32_t *) vmm_findFreePage(sysID);
-  if (kernelPageDirectory == 0x0) {
+
+  if (kernelPageDirectory == 0x0)
     K_PANIC("Error: vmm_findFreePage Failed");
-    return (0x1);
-    } /* end if */
 
   /* Clear The Memory To Ensure There Is No Garbage */
-  //QUESTION Can't we do a memset here?
-  for (i = 0x0; i < PAGE_ENTRIES; i++) {
-    kernelPageDirectory[i] = (u_int32_t)0x0;
-    } /* end for */
+  memset(kernelPageDirectory,0x0,PAGE_SIZE);
 
   /* Allocate a page for the first 4MB of memory */
   if ((pageTable = (u_int32_t *) vmm_findFreePage(sysID)) == 0x0)
@@ -81,11 +76,11 @@ int vmm_pagingInit() {
   kernelPageDirectory[0x0] = (u_int32_t) ((u_int32_t)pageTable | KERNEL_PAGE_DEFAULT);
 
   /* Make Sure The Page Table Is Clean */
-  memset(pageTable,0x0,0x1000);
+  memset(pageTable,0x0,PAGE_SIZE);
 
   /*
-   * Map the first 1MB of Memory to the kernel MM space because our kernel starts
-   * at 0x30000
+   * Map the first 1MB of Memory to the kernel MM space because our kernel starts at 0x30000
+   * This is mapped 1:1
    * Do not map page at address 0x0 this is reserved for null...
    */
   for (i = 0x1; i < (PAGE_ENTRIES / 0x4); i++) {
@@ -96,12 +91,12 @@ int vmm_pagingInit() {
    * Create page tables for the top 1GB of VM space. This space is set aside
    * for kernel space and will be shared with each process
    */
-  for (i = 768; i < PAGE_ENTRIES; i++) {
+  for (i = PAGE_KERNEL_ENTRY; i < PAGE_ENTRIES; i++) {
     if ((pageTable = (u_int32_t *) vmm_findFreePage(sysID)) == 0x0)
       K_PANIC("Error: vmm_findFreePage Failed");
 
     /* Make Sure The Page Table Is Clean */
-    memset(pageTable,0x0,0x1000);
+    vmm_zeroVirtualPage((u_int32_t)pageTable);
 
     /* Map In The Page Directory */
     kernelPageDirectory[i] = (u_int32_t) ((u_int32_t) (pageTable) | KERNEL_PAGE_DEFAULT);
@@ -112,9 +107,9 @@ int vmm_pagingInit() {
     K_PANIC("Error: vmm_findFreePage Failed");
 
   /* Clean Page Table */
-  memset(pageTable,0x0,0x1000);
+  memset(pageTable,0x0,PAGE_SIZE);
 
-  kernelPageDirectory[767] = ((u_int32_t) pageTable | KERNEL_PAGE_DEFAULT);
+  kernelPageDirectory[PAGE_DIR_SPACE] = ((u_int32_t) pageTable | KERNEL_PAGE_DEFAULT);
 
   for (i = 0; i < PAGE_ENTRIES; i++) {
     pageTable[i] = kernelPageDirectory[i];
@@ -169,7 +164,6 @@ int vmm_remapPage(u_int32_t sourceAddr,u_int32_t destAddr,u_int16_t perms) {
   u_int16_t  destPageTableIndex     = 0x0;
   u_int32_t *pageDir                = 0x0;
   u_int32_t *pageTable              = 0x0;
-  short      i                      = 0x0;
 
   assert((sourceAddr & 0xFFF) == 0x0);
   assert((destAddr & 0xFFF) == 0x0);
@@ -218,8 +212,7 @@ int vmm_remapPage(u_int32_t sourceAddr,u_int32_t destAddr,u_int16_t perms) {
     pageTable = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * destPageDirectoryIndex));
 
     /* Zero out the page table */
-    for (i = 0x0;i < PAGE_ENTRIES;i++)
-      pageTable[i] = 0x0;
+    memset(pageTable,0x0,PAGE_SIZE);
     }
 
   /* Set Address To Page Table */
@@ -230,6 +223,8 @@ int vmm_remapPage(u_int32_t sourceAddr,u_int32_t destAddr,u_int16_t perms) {
 
   /* If The Page Is Mapped In Free It Before We Remap */
   if ((pageTable[destPageTableIndex] & PAGE_PRESENT) == PAGE_PRESENT) {
+    kprintf("ADDR: 0x%X",destAddr);
+    K_PANIC("Mapping To Existing Page!");
     if ((pageTable[destPageTableIndex] & PAGE_STACK) == PAGE_STACK)
       kprintf("Stack Page: [0x%X]\n",destAddr);
 

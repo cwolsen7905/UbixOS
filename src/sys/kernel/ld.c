@@ -100,6 +100,8 @@ uInt32 ldEnable() {
         Settings so it helps us in the future
         */
         //kprintf("LD.phMemsz: 0x%X\n",programHeader[i].phMemsz);
+        kprintf("phMemsz: %i",programHeader[i].phMemsz >> PAGE_SHIFT);
+        vmm_unmapPages(programHeader[i].phVaddr + LD_START,programHeader[i].phMemsz >> PAGE_SHIFT,0x0);
         for (x=0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* make r/w or ro */
           if (((programHeader[i].phVaddr & 0xFFFFF00) + x + LD_START) > 0xC0000000)
