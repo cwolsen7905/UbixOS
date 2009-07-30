@@ -110,7 +110,7 @@ void systemTask() {
         kprintf("Closing: [0x%X]\n",tmpTask->imageFd);
         fclose(tmpTask->imageFd);
         }
-      vmm_freeProcessPages(tmpTask->id);
+      vmm_freeProcessPages(tmpTask);
       kfree(tmpTask);
       }
     videoBuffer[0] = systemVitals->sysTicks;

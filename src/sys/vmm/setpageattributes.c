@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002 The UbixOS Project
+ Copyright (c) 2002, 2009 The UbixOS Project
  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -40,28 +40,25 @@ Notes:
 
 ************************************************************************/
 void vmm_setPageAttributes(u_int32_t memAddr,u_int16_t attributes) {
-  u_int16_t          directoryIndex = 0x0, tableIndex = 0x0;
+  u_int16_t          pageDI    = 0x0;
+  u_int16_t          pageTI    = 0x0;
   u_int32_t         *pageTable = 0x0;
 
-#ifdef VMMDEBUG
-  kprintf("vmm_getPageAttributes");
-#endif
-
   /* Calculate The Page Directory Index */
-  directoryIndex = PDI(memAddr);;
+  pageDI = PDI(memAddr);;
   
   /* Calculate The Page Table Index */
-  tableIndex = PTI(memAddr);
+  pageTI = PTI(memAddr);
 
   /* Set Table Pointer */
-  if ((pageTable = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
+  if ((pageTable = (u_int32_t *) (PAGE_TABLES_BASE_ADDR + (0x1000 * pageDI))) == 0x0)
     kpanic("Error: pageTable == NULL, File: %s, Line: %i\n",__FILE__,__LINE__);
     
   /* Set Attribute If Page Is Mapped */
-  if (pageTable[tableIndex] != 0x0)
-    pageTable[tableIndex] = ((pageTable[tableIndex] & 0xFFFFF000) | attributes);
+  if (pageTable[pageTI] != 0x0)
+    pageTable[pageTI] = ((pageTable[pageTI] & 0xFFFFF000) | attributes);
   else
-    kpanic("WTF NON MAPPED");
+    K_PANIC("Page Not Mapped");
 
   /* Reload The Page Table; */
   asm volatile(
@@ -75,6 +72,9 @@ void vmm_setPageAttributes(u_int32_t memAddr,u_int16_t attributes) {
 
 /***
  $Log$
+ Revision 1.3  2009/07/08 21:20:13  reddawg
+ Getting There
+
  Revision 1.2  2009/07/08 16:05:56  reddawg
  Sync
 

@@ -117,7 +117,7 @@ int vmm_pagingInit() {
 
   /* Also Set Up Page Directory To Be The The First Page In 0xE0400000 */
   pageTable = (u_int32_t *) (kernelPageDirectory[0] & 0xFFFFF000);
-  pageTable[256] = (u_int32_t) ((u_int32_t) (kernelPageDirectory) | KERNEL_PAGE_DEFAULT);
+  pageTable[PAGE_DIR_INDEX] = (u_int32_t) ((u_int32_t) (kernelPageDirectory) | KERNEL_PAGE_DEFAULT);
 
 
   /* Now Lets Turn On Paging With This Initial Page Table */

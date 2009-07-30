@@ -42,7 +42,7 @@ int vmm_cleanVirtualSpace(u_int32_t addr) {
   u_int32_t  *pageTableSrc = 0x0;
   u_int32_t  *pageDir      = 0x0;
 
-  assert((addr & 0xFFF) == 0x0);
+  assert((addr & PAGE_MASK) == 0x0);
 
   pageDir = (u_int32_t *) PARENT_PAGEDIR_ADDR;
 
@@ -79,8 +79,10 @@ int vmm_cleanVirtualSpace(u_int32_t addr) {
 
   /* we must now reload the page directory */
   asm(
+    "push %eax\n"
     "movl %cr3,%eax\n"
     "movl %eax,%cr3\n"
+    "pop  %eax\n"
     );
 
   return(0x0);
@@ -107,6 +109,10 @@ void *vmm_getFreeVirtualPage_old(pidType pid, int count,int type) {
 
 
   spinLock(&fvpSpinLock);
+
+  #ifdef VMMDEBUG
+  kprintf("vmm_getFreeVirtualPage_old");
+  #endif
 
   pageDir = (u_int32_t *)PARENT_PAGEDIR_ADDR;
 
@@ -267,7 +273,7 @@ void *vmm_getFreeVirtualPage(pidType pid,int count,int type,u_int32_t start_addr
   /* Start at suggest address if supplied */
   if (start_addr != -1) {
     start_page = start_addr;
-    #ifdef VMM_DEBUG
+    #ifdef VMMDEBUG
       kprintf("Start_ADDR");
     #endif
     }
@@ -297,7 +303,7 @@ void *vmm_getFreeVirtualPage(pidType pid,int count,int type,u_int32_t start_addr
     for (y = 0; y < PAGE_ENTRIES; y++) {
       /* Loop Through The Page Table Find An UnAllocated Page */
       if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-        kprintf("PAGE_COW: 0x%X", (x * (0x400000) + (y * 0x1000)));
+        kprintf("FVP.PAGE_COW: 0x%X", (x * (0x400000) + (y * 0x1000)));
         //_current->td.vm_dsize += btoc(0x1000);
         /* HACK MEMORY LEAK */
         //pageTableSrc[y] = 0x0;
@@ -307,7 +313,7 @@ void *vmm_getFreeVirtualPage(pidType pid,int count,int type,u_int32_t start_addr
           for (c = 0; c < count; c++) {
             if (y + c < 1024) {
               if ((pageTableSrc[y + c] & PAGE_COW) == PAGE_COW) {
-                kprintf("PAGE-COW");
+                kprintf("FVP.PAGE-COW");
                 //_current->td.vm_dsize += btoc(0x1000);
                 /* HACK MEMORY LEAK */
                 //pageTableSrc[y + c] = 0x0;
@@ -524,7 +530,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
       }
     }
   /* Set Virtual Mapping For Page Directory */
-  newPageTable[256] = (vmm_getPhysicalAddr((u_int32_t) newPageDirectory) | PAGE_DEFAULT);
+  newPageTable[PAGE_DIR_INDEX] = (vmm_getPhysicalAddr((u_int32_t) newPageDirectory) | PAGE_DEFAULT);
 
   /*
    * Now The Fun Stuff Build The Initial Virtual Page Space So We Don't Have
@@ -625,7 +631,7 @@ void *vmmCreateVirtualSpace(pid_t pid) {
     newPageTable[x] = parentPageTable[x];
   }
   /* Set Virtual Mapping For Page Directory */
-  newPageTable[256] = (vmm_getPhysicalAddr((u_int32_t) newPageDirectory) | PAGE_DEFAULT);
+  newPageTable[PAGE_DIR_INDEX] = (vmm_getPhysicalAddr((u_int32_t) newPageDirectory) | PAGE_DEFAULT);
 
   /*
    * Now The Fun Stuff Build The Initial Virtual Page Space So We Don't Have
@@ -652,6 +658,9 @@ void *vmmCreateVirtualSpace(pid_t pid) {
 
 /*
  $Log$
+ Revision 1.11  2009/07/09 04:01:15  reddawg
+ More Sanity Checks
+
  Revision 1.10  2009/07/09 00:49:50  reddawg
  Lots of fixes and renaming to the vmm portion of the kernel
 

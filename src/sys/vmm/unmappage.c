@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004,c 009 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -60,7 +60,7 @@ void vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags) {
 
   if ((pageTable[dI] & PAGE_PRESENT) != PAGE_PRESENT) {
     #ifdef VMMDEBUG
-    kprintf("vmm_unmapPages: page not present");
+    kprintf("vmm_unmapPages: page not present - 0x%X",addr);
     #endif 
     return;
     }
@@ -84,6 +84,9 @@ void vmm_unmapPages(u_int32_t addr,u_int32_t count,u_int16_t flags) {
 
 /***
  $Log$
+ Revision 1.4  2009/07/09 04:01:15  reddawg
+ More Sanity Checks
+
  Revision 1.3  2009/07/08 16:06:37  reddawg
  Trying To Hunt Down Bugs
 

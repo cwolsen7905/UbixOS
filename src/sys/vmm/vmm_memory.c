@@ -294,7 +294,7 @@ void vmm_adjustCowCounter(u_int32_t baseAddr, int adjustment) {
 
 /************************************************************************
 
- Function: void vmm_freeProcessPages(pid_t pid);
+ Function: void vmm_freeProcessPages(kTask_t tmpTask);
 
  Description: This Function Will Free Up Memory For The Exiting Process
 
@@ -303,31 +303,63 @@ void vmm_adjustCowCounter(u_int32_t baseAddr, int adjustment) {
   08/04/02 - Added Checking For COW Pages First
 
 ************************************************************************/
-void vmm_freeProcessPages(pidType pid) {
+void vmm_freeProcessPages(kTask_t *tmpTask) {
   int i=0;
   int x=0;
   u_int32_t *tmpPageTable = 0x0;
   u_int32_t *tmpPageDir   = (uInt32 *)PARENT_PAGEDIR_ADDR;
 
+/*
+ This is where a Memory Leak Came From 
+  u_int32_t *tmpPageDir   = (uInt32 *)PARENT_PAGEDIR_ADDR;
+*/
+
+  assert(tmpTask);
+
   spinLock(&vmmSpinLock);
+
+ #ifdef BOOB
+
+  tmpPageDir = (u_int32_t *)0x7A00000;
+
+  if (vmm_remapPage(tmpTask->tss.cr3,0x7A00000,KERNEL_PAGE_DEFAULT) == 0x0)
+    K_PANIC("vmmFailed");
+
+  for (i=0;i<0x1000;i++) {
+    kprintf("tmpPageDir[%i]: 0x%X",i,tmpPageDir[i] & PAGE_UNMASK);
+    if (vmm_remapPage(tmpPageDir[i] & PAGE_UNMASK,0x7A01000 + (i * 0x1000),KERNEL_PAGE_DEFAULT) == 0x0)
+      K_PANIC("Returned NULL");
+    }
+
+
   /* Check Page Directory For An Avail Page Table */
   for (i=0;i<=0x300;i++) {
+    kprintf("tPD: 0x%X\n",tmpPageDir[i]);
     if (tmpPageDir[i] != 0) {
+      kprintf("PE");
       /* Set Up Page Table Pointer */
-      tmpPageTable = (u_int32_t *)(PAGE_TABLES_BASE_ADDR + (i * 0x1000));
+      tmpPageTable = (u_int32_t *)(0x7A01000 + (i * 0x1000));
       /* Check The Page Table For COW Pages */
       for (x = 0;x < PAGE_ENTRIES;x++) {
         /* If The Page Is COW Adjust COW Counter */
         if (((u_int32_t)tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
+          kprintf("COW!");
           vmm_adjustCowCounter(((u_int32_t)tmpPageTable[x] & 0xFFFFF000),-1);
           }
         }
       }
     }
+          //Return The Address Of The Mapped In Memory
+          vmm_unmapPages(0x7A00000,1,1);
+          for (i=0;i<0x1000;i++) {
+            vmm_unmapPages((0x7A01000 + (i*0x1000)),1,1);
+            }
+
+  #endif
 
   /* Loop Through Pages To Find Pages Owned By Process */
   for (i=0;i<numPages;i++) {
-    if (vmmMemoryMap[i].pid == pid) {
+    if (vmmMemoryMap[i].pid == tmpTask->id) {
       /* Check To See If The cowCounter Is Zero If So We Can Ree It */
       if (vmmMemoryMap[i].cowCounter == 0) {
         vmmMemoryMap[i].status = PAGE_AVAILABLE;
@@ -335,6 +367,9 @@ void vmm_freeProcessPages(pidType pid) {
         vmmMemoryMap[i].pid = vmmID;
         freePages++;
         systemVitals->freePages = freePages;
+        }
+      else {
+        K_PANIC("COW!NULL");
         }
       }
     }
@@ -345,6 +380,9 @@ void vmm_freeProcessPages(pidType pid) {
 
 /***
  $Log$
+ Revision 1.4  2009/07/09 04:01:15  reddawg
+ More Sanity Checks
+
  Revision 1.3  2009/07/08 21:20:13  reddawg
  Getting There
 

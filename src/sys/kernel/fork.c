@@ -88,12 +88,14 @@ int fork_copyProcess(struct taskStruct *newProcess,long ebp,long edi,long esi,lo
   newProcess->tss.trace_bitmap = 0x0000;
   newProcess->tss.io_map       = 0x8000;
 
+  // This makes a copy of the CURRENT VMSPACE!
   /* Create A Copy Of The VM Space For New Task */
   newProcess->tss.cr3 = (uInt32)vmm_copyVirtualSpace(newProcess->id);
   newProcess->state = FORK;
 
   /* Fix gcc optimization problems */
-  while (tmpProcPtr->state == FORK) sched_yield();
+  while (tmpProcPtr->state == FORK)
+    sched_yield();
 
   /* Return Id of Proccess */
   return(newProcess->id);

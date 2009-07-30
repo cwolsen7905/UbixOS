@@ -35,14 +35,12 @@ void spinLockInit(spinLock_t *lock) {
   }
 
 void spinUnlock(spinLock_t *lock) {
-  *lock = 0x0;
-  /*
+  //*lock = 0x0;
   register int unlocked;
   asm volatile(
     "xchgl %0, %1"
     : "=&r" (unlocked), "=m" (*lock) : "0" (0)
     );
-  */
   }
 
 int spinTryLock(spinLock_t *lock) {
@@ -54,12 +52,11 @@ int spinTryLock(spinLock_t *lock) {
   }
 
 void spinLock(spinLock_t *lock) {
-  while (!spinTryLock(lock))
-  {
+  while (!spinTryLock(lock)) {
     while (*lock == 1)
-    	sched_yield();
+      sched_yield();
+    }
   }
-}
 
 void spinLock_scheduler(spinLock_t *lock) {
   while (!spinTryLock(lock))

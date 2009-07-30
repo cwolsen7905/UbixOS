@@ -39,7 +39,7 @@
 #include <assert.h>
 
 /* WHERE SHOULD THE STACK BE? */
-#define STACK_ADDR 0x80000000 //0xC800000
+#define STACK_ADDR 0xBFC00000 //0x80000000 //0xC800000
 
 #define AT_NULL         0       /* Terminates the vector. */
 #define AT_IGNORE       1       /* Ignored entry. */
@@ -167,12 +167,12 @@ void execFile(char *file,int argc,char **argv,int console) {
   elfProgramHeader *programHeader = 0x0;
 
   /* Get A New Task For This Proccess */
-  kprintf("execFile: %s",file);
   _current = schedNewTask();
   assert(_current);
   _current->gid  = 0x0;
   _current->uid  = 0x0;
   _current->term = tty_find(console);
+
   if (_current->term == 0x0)
     kprintf("Error: invalid console\n");
 
@@ -213,10 +213,6 @@ void execFile(char *file,int argc,char **argv,int console) {
   //kprintf(">a:%i:0x%X:0x%X<",sizeof(elfHeader),binaryHeader,tmpFd);
   fread(binaryHeader,sizeof(elfHeader),1,tmpFd);
 
-  //UBU
-  kprintf("2");
-
-
   /* Check If App Is A Real Application */
   if ((binaryHeader->eIdent[1] != 'E') && (binaryHeader->eIdent[2] != 'L') && (binaryHeader->eIdent[3] != 'F')) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
@@ -243,8 +239,6 @@ void execFile(char *file,int argc,char **argv,int console) {
 
   //kprintf(">c:%i:0x%X:0x%X<",sizeof(elfProgramHeader)*binaryHeader->ePhnum,programHeader,tmpFd);
   fread(programHeader,(sizeof(elfProgramHeader)*binaryHeader->ePhnum),1,tmpFd);
-  //kprintf(">d<");
-  kprintf("1");
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
   for (i=0;i<binaryHeader->ePhnum;i++) {
@@ -384,8 +378,6 @@ void sysExec(char *file,char *ap,char *ep) {
     return;
     }
 
-  kprintf("Sys EXEC: %i 0x%X 0x%X\n",tmpFd->size,ap,ep);
-
   /* Set tasks FD for binary */
   _current->imageFd = tmpFd;
 
@@ -431,7 +423,6 @@ void sysExec(char *file,char *ap,char *ep) {
   if ((programHeader = (elfProgramHeader *)kmalloc(sizeof(elfProgramHeader)*binaryHeader->ePhnum)) == 0x0)
     K_PANIC("kmalloc: failed to allocate memory");
 
-  assert(programHeader);
   fseek(tmpFd,binaryHeader->ePhoff,0);
   if (fread(programHeader,(sizeof(elfProgramHeader)*binaryHeader->ePhnum),1,tmpFd) != (sizeof(elfProgramHeader)*binaryHeader->ePhnum))
     K_PANIC("fread: Read more than specified");
@@ -439,20 +430,16 @@ void sysExec(char *file,char *ap,char *ep) {
   if ((sectionHeader = (elfSectionHeader *)kmalloc(sizeof(elfSectionHeader)*binaryHeader->eShnum)) == 0x0)
     K_PANIC("kmalloc: failed to allocate memory");
 
-  assert(sectionHeader);
   fseek(tmpFd,binaryHeader->eShoff,0);
   if (fread(sectionHeader,sizeof(elfSectionHeader)*binaryHeader->eShnum,1,tmpFd) != (sizeof(elfSectionHeader)*binaryHeader->eShnum))
     K_PANIC("fread: read more than specified");
 
-  kprintf("This Loop SegFaults HERE: [%i]\n",binaryHeader->ePhnum);
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
   for (i=0;i<binaryHeader->ePhnum;i++) {
-    kprintf("phType: 0x%X, PT_LOAD: 0x%X\n",programHeader[i].phType,PT_LOAD);
     switch (programHeader[i].phType) {
       case PT_LOAD:
         seg_addr = trunc_page(programHeader[i].phVaddr);
         seg_size = round_page(programHeader[i].phMemsz + programHeader[i].phVaddr - seg_addr);
-        kprintf("seg_addr: 0x%X, seg_size: 0x%X\n",seg_addr,seg_size);
 
         /*
         Allocate Memory Im Going To Have To Make This Load Memory With Correct
@@ -467,10 +454,7 @@ void sysExec(char *file,char *ap,char *ep) {
           if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x),0x0,0x1000);
-          kprintf(".");
           }
-
-kprintf("A");
 
         /* Now Load Section To Memory */
         fseek(tmpFd,programHeader[i].phOffset,0);
@@ -498,7 +482,6 @@ kprintf("A");
         elfDynamicS = (elfDynamic *)programHeader[i].phVaddr;
         fseek(tmpFd,programHeader[i].phOffset,0);
         fread((void *)programHeader[i].phVaddr,programHeader[i].phFilesz,1,tmpFd);
-        kprintf(".DYN.\n");
         break;
       case PT_INTERP:
         interp = (char *)kmalloc(programHeader[i].phFilesz);
@@ -526,23 +509,18 @@ kprintf("A");
         tmp[1] = (uInt32)tmpFd;
         break;
         }
-/*
-      else {
-        kprintf("dyn_val: %i",elfDynamicS[i].dynVal);
-        }
-*/
       }
     }
 
   _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
   _current->td.vm_daddr = seg_addr;
-  kprintf("STARTING-*: [0x%X][0x%X]\n",_current->td.vm_dsize,_current->td.vm_daddr);
 
   argv = (char **)ap;
   envp = (char **)ep;
 
   if ((ep != 0x0) && (envp[0] != 0x0))
     kprintf("ENV SIZE: [0x%X]\n",envp[0]);
+
 
   if (argv[1] != 0x0) {
     //UBU
@@ -562,12 +540,12 @@ kprintf("A");
     argv = argvNew;
     }
 
+
   //! Clean the virtual of COW pages left over from the fork
 
   //QUESTION Why did I feel a need to add vm_dsize to vm_daddr
   kprintf("First: 0x%X, 0x%X\n",_current->td.vm_dsize,_current->td.vm_daddr);
   vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT));
-
 
   //! Adjust iframe
   iFrame = (struct i386_frame *)(_current->tss.esp0 - sizeof(struct i386_frame));

@@ -112,11 +112,8 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
       pageTable[pageTableIndex] = (u_int32_t)vmm_findFreePage(_current->id) | PAGE_DEFAULT;
       }
     else {
-      spinUnlock(&pageFaultSpinLock);
-
       /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
       kprintf("Segfault @: 0x%X, ESP: 0x%X, PID: %i, EIP: 0x%X Non Mapped\n",memAddr,esp,_current->id,eip);
-
       spinUnlock(&pageFaultSpinLock);
 
       /* End this task */
@@ -135,6 +132,9 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
 
 /***
  $Log$
+ Revision 1.6  2009/07/09 00:49:50  reddawg
+ Lots of fixes and renaming to the vmm portion of the kernel
+
  Revision 1.5  2009/07/08 21:20:13  reddawg
  Getting There
 

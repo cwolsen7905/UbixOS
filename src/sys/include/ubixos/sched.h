@@ -78,7 +78,7 @@ void     sched();
 
 void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
-kTask_t *schedFindTask(uInt32 id);
+kTask_t *schedFindTask(pidType id);
 
 extern kTask_t *_current;
 extern kTask_t *_usedMath;
@@ -88,6 +88,9 @@ extern kTask_t *_usedMath;
 
 /***
  $Log$
+ Revision 1.2  2007/01/26 18:29:41  reddawg
+ Functional changes to vfs not yet 100% complete also need to impliment kopen in kernel
+
  Revision 1.1.1.1  2007/01/17 03:31:52  reddawg
  UbixOS
 

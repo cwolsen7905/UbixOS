@@ -32,6 +32,7 @@
 
 #include <vmm/paging.h>
 #include <ubixos/types.h>
+#include <ubixos/sched.h>
 
 #define vmmID       -3
 #define vmmMemoryMapAddr 0xE6667000
@@ -66,7 +67,7 @@ void       vmm_setPageAttributes(u_int32_t,u_int16_t);
 int        vmm_remapPage(u_int32_t,u_int32_t,u_int16_t);
 void vmm_freePage(u_int32_t pageAddr);
 void vmm_adjustCowCounter(u_int32_t pageAddr,int adjustment);
-void vmm_freeProcessPages(pidType pid);
+void vmm_freeProcessPages(kTask_t *tmpTask);
 
 /* Interrupt Functions */
 void vmm_pageFault(u_int32_t,u_int32_t,u_int32_t);
@@ -82,6 +83,9 @@ int vmm_countMemory();
 
 /***
  $Log$
+ Revision 1.4  2009/07/09 04:01:15  reddawg
+ More Sanity Checks
+
  Revision 1.3  2009/07/08 21:20:13  reddawg
  Getting There
 

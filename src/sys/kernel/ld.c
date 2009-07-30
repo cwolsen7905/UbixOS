@@ -64,10 +64,6 @@ uInt32 ldEnable() {
     kprintf("Can not open ld.so\n");
     }
 
-  #ifdef LD_DEBUG
-  kprintf("Loading LD\n");
-  #endif
- 
   fseek(ldFd,0x0,0x0);
   binaryHeader = (elfHeader *)kmalloc(sizeof(elfHeader));
   assert(binaryHeader);

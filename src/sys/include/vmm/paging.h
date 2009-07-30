@@ -39,7 +39,8 @@
 
 #define pageLength            0x00000400
 #define PAGE_TABLES_BASE_ADDR 0xBFC00000 /* Base address of page tables in virtual area 3GB - 4MB */ 
-#define PARENT_PAGEDIR_ADDR   0x100000   /* Address at which the page directory is stored */
+#define PARENT_PAGEDIR_ADDR   0x3FF000 /* 0x100000 */   /* Address at which the page directory is stored */
+#define PAGE_DIR_INDEX        (PARENT_PAGEDIR_ADDR/0x1000)
 #define PAGE_COW              0x00000200
 #define PAGE_STACK            0x00000400
 #define PAGE_WIRED            0x00000600
@@ -58,7 +59,7 @@
 #define PAGE_UNAVAILABLE    0x2             /* Set the page to be in use */
 
 #define PAGE_KERNEL_ENTRY   0x300           /* First kernel page entry */
-#define PAGE_DIR_SPACE      0x2FF           /* Virtual Area For Pages 4MB */
+#define PAGE_DIR_SPACE      0x2FF           /* Virtual Area For Page Tables 4MB */
 
 #define PTI(x)              ((x >> 12) & 0x3FF) /* Return page directory index of address */
 #define PDI(x)              (x >> 22)           /* Return page table index of address     */

@@ -68,8 +68,9 @@ Notes:
 
 int sched_init() {
   taskList = (kTask_t *)kmalloc(sizeof(kTask_t));
-  if(taskList == 0x0)
-	kpanic("Unable to create task list");
+
+  if (taskList == 0x0)
+    kpanic("Unable to create task list");
 
   taskList->id = nextID++;
 
@@ -96,6 +97,7 @@ void sched(){
     return;
 
   tmpTask = _current->next;
+  assert(tmpTask);
   //outportByte(0xE9,_current->id + '0');
   schedStart:
 
@@ -171,7 +173,6 @@ kTask_t *schedNewTask() {
   tmpTask->prev  = 0x0;
   taskList->prev = tmpTask;
   taskList       = tmpTask;
-
   spinUnlock(&schedulerSpinLock);
 
   return(tmpTask);
@@ -181,7 +182,10 @@ kTask_t *schedNewTask() {
 int sched_deleteTask(pidType id) {
   kTask_t *tmpTask = 0x0;
 
+  kprintf("Deleting: %i\n",id);
+
   /* Checking each task from the prio queue */
+  spinLock(&schedulerSpinLock);
   for (tmpTask = taskList; tmpTask != 0x0; tmpTask = tmpTask->next) {
    if (tmpTask->id == id) {
      if (tmpTask->prev != 0x0)
@@ -191,9 +195,11 @@ int sched_deleteTask(pidType id) {
      if (taskList == tmpTask)
        taskList = tmpTask->next;
 
+     spinUnlock(&schedulerSpinLock);
      return(0x0);
      }
    }
+  spinUnlock(&schedulerSpinLock);
   return(0x1);
   }
 
@@ -218,19 +224,17 @@ kTask_t *sched_getDelTask() {
   }
 
 
-kTask_t *
-schedFindTask(uInt32 id)
-{
-        kTask_t *tmpTask = 0x0;
+kTask_t *schedFindTask(pidType id) {
+  kTask_t *tmpTask = 0x0;
 
-        for (tmpTask = taskList; tmpTask; tmpTask = tmpTask->next) {
-                if (tmpTask->id == id)
-                        return(tmpTask);
-        }
+  for (tmpTask = taskList; tmpTask; tmpTask = tmpTask->next) {
+    if (tmpTask->id == id)
+      return(tmpTask);
+      }
 
-        return(0x0);
-}
-
+  /* Return NULL when we can't find the task */
+  return(0x0);
+  }
 
 /************************************************************************
 

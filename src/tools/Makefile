@@ -38,6 +38,7 @@ clean:
 
 install-ubix:
 	(cp ../sys/compile/ubix.elf /ubix/boot/kernel/kernel)
+	(cp ../sys/compile/ubix.elf /ubix/boot/loader)
 	(cp ../bin/init/init /ubix/bin)
 	(cp ../bin/login/login /ubix/bin)
 	(cp ../bin/shell/shell //ubix/bin)

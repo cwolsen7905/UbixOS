@@ -52,8 +52,6 @@ int vfs_mount(int major,int minor,int partition,int vfsType,char *mountPoint,cha
   if ((mp = (struct vfs_mountPoint *)kmalloc(sizeof(struct vfs_mountPoint))) == NULL)
     kprintf("vfs_mount: failed to allocate mp\n");
 
-  kprintf("DEBUG: MOUNT");
-
   /* Copy Mount Point Into Buffer */
   sprintf(mp->mountPoint,mountPoint);
   
@@ -65,11 +63,9 @@ int vfs_mount(int major,int minor,int partition,int vfsType,char *mountPoint,cha
     return(0x1);
     }
 
-  kprintf("DEBUG: [0x%X]\n",device);
-
   /* Set Up Mp Defaults */
   mp->device    = device;
-  mp->fs        = vfsFindFS(vfsType);
+  mp->fs        = (struct fileSystem *)vfsFindFS(vfsType);
   mp->partition = partition;
   mp->perms     = *perms;
 
@@ -78,8 +74,6 @@ int vfs_mount(int major,int minor,int partition,int vfsType,char *mountPoint,cha
     kprintf("File System Type: %i Not Found\n",vfsType);
     return(0x1);
     }
-
-  kprintf("DEBUG: mp->fs\n");
 
   /*What is this for? 10/6/2006 */
 /*
