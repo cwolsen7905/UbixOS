@@ -486,8 +486,8 @@ void sysExec(char *file,char *ap,char *ep) {
       case PT_INTERP:
         interp = (char *)kmalloc(programHeader[i].phFilesz);
         fseek(tmpFd,programHeader[i].phOffset,0);
-        kprintf("R: %i, %i\n",fread((void *)interp,programHeader[i].phFilesz,1,tmpFd),programHeader[i].phFilesz);
         #ifdef LD_DEBUG
+        kprintf("R: %i, %i\n",fread((void *)interp,programHeader[i].phFilesz,1,tmpFd),programHeader[i].phFilesz);
         kprintf("Interp: [%s]\n",interp);
         #endif
         ldAddr = ldEnable();
@@ -497,7 +497,6 @@ void sysExec(char *file,char *ap,char *ep) {
       }
     }
 
-  kprintf("What is this doing?\n");
   /* What is this doing? 11/23/06 */
   if (elfDynamicS != 0x0) {
     for (i=0;i<12;i++) {
@@ -544,7 +543,7 @@ void sysExec(char *file,char *ap,char *ep) {
   //! Clean the virtual of COW pages left over from the fork
 
   //QUESTION Why did I feel a need to add vm_dsize to vm_daddr
-  kprintf("First: 0x%X, 0x%X\n",_current->td.vm_dsize,_current->td.vm_daddr);
+  //kprintf("First: 0x%X, 0x%X\n",_current->td.vm_dsize,_current->td.vm_daddr);
   vmm_cleanVirtualSpace((u_int32_t)_current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT));
 
   //! Adjust iframe
@@ -553,25 +552,17 @@ void sysExec(char *file,char *ap,char *ep) {
   iFrame->eip = binaryHeader->eEntry;
   iFrame->user_esp = STACK_ADDR - 12;
 
-  //if (_current->id > 3) {
+  iFrame->user_esp = ((u_int32_t)STACK_ADDR) - (sizeof(u_int32_t) * (argc + 3));
+  tmp = (u_int32_t *)iFrame->user_esp;
 
-    iFrame->user_esp = ((u_int32_t)STACK_ADDR) - (sizeof(u_int32_t) * (argc + 3));
-    tmp = (u_int32_t *)iFrame->user_esp;
+  //! build argc and argv[]
+  tmp[0] = argc;
+  for (i = 0;i < argc;i++) {
+    tmp[i + 1] = (u_int32_t)argv[i];
+    }
+  tmp[argc + 1] = 0x0;
+  tmp[argc + 2] = 0x1;
 
-    //! build argc and argv[]
-    tmp[0] = argc;
-    for (i = 0;i < argc;i++) {
-      tmp[i + 1] = (u_int32_t)argv[i];
-      }
-    tmp[argc + 1] = 0x0;
-    tmp[argc + 2] = 0x1;
-    //}
-  //else {
-    //tmp = (u_int32_t *)STACK_ADDR - 2;
-    //tmp[0] = 0x1;
-    //tmp[1] = 0x0;
-    //tmp[1] = (u_int32_t)argv;
-    //}
   kfree(argvNew);
  /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
   kfree(binaryHeader);

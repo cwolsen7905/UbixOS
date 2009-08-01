@@ -86,7 +86,6 @@ uInt32 ldEnable() {
 
 
   for (i = 0x0;i < binaryHeader->ePhnum;i++) {
-    //kprintf("LD.phType: %i\n",programHeader[i].phType);
     switch (programHeader[i].phType) {
       case PT_LOAD:
         newLoc = (char *)programHeader[i].phVaddr + LD_START;
@@ -96,7 +95,7 @@ uInt32 ldEnable() {
         Settings so it helps us in the future
         */
         //kprintf("LD.phMemsz: 0x%X\n",programHeader[i].phMemsz);
-        kprintf("phMemsz: %i",programHeader[i].phMemsz >> PAGE_SHIFT);
+        //kprintf("phMemsz: %i",programHeader[i].phMemsz >> PAGE_SHIFT);
         vmm_unmapPages(programHeader[i].phVaddr + LD_START,programHeader[i].phMemsz >> PAGE_SHIFT,0x0);
         for (x=0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* make r/w or ro */
@@ -114,9 +113,10 @@ uInt32 ldEnable() {
         break;
       case PT_DYNAMIC:
         newLoc = (char *)programHeader[i].phVaddr + LD_START;
+        //kprintf("DYN.newLoc: 0x%X\n",newLoc);
         /* Now Load Section To Memory */
         fseek(ldFd,programHeader[i].phOffset,0x0);
-        //kprintf("fread: [0x%X - 0x%X]",newLoc,fread(newLoc,programHeader[i].phFilesz,1,ldFd));
+        fread(newLoc,programHeader[i].phFilesz,1,ldFd);
         break;
       case PT_GNU_STACK:
         /* Tells us if the stack should be executable.  Failsafe to executable
@@ -146,9 +146,7 @@ uInt32 ldEnable() {
         elfRel = (elfPltInfo *)kmalloc(sectionHeader[i].shSize);
         fseek(ldFd,sectionHeader[i].shOffset,0x0);
         fread(elfRel,sectionHeader[i].shSize,1,ldFd);
-#ifdef LD_DEBUG
-kprintf("LD_START: 0x%X\n",LD_START);
-#endif
+
         for (x=0x0;x<sectionHeader[i].shSize/sizeof(elfPltInfo);x++) {
           rel = ELF32_R_SYM(elfRel[x].pltInfo);
           reMap = (uInt32 *)((uInt32)LD_START + elfRel[x].pltOffset);
@@ -190,6 +188,8 @@ kprintf("LD_START: 0x%X\n",LD_START);
     }
 
   i = binaryHeader->eEntry + LD_START;
+
+  kprintf("BH.eE: 0x%X",binaryHeader->eEntry);
 
   kfree(dynStr);
   kfree(shStr);

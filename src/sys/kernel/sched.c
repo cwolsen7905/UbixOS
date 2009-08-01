@@ -110,7 +110,6 @@ void sched(){
       break;
       }
     else if (tmpTask->state == DEAD) {
-    	kprintf("WTF");
         delTask  = tmpTask;
         tmpTask  = tmpTask->next;
         sched_deleteTask(delTask->id);
@@ -179,13 +178,11 @@ kTask_t *schedNewTask() {
   }
 
 
+//Do Not Spin Lock But Must Be Called From Scheduler
 int sched_deleteTask(pidType id) {
   kTask_t *tmpTask = 0x0;
 
-  kprintf("Deleting: %i\n",id);
-
   /* Checking each task from the prio queue */
-  spinLock(&schedulerSpinLock);
   for (tmpTask = taskList; tmpTask != 0x0; tmpTask = tmpTask->next) {
    if (tmpTask->id == id) {
      if (tmpTask->prev != 0x0)
@@ -195,11 +192,9 @@ int sched_deleteTask(pidType id) {
      if (taskList == tmpTask)
        taskList = tmpTask->next;
 
-     spinUnlock(&schedulerSpinLock);
      return(0x0);
      }
    }
-  spinUnlock(&schedulerSpinLock);
   return(0x1);
   }
 

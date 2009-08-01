@@ -503,6 +503,7 @@ int obreak(struct thread *td,struct obreak_args *uap) {
 
   if (new > old) {
     for (i = old;i < new;i+= 0x1000) {
+      kprintf("(rm:  0x%X)",i);
       if (vmm_remapPage(vmm_findFreePage(_current->id),i,PAGE_DEFAULT) == 0x0)
         K_PANIC("remap Failed");
       /* Clear Page */
@@ -510,8 +511,9 @@ int obreak(struct thread *td,struct obreak_args *uap) {
     td->vm_dsize += btoc(new - old);
     }
   else if (new < old) {
-    kprintf("0x%X < 0x%X\n",new,old);
-    //K_PANIC("new < old");
+    for (i = new;i <= old;i += 0x1000) {
+      vmm_unmapPages(i,1,1);
+      }
     td->vm_dsize -= btoc(old - new);
     }
 
@@ -521,6 +523,7 @@ int obreak(struct thread *td,struct obreak_args *uap) {
 int munmap(struct thread *td,struct munmap_args *uap) {
   /* HACK */
   //kprintf("munmap: [0x%X:0x%X]",uap->addr,uap->len);
+  K_PANIC("munmap: not implimented");
   return(0x0);
   }
 

@@ -95,7 +95,7 @@ int vfs_mount(int major,int minor,int partition,int vfsType,char *mountPoint,cha
     kfree(mp);
     return(0x1);
     }
-  kprintf("Got Here\n");
+
   /* Return */
   return(0x0);
   }

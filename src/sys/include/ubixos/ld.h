@@ -32,7 +32,7 @@
 
 #include <ubixos/types.h>
 
-#define LD_START 0x1000000
+#define LD_START 0x60000000 //1.5GIG NOW0x1000000
 
 uInt32 ldEnable();
 
@@ -40,6 +40,9 @@ uInt32 ldEnable();
 
 /***
  $Log$
+ Revision 1.1.1.1  2007/01/17 03:31:52  reddawg
+ UbixOS
+
  Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
  ubix2
 

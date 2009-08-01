@@ -134,22 +134,16 @@ int kmain(uInt32 rootdev) {
   if(sysTask == NULL)
     kprintf("OS: Unable to allocate memory\n");
 
-  kprintf("T");
-
   /* Execute System Task */
   // Send stack size to app zero there?
   memset(sysTask,0x0,0x2000);
   execThread(systemTask, (uInt32)sysTask+0x2000,0x0);
 
-  kprintf("P");
-
   /* Execute Init Process */
   execFile("sys:/bin/init",0x0,0x0,0x0); /* OS Initializer    */
 
-  kprintf("BOO\n");
 //        execFile("sys:/bin/login",0x0,0x0,0x1);
 //        execFile("sys:/bin/login",0x0,0x0,0x2);
-
 	irqEnable(0x0);
 
 	while (0x1)
