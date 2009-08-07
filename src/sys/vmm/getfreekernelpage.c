@@ -51,7 +51,8 @@ void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
   int        c = 0;
   u_int32_t *pageTableSrc = 0x0;
 
-  spinLock(&vmmGFPlock);
+  if (!spinTryLock(&vmmGFPlock))
+    K_PANIC("Rentered GFKP");
 
   /* Lets Search For A Free Page */
   for (x = PAGE_KERNEL_ENTRY; x < 1024; x++) {
@@ -108,6 +109,9 @@ void *vmm_getFreeKernelPage(pidType pid, u_int32_t count) {
 
 /***
  $Log$
+ Revision 1.5  2009/07/09 04:01:15  reddawg
+ More Sanity Checks
+
  Revision 1.4  2009/07/09 00:49:50  reddawg
  Lots of fixes and renaming to the vmm portion of the kernel
 

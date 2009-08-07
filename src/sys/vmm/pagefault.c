@@ -56,7 +56,8 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
   u_int32_t *src = 0x0,*dst = 0x0;
 
   /* Try to aquire lock otherwise spin till we do */
-  spinLock(&pageFaultSpinLock);
+  if (!spinTryLock(&pageFaultSpinLock))
+    K_PANIC("Re-Entered pageFault\n");
 
   /* Set page dir pointer to the address of the visable page directory */
   pageDir = (u_int32_t *)PARENT_PAGEDIR_ADDR;
@@ -132,6 +133,9 @@ void vmm_pageFault(u_int32_t memAddr,u_int32_t eip,u_int32_t esp) {
 
 /***
  $Log$
+ Revision 1.7  2009/07/30 14:10:16  reddawg
+ Sync
+
  Revision 1.6  2009/07/09 00:49:50  reddawg
  Lots of fixes and renaming to the vmm portion of the kernel
 

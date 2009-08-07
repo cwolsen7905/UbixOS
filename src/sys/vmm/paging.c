@@ -175,7 +175,8 @@ int vmm_remapPage(u_int32_t sourceAddr,u_int32_t destAddr,u_int16_t perms) {
     K_PANIC("dest == 0x0");
 
   /* Lock this function so to avoid race conditions */
-  spinLock(&rmpSpinLock);
+  if (!spinTryLock(&rmpSpinLock))
+    K_PANIC("Re-Entered: remapPage");
 
 
   /* Set default permissions if not spedified */
@@ -374,7 +375,8 @@ void *vmm_getFreeMallocPage(u_int16_t count) {
   u_int16_t  x            = 0x0;
   u_int16_t  y            = 0x0;
 
-  spinLock(&fkpSpinLock);
+  if (!spinTryLock(&fkpSpinLock))
+    K_PANIC("Re-Entered: getFreeMallocPage");
 
   /* Lets Search For A Free Page */
   for (x = 960; x < 1024; x++) {

@@ -108,7 +108,8 @@ void *vmm_getFreeVirtualPage_old(pidType pid, int count,int type) {
   u_int32_t  start_page   = 0x0;
 
 
-  spinLock(&fvpSpinLock);
+  if (!spinTryLock(&fvpSpinLock))
+    K_PANIC("Re-Entered: getFreeVirtualPage");
 
   #ifdef VMMDEBUG
   kprintf("vmm_getFreeVirtualPage_old");
@@ -253,7 +254,8 @@ void *vmm_getFreeVirtualPage(pidType pid,int count,int type,u_int32_t start_addr
 
   assert(count > 0);
 
-  spinLock(&fvpSpinLock);
+  if (!spinTryLock(&fvpSpinLock))
+    K_PANIC("fvpSpinLock: LOCKED");
 
   pageDir = (u_int32_t *) PARENT_PAGEDIR_ADDR;
 
@@ -399,7 +401,8 @@ void *vmm_copyVirtualSpace(pidType pid) {
   u_int16_t  i                       = 0x0;
   u_int16_t  s                       = 0x0;
 
-  spinLock(&cvsSpinLock);
+  if (!spinTryLock(&cvsSpinLock))
+    K_PANIC("Re-Enetered copyVirtualSpace");
 
   /* Set Address Of Parent Page Directory */
   parentPageDirectory = (u_int32_t *) PARENT_PAGEDIR_ADDR;
@@ -658,6 +661,9 @@ void *vmmCreateVirtualSpace(pid_t pid) {
 
 /*
  $Log$
+ Revision 1.12  2009/07/30 14:10:16  reddawg
+ Sync
+
  Revision 1.11  2009/07/09 04:01:15  reddawg
  More Sanity Checks
 

@@ -63,12 +63,10 @@ void spinLock_scheduler(spinLock_t *lock) {
     while (*lock == 1);
   }
 
-
 int spinLockLocked(spinLock_t *lock) {
   return(*lock != 0);
   }
 
- 
 /***
  END
  ***/

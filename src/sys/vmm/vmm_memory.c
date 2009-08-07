@@ -38,7 +38,6 @@
 
 static u_int32_t   freePages      = 0x0;
 static spinLock_t  vmmSpinLock    = SPIN_LOCK_INITIALIZER;
-static spinLock_t  vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 int                numPages       = 0x0;
 mMap              *vmmMemoryMap   = (mMap *) 0x101000;
 
@@ -192,7 +191,8 @@ u_int32_t vmm_findFreePage(pidType pid) {
   if (pid < sysID)
     kpanic("Error: invalid PID %i\n",pid);
     
-  spinLock(&vmmSpinLock);
+  if (!spinTryLock(&vmmSpinLock))
+    K_PANIC("vmmSpinLock: LOCKED");
 
   for (i = 0; i <= numPages; i++) {
 
@@ -233,7 +233,8 @@ void vmm_freePage(u_int32_t pageAddr) {
 
   assert((pageAddr & 0xFFF) == 0x0);
 
-  spinLock(&vmmSpinLock);
+  if (!spinTryLock(&vmmSpinLock))
+    K_PANIC("vmmSpinLock: LOCKED");
 
   /* Find The Page Index To The Memory Map */
   pageIndex = (pageAddr / 4096);
@@ -274,7 +275,8 @@ void vmm_adjustCowCounter(u_int32_t baseAddr, int adjustment) {
 
   assert((baseAddr & 0xFFF) == 0x0);
 
-  spinLock(&vmmSpinLock);
+  if (!spinTryLock(&vmmSpinLock))
+    K_PANIC("vmmSpinLock: LOCKED");
 
   /* Adjust COW Counter */
   vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
@@ -316,7 +318,8 @@ void vmm_freeProcessPages(kTask_t *tmpTask) {
 
   assert(tmpTask);
 
-  spinLock(&vmmSpinLock);
+  if (!spinTryLock(&vmmSpinLock))
+    K_PANIC("vmmSpinLock: LOCKED");
 
  #ifdef BOOB
 
@@ -380,6 +383,9 @@ void vmm_freeProcessPages(kTask_t *tmpTask) {
 
 /***
  $Log$
+ Revision 1.5  2009/07/30 14:10:16  reddawg
+ Sync
+
  Revision 1.4  2009/07/09 04:01:15  reddawg
  More Sanity Checks
 

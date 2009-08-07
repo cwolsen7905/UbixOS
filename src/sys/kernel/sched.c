@@ -93,8 +93,10 @@ void sched(){
   kTask_t *tmpTask  = 0x0;
   kTask_t *delTask  = 0x0;
 
-  if (!spinTryLock(&schedulerSpinLock))
+  if (!spinTryLock(&schedulerSpinLock)) {
+    kprintf("Scheduler Still Locked?");
     return;
+    }
 
   tmpTask = _current->next;
   assert(tmpTask);
