@@ -193,7 +193,9 @@ void execFile(char *file,int argc,char **argv,int console) {
   tmpFd = (struct file *)kmalloc(sizeof(struct file));
   //KUBU
   memset(tmpFd,0x0,sizeof(struct file));
+  kprintf("open File\n");
   fopen(tmpFd,file,"r");
+  kprintf("file opened\n");
 
   /* If We Dont Find the File Return */
   if (tmpFd == 0x0) {

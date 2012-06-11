@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004,2007,2008 The UbixOS Project
+ Copyright (c) 2002-2004,2007,2008, 2012 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -52,7 +52,7 @@ int main(int argc,char **argv) {
     exit(0x1);
     }
 
-  printf("Initializing UbixOS\n");
+  printf("Initializing uBixOS\n");
 
 #if 0
   /* Start TTYD */

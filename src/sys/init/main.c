@@ -119,6 +119,7 @@ int kmain(uInt32 rootdev) {
 
 
   /* Mount Root */
+  kprintf("Mounting SYS\n");
   if (vfs_mount(0x1,0x2,0x0,0xAA,"sys","rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
     }
@@ -140,6 +141,7 @@ int kmain(uInt32 rootdev) {
   execThread(systemTask, (uInt32)sysTask+0x2000,0x0);
 
   /* Execute Init Process */
+  kprintf("Starting init\n");
   execFile("sys:/bin/init",0x0,0x0,0x0); /* OS Initializer    */
 
 //        execFile("sys:/bin/login",0x0,0x0,0x1);

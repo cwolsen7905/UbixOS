@@ -105,8 +105,8 @@ int initHardDisk() {
                 hdd2     = (struct driveInfo *)kmalloc(sizeof(struct driveInfo));
                 memcpy(devInfo2,devInfo,sizeof(struct device_interface));
                 memcpy(hdd2,hdd,sizeof(struct driveInfo));
-                //hdd2->parOffset = d[i].dp_start + bsdd->d_partitions[x].p_offset;
-                hdd2->parOffset = bsdd->d_partitions[x].p_offset;
+                hdd2->parOffset = d[i].dp_start + bsdd->d_partitions[x].p_offset;
+                //UBUhdd2->parOffset = bsdd->d_partitions[x].p_offset;
                 devInfo2->info   = hdd2;
                 minor++;
 
@@ -357,6 +357,9 @@ void hdRead(struct driveInfo *hdd,void *baseAddr,uInt32 startSector,uInt32 secto
 
 /***
  $Log$
+ Revision 1.3  2009/07/08 21:20:13  reddawg
+ Getting There
+
  Revision 1.2  2008/02/29 14:56:31  reddawg
  Sync - Working On Getting It To Boot Again
 
