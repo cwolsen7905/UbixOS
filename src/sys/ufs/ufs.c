@@ -115,7 +115,7 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte,struct file *fd) {
     for (n = 0; sblock_try[n] != -1; n++) {
       if (dskread(fs, sblock_try[n] / DEV_BSIZE, 16,fd))
         return -1;
-      kprintf("MAGIC: [%x:%i]\n",fs->fs_magic,sblock_try[n]);
+
       if ((
        #if defined(UFS1_ONLY)
        fs->fs_magic == FS_UFS1_MAGIC

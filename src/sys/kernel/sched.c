@@ -94,7 +94,8 @@ void sched(){
   kTask_t *delTask  = 0x0;
 
   if (!spinTryLock(&schedulerSpinLock)) {
-    kprintf("Scheduler Still Locked?");
+    // UBU - Why do i care if it's still locked? 6/12/12
+    //kprintf("Scheduler Still Locked?");
     return;
     }
 

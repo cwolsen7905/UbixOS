@@ -1,4 +1,4 @@
-CC = gcc
+CC = gcc34
 
 REMOVE = rm -fr
 .if defined(PICA)
