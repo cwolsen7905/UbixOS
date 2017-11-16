@@ -1,0 +1,431 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="tty_8c" kind="file">
+    <compoundname>tty.c</compoundname>
+    <includes refid="tty_8h" local="no">ubixos/tty.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="io_8h" local="no">sys/io.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <incdepgraph>
+      <node id="5573">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="5574">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="5571" relation="include">
+        </childnode>
+      </node>
+      <node id="5569">
+        <label>src/sys/kernel/tty.c</label>
+        <link refid="tty.c"/>
+        <childnode refid="5570" relation="include">
+        </childnode>
+        <childnode refid="5573" relation="include">
+        </childnode>
+        <childnode refid="5574" relation="include">
+        </childnode>
+        <childnode refid="5575" relation="include">
+        </childnode>
+        <childnode refid="5576" relation="include">
+        </childnode>
+        <childnode refid="5577" relation="include">
+        </childnode>
+        <childnode refid="5578" relation="include">
+        </childnode>
+      </node>
+      <node id="5571">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5572" relation="include">
+        </childnode>
+      </node>
+      <node id="5572">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5578">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="5571" relation="include">
+        </childnode>
+      </node>
+      <node id="5576">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="5571" relation="include">
+        </childnode>
+      </node>
+      <node id="5575">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5571" relation="include">
+        </childnode>
+      </node>
+      <node id="5570">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5571" relation="include">
+        </childnode>
+      </node>
+      <node id="5577">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="tty_8c_152a11053c56546a0dcb568942ada9c72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int tty_change</definition>
+        <argsstring>(uInt16 tty)</argsstring>
+        <name>tty_change</name>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>tty</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="87" bodyend="116"/>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="tty_8c_171910aae9a65de1b7375f236908f8a22" compoundref="tty_8c" startline="38">terms</references>
+        <references refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" compoundref="tty_8h" startline="38">tty_termNode::tty_buffer</references>
+        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
+        <references refid="tty_8h_1af7550f4ba4072823e4085117944c5ef" compoundref="tty_8h" startline="35">TTY_MAX_TERMS</references>
+        <references refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" compoundref="tty_8h" startline="39">tty_termNode::tty_pointer</references>
+        <references refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" compoundref="tty_8h" startline="41">tty_termNode::tty_x</references>
+        <references refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" compoundref="tty_8h" startline="42">tty_termNode::tty_y</references>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="tty_8c_1360dbff4aa208682a9943640a8696d66" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
+        <definition>tty_term* tty_find</definition>
+        <argsstring>(uInt16 tty)</argsstring>
+        <name>tty_find</name>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>tty</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" line="170" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="170" bodyend="172"/>
+        <references refid="tty_8c_171910aae9a65de1b7375f236908f8a22" compoundref="tty_8c" startline="38">terms</references>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int tty_init</definition>
+        <argsstring>()</argsstring>
+        <name>tty_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="42" bodyend="79"/>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="tty_8c_171910aae9a65de1b7375f236908f8a22" compoundref="tty_8c" startline="38">terms</references>
+        <references refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" compoundref="tty_8h" startline="38">tty_termNode::tty_buffer</references>
+        <references refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" compoundref="tty_8h" startline="40">tty_termNode::tty_colour</references>
+        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
+        <references refid="tty_8h_1af7550f4ba4072823e4085117944c5ef" compoundref="tty_8h" startline="35">TTY_MAX_TERMS</references>
+        <references refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" compoundref="tty_8h" startline="39">tty_termNode::tty_pointer</references>
+        <references refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" compoundref="tty_8h" startline="41">tty_termNode::tty_x</references>
+        <references refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" compoundref="tty_8h" startline="42">tty_termNode::tty_y</references>
+      </memberdef>
+      <memberdef kind="function" id="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int tty_print</definition>
+        <argsstring>(char *string, tty_term *term)</argsstring>
+        <name>tty_print</name>
+        <param>
+          <type>char *</type>
+          <declname>string</declname>
+        </param>
+        <param>
+          <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
+          <declname>term</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="118" bodyend="168"/>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" compoundref="tty_8h" startline="40">tty_termNode::tty_colour</references>
+        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
+        <references refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" compoundref="tty_8h" startline="39">tty_termNode::tty_pointer</references>
+        <references refid="tty_8c_100b6c183f536a95df28a74c26816dc08" compoundref="tty_8c" startline="40">tty_spinLock</references>
+        <references refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" compoundref="tty_8h" startline="41">tty_termNode::tty_x</references>
+        <references refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" compoundref="tty_8h" startline="42">tty_termNode::tty_y</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
+        <referencedby refid="file_8c_11a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="49" endline="57">sysFwrite</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="tty_8c_171910aae9a65de1b7375f236908f8a22" prot="public" static="yes" mutable="no">
+        <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
+        <definition>tty_term* terms</definition>
+        <argsstring></argsstring>
+        <name>terms</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="38" bodyend="-1"/>
+        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
+        <referencedby refid="tty_8c_1360dbff4aa208682a9943640a8696d66" compoundref="tty_8c" startline="170" endline="172">tty_find</referencedby>
+        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="tty_8c_1afbb5679104334c34d7691b2de7d7a86" prot="public" static="no" mutable="no">
+        <type><ref refid="structtty__termNode" kindref="compound">tty_term</ref> *</type>
+        <definition>tty_term* tty_foreground</definition>
+        <argsstring></argsstring>
+        <name>tty_foreground</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="39" bodyend="-1"/>
+        <referencedby refid="video_8c_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</referencedby>
+        <referencedby refid="atkbd_8c_19e32494b8c0797b73c41a50c698f0c04" compoundref="atkbd_8c" startline="329" endline="375">getch</referencedby>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+        <referencedby refid="kpanic_8c_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</referencedby>
+        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
+        <referencedby refid="file_8c_104b3a6449e24cc27188e1f4b9a9d8225" compoundref="file_8c" startline="59" endline="86">sysFgetc</referencedby>
+        <referencedby refid="tty_8c_152a11053c56546a0dcb568942ada9c72" compoundref="tty_8c" startline="87" endline="116">tty_change</referencedby>
+        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
+        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="tty_8c_100b6c183f536a95df28a74c26816dc08" prot="public" static="yes" mutable="no">
+        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
+        <definition>spinLock_t tty_spinLock</definition>
+        <argsstring></argsstring>
+        <name>tty_spinLock</name>
+        <initializer> SPIN_LOCK_INITIALIZER</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c" bodystart="40" bodyend="-1"/>
+        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: tty_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="tty_8h" kindref="compound">ubixos/tty.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="tty_8c_171910aae9a65de1b7375f236908f8a22" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/><sp/>*<ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="39" refid="tty_8c_1afbb5679104334c34d7691b2de7d7a86" refkind="member"><highlight class="normal"><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="40" refid="tty_8c_100b6c183f536a95df28a74c26816dc08" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="tty_8c_100b6c183f536a95df28a74c26816dc08" kindref="member">tty_spinLock</ref><sp/><sp/><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1ab365abb615be7027fa0bdb2c09569cb" kindref="member">tty_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>memory<sp/>for<sp/>terminals<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref><sp/>=<sp/>(<ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structtty__termNode" kindref="compound">tty_term</ref>)*<ref refid="tty_8h_1af7550f4ba4072823e4085117944c5ef" kindref="member">TTY_MAX_TERMS</ref>);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref><sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;tty_init:<sp/>Failed<sp/>to<sp/>allocate<sp/>memory.<sp/>File:<sp/>%s,<sp/>Line:<sp/>%i\n&quot;</highlight><highlight class="normal">,__FILE__,__LINE__);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>all<sp/>default<sp/>terminal<sp/>information<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;i<sp/>&lt;<sp/>TTY_MAX_TERMS;i++)<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[i].tty_buffer<sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(80*60*2);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[i].tty_buffer<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;tty_init:<sp/>Failed<sp/>to<sp/>allocate<sp/>buffer<sp/>memory.<sp/>File:<sp/>%s,<sp/>Line:<sp/>%i\n&quot;</highlight><highlight class="normal">,__FILE__,__LINE__);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[i].<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref><sp/>=<sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[i].<ref refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" kindref="member">tty_buffer</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>tty<sp/>pointer<sp/>to<sp/>internal<sp/>buffer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[i].<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>default<sp/>X<sp/>position<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[i].<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>default<sp/>Y<sp/>position<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[i].<ref refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" kindref="member">tty_colour</ref><sp/><sp/>=<sp/>0x0A<sp/>+<sp/>i;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>default<sp/>tty<sp/>text<sp/>colour<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Read<sp/>tty0<sp/>current<sp/>position<sp/>(to<sp/>migrate<sp/>from<sp/>kprintf).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0e);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[0].<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref><sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x3D5);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0f);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[0].<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref><sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x3D5);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>pointer<sp/>for<sp/>the<sp/>foreground<sp/>tty<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref><sp/>=<sp/>&amp;<ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[0];</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>the<sp/>foreground<sp/>ttys<sp/>information<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)0xB8000;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>to<sp/>let<sp/>kernel<sp/>know<sp/>initialization<sp/>is<sp/>complete<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;tty0<sp/>-<sp/>Initialized\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/><sp/>This<sp/>will<sp/>change<sp/>the<sp/>specified<sp/>tty.<sp/>It<sp/>ultimately<sp/>copies<sp/>the<sp/>screen</highlight></codeline>
+<codeline lineno="84"><highlight class="comment"><sp/><sp/>to<sp/>the<sp/>foreground<sp/>buffer<sp/>copies<sp/>the<sp/>new<sp/>ttys<sp/>buffer<sp/>to<sp/>the<sp/>screen<sp/>and</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/><sp/>adjusts<sp/>a<sp/>couple<sp/>pointers<sp/>and<sp/>we<sp/>are<sp/>good<sp/>to<sp/>go.</highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="tty_8c_152a11053c56546a0dcb568942ada9c72" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1fb200d47095b1f878728403e9346cc33" kindref="member">tty_change</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>tty)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tty<sp/>&gt;<sp/><ref refid="tty_8h_1af7550f4ba4072823e4085117944c5ef" kindref="member">TTY_MAX_TERMS</ref>)</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Error:<sp/>Changing<sp/>to<sp/>an<sp/>invalid<sp/>tty.<sp/>File:<sp/>%s,<sp/>Line:<sp/>%i\n&quot;</highlight><highlight class="normal">,__FILE__,__LINE__);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Copy<sp/>display<sp/>buffer<sp/>to<sp/>tty<sp/>buffer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(<ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" kindref="member">tty_buffer</ref>,(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)0xB8000,(80*60*2));</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Copy<sp/>new<sp/>tty<sp/>buffer<sp/>to<sp/>display<sp/>buffer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)0xB8000,<ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[tty].tty_buffer,(80*60*2));</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="99"><highlight class="comment"><sp/><sp/><sp/>Set<sp/>the<sp/>tty_pointer<sp/>to<sp/>the<sp/>internal<sp/>buffer<sp/>so<sp/>I<sp/>can<sp/>continue<sp/></highlight></codeline>
+<codeline lineno="100"><highlight class="comment"><sp/><sp/><sp/>writing<sp/>to<sp/>what<sp/>it<sp/>believes<sp/>is<sp/>the<sp/>screen</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref><sp/>=<sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_1d7d6c2241ad060df43036b02a9a6ac26" kindref="member">tty_buffer</ref>;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[tty].<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)0xB8000;</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>set<sp/>new<sp/>foreground<sp/>tty<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref><sp/>=<sp/>&amp;<ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[tty];</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Adjust<sp/>cursor<sp/>when<sp/>we<sp/>change<sp/>consoles<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0F);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref>);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0E);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref>);</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118" refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="tty_8h_1d96f57a7c113d3cfa76ee5fed6de33c0" kindref="member">tty_print</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*string,<ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*term)<sp/>{</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>bufferOffset<sp/>=<sp/>0x0,<sp/>character<sp/>=<sp/>0x0,<sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="tty_8c_100b6c183f536a95df28a74c26816dc08" kindref="member">tty_spinLock</ref>);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>We<sp/>Need<sp/>To<sp/>Get<sp/>The<sp/>Y<sp/>Position<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>=<sp/>term-&gt;<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref>;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&lt;&lt;=<sp/>8;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Then<sp/>We<sp/>Need<sp/>To<sp/>Add<sp/>The<sp/>X<sp/>Position<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>+=<sp/>term-&gt;<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref>;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&lt;&lt;=<sp/>1;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>((character<sp/>=<sp/>*string++))<sp/>{</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(character)<sp/>{</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\n&apos;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bufferOffset<sp/>=<sp/>(bufferOffset<sp/>/<sp/>160)<sp/>*<sp/>160<sp/>+<sp/>160;</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>term-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>[bufferOffset++]<sp/>=<sp/>character;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>term-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>[bufferOffset++]<sp/>=<sp/>term-&gt;<ref refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" kindref="member">tty_colour</ref>;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><sp/></highlight><highlight class="comment">/*<sp/>switch<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Check<sp/>To<sp/>See<sp/>If<sp/>We<sp/>Are<sp/>Out<sp/>Of<sp/>Bounds<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(bufferOffset<sp/>&gt;=<sp/>160<sp/>*<sp/>25)<sp/>{</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>160<sp/>*<sp/>24;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>term-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>[i]<sp/>=<sp/>term-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>[i<sp/>+<sp/>160];</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>80;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>term-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>[(160<sp/>*<sp/>24)<sp/>+<sp/>(i<sp/>*<sp/>2)]<sp/>=<sp/>0<ref refid="start_8S_162df326d54f8b2ece412319c4360ef3e" kindref="member">x20</ref>;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>term-&gt;<ref refid="structtty__termNode_1c0868dddca6832ef5f791dd8d2606c7c" kindref="member">tty_pointer</ref>[(160<sp/>*<sp/>24)<sp/>+<sp/>(i<sp/>*<sp/>2)<sp/>+<sp/>1]<sp/>=<sp/>term-&gt;<ref refid="structtty__termNode_113a559749639b1ebd5429e76c5588632" kindref="member">tty_colour</ref>;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bufferOffset<sp/>-=<sp/>160;</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&gt;&gt;=<sp/>1;<sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>the<sp/>new<sp/>cursor<sp/>position<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/>term-&gt;<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref><sp/>=<sp/>(bufferOffset<sp/>&amp;<sp/><sp/>0xFF);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/>term-&gt;<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref><sp/>=<sp/>(bufferOffset<sp/>&gt;&gt;<sp/>0x8);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(term<sp/>==<sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0f);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/>term-&gt;<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref>);</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0e);</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/>term-&gt;<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref>);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="tty_8c_100b6c183f536a95df28a74c26816dc08" kindref="member">tty_spinLock</ref>);</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight></codeline>
+<codeline lineno="170" refid="tty_8c_1360dbff4aa208682a9943640a8696d66" refkind="member"><highlight class="normal"><ref refid="structtty__termNode" kindref="compound">tty_term</ref><sp/>*<ref refid="tty_8h_14f96ccac7e60296ef496008d8cbed0ff" kindref="member">tty_find</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>tty)<sp/>{</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(&amp;<ref refid="tty_8c_171910aae9a65de1b7375f236908f8a22" kindref="member">terms</ref>[tty]);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="175"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="176"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/tty.c"/>
+  </compounddef>
+</doxygen>

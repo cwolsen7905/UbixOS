@@ -1,0 +1,8 @@
+base referer
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 198,81 278,108
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 190,132 286,159
+rect $sched_8h.html#08933fe6d593a1c78b9080359f15a0b7 334,56 435,83
+rect $spinlock_8h.html#8f9173fadeddafa01754d6cbcc630198 619,107 718,133
+rect $sched_8h.html#549a0c1cc47933fa045b200690965cbd 484,56 546,83
+rect $sched_8h.html#e969273d772018d111e1f0344eb550f8 595,5 742,32
+rect $sched_8h.html#086cc0adc0b6a3860ceeeb5bc5ea94ea 599,56 738,83

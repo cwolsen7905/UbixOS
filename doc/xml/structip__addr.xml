@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structip__addr" kind="struct" prot="public">
+    <compoundname>ip_addr</compoundname>
+    <includes refid="ipv4_2ip__addr_8h" local="no">ip_addr.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structip__addr_160186a1db9399a085ce26b9a3cdf6c22" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ip_addr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(uInt32 addr)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>addr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip_addr.h" line="46"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structip__addr_1aca6b7136a4c4efb4e0da1384d76f4b5" prot="public" static="no" mutable="no">
+        <type>u32_t</type>
+        <definition>u32_t ip_addr::addr[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip_addr.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/ip_addr.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1f32c7d1377562b7b35fdd0535f6fa952" compoundref="sockets_8c" startline="91" endline="118">lwip_accept</referencedby>
+        <referencedby refid="sockets_8c_11675042812d3bc6d5f9eeaa28c8f37a7" compoundref="sockets_8c" startline="121" endline="144">lwip_bind</referencedby>
+        <referencedby refid="sockets_8c_19688d733f4d571cef85948fe74e0f6c7" compoundref="sockets_8c" startline="169" endline="192">lwip_connect</referencedby>
+        <referencedby refid="sockets_8c_1a433d1ebe9c87f57160c0d260e225705" compoundref="sockets_8c" startline="216" endline="290">lwip_recvfrom</referencedby>
+        <referencedby refid="sockets_8c_18dba95d254d6cb221ba4039ad8f3337b" compoundref="sockets_8c" startline="354" endline="380">lwip_sendto</referencedby>
+        <referencedby refid="udpecho_8c_1cd77ce4346d8d940f934ad6007214bf0" compoundref="udpecho_8c" startline="44" endline="75">udpecho_thread</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip_addr.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/ip_addr.h" bodystart="45" bodyend="47"/>
+    <listofallmembers>
+      <member refid="structip__addr_1aca6b7136a4c4efb4e0da1384d76f4b5" prot="public" virt="non-virtual"><scope>ip_addr</scope><name>addr</name></member>
+      <member refid="structip__addr_160186a1db9399a085ce26b9a3cdf6c22" prot="public" virt="non-virtual"><scope>ip_addr</scope><name>PACK_STRUCT_FIELD</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

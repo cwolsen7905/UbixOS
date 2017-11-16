@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structeth__addr" kind="struct" prot="public">
+    <compoundname>eth_addr</compoundname>
+    <includes refid="arp_8h" local="no">arp.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structeth__addr_1659e6d94ddb0acdae1a3df46b0de80ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>eth_addr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(uInt8 addr[6])</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>addr</declname>
+          <array>[6]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="49"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" bodystart="48" bodyend="50"/>
+    <listofallmembers>
+      <member refid="structeth__addr_1659e6d94ddb0acdae1a3df46b0de80ed" prot="public" virt="non-virtual"><scope>eth_addr</scope><name>PACK_STRUCT_FIELD</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,648 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="vmm_8h" kind="file">
+    <compoundname>vmm.h</compoundname>
+    <includes refid="paging_8h" local="no">vmm/paging.h</includes>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
+    <includedby refid="bioscall_8c" local="no">src/sys/kernel/bioscall.c</includedby>
+    <includedby refid="elf_8c" local="no">src/sys/kernel/elf.c</includedby>
+    <includedby refid="endtask_8c" local="no">src/sys/kernel/endtask.c</includedby>
+    <includedby refid="exec_8c" local="no">src/sys/kernel/exec.c</includedby>
+    <includedby refid="fork_8c" local="no">src/sys/kernel/fork.c</includedby>
+    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
+    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
+    <includedby refid="syscall_8c" local="no">src/sys/kernel/syscall.c</includedby>
+    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
+    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
+    <includedby refid="kmalloc_8c" local="no">src/sys/lib/kmalloc.c</includedby>
+    <includedby refid="idt_8c" local="no">src/sys/sys/idt.c</includedby>
+    <includedby refid="copyvirtualspace_8c" local="no">src/sys/vmm/copyvirtualspace.c</includedby>
+    <includedby refid="createvirtualspace_8c" local="no">src/sys/vmm/createvirtualspace.c</includedby>
+    <includedby refid="getfreepage_8c" local="no">src/sys/vmm/getfreepage.c</includedby>
+    <includedby refid="getfreevirtualpage_8c" local="no">src/sys/vmm/getfreevirtualpage.c</includedby>
+    <includedby refid="getphysicaladdr_8c" local="no">src/sys/vmm/getphysicaladdr.c</includedby>
+    <includedby refid="pagefault_8c" local="no">src/sys/vmm/pagefault.c</includedby>
+    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
+    <includedby refid="setpageattributes_8c" local="no">src/sys/vmm/setpageattributes.c</includedby>
+    <includedby refid="unmappage_8c" local="no">src/sys/vmm/unmappage.c</includedby>
+    <includedby refid="vmm__init_8c" local="no">src/sys/vmm/vmm_init.c</includedby>
+    <includedby refid="vmm__memory_8c" local="no">src/sys/vmm/vmm_memory.c</includedby>
+    <incdepgraph>
+      <node id="4998">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4994" relation="include">
+        </childnode>
+      </node>
+      <node id="4994">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="4995" relation="include">
+        </childnode>
+      </node>
+      <node id="4995">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="4993">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="4994" relation="include">
+        </childnode>
+        <childnode refid="4996" relation="include">
+        </childnode>
+        <childnode refid="4998" relation="include">
+        </childnode>
+      </node>
+      <node id="4992">
+        <label>src/sys/include/vmm/vmm.h</label>
+        <link refid="vmm.h"/>
+        <childnode refid="4993" relation="include">
+        </childnode>
+        <childnode refid="4994" relation="include">
+        </childnode>
+      </node>
+      <node id="4996">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="4997" relation="include">
+        </childnode>
+        <childnode refid="4998" relation="include">
+        </childnode>
+      </node>
+      <node id="4997">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="4994" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="5003">
+        <label>src/sys/kernel/elf.c</label>
+        <link refid="elf_8c"/>
+      </node>
+      <node id="5011">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="5012">
+        <label>src/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="5020">
+        <label>src/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="5010">
+        <label>src/sys/kernel/systemtask.c</label>
+        <link refid="systemtask_8c"/>
+      </node>
+      <node id="5007">
+        <label>src/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="5006">
+        <label>src/sys/kernel/fork.c</label>
+        <link refid="fork_8c"/>
+      </node>
+      <node id="5015">
+        <label>src/sys/vmm/createvirtualspace.c</label>
+        <link refid="createvirtualspace_8c"/>
+      </node>
+      <node id="5023">
+        <label>src/sys/vmm/vmm_init.c</label>
+        <link refid="vmm__init_8c"/>
+      </node>
+      <node id="5008">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="4999">
+        <label>src/sys/include/vmm/vmm.h</label>
+        <link refid="vmm.h"/>
+        <childnode refid="5000" relation="include">
+        </childnode>
+        <childnode refid="5002" relation="include">
+        </childnode>
+        <childnode refid="5003" relation="include">
+        </childnode>
+        <childnode refid="5004" relation="include">
+        </childnode>
+        <childnode refid="5005" relation="include">
+        </childnode>
+        <childnode refid="5006" relation="include">
+        </childnode>
+        <childnode refid="5007" relation="include">
+        </childnode>
+        <childnode refid="5008" relation="include">
+        </childnode>
+        <childnode refid="5009" relation="include">
+        </childnode>
+        <childnode refid="5010" relation="include">
+        </childnode>
+        <childnode refid="5011" relation="include">
+        </childnode>
+        <childnode refid="5012" relation="include">
+        </childnode>
+        <childnode refid="5013" relation="include">
+        </childnode>
+        <childnode refid="5014" relation="include">
+        </childnode>
+        <childnode refid="5015" relation="include">
+        </childnode>
+        <childnode refid="5016" relation="include">
+        </childnode>
+        <childnode refid="5017" relation="include">
+        </childnode>
+        <childnode refid="5018" relation="include">
+        </childnode>
+        <childnode refid="5019" relation="include">
+        </childnode>
+        <childnode refid="5020" relation="include">
+        </childnode>
+        <childnode refid="5021" relation="include">
+        </childnode>
+        <childnode refid="5022" relation="include">
+        </childnode>
+        <childnode refid="5023" relation="include">
+        </childnode>
+        <childnode refid="5024" relation="include">
+        </childnode>
+      </node>
+      <node id="5021">
+        <label>src/sys/vmm/setpageattributes.c</label>
+        <link refid="setpageattributes_8c"/>
+      </node>
+      <node id="5018">
+        <label>src/sys/vmm/getphysicaladdr.c</label>
+        <link refid="getphysicaladdr_8c"/>
+      </node>
+      <node id="5001">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="5002">
+        <label>src/sys/kernel/bioscall.c</label>
+        <link refid="bioscall_8c"/>
+      </node>
+      <node id="5009">
+        <label>src/sys/kernel/syscall.c</label>
+        <link refid="syscall_8c"/>
+      </node>
+      <node id="5019">
+        <label>src/sys/vmm/pagefault.c</label>
+        <link refid="pagefault_8c"/>
+      </node>
+      <node id="5000">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="5001" relation="include">
+        </childnode>
+      </node>
+      <node id="5022">
+        <label>src/sys/vmm/unmappage.c</label>
+        <link refid="unmappage_8c"/>
+      </node>
+      <node id="5024">
+        <label>src/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="5004">
+        <label>src/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="5016">
+        <label>src/sys/vmm/getfreepage.c</label>
+        <link refid="getfreepage_8c"/>
+      </node>
+      <node id="5013">
+        <label>src/sys/sys/idt.c</label>
+        <link refid="idt_8c"/>
+      </node>
+      <node id="5005">
+        <label>src/sys/kernel/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+      <node id="5017">
+        <label>src/sys/vmm/getfreevirtualpage.c</label>
+        <link refid="getfreevirtualpage_8c"/>
+      </node>
+      <node id="5014">
+        <label>src/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structmMap" prot="public">mMap</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="vmm_8h_1b75ffaa83e1dc903d97c411c84dfec0f" prot="public" static="no">
+        <name>memAvail</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="vmm_8h_141dc1abc6436bd66a4269de8ab471181" prot="public" static="no">
+        <name>memNotavail</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="vmm_8h_1e6c443b60824c02f199f51cf4a14e9f4" prot="public" static="no">
+        <name>vmmID</name>
+        <initializer>-3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="vmm_8h_1e6d4c286bb58576d1802a2c7d92e698e" prot="public" static="no">
+        <name>vmmMemoryMapAddr</name>
+        <initializer>0xE6667000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int adjustCowCounter</definition>
+        <argsstring>(uInt32 baseAddr, int adjustment)</argsstring>
+        <name>adjustCowCounter</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>baseAddr</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>adjustment</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="266" bodyend="283"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structmMap_12fb919d9c0a2653979ed667d59a395cb" compoundref="vmm_8h" startline="46">mMap::cowCounter</references>
+        <references refid="vmm__memory_8c_10e1198ffc77f9177e36e61b72daf3cdc" compoundref="vmm__memory_8c" startline="39">freePages</references>
+        <references refid="structvitalsStruct_11f45a0348eac13344950507efaf565f8" compoundref="vitals_8h" startline="44">vitalsStruct::freePages</references>
+        <references refid="vmm_8h_1b75ffaa83e1dc903d97c411c84dfec0f" compoundref="vmm_8h" startline="36">memAvail</references>
+        <references refid="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" compoundref="vmm_8h" startline="45">mMap::pid</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="structmMap_1cce32b3022c0d0fbed2760ecc118f664" compoundref="vmm_8h" startline="43">mMap::status</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+        <references refid="vmm__memory_8c_1c13b9a55ec869479ab26ad9d949e6f85" compoundref="vmm__memory_8c" startline="41">vmmCowSpinLock</references>
+        <references refid="vmm_8h_1e6c443b60824c02f199f51cf4a14e9f4" compoundref="vmm_8h" startline="38">vmmID</references>
+        <references refid="vmm_8h_189e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="45">vmmMemoryMap</references>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="vmm_8h_11a89fbc2f80ca828332c5ef31801faa3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int countMemory</definition>
+        <argsstring>()</argsstring>
+        <name>countMemory</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="104" bodyend="174"/>
+        <references refid="ap-boot_8S_155b794ab80e3855b3bd9c5e48621624f" compoundref="ap-boot_8S" startline="6">cr0</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="vmm_8h_1e90be267d851fed04d4d9b1c6c10454a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int freePage</definition>
+        <argsstring>(uInt32 pageAddr)</argsstring>
+        <name>freePage</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>pageAddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="228" bodyend="252"/>
+        <references refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</references>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structmMap_12fb919d9c0a2653979ed667d59a395cb" compoundref="vmm_8h" startline="46">mMap::cowCounter</references>
+        <references refid="vmm__memory_8c_10e1198ffc77f9177e36e61b72daf3cdc" compoundref="vmm__memory_8c" startline="39">freePages</references>
+        <references refid="structvitalsStruct_11f45a0348eac13344950507efaf565f8" compoundref="vitals_8h" startline="44">vitalsStruct::freePages</references>
+        <references refid="vmm_8h_1b75ffaa83e1dc903d97c411c84dfec0f" compoundref="vmm_8h" startline="36">memAvail</references>
+        <references refid="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" compoundref="vmm_8h" startline="45">mMap::pid</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="structmMap_1cce32b3022c0d0fbed2760ecc118f664" compoundref="vmm_8h" startline="43">mMap::status</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+        <references refid="vmm_8h_189e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="45">vmmMemoryMap</references>
+        <references refid="vmm__memory_8c_1ee00a539cbe4cc341553ee44f318157a" compoundref="vmm__memory_8c" startline="40">vmmSpinLock</references>
+        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="vmm_8h_1ac183f585641487a954ca46c0d7bde31" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int vmm_init</definition>
+        <argsstring>()</argsstring>
+        <name>vmm_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function: int <ref refid="vmm_8h_1ac183f585641487a954ca46c0d7bde31" kindref="member">vmm_init()</ref></para><para>Description: Initializes the vmm subsystem</para><para>Notes: </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_init.c" bodystart="41" bodyend="49"/>
+        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
+        <references refid="paging_8h_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</references>
+        <references refid="vmm_8h_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</references>
+      </memberdef>
+      <memberdef kind="function" id="vmm_8h_1976cf3919bf7c77c868021ec9374593b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t vmmFindFreePage</definition>
+        <argsstring>(pidType pid)</argsstring>
+        <name>vmmFindFreePage</name>
+        <param>
+          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="186" bodyend="216"/>
+        <references refid="vmm__memory_8c_10e1198ffc77f9177e36e61b72daf3cdc" compoundref="vmm__memory_8c" startline="39">freePages</references>
+        <references refid="structvitalsStruct_11f45a0348eac13344950507efaf565f8" compoundref="vitals_8h" startline="44">vitalsStruct::freePages</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="vmm_8h_1b75ffaa83e1dc903d97c411c84dfec0f" compoundref="vmm_8h" startline="36">memAvail</references>
+        <references refid="vmm_8h_141dc1abc6436bd66a4269de8ab471181" compoundref="vmm_8h" startline="37">memNotavail</references>
+        <references refid="vmm_8h_12b0091bdc36e32af3daf9cfcaa7c04e1" compoundref="vmm__memory_8c" startline="44">numPages</references>
+        <references refid="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" compoundref="vmm_8h" startline="45">mMap::pid</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="fdc_8c_1e2746d1bf47d4f690105d083b966fa82" compoundref="fdc_8c" startline="54">status</references>
+        <references refid="kmalloc_8h_181d09bc848b49133401b3efeeb65f1af" compoundref="kmalloc_8h" startline="39">sysID</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+        <references refid="vmm_8h_189e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="45">vmmMemoryMap</references>
+        <references refid="vmm__memory_8c_1ee00a539cbe4cc341553ee44f318157a" compoundref="vmm__memory_8c" startline="40">vmmSpinLock</references>
+        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
+        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
+        <referencedby refid="paging_8c_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</referencedby>
+        <referencedby refid="getfreepage_8c_197b73a5761e664ab5c0c24382971a2e6" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="vmm_8h_1a24b696e386ef97dfe88b9b434c671c6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vmmFreeProcessPages</definition>
+        <argsstring>(pidType pid)</argsstring>
+        <name>vmmFreeProcessPages</name>
+        <param>
+          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="296" bodyend="332"/>
+        <references refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</references>
+        <references refid="structmMap_12fb919d9c0a2653979ed667d59a395cb" compoundref="vmm_8h" startline="46">mMap::cowCounter</references>
+        <references refid="vmm__memory_8c_10e1198ffc77f9177e36e61b72daf3cdc" compoundref="vmm__memory_8c" startline="39">freePages</references>
+        <references refid="structvitalsStruct_11f45a0348eac13344950507efaf565f8" compoundref="vitals_8h" startline="44">vitalsStruct::freePages</references>
+        <references refid="vmm_8h_1b75ffaa83e1dc903d97c411c84dfec0f" compoundref="vmm_8h" startline="36">memAvail</references>
+        <references refid="vmm_8h_12b0091bdc36e32af3daf9cfcaa7c04e1" compoundref="vmm__memory_8c" startline="44">numPages</references>
+        <references refid="paging_8h_157d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="46">PAGE_COW</references>
+        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
+        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
+        <references refid="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" compoundref="vmm_8h" startline="45">mMap::pid</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="fdc_8c_1e2746d1bf47d4f690105d083b966fa82" compoundref="fdc_8c" startline="54">status</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
+        <references refid="vmm_8h_1e6c443b60824c02f199f51cf4a14e9f4" compoundref="vmm_8h" startline="38">vmmID</references>
+        <references refid="vmm_8h_189e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="45">vmmMemoryMap</references>
+        <references refid="vmm__memory_8c_1ee00a539cbe4cc341553ee44f318157a" compoundref="vmm__memory_8c" startline="40">vmmSpinLock</references>
+        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="vmm_8h_10926a4c7f70e387891f6124a48258b64" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int vmmMemMapInit</definition>
+        <argsstring>()</argsstring>
+        <name>vmmMemMapInit</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="57" bodyend="93"/>
+        <references refid="vmm_8h_11a89fbc2f80ca828332c5ef31801faa3" compoundref="vmm__memory_8c" startline="104" endline="174">countMemory</references>
+        <references refid="vmm__memory_8c_10e1198ffc77f9177e36e61b72daf3cdc" compoundref="vmm__memory_8c" startline="39">freePages</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="vmm_8h_1b75ffaa83e1dc903d97c411c84dfec0f" compoundref="vmm_8h" startline="36">memAvail</references>
+        <references refid="vmm_8h_141dc1abc6436bd66a4269de8ab471181" compoundref="vmm_8h" startline="37">memNotavail</references>
+        <references refid="vmm_8h_12b0091bdc36e32af3daf9cfcaa7c04e1" compoundref="vmm__memory_8c" startline="44">numPages</references>
+        <references refid="structmMap_1c8d077d6fec5b5f9a63f01f044444f2b" compoundref="vmm_8h" startline="42">mMap::pageAddr</references>
+        <references refid="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" compoundref="vmm_8h" startline="45">mMap::pid</references>
+        <references refid="structmMap_1cce32b3022c0d0fbed2760ecc118f664" compoundref="vmm_8h" startline="43">mMap::status</references>
+        <references refid="fdc_8c_1e2746d1bf47d4f690105d083b966fa82" compoundref="fdc_8c" startline="54">status</references>
+        <references refid="vmm_8h_1e6c443b60824c02f199f51cf4a14e9f4" compoundref="vmm_8h" startline="38">vmmID</references>
+        <references refid="vmm_8h_189e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="45">vmmMemoryMap</references>
+        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+        <referencedby refid="vmm__init_8c_1ac183f585641487a954ca46c0d7bde31" compoundref="vmm__init_8c" startline="41" endline="49">vmm_init</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="vmm_8h_12b0091bdc36e32af3daf9cfcaa7c04e1" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int numPages</definition>
+        <argsstring></argsstring>
+        <name>numPages</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="44" bodyend="-1"/>
+        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
+        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="vmm_8h_189e87741958ee81f1811075b25af058a" prot="public" static="no" mutable="no">
+        <type><ref refid="structmMap" kindref="compound">mMap</ref> *</type>
+        <definition>mMap* vmmMemoryMap</definition>
+        <argsstring></argsstring>
+        <name>vmmMemoryMap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/vmm_memory.c" bodystart="45" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
+        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: vmm_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_VMM_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_VMM_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="paging_8h" kindref="compound">vmm/paging.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="vmm_8h_1b75ffaa83e1dc903d97c411c84dfec0f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>memAvail<sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="37" refid="vmm_8h_141dc1abc6436bd66a4269de8ab471181" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>memNotavail<sp/><sp/>2</highlight></codeline>
+<codeline lineno="38" refid="vmm_8h_1e6c443b60824c02f199f51cf4a14e9f4" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>vmmID<sp/><sp/><sp/><sp/><sp/><sp/><sp/>-3</highlight></codeline>
+<codeline lineno="39" refid="vmm_8h_1e6d4c286bb58576d1802a2c7d92e698e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>vmmMemoryMapAddr<sp/>0xE6667000</highlight></codeline>
+<codeline lineno="40"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="structmMap" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="42" refid="structmMap_1c8d077d6fec5b5f9a63f01f044444f2b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/>pageAddr;</highlight></codeline>
+<codeline lineno="43" refid="structmMap_1cce32b3022c0d0fbed2760ecc118f664" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="fdc_8c_1e2746d1bf47d4f690105d083b966fa82" kindref="member">status</ref>;</highlight></codeline>
+<codeline lineno="44" refid="structmMap_11561717fd6d76d6526c9dac718925681" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>reserved;</highlight></codeline>
+<codeline lineno="45" refid="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref><sp/><sp/>pid;</highlight></codeline>
+<codeline lineno="46" refid="structmMap_12fb919d9c0a2653979ed667d59a395cb" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>cowCounter;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="structmMap" kindref="compound">mMap</ref>;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_12b0091bdc36e32af3daf9cfcaa7c04e1" kindref="member">numPages</ref>;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="structmMap" kindref="compound">mMap</ref><sp/>*<ref refid="vmm_8h_189e87741958ee81f1811075b25af058a" kindref="member">vmmMemoryMap</ref>;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1ac183f585641487a954ca46c0d7bde31" kindref="member">vmm_init</ref>();</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_10926a4c7f70e387891f6124a48258b64" kindref="member">vmmMemMapInit</ref>();</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_11a89fbc2f80ca828332c5ef31801faa3" kindref="member">countMemory</ref>();</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" kindref="member">vmmFindFreePage</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1e90be267d851fed04d4d9b1c6c10454a" kindref="member">freePage</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>pageAddr);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" kindref="member">adjustCowCounter</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>baseAddr,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>adjustment);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1a24b696e386ef97dfe88b9b434c671c6" kindref="member">vmmFreeProcessPages</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="61"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>$Log: vmm_8h.xml,v $
+<codeline lineno="63"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:54  reddawg
+<codeline lineno="63"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="63"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2006/12/05<sp/>14:10:21<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>Workign<sp/>Distro</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"></highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"></highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"></highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:59<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"></highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/21<sp/>17:39:04<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/>removed<sp/>device</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"></highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/19<sp/>02:08:28<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>Cleaned<sp/>out<sp/>the<sp/>rest<sp/>of<sp/>debuging<sp/>code<sp/>also<sp/>temporarily<sp/>disabled<sp/>the<sp/>ip<sp/>stack<sp/>to<sp/>improve<sp/>boot<sp/>time</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"></highlight></codeline>
+<codeline lineno="82"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/09<sp/>12:18:19<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="83"><highlight class="comment"><sp/>Updating<sp/>Initialization<sp/>Procedures</highlight></codeline>
+<codeline lineno="84"><highlight class="comment"></highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/21<sp/>15:21:04<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"></highlight></codeline>
+<codeline lineno="88"><highlight class="comment"></highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h"/>
+  </compounddef>
+</doxygen>

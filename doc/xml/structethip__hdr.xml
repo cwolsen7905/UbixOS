@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structethip__hdr" kind="struct" prot="public">
+    <compoundname>ethip_hdr</compoundname>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structethip__hdr_1e121a22334e3ad93e6119db2b8945797" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ethip_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(struct ip_hdr ip)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type>struct <ref refid="structip__hdr" kindref="compound">ip_hdr</ref></type>
+          <declname>ip</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" line="78"/>
+      </memberdef>
+      <memberdef kind="function" id="structethip__hdr_1eaff5bdb00c5618ea94cc70081ba27d9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ethip_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(struct eth_hdr eth)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type>struct <ref refid="structeth__hdr" kindref="compound">eth_hdr</ref></type>
+          <declname>eth</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" line="77"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" bodystart="76" bodyend="79"/>
+    <listofallmembers>
+      <member refid="structethip__hdr_1eaff5bdb00c5618ea94cc70081ba27d9" prot="public" virt="non-virtual"><scope>ethip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structethip__hdr_1e121a22334e3ad93e6119db2b8945797" prot="public" virt="non-virtual"><scope>ethip_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

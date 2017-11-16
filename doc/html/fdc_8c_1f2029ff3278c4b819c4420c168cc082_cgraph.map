@@ -1,0 +1,5 @@
+base referer
+rect $fdc_8h.html#a03242a5e44c4f2d10e15d296aca8c6b 135,30 223,56
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 139,80 219,107
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 131,131 227,158
+rect $fdc_8h.html#9d92103f483df5da1a07402347739e44 276,30 337,56

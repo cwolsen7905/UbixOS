@@ -1,0 +1,13 @@
+# $Id: Makefile.inc 89 2016-01-12 00:20:40Z reddawg $
+# Global 'Source' Options
+
+# allow you to change your default compiler without affecting your other work
+#MrOlsen (2016-01-10) NOTE: I pass all this now
+CFLAGS = -m32 
+#CC = cc
+#CXX = c++
+#LD = ld
+#AR = ar
+REMOVE = rm -rf
+
+FD_DEVICE = /dev/md0

@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="syscall__new_8c" kind="file">
+    <compoundname>syscall_new.c</compoundname>
+    <includes refid="syscalls__new_8h" local="no">ubixos/syscalls_new.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="trap_8h" local="no">sys/trap.h</includes>
+    <includes refid="lib_2string_8h" local="no">lib/string.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <incdepgraph>
+      <node id="5505">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5506">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+        <childnode refid="5507" relation="include">
+        </childnode>
+        <childnode refid="5508" relation="include">
+        </childnode>
+        <childnode refid="5511" relation="include">
+        </childnode>
+        <childnode refid="5505" relation="include">
+        </childnode>
+      </node>
+      <node id="5513">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5512">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+        <childnode refid="5506" relation="include">
+        </childnode>
+      </node>
+      <node id="5503">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5504" relation="include">
+        </childnode>
+      </node>
+      <node id="5504">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5515">
+        <label>lib/string.h</label>
+        <link refid="lib_2string_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5508">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+        <childnode refid="5509" relation="include">
+        </childnode>
+        <childnode refid="5510" relation="include">
+        </childnode>
+      </node>
+      <node id="5511">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5510">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5516">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5509">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5501">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="5502" relation="include">
+        </childnode>
+        <childnode refid="5505" relation="include">
+        </childnode>
+      </node>
+      <node id="5502">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5507">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5503" relation="include">
+        </childnode>
+      </node>
+      <node id="5499">
+        <label>src/sys/kernel/syscall_new.c</label>
+        <link refid="syscall_new.c"/>
+        <childnode refid="5500" relation="include">
+        </childnode>
+        <childnode refid="5506" relation="include">
+        </childnode>
+        <childnode refid="5503" relation="include">
+        </childnode>
+        <childnode refid="5512" relation="include">
+        </childnode>
+        <childnode refid="5513" relation="include">
+        </childnode>
+        <childnode refid="5514" relation="include">
+        </childnode>
+        <childnode refid="5515" relation="include">
+        </childnode>
+        <childnode refid="5516" relation="include">
+        </childnode>
+      </node>
+      <node id="5500">
+        <label>ubixos/syscalls_new.h</label>
+        <link refid="syscalls__new_8h"/>
+        <childnode refid="5501" relation="include">
+        </childnode>
+      </node>
+      <node id="5514">
+        <label>sys/trap.h</label>
+        <link refid="trap_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void syscall</definition>
+        <argsstring>(struct trapframe frame)</argsstring>
+        <name>syscall</name>
+        <param>
+          <type>struct <ref refid="structtrapframe" kindref="compound">trapframe</ref></type>
+          <declname>frame</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall_new.c" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall_new.c" bodystart="41" bodyend="88"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="syscalls__new_8h_16bad9f3eaf40b0161bc52e3fe8aa0575" compoundref="syscalls__new_8h" startline="58">EJUSTRETURN</references>
+        <references refid="syscalls__new_8h_10e5993319c80d5a93ed10b6253878ae5" compoundref="syscalls__new_8h" startline="59">ERESTART</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="syscalls__new_8h_19547f658d81341fdf691bb24c6243b74" compoundref="syscalls__new_8h" startline="57">PSL_C</references>
+        <references refid="syscalls__new_8h_1a55574708fb2a4bea357c266347e16db" compoundref="syscalls__new_8h" startline="66">systemCalls_new</references>
+        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
+        <references refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="38">thread::td_retval</references>
+        <references refid="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" compoundref="trap_8h" startline="44">trapframe::tf_eax</references>
+        <references refid="structtrapframe_14e14d725fc1185125f65d8812737c3d4" compoundref="trap_8h" startline="42">trapframe::tf_edx</references>
+        <references refid="structtrapframe_1dafa69a2f56db6fef99c33bc17c947ba" compoundref="trap_8h" startline="50">trapframe::tf_eflags</references>
+        <references refid="structtrapframe_15d510dabbcd29cf981b17a4c08234c3b" compoundref="trap_8h" startline="48">trapframe::tf_eip</references>
+        <references refid="structtrapframe_19e4fa072056d86cd7516e9445822ef34" compoundref="trap_8h" startline="47">trapframe::tf_err</references>
+        <references refid="structtrapframe_1cbc06b1642fabea71bfa8ddbba3ede44" compoundref="trap_8h" startline="52">trapframe::tf_esp</references>
+        <references refid="syscalls__new_8h_1ab56fc2410668ba7358ac4c867daf7d3" compoundref="syscalls__new_8h" startline="525">totalCalls_new</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="syscall__new_8c_1061103633079320d29a623d5758623b1" prot="public" static="no" mutable="no">
+        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
+        <definition>spinLock_t Master</definition>
+        <argsstring></argsstring>
+        <name>Master</name>
+        <initializer> SPIN_LOCK_INITIALIZER</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall_new.c" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall_new.c" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: syscall__new_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="syscalls__new_8h" kindref="compound">ubixos/syscalls_new.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="trap_8h" kindref="compound">sys/trap.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lib_2string_8h" kindref="compound">lib/string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="syscall__new_8c_1061103633079320d29a623d5758623b1" refkind="member"><highlight class="normal"><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="spinlock_8h_1061103633079320d29a623d5758623b1" kindref="member">Master</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" kindref="member">syscall</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtrapframe" kindref="compound">trapframe</ref><sp/>frame)<sp/>{</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>code<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref><sp/>params;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structthread" kindref="compound">thread</ref><sp/>*td<sp/>=<sp/>&amp;<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" kindref="member">td</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>args[8];</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>error<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/>params<sp/>=<sp/>(<ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref>)frame.<ref refid="structtrapframe_1cbc06b1642fabea71bfa8ddbba3ede44" kindref="member">tf_esp</ref><sp/>+<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>code<sp/>=<sp/>frame.<ref refid="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref>;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(code<sp/>==<sp/>198)<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(&amp;code,params,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/>params<sp/>+=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref>);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(code<sp/>&gt;<sp/><ref refid="syscalls__new_8h_1ab56fc2410668ba7358ac4c867daf7d3" kindref="member">totalCalls_new</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>Call:<sp/>[%i]\n&quot;</highlight><highlight class="normal">,frame.<ref refid="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref>);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<ref refid="syscalls__new_8h_1a55574708fb2a4bea357c266347e16db" kindref="member">systemCalls_new</ref>[code]<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>Call:<sp/>[%i][0x%X]\n&quot;</highlight><highlight class="normal">,code,(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<ref refid="syscalls__new_8h_1a55574708fb2a4bea357c266347e16db" kindref="member">systemCalls_new</ref>[code]);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref><sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_14e14d725fc1185125f65d8812737c3d4" kindref="member">tf_edx</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(args,params,8<sp/>*<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">));</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/>td-&gt;<ref refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[1]<sp/>=<sp/>frame.<ref refid="structtrapframe_14e14d725fc1185125f65d8812737c3d4" kindref="member">tf_edx</ref>;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/>error<sp/>=<sp/>(int)<ref refid="syscalls__new_8h_1a55574708fb2a4bea357c266347e16db" kindref="member">systemCalls_new</ref>[code](td,args);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(error)<sp/>{</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0:</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref><sp/>=<sp/>td-&gt;td_retval[0];</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_14e14d725fc1185125f65d8812737c3d4" kindref="member">tf_edx</ref><sp/>=<sp/>td-&gt;td_retval[1];</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_1dafa69a2f56db6fef99c33bc17c947ba" kindref="member">tf_eflags</ref><sp/>&amp;=<sp/>~<ref refid="syscalls__new_8h_19547f658d81341fdf691bb24c6243b74" kindref="member">PSL_C</ref>;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="syscalls__new_8h_10e5993319c80d5a93ed10b6253878ae5" kindref="member">ERESTART</ref>:</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_15d510dabbcd29cf981b17a4c08234c3b" kindref="member">tf_eip</ref><sp/>-=<sp/>frame.<ref refid="structtrapframe_19e4fa072056d86cd7516e9445822ef34" kindref="member">tf_err</ref>;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="syscalls__new_8h_16bad9f3eaf40b0161bc52e3fe8aa0575" kindref="member">EJUSTRETURN</ref>:</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_1fb020a5162b2fe71f4f8fa641f7dd5f2" kindref="member">tf_eax</ref><sp/>=<sp/>error;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>frame.<ref refid="structtrapframe_1dafa69a2f56db6fef99c33bc17c947ba" kindref="member">tf_eflags</ref><sp/>|=<sp/><ref refid="syscalls__new_8h_19547f658d81341fdf691bb24c6243b74" kindref="member">PSL_C</ref>;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="93"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall_new.c"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,6 @@
+base referer
+rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 238,5 304,32
+rect $lib_2string_8h.html#ce4b911463887af5e748326323e99a23 232,56 310,83
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 422,132 502,159
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 414,195 510,221
+rect $paging_8h.html#541f0b43826a40b9e978f5479080bb0e 176,157 366,184

@@ -1,0 +1,895 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="classUbixFS" kind="class" prot="public">
+    <compoundname>UbixFS</compoundname>
+    <basecompoundref refid="classvfs__abstract" prot="public" virt="non-virtual">vfs_abstract</basecompoundref>
+    <includes refid="ubixfsv2_2ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classUbixFS_115d6d564145f65baba56b5e721a72c8b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>UbixFS::UbixFS</definition>
+        <argsstring>(device_t *)</argsstring>
+        <name>UbixFS</name>
+        <param>
+          <type><ref refid="structdevice__t" kindref="compound">device_t</ref> *</type>
+          <defname>dev</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="149" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="21" bodyend="26"/>
+        <references refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" compoundref="ethernetif_8c" startline="78">dev</references>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" compoundref="ubixfsv2_2ubixfs_8h" startline="136">root</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1a8411daf956e8ba4e129b3f26d7ecb45" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>UbixFS::UbixFS</definition>
+        <argsstring>(void)</argsstring>
+        <name>UbixFS</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="148" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="13" bodyend="18"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" compoundref="ubixfsv2_2ubixfs_8h" startline="136">root</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_14d5773ba4f9449ca6f53a284e46319ba" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_close</definition>
+        <argsstring>(fileDescriptor *)</argsstring>
+        <name>vfs_close</name>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="18" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="18" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1c051cfe1b772bc4340bf9218d28f1d10" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_closedir</definition>
+        <argsstring>(DIR *)</argsstring>
+        <name>vfs_closedir</name>
+        <param>
+          <type>DIR *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="26" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="26" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1e1266337d259778b1404601184d75028" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int UbixFS::vfs_format</definition>
+        <argsstring>(device_t *)</argsstring>
+        <name>vfs_format</name>
+        <reimplements refid="classvfs__abstract_1af0980013d73e232c27fc9c2dcb7f267">vfs_format</reimplements>
+        <param>
+          <type><ref refid="structdevice__t" kindref="compound">device_t</ref> *</type>
+          <defname>dev</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="151" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="118" bodyend="302"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" compoundref="ethernetif_8c" startline="78">dev</references>
+        <references refid="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" compoundref="btreeheader_8h" startline="9">bTreeHeader::firstDeleted</references>
+        <references refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" compoundref="btreeheader_8h" startline="8">bTreeHeader::firstNodeOffset</references>
+        <references refid="gen__calls_8h_1d78d6c02154727f556f78cca62020c83" compoundref="gen__calls_8c" startline="59" endline="65">getgid</references>
+        <references refid="gen__calls_8h_1b2bf044f6f20a60f7c4139b527c4bd6c" compoundref="gen__calls_8c" startline="50" endline="56">getuid</references>
+        <references refid="ubixfsv2_2ubixfs_8h_103a6b271b2413595574aab2babfa1460" compoundref="ubixfsv2_2ubixfs_8h" startline="11">INODE_DIRECTORY</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="strcpy_8S_19132520cc79236b654666f4ddc1b516c" compoundref="strcpy_8S" startline="3">strcpy</references>
+        <references refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" compoundref="btreeheader_8h" startline="5">bTreeHeader::treeDepth</references>
+        <references refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" compoundref="btreeheader_8h" startline="7">bTreeHeader::treeLeafCount</references>
+        <references refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" compoundref="btreeheader_8h" startline="6">bTreeHeader::treeWidth</references>
+        <references refid="ubixfsv2_2ubixfs_8h_1c88e98d44093495af57d4a956b095b9d" compoundref="ubixfsv2_2ubixfs_8h" startline="26">UBIXFS_INODE_MAGIC</references>
+        <references refid="ubixfsv2_2ubixfs_8h_1b5c389bfe61bb5707916f2ac6d4d0c6a" compoundref="ubixfsv2_2ubixfs_8h" startline="23">UBIXFS_MAGIC1</references>
+        <references refid="ubixfsv2_2ubixfs_8h_15dd83bc90fdb21a43a412d90b99f5704" compoundref="ubixfsv2_2ubixfs_8h" startline="24">UBIXFS_MAGIC2</references>
+        <references refid="ubixfsv2_2ubixfs_8h_17bc7bdfbc69287525c62286f77443b97" compoundref="ubixfsv2_2ubixfs_8h" startline="25">UBIXFS_MAGIC3</references>
+        <referencedby refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" compoundref="main_8cpp" startline="12" endline="65">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int UbixFS::vfs_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_init</name>
+        <reimplements refid="classvfs__abstract_1390e117f43e869e8413d73a7051f34c7">vfs_init</reimplements>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="150" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="50" bodyend="115"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="classUbixFS_1d8e9bf5a5c42eabcce4ea4ab71c95528" compoundref="ubixfsv2_2ubixfs_8h" startline="160">bTree</references>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="structfileDescriptor_1d6e69b4726ce93464490201390a9d922" compoundref="ubixfsv2_2file_8h" startline="9">fileDescriptor::inode</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_12303eac53dcf539ad1db595b09e1568a" compoundref="ubixfs_8cpp" startline="29" endline="47">printSuperBlock</references>
+        <references refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" compoundref="ubixfsv2_2ubixfs_8h" startline="136">root</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+        <references refid="ubixfsv2_2ubixfs_8h_149a8f9142d94b4472956c6d8f446d2ce" compoundref="ubixfsv2_2ubixfs_8h" startline="33">UBIXFS_CLEAN</references>
+        <references refid="ubixfsv2_2ubixfs_8h_1b5c389bfe61bb5707916f2ac6d4d0c6a" compoundref="ubixfsv2_2ubixfs_8h" startline="23">UBIXFS_MAGIC1</references>
+        <references refid="ubixfsv2_2ubixfs_8h_15dd83bc90fdb21a43a412d90b99f5704" compoundref="ubixfsv2_2ubixfs_8h" startline="24">UBIXFS_MAGIC2</references>
+        <references refid="ubixfsv2_2ubixfs_8h_17bc7bdfbc69287525c62286f77443b97" compoundref="ubixfsv2_2ubixfs_8h" startline="25">UBIXFS_MAGIC3</references>
+        <referencedby refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" compoundref="main_8cpp" startline="12" endline="65">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int UbixFS::vfs_mkdir</definition>
+        <argsstring>(const char *, mode_t)</argsstring>
+        <name>vfs_mkdir</name>
+        <reimplements refid="classvfs__abstract_1c9a165e1416056c3a96832c15bbff16e">vfs_mkdir</reimplements>
+        <param>
+          <type>const char *</type>
+          <defname>path</defname>
+        </param>
+        <param>
+          <type><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref></type>
+          <defname>mode</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="153" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="891" bodyend="963"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structfileDescriptor_1d6e69b4726ce93464490201390a9d922" compoundref="ubixfsv2_2file_8h" startline="9">fileDescriptor::inode</references>
+        <references refid="ubixfsv2_2ubixfs_8h_103a6b271b2413595574aab2babfa1460" compoundref="ubixfsv2_2ubixfs_8h" startline="11">INODE_DIRECTORY</references>
+        <references refid="ubixfsv2_2ubixfs_8h_16773b93f3093658c3dcb569de3b4bdb2" compoundref="ubixfsv2_2ubixfs_8h" startline="21">MAX_FILENAME_LENGTH</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" compoundref="ubixfs_8cpp" startline="835" endline="888">mknod</references>
+        <references refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="39">name</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" compoundref="ubixfsv2_2ubixfs_8h" startline="136">root</references>
+        <references refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" compoundref="strlen_8S" startline="4">strlen</references>
+        <references refid="lib_2string_8h_12a6bedbfab350cd17b80849f5f9234e9" compoundref="string_8c" startline="105" endline="116">strncpy</references>
+        <referencedby refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" compoundref="main_8cpp" startline="12" endline="65">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1b1422145c6575f723179b60421a494aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void *</type>
+        <definition>void * UbixFS::vfs_mknod</definition>
+        <argsstring>(const char *, mode_t)</argsstring>
+        <name>vfs_mknod</name>
+        <reimplements refid="classvfs__abstract_1e6b9a9e65a16b1b473d64ebb09c8f5c4">vfs_mknod</reimplements>
+        <param>
+          <type>const char *</type>
+          <defname>path</defname>
+        </param>
+        <param>
+          <type><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref></type>
+          <defname>mode</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="305" bodyend="307"/>
+        <references refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" compoundref="ubixfs_8cpp" startline="835" endline="888">mknod</references>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1d3e28ccdb5cd84d63e5d6e9db2fc3e65" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int UbixFS::vfs_open</definition>
+        <argsstring>(const char *, fileDescriptor *, int,...)</argsstring>
+        <name>vfs_open</name>
+        <reimplements refid="classvfs__abstract_15b83727e3be5c4df2c3b43ee01edf8d7">vfs_open</reimplements>
+        <param>
+          <type>const char *</type>
+          <defname>filename</defname>
+        </param>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+          <defname>fd</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <defname>flags</defname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="154" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="310" bodyend="318"/>
+        <references refid="structfileDescriptor_1d6e69b4726ce93464490201390a9d922" compoundref="ubixfsv2_2file_8h" startline="9">fileDescriptor::inode</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="structfileDescriptor_109c5cd0d4979a70b8d7098319cd00b7c" compoundref="ubixfsv2_2file_8h" startline="10">fileDescriptor::offset</references>
+        <references refid="structfileDescriptor_12967356da3f80c5df1405f4e2fb4272b" compoundref="ubixfsv2_2file_8h" startline="11">fileDescriptor::size</references>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1f7f49919b29ae23be0b500691bd7489b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_opendir</definition>
+        <argsstring>(DIR *, const char *)</argsstring>
+        <name>vfs_opendir</name>
+        <param>
+          <type>DIR *</type>
+        </param>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="25" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="25" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_144b94c11ccc71b299022b24e4810273f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_purge</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_purge</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="35" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_10fce9a3abd07c65fa9af38e51517310a" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t UbixFS::vfs_read</definition>
+        <argsstring>(fileDescriptor *, void *, off_t, size_t)</argsstring>
+        <name>vfs_read</name>
+        <reimplements refid="classvfs__abstract_1de057292eb1e2e6a370d7c904e5de8a0">vfs_read</reimplements>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+          <defname>fd</defname>
+        </param>
+        <param>
+          <type>void *</type>
+          <defname>data</defname>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+          <defname>offset</defname>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <defname>size</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="155" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="321" bodyend="384"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structfileDescriptor_1d6e69b4726ce93464490201390a9d922" compoundref="ubixfsv2_2file_8h" startline="9">fileDescriptor::inode</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="ubixfsv2_2ubixfs_8h_130ca66da1223315f426910bd6de581f7" compoundref="ubixfsv2_2ubixfs_8h" startline="20">NUM_DIRECT_BLOCKS</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1e0e736281f7a5c7f6ba6c2fcc1606537" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_readdir</definition>
+        <argsstring>(DIR *, struct dirent *)</argsstring>
+        <name>vfs_readdir</name>
+        <param>
+          <type>DIR *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structdirent" kindref="compound">dirent</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="29" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="29" bodyend="29"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1566f42818133f3151b79409bfcc0a086" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_rename</definition>
+        <argsstring>(const char *, const char *)</argsstring>
+        <name>vfs_rename</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="41" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_12ad911bc4b4ad0867e0b1037a0bafd6e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_rmdir</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>vfs_rmdir</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="28" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="28" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int UbixFS::vfs_stop</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_stop</name>
+        <reimplements refid="classvfs__abstract_1ec448ee0b4a5b85c47cac5416baaeb37">vfs_stop</reimplements>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="158" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="557" bodyend="585"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="structfileDescriptor_1d6e69b4726ce93464490201390a9d922" compoundref="ubixfsv2_2file_8h" startline="9">fileDescriptor::inode</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" compoundref="ubixfsv2_2ubixfs_8h" startline="136">root</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+        <references refid="classUbixFS_15610078343779a3c5e3046283d482766" compoundref="ubixfs_8cpp" startline="588" endline="597">vfs_sync</references>
+        <referencedby refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" compoundref="main_8cpp" startline="12" endline="65">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_15610078343779a3c5e3046283d482766" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int UbixFS::vfs_sync</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_sync</name>
+        <reimplements refid="classvfs__abstract_1b3aa1f17380e950fdf7711cb21c53d60">vfs_sync</reimplements>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="157" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="588" bodyend="597"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+        <referencedby refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" compoundref="ubixfs_8cpp" startline="557" endline="585">vfs_stop</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_10b409654c320cf8724e83d403bcf1099" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_unlink</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>vfs_unlink</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="40" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1551d3daae6a65555a220de05eb619930" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t UbixFS::vfs_write</definition>
+        <argsstring>(fileDescriptor *, void *, off_t, size_t)</argsstring>
+        <name>vfs_write</name>
+        <reimplements refid="classvfs__abstract_1aac0143052a6ba9c324f8909eb2d60d1">vfs_write</reimplements>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+          <defname>fd</defname>
+        </param>
+        <param>
+          <type>void *</type>
+          <defname>data</defname>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+          <defname>offset</defname>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <defname>size</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="387" bodyend="554"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="classUbixFS_1092741c58dade79091213126d592be65" compoundref="ubixfs_8cpp" startline="777" endline="779">getFreeBlock</references>
+        <references refid="structfileDescriptor_1d6e69b4726ce93464490201390a9d922" compoundref="ubixfsv2_2file_8h" startline="9">fileDescriptor::inode</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="ubixfsv2_2ubixfs_8h_130ca66da1223315f426910bd6de581f7" compoundref="ubixfsv2_2ubixfs_8h" startline="20">NUM_DIRECT_BLOCKS</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1c607e8f35afa1aca552a1dc24e777998" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>virtual</type>
+        <definition>UbixFS::~UbixFS</definition>
+        <argsstring>(void)</argsstring>
+        <name>~UbixFS</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="159" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="986" bodyend="989"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classUbixFS_12e0acd2fb08df1df4645ab91a69dc048" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref></type>
+        <definition>blockRun UbixFS::get8FreeBlocks</definition>
+        <argsstring>(uInt32)</argsstring>
+        <name>get8FreeBlocks</name>
+        <param>
+          <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <defname>AG</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="141" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="782" bodyend="832"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1092741c58dade79091213126d592be65" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref></type>
+        <definition>blockRun UbixFS::getFreeBlock</definition>
+        <argsstring>(void)</argsstring>
+        <name>getFreeBlock</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="140" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="777" bodyend="779"/>
+        <references refid="classUbixFS_1f16cc9199d1b438ccb1dae81974f6865" compoundref="ubixfs_8cpp" startline="760" endline="768">getNextAG</references>
+        <referencedby refid="classUbixFS_1038f1a28d415b5198717466215edde0f" compoundref="ubixfs_8cpp" startline="616" endline="690">getFreeBlock</referencedby>
+        <referencedby refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" compoundref="ubixfs_8cpp" startline="835" endline="888">mknod</referencedby>
+        <referencedby refid="classUbixFS_1551d3daae6a65555a220de05eb619930" compoundref="ubixfs_8cpp" startline="387" endline="554">vfs_write</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1c104fac0637432050288cd612f33f5cf" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref></type>
+        <definition>blockRun UbixFS::getFreeBlock</definition>
+        <argsstring>(uInt32)</argsstring>
+        <name>getFreeBlock</name>
+        <param>
+          <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <defname>AG</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="139" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="693" bodyend="757"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1038f1a28d415b5198717466215edde0f" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref></type>
+        <definition>blockRun UbixFS::getFreeBlock</definition>
+        <argsstring>(blockRun)</argsstring>
+        <name>getFreeBlock</name>
+        <param>
+          <type><ref refid="structblockRun" kindref="compound">blockRun</ref></type>
+          <defname>ibr</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="138" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="616" bodyend="690"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="classUbixFS_1092741c58dade79091213126d592be65" compoundref="ubixfs_8cpp" startline="777" endline="779">getFreeBlock</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_1f16cc9199d1b438ccb1dae81974f6865" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 UbixFS::getNextAG</definition>
+        <argsstring>(void)</argsstring>
+        <name>getNextAG</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="142" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="760" bodyend="768"/>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+        <referencedby refid="classUbixFS_1092741c58dade79091213126d592be65" compoundref="ubixfs_8cpp" startline="777" endline="779">getFreeBlock</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void * UbixFS::mknod</definition>
+        <argsstring>(const char *, ubixfsInode *, mode_t)</argsstring>
+        <name>mknod</name>
+        <param>
+          <type>const char *</type>
+          <defname>filename</defname>
+        </param>
+        <param>
+          <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+          <defname>parent</defname>
+        </param>
+        <param>
+          <type><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref></type>
+          <defname>mode</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="835" bodyend="888"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="classUbixFS_1092741c58dade79091213126d592be65" compoundref="ubixfs_8cpp" startline="777" endline="779">getFreeBlock</references>
+        <references refid="gen__calls_8h_1d78d6c02154727f556f78cca62020c83" compoundref="gen__calls_8c" startline="59" endline="65">getgid</references>
+        <references refid="gen__calls_8h_1b2bf044f6f20a60f7c4139b527c4bd6c" compoundref="gen__calls_8c" startline="50" endline="56">getuid</references>
+        <references refid="ubixfsv2_2ubixfs_8h_16773b93f3093658c3dcb569de3b4bdb2" compoundref="ubixfsv2_2ubixfs_8h" startline="21">MAX_FILENAME_LENGTH</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="lib_2string_8h_12a6bedbfab350cd17b80849f5f9234e9" compoundref="string_8c" startline="105" endline="116">strncpy</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+        <references refid="ubixfsv2_2ubixfs_8h_1c88e98d44093495af57d4a956b095b9d" compoundref="ubixfsv2_2ubixfs_8h" startline="26">UBIXFS_INODE_MAGIC</references>
+        <referencedby refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" compoundref="ubixfs_8cpp" startline="891" endline="963">vfs_mkdir</referencedby>
+        <referencedby refid="classUbixFS_1b1422145c6575f723179b60421a494aa" compoundref="ubixfs_8cpp" startline="305" endline="307">vfs_mknod</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_179445019036de9f0811426196299c46a" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void UbixFS::printFreeBlockList</definition>
+        <argsstring>(uInt32)</argsstring>
+        <name>printFreeBlockList</name>
+        <param>
+          <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <defname>AG</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="145" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="966" bodyend="984"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_12303eac53dcf539ad1db595b09e1568a" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void UbixFS::printSuperBlock</definition>
+        <argsstring>(void)</argsstring>
+        <name>printSuperBlock</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="29" bodyend="47"/>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">vfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classUbixFS_10fe83377d78fbdc768054870fc8d4f3d" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void UbixFS::setFreeBlock</definition>
+        <argsstring>(blockRun)</argsstring>
+        <name>setFreeBlock</name>
+        <param>
+          <type><ref refid="structblockRun" kindref="compound">blockRun</ref></type>
+          <defname>ibr</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="146" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.cpp" bodystart="600" bodyend="613"/>
+        <references refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" compoundref="ubixfsv2_2ubixfs_8h" startline="134">freeBlockList</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" compoundref="ubixfsv2_2ubixfs_8h" startline="135">superBlock</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvfs__abstract_1e10cade4827cea8db0f94e517d82dcfd" prot="protected" static="no" mutable="no">
+        <type><ref refid="structdevice__t" kindref="compound">device_t</ref> *</type>
+        <definition>device_t* vfs_abstract::device</definition>
+        <argsstring></argsstring>
+        <name>device</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="14" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classUbixFS_1910425153882d145e2af0ae30bdec9a6" prot="protected" static="no" mutable="no">
+        <type>signed char *</type>
+        <definition>signed char* UbixFS::freeBlockList</definition>
+        <argsstring></argsstring>
+        <name>freeBlockList</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="134" bodyend="-1"/>
+        <referencedby refid="classUbixFS_12e0acd2fb08df1df4645ab91a69dc048" compoundref="ubixfs_8cpp" startline="782" endline="832">get8FreeBlocks</referencedby>
+        <referencedby refid="classUbixFS_1038f1a28d415b5198717466215edde0f" compoundref="ubixfs_8cpp" startline="616" endline="690">getFreeBlock</referencedby>
+        <referencedby refid="classUbixFS_179445019036de9f0811426196299c46a" compoundref="ubixfs_8cpp" startline="966" endline="984">printFreeBlockList</referencedby>
+        <referencedby refid="classUbixFS_10fe83377d78fbdc768054870fc8d4f3d" compoundref="ubixfs_8cpp" startline="600" endline="613">setFreeBlock</referencedby>
+        <referencedby refid="classUbixFS_1a8411daf956e8ba4e129b3f26d7ecb45" compoundref="ubixfs_8cpp" startline="13" endline="18">UbixFS</referencedby>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">vfs_init</referencedby>
+        <referencedby refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" compoundref="ubixfs_8cpp" startline="557" endline="585">vfs_stop</referencedby>
+        <referencedby refid="classUbixFS_15610078343779a3c5e3046283d482766" compoundref="ubixfs_8cpp" startline="588" endline="597">vfs_sync</referencedby>
+        <referencedby refid="classUbixFS_1c607e8f35afa1aca552a1dc24e777998" compoundref="ubixfs_8cpp" startline="986" endline="989">~UbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="classvfs__abstract_145ce75cdedbdca884f4d7d965ce91802" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref> *</type>
+        <definition>vfs_abstract* vfs_abstract::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="13" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvfs__abstract_1b766870262f3d41bbf21326abf40cad8" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref> *</type>
+        <definition>vfs_abstract* vfs_abstract::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="12" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classUbixFS_1d7a17314620c3031ee4d1868ea745222" prot="protected" static="no" mutable="no">
+        <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+        <definition>fileDescriptor* UbixFS::root</definition>
+        <argsstring></argsstring>
+        <name>root</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="136" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="136" bodyend="-1"/>
+        <referencedby refid="classUbixFS_1a8411daf956e8ba4e129b3f26d7ecb45" compoundref="ubixfs_8cpp" startline="13" endline="18">UbixFS</referencedby>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">vfs_init</referencedby>
+        <referencedby refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" compoundref="ubixfs_8cpp" startline="891" endline="963">vfs_mkdir</referencedby>
+        <referencedby refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" compoundref="ubixfs_8cpp" startline="557" endline="585">vfs_stop</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" prot="protected" static="no" mutable="no">
+        <type><ref refid="structdiskSuperBlock" kindref="compound">diskSuperBlock</ref> *</type>
+        <definition>diskSuperBlock* UbixFS::superBlock</definition>
+        <argsstring></argsstring>
+        <name>superBlock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="135" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="135" bodyend="-1"/>
+        <referencedby refid="classUbixFS_12e0acd2fb08df1df4645ab91a69dc048" compoundref="ubixfs_8cpp" startline="782" endline="832">get8FreeBlocks</referencedby>
+        <referencedby refid="classUbixFS_1038f1a28d415b5198717466215edde0f" compoundref="ubixfs_8cpp" startline="616" endline="690">getFreeBlock</referencedby>
+        <referencedby refid="classUbixFS_1f16cc9199d1b438ccb1dae81974f6865" compoundref="ubixfs_8cpp" startline="760" endline="768">getNextAG</referencedby>
+        <referencedby refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" compoundref="ubixfs_8cpp" startline="835" endline="888">mknod</referencedby>
+        <referencedby refid="classUbixFS_179445019036de9f0811426196299c46a" compoundref="ubixfs_8cpp" startline="966" endline="984">printFreeBlockList</referencedby>
+        <referencedby refid="classUbixFS_12303eac53dcf539ad1db595b09e1568a" compoundref="ubixfs_8cpp" startline="29" endline="47">printSuperBlock</referencedby>
+        <referencedby refid="classUbixFS_10fe83377d78fbdc768054870fc8d4f3d" compoundref="ubixfs_8cpp" startline="600" endline="613">setFreeBlock</referencedby>
+        <referencedby refid="classUbixFS_1a8411daf956e8ba4e129b3f26d7ecb45" compoundref="ubixfs_8cpp" startline="13" endline="18">UbixFS</referencedby>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">vfs_init</referencedby>
+        <referencedby refid="classUbixFS_10fce9a3abd07c65fa9af38e51517310a" compoundref="ubixfs_8cpp" startline="321" endline="384">vfs_read</referencedby>
+        <referencedby refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" compoundref="ubixfs_8cpp" startline="557" endline="585">vfs_stop</referencedby>
+        <referencedby refid="classUbixFS_15610078343779a3c5e3046283d482766" compoundref="ubixfs_8cpp" startline="588" endline="597">vfs_sync</referencedby>
+        <referencedby refid="classUbixFS_1551d3daae6a65555a220de05eb619930" compoundref="ubixfs_8cpp" startline="387" endline="554">vfs_write</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classUbixFS_1d8e9bf5a5c42eabcce4ea4ab71c95528" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>friend class</type>
+        <definition>friend class bTree</definition>
+        <argsstring></argsstring>
+        <name>bTree</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="160" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="160" bodyend="-1"/>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">vfs_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="455">
+        <label>UbixFS</label>
+        <link refid="classUbixFS"/>
+        <childnode refid="456" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="456">
+        <label>vfs_abstract</label>
+        <link refid="classvfs__abstract"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="457">
+        <label>UbixFS</label>
+        <link refid="classUbixFS"/>
+        <childnode refid="458" relation="public-inheritance">
+        </childnode>
+        <childnode refid="460" relation="usage">
+          <edgelabel>superBlock</edgelabel>
+        </childnode>
+        <childnode refid="461" relation="usage">
+          <edgelabel>root</edgelabel>
+        </childnode>
+      </node>
+      <node id="460">
+        <label>diskSuperBlock</label>
+        <link refid="structdiskSuperBlock"/>
+      </node>
+      <node id="461">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="461" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="458">
+        <label>vfs_abstract</label>
+        <link refid="classvfs__abstract"/>
+        <childnode refid="458" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+        <childnode refid="459" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+      </node>
+      <node id="459">
+        <label>device_t</label>
+        <link refid="structdevice__t"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="132" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="132" bodyend="161"/>
+    <listofallmembers>
+      <member refid="classUbixFS_1d8e9bf5a5c42eabcce4ea4ab71c95528" prot="public" virt="non-virtual"><scope>UbixFS</scope><name>bTree</name></member>
+      <member refid="classvfs__abstract_1e10cade4827cea8db0f94e517d82dcfd" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>device</name></member>
+      <member refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>freeBlockList</name></member>
+      <member refid="classUbixFS_12e0acd2fb08df1df4645ab91a69dc048" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>get8FreeBlocks</name></member>
+      <member refid="classUbixFS_1038f1a28d415b5198717466215edde0f" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>getFreeBlock</name></member>
+      <member refid="classUbixFS_1c104fac0637432050288cd612f33f5cf" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>getFreeBlock</name></member>
+      <member refid="classUbixFS_1092741c58dade79091213126d592be65" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>getFreeBlock</name></member>
+      <member refid="classUbixFS_1f16cc9199d1b438ccb1dae81974f6865" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>getNextAG</name></member>
+      <member refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>mknod</name></member>
+      <member refid="classvfs__abstract_145ce75cdedbdca884f4d7d965ce91802" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>next</name></member>
+      <member refid="classvfs__abstract_1b766870262f3d41bbf21326abf40cad8" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>prev</name></member>
+      <member refid="classUbixFS_179445019036de9f0811426196299c46a" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>printFreeBlockList</name></member>
+      <member refid="classUbixFS_12303eac53dcf539ad1db595b09e1568a" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>printSuperBlock</name></member>
+      <member refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>root</name></member>
+      <member refid="classUbixFS_10fe83377d78fbdc768054870fc8d4f3d" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>setFreeBlock</name></member>
+      <member refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" prot="protected" virt="non-virtual"><scope>UbixFS</scope><name>superBlock</name></member>
+      <member refid="classUbixFS_1a8411daf956e8ba4e129b3f26d7ecb45" prot="public" virt="non-virtual"><scope>UbixFS</scope><name>UbixFS</name></member>
+      <member refid="classUbixFS_115d6d564145f65baba56b5e721a72c8b" prot="public" virt="non-virtual"><scope>UbixFS</scope><name>UbixFS</name></member>
+      <member refid="classvfs__abstract_14d5773ba4f9449ca6f53a284e46319ba" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_close</name></member>
+      <member refid="classvfs__abstract_1c051cfe1b772bc4340bf9218d28f1d10" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_closedir</name></member>
+      <member refid="classUbixFS_1e1266337d259778b1404601184d75028" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_format</name></member>
+      <member refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_init</name></member>
+      <member refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_mkdir</name></member>
+      <member refid="classUbixFS_1b1422145c6575f723179b60421a494aa" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_mknod</name></member>
+      <member refid="classUbixFS_1d3e28ccdb5cd84d63e5d6e9db2fc3e65" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_open</name></member>
+      <member refid="classvfs__abstract_1f7f49919b29ae23be0b500691bd7489b" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_opendir</name></member>
+      <member refid="classvfs__abstract_144b94c11ccc71b299022b24e4810273f" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_purge</name></member>
+      <member refid="classUbixFS_10fce9a3abd07c65fa9af38e51517310a" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_read</name></member>
+      <member refid="classvfs__abstract_1e0e736281f7a5c7f6ba6c2fcc1606537" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_readdir</name></member>
+      <member refid="classvfs__abstract_1566f42818133f3151b79409bfcc0a086" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_rename</name></member>
+      <member refid="classvfs__abstract_12ad911bc4b4ad0867e0b1037a0bafd6e" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_rmdir</name></member>
+      <member refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_stop</name></member>
+      <member refid="classUbixFS_15610078343779a3c5e3046283d482766" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_sync</name></member>
+      <member refid="classvfs__abstract_10b409654c320cf8724e83d403bcf1099" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_unlink</name></member>
+      <member refid="classUbixFS_1551d3daae6a65555a220de05eb619930" prot="public" virt="virtual"><scope>UbixFS</scope><name>vfs_write</name></member>
+      <member refid="classUbixFS_1c607e8f35afa1aca552a1dc24e777998" prot="public" virt="virtual"><scope>UbixFS</scope><name>~UbixFS</name></member>
+      <member refid="classvfs__abstract_17dabc61aa4225bb9f281bcd4cb577795" prot="public" virt="virtual"><scope>UbixFS</scope><name>~vfs_abstract</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

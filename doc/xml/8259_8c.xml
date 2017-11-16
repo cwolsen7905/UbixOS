@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="8259_8c" kind="file">
+    <compoundname>8259.c</compoundname>
+    <includes refid="8259_8h" local="no">isa/8259.h</includes>
+    <includes refid="io_8h" local="no">sys/io.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <incdepgraph>
+      <node id="5079">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5080" relation="include">
+        </childnode>
+      </node>
+      <node id="5080">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5082">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5079" relation="include">
+        </childnode>
+      </node>
+      <node id="5077">
+        <label>src/sys/isa/8259.c</label>
+        <link refid="8259.c"/>
+        <childnode refid="5078" relation="include">
+        </childnode>
+        <childnode refid="5081" relation="include">
+        </childnode>
+        <childnode refid="5082" relation="include">
+        </childnode>
+      </node>
+      <node id="5081">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5078">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="5079" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="8259_8c_18045101c57cc1791817412b1016794b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int i8259_init</definition>
+        <argsstring>()</argsstring>
+        <name>i8259_init</name>
+        <briefdescription>
+<para>initialize the 8259 PIC </para>        </briefdescription>
+        <detaileddescription>
+<para>This will initialize both PICs for all of our IRQs </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" bodystart="42" bodyend="60"/>
+        <references refid="8259_8h_1543896e13206abea73704f0f87f65d7e" compoundref="8259_8h" startline="40">icw1</references>
+        <references refid="8259_8h_116fcea0b8e8fb321710ee3fe0788b2a6" compoundref="8259_8h" startline="41">icw4</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="8259_8h_1b5e84ca4c143a8b9a34b575201aaffd5" compoundref="8259_8h" startline="36">mImr</references>
+        <references refid="8259_8h_10195451428bc646f820202dc15f25d9f" compoundref="8259_8h" startline="35">mPic</references>
+        <references refid="8259_8h_17d84962c1a1c225344a94545309f92fc" compoundref="8259_8h" startline="42">mVec</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="8259_8h_113b25eb31f4b435fdb1ed81c10b07315" compoundref="8259_8h" startline="38">sImr</references>
+        <references refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" compoundref="8259_8h" startline="37">sPic</references>
+        <references refid="8259_8h_12f7f6ebf05739e77a7c20aee806b771c" compoundref="8259_8h" startline="43">sVec</references>
+      </memberdef>
+      <memberdef kind="function" id="8259_8c_1371dc14d6686c2005baaa0be4b26ab87" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void irqDisable</definition>
+        <argsstring>(u_int16_t irqNo)</argsstring>
+        <name>irqDisable</name>
+        <param>
+          <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+          <declname>irqNo</declname>
+        </param>
+        <briefdescription>
+<para>disable specified IRQ </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>irqNo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>IRQ to disable </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" bodystart="81" bodyend="88"/>
+        <references refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" compoundref="8259_8c" startline="34">irqMask</references>
+        <references refid="8259_8h_10195451428bc646f820202dc15f25d9f" compoundref="8259_8h" startline="35">mPic</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" compoundref="8259_8h" startline="37">sPic</references>
+      </memberdef>
+      <memberdef kind="function" id="8259_8c_149b612db44e9e81ee7bad138264d6e32" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void irqEnable</definition>
+        <argsstring>(u_int16_t irqNo)</argsstring>
+        <name>irqEnable</name>
+        <param>
+          <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+          <declname>irqNo</declname>
+        </param>
+        <briefdescription>
+<para>enable specified IRQ </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>irqNo</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>IRQ to enable </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" bodystart="67" bodyend="74"/>
+        <references refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" compoundref="8259_8c" startline="34">irqMask</references>
+        <references refid="8259_8h_10195451428bc646f820202dc15f25d9f" compoundref="8259_8h" startline="35">mPic</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" compoundref="8259_8h" startline="37">sPic</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" prot="public" static="yes" mutable="no">
+        <type>unsigned int</type>
+        <definition>unsigned int irqMask</definition>
+        <argsstring></argsstring>
+        <name>irqMask</name>
+        <initializer> 0xFFFF</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c" bodystart="34" bodyend="-1"/>
+        <referencedby refid="8259_8c_1371dc14d6686c2005baaa0be4b26ab87" compoundref="8259_8c" startline="81" endline="88">irqDisable</referencedby>
+        <referencedby refid="8259_8c_149b612db44e9e81ee7bad138264d6e32" compoundref="8259_8c" startline="67" endline="74">irqEnable</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: 8259_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>=<sp/>0xFFFF;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="8259_8c_18045101c57cc1791817412b1016794b4" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="8259_8h_18045101c57cc1791817412b1016794b4" kindref="member">i8259_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>,<sp/><sp/><sp/><ref refid="8259_8h_1543896e13206abea73704f0f87f65d7e" kindref="member">icw1</ref>);<sp/></highlight><highlight class="comment">/*<sp/>Initialize<sp/>Master<sp/>PIC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>,<sp/><sp/><sp/><ref refid="8259_8h_1543896e13206abea73704f0f87f65d7e" kindref="member">icw1</ref>);<sp/></highlight><highlight class="comment">/*<sp/>Initialize<sp/>Seconary<sp/>PIC<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>+1,<sp/><ref refid="8259_8h_17d84962c1a1c225344a94545309f92fc" kindref="member">mVec</ref>);<sp/></highlight><highlight class="comment">/*<sp/>Master<sp/>Interrup<sp/>Vector<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>+1,<sp/><ref refid="8259_8h_12f7f6ebf05739e77a7c20aee806b771c" kindref="member">sVec</ref>);<sp/></highlight><highlight class="comment">/*<sp/>Secondary<sp/>Interrupt<sp/>Vector<sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>+1,<sp/>1&lt;&lt;2);<sp/></highlight><highlight class="comment">/*<sp/>Bitmask<sp/>for<sp/>cascade<sp/>on<sp/>IRQ<sp/>2<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>+1,<sp/>2);<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Cascade<sp/>on<sp/>IRQ<sp/>2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>+1,<sp/><ref refid="8259_8h_116fcea0b8e8fb321710ee3fe0788b2a6" kindref="member">icw4</ref>);<sp/></highlight><highlight class="comment">/*<sp/>Finish<sp/>Primary<sp/>Initialization<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>+1,<sp/><ref refid="8259_8h_116fcea0b8e8fb321710ee3fe0788b2a6" kindref="member">icw4</ref>);<sp/></highlight><highlight class="comment">/*<sp/>Finish<sp/>Seconary<sp/>Initialization<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_1b5e84ca4c143a8b9a34b575201aaffd5" kindref="member">mImr</ref>,<sp/><sp/><sp/>0xff);<sp/></highlight><highlight class="comment">/*<sp/>Mask<sp/>All<sp/>Primary<sp/>Interrupts<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_113b25eb31f4b435fdb1ed81c10b07315" kindref="member">sImr</ref>,<sp/><sp/><sp/>0xff);<sp/></highlight><highlight class="comment">/*<sp/>Mask<sp/>All<sp/>Seconary<sp/>Interrupts<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Print<sp/>out<sp/>the<sp/>system<sp/>info<sp/>for<sp/>this<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;pic0<sp/>-<sp/>Port:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;pic1<sp/>-<sp/>Port:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>the<sp/>system<sp/>knows<sp/>it<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="8259_8c_149b612db44e9e81ee7bad138264d6e32" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a" kindref="member">irqEnable</ref>(<ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/>irqNo)<sp/>{</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>&amp;=<sp/>~(1<sp/>&lt;&lt;<sp/>irqNo);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(irqNo<sp/>&gt;=<sp/>8)<sp/>{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>&amp;=<sp/>~(1<sp/>&lt;&lt;<sp/>2);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>+1,<sp/><ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>&amp;<sp/>0xFF);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>+1,<sp/>(<ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>&gt;&gt;<sp/>8)<sp/>&amp;<sp/>0xFF);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="8259_8c_1371dc14d6686c2005baaa0be4b26ab87" refkind="member"><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="8259_8h_12b9ec30943ddb0a2ef3bd7ccfd2026c0" kindref="member">irqDisable</ref>(<ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/>irqNo)<sp/>{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>|=<sp/>(1<sp/>&lt;&lt;<sp/>irqNo);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>&amp;<sp/>0xFF00)==0xFF00)<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>|=<sp/>(1<sp/>&lt;&lt;<sp/>2);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_10195451428bc646f820202dc15f25d9f" kindref="member">mPic</ref>+1,<sp/><ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>&amp;<sp/>0xFF);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="8259_8h_17d4efc593ecc4ace3d92e1f4ee919b99" kindref="member">sPic</ref>+1,<sp/>(<ref refid="8259_8c_1c1c08e908fa26e3c59fd4989c5290c58" kindref="member">irqMask</ref><sp/>&gt;&gt;<sp/>8)<sp/>&amp;<sp/>0xFF);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/8259.c"/>
+  </compounddef>
+</doxygen>

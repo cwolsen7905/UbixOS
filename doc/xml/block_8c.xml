@@ -1,0 +1,368 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="block_8c" kind="file">
+    <compoundname>block.c</compoundname>
+    <includes refid="ubixfs_8h" local="no">ubixfs/ubixfs.h</includes>
+    <includes refid="file_8h" local="no">vfs/file.h</includes>
+    <includes refid="mount_8h" local="no">vfs/mount.h</includes>
+    <incdepgraph>
+      <node id="5907">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+      </node>
+      <node id="5910">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+        <childnode refid="5911" relation="include">
+        </childnode>
+        <childnode refid="5902" relation="include">
+        </childnode>
+        <childnode refid="5912" relation="include">
+        </childnode>
+        <childnode refid="5907" relation="include">
+        </childnode>
+      </node>
+      <node id="5899">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5900" relation="include">
+        </childnode>
+      </node>
+      <node id="5900">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5902">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+        <childnode refid="5903" relation="include">
+        </childnode>
+        <childnode refid="5904" relation="include">
+        </childnode>
+      </node>
+      <node id="5912">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+      </node>
+      <node id="5897">
+        <label>src/sys/ubixfs/block.c</label>
+        <link refid="block.c"/>
+        <childnode refid="5898" relation="include">
+        </childnode>
+        <childnode refid="5902" relation="include">
+        </childnode>
+        <childnode refid="5904" relation="include">
+        </childnode>
+      </node>
+      <node id="5909">
+        <label>mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+        <childnode refid="5910" relation="include">
+        </childnode>
+      </node>
+      <node id="5901">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+        <childnode refid="5902" relation="include">
+        </childnode>
+        <childnode refid="5904" relation="include">
+        </childnode>
+        <childnode refid="5905" relation="include">
+        </childnode>
+        <childnode refid="5907" relation="include">
+        </childnode>
+      </node>
+      <node id="5904">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+      </node>
+      <node id="5898">
+        <label>ubixfs/ubixfs.h</label>
+        <link refid="ubixfs_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+        <childnode refid="5901" relation="include">
+        </childnode>
+        <childnode refid="5908" relation="include">
+        </childnode>
+        <childnode refid="5909" relation="include">
+        </childnode>
+        <childnode refid="5903" relation="include">
+        </childnode>
+      </node>
+      <node id="5903">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+      </node>
+      <node id="5905">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="5906" relation="include">
+        </childnode>
+        <childnode refid="5907" relation="include">
+        </childnode>
+      </node>
+      <node id="5906">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+      </node>
+      <node id="5911">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+      </node>
+      <node id="5908">
+        <label>sys/device.h</label>
+        <link refid="device_8h"/>
+        <childnode refid="5899" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="block_8c_1182b9be545371d2fcda6981134de2b44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int freeBlocks</definition>
+        <argsstring>(int block, fileDescriptor *fd)</argsstring>
+        <name>freeBlocks</name>
+        <param>
+          <type>int</type>
+          <declname>block</declname>
+        </param>
+        <param>
+          <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/block.c" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/block.c" bodystart="79" bodyend="94"/>
+        <references refid="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" compoundref="ubixfs_8h" startline="96">blockAllocationTableEntry::attributes</references>
+        <references refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" compoundref="ubixfs_8h" startline="131">ubixFSInfo::blockAllocationTable</references>
+        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
+        <references refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" compoundref="file_8h" startline="49">fileDescriptorStruct::mp</references>
+        <references refid="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" compoundref="ubixfs_8h" startline="98">blockAllocationTableEntry::nextBlock</references>
+        <references refid="ubixfs_8h_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</references>
+      </memberdef>
+      <memberdef kind="function" id="block_8c_1d2880707d0f942f5119f946db4e13e4e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int getFreeBlocks</definition>
+        <argsstring>(int count, fileDescriptor *fd)</argsstring>
+        <name>getFreeBlocks</name>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <param>
+          <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/block.c" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/block.c" bodystart="96" bodyend="124"/>
+        <references refid="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" compoundref="ubixfs_8h" startline="96">blockAllocationTableEntry::attributes</references>
+        <references refid="structubixFSInfo_14f530e266f49e0310c763653399dafa2" compoundref="ubixfs_8h" startline="133">ubixFSInfo::batEntries</references>
+        <references refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" compoundref="ubixfs_8h" startline="131">ubixFSInfo::blockAllocationTable</references>
+        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
+        <references refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" compoundref="file_8h" startline="49">fileDescriptorStruct::mp</references>
+        <references refid="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" compoundref="ubixfs_8h" startline="98">blockAllocationTableEntry::nextBlock</references>
+        <references refid="ubixfs_8h_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="block_8c_199dfa2e54401fafb70357a6632c4ef10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void syncBat</definition>
+        <argsstring>(struct vfs_mountPoint *mp)</argsstring>
+        <name>syncBat</name>
+        <param>
+          <type>struct <ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+          <declname>mp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/block.c" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/block.c" bodystart="74" bodyend="77"/>
+        <references refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" compoundref="ubixfs_8h" startline="131">ubixFSInfo::blockAllocationTable</references>
+        <references refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" compoundref="mount_8h" startline="39">vfs_mountPoint::device</references>
+        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
+        <references refid="structvfs__mountPoint_1e5ddbb2d1c7a01716a481bc5462d6c8f" compoundref="mount_8h" startline="40">vfs_mountPoint::diskLabel</references>
+        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
+        <references refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" compoundref="device_8h" startline="52">device_interface::info</references>
+        <references refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" compoundref="mount_8h" startline="42">vfs_mountPoint::partition</references>
+        <references refid="structubixDiskLabel_1a97973cf7f0b67811080656e11c6385f">ubixDiskLabel::partitions</references>
+        <references refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df">device_interface::write</references>
+        <referencedby refid="block_8c_1182b9be545371d2fcda6981134de2b44" compoundref="block_8c" startline="79" endline="94">freeBlocks</referencedby>
+        <referencedby refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Log: block_8c.xml,v $
+<codeline lineno="26"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:50  reddawg
+<codeline lineno="26"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="26"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2006/12/05<sp/>14:10:21<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>Workign<sp/>Distro</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"></highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:17<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"></highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"></highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:39<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"></highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/08/14<sp/>11:23:02<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>Changes</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"></highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/23<sp/>09:10:06<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>ubixfs:<sp/>cleaned<sp/>up<sp/>some<sp/>functions<sp/>played<sp/>with<sp/>the<sp/>caching<sp/>a<sp/>bit</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>vfs:<sp/><sp/><sp/><sp/>renamed<sp/>a<sp/>bunch<sp/>of<sp/>functions</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>misc<sp/>bugs</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"></highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/06/04<sp/>10:19:42<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>notes:<sp/>we<sp/>compile<sp/>again,<sp/>thank<sp/>g-d<sp/>anyways<sp/>i<sp/>was<sp/>about<sp/>to<sp/>cry</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"></highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/19<sp/>15:20:06<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>Fixed<sp/>reference<sp/>problems<sp/>due<sp/>to<sp/>changes<sp/>in<sp/>drive<sp/>subsystem</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"></highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/04/28<sp/>02:22:55<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>This<sp/>is<sp/>a<sp/>fiarly<sp/>large<sp/>commit<sp/>but<sp/>we<sp/>are<sp/>starting<sp/>to<sp/>use<sp/>new<sp/>driver<sp/>model</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>all<sp/>around</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"></highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:07:07<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"></highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/04/13<sp/>16:36:34<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"></highlight></codeline>
+<codeline lineno="63"><highlight class="comment"></highlight></codeline>
+<codeline lineno="64"><highlight class="comment"></highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>$Id: block_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"></highlight></codeline>
+<codeline lineno="67"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ubixfs_8h" kindref="compound">ubixfs/ubixfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="file_8h" kindref="compound">vfs/file.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mount_8h" kindref="compound">vfs/mount.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ubixfs_8h_199dfa2e54401fafb70357a6632c4ef10" kindref="member">syncBat</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*mp)<sp/>{</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixFSInfo" kindref="compound">ubixFSInfo</ref><sp/>*fsInfo<sp/>=<sp/>mp-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>mp-&gt;<ref refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df" kindref="member">write</ref>(mp-&gt;<ref refid="structvfs__mountPoint_15683a99774aaf81116e1765eb2509df5" kindref="member">device</ref>-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>,mp-&gt;<ref refid="structvfs__mountPoint_1e5ddbb2d1c7a01716a481bc5462d6c8f" kindref="member">diskLabel</ref>-&gt;<ref refid="structubixDiskLabel_1a97973cf7f0b67811080656e11c6385f" kindref="member">partitions</ref>[mp-&gt;<ref refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" kindref="member">partition</ref>].pOffset,mp-&gt;<ref refid="structvfs__mountPoint_1e5ddbb2d1c7a01716a481bc5462d6c8f" kindref="member">diskLabel</ref>-&gt;<ref refid="structubixDiskLabel_1a97973cf7f0b67811080656e11c6385f" kindref="member">partitions</ref>[mp-&gt;<ref refid="structvfs__mountPoint_126cf95c23f79647d61dc6396bbeb94a6" kindref="member">partition</ref>].pBatSize);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="block_8c_1182b9be545371d2fcda6981134de2b44" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubixfs_8h_1182b9be545371d2fcda6981134de2b44" kindref="member">freeBlocks</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>block,<ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/>*fd)<sp/>{</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>block;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixFSInfo" kindref="compound">ubixFSInfo</ref><sp/>*fsInfo<sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(i<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>block<sp/>=<sp/>fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[i].<ref refid="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" kindref="member">nextBlock</ref>;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/>fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[i].<ref refid="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" kindref="member">attributes</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/>fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[i].<ref refid="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" kindref="member">nextBlock</ref><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>i<sp/>=<sp/>block;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><ref refid="ubixfs_8h_199dfa2e54401fafb70357a6632c4ef10" kindref="member">syncBat</ref>(fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(i);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="96" refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubixfs_8h_1d2880707d0f942f5119f946db4e13e4e" kindref="member">getFreeBlocks</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>count,<ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/>*fd)<sp/>{</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>x<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixFSInfo" kindref="compound">ubixFSInfo</ref><sp/>*fsInfo<sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/>getBlocks:</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=1;i<sp/>&lt;<sp/>fsInfo-&gt;<ref refid="structubixFSInfo_14f530e266f49e0310c763653399dafa2" kindref="member">batEntries</ref>;i++)<sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[i].<ref refid="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" kindref="member">attributes</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>for<sp/>(x<sp/>=<sp/>1;<sp/>x<sp/>&lt;<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)count;<sp/>x++)<sp/>{</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[i<sp/>+<sp/>x].<ref refid="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" kindref="member">attributes</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>getBlocks;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x<sp/>=<sp/>i;<sp/>x<sp/>&lt;<sp/>i+count;x++)<sp/>{</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[x].<ref refid="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" kindref="member">attributes</ref><sp/>=<sp/>0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>((x+1)<sp/>==<sp/>(i+count))<sp/>{</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[x].<ref refid="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" kindref="member">nextBlock</ref><sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fsInfo-&gt;<ref refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" kindref="member">blockAllocationTable</ref>[x].<ref refid="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" kindref="member">nextBlock</ref><sp/><sp/>=<sp/>x+1;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ubixfs_8h_199dfa2e54401fafb70357a6632c4ef10" kindref="member">syncBat</ref>(fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(i);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="127"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="128"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfs/block.c"/>
+  </compounddef>
+</doxygen>

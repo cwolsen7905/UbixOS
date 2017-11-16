@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structgdtGate" kind="struct" prot="public">
+    <compoundname>gdtGate</compoundname>
+    <includes refid="gdt_8h" local="no">gdt.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structgdtGate_178486d8b9aa678859910a54e16ca043c" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short gdtGate::access</definition>
+        <argsstring></argsstring>
+        <name>access</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="73" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ee676dc504a8f6498927c2d5fb5e4c88" compoundref="idt_8c" startline="174" endline="183">setTaskVector</referencedby>
+        <referencedby refid="idt_8c_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short gdtGate::offsetHigh</definition>
+        <argsstring></argsstring>
+        <name>offsetHigh</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="74" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ee676dc504a8f6498927c2d5fb5e4c88" compoundref="idt_8c" startline="174" endline="183">setTaskVector</referencedby>
+        <referencedby refid="idt_8c_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short gdtGate::offsetLow</definition>
+        <argsstring></argsstring>
+        <name>offsetLow</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="71" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ee676dc504a8f6498927c2d5fb5e4c88" compoundref="idt_8c" startline="174" endline="183">setTaskVector</referencedby>
+        <referencedby refid="idt_8c_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structgdtGate_171d7780bce5bd08890088cab94d6c415" prot="public" static="no" mutable="no">
+        <type>unsigned short</type>
+        <definition>unsigned short gdtGate::selector</definition>
+        <argsstring></argsstring>
+        <name>selector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="72" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ee676dc504a8f6498927c2d5fb5e4c88" compoundref="idt_8c" startline="174" endline="183">setTaskVector</referencedby>
+        <referencedby refid="idt_8c_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="70" bodyend="75"/>
+    <listofallmembers>
+      <member refid="structgdtGate_178486d8b9aa678859910a54e16ca043c" prot="public" virt="non-virtual"><scope>gdtGate</scope><name>access</name></member>
+      <member refid="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" prot="public" virt="non-virtual"><scope>gdtGate</scope><name>offsetHigh</name></member>
+      <member refid="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" prot="public" virt="non-virtual"><scope>gdtGate</scope><name>offsetLow</name></member>
+      <member refid="structgdtGate_171d7780bce5bd08890088cab94d6c415" prot="public" virt="non-virtual"><scope>gdtGate</scope><name>selector</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

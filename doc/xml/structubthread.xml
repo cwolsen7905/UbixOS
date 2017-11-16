@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structubthread" kind="struct" prot="public">
+    <compoundname>ubthread</compoundname>
+    <includes refid="ubthread_8h" local="no">ubthread.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structubthread_17644a25394098d5a41d63f44852d5e84" prot="public" static="no" mutable="no">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* ubthread::task</definition>
+        <argsstring></argsstring>
+        <name>task</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="641">
+        <label>i387Struct</label>
+        <link refid="structi387Struct"/>
+      </node>
+      <node id="655">
+        <label>tssStruct</label>
+        <link refid="structtssStruct"/>
+      </node>
+      <node id="643">
+        <label>tty_termNode</label>
+        <link refid="structtty__termNode"/>
+      </node>
+      <node id="651">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="650">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="651" relation="usage">
+          <edgelabel>devRec</edgelabel>
+        </childnode>
+        <childnode refid="652" relation="usage">
+          <edgelabel>devInfo</edgelabel>
+        </childnode>
+        <childnode refid="650" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="654">
+        <label>osInfo</label>
+        <link refid="structosInfo"/>
+      </node>
+      <node id="645">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="645" relation="usage">
+          <edgelabel>prev
+next
+parent
+fileListTail
+fileListHead</edgelabel>
+        </childnode>
+      </node>
+      <node id="648">
+        <label>ubixDiskLabel</label>
+        <link refid="structubixDiskLabel"/>
+        <childnode refid="649" relation="usage">
+          <edgelabel>partitions</edgelabel>
+        </childnode>
+      </node>
+      <node id="639">
+        <label>ubthread</label>
+        <link refid="structubthread"/>
+        <childnode refid="640" relation="usage">
+          <edgelabel>task</edgelabel>
+        </childnode>
+      </node>
+      <node id="649">
+        <label>ubixDiskLabel::ubixPartitions</label>
+        <link refid="structubixDiskLabel_1_1ubixPartitions"/>
+      </node>
+      <node id="644">
+        <label>fileDescriptorStruct</label>
+        <link refid="structfileDescriptorStruct"/>
+        <childnode refid="645" relation="usage">
+          <edgelabel>cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="646" relation="usage">
+          <edgelabel>dmadat</edgelabel>
+        </childnode>
+        <childnode refid="647" relation="usage">
+          <edgelabel>mp</edgelabel>
+        </childnode>
+        <childnode refid="644" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="647">
+        <label>vfs_mountPoint</label>
+        <link refid="structvfs__mountPoint"/>
+        <childnode refid="648" relation="usage">
+          <edgelabel>diskLabel</edgelabel>
+        </childnode>
+        <childnode refid="650" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+        <childnode refid="653" relation="usage">
+          <edgelabel>fs</edgelabel>
+        </childnode>
+        <childnode refid="647" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="640">
+        <label>taskStruct</label>
+        <link refid="structtaskStruct"/>
+        <childnode refid="640" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+        <childnode refid="641" relation="usage">
+          <edgelabel>i387</edgelabel>
+        </childnode>
+        <childnode refid="642" relation="usage">
+          <edgelabel>td</edgelabel>
+        </childnode>
+        <childnode refid="643" relation="usage">
+          <edgelabel>term</edgelabel>
+        </childnode>
+        <childnode refid="644" relation="usage">
+          <edgelabel>imageFd</edgelabel>
+        </childnode>
+        <childnode refid="654" relation="usage">
+          <edgelabel>oInfo</edgelabel>
+        </childnode>
+        <childnode refid="655" relation="usage">
+          <edgelabel>tss</edgelabel>
+        </childnode>
+      </node>
+      <node id="652">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+      <node id="646">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+      <node id="642">
+        <label>thread</label>
+        <link refid="structthread"/>
+      </node>
+      <node id="653">
+        <label>fileSystem</label>
+        <link refid="structfileSystem"/>
+        <childnode refid="653" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="46" bodyend="48"/>
+    <listofallmembers>
+      <member refid="structubthread_17644a25394098d5a41d63f44852d5e84" prot="public" virt="non-virtual"><scope>ubthread</scope><name>task</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,4 @@
+base referer
+rect $init_8h.html 252,5 460,32
+rect $ne2k_8c.html 286,56 427,83
+rect $main_8c.html 510,5 654,32

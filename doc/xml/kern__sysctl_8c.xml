@@ -1,0 +1,604 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="kern__sysctl_8c" kind="file">
+    <compoundname>kern_sysctl.c</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="sysproto_8h" local="no">sys/sysproto.h</includes>
+    <includes refid="thread_8h" local="no">sys/thread.h</includes>
+    <includes refid="kern__sysctl_8h" local="no">sys/kern_sysctl.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="assert_8h" local="no">assert.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <incdepgraph>
+      <node id="5348">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5357">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="5351">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+        <childnode refid="5352" relation="include">
+        </childnode>
+        <childnode refid="5353" relation="include">
+        </childnode>
+        <childnode refid="5356" relation="include">
+        </childnode>
+        <childnode refid="5348" relation="include">
+        </childnode>
+      </node>
+      <node id="5350">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+        <childnode refid="5351" relation="include">
+        </childnode>
+      </node>
+      <node id="5343">
+        <label>src/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern_sysctl.c"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+        <childnode refid="5346" relation="include">
+        </childnode>
+        <childnode refid="5348" relation="include">
+        </childnode>
+        <childnode refid="5349" relation="include">
+        </childnode>
+        <childnode refid="5350" relation="include">
+        </childnode>
+        <childnode refid="5357" relation="include">
+        </childnode>
+        <childnode refid="5358" relation="include">
+        </childnode>
+        <childnode refid="5359" relation="include">
+        </childnode>
+        <childnode refid="5360" relation="include">
+        </childnode>
+        <childnode refid="5361" relation="include">
+        </childnode>
+      </node>
+      <node id="5344">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5345" relation="include">
+        </childnode>
+      </node>
+      <node id="5345">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5361">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5353">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+        <childnode refid="5354" relation="include">
+        </childnode>
+        <childnode refid="5355" relation="include">
+        </childnode>
+      </node>
+      <node id="5356">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5359">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5349">
+        <label>sys/kern_sysctl.h</label>
+        <link refid="kern__sysctl_8h"/>
+        <childnode refid="5346" relation="include">
+        </childnode>
+        <childnode refid="5348" relation="include">
+        </childnode>
+      </node>
+      <node id="5355">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5358">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5360">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="5354">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5346">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="5347" relation="include">
+        </childnode>
+        <childnode refid="5348" relation="include">
+        </childnode>
+      </node>
+      <node id="5347">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+      <node id="5352">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5344" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int __sysctl</definition>
+        <argsstring>(struct thread *td, struct sysctl_args *uap)</argsstring>
+        <name>__sysctl</name>
+        <param>
+          <type>struct <ref refid="structthread" kindref="compound">thread</ref> *</type>
+          <declname>td</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsysctl__args" kindref="compound">sysctl_args</ref> *</type>
+          <declname>uap</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" line="153" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="153" bodyend="182"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" compoundref="kern__sysctl_8c" startline="41">ctls</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structsysctl__args_12653c7c39cf27b5c3d565902797cfb1c" compoundref="sysproto_8h" startline="71">sysctl_args::name</references>
+        <references refid="structsysctl__args_1bd967f23c35e3af742faa6135f89e79e" compoundref="sysproto_8h" startline="72">sysctl_args::namelen</references>
+        <references refid="structsysctl__args_145cc219865ddc983c32a7a12a692106c" compoundref="sysproto_8h" startline="76">sysctl_args::newlen</references>
+        <references refid="structsysctl__args_15a10c812e19c32979ad704d816fa78ae" compoundref="sysproto_8h" startline="73">sysctl_args::old</references>
+        <references refid="structsysctl__args_1d82c3aba52eb190fc3dbee14eea74c0f" compoundref="sysproto_8h" startline="74">sysctl_args::oldlenp</references>
+        <references refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" compoundref="kern__sysctl_8c" startline="184" endline="203">sysctl_find</references>
+        <references refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" compoundref="thread_8h" startline="38">thread::td_retval</references>
+        <references refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" compoundref="kern__sysctl_8h" startline="64">sysctl_entry::val_len</references>
+        <references refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" compoundref="kern__sysctl_8h" startline="63">sysctl_entry::value</references>
+      </memberdef>
+      <memberdef kind="function" id="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void def_ctls</definition>
+        <argsstring>()</argsstring>
+        <name>def_ctls</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="46" bodyend="63"/>
+        <references refid="kern__sysctl_8h_164c10ad2583c04cbc1b4c5ee9269f9ee" compoundref="kern__sysctl_8h" startline="36">CTL_MAXNAME</references>
+        <references refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="39">name</references>
+        <references refid="kern__sysctl_8h_1e50e8494ce7dc186f78a4bd65c7e8387" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</references>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysctl_add</definition>
+        <argsstring>(int *name, int namelen, char *str_name, void *buf, int buf_size)</argsstring>
+        <name>sysctl_add</name>
+        <param>
+          <type>int *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>namelen</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>str_name</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>buf_size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" line="205" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="205" bodyend="248"/>
+        <references refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" compoundref="kern__sysctl_8h" startline="60">sysctl_entry::children</references>
+        <references refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" compoundref="kern__sysctl_8h" startline="62">sysctl_entry::id</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" compoundref="kern__sysctl_8h" startline="61">sysctl_entry::name</references>
+        <references refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" compoundref="kern__sysctl_8h" startline="59">sysctl_entry::next</references>
+        <references refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" compoundref="kern__sysctl_8h" startline="58">sysctl_entry::prev</references>
+        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
+        <references refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" compoundref="kern__sysctl_8c" startline="184" endline="203">sysctl_find</references>
+        <references refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" compoundref="kern__sysctl_8h" startline="64">sysctl_entry::val_len</references>
+        <references refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" compoundref="kern__sysctl_8h" startline="63">sysctl_entry::value</references>
+        <referencedby refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" compoundref="kern__sysctl_8c" startline="46" endline="63">def_ctls</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref> *</type>
+        <definition>static struct sysctl_entry * sysctl_find</definition>
+        <argsstring>(int *, int)</argsstring>
+        <name>sysctl_find</name>
+        <param>
+          <type>int *</type>
+          <defname>name</defname>
+        </param>
+        <param>
+          <type>int</type>
+          <defname>namelen</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="184" bodyend="203"/>
+        <references refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" compoundref="kern__sysctl_8h" startline="60">sysctl_entry::children</references>
+        <references refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" compoundref="kern__sysctl_8c" startline="41">ctls</references>
+        <references refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" compoundref="kern__sysctl_8h" startline="62">sysctl_entry::id</references>
+        <references refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" compoundref="kern__sysctl_8h" startline="59">sysctl_entry::next</references>
+        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sysctl_init</definition>
+        <argsstring>()</argsstring>
+        <name>sysctl_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="65" bodyend="151"/>
+        <references refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" compoundref="kern__sysctl_8h" startline="60">sysctl_entry::children</references>
+        <references refid="kern__sysctl_8h_1e6b785c09f229d4721e21ac93c050d25" compoundref="kern__sysctl_8h" startline="46">CTL_DEBUG</references>
+        <references refid="kern__sysctl_8h_1c5963570c033378ae3a95be4ea4bcd6a" compoundref="kern__sysctl_8h" startline="47">CTL_HW</references>
+        <references refid="kern__sysctl_8h_1e2217b9898706e75ee4c68263f40f14f" compoundref="kern__sysctl_8h" startline="42">CTL_KERN</references>
+        <references refid="kern__sysctl_8h_1ecdcd57f7e07c377f8a3f5d8c3dfc5c3" compoundref="kern__sysctl_8h" startline="48">CTL_MACHDEP</references>
+        <references refid="kern__sysctl_8h_195feaa2f7d63c1feead4999e6826b663" compoundref="kern__sysctl_8h" startline="45">CTL_NET</references>
+        <references refid="kern__sysctl_8h_1e367595aed72f0d28376f41963be0716" compoundref="kern__sysctl_8h" startline="50">CTL_P1003_1B</references>
+        <references refid="kern__sysctl_8h_1c279bc858fea4ae549e51a5382ad7709" compoundref="kern__sysctl_8h" startline="51">CTL_UBIX</references>
+        <references refid="kern__sysctl_8h_12d465d8d18db06791908c04b168e26c2" compoundref="kern__sysctl_8h" startline="41">CTL_UNSPEC</references>
+        <references refid="kern__sysctl_8h_172fbcdd5beae9909011f3b9b96412145" compoundref="kern__sysctl_8h" startline="49">CTL_USER</references>
+        <references refid="kern__sysctl_8h_18468f3456b5e69f27996cfa59f73525f" compoundref="kern__sysctl_8h" startline="44">CTL_VFS</references>
+        <references refid="kern__sysctl_8h_1f6d848b54abe0956f610dc61df972778" compoundref="kern__sysctl_8h" startline="43">CTL_VM</references>
+        <references refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" compoundref="kern__sysctl_8c" startline="41">ctls</references>
+        <references refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" compoundref="kern__sysctl_8c" startline="46" endline="63">def_ctls</references>
+        <references refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" compoundref="kern__sysctl_8h" startline="62">sysctl_entry::id</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" compoundref="kern__sysctl_8h" startline="61">sysctl_entry::name</references>
+        <references refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" compoundref="kern__sysctl_8h" startline="59">sysctl_entry::next</references>
+        <references refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" compoundref="kern__sysctl_8h" startline="58">sysctl_entry::prev</references>
+        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref> *</type>
+        <definition>struct sysctl_entry* ctls</definition>
+        <argsstring></argsstring>
+        <name>ctls</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c" bodystart="41" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <referencedby refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" compoundref="kern__sysctl_8c" startline="184" endline="203">sysctl_find</referencedby>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: kern__sysctl_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sysproto_8h" kindref="compound">sys/sysproto.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="thread_8h" kindref="compound">sys/thread.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kern__sysctl_8h" kindref="compound">sys/kern_sysctl.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" kindref="member">sysctl_find</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>This<sp/>is<sp/>a<sp/>cheat<sp/>for<sp/>now<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" kindref="member">def_ctls</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[<ref refid="kern__sysctl_8h_164c10ad2583c04cbc1b4c5ee9269f9ee" kindref="member">CTL_MAXNAME</ref>],<sp/>name_len;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>page_val<sp/>=<sp/>0x1000;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/>name[0]<sp/>=<sp/>6;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>name[1]<sp/>=<sp/>7;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/>name_len<sp/>=<sp/>2;<sp/></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8h_1e50e8494ce7dc186f78a4bd65c7e8387" kindref="member">sysctl_add</ref>(name,name_len,</highlight><highlight class="stringliteral">&quot;page_size&quot;</highlight><highlight class="normal">,&amp;page_val,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>));</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Clock<sp/>Rate<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/>name[0]<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>name<sp/>[1]<sp/>=<sp/>12;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/>page_val<sp/>=<sp/>0x3E8;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8h_1e50e8494ce7dc186f78a4bd65c7e8387" kindref="member">sysctl_add</ref>(name,name_len,</highlight><highlight class="stringliteral">&quot;page_size&quot;</highlight><highlight class="normal">,&amp;page_val,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(uInt32));</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>User<sp/>Stack<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>name[0]<sp/>=<sp/>1;</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>name<sp/>[1]<sp/>=<sp/>33;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>page_val<sp/>=<sp/>0xCBE8000;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8h_1e50e8494ce7dc186f78a4bd65c7e8387" kindref="member">sysctl_add</ref>(name,name_len,</highlight><highlight class="stringliteral">&quot;page_size&quot;</highlight><highlight class="normal">,&amp;page_val,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(uInt32));</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_16d1146ba67c212252bb9699a7dc77cbf" kindref="member">sysctl_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*tmpCtl<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;sysctl<sp/>already<sp/>Initialized\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref>));</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref>-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_12d465d8d18db06791908c04b168e26c2" kindref="member">CTL_UNSPEC</ref>;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref>-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(<ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref>-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;unspec&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/>tmpCtl<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref>;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_1e2217b9898706e75ee4c68263f40f14f" kindref="member">CTL_KERN</ref>;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;kern&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref>-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_1f6d848b54abe0956f610dc61df972778" kindref="member">CTL_VM</ref>;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;vm&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_18468f3456b5e69f27996cfa59f73525f" kindref="member">CTL_VFS</ref>;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;vfs&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_195feaa2f7d63c1feead4999e6826b663" kindref="member">CTL_NET</ref>;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;net&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_1e6b785c09f229d4721e21ac93c050d25" kindref="member">CTL_DEBUG</ref>;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;debug&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_1c5963570c033378ae3a95be4ea4bcd6a" kindref="member">CTL_HW</ref>;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;hw&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_1ecdcd57f7e07c377f8a3f5d8c3dfc5c3" kindref="member">CTL_MACHDEP</ref>;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;machdep&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_172fbcdd5beae9909011f3b9b96412145" kindref="member">CTL_USER</ref>;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;user&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_entry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_1e367595aed72f0d28376f41963be0716" kindref="member">CTL_P1003_1B</ref>;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;p1003_1b&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">sysctl_enctry<sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>sysctl_entry));</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>tmpCtl;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/>tmpCtl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="kern__sysctl_8h_1c279bc858fea4ae549e51a5382ad7709" kindref="member">CTL_UBIX</ref>;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,</highlight><highlight class="stringliteral">&quot;ubix&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><ref refid="kern__sysctl_8c_123c118948f8d574b180e46e55ce2ec5c" kindref="member">def_ctls</ref>();</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153" refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls__new_8h_107cc47be4da165499f5183e63637cdd4" kindref="member">__sysctl</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsysctl__args" kindref="compound">sysctl_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*tmpCtl<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref><sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;sysctl<sp/>not<sp/>initialized&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(uap-&gt;<ref refid="structsysctl__args_145cc219865ddc983c32a7a12a692106c" kindref="member">newlen</ref><sp/>&lt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Changing<sp/>Not<sp/>supported<sp/>yet.\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/>tmpCtl<sp/>=<sp/><ref refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" kindref="member">sysctl_find</ref>(uap-&gt;<ref refid="structsysctl__args_12653c7c39cf27b5c3d565902797cfb1c" kindref="member">name</ref>,uap-&gt;<ref refid="structsysctl__args_1bd967f23c35e3af742faa6135f89e79e" kindref="member">namelen</ref>);</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpCtl<sp/>==<sp/>0x0)<sp/>{<sp/></highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>CTL\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0x0;i<sp/>&lt;<sp/>uap-&gt;<ref refid="structsysctl__args_1bd967f23c35e3af742faa6135f89e79e" kindref="member">namelen</ref>;i++)</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;(%i)&quot;</highlight><highlight class="normal">,uap-&gt;<ref refid="structsysctl__args_12653c7c39cf27b5c3d565902797cfb1c" kindref="member">name</ref>[i]);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref>)uap-&gt;<ref refid="structsysctl__args_1d82c3aba52eb190fc3dbee14eea74c0f" kindref="member">oldlenp</ref><sp/>&lt;<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" kindref="member">val_len</ref>)<sp/></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(uap-&gt;<ref refid="structsysctl__args_15a10c812e19c32979ad704d816fa78ae" kindref="member">old</ref>,tmpCtl-&gt;<ref refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref>,(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)uap-&gt;<ref refid="structsysctl__args_1d82c3aba52eb190fc3dbee14eea74c0f" kindref="member">oldlenp</ref>);</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(uap-&gt;<ref refid="structsysctl__args_15a10c812e19c32979ad704d816fa78ae" kindref="member">old</ref>,tmpCtl-&gt;<ref refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref>,tmpCtl-&gt;<ref refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" kindref="member">val_len</ref>);</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/>td-&gt;<ref refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" kindref="member">td_retval</ref>[0]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight></codeline>
+<codeline lineno="184" refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*<ref refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" kindref="member">sysctl_find</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>namelen)<sp/>{</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*tmpCtl<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*lCtl<sp/>=<sp/><ref refid="kern__sysctl_8c_178853afaf5035f2ad68feeb8ebf184b1" kindref="member">ctls</ref>;</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Loop<sp/>Name<sp/>Len<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0x0;<sp/>i<sp/>&lt;<sp/>namelen;i++)<sp/>{</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpCtl<sp/>=<sp/>lCtl;tmpCtl<sp/>!=<sp/>0x0;tmpCtl<sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;ctlName:<sp/>[%s],<sp/>ctlId;<sp/>[%i]\n&quot;,tmpCtl-&gt;name,tmpCtl-&gt;id);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/>==<sp/>name[i])<sp/>{</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>((i+1)<sp/>==<sp/>namelen)<sp/>{</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpCtl);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lCtl<sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="205" refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kern__sysctl_8h_1e50e8494ce7dc186f78a4bd65c7e8387" kindref="member">sysctl_add</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>namelen,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*str_name,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>buf_size)<sp/>{</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*tmpCtl<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*newCtl<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Check<sp/>if<sp/>it<sp/>exists<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/>tmpCtl<sp/>=<sp/><ref refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" kindref="member">sysctl_find</ref>(name,namelen);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpCtl<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Node<sp/>Exists!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1);</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"></highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Get<sp/>Parent<sp/>Node<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/>tmpCtl<sp/>=<sp/><ref refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" kindref="member">sysctl_find</ref>(name,namelen-1);</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpCtl<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Parent<sp/>Node<sp/>Non<sp/>Existant\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref>));</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>name[namelen-1];</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,str_name);</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(buf_size);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref>,buf,buf_size);</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" kindref="member">val_len</ref><sp/>=<sp/>buf_size;</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/>newCtl<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref>));<sp/></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/>newCtl-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/>newCtl-&gt;<ref refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" kindref="member">next</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>;</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/>newCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/><sp/><sp/>newCtl-&gt;<ref refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>name[namelen-1];</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(newCtl-&gt;<ref refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" kindref="member">name</ref>,str_name);</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/><sp/><sp/>newCtl-&gt;<ref refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(buf_size);</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(newCtl-&gt;<ref refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" kindref="member">value</ref>,buf,buf_size);</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/>newCtl-&gt;<ref refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" kindref="member">val_len</ref><sp/><sp/>=<sp/>buf_size;</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref>-&gt;<ref refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" kindref="member">prev</ref><sp/>=<sp/>newCtl;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpCtl-&gt;<ref refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" kindref="member">children</ref><sp/>=<sp/>newCtl;</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"></highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="252"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="253"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/kern_sysctl.c"/>
+  </compounddef>
+</doxygen>

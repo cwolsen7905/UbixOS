@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="vfs_8cpp" kind="file">
+    <compoundname>vfs.cpp</compoundname>
+    <includes local="no">stdio.h</includes>
+    <includes refid="ubixfsv2_2vfs_8h" local="yes">vfs.h</includes>
+    <incdepgraph>
+      <node id="4625">
+        <label>stdlib.h</label>
+      </node>
+      <node id="4624">
+        <label>vfs.h</label>
+        <link refid="ubixfsv2_2vfs_8h"/>
+        <childnode refid="4625" relation="include">
+        </childnode>
+        <childnode refid="4623" relation="include">
+        </childnode>
+      </node>
+      <node id="4622">
+        <label>src/sys/ubixfsv2/vfs.cpp</label>
+        <link refid="vfs.cpp"/>
+        <childnode refid="4623" relation="include">
+        </childnode>
+        <childnode refid="4624" relation="include">
+        </childnode>
+      </node>
+      <node id="4623">
+        <label>stdio.h</label>
+      </node>
+    </incdepgraph>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="2"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2vfs_8h" kindref="compound">vfs.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="3"><highlight class="normal"></highlight></codeline>
+<codeline lineno="4" refid="classDiskFS_11bb2a92794cb2bb4f6409ba76fe6450b" refkind="member"><highlight class="normal"><ref refid="classDiskFS_11bb2a92794cb2bb4f6409ba76fe6450b" kindref="member">DiskFS::DiskFS</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>filename)<sp/>{</highlight></codeline>
+<codeline lineno="5"><highlight class="normal"><sp/><sp/><ref refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" kindref="member">diskFile</ref><sp/>=<sp/><ref refid="include_2vfs_2file_8h_1d6a41ac88a7d46d574e8a675fdde136c" kindref="member">fopen</ref>(filename,<sp/></highlight><highlight class="stringliteral">&quot;r+&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="6"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>DiskFS::DiskFS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9" refid="classDiskFS_1921249f4fc1f479d9f15dd56b0187dc2" refkind="member"><highlight class="normal"><ref refid="classDiskFS_1921249f4fc1f479d9f15dd56b0187dc2" kindref="member">DiskFS::write</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>data,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>offset,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" kindref="member">diskFile</ref><sp/>==<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/><sp/><ref refid="include_2vfs_2file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(<ref refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" kindref="member">diskFile</ref>,<sp/>offset,<sp/><ref refid="include_2vfs_2file_8h_10d112bae8fd35be772185b6ec6bcbe64" kindref="member">SEEK_SET</ref>);</highlight></codeline>
+<codeline lineno="12"><highlight class="normal"><sp/><sp/><ref refid="include_2vfs_2file_8h_1ca6c1e5b57dc9f5d8551b41ea98bfbb7" kindref="member">fwrite</ref>(data,<sp/>size,<sp/>1,<sp/><ref refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" kindref="member">diskFile</ref>);</highlight></codeline>
+<codeline lineno="13"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="14"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>DiskFS::write</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="15"><highlight class="normal"></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="classDiskFS_1de8d72587494f9d7505574e9afe4ab0b" refkind="member"><highlight class="normal"><ref refid="classDiskFS_1de8d72587494f9d7505574e9afe4ab0b" kindref="member">DiskFS::read</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>data,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>offset,<sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="18"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" kindref="member">diskFile</ref><sp/>==<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>1;</highlight></codeline>
+<codeline lineno="19"><highlight class="normal"><sp/><sp/><ref refid="include_2vfs_2file_8h_180528d8335cd52755f5d6a92e4f08391" kindref="member">fseek</ref>(<ref refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" kindref="member">diskFile</ref>,<sp/>offset,<sp/><ref refid="include_2vfs_2file_8h_10d112bae8fd35be772185b6ec6bcbe64" kindref="member">SEEK_SET</ref>);</highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><ref refid="include_2vfs_2file_8h_13b06878a03209e88c008c77234b89359" kindref="member">fread</ref>(data,<sp/>size,<sp/>1,<sp/><ref refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" kindref="member">diskFile</ref>);</highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;</highlight></codeline>
+<codeline lineno="22"><highlight class="normal">}<sp/></highlight><highlight class="comment">//<sp/>DiskFS::read</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.cpp"/>
+  </compounddef>
+</doxygen>

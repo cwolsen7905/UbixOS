@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structsys__mbox__msg" kind="struct" prot="public">
+    <compoundname>sys_mbox_msg</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__mbox__msg_15902d8670558a8892e739c37804e20e5" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* sys_mbox_msg::msg</definition>
+        <argsstring></argsstring>
+        <name>msg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="103" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__mbox__msg_1aee9d483ae1aedfb4c5ebea30cd2f84b" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__mbox__msg" kindref="compound">sys_mbox_msg</ref> *</type>
+        <definition>struct sys_mbox_msg* sys_mbox_msg::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="102" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="329">
+        <label>sys_mbox_msg</label>
+        <link refid="structsys__mbox__msg"/>
+        <childnode refid="329" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="101" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="101" bodyend="104"/>
+    <listofallmembers>
+      <member refid="structsys__mbox__msg_15902d8670558a8892e739c37804e20e5" prot="public" virt="non-virtual"><scope>sys_mbox_msg</scope><name>msg</name></member>
+      <member refid="structsys__mbox__msg_1aee9d483ae1aedfb4c5ebea30cd2f84b" prot="public" virt="non-virtual"><scope>sys_mbox_msg</scope><name>next</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

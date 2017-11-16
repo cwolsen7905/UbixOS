@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structclose__args" kind="struct" prot="public">
+    <compoundname>close_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structclose__args_1795acdf38594b16ee7638db7ac6a3d4c" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int close_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="109" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_1ec14600d2aa9db1288f00704ba3a55d7" compoundref="kern__descrip_8c" startline="90" endline="98">close</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structclose__args_10f51f560581579e7fe5e01b546c07ce1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char close_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structclose__args_1e79073fdba01a4bedce7048f426db17c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char close_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="108" bodyend="110"/>
+    <listofallmembers>
+      <member refid="structclose__args_1795acdf38594b16ee7638db7ac6a3d4c" prot="public" virt="non-virtual"><scope>close_args</scope><name>fd</name></member>
+      <member refid="structclose__args_10f51f560581579e7fe5e01b546c07ce1" prot="public" virt="non-virtual"><scope>close_args</scope><name>fd_l_</name></member>
+      <member refid="structclose__args_1e79073fdba01a4bedce7048f426db17c" prot="public" virt="non-virtual"><scope>close_args</scope><name>fd_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

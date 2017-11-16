@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_a0cadbe588a0f0b62517333d702e3cca" kind="dir">
+    <compoundname>src/sys/kmods/</compoundname>
+    <innerfile refid="kmod_8c">kmod.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kmods/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,424 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="bot_8c" kind="file">
+    <compoundname>bot.c</compoundname>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="mem_8h" local="yes">net/mem.h</includes>
+    <includes refid="debug_8h" local="yes">net/debug.h</includes>
+    <includes refid="def_8h" local="yes">net/def.h</includes>
+    <includes refid="api_8h" local="yes">net/api.h</includes>
+    <includes refid="stats_8h" local="yes">net/stats.h</includes>
+    <incdepgraph>
+      <node id="3960">
+        <label>net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="3951" relation="include">
+        </childnode>
+        <childnode refid="3954" relation="include">
+        </childnode>
+        <childnode refid="3957" relation="include">
+        </childnode>
+        <childnode refid="3961" relation="include">
+        </childnode>
+        <childnode refid="3962" relation="include">
+        </childnode>
+        <childnode refid="3963" relation="include">
+        </childnode>
+      </node>
+      <node id="3955">
+        <label>arch/lib.h</label>
+        <link refid="lib_8h"/>
+      </node>
+      <node id="3968">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="3949" relation="include">
+        </childnode>
+        <childnode refid="3953" relation="include">
+        </childnode>
+        <childnode refid="3969" relation="include">
+        </childnode>
+      </node>
+      <node id="3962">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="3949" relation="include">
+        </childnode>
+        <childnode refid="3963" relation="include">
+        </childnode>
+        <childnode refid="3961" relation="include">
+        </childnode>
+        <childnode refid="3964" relation="include">
+        </childnode>
+        <childnode refid="3957" relation="include">
+        </childnode>
+      </node>
+      <node id="3965">
+        <label>net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="3951" relation="include">
+        </childnode>
+        <childnode refid="3957" relation="include">
+        </childnode>
+        <childnode refid="3964" relation="include">
+        </childnode>
+        <childnode refid="3960" relation="include">
+        </childnode>
+        <childnode refid="3963" relation="include">
+        </childnode>
+      </node>
+      <node id="3952">
+        <label>arch/cpu.h</label>
+        <link refid="cpu_8h"/>
+      </node>
+      <node id="3959">
+        <label>arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+      </node>
+      <node id="3966">
+        <label>net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="3958" relation="include">
+        </childnode>
+        <childnode refid="3947" relation="include">
+        </childnode>
+        <childnode refid="3957" relation="include">
+        </childnode>
+        <childnode refid="3949" relation="include">
+        </childnode>
+        <childnode refid="3960" relation="include">
+        </childnode>
+        <childnode refid="3967" relation="include">
+        </childnode>
+        <childnode refid="3963" relation="include">
+        </childnode>
+      </node>
+      <node id="3943">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3944" relation="include">
+        </childnode>
+      </node>
+      <node id="3944">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3951">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3952" relation="include">
+        </childnode>
+        <childnode refid="3953" relation="include">
+        </childnode>
+      </node>
+      <node id="3967">
+        <label>net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="3951" relation="include">
+        </childnode>
+        <childnode refid="3949" relation="include">
+        </childnode>
+        <childnode refid="3957" relation="include">
+        </childnode>
+        <childnode refid="3962" relation="include">
+        </childnode>
+      </node>
+      <node id="3941">
+        <label>src/sys/net/net/bot.c</label>
+        <link refid="bot.c"/>
+        <childnode refid="3942" relation="include">
+        </childnode>
+        <childnode refid="3945" relation="include">
+        </childnode>
+        <childnode refid="3946" relation="include">
+        </childnode>
+        <childnode refid="3947" relation="include">
+        </childnode>
+        <childnode refid="3948" relation="include">
+        </childnode>
+        <childnode refid="3954" relation="include">
+        </childnode>
+        <childnode refid="3956" relation="include">
+        </childnode>
+        <childnode refid="3968" relation="include">
+        </childnode>
+      </node>
+      <node id="3946">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="3943" relation="include">
+        </childnode>
+      </node>
+      <node id="3942">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3943" relation="include">
+        </childnode>
+      </node>
+      <node id="3950">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="3954">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="3955" relation="include">
+        </childnode>
+      </node>
+      <node id="3947">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="3943" relation="include">
+        </childnode>
+        <childnode refid="3948" relation="include">
+        </childnode>
+        <childnode refid="3949" relation="include">
+        </childnode>
+        <childnode refid="3951" relation="include">
+        </childnode>
+      </node>
+      <node id="3969">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="3943" relation="include">
+        </childnode>
+        <childnode refid="3948" relation="include">
+        </childnode>
+        <childnode refid="3953" relation="include">
+        </childnode>
+        <childnode refid="3950" relation="include">
+        </childnode>
+      </node>
+      <node id="3945">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3943" relation="include">
+        </childnode>
+      </node>
+      <node id="3961">
+        <label>net/ipv4/ip_addr.h</label>
+        <link refid="ipv4_2ip__addr_8h"/>
+        <childnode refid="3951" relation="include">
+        </childnode>
+      </node>
+      <node id="3963">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="3943" relation="include">
+        </childnode>
+        <childnode refid="3948" relation="include">
+        </childnode>
+        <childnode refid="3953" relation="include">
+        </childnode>
+      </node>
+      <node id="3956">
+        <label>net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="3949" relation="include">
+        </childnode>
+        <childnode refid="3957" relation="include">
+        </childnode>
+        <childnode refid="3958" relation="include">
+        </childnode>
+        <childnode refid="3960" relation="include">
+        </childnode>
+        <childnode refid="3965" relation="include">
+        </childnode>
+        <childnode refid="3966" relation="include">
+        </childnode>
+        <childnode refid="3963" relation="include">
+        </childnode>
+      </node>
+      <node id="3949">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3950" relation="include">
+        </childnode>
+      </node>
+      <node id="3958">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="3953" relation="include">
+        </childnode>
+        <childnode refid="3959" relation="include">
+        </childnode>
+      </node>
+      <node id="3957">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="3948" relation="include">
+        </childnode>
+        <childnode refid="3951" relation="include">
+        </childnode>
+      </node>
+      <node id="3948">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="3964">
+        <label>net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="3951" relation="include">
+        </childnode>
+        <childnode refid="3949" relation="include">
+        </childnode>
+        <childnode refid="3957" relation="include">
+        </childnode>
+        <childnode refid="3961" relation="include">
+        </childnode>
+      </node>
+      <node id="3953">
+        <label>arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="bot_8c_1e5e17afd28772b096c68d413334b257a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bot_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>bot_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/bot.c" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/bot.c" bodystart="83" bodyend="85"/>
+        <references refid="bot_8c_1ab86e03f8301aa7da6924fe6120e0d31" compoundref="bot_8c" startline="56" endline="81">bot_thread</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</references>
+      </memberdef>
+      <memberdef kind="function" id="bot_8c_1ab86e03f8301aa7da6924fe6120e0d31" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void bot_thread</definition>
+        <argsstring>(void *arg)</argsstring>
+        <name>bot_thread</name>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/bot.c" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/bot.c" bodystart="56" bodyend="81"/>
+        <references refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" compoundref="ipv4_2ip__addr_8h" startline="52">IP4_ADDR</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="api_8h_17c70594658105835086ed6fe19aa8067" compoundref="api__lib_8c" startline="186" endline="189">netbuf_copy</references>
+        <references refid="api_8h_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</references>
+        <references refid="api_8h_16d20eca8f0316e4e71980108c1563581" compoundref="api__lib_8c" startline="122" endline="125">netbuf_len</references>
+        <references refid="api_8h_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</references>
+        <references refid="api_8h_1935860c5a91e85457369b6f558e638fd" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</references>
+        <references refid="api_8h_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a">NETCONN_TCP</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <referencedby refid="bot_8c_1e5e17afd28772b096c68d413334b257a" compoundref="bot_8c" startline="83" endline="85">bot_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: bot_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="mem_8h" kindref="compound">net/mem.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="debug_8h" kindref="compound">net/debug.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="def_8h" kindref="compound">net/def.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="api_8h" kindref="compound">net/api.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">net/stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>UBU</highlight></codeline>
+<codeline lineno="47"><highlight class="comment">static<sp/>void<sp/>sendstr(const<sp/>char<sp/>*str,<sp/>struct<sp/>netconn<sp/>*conn)<sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/><sp/>netconn_write(conn,<sp/>(void<sp/>*)str,<sp/>strlen(str),<sp/>NETCONN_NOCOPY);</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"></highlight></codeline>
+<codeline lineno="51"><highlight class="comment">static<sp/>void<sp/>botErr()<sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/><sp/>kprintf(&quot;ERRROR\n&quot;);</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="54"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="bot_8c_1ab86e03f8301aa7da6924fe6120e0d31" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="bot_8c_1ab86e03f8301aa7da6924fe6120e0d31" kindref="member">bot_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg)<sp/>{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetconn" kindref="compound">netconn</ref><sp/>*conn;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>len;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>bufr[1500];</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>ipaddr;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetbuf" kindref="compound">netbuf</ref><sp/>*<ref refid="structbuf" kindref="compound">buf</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" kindref="member">IP4_ADDR</ref>(&amp;ipaddr,216,152,77,10);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>conn<sp/>=<sp/><ref refid="api_8h_1935860c5a91e85457369b6f558e638fd" kindref="member">netconn_new</ref>(<ref refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a" kindref="member">NETCONN_TCP</ref>);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Starting<sp/>UbixOS<sp/>Bot\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal">(1)<sp/>{</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[A&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;\n\nCONNECT:<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="api_8h_140e08b372ad246ec7d2a7c9b1a2bd8fb" kindref="member">netconn_connect</ref>(conn,&amp;ipaddr,6667));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;B]&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(buf<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>buf<sp/>=<sp/><ref refid="api_8h_1cbd0b5a0344c2c3fffe5a02445a2c2b3" kindref="member">netconn_recv</ref>(conn);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="api_8h_17c70594658105835086ed6fe19aa8067" kindref="member">netbuf_copy</ref>(buf,<sp/>bufr,<sp/>1024);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>len<sp/>=<sp/><ref refid="api_8h_16d20eca8f0316e4e71980108c1563581" kindref="member">netbuf_len</ref>(buf);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="api_8h_19dfd3ddfe0ec65009cb140c68404b09d" kindref="member">netbuf_delete</ref>(buf);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bufr[len-2]<sp/>=<sp/></highlight><highlight class="charliteral">&apos;\0&apos;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Bufr:<sp/>[%s:%i]&quot;</highlight><highlight class="normal">,bufr,len);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//sendstr(&quot;BLah\n&quot;,conn);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="bot_8c_1e5e17afd28772b096c68d413334b257a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="bot_8c_1e5e17afd28772b096c68d413334b257a" kindref="member">bot_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" kindref="member">sys_thread_new</ref>(<ref refid="bot_8c_1ab86e03f8301aa7da6924fe6120e0d31" kindref="member">bot_thread</ref>,<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/bot.c"/>
+  </compounddef>
+</doxygen>

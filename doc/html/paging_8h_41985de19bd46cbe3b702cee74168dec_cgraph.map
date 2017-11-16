@@ -1,0 +1,9 @@
+base referer
+rect $vmm_8h.html#362d462b3a1e19b5e0ef95e1839dbf11 248,56 395,83
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 470,56 550,83
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 462,107 558,133
+rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 288,208 355,235
+rect $lib_2string_8h.html#ce4b911463887af5e748326323e99a23 283,259 360,285
+rect $paging_8h.html#e88bcfc69132a46a1982237913101a5b 236,309 407,336
+rect $paging_8h.html#30a38035243b9dfb285b3793788126be 230,107 414,133
+rect $paging_8h.html#fd94da50e455602f86ad7dae2fc9d1db 254,360 390,387

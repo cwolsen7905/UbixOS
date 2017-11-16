@@ -1,0 +1,4 @@
+base referer
+rect $vmm_8h.html 260,31 367,57
+rect $paging_8h.html 416,5 536,32
+rect $types_8h.html 585,31 705,57

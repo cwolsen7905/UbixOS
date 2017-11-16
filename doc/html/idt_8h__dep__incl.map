@@ -1,0 +1,10 @@
+base referer
+rect $init_8h.html 239,5 447,32
+rect $atkbd_8c.html 269,56 416,83
+rect $fdc_8c.html 279,107 407,133
+rect $mouse_8c.html 267,157 419,184
+rect $ne2k_8c.html 272,208 413,235
+rect $sched_8c.html 257,259 428,285
+rect $lnc_8c.html 279,309 407,336
+rect $idt_8c.html 279,360 407,387
+rect $main_8c.html 496,5 640,32

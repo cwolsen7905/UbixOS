@@ -1,0 +1,9 @@
+base referer
+rect $smp_8h.html 227,6 339,32
+rect $spinlock_8h.html 214,56 352,83
+rect $kpanic_8h.html 219,107 347,134
+rect $kprintf_8h.html 234,158 332,184
+rect $lib_2string_8h.html 236,208 330,235
+rect $io_8h.html 247,259 319,286
+rect $types_8h.html 402,107 522,134
+rect $__types_8h.html 572,107 676,134

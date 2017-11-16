@@ -1,0 +1,1375 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="lnc_8h" kind="file">
+    <compoundname>lnc.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="lnc_8c" local="no">src/sys/pci/lnc.c</includedby>
+    <incdepgraph>
+      <node id="3447">
+        <label>src/sys/include/pci/lnc.h</label>
+        <link refid="lnc.h"/>
+        <childnode refid="3448" relation="include">
+        </childnode>
+      </node>
+      <node id="3448">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3449" relation="include">
+        </childnode>
+      </node>
+      <node id="3449">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3451">
+        <label>src/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="3450">
+        <label>src/sys/include/pci/lnc.h</label>
+        <link refid="lnc.h"/>
+        <childnode refid="3451" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structarpcom" prot="public">arpcom</innerclass>
+    <innerclass refid="structhostRingEntry" prot="public">hostRingEntry</innerclass>
+    <innerclass refid="structinitBlock" prot="public">initBlock</innerclass>
+    <innerclass refid="structlncInfo" prot="public">lncInfo</innerclass>
+    <innerclass refid="structmds" prot="public">mds</innerclass>
+    <innerclass refid="structnicInfo" prot="public">nicInfo</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="lnc_8h_105aca4c2607e5cf418d26c6471c6df91" prot="public" static="no">
+        <name>Am79C960</name>
+        <initializer>0x0003</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="100" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="100" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_191e4b6782cdb439f7d1493924b06036d" prot="public" static="no">
+        <name>Am79C961</name>
+        <initializer>0x2260</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="101" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="101" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_13e6e658373fd814ca74785d82fb483df" prot="public" static="no">
+        <name>Am79C961A</name>
+        <initializer>0x2261</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="102" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="102" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1be2e36dbd6a0dda5f7132f496d560751" prot="public" static="no">
+        <name>Am79C965</name>
+        <initializer>0x2430</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="103" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="103" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1901c0fbc5ca77f43baa5468a0c554148" prot="public" static="no">
+        <name>Am79C970</name>
+        <initializer>0x0242</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="104" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="104" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_126c7d28ffe133b74501f6c3cd3ee0afc" prot="public" static="no">
+        <name>Am79C970A</name>
+        <initializer>0x2621</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="105" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="105" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_177cd476f0f327589173897cace2a6d5d" prot="public" static="no">
+        <name>Am79C971</name>
+        <initializer>0x2623</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="106" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="106" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1ec4eaac1bfb06a8d9d33802cd3481a71" prot="public" static="no">
+        <name>Am79C972</name>
+        <initializer>0x2624</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="107" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="107" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_12418761a3aa861593c41df8a9c75c84b" prot="public" static="no">
+        <name>Am79C973</name>
+        <initializer>0x2625</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="108" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_14377d3112a6628c997cd2a4fe9a5e3d8" prot="public" static="no">
+        <name>Am79C978</name>
+        <initializer>0x2626</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="109" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1e3685f97383506d96630657d40139121" prot="public" static="no">
+        <name>AMD_MASK</name>
+        <initializer>0x003</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="98" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_13ef96780b54fbd7c886561ccec168e89" prot="public" static="no">
+        <name>BABL</name>
+        <initializer>0x4000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" prot="public" static="no">
+        <name>C_LANCE</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="60" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1176c0577baa96c686397bca42f7ee6ff" prot="public" static="no">
+        <name>CERR</name>
+        <initializer>0x2000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" prot="public" static="no">
+        <name>CSR0</name>
+        <initializer>0x0000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="72" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1aa0004ce746adcb049f80ada0d848500" prot="public" static="no">
+        <name>CSR1</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_16f3bf10d90237a3c12153ebf8a52d586" prot="public" static="no">
+        <name>CSR2</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" prot="public" static="no">
+        <name>CSR3</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="75" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1c2969c1f9783df74d1315e32c8d7e512" prot="public" static="no">
+        <name>CSR88</name>
+        <initializer>88</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="76" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_164a850bd91da43c547e18e1b4cba0af2" prot="public" static="no">
+        <name>CSR89</name>
+        <initializer>89</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="77" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" prot="public" static="no">
+        <name>DMA_FIXED</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1ad3ba02ca3af2c007a91e05b7dada2b1" prot="public" static="no">
+        <name>DMA_MBUF</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1735563036dced0b7d6cc98f97ea4978b" prot="public" static="no">
+        <name>ERR</name>
+        <initializer>0x8000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="79" bodyend="-1"/>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1bf4fcaacb1ad2010711b7c880ec2ed20" prot="public" static="no">
+        <name>ETHER_ADDR_LEN</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1ca0dae20ad119b8bf8f368693eb2bff8" prot="public" static="no">
+        <name>IDON</name>
+        <initializer>0x0100</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="86" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_193d733faa9617c2136ecc02953be45d5" prot="public" static="no">
+        <name>INEA</name>
+        <initializer>0x0040</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="88" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1b5889105dcd019008c9448dff61323f6" prot="public" static="no">
+        <name>INIT</name>
+        <initializer>0x0001</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="94" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_171e19ac3883e6cdbc2a19126e1b590ab" prot="public" static="no">
+        <name>INTR</name>
+        <initializer>0x0080</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="87" bodyend="-1"/>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" prot="public" static="no">
+        <name>LANCE</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="59" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1f52baa205a87ca363ed5b4121a5f80a9" prot="public" static="no">
+        <name>MEM_SLEW</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1d4b3c4a053ea2e5475d77c3732383899" prot="public" static="no">
+        <name>MERR</name>
+        <initializer>0x0800</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1614c0d93bfbf181f442e30e1c27b27ae" prot="public" static="no">
+        <name>MISS</name>
+        <initializer>0x1000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_13924669c8950a7f0b9b30e2841c21986" prot="public" static="no">
+        <name>NDESC</name>
+        <param><defname>len2</defname></param>
+        <initializer>(1 &lt;&lt; len2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_10f13e1c33c723fb1751c67d8dcd54df3" prot="public" static="no">
+        <name>NE2100</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1b8a25540b57ae88d6dafdab7f8196028" prot="public" static="no">
+        <name>NE2100_IOSIZE</name>
+        <initializer>24</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_11291f416b069313021b519eea62d5bf1" prot="public" static="no">
+        <name>NORMAL</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_19a6f0938f7533adf6aebf030c2cff3d6" prot="public" static="no">
+        <name>NRDRE</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_15feb2f9782070ea70e997a934dba38b1" prot="public" static="no">
+        <name>NTDRE</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1f09868a61f66925c57b5d3e7fe36596b" prot="public" static="no">
+        <name>PART_MASK</name>
+        <initializer>0xffff</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="99" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="99" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" prot="public" static="no">
+        <name>PCnet_32</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="64" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1a3d9c098a27fad92e011c8642149245a" prot="public" static="no">
+        <name>PCNET_BDP</name>
+        <initializer>0x16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_133e34c2221d08ac7e5e4a76ad5fe5f2c" prot="public" static="no">
+        <name>PCnet_FAST</name>
+        <initializer>9</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="67" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1132ccf085a33454d996e0a80d804c391" prot="public" static="no">
+        <name>PCnet_FASTplus</name>
+        <initializer>10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="68" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_142619f0c436d20482c7cb4b76fc643a5" prot="public" static="no">
+        <name>PCnet_Home</name>
+        <initializer>11</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="69" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_13baa99ddd1afd3e15b0895fd678db39e" prot="public" static="no">
+        <name>PCnet_ISA</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1ed1e84c250032911bffed1b2f49fcf6e" prot="public" static="no">
+        <name>PCnet_ISA_II</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="63" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_19ad716fd5d7913ddf296a963b88c74e6" prot="public" static="no">
+        <name>PCnet_ISAplus</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="62" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_12da9a3ce30e040d19856a3aa23d11d09" prot="public" static="no">
+        <name>PCnet_PCI</name>
+        <initializer>7</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="65" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1e4152589aa28996d4f456ea1e3841613" prot="public" static="no">
+        <name>PCnet_PCI_II</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="66" bodyend="-1"/>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_14b84cf377a1b65f8597fb5a1a6b165cf" prot="public" static="no">
+        <name>PCNET_RAP</name>
+        <initializer>0x12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_180e710fa02e057090e7212fc4e52a09f" prot="public" static="no">
+        <name>PCNET_RDP</name>
+        <initializer>0x10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1023333abff7d16895fd173e2301468c5" prot="public" static="no">
+        <name>PCNET_RESET</name>
+        <initializer>0x14</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1e4f718f472f63dc07f7f923bd4b02e4e" prot="public" static="no">
+        <name>PCNET_VSW</name>
+        <initializer>0x18</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_17f410619679156a88b8f9e878e5badcf" prot="public" static="no">
+        <name>RECVBUFSIZE</name>
+        <initializer>1518</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_14810d8325791be718f1bcb2a92fd3a0f" prot="public" static="no">
+        <name>RINT</name>
+        <initializer>0x0400</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="84" bodyend="-1"/>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1e1bf5924626af85b5708417edb408ce1" prot="public" static="no">
+        <name>RXON</name>
+        <initializer>0x0020</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="89" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="89" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1ef3765fe92001684a71af27e0d738038" prot="public" static="no">
+        <name>SHMEM</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1e19b6bb2940d2fbe0a79852b070eeafd" prot="public" static="no">
+        <name>STOP</name>
+        <initializer>0x0004</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="92" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_139aaa2cb5148aec0a6c4599feaf3a7d3" prot="public" static="no">
+        <name>STRT</name>
+        <initializer>0x0002</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="93" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_15b56addf254a3a41f1596ee477c2293b" prot="public" static="no">
+        <name>TDMD</name>
+        <initializer>0x0008</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="91" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1c6f30425a8221b25e8ebf4cdeb804b0e" prot="public" static="no">
+        <name>TINT</name>
+        <initializer>0x0200</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="85" bodyend="-1"/>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_10d38de8b1de05fb25c7899244cc7a7df" prot="public" static="no">
+        <name>TRANSBUFSIZE</name>
+        <initializer>1518</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_188130575343bc866e885c2a9fea681d1" prot="public" static="no">
+        <name>TXON</name>
+        <initializer>0x0010</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="90" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lnc_8h_1c1ae4add974b9cfc6b5aaf8a578f01ab" prot="public" static="no">
+        <name>UNKNOWN</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="lnc_8h_1d155cde754cb2beb8403810b0a651ba7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _lncInt</definition>
+        <argsstring>()</argsstring>
+        <name>_lncInt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="183"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_10b7fb4f8833ed743dc1f3c4c90c28731" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void initLNC</definition>
+        <argsstring>()</argsstring>
+        <name>initLNC</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="176" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="104" bodyend="152"/>
+        <references refid="lnc_8h_1d155cde754cb2beb8403810b0a651ba7">_lncInt</references>
+        <references refid="structarpcom_18335c2422b63415a71353f12d70b1e05" compoundref="lnc_8h" startline="143">arpcom::ac_enaddr</references>
+        <references refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" compoundref="lnc_8h" startline="157">lncInfo::arpcom</references>
+        <references refid="structlncInfo_1e39a5151bfee43405df118538307a604" compoundref="lnc_8h" startline="164">lncInfo::bdp</references>
+        <references refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" compoundref="lnc_8h" startline="72">CSR0</references>
+        <references refid="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" compoundref="lnc_8h" startline="75">CSR3</references>
+        <references refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" compoundref="gdt_8h" startline="44">dDpl3</references>
+        <references refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" compoundref="gdt_8h" startline="37">dInt</references>
+        <references refid="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" compoundref="lnc_8h" startline="52">DMA_FIXED</references>
+        <references refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" compoundref="gdt_8h" startline="48">dPresent</references>
+        <references refid="lnc_8h_1bf4fcaacb1ad2010711b7c880ec2ed20" compoundref="lnc_8h" startline="42">ETHER_ADDR_LEN</references>
+        <references refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" compoundref="lnc_8h" startline="150">nicInfo::ic</references>
+        <references refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" compoundref="lnc_8h" startline="149">nicInfo::ident</references>
+        <references refid="lnc_8h_1ca0dae20ad119b8bf8f368693eb2bff8" compoundref="lnc_8h" startline="86">IDON</references>
+        <references refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" compoundref="lnc_8h" startline="88">INEA</references>
+        <references refid="lnc_8h_1b5889105dcd019008c9448dff61323f6" compoundref="lnc_8h" startline="94">INIT</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="lnc_8h_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</references>
+        <references refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" compoundref="lnc_8h" startline="151">nicInfo::memMode</references>
+        <references refid="8259_8h_17d84962c1a1c225344a94545309f92fc" compoundref="8259_8h" startline="42">mVec</references>
+        <references refid="lnc_8h_10f13e1c33c723fb1751c67d8dcd54df3" compoundref="lnc_8h" startline="49">NE2100</references>
+        <references refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" compoundref="lnc_8h" startline="158">lncInfo::nic</references>
+        <references refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" compoundref="lnc_8h" startline="165">lncInfo::nrdre</references>
+        <references refid="lnc_8h_19a6f0938f7533adf6aebf030c2cff3d6" compoundref="lnc_8h" startline="40">NRDRE</references>
+        <references refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" compoundref="lnc_8h" startline="166">lncInfo::ntdre</references>
+        <references refid="lnc_8h_15feb2f9782070ea70e997a934dba38b1" compoundref="lnc_8h" startline="41">NTDRE</references>
+        <references refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" compoundref="lnc_8h" startline="64">PCnet_32</references>
+        <references refid="lnc_8h_1a3d9c098a27fad92e011c8642149245a" compoundref="lnc_8h" startline="47">PCNET_BDP</references>
+        <references refid="lnc_8h_14b84cf377a1b65f8597fb5a1a6b165cf" compoundref="lnc_8h" startline="45">PCNET_RAP</references>
+        <references refid="lnc_8h_180e710fa02e057090e7212fc4e52a09f" compoundref="lnc_8h" startline="44">PCNET_RDP</references>
+        <references refid="lnc_8h_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <references refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</references>
+        <references refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</references>
+        <references refid="lnc_8h_139aaa2cb5148aec0a6c4599feaf3a7d3" compoundref="lnc_8h" startline="93">STRT</references>
+        <references refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</references>
+        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_1c698a392b34b41b9aa3eed6ec7c2f8db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lanceProbe</definition>
+        <argsstring>(struct lncInfo *lnc)</argsstring>
+        <name>lanceProbe</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="178" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="192" bodyend="206"/>
+        <references refid="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" compoundref="lnc_8h" startline="60">C_LANCE</references>
+        <references refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" compoundref="lnc_8h" startline="72">CSR0</references>
+        <references refid="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" compoundref="lnc_8h" startline="75">CSR3</references>
+        <references refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" compoundref="lnc_8h" startline="88">INEA</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" compoundref="lnc_8h" startline="59">LANCE</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <references refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</references>
+        <references refid="lnc_8h_1e19b6bb2940d2fbe0a79852b070eeafd" compoundref="lnc_8h" startline="92">STOP</references>
+        <references refid="lnc_8h_1c1ae4add974b9cfc6b5aaf8a578f01ab" compoundref="lnc_8h" startline="58">UNKNOWN</references>
+        <references refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</references>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_186e977fd8113976b87da564f2b53a2d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lncAttach</definition>
+        <argsstring>(struct lncInfo *lnc, int unit)</argsstring>
+        <name>lncAttach</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>unit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="179" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="246" bodyend="308"/>
+        <references refid="structarpcom_18335c2422b63415a71353f12d70b1e05" compoundref="lnc_8h" startline="143">arpcom::ac_enaddr</references>
+        <references refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" compoundref="lnc_8h" startline="157">lncInfo::arpcom</references>
+        <references refid="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" compoundref="lnc_8h" startline="60">C_LANCE</references>
+        <references refid="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" compoundref="lnc_8h" startline="52">DMA_FIXED</references>
+        <references refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" compoundref="lnc_8h" startline="150">nicInfo::ic</references>
+        <references refid="lnc_8c_1f979fe05542c79a6de2a45efeb75cb01" compoundref="lnc_8c" startline="68">icIdent</references>
+        <references refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" compoundref="lnc_8h" startline="149">nicInfo::ident</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" compoundref="lnc_8h" startline="59">LANCE</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="lnc_8h_1f52baa205a87ca363ed5b4121a5f80a9" compoundref="lnc_8h" startline="37">MEM_SLEW</references>
+        <references refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" compoundref="lnc_8h" startline="151">nicInfo::memMode</references>
+        <references refid="structnicInfo_13dc304d78fecc9112cf979b7b1fc3525" compoundref="lnc_8h" startline="153">nicInfo::mode</references>
+        <references refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" compoundref="lnc_8h" startline="35">NDESC</references>
+        <references refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" compoundref="lnc_8h" startline="158">lncInfo::nic</references>
+        <references refid="lnc_8c_1efadd74e9a9786e9fb67f6d994da3366" compoundref="lnc_8c" startline="60">nicIdent</references>
+        <references refid="lnc_8h_11291f416b069313021b519eea62d5bf1" compoundref="lnc_8h" startline="36">NORMAL</references>
+        <references refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" compoundref="lnc_8h" startline="165">lncInfo::nrdre</references>
+        <references refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" compoundref="lnc_8h" startline="166">lncInfo::ntdre</references>
+        <references refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" compoundref="lnc_8h" startline="64">PCnet_32</references>
+        <references refid="lnc_8h_17f410619679156a88b8f9e878e5badcf" compoundref="lnc_8h" startline="39">RECVBUFSIZE</references>
+        <references refid="structlncInfo_149f921775c4d249ce90af5afed331bd9" compoundref="lnc_8h" startline="159">lncInfo::recvRing</references>
+        <references refid="lnc_8h_1ef3765fe92001684a71af27e0d738038" compoundref="lnc_8h" startline="54">SHMEM</references>
+        <references refid="lnc_8h_10d38de8b1de05fb25c7899244cc7a7df" compoundref="lnc_8h" startline="38">TRANSBUFSIZE</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_16fdabac3834c12782583e0a42f928295" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void lncInt</definition>
+        <argsstring>()</argsstring>
+        <name>lncInt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="182" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="208" bodyend="226"/>
+        <references refid="lnc_8h_1735563036dced0b7d6cc98f97ea4978b" compoundref="lnc_8h" startline="79">ERR</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="lnc_8h_171e19ac3883e6cdbc2a19126e1b590ab" compoundref="lnc_8h" startline="87">INTR</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <references refid="lnc_8h_14810d8325791be718f1bcb2a92fd3a0f" compoundref="lnc_8h" startline="84">RINT</references>
+        <references refid="lnc_8h_1c6f30425a8221b25e8ebf4cdeb804b0e" compoundref="lnc_8h" startline="85">TINT</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_17b84655da5c5a354e1dd00faf729506c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int probe</definition>
+        <argsstring>(struct lncInfo *lnc)</argsstring>
+        <name>probe</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="177" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="154" bodyend="190"/>
+        <references refid="lnc_8h_105aca4c2607e5cf418d26c6471c6df91" compoundref="lnc_8h" startline="100">Am79C960</references>
+        <references refid="lnc_8h_191e4b6782cdb439f7d1493924b06036d" compoundref="lnc_8h" startline="101">Am79C961</references>
+        <references refid="lnc_8h_13e6e658373fd814ca74785d82fb483df" compoundref="lnc_8h" startline="102">Am79C961A</references>
+        <references refid="lnc_8h_1be2e36dbd6a0dda5f7132f496d560751" compoundref="lnc_8h" startline="103">Am79C965</references>
+        <references refid="lnc_8h_1901c0fbc5ca77f43baa5468a0c554148" compoundref="lnc_8h" startline="104">Am79C970</references>
+        <references refid="lnc_8h_126c7d28ffe133b74501f6c3cd3ee0afc" compoundref="lnc_8h" startline="105">Am79C970A</references>
+        <references refid="lnc_8h_177cd476f0f327589173897cace2a6d5d" compoundref="lnc_8h" startline="106">Am79C971</references>
+        <references refid="lnc_8h_1ec4eaac1bfb06a8d9d33802cd3481a71" compoundref="lnc_8h" startline="107">Am79C972</references>
+        <references refid="lnc_8h_12418761a3aa861593c41df8a9c75c84b" compoundref="lnc_8h" startline="108">Am79C973</references>
+        <references refid="lnc_8h_14377d3112a6628c997cd2a4fe9a5e3d8" compoundref="lnc_8h" startline="109">Am79C978</references>
+        <references refid="lnc_8h_1e3685f97383506d96630657d40139121" compoundref="lnc_8h" startline="98">AMD_MASK</references>
+        <references refid="lnc_8h_1c2969c1f9783df74d1315e32c8d7e512" compoundref="lnc_8h" startline="76">CSR88</references>
+        <references refid="lnc_8h_164a850bd91da43c547e18e1b4cba0af2" compoundref="lnc_8h" startline="77">CSR89</references>
+        <references refid="lnc_8h_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="lnc_8h_1f09868a61f66925c57b5d3e7fe36596b" compoundref="lnc_8h" startline="99">PART_MASK</references>
+        <references refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" compoundref="lnc_8h" startline="64">PCnet_32</references>
+        <references refid="lnc_8h_133e34c2221d08ac7e5e4a76ad5fe5f2c" compoundref="lnc_8h" startline="67">PCnet_FAST</references>
+        <references refid="lnc_8h_1132ccf085a33454d996e0a80d804c391" compoundref="lnc_8h" startline="68">PCnet_FASTplus</references>
+        <references refid="lnc_8h_142619f0c436d20482c7cb4b76fc643a5" compoundref="lnc_8h" startline="69">PCnet_Home</references>
+        <references refid="lnc_8h_13baa99ddd1afd3e15b0895fd678db39e" compoundref="lnc_8h" startline="61">PCnet_ISA</references>
+        <references refid="lnc_8h_1ed1e84c250032911bffed1b2f49fcf6e" compoundref="lnc_8h" startline="63">PCnet_ISA_II</references>
+        <references refid="lnc_8h_19ad716fd5d7913ddf296a963b88c74e6" compoundref="lnc_8h" startline="62">PCnet_ISAplus</references>
+        <references refid="lnc_8h_12da9a3ce30e040d19856a3aa23d11d09" compoundref="lnc_8h" startline="65">PCnet_PCI</references>
+        <references refid="lnc_8h_1e4152589aa28996d4f456ea1e3841613" compoundref="lnc_8h" startline="66">PCnet_PCI_II</references>
+        <references refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_1b26b4568cde86b4006a54e4aae74d0e7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 readBcr</definition>
+        <argsstring>(struct lncInfo *lnc, uInt16 port)</argsstring>
+        <name>readBcr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="174" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="98" bodyend="101"/>
+        <references refid="structlncInfo_1e39a5151bfee43405df118538307a604" compoundref="lnc_8h" startline="164">lncInfo::bdp</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 readCsr</definition>
+        <argsstring>(struct lncInfo *lnc, uInt16 port)</argsstring>
+        <name>readCsr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="172" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="88" bodyend="91"/>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_1c77dcbd7df5a9a8cacc3f684fd59e389" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeBcr</definition>
+        <argsstring>(struct lncInfo *lnc, uInt16 port, uInt16 val)</argsstring>
+        <name>writeBcr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="173" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="93" bodyend="96"/>
+        <references refid="structlncInfo_1e39a5151bfee43405df118538307a604" compoundref="lnc_8h" startline="164">lncInfo::bdp</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeCsr</definition>
+        <argsstring>(struct lncInfo *lnc, uInt16 port, uInt16 val)</argsstring>
+        <name>writeCsr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="171" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="83" bodyend="86"/>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" prot="public" static="no" mutable="no">
+        <type><ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+        <definition>struct lncInfo* lnc</definition>
+        <argsstring></argsstring>
+        <name>lnc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="169" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="58" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+        <referencedby refid="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</referencedby>
+        <referencedby refid="lnc_8c_1c77dcbd7df5a9a8cacc3f684fd59e389" compoundref="lnc_8c" startline="93" endline="96">writeBcr</referencedby>
+        <referencedby refid="lnc_8c_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: lnc_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_LNC_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_LNC_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NDESC(len2)<sp/>(1<sp/>&lt;&lt;<sp/>len2)</highlight></codeline>
+<codeline lineno="36" refid="lnc_8h_11291f416b069313021b519eea62d5bf1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NORMAL<sp/>0</highlight></codeline>
+<codeline lineno="37" refid="lnc_8h_1f52baa205a87ca363ed5b4121a5f80a9" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEM_SLEW<sp/>8</highlight></codeline>
+<codeline lineno="38" refid="lnc_8h_10d38de8b1de05fb25c7899244cc7a7df" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TRANSBUFSIZE<sp/>1518</highlight></codeline>
+<codeline lineno="39" refid="lnc_8h_17f410619679156a88b8f9e878e5badcf" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>RECVBUFSIZE<sp/>1518</highlight></codeline>
+<codeline lineno="40" refid="lnc_8h_19a6f0938f7533adf6aebf030c2cff3d6" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NRDRE<sp/>3</highlight></codeline>
+<codeline lineno="41" refid="lnc_8h_15feb2f9782070ea70e997a934dba38b1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NTDRE<sp/>3</highlight></codeline>
+<codeline lineno="42" refid="lnc_8h_1bf4fcaacb1ad2010711b7c880ec2ed20" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/>ETHER_ADDR_LEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight></codeline>
+<codeline lineno="43" refid="lnc_8h_1b8a25540b57ae88d6dafdab7f8196028" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NE2100_IOSIZE<sp/><sp/>24</highlight></codeline>
+<codeline lineno="44" refid="lnc_8h_180e710fa02e057090e7212fc4e52a09f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PCNET_RDP<sp/><sp/><sp/><sp/>0x10<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Register<sp/>Data<sp/>Port<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="lnc_8h_14b84cf377a1b65f8597fb5a1a6b165cf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCNET_RAP<sp/><sp/><sp/><sp/>0x12<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Register<sp/>Address<sp/>Port<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="lnc_8h_1023333abff7d16895fd173e2301468c5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCNET_RESET<sp/><sp/>0x14</highlight></codeline>
+<codeline lineno="47" refid="lnc_8h_1a3d9c098a27fad92e011c8642149245a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PCNET_BDP<sp/><sp/><sp/><sp/>0x16</highlight></codeline>
+<codeline lineno="48" refid="lnc_8h_1e4f718f472f63dc07f7f923bd4b02e4e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PCNET_VSW<sp/><sp/><sp/><sp/>0x18</highlight></codeline>
+<codeline lineno="49" refid="lnc_8h_10f13e1c33c723fb1751c67d8dcd54df3" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NE2100<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="50"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>mem_mode<sp/>values<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DMA_FIXED<sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="53" refid="lnc_8h_1ad3ba02ca3af2c007a91e05b7dada2b1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DMA_MBUF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="54" refid="lnc_8h_1ef3765fe92001684a71af27e0d738038" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SHMEM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="55"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="comment">/**********<sp/>Chip<sp/>Types<sp/>**********/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="lnc_8h_1c1ae4add974b9cfc6b5aaf8a578f01ab" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UNKNOWN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Unknown<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LANCE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am7990<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>C_LANCE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C90<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="lnc_8h_13baa99ddd1afd3e15b0895fd678db39e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_ISA<sp/><sp/><sp/><sp/><sp/><sp/><sp/>3<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C960<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="lnc_8h_19ad716fd5d7913ddf296a963b88c74e6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_ISAplus<sp/><sp/><sp/>4<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C961<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="lnc_8h_1ed1e84c250032911bffed1b2f49fcf6e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_ISA_II<sp/><sp/><sp/><sp/>5<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C961A<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_32<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C965<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="lnc_8h_12da9a3ce30e040d19856a3aa23d11d09" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_PCI<sp/><sp/><sp/><sp/><sp/><sp/><sp/>7<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C970<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="lnc_8h_1e4152589aa28996d4f456ea1e3841613" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_PCI_II<sp/><sp/><sp/><sp/>8<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C970A<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="lnc_8h_133e34c2221d08ac7e5e4a76ad5fe5f2c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_FAST<sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C971<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="lnc_8h_1132ccf085a33454d996e0a80d804c391" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_FASTplus<sp/><sp/>10<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C972<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="lnc_8h_142619f0c436d20482c7cb4b76fc643a5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PCnet_Home<sp/><sp/><sp/><sp/><sp/><sp/>11<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Am79C978<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">/********<sp/>AM7990<sp/>Specifics<sp/>**************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>CSR0<sp/><sp/><sp/><sp/>0x0000</highlight></codeline>
+<codeline lineno="73" refid="lnc_8h_1aa0004ce746adcb049f80ada0d848500" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>CSR1<sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="74" refid="lnc_8h_16f3bf10d90237a3c12153ebf8a52d586" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>CSR2<sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="75" refid="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>CSR3<sp/><sp/><sp/><sp/>3</highlight></codeline>
+<codeline lineno="76" refid="lnc_8h_1c2969c1f9783df74d1315e32c8d7e512" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>CSR88<sp/><sp/><sp/>88</highlight></codeline>
+<codeline lineno="77" refid="lnc_8h_164a850bd91da43c547e18e1b4cba0af2" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>CSR89<sp/><sp/><sp/>89</highlight></codeline>
+<codeline lineno="78"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="lnc_8h_1735563036dced0b7d6cc98f97ea4978b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ERR<sp/><sp/><sp/><sp/><sp/>0x8000</highlight></codeline>
+<codeline lineno="80" refid="lnc_8h_13ef96780b54fbd7c886561ccec168e89" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>BABL<sp/><sp/><sp/><sp/>0x4000</highlight></codeline>
+<codeline lineno="81" refid="lnc_8h_1176c0577baa96c686397bca42f7ee6ff" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>CERR<sp/><sp/><sp/><sp/>0x2000</highlight></codeline>
+<codeline lineno="82" refid="lnc_8h_1614c0d93bfbf181f442e30e1c27b27ae" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MISS<sp/><sp/><sp/><sp/>0x1000</highlight></codeline>
+<codeline lineno="83" refid="lnc_8h_1d4b3c4a053ea2e5475d77c3732383899" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MERR<sp/><sp/><sp/><sp/>0x0800</highlight></codeline>
+<codeline lineno="84" refid="lnc_8h_14810d8325791be718f1bcb2a92fd3a0f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>RINT<sp/><sp/><sp/><sp/>0x0400</highlight></codeline>
+<codeline lineno="85" refid="lnc_8h_1c6f30425a8221b25e8ebf4cdeb804b0e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TINT<sp/><sp/><sp/><sp/>0x0200</highlight></codeline>
+<codeline lineno="86" refid="lnc_8h_1ca0dae20ad119b8bf8f368693eb2bff8" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IDON<sp/><sp/><sp/><sp/>0x0100</highlight></codeline>
+<codeline lineno="87" refid="lnc_8h_171e19ac3883e6cdbc2a19126e1b590ab" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INTR<sp/><sp/><sp/><sp/>0x0080</highlight></codeline>
+<codeline lineno="88" refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INEA<sp/><sp/><sp/><sp/>0x0040</highlight></codeline>
+<codeline lineno="89" refid="lnc_8h_1e1bf5924626af85b5708417edb408ce1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>RXON<sp/><sp/><sp/><sp/>0x0020</highlight></codeline>
+<codeline lineno="90" refid="lnc_8h_188130575343bc866e885c2a9fea681d1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TXON<sp/><sp/><sp/><sp/>0x0010</highlight></codeline>
+<codeline lineno="91" refid="lnc_8h_15b56addf254a3a41f1596ee477c2293b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TDMD<sp/><sp/><sp/><sp/>0x0008</highlight></codeline>
+<codeline lineno="92" refid="lnc_8h_1e19b6bb2940d2fbe0a79852b070eeafd" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>STOP<sp/><sp/><sp/><sp/>0x0004</highlight></codeline>
+<codeline lineno="93" refid="lnc_8h_139aaa2cb5148aec0a6c4599feaf3a7d3" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>STRT<sp/><sp/><sp/><sp/>0x0002</highlight></codeline>
+<codeline lineno="94" refid="lnc_8h_1b5889105dcd019008c9448dff61323f6" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INIT<sp/><sp/><sp/><sp/>0x0001</highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>CSR88-89:<sp/>Chip<sp/>ID<sp/>masks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="lnc_8h_1e3685f97383506d96630657d40139121" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>AMD_MASK<sp/><sp/>0x003</highlight></codeline>
+<codeline lineno="99" refid="lnc_8h_1f09868a61f66925c57b5d3e7fe36596b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PART_MASK<sp/>0xffff</highlight></codeline>
+<codeline lineno="100" refid="lnc_8h_105aca4c2607e5cf418d26c6471c6df91" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C960<sp/><sp/>0x0003</highlight></codeline>
+<codeline lineno="101" refid="lnc_8h_191e4b6782cdb439f7d1493924b06036d" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C961<sp/><sp/>0x2260</highlight></codeline>
+<codeline lineno="102" refid="lnc_8h_13e6e658373fd814ca74785d82fb483df" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C961A<sp/>0x2261</highlight></codeline>
+<codeline lineno="103" refid="lnc_8h_1be2e36dbd6a0dda5f7132f496d560751" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C965<sp/><sp/>0x2430</highlight></codeline>
+<codeline lineno="104" refid="lnc_8h_1901c0fbc5ca77f43baa5468a0c554148" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C970<sp/><sp/>0x0242</highlight></codeline>
+<codeline lineno="105" refid="lnc_8h_126c7d28ffe133b74501f6c3cd3ee0afc" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C970A<sp/>0x2621</highlight></codeline>
+<codeline lineno="106" refid="lnc_8h_177cd476f0f327589173897cace2a6d5d" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C971<sp/><sp/>0x2623</highlight></codeline>
+<codeline lineno="107" refid="lnc_8h_1ec4eaac1bfb06a8d9d33802cd3481a71" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C972<sp/><sp/>0x2624</highlight></codeline>
+<codeline lineno="108" refid="lnc_8h_12418761a3aa861593c41df8a9c75c84b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C973<sp/><sp/>0x2625</highlight></codeline>
+<codeline lineno="109" refid="lnc_8h_14377d3112a6628c997cd2a4fe9a5e3d8" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>Am79C978<sp/><sp/>0x2626</highlight></codeline>
+<codeline lineno="110"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="comment">/**********<sp/>Structs<sp/>**********/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="structinitBlock" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinitBlock" kindref="compound">initBlock</ref><sp/>{</highlight></codeline>
+<codeline lineno="117" refid="structinitBlock_16dbe5d89c035727232538c53760a131d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structinitBlock_16dbe5d89c035727232538c53760a131d" kindref="member">mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Mode<sp/>register<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118" refid="structinitBlock_1966fe5afb7e00a8b9f093432322e03e2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structinitBlock_1966fe5afb7e00a8b9f093432322e03e2" kindref="member">padr</ref>[6];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Ethernet<sp/>address<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="structinitBlock_118f6d5184b5a8a3dc34716b9e5a762a2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structinitBlock_118f6d5184b5a8a3dc34716b9e5a762a2" kindref="member">ladrf</ref>[8];<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Logical<sp/>address<sp/>filter<sp/>(multicast)<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="structinitBlock_18213a0e400bb4f9d43a4284a10e9553e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structinitBlock_18213a0e400bb4f9d43a4284a10e9553e" kindref="member">rdra</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Low<sp/>order<sp/>pointer<sp/>to<sp/>receive<sp/>ring<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121" refid="structinitBlock_1440d0221af7f72b1856b410f8c55ea6a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structinitBlock_1440d0221af7f72b1856b410f8c55ea6a" kindref="member">rlen</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>High<sp/>order<sp/>pointer<sp/>and<sp/>no.<sp/>rings<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="structinitBlock_1d7eec8942feb825f40ce889bdc42e00d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structinitBlock_1d7eec8942feb825f40ce889bdc42e00d" kindref="member">tdra</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Low<sp/>order<sp/>pointer<sp/>to<sp/>transmit<sp/>ring<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123" refid="structinitBlock_167f35718c6171252a916315bf8177190" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structinitBlock_167f35718c6171252a916315bf8177190" kindref="member">tlen</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>High<sp/>order<sp/>pointer<sp/>and<sp/>no<sp/>rings<sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"></highlight></codeline>
+<codeline lineno="126" refid="structmds" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmds" kindref="compound">mds</ref><sp/>{</highlight></codeline>
+<codeline lineno="127" refid="structmds_1b918a9e27f5f2db9a390a87bda010994" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structmds_1b918a9e27f5f2db9a390a87bda010994" kindref="member">md0</ref>;</highlight></codeline>
+<codeline lineno="128" refid="structmds_103497b545351e713101ef485bb613e29" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structmds_103497b545351e713101ef485bb613e29" kindref="member">md1</ref>;</highlight></codeline>
+<codeline lineno="129" refid="structmds_18e97b48b0e792936110351265e5d8c2b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><sp/><ref refid="structmds_18e97b48b0e792936110351265e5d8c2b" kindref="member">md2</ref>;</highlight></codeline>
+<codeline lineno="130" refid="structmds_155560d24569d20aff12528e4c4ec6a1e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structmds_155560d24569d20aff12528e4c4ec6a1e" kindref="member">md3</ref>;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="structhostRingEntry" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structhostRingEntry" kindref="compound">hostRingEntry</ref><sp/>{</highlight></codeline>
+<codeline lineno="134" refid="structhostRingEntry_11d19c97563a6859a066762e7d0d32739" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structmds" kindref="compound">mds</ref><sp/>*<ref refid="structhostRingEntry_11d19c97563a6859a066762e7d0d32739" kindref="member">md</ref>;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//struct<sp/>mbuf<sp/>*mbuf;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137" refid="structhostRingEntry_1ddc4bbce700597b4277125f8c0835a42" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structhostRingEntry_1ddc4bbce700597b4277125f8c0835a42" kindref="member">data</ref>;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/>}<ref refid="structhostRingEntry_1c161484f38e0d27a0923dcd5636dd150" kindref="member">buff</ref>;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141" refid="structarpcom" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structarpcom" kindref="compound">arpcom</ref><sp/>{</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//struct<sp/><sp/>ifnet<sp/>ac_if;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/*<sp/>network-visible<sp/>interface<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143" refid="structarpcom_18335c2422b63415a71353f12d70b1e05" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><ref refid="structarpcom_18335c2422b63415a71353f12d70b1e05" kindref="member">ac_enaddr</ref>[6];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>ethernet<sp/>hardware<sp/>address<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144" refid="structarpcom_11a87d8675dd64e8b9cc75fbdde92c689" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structarpcom_11a87d8675dd64e8b9cc75fbdde92c689" kindref="member">ac_multicnt</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>length<sp/>of<sp/>ac_multiaddrs<sp/>list<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="structarpcom_1371d1dc4612203c828b6d17d829ac9eb" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/>*<ref refid="structarpcom_1371d1dc4612203c828b6d17d829ac9eb" kindref="member">ac_netgraph</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>ng_ether(4)<sp/>netgraph<sp/>node<sp/>info<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="structnicInfo" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnicInfo" kindref="compound">nicInfo</ref><sp/>{</highlight></codeline>
+<codeline lineno="149" refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" kindref="member">ident</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Type<sp/>of<sp/>card<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Type<sp/>of<sp/>ic,<sp/>Am7990,<sp/>Am79C960<sp/>etc.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151" refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" kindref="member">memMode</ref>;</highlight></codeline>
+<codeline lineno="152" refid="structnicInfo_143f563787f5316ee79ca6bdf04c0b6df" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structnicInfo_143f563787f5316ee79ca6bdf04c0b6df" kindref="member">iobase</ref>;</highlight></codeline>
+<codeline lineno="153" refid="structnicInfo_13dc304d78fecc9112cf979b7b1fc3525" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="structnicInfo_13dc304d78fecc9112cf979b7b1fc3525" kindref="member">mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Mode<sp/>setting<sp/>at<sp/>initialization<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="structlncInfo" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>{</highlight></codeline>
+<codeline lineno="157" refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structarpcom" kindref="compound">arpcom</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" kindref="member">arpcom</ref>;</highlight></codeline>
+<codeline lineno="158" refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnicInfo" kindref="compound">nicInfo</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>;</highlight></codeline>
+<codeline lineno="159" refid="structlncInfo_149f921775c4d249ce90af5afed331bd9" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structhostRingEntry" kindref="compound">hostRingEntry</ref><sp/>*<ref refid="structlncInfo_149f921775c4d249ce90af5afed331bd9" kindref="member">recvRing</ref>;</highlight></codeline>
+<codeline lineno="160" refid="structlncInfo_11e59ad4c4c8f75bfc8c19ba8b3f889ae" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structhostRingEntry" kindref="compound">hostRingEntry</ref><sp/>*<ref refid="structlncInfo_11e59ad4c4c8f75bfc8c19ba8b3f889ae" kindref="member">transRings</ref>;</highlight></codeline>
+<codeline lineno="161" refid="structlncInfo_1099769d9082a972c0b23a7e4b9fc1c77" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinitBlock" kindref="compound">initBlock</ref><sp/><sp/><sp/><sp/><sp/>*<ref refid="structlncInfo_1099769d9082a972c0b23a7e4b9fc1c77" kindref="member">initBloack</ref>;</highlight></codeline>
+<codeline lineno="162" refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" kindref="member">rap</ref>;</highlight></codeline>
+<codeline lineno="163" refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" kindref="member">rdp</ref>;</highlight></codeline>
+<codeline lineno="164" refid="structlncInfo_1e39a5151bfee43405df118538307a604" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structlncInfo_1e39a5151bfee43405df118538307a604" kindref="member">bdp</ref>;</highlight></codeline>
+<codeline lineno="165" refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" kindref="member">nrdre</ref>;</highlight></codeline>
+<codeline lineno="166" refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" kindref="member">ntdre</ref>;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" kindref="member">writeCsr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>val);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1c77dcbd7df5a9a8cacc3f684fd59e389" kindref="member">writeBcr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>val);</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="lnc_8h_1b26b4568cde86b4006a54e4aae74d0e7" kindref="member">readBcr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port);</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_10b7fb4f8833ed743dc1f3c4c90c28731" kindref="member">initLNC</ref>();</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_17b84655da5c5a354e1dd00faf729506c" kindref="member">probe</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>);</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1c698a392b34b41b9aa3eed6ec7c2f8db" kindref="member">lanceProbe</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_186e977fd8113976b87da564f2b53a2d7" kindref="member">lncAttach</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>unit);</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"></highlight></codeline>
+<codeline lineno="181"><highlight class="normal"></highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_16fdabac3834c12782583e0a42f928295" kindref="member">lncInt</ref>();</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1d155cde754cb2beb8403810b0a651ba7" kindref="member">_lncInt</ref>();</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="186"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="188"><highlight class="comment"><sp/>$Log: lnc_8h.xml,v $
+<codeline lineno="188"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
+<codeline lineno="188"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="188"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="189"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="190"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="191"><highlight class="comment"></highlight></codeline>
+<codeline lineno="192"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="193"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="194"><highlight class="comment"></highlight></codeline>
+<codeline lineno="195"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:50<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="196"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="197"><highlight class="comment"></highlight></codeline>
+<codeline lineno="198"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:05:07<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="199"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="200"><highlight class="comment"></highlight></codeline>
+<codeline lineno="201"><highlight class="comment"></highlight></codeline>
+<codeline lineno="202"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="203"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h"/>
+  </compounddef>
+</doxygen>

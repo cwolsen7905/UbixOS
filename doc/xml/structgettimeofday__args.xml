@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structgettimeofday__args" kind="struct" prot="public">
+    <compoundname>gettimeofday_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structgettimeofday__args_1fd193375eb0db7ca9958363b54d8740b" prot="public" static="no" mutable="no">
+        <type><ref refid="structtimeval" kindref="compound">timeval</ref> *</type>
+        <definition>struct timeval* gettimeofday_args::tp</definition>
+        <argsstring></argsstring>
+        <name>tp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="147" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgettimeofday__args_1153bad8d6d2f55fa314aefd1fdea8f94" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char gettimeofday_args::tp_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>tp_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="147" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgettimeofday__args_14f7acd871b6cda2d2acefeaa06ff40f4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char gettimeofday_args::tp_r_[(sizeof(register_t)&lt;=sizeof(struct timeval *)?0:sizeof(register_t)-sizeof(struct timeval *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct timeval *)?0:sizeof(register_t)-sizeof(struct timeval *))]</argsstring>
+        <name>tp_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="147" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgettimeofday__args_1df6abf340afc684fe7fd5794b1caff5c" prot="public" static="no" mutable="no">
+        <type><ref refid="structtimezone" kindref="compound">timezone</ref> *</type>
+        <definition>struct timezone* gettimeofday_args::tzp</definition>
+        <argsstring></argsstring>
+        <name>tzp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="148" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgettimeofday__args_1b64410e07f613e74243f125c8105a120" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char gettimeofday_args::tzp_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>tzp_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="148" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structgettimeofday__args_1e3b668286098d30d5eda58c71b04443c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char gettimeofday_args::tzp_r_[(sizeof(register_t)&lt;=sizeof(struct timezone *)?0:sizeof(register_t)-sizeof(struct timezone *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct timezone *)?0:sizeof(register_t)-sizeof(struct timezone *))]</argsstring>
+        <name>tzp_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="148" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="508">
+        <label>timezone</label>
+        <link refid="structtimezone"/>
+      </node>
+      <node id="507">
+        <label>gettimeofday_args</label>
+        <link refid="structgettimeofday__args"/>
+        <childnode refid="508" relation="usage">
+          <edgelabel>tzp</edgelabel>
+        </childnode>
+        <childnode refid="509" relation="usage">
+          <edgelabel>tp</edgelabel>
+        </childnode>
+      </node>
+      <node id="509">
+        <label>timeval</label>
+        <link refid="structtimeval"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="146" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="146" bodyend="149"/>
+    <listofallmembers>
+      <member refid="structgettimeofday__args_1fd193375eb0db7ca9958363b54d8740b" prot="public" virt="non-virtual"><scope>gettimeofday_args</scope><name>tp</name></member>
+      <member refid="structgettimeofday__args_1153bad8d6d2f55fa314aefd1fdea8f94" prot="public" virt="non-virtual"><scope>gettimeofday_args</scope><name>tp_l_</name></member>
+      <member refid="structgettimeofday__args_14f7acd871b6cda2d2acefeaa06ff40f4" prot="public" virt="non-virtual"><scope>gettimeofday_args</scope><name>tp_r_</name></member>
+      <member refid="structgettimeofday__args_1df6abf340afc684fe7fd5794b1caff5c" prot="public" virt="non-virtual"><scope>gettimeofday_args</scope><name>tzp</name></member>
+      <member refid="structgettimeofday__args_1b64410e07f613e74243f125c8105a120" prot="public" virt="non-virtual"><scope>gettimeofday_args</scope><name>tzp_l_</name></member>
+      <member refid="structgettimeofday__args_1e3b668286098d30d5eda58c71b04443c" prot="public" virt="non-virtual"><scope>gettimeofday_args</scope><name>tzp_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

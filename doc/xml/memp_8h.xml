@@ -1,0 +1,461 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="memp_8h" kind="file">
+    <compoundname>memp.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="debug_8h" local="yes">net/debug.h</includes>
+    <includes refid="cc_8h" local="yes">net/arch/cc.h</includes>
+    <includes refid="lwipopts_8h" local="yes">net/lwipopts.h</includes>
+    <includedby refid="stats_8h" local="yes">src/sys/include/net/stats.h</includedby>
+    <includedby refid="api__lib_8c" local="yes">src/sys/net/api/api_lib.c</includedby>
+    <includedby refid="api__msg_8c" local="yes">src/sys/net/api/api_msg.c</includedby>
+    <includedby refid="tcpip_8c" local="yes">src/sys/net/api/tcpip.c</includedby>
+    <includedby refid="init_8c" local="no">src/sys/net/net/init.c</includedby>
+    <incdepgraph>
+      <node id="866">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="867" relation="include">
+        </childnode>
+      </node>
+      <node id="867">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="870">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="865">
+        <label>src/sys/include/net/memp.h</label>
+        <link refid="memp.h"/>
+        <childnode refid="866" relation="include">
+        </childnode>
+        <childnode refid="868" relation="include">
+        </childnode>
+        <childnode refid="869" relation="include">
+        </childnode>
+        <childnode refid="870" relation="include">
+        </childnode>
+      </node>
+      <node id="868">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="869">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="872">
+        <label>src/sys/include/net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="873" relation="include">
+        </childnode>
+        <childnode refid="874" relation="include">
+        </childnode>
+        <childnode refid="875" relation="include">
+        </childnode>
+      </node>
+      <node id="875">
+        <label>src/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="873">
+        <label>src/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
+      </node>
+      <node id="878">
+        <label>src/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="874">
+        <label>src/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="876">
+        <label>src/sys/net/api/api_lib.c</label>
+        <link refid="api__lib_8c"/>
+      </node>
+      <node id="879">
+        <label>src/sys/net/net/init.c</label>
+        <link refid="init_8c"/>
+      </node>
+      <node id="871">
+        <label>src/sys/include/net/memp.h</label>
+        <link refid="memp.h"/>
+        <childnode refid="872" relation="include">
+        </childnode>
+        <childnode refid="876" relation="include">
+        </childnode>
+        <childnode refid="877" relation="include">
+        </childnode>
+        <childnode refid="878" relation="include">
+        </childnode>
+        <childnode refid="879" relation="include">
+        </childnode>
+      </node>
+      <node id="877">
+        <label>src/sys/net/api/api_msg.c</label>
+        <link refid="api__msg_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="memp_8h_168c3d4d5eebe82bb950a715f71424b79" prot="public" static="no">
+        <name>memp_register_reclaim</name>
+        <param><defname>t</defname></param>
+        <param><defname>f</defname></param>
+        <param><defname>arg</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="memp_8h_185a164b1f7764951cc685ea525114e57" prot="public" static="no">
+        <name>memp_t</name>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e57ace9446c66ccd884e15b4fb843e8b4fa" prot="public">
+          <name>MEMP_PBUF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e571a9815e3b6cd4272c0618d24bfd094e8" prot="public">
+          <name>MEMP_UDP_PCB</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e5790e6ec01802b36e2e928f27d6939f82d" prot="public">
+          <name>MEMP_TCP_PCB</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e57ff63d88540eba15110bfacad9ca424c4" prot="public">
+          <name>MEMP_TCP_PCB_LISTEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e57e7de932f63417a74429891366689add0" prot="public">
+          <name>MEMP_TCP_SEG</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e57c0bb141248dc601c118d1ec36170a04e" prot="public">
+          <name>MEMP_NETBUF</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e57c734c3ec027353cbb98cd72fa986f5f1" prot="public">
+          <name>MEMP_NETCONN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e572decda39458fdeaa1921df20aa15f0ea" prot="public">
+          <name>MEMP_API_MSG</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e57110e78608e5acf1cf15cb442dfffd84f" prot="public">
+          <name>MEMP_TCPIP_MSG</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e575d3e764e7a5fabf78a43be980a8662ea" prot="public">
+          <name>MEMP_SYS_TIMEOUT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="memp_8h_185a164b1f7764951cc685ea525114e573387042084427642949f3223c7ddd321" prot="public">
+          <name>MEMP_MAX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" bodystart="45" bodyend="60"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="memp_8h_1ecd94926b7c2a0e23ae195f4ae97581f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void memp_free</definition>
+        <argsstring>(memp_t type, void *mem)</argsstring>
+        <name>memp_free</name>
+        <param>
+          <type><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>mem</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="68"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="tcpip_8c_1d72ca05f74e20244cd26a8828711e9f2" compoundref="tcpip_8c" startline="121" endline="132">tcpip_apimsg</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="memp_8h_1269bd926cd0413cf1948cf1992209451" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void memp_freep</definition>
+        <argsstring>(memp_t type, void *mem)</argsstring>
+        <name>memp_freep</name>
+        <param>
+          <type><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>mem</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="69"/>
+        <referencedby refid="api__lib_8c_1631e8bddd99b2397cd0b26973c659602" compoundref="api__lib_8c" startline="114" endline="119">netbuf_chain</referencedby>
+        <referencedby refid="api__lib_8c_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</referencedby>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+        <referencedby refid="tcpip_8c_161474ad2c2c25ba58cc774e2bcc4ef5f" compoundref="tcpip_8c" startline="68" endline="98">tcpip_thread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="memp_8h_19693e5b1ac2c6b9c0e7870522d45efa2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void memp_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>memp_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="62"/>
+        <referencedby refid="init_8c_122b2914249628f6cba7d4e1f138c969f" compoundref="init_8c" startline="50" endline="63">net_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="memp_8h_12b00593d086313c267b54a976bf67aa5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* memp_malloc</definition>
+        <argsstring>(memp_t type)</argsstring>
+        <name>memp_malloc</name>
+        <param>
+          <type><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="64"/>
+      </memberdef>
+      <memberdef kind="function" id="memp_8h_13e83e8a6e588d56b4620eddf89001d7e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* memp_malloc2</definition>
+        <argsstring>(memp_t type)</argsstring>
+        <name>memp_malloc2</name>
+        <param>
+          <type><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="66"/>
+      </memberdef>
+      <memberdef kind="function" id="memp_8h_18fd5bd978dc56399e1649381cc2a1aeb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* memp_mallocp</definition>
+        <argsstring>(memp_t type)</argsstring>
+        <name>memp_mallocp</name>
+        <param>
+          <type><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="65"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__lib_8c_1aba704cd963e35e71145de9f5112991d" compoundref="api__lib_8c" startline="51" endline="63">netbuf_new</referencedby>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
+        <referencedby refid="tcpip_8c_1d72ca05f74e20244cd26a8828711e9f2" compoundref="tcpip_8c" startline="121" endline="132">tcpip_apimsg</referencedby>
+        <referencedby refid="tcpip_8c_1e510f195171bed8499ae94e264a92717" compoundref="tcpip_8c" startline="101" endline="118">tcpip_input</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="memp_8h_13910fbf5cded713d0892c16ae2ce7fc4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* memp_realloc</definition>
+        <argsstring>(memp_t fromtype, memp_t totype, void *mem)</argsstring>
+        <name>memp_realloc</name>
+        <param>
+          <type><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref></type>
+          <declname>fromtype</declname>
+        </param>
+        <param>
+          <type><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref></type>
+          <declname>totype</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>mem</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h" line="67"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: memp_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_MEMP_H__</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_MEMP_H__</highlight></codeline>
+<codeline lineno="38"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="debug_8h" kindref="compound">net/debug.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="cc_8h" kindref="compound">net/arch/cc.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="lwipopts_8h" kindref="compound">net/lwipopts.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="memp_8h_185a164b1f7764951cc685ea525114e57" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57ace9446c66ccd884e15b4fb843e8b4fa" kindref="member">MEMP_PBUF</ref>,</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e571a9815e3b6cd4272c0618d24bfd094e8" kindref="member">MEMP_UDP_PCB</ref>,</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e5790e6ec01802b36e2e928f27d6939f82d" kindref="member">MEMP_TCP_PCB</ref>,</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57ff63d88540eba15110bfacad9ca424c4" kindref="member">MEMP_TCP_PCB_LISTEN</ref>,</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57e7de932f63417a74429891366689add0" kindref="member">MEMP_TCP_SEG</ref>,</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57c0bb141248dc601c118d1ec36170a04e" kindref="member">MEMP_NETBUF</ref>,</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57c734c3ec027353cbb98cd72fa986f5f1" kindref="member">MEMP_NETCONN</ref>,</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e572decda39458fdeaa1921df20aa15f0ea" kindref="member">MEMP_API_MSG</ref>,</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57110e78608e5acf1cf15cb442dfffd84f" kindref="member">MEMP_TCPIP_MSG</ref>,</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e575d3e764e7a5fabf78a43be980a8662ea" kindref="member">MEMP_SYS_TIMEOUT</ref>,</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e573387042084427642949f3223c7ddd321" kindref="member">MEMP_MAX</ref></highlight></codeline>
+<codeline lineno="60"><highlight class="normal">}<sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="memp_8h_19693e5b1ac2c6b9c0e7870522d45efa2" kindref="member">memp_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="memp_8h_12b00593d086313c267b54a976bf67aa5" kindref="member">memp_malloc</ref>(<ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>type);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="memp_8h_18fd5bd978dc56399e1649381cc2a1aeb" kindref="member">memp_mallocp</ref>(<ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>type);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="memp_8h_13e83e8a6e588d56b4620eddf89001d7e" kindref="member">memp_malloc2</ref>(<ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>type);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="memp_8h_13910fbf5cded713d0892c16ae2ce7fc4" kindref="member">memp_realloc</ref>(<ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>fromtype,<sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>totype,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="memp_8h_1ecd94926b7c2a0e23ae195f4ae97581f" kindref="member">memp_free</ref>(<ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>type,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="memp_8h_1269bd926cd0413cf1948cf1992209451" kindref="member">memp_freep</ref>(<ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>type,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>MEMP_RECLAIM</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>(*memp_reclaim_func)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg,<sp/><ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>type);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="memp_8h_168c3d4d5eebe82bb950a715f71424b79" kindref="member">memp_register_reclaim</ref>(<ref refid="memp_8h_185a164b1f7764951cc685ea525114e57" kindref="member">memp_t</ref><sp/>type,<sp/>memp_reclaim_func<sp/>f,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight></codeline>
+<codeline lineno="75" refid="memp_8h_168c3d4d5eebe82bb950a715f71424b79" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>memp_register_reclaim(t,<sp/>f,<sp/>arg)</highlight></codeline>
+<codeline lineno="76"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>MEMP_RECLAIM<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_MEMP_H__<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/memp.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,6 @@
+base referer
+rect $devfs_8c.html 296,5 459,32
+rect $init_8h.html 273,56 481,83
+rect $fdc_8c.html 313,107 441,133
+rect $hd_8c.html 315,157 440,184
+rect $main_8c.html 531,56 675,83

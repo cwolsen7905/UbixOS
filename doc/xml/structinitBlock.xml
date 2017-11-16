@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structinitBlock" kind="struct" prot="public">
+    <compoundname>initBlock</compoundname>
+    <includes refid="lnc_8h" local="no">lnc.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structinitBlock_118f6d5184b5a8a3dc34716b9e5a762a2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 initBlock::ladrf[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>ladrf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock_16dbe5d89c035727232538c53760a131d" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 initBlock::mode</definition>
+        <argsstring></argsstring>
+        <name>mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock_1966fe5afb7e00a8b9f093432322e03e2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 initBlock::padr[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>padr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock_18213a0e400bb4f9d43a4284a10e9553e" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 initBlock::rdra</definition>
+        <argsstring></argsstring>
+        <name>rdra</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="120" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock_1440d0221af7f72b1856b410f8c55ea6a" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 initBlock::rlen</definition>
+        <argsstring></argsstring>
+        <name>rlen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="121" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock_1d7eec8942feb825f40ce889bdc42e00d" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 initBlock::tdra</definition>
+        <argsstring></argsstring>
+        <name>tdra</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structinitBlock_167f35718c6171252a916315bf8177190" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 initBlock::tlen</definition>
+        <argsstring></argsstring>
+        <name>tlen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="116" bodyend="124"/>
+    <listofallmembers>
+      <member refid="structinitBlock_118f6d5184b5a8a3dc34716b9e5a762a2" prot="public" virt="non-virtual"><scope>initBlock</scope><name>ladrf</name></member>
+      <member refid="structinitBlock_16dbe5d89c035727232538c53760a131d" prot="public" virt="non-virtual"><scope>initBlock</scope><name>mode</name></member>
+      <member refid="structinitBlock_1966fe5afb7e00a8b9f093432322e03e2" prot="public" virt="non-virtual"><scope>initBlock</scope><name>padr</name></member>
+      <member refid="structinitBlock_18213a0e400bb4f9d43a4284a10e9553e" prot="public" virt="non-virtual"><scope>initBlock</scope><name>rdra</name></member>
+      <member refid="structinitBlock_1440d0221af7f72b1856b410f8c55ea6a" prot="public" virt="non-virtual"><scope>initBlock</scope><name>rlen</name></member>
+      <member refid="structinitBlock_1d7eec8942feb825f40ce889bdc42e00d" prot="public" virt="non-virtual"><scope>initBlock</scope><name>tdra</name></member>
+      <member refid="structinitBlock_167f35718c6171252a916315bf8177190" prot="public" virt="non-virtual"><scope>initBlock</scope><name>tlen</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

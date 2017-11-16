@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_9854bc9d2b9a2a73f32c73e97d31d0f7" kind="dir">
+    <compoundname>src/sys/include/ubixos/</compoundname>
+    <innerfile refid="elf_8h">elf.h</innerfile>
+    <innerfile refid="endtask_8h">endtask.h</innerfile>
+    <innerfile refid="exec_8h">exec.h</innerfile>
+    <innerfile refid="fork_8h">fork.h</innerfile>
+    <innerfile refid="init_8h">init.h</innerfile>
+    <innerfile refid="kmod_8h">kmod.h</innerfile>
+    <innerfile refid="kpanic_8h">kpanic.h</innerfile>
+    <innerfile refid="ld_8h">ld.h</innerfile>
+    <innerfile refid="lists_8h">lists.h</innerfile>
+    <innerfile refid="sched_8h">sched.h</innerfile>
+    <innerfile refid="sem_8h">sem.h</innerfile>
+    <innerfile refid="smp_8h">smp.h</innerfile>
+    <innerfile refid="spinlock_8h">spinlock.h</innerfile>
+    <innerfile refid="static_8h">static.h</innerfile>
+    <innerfile refid="syscall_8h">syscall.h</innerfile>
+    <innerfile refid="syscalls_8h">syscalls.h</innerfile>
+    <innerfile refid="syscalls__new_8h">syscalls_new.h</innerfile>
+    <innerfile refid="systemtask_8h">systemtask.h</innerfile>
+    <innerfile refid="time_8h">time.h</innerfile>
+    <innerfile refid="times_8h">times.h</innerfile>
+    <innerfile refid="tty_8h">tty.h</innerfile>
+    <innerfile refid="types_8h">types.h</innerfile>
+    <innerfile refid="ubthread_8h">ubthread.h</innerfile>
+    <innerfile refid="vitals_8h">vitals.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,9 @@
+base referer
+rect $fork_8h.html 216,5 325,32
+rect $types_8h.html 703,132 823,159
+rect $sched_8h.html 380,56 503,83
+rect $tty_8h.html 553,107 652,133
+rect $vitals_8h.html 211,208 331,235
+rect $vmm_8h.html 388,233 495,260
+rect $string_8h.html 567,289 639,316
+rect $assert_8h.html 233,360 308,387

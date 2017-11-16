@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_bcb67723b759fa7c88f0f248d2c080de" kind="dir">
+    <compoundname>src/sys/mpi/</compoundname>
+    <innerfile refid="message_8c">message.c</innerfile>
+    <innerfile refid="system_8c">system.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/mpi/"/>
+  </compounddef>
+</doxygen>

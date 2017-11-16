@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structtms" kind="struct" prot="public">
+    <compoundname>tms</compoundname>
+    <includes refid="times_8h" local="no">times.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structtms_1d21f41a18aff2813fe6154154f1f9522" prot="public" static="no" mutable="no">
+        <type><ref refid="times_8h_1169d6209914792de967892c1cb11f648" kindref="member">clock_t</ref></type>
+        <definition>clock_t tms::tms_cstime</definition>
+        <argsstring></argsstring>
+        <name>tms_cstime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtms_1dc1a7576a7287de70b7611047829ab6f" prot="public" static="no" mutable="no">
+        <type><ref refid="times_8h_1169d6209914792de967892c1cb11f648" kindref="member">clock_t</ref></type>
+        <definition>clock_t tms::tms_cutime</definition>
+        <argsstring></argsstring>
+        <name>tms_cutime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtms_160d97d80205a34858387314fb00cc4c0" prot="public" static="no" mutable="no">
+        <type><ref refid="times_8h_1169d6209914792de967892c1cb11f648" kindref="member">clock_t</ref></type>
+        <definition>clock_t tms::tms_stime</definition>
+        <argsstring></argsstring>
+        <name>tms_stime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtms_12522ba0b91f98baeb8f2b7249f367b7c" prot="public" static="no" mutable="no">
+        <type><ref refid="times_8h_1169d6209914792de967892c1cb11f648" kindref="member">clock_t</ref></type>
+        <definition>clock_t tms::tms_utime</definition>
+        <argsstring></argsstring>
+        <name>tms_utime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/times.h" bodystart="41" bodyend="46"/>
+    <listofallmembers>
+      <member refid="structtms_1d21f41a18aff2813fe6154154f1f9522" prot="public" virt="non-virtual"><scope>tms</scope><name>tms_cstime</name></member>
+      <member refid="structtms_1dc1a7576a7287de70b7611047829ab6f" prot="public" virt="non-virtual"><scope>tms</scope><name>tms_cutime</name></member>
+      <member refid="structtms_160d97d80205a34858387314fb00cc4c0" prot="public" virt="non-virtual"><scope>tms</scope><name>tms_stime</name></member>
+      <member refid="structtms_12522ba0b91f98baeb8f2b7249f367b7c" prot="public" virt="non-virtual"><scope>tms</scope><name>tms_utime</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

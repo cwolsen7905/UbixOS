@@ -1,0 +1,14 @@
+base referer
+rect $ubixfs_8h.html 249,157 473,184
+rect $syscall_8c.html 529,5 705,32
+rect $systemtask_8c.html 259,208 464,235
+rect $message_8c.html 275,259 448,285
+rect $system_8c.html 280,309 443,336
+rect $hd_8h.html 527,56 708,83
+rect $init_8h.html 761,107 969,133
+rect $block_8c.html 535,157 700,184
+rect $dirCache_8c.html 523,208 712,235
+rect $directory_8c.html 524,259 711,285
+rect $thread_8c.html 531,309 704,336
+rect $ubixfs_8c.html 532,360 703,387
+rect $hd_8c.html 803,56 928,83

@@ -1,0 +1,336 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="ipv6_2icmp_8h" kind="file">
+    <compoundname>icmp.h</compoundname>
+    <includes local="yes">lwip/arch.h</includes>
+    <includes local="yes">lwip/opt.h</includes>
+    <includes local="yes">lwip/pbuf.h</includes>
+    <includes local="yes">lwip/netif.h</includes>
+    <incdepgraph>
+      <node id="681">
+        <label>src/sys/include/net/ipv6/icmp.h</label>
+        <link refid="ipv6/icmp.h"/>
+        <childnode refid="682" relation="include">
+        </childnode>
+        <childnode refid="683" relation="include">
+        </childnode>
+        <childnode refid="684" relation="include">
+        </childnode>
+        <childnode refid="685" relation="include">
+        </childnode>
+      </node>
+      <node id="683">
+        <label>lwip/opt.h</label>
+      </node>
+      <node id="685">
+        <label>lwip/netif.h</label>
+      </node>
+      <node id="684">
+        <label>lwip/pbuf.h</label>
+      </node>
+      <node id="682">
+        <label>lwip/arch.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structicmp__dur__hdr" prot="public">icmp_dur_hdr</innerclass>
+    <innerclass refid="structicmp__echo__hdr" prot="public">icmp_echo_hdr</innerclass>
+    <innerclass refid="structicmp__te__hdr" prot="public">icmp_te_hdr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ipv6_2icmp_8h_17ed40b3824d1ad824934bfdd245266d4" prot="public" static="no">
+        <name>ICMP6_DUR</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ipv6_2icmp_8h_14cc3e223b63f27b546d62e9a258dba5a" prot="public" static="no">
+        <name>ICMP6_ECHO</name>
+        <initializer>128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ipv6_2icmp_8h_12ff2d0fef8c5ccf820b7bf8bc9f19c7f" prot="public" static="no">
+        <name>ICMP6_ER</name>
+        <initializer>129</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ipv6_2icmp_8h_18cae45353e9358b7892ad3b29174c4dc" prot="public" static="no">
+        <name>ICMP6_TE</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a5" prot="public" static="no">
+        <name>icmp_dur_type</name>
+        <enumvalue id="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a53cc3714544e123bdef2eadb1a4d320e3" prot="public">
+          <name>ICMP_DUR_NET</name>
+          <initializer> 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a5648ab915a76dfb7b9568e94de00da1e7" prot="public">
+          <name>ICMP_DUR_HOST</name>
+          <initializer> 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a53c7bbd13b613990413ef167017dfbcef" prot="public">
+          <name>ICMP_DUR_PROTO</name>
+          <initializer> 2</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a5c973dd9b04e094043ccc4cf875ef5644" prot="public">
+          <name>ICMP_DUR_PORT</name>
+          <initializer> 3</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a58be2bc49d42aa1a6ee1da93a8700ef5f" prot="public">
+          <name>ICMP_DUR_FRAG</name>
+          <initializer> 4</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a5f63296fc25f79e56946a56a8da132c13" prot="public">
+          <name>ICMP_DUR_SR</name>
+          <initializer> 5</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="51" bodyend="58"/>
+      </memberdef>
+      <memberdef kind="enum" id="ipv6_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a" prot="public" static="no">
+        <name>icmp_te_type</name>
+        <enumvalue id="ipv6_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a827a1f8705826a6cc3c22e2571acf02c" prot="public">
+          <name>ICMP_TE_TTL</name>
+          <initializer> 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="ipv6_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a4d351874c3e2d4a4cf46569df28cd796" prot="public">
+          <name>ICMP_TE_FRAG</name>
+          <initializer> 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="60" bodyend="63"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="ipv6_2icmp_8h_1e26c59eab4ce553964a0c9d43f534d06" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void icmp_dest_unreach</definition>
+        <argsstring>(struct pbuf *p, enum icmp_dur_type t)</argsstring>
+        <name>icmp_dest_unreach</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>enum <ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a5" kindref="member">icmp_dur_type</ref></type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="67"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2icmp_8h_1c929e48a1dddf98050b73a2633fcaef1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void icmp_input</definition>
+        <argsstring>(struct pbuf *p, struct netif *inp)</argsstring>
+        <name>icmp_input</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>inp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="65"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2icmp_8h_149723e5e11c4bbc86197e58fdca7c119" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void icmp_time_exceeded</definition>
+        <argsstring>(struct pbuf *p, enum icmp_te_type t)</argsstring>
+        <name>icmp_time_exceeded</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>enum <ref refid="ipv4_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a" kindref="member">icmp_te_type</ref></type>
+          <declname>t</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="68"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: ipv6_2icmp_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_ICMP_H__</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_ICMP_H__</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/arch.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/opt.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/pbuf.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;lwip/netif.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="ipv6_2icmp_8h_17ed40b3824d1ad824934bfdd245266d4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ICMP6_DUR<sp/><sp/>1</highlight></codeline>
+<codeline lineno="46" refid="ipv6_2icmp_8h_18cae45353e9358b7892ad3b29174c4dc" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ICMP6_TE<sp/><sp/><sp/>3</highlight></codeline>
+<codeline lineno="47" refid="ipv6_2icmp_8h_14cc3e223b63f27b546d62e9a258dba5a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ICMP6_ECHO<sp/>128<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>echo<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="ipv6_2icmp_8h_12ff2d0fef8c5ccf820b7bf8bc9f19c7f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ICMP6_ER<sp/><sp/><sp/>129<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>echo<sp/>reply<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="ipv6_2icmp_8h_117637465f209385e5d19ef47fd9266a5" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a5" kindref="member">icmp_dur_type</ref><sp/>{</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a53cc3714544e123bdef2eadb1a4d320e3" kindref="member">ICMP_DUR_NET</ref><sp/>=<sp/>0,<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>net<sp/>unreachable<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a5648ab915a76dfb7b9568e94de00da1e7" kindref="member">ICMP_DUR_HOST</ref><sp/>=<sp/>1,<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>host<sp/>unreachable<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a53c7bbd13b613990413ef167017dfbcef" kindref="member">ICMP_DUR_PROTO</ref><sp/>=<sp/>2,<sp/><sp/></highlight><highlight class="comment">/*<sp/>protocol<sp/>unreachable<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a5c973dd9b04e094043ccc4cf875ef5644" kindref="member">ICMP_DUR_PORT</ref><sp/>=<sp/>3,<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>port<sp/>unreachable<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a58be2bc49d42aa1a6ee1da93a8700ef5f" kindref="member">ICMP_DUR_FRAG</ref><sp/>=<sp/>4,<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>fragmentation<sp/>needed<sp/>and<sp/>DF<sp/>set<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a5f63296fc25f79e56946a56a8da132c13" kindref="member">ICMP_DUR_SR</ref><sp/>=<sp/>5<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>source<sp/>route<sp/>failed<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="ipv6_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="ipv4_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a" kindref="member">icmp_te_type</ref><sp/>{</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a827a1f8705826a6cc3c22e2571acf02c" kindref="member">ICMP_TE_TTL</ref><sp/>=<sp/>0,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>time<sp/>to<sp/>live<sp/>exceeded<sp/>in<sp/>transit<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a4d351874c3e2d4a4cf46569df28cd796" kindref="member">ICMP_TE_FRAG</ref><sp/>=<sp/>1<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>fragment<sp/>reassembly<sp/>time<sp/>exceeded<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ipv4_2icmp_8h_1c929e48a1dddf98050b73a2633fcaef1" kindref="member">icmp_input</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*inp);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ipv4_2icmp_8h_1e26c59eab4ce553964a0c9d43f534d06" kindref="member">icmp_dest_unreach</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="ipv4_2icmp_8h_117637465f209385e5d19ef47fd9266a5" kindref="member">icmp_dur_type</ref><sp/>t);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ipv4_2icmp_8h_149723e5e11c4bbc86197e58fdca7c119" kindref="member">icmp_time_exceeded</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="ipv4_2icmp_8h_1058d0a0769bd38db99fc6fd1dad1324a" kindref="member">icmp_te_type</ref><sp/>t);</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__echo__hdr" kindref="compound">icmp_echo_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="71" refid="structicmp__echo__hdr_141fbe35b6732e5b675527b5561aaef73" refkind="member"><highlight class="normal"><sp/><sp/>u8_t<sp/><ref refid="structicmp__echo__hdr_141fbe35b6732e5b675527b5561aaef73" kindref="member">type</ref>;</highlight></codeline>
+<codeline lineno="72" refid="structicmp__echo__hdr_109cbe6937f16588714f1a2c5a33bfb84" refkind="member"><highlight class="normal"><sp/><sp/>u8_t<sp/><ref refid="structicmp__echo__hdr_109cbe6937f16588714f1a2c5a33bfb84" kindref="member">icode</ref>;</highlight></codeline>
+<codeline lineno="73" refid="structicmp__echo__hdr_165ffa20f2da497b6ca7f2e2c75cc740a" refkind="member"><highlight class="normal"><sp/><sp/>u16_t<sp/><ref refid="structicmp__echo__hdr_165ffa20f2da497b6ca7f2e2c75cc740a" kindref="member">chksum</ref>;</highlight></codeline>
+<codeline lineno="74" refid="structicmp__echo__hdr_16a80a74668fbb1500e0fab527ceba5b6" refkind="member"><highlight class="normal"><sp/><sp/>u16_t<sp/><ref refid="structicmp__echo__hdr_16a80a74668fbb1500e0fab527ceba5b6" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="75" refid="structicmp__echo__hdr_142ade6a5230d4161c272fcaec67b7c3d" refkind="member"><highlight class="normal"><sp/><sp/>u16_t<sp/><ref refid="structicmp__echo__hdr_142ade6a5230d4161c272fcaec67b7c3d" kindref="member">seqno</ref>;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__dur__hdr" kindref="compound">icmp_dur_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="79" refid="structicmp__dur__hdr_1725c471d0a92b3ad5a47316df39b62e4" refkind="member"><highlight class="normal"><sp/><sp/>u8_t<sp/><ref refid="structicmp__dur__hdr_1725c471d0a92b3ad5a47316df39b62e4" kindref="member">type</ref>;</highlight></codeline>
+<codeline lineno="80" refid="structicmp__dur__hdr_1ab7305d10b7cd3fd96ee3424ddba46c5" refkind="member"><highlight class="normal"><sp/><sp/>u8_t<sp/><ref refid="structicmp__dur__hdr_1ab7305d10b7cd3fd96ee3424ddba46c5" kindref="member">icode</ref>;</highlight></codeline>
+<codeline lineno="81" refid="structicmp__dur__hdr_1da29ca70b725524f59ba969efed5c870" refkind="member"><highlight class="normal"><sp/><sp/>u16_t<sp/><ref refid="structicmp__dur__hdr_1da29ca70b725524f59ba969efed5c870" kindref="member">chksum</ref>;</highlight></codeline>
+<codeline lineno="82" refid="structicmp__dur__hdr_102d25a41e6438d64e6b858c40f4e3f4f" refkind="member"><highlight class="normal"><sp/><sp/>u32_t<sp/><ref refid="structicmp__dur__hdr_102d25a41e6438d64e6b858c40f4e3f4f" kindref="member">unused</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structicmp__te__hdr" kindref="compound">icmp_te_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="86" refid="structicmp__te__hdr_1b8a96dbb8f806159a9e270505eade903" refkind="member"><highlight class="normal"><sp/><sp/>u8_t<sp/><ref refid="structicmp__te__hdr_1b8a96dbb8f806159a9e270505eade903" kindref="member">type</ref>;</highlight></codeline>
+<codeline lineno="87" refid="structicmp__te__hdr_1739191eedfc092aefea52ddd64670a50" refkind="member"><highlight class="normal"><sp/><sp/>u8_t<sp/><ref refid="structicmp__te__hdr_1739191eedfc092aefea52ddd64670a50" kindref="member">icode</ref>;</highlight></codeline>
+<codeline lineno="88" refid="structicmp__te__hdr_1fa9448daf9c3c077d49ade906c5ede64" refkind="member"><highlight class="normal"><sp/><sp/>u16_t<sp/><ref refid="structicmp__te__hdr_1fa9448daf9c3c077d49ade906c5ede64" kindref="member">chksum</ref>;</highlight></codeline>
+<codeline lineno="89" refid="structicmp__te__hdr_1be6c4317f8e9bf39ec53546cc26f75ff" refkind="member"><highlight class="normal"><sp/><sp/>u32_t<sp/><ref refid="structicmp__te__hdr_1be6c4317f8e9bf39ec53546cc26f75ff" kindref="member">unused</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_ICMP_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h"/>
+  </compounddef>
+</doxygen>

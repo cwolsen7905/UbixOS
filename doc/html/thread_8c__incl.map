@@ -1,0 +1,9 @@
+base referer
+rect $ubixfs_8h.html 231,107 351,134
+rect $vfs_8h.html 435,6 512,32
+rect $kpanic_8h.html 227,158 355,184
+rect $kprintf_8h.html 241,234 340,260
+rect $types_8h.html 593,132 713,159
+rect $device_8h.html 420,107 527,134
+rect $mpi_8h.html 428,158 519,184
+rect $dirCache_8h.html 404,208 543,235

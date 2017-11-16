@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="unionuPtr" kind="union" prot="public">
+    <compoundname>uPtr</compoundname>
+    <includes refid="ubixfsv2_2ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="unionuPtr_1bb67f31e5a2f1b7348a84598f44bdfd9" prot="public" static="no" mutable="no">
+        <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+        <definition>bNode* uPtr::bPtr</definition>
+        <argsstring></argsstring>
+        <name>bPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionuPtr_16b68f0ebac5ca4d3c3091984a59ec1e0" prot="public" static="no" mutable="no">
+        <type><ref refid="classbTree" kindref="compound">bTree</ref> *</type>
+        <definition>bTree* uPtr::btPtr</definition>
+        <argsstring></argsstring>
+        <name>btPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionuPtr_1e47ada455978ad34d9323072ffe4411f" prot="public" static="no" mutable="no">
+        <type><ref refid="structblockRun" kindref="compound">inodeAddr</ref></type>
+        <definition>inodeAddr uPtr::iAddr</definition>
+        <argsstring></argsstring>
+        <name>iAddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionuPtr_12c665149ed0616c55277166034ea6214" prot="public" static="no" mutable="no">
+        <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+        <definition>ubixfsInode* uPtr::iPtr</definition>
+        <argsstring></argsstring>
+        <name>iPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionuPtr_1fdf63e00719727b4957c0a7eefec6799" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t uPtr::offset</definition>
+        <argsstring></argsstring>
+        <name>offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="unionuPtr_1950c9eb8913c9960c8e8937d8210a384" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* uPtr::vPtr</definition>
+        <argsstring></argsstring>
+        <name>vPtr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="510">
+        <label>UbixFS</label>
+        <link refid="classUbixFS"/>
+        <childnode refid="511" relation="public-inheritance">
+        </childnode>
+        <childnode refid="513" relation="usage">
+          <edgelabel>superBlock</edgelabel>
+        </childnode>
+        <childnode refid="514" relation="usage">
+          <edgelabel>root</edgelabel>
+        </childnode>
+      </node>
+      <node id="508">
+        <label>blockRun</label>
+        <link refid="structblockRun"/>
+      </node>
+      <node id="507">
+        <label>uPtr</label>
+        <link refid="unionuPtr"/>
+        <childnode refid="508" relation="usage">
+          <edgelabel>iAddr</edgelabel>
+        </childnode>
+        <childnode refid="509" relation="usage">
+          <edgelabel>btPtr</edgelabel>
+        </childnode>
+        <childnode refid="517" relation="usage">
+          <edgelabel>iPtr</edgelabel>
+        </childnode>
+        <childnode refid="515" relation="usage">
+          <edgelabel>bPtr</edgelabel>
+        </childnode>
+      </node>
+      <node id="517">
+        <label>ubixfsInode</label>
+        <link refid="structubixfsInode"/>
+      </node>
+      <node id="513">
+        <label>diskSuperBlock</label>
+        <link refid="structdiskSuperBlock"/>
+      </node>
+      <node id="516">
+        <label>bTreeHeader</label>
+        <link refid="structbTreeHeader"/>
+      </node>
+      <node id="515">
+        <label>bNode</label>
+        <link refid="structbNode"/>
+      </node>
+      <node id="514">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="514" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="511">
+        <label>vfs_abstract</label>
+        <link refid="classvfs__abstract"/>
+        <childnode refid="511" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+        <childnode refid="512" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+      </node>
+      <node id="512">
+        <label>device_t</label>
+        <link refid="structdevice__t"/>
+      </node>
+      <node id="509">
+        <label>bTree</label>
+        <link refid="classbTree"/>
+        <childnode refid="510" relation="usage">
+          <edgelabel>fs</edgelabel>
+        </childnode>
+        <childnode refid="514" relation="usage">
+          <edgelabel>fd</edgelabel>
+        </childnode>
+        <childnode refid="515" relation="usage">
+          <edgelabel>root</edgelabel>
+        </childnode>
+        <childnode refid="516" relation="usage">
+          <edgelabel>header</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="47" bodyend="54"/>
+    <listofallmembers>
+      <member refid="unionuPtr_1bb67f31e5a2f1b7348a84598f44bdfd9" prot="public" virt="non-virtual"><scope>uPtr</scope><name>bPtr</name></member>
+      <member refid="unionuPtr_16b68f0ebac5ca4d3c3091984a59ec1e0" prot="public" virt="non-virtual"><scope>uPtr</scope><name>btPtr</name></member>
+      <member refid="unionuPtr_1e47ada455978ad34d9323072ffe4411f" prot="public" virt="non-virtual"><scope>uPtr</scope><name>iAddr</name></member>
+      <member refid="unionuPtr_12c665149ed0616c55277166034ea6214" prot="public" virt="non-virtual"><scope>uPtr</scope><name>iPtr</name></member>
+      <member refid="unionuPtr_1fdf63e00719727b4957c0a7eefec6799" prot="public" virt="non-virtual"><scope>uPtr</scope><name>offset</name></member>
+      <member refid="unionuPtr_1950c9eb8913c9960c8e8937d8210a384" prot="public" virt="non-virtual"><scope>uPtr</scope><name>vPtr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structsys__timeout" kind="struct" prot="public">
+    <compoundname>sys_timeout</compoundname>
+    <includes refid="sys_8h" local="no">sys.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__timeout_108ef2543fa6f102c1e2b5ea3fed3cc36" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* sys_timeout::arg</definition>
+        <argsstring></argsstring>
+        <name>arg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__timeout_1dc2f8654aef6eae6d4f8818681de92f4" prot="public" static="no" mutable="no">
+        <type><ref refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" kindref="member">sys_timeout_handler</ref></type>
+        <definition>sys_timeout_handler sys_timeout::h</definition>
+        <argsstring></argsstring>
+        <name>h</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__timeout_1dc3659bd760019a94f216809e2eb8271" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__timeout" kindref="compound">sys_timeout</ref> *</type>
+        <definition>struct sys_timeout* sys_timeout::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__timeout_15f858b7e108ef28f4da55f062ebc9bb6" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 sys_timeout::time</definition>
+        <argsstring></argsstring>
+        <name>time</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="355">
+        <label>sys_timeout</label>
+        <link refid="structsys__timeout"/>
+        <childnode refid="355" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sys.h" bodystart="43" bodyend="48"/>
+    <listofallmembers>
+      <member refid="structsys__timeout_108ef2543fa6f102c1e2b5ea3fed3cc36" prot="public" virt="non-virtual"><scope>sys_timeout</scope><name>arg</name></member>
+      <member refid="structsys__timeout_1dc2f8654aef6eae6d4f8818681de92f4" prot="public" virt="non-virtual"><scope>sys_timeout</scope><name>h</name></member>
+      <member refid="structsys__timeout_1dc3659bd760019a94f216809e2eb8271" prot="public" virt="non-virtual"><scope>sys_timeout</scope><name>next</name></member>
+      <member refid="structsys__timeout_15f858b7e108ef28f4da55f062ebc9bb6" prot="public" virt="non-virtual"><scope>sys_timeout</scope><name>time</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,9 @@
+base referer
+rect $vitals_8h.html 225,5 345,32
+rect $kpanic_8h.html 221,56 349,83
+rect $kprintf_8h.html 421,107 520,133
+rect $kmalloc_8h.html 417,157 524,184
+rect $string_8h.html 249,208 321,235
+rect $ubthread_8h.html 399,5 543,32
+rect $vfs_8h.html 432,56 509,83
+rect $types_8h.html 593,107 713,133

@@ -1,0 +1,12 @@
+base referer
+rect $io_8h.html#77b934268de1b3ecdcf3f275413b3108 128,259 221,285
+rect $kmalloc_8h.html#150eab2ac4ce4553e21ca10e7f441762 137,309 212,336
+rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 507,309 573,336
+rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 697,360 764,387
+rect $io_8h.html#8acc1a06073db2e7b92ffbd00fbd0cf1 124,512 225,539
+rect $kmalloc_8c.html#f6c4ea5cb961c72548d92ff65d7e33a4 276,183 396,209
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 691,56 771,83
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 683,157 779,184
+rect $kmalloc_8c.html#eb1c3f1ef8eb9063c2e5c4af488dd2d0 275,309 397,336
+rect $lib_2string_8h.html#ce4b911463887af5e748326323e99a23 501,208 579,235
+rect $paging_8h.html#541f0b43826a40b9e978f5479080bb0e 445,107 635,133

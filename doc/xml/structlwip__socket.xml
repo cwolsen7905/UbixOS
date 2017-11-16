@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structlwip__socket" kind="struct" prot="public">
+    <compoundname>lwip_socket</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" prot="public" static="no" mutable="no">
+        <type><ref refid="structnetconn" kindref="compound">netconn</ref> *</type>
+        <definition>struct netconn* lwip_socket::conn</definition>
+        <argsstring></argsstring>
+        <name>conn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="46" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1cfcb93611c8f8e67e69d87561a72c3ee" compoundref="sockets_8c" startline="74" endline="88">alloc_socket</referencedby>
+        <referencedby refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</referencedby>
+        <referencedby refid="sockets_8c_1f32c7d1377562b7b35fdd0535f6fa952" compoundref="sockets_8c" startline="91" endline="118">lwip_accept</referencedby>
+        <referencedby refid="sockets_8c_11675042812d3bc6d5f9eeaa28c8f37a7" compoundref="sockets_8c" startline="121" endline="144">lwip_bind</referencedby>
+        <referencedby refid="sockets_8c_1fd0897a2e23d99a5dffcc976c7e5d72c" compoundref="sockets_8c" startline="147" endline="166">lwip_close</referencedby>
+        <referencedby refid="sockets_8c_19688d733f4d571cef85948fe74e0f6c7" compoundref="sockets_8c" startline="169" endline="192">lwip_connect</referencedby>
+        <referencedby refid="sockets_8c_1bee6ee286147cf334a1ba19f19b2e08b" compoundref="sockets_8c" startline="195" endline="213">lwip_listen</referencedby>
+        <referencedby refid="sockets_8c_1a433d1ebe9c87f57160c0d260e225705" compoundref="sockets_8c" startline="216" endline="290">lwip_recvfrom</referencedby>
+        <referencedby refid="sockets_8c_1cb3ba0c7f21116c629f116e15e40ce2b" compoundref="sockets_8c" startline="305" endline="351">lwip_send</referencedby>
+        <referencedby refid="sockets_8c_18dba95d254d6cb221ba4039ad8f3337b" compoundref="sockets_8c" startline="354" endline="380">lwip_sendto</referencedby>
+        <referencedby refid="sockets_8c_1e3d92ccb1ddfafe7df89185dbc881ec2" compoundref="sockets_8c" startline="417" endline="445">lwip_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlwip__socket_1f648ad335e1a066b00801f992d0de3a8" prot="public" static="no" mutable="no">
+        <type><ref refid="structnetbuf" kindref="compound">netbuf</ref> *</type>
+        <definition>struct netbuf* lwip_socket::lastdata</definition>
+        <argsstring></argsstring>
+        <name>lastdata</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="47" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1cfcb93611c8f8e67e69d87561a72c3ee" compoundref="sockets_8c" startline="74" endline="88">alloc_socket</referencedby>
+        <referencedby refid="sockets_8c_1fd0897a2e23d99a5dffcc976c7e5d72c" compoundref="sockets_8c" startline="147" endline="166">lwip_close</referencedby>
+        <referencedby refid="sockets_8c_1a433d1ebe9c87f57160c0d260e225705" compoundref="sockets_8c" startline="216" endline="290">lwip_recvfrom</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlwip__socket_1548897cb34e4f6254c0d466af80596ae" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 lwip_socket::lastoffset</definition>
+        <argsstring></argsstring>
+        <name>lastoffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="48" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1cfcb93611c8f8e67e69d87561a72c3ee" compoundref="sockets_8c" startline="74" endline="88">alloc_socket</referencedby>
+        <referencedby refid="sockets_8c_1fd0897a2e23d99a5dffcc976c7e5d72c" compoundref="sockets_8c" startline="147" endline="166">lwip_close</referencedby>
+        <referencedby refid="sockets_8c_1a433d1ebe9c87f57160c0d260e225705" compoundref="sockets_8c" startline="216" endline="290">lwip_recvfrom</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="229">
+        <label>sys_mbox</label>
+        <link refid="structsys__mbox"/>
+        <childnode refid="230" relation="usage">
+          <edgelabel>mutex
+mail</edgelabel>
+        </childnode>
+      </node>
+      <node id="227">
+        <label>ip_addr</label>
+        <link refid="structip__addr"/>
+      </node>
+      <node id="225">
+        <label>netbuf</label>
+        <link refid="structnetbuf"/>
+        <childnode refid="226" relation="usage">
+          <edgelabel>ptr
+p</edgelabel>
+        </childnode>
+        <childnode refid="227" relation="usage">
+          <edgelabel>fromaddr</edgelabel>
+        </childnode>
+      </node>
+      <node id="224">
+        <label>lwip_socket</label>
+        <link refid="structlwip__socket"/>
+        <childnode refid="225" relation="usage">
+          <edgelabel>lastdata</edgelabel>
+        </childnode>
+        <childnode refid="228" relation="usage">
+          <edgelabel>conn</edgelabel>
+        </childnode>
+      </node>
+      <node id="231">
+        <label>ubthread_mutex</label>
+        <link refid="structubthread__mutex"/>
+      </node>
+      <node id="232">
+        <label>ubthread_cond</label>
+        <link refid="structubthread__cond"/>
+      </node>
+      <node id="235">
+        <label>tcp_seg</label>
+        <link refid="structtcp__seg"/>
+        <childnode refid="235" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+        <childnode refid="236" relation="usage">
+          <edgelabel>tcphdr</edgelabel>
+        </childnode>
+        <childnode refid="226" relation="usage">
+          <edgelabel>p</edgelabel>
+        </childnode>
+      </node>
+      <node id="226">
+        <label>pbuf</label>
+        <link refid="structpbuf"/>
+        <childnode refid="226" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="233">
+        <label>udp_pcb</label>
+        <link refid="structudp__pcb"/>
+        <childnode refid="227" relation="usage">
+          <edgelabel>remote_ip</edgelabel>
+        </childnode>
+        <childnode refid="233" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="228">
+        <label>netconn</label>
+        <link refid="structnetconn"/>
+        <childnode refid="229" relation="usage">
+          <edgelabel>recvmbox
+acceptmbox
+mbox</edgelabel>
+        </childnode>
+        <childnode refid="230" relation="usage">
+          <edgelabel>sem</edgelabel>
+        </childnode>
+        <childnode refid="233" relation="usage">
+          <edgelabel>udp</edgelabel>
+        </childnode>
+        <childnode refid="234" relation="usage">
+          <edgelabel>tcp</edgelabel>
+        </childnode>
+      </node>
+      <node id="230">
+        <label>sys_sem</label>
+        <link refid="structsys__sem"/>
+        <childnode refid="231" relation="usage">
+          <edgelabel>mutex</edgelabel>
+        </childnode>
+        <childnode refid="232" relation="usage">
+          <edgelabel>cond</edgelabel>
+        </childnode>
+      </node>
+      <node id="236">
+        <label>tcp_hdr</label>
+        <link refid="structtcp__hdr"/>
+      </node>
+      <node id="234">
+        <label>tcp_pcb</label>
+        <link refid="structtcp__pcb"/>
+        <childnode refid="235" relation="usage">
+          <edgelabel>unsent
+unacked</edgelabel>
+        </childnode>
+        <childnode refid="226" relation="usage">
+          <edgelabel>recv_data</edgelabel>
+        </childnode>
+        <childnode refid="227" relation="usage">
+          <edgelabel>local_ip
+remote_ip</edgelabel>
+        </childnode>
+        <childnode refid="234" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="45" bodyend="49"/>
+    <listofallmembers>
+      <member refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" prot="public" virt="non-virtual"><scope>lwip_socket</scope><name>conn</name></member>
+      <member refid="structlwip__socket_1f648ad335e1a066b00801f992d0de3a8" prot="public" virt="non-virtual"><scope>lwip_socket</scope><name>lastdata</name></member>
+      <member refid="structlwip__socket_1548897cb34e4f6254c0d466af80596ae" prot="public" virt="non-virtual"><scope>lwip_socket</scope><name>lastoffset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

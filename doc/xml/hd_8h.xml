@@ -1,0 +1,847 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="hd_8h" kind="file">
+    <compoundname>hd.h</compoundname>
+    <includes refid="ubixfs_8h" local="no">ubixfs/ubixfs.h</includes>
+    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
+    <includedby refid="hd_8c" local="no">src/sys/pci/hd.c</includedby>
+    <incdepgraph>
+      <node id="3437">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+      </node>
+      <node id="3440">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+        <childnode refid="3441" relation="include">
+        </childnode>
+        <childnode refid="3432" relation="include">
+        </childnode>
+        <childnode refid="3442" relation="include">
+        </childnode>
+        <childnode refid="3437" relation="include">
+        </childnode>
+      </node>
+      <node id="3429">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3430" relation="include">
+        </childnode>
+      </node>
+      <node id="3430">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3432">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+        <childnode refid="3433" relation="include">
+        </childnode>
+        <childnode refid="3434" relation="include">
+        </childnode>
+      </node>
+      <node id="3442">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+      </node>
+      <node id="3439">
+        <label>mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+        <childnode refid="3440" relation="include">
+        </childnode>
+      </node>
+      <node id="3431">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+        <childnode refid="3432" relation="include">
+        </childnode>
+        <childnode refid="3434" relation="include">
+        </childnode>
+        <childnode refid="3435" relation="include">
+        </childnode>
+        <childnode refid="3437" relation="include">
+        </childnode>
+      </node>
+      <node id="3434">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+      </node>
+      <node id="3428">
+        <label>ubixfs/ubixfs.h</label>
+        <link refid="ubixfs_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+        <childnode refid="3431" relation="include">
+        </childnode>
+        <childnode refid="3438" relation="include">
+        </childnode>
+        <childnode refid="3439" relation="include">
+        </childnode>
+        <childnode refid="3433" relation="include">
+        </childnode>
+      </node>
+      <node id="3433">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+      </node>
+      <node id="3427">
+        <label>src/sys/include/pci/hd.h</label>
+        <link refid="hd.h"/>
+        <childnode refid="3428" relation="include">
+        </childnode>
+      </node>
+      <node id="3435">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="3436" relation="include">
+        </childnode>
+        <childnode refid="3437" relation="include">
+        </childnode>
+      </node>
+      <node id="3436">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+      </node>
+      <node id="3441">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+      </node>
+      <node id="3438">
+        <label>sys/device.h</label>
+        <link refid="device_8h"/>
+        <childnode refid="3429" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3446">
+        <label>src/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="3445">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="3443">
+        <label>src/sys/include/pci/hd.h</label>
+        <link refid="hd.h"/>
+        <childnode refid="3444" relation="include">
+        </childnode>
+        <childnode refid="3446" relation="include">
+        </childnode>
+      </node>
+      <node id="3444">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="3445" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structbsd__disklabel" prot="public">bsd_disklabel</innerclass>
+    <innerclass refid="structbsd__disklabel_1_1partition" prot="public">bsd_disklabel::partition</innerclass>
+    <innerclass refid="structdos__partition" prot="public">dos_partition</innerclass>
+    <innerclass refid="structdriveInfo" prot="public">driveInfo</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="hd_8h_17623c70dac9a02ab1f75aa7a6e547c4c" prot="public" static="no">
+        <name>hdCmd</name>
+        <initializer>0x7</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_12a82bac9f72d97307f87e60acb709ebb" prot="public" static="no">
+        <name>hdCylHi</name>
+        <initializer>0x5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_130a2e624c7eda626a913f0b5b9ed26b7" prot="public" static="no">
+        <name>hdCylLow</name>
+        <initializer>0x4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_11571e7119dfede60820469184878948a" prot="public" static="no">
+        <name>hdData</name>
+        <initializer>0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_198d5f3b47b6afa2948cb1db2a9e0cd36" prot="public" static="no">
+        <name>hdError</name>
+        <initializer>0x1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_1cefc72ce44e542db4580ce7e7c732aab" prot="public" static="no">
+        <name>hdHead</name>
+        <initializer>0x6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_18206a5d5a25f1d6fc9e02013572c52db" prot="public" static="no">
+        <name>hdSecCount</name>
+        <initializer>0x2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_10fa794dfb3e811122d5eafbe348c368f" prot="public" static="no">
+        <name>hdSecNum</name>
+        <initializer>0x3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_173f0c3f82605d0aa108e8186e4daae6b" prot="public" static="no">
+        <name>hdStat</name>
+        <initializer>0x7</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_1b365aa9aae531413e33947aba3d079cc" prot="public" static="no">
+        <name>MAXPARTITIONS</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_124fef906c993a6511034377118497b67" prot="public" static="no">
+        <name>NDDATA</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="140" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="hd_8h_1a7634e74ec4ca64b3a931b89c07ece15" prot="public" static="no">
+        <name>NSPARE</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="142" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="hd_8h_1b01b187dc277e089d0161315437fde41" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int hdInit</definition>
+        <argsstring>(struct device_node *dev)</argsstring>
+        <name>hdInit</name>
+        <param>
+          <type>struct <ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
+          <declname>dev</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="145" bodyend="220"/>
+        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
+        <references refid="hd_8h_17623c70dac9a02ab1f75aa7a6e547c4c" compoundref="hd_8h" startline="43">hdCmd</references>
+        <references refid="hd_8h_11571e7119dfede60820469184878948a" compoundref="hd_8h" startline="35">hdData</references>
+        <references refid="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" compoundref="hd_8h" startline="50">driveInfo::hdDev</references>
+        <references refid="structdriveInfo_1f385dccea1485233fc52351a8d7666aa" compoundref="hd_8h" startline="49">driveInfo::hdEnable</references>
+        <references refid="hd_8h_1cefc72ce44e542db4580ce7e7c732aab" compoundref="hd_8h" startline="41">hdHead</references>
+        <references refid="structdriveInfo_1a446858a696dafa8454b90a9d5087aae" compoundref="hd_8h" startline="53">driveInfo::hdMask</references>
+        <references refid="structdriveInfo_1c6d14ed915761c07077af5d64fa0b83e" compoundref="hd_8h" startline="54">driveInfo::hdMulti</references>
+        <references refid="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" compoundref="hd_8h" startline="55">driveInfo::hdPort</references>
+        <references refid="hd_8h_18206a5d5a25f1d6fc9e02013572c52db" compoundref="hd_8h" startline="37">hdSecCount</references>
+        <references refid="structdriveInfo_1ce7d3b12f76a7f0b5dba53b1904be35a" compoundref="hd_8h" startline="48">driveInfo::hdSector</references>
+        <references refid="structdriveInfo_1cacd139e4cfe1037afbcf488f2f5d2c3" compoundref="hd_8h" startline="52">driveInfo::hdShift</references>
+        <references refid="structdriveInfo_1da0977b5e57df10de593d1df22712af8" compoundref="hd_8h" startline="56">driveInfo::hdSize</references>
+        <references refid="hd_8h_173f0c3f82605d0aa108e8186e4daae6b" compoundref="hd_8h" startline="42">hdStat</references>
+        <references refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" compoundref="device_8h" startline="52">device_interface::info</references>
+        <references refid="structdevice__interface_1561678212ee39a09ce43c1a3567c64e2" compoundref="device_8h" startline="49">device_interface::initialized</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="structdevice__interface_182fda947114f5c8d53fb7acbd7eb0e21" compoundref="device_8h" startline="50">device_interface::size</references>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_1ce9b924d48cc450c255d1d48fcbc13a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int hdIoctl</definition>
+        <argsstring>()</argsstring>
+        <name>hdIoctl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="137" bodyend="139"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_1bda1e72920488b35bcfc9ed68bf4c268" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void hdRead</definition>
+        <argsstring>(struct driveInfo *hdd, void *, uInt32, uInt32)</argsstring>
+        <name>hdRead</name>
+        <param>
+          <type>struct <ref refid="structdriveInfo" kindref="compound">driveInfo</ref> *</type>
+          <declname>hdd</declname>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="284" bodyend="346"/>
+        <references refid="structdriveInfo_1877ef27dad0f84711aedbabb4ff71a2a" compoundref="hd_8h" startline="57">driveInfo::hdCalc</references>
+        <references refid="hd_8h_17623c70dac9a02ab1f75aa7a6e547c4c" compoundref="hd_8h" startline="43">hdCmd</references>
+        <references refid="hd_8h_12a82bac9f72d97307f87e60acb709ebb" compoundref="hd_8h" startline="40">hdCylHi</references>
+        <references refid="hd_8h_130a2e624c7eda626a913f0b5b9ed26b7" compoundref="hd_8h" startline="39">hdCylLow</references>
+        <references refid="hd_8h_11571e7119dfede60820469184878948a" compoundref="hd_8h" startline="35">hdData</references>
+        <references refid="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" compoundref="hd_8h" startline="50">driveInfo::hdDev</references>
+        <references refid="structdriveInfo_1f385dccea1485233fc52351a8d7666aa" compoundref="hd_8h" startline="49">driveInfo::hdEnable</references>
+        <references refid="hd_8h_1cefc72ce44e542db4580ce7e7c732aab" compoundref="hd_8h" startline="41">hdHead</references>
+        <references refid="structdriveInfo_1c6d14ed915761c07077af5d64fa0b83e" compoundref="hd_8h" startline="54">driveInfo::hdMulti</references>
+        <references refid="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" compoundref="hd_8h" startline="55">driveInfo::hdPort</references>
+        <references refid="hd_8h_18206a5d5a25f1d6fc9e02013572c52db" compoundref="hd_8h" startline="37">hdSecCount</references>
+        <references refid="hd_8h_10fa794dfb3e811122d5eafbe348c368f" compoundref="hd_8h" startline="38">hdSecNum</references>
+        <references refid="structdriveInfo_1cacd139e4cfe1037afbcf488f2f5d2c3" compoundref="hd_8h" startline="52">driveInfo::hdShift</references>
+        <references refid="hd_8h_173f0c3f82605d0aa108e8186e4daae6b" compoundref="hd_8h" startline="42">hdStat</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="structdriveInfo_1bbb3cbf508e4e7b866eeb658846bd44a" compoundref="hd_8h" startline="58">driveInfo::parOffset</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_18e64e509439c31ba2acfe68a7aefcc10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int hdReset</definition>
+        <argsstring>()</argsstring>
+        <name>hdReset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="141" bodyend="143"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_1525245216f426465a3c0f130bd0efd19" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int hdStandby</definition>
+        <argsstring>()</argsstring>
+        <name>hdStandby</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="125" bodyend="127"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_19535712ecc532571658cc6861570dde5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int hdStart</definition>
+        <argsstring>()</argsstring>
+        <name>hdStart</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="129" bodyend="131"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_17a00465121a584acd10c1ca1b46680a1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int hdStop</definition>
+        <argsstring>()</argsstring>
+        <name>hdStop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="133" bodyend="135"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_16bbbb9d4c1c81ca945bf093cbba5490c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void hdWrite</definition>
+        <argsstring>(struct driveInfo *hdd, void *, uInt32, uInt32)</argsstring>
+        <name>hdWrite</name>
+        <param>
+          <type>struct <ref refid="structdriveInfo" kindref="compound">driveInfo</ref> *</type>
+          <declname>hdd</declname>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="222" bodyend="282"/>
+        <references refid="structdriveInfo_1877ef27dad0f84711aedbabb4ff71a2a" compoundref="hd_8h" startline="57">driveInfo::hdCalc</references>
+        <references refid="hd_8h_17623c70dac9a02ab1f75aa7a6e547c4c" compoundref="hd_8h" startline="43">hdCmd</references>
+        <references refid="hd_8h_12a82bac9f72d97307f87e60acb709ebb" compoundref="hd_8h" startline="40">hdCylHi</references>
+        <references refid="hd_8h_130a2e624c7eda626a913f0b5b9ed26b7" compoundref="hd_8h" startline="39">hdCylLow</references>
+        <references refid="hd_8h_11571e7119dfede60820469184878948a" compoundref="hd_8h" startline="35">hdData</references>
+        <references refid="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" compoundref="hd_8h" startline="50">driveInfo::hdDev</references>
+        <references refid="structdriveInfo_1f385dccea1485233fc52351a8d7666aa" compoundref="hd_8h" startline="49">driveInfo::hdEnable</references>
+        <references refid="hd_8h_1cefc72ce44e542db4580ce7e7c732aab" compoundref="hd_8h" startline="41">hdHead</references>
+        <references refid="structdriveInfo_1c6d14ed915761c07077af5d64fa0b83e" compoundref="hd_8h" startline="54">driveInfo::hdMulti</references>
+        <references refid="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" compoundref="hd_8h" startline="55">driveInfo::hdPort</references>
+        <references refid="hd_8h_18206a5d5a25f1d6fc9e02013572c52db" compoundref="hd_8h" startline="37">hdSecCount</references>
+        <references refid="hd_8h_10fa794dfb3e811122d5eafbe348c368f" compoundref="hd_8h" startline="38">hdSecNum</references>
+        <references refid="structdriveInfo_1cacd139e4cfe1037afbcf488f2f5d2c3" compoundref="hd_8h" startline="52">driveInfo::hdShift</references>
+        <references refid="hd_8h_173f0c3f82605d0aa108e8186e4daae6b" compoundref="hd_8h" startline="42">hdStat</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structdriveInfo_1bbb3cbf508e4e7b866eeb658846bd44a" compoundref="hd_8h" startline="58">driveInfo::parOffset</references>
+        <references refid="ap-boot_8S_1c2a218176530ced267bbcc8042da1000" compoundref="ap-boot_8S" startline="52">x30</references>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="hd_8h_1a6ffe735243161c69ce0930999e02f88" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int initHardDisk</definition>
+        <argsstring>()</argsstring>
+        <name>initHardDisk</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/hd.c" bodystart="39" bodyend="123"/>
+        <references refid="structbsd__disklabel_16a478db13de03d2384bbb5307be1e84c" compoundref="hd_8h" startline="148">bsd_disklabel::d_npartitions</references>
+        <references refid="structbsd__disklabel_160c26768f84bf0061c2436f29a2fdff0">bsd_disklabel::d_partitions</references>
+        <references refid="devfs_8c_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</references>
+        <references refid="device_8h_1256b750ab99e3be9b83a9bfd37a22388" compoundref="device_8c" startline="51" endline="73">device_add</references>
+        <references refid="structdos__partition_1b316e0e02d24902172d5edde412f3238" compoundref="hd_8h" startline="80">dos_partition::dp_start</references>
+        <references refid="hd_8h_16ef530d16811c8a4680c136ed9e72cbf" compoundref="hd_8h" startline="161">fstypenames</references>
+        <references refid="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" compoundref="hd_8h" startline="50">driveInfo::hdDev</references>
+        <references refid="hd_8h_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</references>
+        <references refid="hd_8h_1ce9b924d48cc450c255d1d48fcbc13a5" compoundref="hd_8c" startline="137" endline="139">hdIoctl</references>
+        <references refid="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" compoundref="hd_8h" startline="55">driveInfo::hdPort</references>
+        <references refid="hd_8h_1bda1e72920488b35bcfc9ed68bf4c268" compoundref="hd_8c" startline="284" endline="346">hdRead</references>
+        <references refid="hd_8h_18e64e509439c31ba2acfe68a7aefcc10" compoundref="hd_8c" startline="141" endline="143">hdReset</references>
+        <references refid="structdriveInfo_1da0977b5e57df10de593d1df22712af8" compoundref="hd_8h" startline="56">driveInfo::hdSize</references>
+        <references refid="hd_8h_1525245216f426465a3c0f130bd0efd19" compoundref="hd_8c" startline="125" endline="127">hdStandby</references>
+        <references refid="hd_8h_19535712ecc532571658cc6861570dde5" compoundref="hd_8c" startline="129" endline="131">hdStart</references>
+        <references refid="hd_8h_17a00465121a584acd10c1ca1b46680a1" compoundref="hd_8c" startline="133" endline="135">hdStop</references>
+        <references refid="hd_8h_16bbbb9d4c1c81ca945bf093cbba5490c" compoundref="hd_8c" startline="222" endline="282">hdWrite</references>
+        <references refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" compoundref="device_8h" startline="52">device_interface::info</references>
+        <references refid="structdevice__interface_192620413c2580ea3cf01e121bb54c254">device_interface::init</references>
+        <references refid="structdevice__interface_1a1c4703d14f4a7f53a8dd6d6dda9e641">device_interface::ioctl</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structdevice__interface_17eb42b0bb3e06dbc9183531a5e59ddb8" compoundref="device_8h" startline="51">device_interface::major</references>
+        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="39">name</references>
+        <references refid="structbsd__disklabel_1_1partition_1234eea6a587c4d889251c2f07d982cef" compoundref="hd_8h" startline="155">bsd_disklabel::partition::p_fstype</references>
+        <references refid="structbsd__disklabel_1_1partition_18bc8426239533bd9dfdce0f25190da06" compoundref="hd_8h" startline="153">bsd_disklabel::partition::p_offset</references>
+        <references refid="structbsd__disklabel_1_1partition_15663ff994f70fcc34ce0587012a2339b" compoundref="hd_8h" startline="152">bsd_disklabel::partition::p_size</references>
+        <references refid="structdriveInfo_1bbb3cbf508e4e7b866eeb658846bd44a" compoundref="hd_8h" startline="58">driveInfo::parOffset</references>
+        <references refid="structdevice__interface_16caf84418059d0121e76d873e305ddcb">device_interface::read</references>
+        <references refid="structdevice__interface_1cbfb9de4fadc968479e1536fcef4a2d6">device_interface::reset</references>
+        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
+        <references refid="structdevice__interface_12c8e52e7fd5b4766863525af3ecb14ed">device_interface::standby</references>
+        <references refid="structdevice__interface_16376721f0db48a8cc534b41c28e9a060">device_interface::start</references>
+        <references refid="structdevice__interface_1734dddd62b4d34efc7f8faaa4f009304">device_interface::stop</references>
+        <references refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df">device_interface::write</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="hd_8h_16ef530d16811c8a4680c136ed9e72cbf" prot="public" static="yes" mutable="no">
+        <type>const char *</type>
+        <definition>const char* fstypenames[]</definition>
+        <argsstring>[]</argsstring>
+        <name>fstypenames</name>
+        <initializer> {
+        &quot;unused&quot;,
+        &quot;swap&quot;,
+        &quot;Version 6&quot;,
+        &quot;Version 7&quot;,
+        &quot;System V&quot;,
+        &quot;4.1BSD&quot;,
+        &quot;Eighth Edition&quot;,
+        &quot;4.2BSD&quot;,
+        &quot;MSDOS&quot;,
+        &quot;4.4LFS&quot;,
+        &quot;unknown&quot;,
+        &quot;HPFS&quot;,
+        &quot;ISO9660&quot;,
+        &quot;boot&quot;,
+        &quot;vinum&quot;,
+        &quot;raid&quot;,
+        &quot;?&quot;,
+        &quot;?&quot;,
+        &quot;?&quot;,
+        &quot;?&quot;,
+        &quot;jfs&quot;,
+        NULL
+}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="184" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="161" bodyend="-1"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: hd_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_HD_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_HD_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ubixfs_8h" kindref="compound">ubixfs/ubixfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="hd_8h_11571e7119dfede60820469184878948a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>hdData<sp/><sp/><sp/><sp/><sp/>0x0</highlight></codeline>
+<codeline lineno="36" refid="hd_8h_198d5f3b47b6afa2948cb1db2a9e0cd36" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdError<sp/><sp/><sp/><sp/>0x1</highlight></codeline>
+<codeline lineno="37" refid="hd_8h_18206a5d5a25f1d6fc9e02013572c52db" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdSecCount<sp/>0x2</highlight></codeline>
+<codeline lineno="38" refid="hd_8h_10fa794dfb3e811122d5eafbe348c368f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdSecNum<sp/><sp/><sp/>0x3</highlight></codeline>
+<codeline lineno="39" refid="hd_8h_130a2e624c7eda626a913f0b5b9ed26b7" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdCylLow<sp/><sp/><sp/>0x4</highlight></codeline>
+<codeline lineno="40" refid="hd_8h_12a82bac9f72d97307f87e60acb709ebb" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdCylHi<sp/><sp/><sp/><sp/>0x5</highlight></codeline>
+<codeline lineno="41" refid="hd_8h_1cefc72ce44e542db4580ce7e7c732aab" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdHead<sp/><sp/><sp/><sp/><sp/>0x6</highlight></codeline>
+<codeline lineno="42" refid="hd_8h_173f0c3f82605d0aa108e8186e4daae6b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdStat<sp/><sp/><sp/><sp/><sp/>0x7</highlight></codeline>
+<codeline lineno="43" refid="hd_8h_17623c70dac9a02ab1f75aa7a6e547c4c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>hdCmd<sp/><sp/><sp/><sp/><sp/><sp/>0x7</highlight></codeline>
+<codeline lineno="44"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="structdriveInfo" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdriveInfo" kindref="compound">driveInfo</ref><sp/>{</highlight></codeline>
+<codeline lineno="47" refid="structdriveInfo_116f2a2a3b5ea803c987edc8659d16559" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">driveDiskLabel<sp/>*<ref refid="structdriveInfo_116f2a2a3b5ea803c987edc8659d16559" kindref="member">diskLabel</ref>;</highlight></codeline>
+<codeline lineno="48" refid="structdriveInfo_1ce7d3b12f76a7f0b5dba53b1904be35a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1ce7d3b12f76a7f0b5dba53b1904be35a" kindref="member">hdSector</ref>[512];</highlight></codeline>
+<codeline lineno="49" refid="structdriveInfo_1f385dccea1485233fc52351a8d7666aa" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1f385dccea1485233fc52351a8d7666aa" kindref="member">hdEnable</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" kindref="member">hdDev</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structdriveInfo_10ede68cc430fe1c49e9c234bbbe5ec11" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_10ede68cc430fe1c49e9c234bbbe5ec11" kindref="member">hdFlags</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structdriveInfo_1cacd139e4cfe1037afbcf488f2f5d2c3" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1cacd139e4cfe1037afbcf488f2f5d2c3" kindref="member">hdShift</ref>;</highlight></codeline>
+<codeline lineno="53" refid="structdriveInfo_1a446858a696dafa8454b90a9d5087aae" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1a446858a696dafa8454b90a9d5087aae" kindref="member">hdMask</ref>;</highlight></codeline>
+<codeline lineno="54" refid="structdriveInfo_1c6d14ed915761c07077af5d64fa0b83e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1c6d14ed915761c07077af5d64fa0b83e" kindref="member">hdMulti</ref>;</highlight></codeline>
+<codeline lineno="55" refid="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" kindref="member">hdPort</ref>;</highlight></codeline>
+<codeline lineno="56" refid="structdriveInfo_1da0977b5e57df10de593d1df22712af8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1da0977b5e57df10de593d1df22712af8" kindref="member">hdSize</ref>;</highlight></codeline>
+<codeline lineno="57" refid="structdriveInfo_1877ef27dad0f84711aedbabb4ff71a2a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1877ef27dad0f84711aedbabb4ff71a2a" kindref="member">hdCalc</ref>;</highlight></codeline>
+<codeline lineno="58" refid="structdriveInfo_1bbb3cbf508e4e7b866eeb658846bd44a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo_1bbb3cbf508e4e7b866eeb658846bd44a" kindref="member">parOffset</ref>;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="hd_8h_1a6ffe735243161c69ce0930999e02f88" kindref="member">initHardDisk</ref>();</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="hd_8h_16bbbb9d4c1c81ca945bf093cbba5490c" kindref="member">hdWrite</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo" kindref="compound">driveInfo</ref><sp/>*hdd,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="hd_8h_1bda1e72920488b35bcfc9ed68bf4c268" kindref="member">hdRead</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdriveInfo" kindref="compound">driveInfo</ref><sp/>*hdd,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="hd_8h_18e64e509439c31ba2acfe68a7aefcc10" kindref="member">hdReset</ref>();</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="hd_8h_1ce9b924d48cc450c255d1d48fcbc13a5" kindref="member">hdIoctl</ref>();</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="hd_8h_19535712ecc532571658cc6861570dde5" kindref="member">hdStart</ref>();</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="hd_8h_17a00465121a584acd10c1ca1b46680a1" kindref="member">hdStop</ref>();</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="hd_8h_1525245216f426465a3c0f130bd0efd19" kindref="member">hdStandby</ref>();</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="hd_8h_1b01b187dc277e089d0161315437fde41" kindref="member">hdInit</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/>*dev);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structdos__partition" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdos__partition" kindref="compound">dos_partition</ref><sp/>{</highlight></codeline>
+<codeline lineno="72" refid="structdos__partition_176754d1c9c64baa477f45dac3b258a40" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_176754d1c9c64baa477f45dac3b258a40" kindref="member">dp_flag</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>bootstrap<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="structdos__partition_143c14b7f158728b75f4fa550ee7ec75f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_143c14b7f158728b75f4fa550ee7ec75f" kindref="member">dp_shd</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>starting<sp/>head<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="structdos__partition_1bd8bc367d5183d55902ab1175f63343b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_1bd8bc367d5183d55902ab1175f63343b" kindref="member">dp_ssect</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>starting<sp/>sector<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75" refid="structdos__partition_13a8d760608768cd64c6c5765aeac7a40" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_13a8d760608768cd64c6c5765aeac7a40" kindref="member">dp_scyl</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>starting<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="structdos__partition_1817b13493937968e878385eeede34f0b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_1817b13493937968e878385eeede34f0b" kindref="member">dp_type</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>partition<sp/>type<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="structdos__partition_1bb8315c288cd2fb600b593867f7fe9db" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_1bb8315c288cd2fb600b593867f7fe9db" kindref="member">dp_ehd</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>end<sp/>head<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="structdos__partition_17c867bf1f30a039de242889af824d188" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_17c867bf1f30a039de242889af824d188" kindref="member">dp_esect</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>end<sp/>sector<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="structdos__partition_136e0dc33679a315c60056b2a8e865598" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structdos__partition_136e0dc33679a315c60056b2a8e865598" kindref="member">dp_ecyl</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>end<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="structdos__partition_1b316e0e02d24902172d5edde412f3238" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdos__partition_1b316e0e02d24902172d5edde412f3238" kindref="member">dp_start</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>absolute<sp/>starting<sp/>sector<sp/>number<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="structdos__partition_1f001423f7cab0f911f83d19906c9018f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdos__partition_1f001423f7cab0f911f83d19906c9018f" kindref="member">dp_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>partition<sp/>size<sp/>in<sp/>sectors<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="hd_8h_1b365aa9aae531413e33947aba3d079cc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAXPARTITIONS<sp/><sp/><sp/>8</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="structbsd__disklabel" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbsd__disklabel" kindref="compound">bsd_disklabel</ref><sp/>{</highlight></codeline>
+<codeline lineno="87" refid="structbsd__disklabel_14cd5d09a3a36da18477d178762fdfd97" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_14cd5d09a3a36da18477d178762fdfd97" kindref="member">d_magic</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>magic<sp/>number<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="structbsd__disklabel_1339de842bcffc11bce9a34fc53b03362" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_1339de842bcffc11bce9a34fc53b03362" kindref="member">d_type</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>drive<sp/>type<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89" refid="structbsd__disklabel_1c6a9dfd75ae82c8c45e86726ca9cdd3b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_1c6a9dfd75ae82c8c45e86726ca9cdd3b" kindref="member">d_subtype</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>controller/d_type<sp/>specific<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="structbsd__disklabel_1d6a5a058cc4fa40a5a0a5cb305104569" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbsd__disklabel_1d6a5a058cc4fa40a5a0a5cb305104569" kindref="member">d_typename</ref>[16];<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>type<sp/>name,<sp/>e.g.<sp/>&quot;eagle&quot;<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92" refid="structbsd__disklabel_1327daaf81e47645765fce50925f63030" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbsd__disklabel_1327daaf81e47645765fce50925f63030" kindref="member">d_packname</ref>[16];<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>pack<sp/>identifier<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>disk<sp/>geometry:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="structbsd__disklabel_179153fe068fdf0406a058bde26cc878a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_179153fe068fdf0406a058bde26cc878a" kindref="member">d_secsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>bytes<sp/>per<sp/>sector<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="structbsd__disklabel_1941fd2872c4114f45aa6351d274146de" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1941fd2872c4114f45aa6351d274146de" kindref="member">d_nsectors</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>data<sp/>sectors<sp/>per<sp/>track<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="structbsd__disklabel_1d4d554a81a0a40ea3798534bbcaea9cb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1d4d554a81a0a40ea3798534bbcaea9cb" kindref="member">d_ntracks</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>tracks<sp/>per<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="structbsd__disklabel_1b714391225d73f1d54cfed83bb856b33" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1b714391225d73f1d54cfed83bb856b33" kindref="member">d_ncylinders</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>data<sp/>cylinders<sp/>per<sp/>unit<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="structbsd__disklabel_1b5b34b633875649ac99cec0d15e0499d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1b5b34b633875649ac99cec0d15e0499d" kindref="member">d_secpercyl</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>data<sp/>sectors<sp/>per<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="structbsd__disklabel_1a29883ea8626c0690b18d62a7c6592d9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1a29883ea8626c0690b18d62a7c6592d9" kindref="member">d_secperunit</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>data<sp/>sectors<sp/>per<sp/>unit<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>Spares<sp/>(bad<sp/>sector<sp/>replacements)<sp/>below<sp/>are<sp/>not<sp/>counted<sp/>in</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>d_nsectors<sp/>or<sp/>d_secpercyl.<sp/><sp/>Spare<sp/>sectors<sp/>are<sp/>assumed<sp/>to</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>be<sp/>physical<sp/>sectors<sp/>which<sp/>occupy<sp/>space<sp/>at<sp/>the<sp/>end<sp/>of<sp/>each</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>track<sp/>and/or<sp/>cylinder.</highlight></codeline>
+<codeline lineno="107"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108" refid="structbsd__disklabel_170038e5db15a12985955a06daa31b2b6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_170038e5db15a12985955a06daa31b2b6" kindref="member">d_sparespertrack</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>spare<sp/>sectors<sp/>per<sp/>track<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109" refid="structbsd__disklabel_166e9626c5aa0312540d253599483b6b6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_166e9626c5aa0312540d253599483b6b6" kindref="member">d_sparespercyl</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>spare<sp/>sectors<sp/>per<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="111"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>Alternate<sp/>cylinders<sp/>include<sp/>maintenance,<sp/>replacement,<sp/>configuration</highlight></codeline>
+<codeline lineno="112"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>description<sp/>areas,<sp/>etc.</highlight></codeline>
+<codeline lineno="113"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="structbsd__disklabel_11a2e5096cbd1ebe4fe430f882c52c57d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_11a2e5096cbd1ebe4fe430f882c52c57d" kindref="member">d_acylinders</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>of<sp/>alt.<sp/>cylinders<sp/>per<sp/>unit<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>hardware<sp/>characteristics:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="118"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>d_interleave,<sp/>d_trackskew<sp/>and<sp/>d_cylskew<sp/>describe<sp/>perturbations</highlight></codeline>
+<codeline lineno="119"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>in<sp/>the<sp/>media<sp/>format<sp/>used<sp/>to<sp/>compensate<sp/>for<sp/>a<sp/>slow<sp/>controller.</highlight></codeline>
+<codeline lineno="120"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>Interleave<sp/>is<sp/>physical<sp/>sector<sp/>interleave,<sp/>set<sp/>up<sp/>by<sp/>the</highlight></codeline>
+<codeline lineno="121"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>formatter<sp/>or<sp/>controller<sp/>when<sp/>formatting.<sp/><sp/>When<sp/>interleaving<sp/>is</highlight></codeline>
+<codeline lineno="122"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>in<sp/>use,<sp/>logically<sp/>adjacent<sp/>sectors<sp/>are<sp/>not<sp/>physically</highlight></codeline>
+<codeline lineno="123"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>contiguous,<sp/>but<sp/>instead<sp/>are<sp/>separated<sp/>by<sp/>some<sp/>number<sp/>of</highlight></codeline>
+<codeline lineno="124"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>sectors.<sp/><sp/>It<sp/>is<sp/>specified<sp/>as<sp/>the<sp/>ratio<sp/>of<sp/>physical<sp/>sectors</highlight></codeline>
+<codeline lineno="125"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>traversed<sp/>per<sp/>logical<sp/>sector.<sp/><sp/>Thus<sp/>an<sp/>interleave<sp/>of<sp/>1:1</highlight></codeline>
+<codeline lineno="126"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>implies<sp/>contiguous<sp/>layout,<sp/>while<sp/>2:1<sp/>implies<sp/>that<sp/>logical</highlight></codeline>
+<codeline lineno="127"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>sector<sp/>0<sp/>is<sp/>separated<sp/>by<sp/>one<sp/>sector<sp/>from<sp/>logical<sp/>sector<sp/>1.</highlight></codeline>
+<codeline lineno="128"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>d_trackskew<sp/>is<sp/>the<sp/>offset<sp/>of<sp/>sector<sp/>0<sp/>on<sp/>track<sp/>N<sp/>relative<sp/>to</highlight></codeline>
+<codeline lineno="129"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>sector<sp/>0<sp/>on<sp/>track<sp/>N-1<sp/>on<sp/>the<sp/>same<sp/>cylinder.<sp/><sp/>Finally,<sp/>d_cylskew</highlight></codeline>
+<codeline lineno="130"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>is<sp/>the<sp/>offset<sp/>of<sp/>sector<sp/>0<sp/>on<sp/>cylinder<sp/>N<sp/>relative<sp/>to<sp/>sector<sp/>0</highlight></codeline>
+<codeline lineno="131"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>on<sp/>cylinder<sp/>N-1.</highlight></codeline>
+<codeline lineno="132"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="structbsd__disklabel_108bc0c83a73009a0886aeadae13adf9f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_108bc0c83a73009a0886aeadae13adf9f" kindref="member">d_rpm</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>rotational<sp/>speed<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="structbsd__disklabel_19f251fc6b92836fc3df6fdcf5ada1eaf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_19f251fc6b92836fc3df6fdcf5ada1eaf" kindref="member">d_interleave</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>hardware<sp/>sector<sp/>interleave<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135" refid="structbsd__disklabel_116886f26e50cfa69d6f8a83c3ec74d3f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_116886f26e50cfa69d6f8a83c3ec74d3f" kindref="member">d_trackskew</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sector<sp/>0<sp/>skew,<sp/>per<sp/>track<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136" refid="structbsd__disklabel_18a1ea7da1a561dc09e78d9fd510cc9d7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_18a1ea7da1a561dc09e78d9fd510cc9d7" kindref="member">d_cylskew</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sector<sp/>0<sp/>skew,<sp/>per<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137" refid="structbsd__disklabel_1f4d4f387f5a586b7b7207b627ad97fe8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1f4d4f387f5a586b7b7207b627ad97fe8" kindref="member">d_headswitch</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>head<sp/>switch<sp/>time,<sp/>usec<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138" refid="structbsd__disklabel_122be9443e1f538e456eb0ecdee8a3b56" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_122be9443e1f538e456eb0ecdee8a3b56" kindref="member">d_trkseek</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>track-to-track<sp/>seek,<sp/>usec<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139" refid="structbsd__disklabel_18c414f88561a87791b7275c85093a497" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_18c414f88561a87791b7275c85093a497" kindref="member">d_flags</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>generic<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="hd_8h_124fef906c993a6511034377118497b67" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NDDATA<sp/>5</highlight></codeline>
+<codeline lineno="141" refid="structbsd__disklabel_1ee88bede04d4e92e3e35ce8b3fa96c53" refkind="member"><highlight class="preprocessor"></highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1ee88bede04d4e92e3e35ce8b3fa96c53" kindref="member">d_drivedata</ref>[<ref refid="hd_8h_124fef906c993a6511034377118497b67" kindref="member">NDDATA</ref>];<sp/><sp/></highlight><highlight class="comment">/*<sp/>drive-type<sp/>specific<sp/>information<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142" refid="hd_8h_1a7634e74ec4ca64b3a931b89c07ece15" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NSPARE<sp/>5</highlight></codeline>
+<codeline lineno="143" refid="structbsd__disklabel_117cd3e21e9fe8f67745c28330f31db11" refkind="member"><highlight class="preprocessor"></highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_117cd3e21e9fe8f67745c28330f31db11" kindref="member">d_spare</ref>[<ref refid="hd_8h_1a7634e74ec4ca64b3a931b89c07ece15" kindref="member">NSPARE</ref>];<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>reserved<sp/>for<sp/>future<sp/>use<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144" refid="structbsd__disklabel_11791efc5907c820e31113c0c9a645602" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_11791efc5907c820e31113c0c9a645602" kindref="member">d_magic2</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>magic<sp/>number<sp/>(again)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="structbsd__disklabel_1c509dd0d343b76b9dc7dc75973219a7e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_1c509dd0d343b76b9dc7dc75973219a7e" kindref="member">d_checksum</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>xor<sp/>of<sp/>data<sp/>incl.<sp/>partitions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem<sp/>and<sp/>partition<sp/>information:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="structbsd__disklabel_16a478db13de03d2384bbb5307be1e84c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_16a478db13de03d2384bbb5307be1e84c" kindref="member">d_npartitions</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>partitions<sp/>in<sp/>following<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149" refid="structbsd__disklabel_1e6fd038ae8f29755866e1c6fcfbfd11f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1e6fd038ae8f29755866e1c6fcfbfd11f" kindref="member">d_bbsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>size<sp/>of<sp/>boot<sp/>area<sp/>at<sp/>sn0,<sp/>bytes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="structbsd__disklabel_1bbdfb5c93b11731acef587db4f9492ff" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1bbdfb5c93b11731acef587db4f9492ff" kindref="member">d_sbsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>max<sp/>size<sp/>of<sp/>fs<sp/>superblock,<sp/>bytes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151" refid="structbsd__disklabel_1_1partition" refkind="compound"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbsd__disklabel_1_1partition" kindref="compound">partition</ref><sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>the<sp/>partition<sp/>table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="structbsd__disklabel_1_1partition_15663ff994f70fcc34ce0587012a2339b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1_1partition_15663ff994f70fcc34ce0587012a2339b" kindref="member">p_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>sectors<sp/>in<sp/>partition<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153" refid="structbsd__disklabel_1_1partition_18bc8426239533bd9dfdce0f25190da06" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1_1partition_18bc8426239533bd9dfdce0f25190da06" kindref="member">p_offset</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>starting<sp/>sector<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154" refid="structbsd__disklabel_1_1partition_128f6899ed90435dd6e7a0b737718d703" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="structbsd__disklabel_1_1partition_128f6899ed90435dd6e7a0b737718d703" kindref="member">p_fsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem<sp/>basic<sp/>fragment<sp/>size<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155" refid="structbsd__disklabel_1_1partition_1234eea6a587c4d889251c2f07d982cef" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref><sp/><ref refid="structbsd__disklabel_1_1partition_1234eea6a587c4d889251c2f07d982cef" kindref="member">p_fstype</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem<sp/>type,<sp/>see<sp/>below<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="structbsd__disklabel_1_1partition_1d200bba4ef05cb1d2824c6b93092f711" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref><sp/><ref refid="structbsd__disklabel_1_1partition_1d200bba4ef05cb1d2824c6b93092f711" kindref="member">p_frag</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem<sp/>fragments<sp/>per<sp/>block<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="structbsd__disklabel_1_1partition_126963c89dd04bf274c1f31b1d76dee89" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structbsd__disklabel_1_1partition_126963c89dd04bf274c1f31b1d76dee89" kindref="member">p_cpg</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem<sp/>cylinders<sp/>per<sp/>group<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/><ref refid="structbsd__disklabel_160c26768f84bf0061c2436f29a2fdff0" kindref="member">d_partitions</ref>[<ref refid="hd_8h_1b365aa9aae531413e33947aba3d079cc" kindref="member">MAXPARTITIONS</ref>];<sp/><sp/></highlight><highlight class="comment">/*<sp/>actually<sp/>may<sp/>be<sp/>more<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"></highlight></codeline>
+<codeline lineno="161" refid="hd_8h_16ef530d16811c8a4680c136ed9e72cbf" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="hd_8h_16ef530d16811c8a4680c136ed9e72cbf" kindref="member">fstypenames</ref>[]<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;unused&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;swap&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Version<sp/>6&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Version<sp/>7&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;System<sp/>V&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;4.1BSD&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;Eighth<sp/>Edition&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;4.2BSD&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;MSDOS&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;4.4LFS&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;unknown&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;HPFS&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;ISO9660&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;boot&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;vinum&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;raid&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;?&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;?&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;?&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;?&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;jfs&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref></highlight></codeline>
+<codeline lineno="184"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="187"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="189"><highlight class="comment"><sp/>$Log: hd_8h.xml,v $
+<codeline lineno="189"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
+<codeline lineno="189"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="189"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="190"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2006/10/09<sp/>02:58:05<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="191"><highlight class="comment"><sp/>Fixing<sp/>UFS</highlight></codeline>
+<codeline lineno="192"><highlight class="comment"></highlight></codeline>
+<codeline lineno="193"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="194"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="195"><highlight class="comment"></highlight></codeline>
+<codeline lineno="196"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="197"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="198"><highlight class="comment"></highlight></codeline>
+<codeline lineno="199"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:50<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="200"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="201"><highlight class="comment"></highlight></codeline>
+<codeline lineno="202"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/08/15<sp/>00:33:02<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="203"><highlight class="comment"><sp/>Wow<sp/>the<sp/>ide<sp/>driver<sp/>works<sp/>again</highlight></codeline>
+<codeline lineno="204"><highlight class="comment"></highlight></codeline>
+<codeline lineno="205"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/21<sp/>10:02:09<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="206"><highlight class="comment"><sp/>devfs:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="207"><highlight class="comment"><sp/>device<sp/>system:<sp/>renamed<sp/>functions</highlight></codeline>
+<codeline lineno="208"><highlight class="comment"><sp/>fdc:<sp/>fixed<sp/>a<sp/>few<sp/>potential<sp/>bugs<sp/>and<sp/>cleaned<sp/>up<sp/>some<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="209"><highlight class="comment"><sp/>strol:<sp/>fixed<sp/>definition</highlight></codeline>
+<codeline lineno="210"><highlight class="comment"><sp/>endtask:<sp/>made<sp/>it<sp/>print<sp/>out<sp/>freepage<sp/>debug<sp/>info</highlight></codeline>
+<codeline lineno="211"><highlight class="comment"><sp/>kmalloc:<sp/>fixed<sp/>a<sp/>huge<sp/>memory<sp/>leak<sp/>we<sp/>had<sp/>some<sp/>unhandled<sp/>descriptor<sp/>insertion<sp/>so<sp/>some<sp/>descriptors<sp/>were<sp/>lost</highlight></codeline>
+<codeline lineno="212"><highlight class="comment"><sp/>ld:<sp/>fixed<sp/>a<sp/>pointer<sp/>conversion</highlight></codeline>
+<codeline lineno="213"><highlight class="comment"><sp/>file:<sp/>cleaned<sp/>up<sp/>a<sp/>few<sp/>unused<sp/>variables</highlight></codeline>
+<codeline lineno="214"><highlight class="comment"><sp/>sched:<sp/>broke<sp/>task<sp/>deletion</highlight></codeline>
+<codeline lineno="215"><highlight class="comment"><sp/>kprintf:<sp/>fixed<sp/>ogPrintf<sp/>definition</highlight></codeline>
+<codeline lineno="216"><highlight class="comment"></highlight></codeline>
+<codeline lineno="217"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/05/21<sp/>15:05:07<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="218"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="219"><highlight class="comment"></highlight></codeline>
+<codeline lineno="220"><highlight class="comment"></highlight></codeline>
+<codeline lineno="221"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="222"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h"/>
+  </compounddef>
+</doxygen>

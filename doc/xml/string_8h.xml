@@ -1,0 +1,389 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="string_8h" kind="file">
+    <compoundname>string.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="ne2k_8c" local="no">src/sys/isa/ne2k.c</includedby>
+    <includedby refid="fork_8c" local="no">src/sys/kernel/fork.c</includedby>
+    <includedby refid="gen__calls_8c" local="no">src/sys/kernel/gen_calls.c</includedby>
+    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
+    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
+    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
+    <includedby refid="tty_8c" local="no">src/sys/kernel/tty.c</includedby>
+    <includedby refid="vitals_8c" local="no">src/sys/kernel/vitals.c</includedby>
+    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
+    <includedby refid="kmalloc_8c" local="no">src/sys/lib/kmalloc.c</includedby>
+    <includedby refid="bcopy_8c" local="no">src/sys/lib/bcopy.c</includedby>
+    <includedby refid="memset_8c" local="no">src/sys/lib/memset.c</includedby>
+    <includedby refid="net_8c" local="no">src/sys/lib/net.c</includedby>
+    <includedby refid="hd_8c" local="no">src/sys/pci/hd.c</includedby>
+    <includedby refid="idt_8c" local="no">src/sys/sys/idt.c</includedby>
+    <includedby refid="copyvirtualspace_8c" local="no">src/sys/vmm/copyvirtualspace.c</includedby>
+    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
+    <incdepgraph>
+      <node id="3360">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3361" relation="include">
+        </childnode>
+      </node>
+      <node id="3361">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3359">
+        <label>src/sys/include/string.h</label>
+        <link refid="string.h"/>
+        <childnode refid="3360" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3375">
+        <label>src/sys/lib/memcpy.c</label>
+        <link refid="memcpy_8c"/>
+      </node>
+      <node id="3378">
+        <label>src/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="3377">
+        <label>src/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+      <node id="3371">
+        <label>src/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="3370">
+        <label>src/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="3372">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="3366">
+        <label>src/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="3373">
+        <label>src/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="3381">
+        <label>src/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="3369">
+        <label>src/sys/kernel/systemtask.c</label>
+        <link refid="systemtask_8c"/>
+      </node>
+      <node id="3362">
+        <label>src/sys/include/string.h</label>
+        <link refid="string.h"/>
+        <childnode refid="3363" relation="include">
+        </childnode>
+        <childnode refid="3364" relation="include">
+        </childnode>
+        <childnode refid="3365" relation="include">
+        </childnode>
+        <childnode refid="3366" relation="include">
+        </childnode>
+        <childnode refid="3367" relation="include">
+        </childnode>
+        <childnode refid="3368" relation="include">
+        </childnode>
+        <childnode refid="3369" relation="include">
+        </childnode>
+        <childnode refid="3370" relation="include">
+        </childnode>
+        <childnode refid="3371" relation="include">
+        </childnode>
+        <childnode refid="3372" relation="include">
+        </childnode>
+        <childnode refid="3373" relation="include">
+        </childnode>
+        <childnode refid="3374" relation="include">
+        </childnode>
+        <childnode refid="3376" relation="include">
+        </childnode>
+        <childnode refid="3377" relation="include">
+        </childnode>
+        <childnode refid="3378" relation="include">
+        </childnode>
+        <childnode refid="3379" relation="include">
+        </childnode>
+        <childnode refid="3380" relation="include">
+        </childnode>
+        <childnode refid="3381" relation="include">
+        </childnode>
+      </node>
+      <node id="3367">
+        <label>src/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="3364">
+        <label>src/sys/kernel/fork.c</label>
+        <link refid="fork_8c"/>
+      </node>
+      <node id="3368">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="3376">
+        <label>src/sys/lib/memset.c</label>
+        <link refid="memset_8c"/>
+      </node>
+      <node id="3363">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="3374">
+        <label>src/sys/lib/bcopy.c</label>
+        <link refid="bcopy_8c"/>
+        <childnode refid="3375" relation="include">
+        </childnode>
+      </node>
+      <node id="3379">
+        <label>src/sys/sys/idt.c</label>
+        <link refid="idt_8c"/>
+      </node>
+      <node id="3365">
+        <label>src/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="3380">
+        <label>src/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="string_8h_1438fd8df168b3de7321baec2a8805c72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* memcpy</definition>
+        <argsstring>(void *dst, const void *src, size_t length)</argsstring>
+        <name>memcpy</name>
+        <param>
+          <type>void *</type>
+          <declname>dst</declname>
+        </param>
+        <param>
+          <type>const void *</type>
+          <declname>src</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="37"/>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_1ce4b911463887af5e748326323e99a23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void *</type>
+        <definition>void* memset</definition>
+        <argsstring>(void *dst, int c, size_t length)</argsstring>
+        <name>memset</name>
+        <param>
+          <type>void *</type>
+          <declname>dst</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+          <declname>length</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/memset.c" bodystart="37" bodyend="80"/>
+        <references refid="memset_8c_16a203659ae1d198f05feb3f9f987013d" compoundref="memset_8c" startline="34">VAL</references>
+        <references refid="memset_8c_162799d9c2c8c93ff3336ea492d4522d6" compoundref="memset_8c" startline="35">WIDEVAL</references>
+        <references refid="bcopy_8c_1b5deaef115ff5ca6ef1457d923d8331a" compoundref="bcopy_8c" startline="49">wmask</references>
+        <references refid="bcopy_8c_101c6b59ca21f041b23efbb9845cc4e32" compoundref="bcopy_8c" startline="48">wsize</references>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_13082155ec11e7229f7a20439b31a169e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sprintf</definition>
+        <argsstring>(char *str, const char *format,...)</argsstring>
+        <name>sprintf</name>
+        <param>
+          <type>char *</type>
+          <declname>str</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>format</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kprintf.c" bodystart="51" bodyend="58"/>
+        <references refid="stdarg_8h_19eb66fe3016779da70a50f348919a850" compoundref="stdarg_8h" startline="43">vaEnd</references>
+        <references refid="stdarg_8h_18a3212be1635dea2009b962c2abe5237" compoundref="stdarg_8h" startline="35">vaStart</references>
+        <references refid="stdarg_8h_1621577c2df0ad5faa281223c56eeb7a5" compoundref="vsprintf_8c" startline="139" endline="280">vsprintf</references>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_121e4788b4a0ae39b11aa32e9a1079f98" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int strcmp</definition>
+        <argsstring>(const char *, const char *)</argsstring>
+        <name>strcmp</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/string.c" bodystart="32" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_11a8e0d046aa6ccaf2c9947e3142e4786" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char *</type>
+        <definition>char* strcpy</definition>
+        <argsstring>(char *dst, const char *src)</argsstring>
+        <name>strcpy</name>
+        <param>
+          <type>char *</type>
+          <declname>dst</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>src</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="35"/>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_1ce2e8f8b5db1119196eee36974d8b536" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int strlen</definition>
+        <argsstring>(const char *string)</argsstring>
+        <name>strlen</name>
+        <param>
+          <type>const char *</type>
+          <declname>string</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="39"/>
+      </memberdef>
+      <memberdef kind="function" id="string_8h_123a80e470a9dae66d16e7d25fbba122a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>long</type>
+        <definition>long strtol</definition>
+        <argsstring>(const char *__restrict nptr, char **__restrict endptr, int base)</argsstring>
+        <name>strtol</name>
+        <param>
+          <type>const char *__restrict</type>
+          <declname>nptr</declname>
+        </param>
+        <param>
+          <type>char **__restrict</type>
+          <declname>endptr</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>base</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/strtol.c" bodystart="12" bodyend="103"/>
+        <references refid="strtol_8c_150fece4db74f09568b2938db583c5655" compoundref="strtol_8c" startline="7">LONG_MAX</references>
+        <references refid="strtol_8c_1e8a44c5a7436466221e0f3859d02420f" compoundref="strtol_8c" startline="6">LONG_MIN</references>
+        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+        <referencedby refid="net_8c_1a9e522808a681d651832da7d16ff1ebb" compoundref="net_8c" startline="112" endline="209">inet_aton</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: string_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_STRING_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_STRING_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="strcpy_8S_19132520cc79236b654666f4ddc1b516c" kindref="member">strcpy</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*dst,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*src);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c" kindref="member">memcpy</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>dst,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>src,<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>length);</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" kindref="member">memset</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/>dst,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>c,<sp/><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/>length);</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" kindref="member">strlen</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>string);</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>str,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>format,<sp/>...);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="string_8h_123a80e470a9dae66d16e7d25fbba122a" kindref="member">strtol</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/>__restrict<sp/>nptr,<sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>**<sp/>__restrict<sp/>endptr,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>base);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="47"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/string.h"/>
+  </compounddef>
+</doxygen>

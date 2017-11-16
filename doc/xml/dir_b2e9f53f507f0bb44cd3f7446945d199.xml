@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_b2e9f53f507f0bb44cd3f7446945d199" kind="dir">
+    <compoundname>src/sys/net/net/</compoundname>
+    <innerfile refid="bot_8c">bot.c</innerfile>
+    <innerfile refid="init_8c">init.c</innerfile>
+    <innerfile refid="shell_8c">shell.c</innerfile>
+    <innerfile refid="shell_8h">shell.h</innerfile>
+    <innerfile refid="sys__arch_8c">sys_arch.c</innerfile>
+    <innerfile refid="udpecho_8c">udpecho.c</innerfile>
+    <innerfile refid="udpecho_8h">udpecho.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/"/>
+  </compounddef>
+</doxygen>

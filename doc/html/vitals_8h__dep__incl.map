@@ -1,0 +1,17 @@
+base referer
+rect $init_8h.html 283,6 491,32
+rect $atkbd_8c.html 313,56 460,83
+rect $ne2k_8c.html 316,107 457,134
+rect $endtask_8c.html 295,158 479,184
+rect $fork_8c.html 309,208 464,235
+rect $syscall_8c.html 299,259 475,286
+rect $systemtask_8c.html 284,310 489,336
+rect $time_8c.html 307,360 467,387
+rect $ubthread_8c.html 291,411 483,438
+rect $vitals_8c.html 304,462 469,488
+rect $ogprintf_8cc.html 304,512 469,539
+rect $file_8c.html 323,563 451,590
+rect $mount_8c.html 311,614 463,640
+rect $vfs_8c.html 323,664 451,691
+rect $vmm__memory_8c.html 277,715 496,742
+rect $main_8c.html 544,6 688,32

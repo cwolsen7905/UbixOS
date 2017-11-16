@@ -1,0 +1,11 @@
+base referer
+rect $init_8h.html 226,5 330,32
+rect $gdt_8h.html 236,56 319,83
+rect $video_8h.html 228,107 327,133
+rect $tss_8h.html 238,157 318,184
+rect $exec_8h.html 220,208 335,235
+rect $kpanic_8h.html 214,259 342,285
+rect $systemtask_8h.html 198,309 358,336
+rect $mount_8h.html 227,360 328,387
+rect $kprintf_8h.html 228,411 327,437
+rect $kmalloc_8h.html 224,461 331,488

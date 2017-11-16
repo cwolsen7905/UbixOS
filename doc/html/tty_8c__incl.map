@@ -1,0 +1,10 @@
+base referer
+rect $tty_8h.html 220,5 319,32
+rect $kpanic_8h.html 205,56 333,83
+rect $spinlock_8h.html 200,107 339,133
+rect $kprintf_8h.html 220,157 319,184
+rect $kmalloc_8h.html 216,208 323,235
+rect $io_8h.html 233,259 305,285
+rect $string_8h.html 233,309 305,336
+rect $types_8h.html 388,157 508,184
+rect $__types_8h.html 559,157 663,184

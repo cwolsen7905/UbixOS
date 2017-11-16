@@ -1,0 +1,15 @@
+base referer
+rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 713,56 780,83
+rect $paging_8h.html#a05f8d8947fb5bcec87fc6661f83243e 123,208 261,235
+rect $vmm_8h.html#976cf3919bf7c77c868021ec9374593b 311,157 455,184
+rect $vmm_8h.html#e90be267d851fed04d4d9b1c6c10454a 343,309 423,336
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 707,385 787,412
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 699,233 795,260
+rect $vmm_8h.html#362d462b3a1e19b5e0ef95e1839dbf11 504,360 651,387
+rect $sched_8h.html#08933fe6d593a1c78b9080359f15a0b7 843,360 944,387
+rect $spinlock_8h.html#8f9173fadeddafa01754d6cbcc630198 844,411 943,437
+rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 544,107 611,133
+rect $8259_8h.html#2b9ec30943ddb0a2ef3bd7ccfd2026c0 701,107 792,133
+rect $stdarg_8h.html#621577c2df0ad5faa281223c56eeb7a5 711,157 783,184
+rect $vsprintf_8c.html#c2f4c669c6f6aa6caa5ab8adb1b07dd0 856,132 931,159
+rect $vsprintf_8c.html#3fa7c8ef8597579301cb4b5c59bc6d9a 853,183 933,209

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_d6c0de4141c0ef78b51cf518480fe588" kind="dir">
+    <compoundname>src/sys/include/mpi/</compoundname>
+    <innerfile refid="mpi_8h">mpi.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/"/>
+  </compounddef>
+</doxygen>

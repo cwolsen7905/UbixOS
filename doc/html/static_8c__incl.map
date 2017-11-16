@@ -1,0 +1,4 @@
+base referer
+rect $kprintf_8h.html 200,5 299,32
+rect $types_8h.html 348,5 468,32
+rect $__types_8h.html 519,5 623,32

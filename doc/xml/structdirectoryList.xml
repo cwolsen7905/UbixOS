@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdirectoryList" kind="struct" prot="public">
+    <compoundname>directoryList</compoundname>
+    <includes refid="ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdirectoryList_1314f7553c3282d3247b35909e18b4bb3" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 directoryList::dirBlock</definition>
+        <argsstring></argsstring>
+        <name>dirBlock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdirectoryList_13dcc1ef7098c5f3718dd1f61b485a43a" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* directoryList::dirCache</definition>
+        <argsstring></argsstring>
+        <name>dirCache</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="59" bodyend="-1"/>
+        <referencedby refid="directory_8c_17cac3d485d20bce5cf642f767769dfcf" compoundref="directory_8c" startline="41" endline="63">ubixFSLoadDir</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdirectoryList_115d4445988606706d7d28c6b5957b03f" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char directoryList::dirName[256]</definition>
+        <argsstring>[256]</argsstring>
+        <name>dirName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="directory_8c_17cac3d485d20bce5cf642f767769dfcf" compoundref="directory_8c" startline="41" endline="63">ubixFSLoadDir</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdirectoryList_12b552b5117f837b6165f1c5355d65ae8" prot="public" static="no" mutable="no">
+        <type><ref refid="structdirectoryList" kindref="compound">directoryList</ref> *</type>
+        <definition>struct directoryList* directoryList::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="directory_8c_17cac3d485d20bce5cf642f767769dfcf" compoundref="directory_8c" startline="41" endline="63">ubixFSLoadDir</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdirectoryList_1752b12564cb98504c28f81adda2c3620" prot="public" static="no" mutable="no">
+        <type><ref refid="structdirectoryList" kindref="compound">directoryList</ref> *</type>
+        <definition>struct directoryList* directoryList::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="62" bodyend="-1"/>
+        <referencedby refid="directory_8c_17cac3d485d20bce5cf642f767769dfcf" compoundref="directory_8c" startline="41" endline="63">ubixFSLoadDir</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="422">
+        <label>directoryList</label>
+        <link refid="structdirectoryList"/>
+        <childnode refid="422" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="57" bodyend="63"/>
+    <listofallmembers>
+      <member refid="structdirectoryList_1314f7553c3282d3247b35909e18b4bb3" prot="public" virt="non-virtual"><scope>directoryList</scope><name>dirBlock</name></member>
+      <member refid="structdirectoryList_13dcc1ef7098c5f3718dd1f61b485a43a" prot="public" virt="non-virtual"><scope>directoryList</scope><name>dirCache</name></member>
+      <member refid="structdirectoryList_115d4445988606706d7d28c6b5957b03f" prot="public" virt="non-virtual"><scope>directoryList</scope><name>dirName</name></member>
+      <member refid="structdirectoryList_12b552b5117f837b6165f1c5355d65ae8" prot="public" virt="non-virtual"><scope>directoryList</scope><name>next</name></member>
+      <member refid="structdirectoryList_1752b12564cb98504c28f81adda2c3620" prot="public" virt="non-virtual"><scope>directoryList</scope><name>prev</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

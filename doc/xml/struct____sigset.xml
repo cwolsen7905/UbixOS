@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="struct____sigset" kind="struct" prot="public">
+    <compoundname>__sigset</compoundname>
+    <includes refid="signal_8h" local="no">signal.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct____sigset_1f82a86c0ba3a93f568304f7df2e95867" prot="public" static="no" mutable="no">
+        <type><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
+        <definition>__uint32_t __sigset::__bits[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>__bits</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="42" bodyend="44"/>
+    <listofallmembers>
+      <member refid="struct____sigset_1f82a86c0ba3a93f568304f7df2e95867" prot="public" virt="non-virtual"><scope>__sigset</scope><name>__bits</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

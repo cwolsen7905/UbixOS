@@ -1,0 +1,13 @@
+base referer
+rect $gen__calls_8h.html 301,6 528,32
+rect $kern__descrip_8h.html 289,107 540,134
+rect $kern__descrip_8c.html 600,82 816,108
+rect $pipe_8c.html 628,158 788,184
+rect $kern__sig_8h.html 304,259 525,286
+rect $kern__sig_8c.html 615,298 801,324
+rect $kern__sysctl_8h.html 295,360 535,387
+rect $kern__sysctl_8c.html 605,374 811,400
+rect $pipe_8h.html 317,208 512,235
+rect $syscalls__new_8h.html 279,462 551,488
+rect $vfs_8h.html 323,512 507,539
+rect $paging_8h.html 303,563 527,590

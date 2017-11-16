@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_626404c379d6b1b237f0a541878d72c0" kind="dir">
+    <compoundname>src/sys/include/sde/</compoundname>
+    <innerfile refid="ogDisplay__UbixOS_8h">ogDisplay_UbixOS.h</innerfile>
+    <innerfile refid="sde_8h">sde.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/"/>
+  </compounddef>
+</doxygen>

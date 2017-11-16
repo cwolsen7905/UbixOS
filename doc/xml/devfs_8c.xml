@@ -1,0 +1,629 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="devfs_8c" kind="file">
+    <compoundname>devfs.c</compoundname>
+    <includes refid="devfs_8h" local="no">devfs/devfs.h</includes>
+    <includes refid="vfs_8h" local="no">vfs/vfs.h</includes>
+    <includes refid="device_8h" local="no">sys/device.h</includes>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="lib_2string_8h" local="no">lib/string.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <incdepgraph>
+      <node id="3140">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3143">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="3142">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3131">
+        <label>devfs/devfs.h</label>
+        <link refid="devfs_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+        <childnode refid="3134" relation="include">
+        </childnode>
+      </node>
+      <node id="3132">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3133" relation="include">
+        </childnode>
+      </node>
+      <node id="3133">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3145">
+        <label>lib/string.h</label>
+        <link refid="lib_2string_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3134">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+        <childnode refid="3135" relation="include">
+        </childnode>
+        <childnode refid="3136" relation="include">
+        </childnode>
+      </node>
+      <node id="3144">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3137">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+        <childnode refid="3134" relation="include">
+        </childnode>
+        <childnode refid="3136" relation="include">
+        </childnode>
+        <childnode refid="3138" relation="include">
+        </childnode>
+        <childnode refid="3140" relation="include">
+        </childnode>
+      </node>
+      <node id="3136">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3146">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3135">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3130">
+        <label>src/sys/devfs/devfs.c</label>
+        <link refid="devfs.c"/>
+        <childnode refid="3131" relation="include">
+        </childnode>
+        <childnode refid="3137" relation="include">
+        </childnode>
+        <childnode refid="3141" relation="include">
+        </childnode>
+        <childnode refid="3132" relation="include">
+        </childnode>
+        <childnode refid="3142" relation="include">
+        </childnode>
+        <childnode refid="3143" relation="include">
+        </childnode>
+        <childnode refid="3144" relation="include">
+        </childnode>
+        <childnode refid="3145" relation="include">
+        </childnode>
+        <childnode refid="3146" relation="include">
+        </childnode>
+      </node>
+      <node id="3138">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="3139" relation="include">
+        </childnode>
+        <childnode refid="3140" relation="include">
+        </childnode>
+      </node>
+      <node id="3139">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+      <node id="3141">
+        <label>sys/device.h</label>
+        <link refid="device_8h"/>
+        <childnode refid="3132" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="devfs_8c_1c74c840a034d38b197e93bf883001d0d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int devfs_init</definition>
+        <argsstring>()</argsstring>
+        <name>devfs_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="215" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="215" bodyend="240"/>
+        <references refid="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" compoundref="devfs_8c" startline="50" endline="62">devfs_initialize</references>
+        <references refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</references>
+        <references refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</references>
+        <references refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</references>
+        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+        <references refid="mount_8h_11255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="47" endline="94">vfs_mount</references>
+        <references refid="vfs_8h_18652b1ccbcf7d2a872c5781640f7d59a" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+      </memberdef>
+      <memberdef kind="function" id="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void devfs_initialize</definition>
+        <argsstring>(struct vfs_mountPoint *mp)</argsstring>
+        <name>devfs_initialize</name>
+        <param>
+          <type>struct <ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+          <declname>mp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This is the initialized called by the vfs system when enabling devfs basically it allocates memory for the devfs module </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="50" bodyend="62"/>
+        <references refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" compoundref="devfs_8h" startline="46">devfs_info::deviceList</references>
+        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
+        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <referencedby refid="devfs_8h_1c74c840a034d38b197e93bf883001d0d" compoundref="devfs_8c" startline="215" endline="240">devfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="devfs_8c_1d568bae84bef3691539f1b1d0f6a54b4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int devfs_makeNode</definition>
+        <argsstring>(char *name, uInt8 type, uInt16 major, uInt16 minor)</argsstring>
+        <name>devfs_makeNode</name>
+        <param>
+          <type>char *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>major</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>minor</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="178" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="178" bodyend="213"/>
+        <references refid="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" compoundref="devfs_8c" startline="44">devfs_len</references>
+        <references refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" compoundref="devfs_8c" startline="41">devfsSpinLock</references>
+        <references refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" compoundref="devfs_8h" startline="46">devfs_info::deviceList</references>
+        <references refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" compoundref="devfs_8h" startline="40">devfs_devices::devMajor</references>
+        <references refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" compoundref="devfs_8h" startline="41">devfs_devices::devMinor</references>
+        <references refid="structdevfs__devices_10200a09acd1456819501f7238df52474" compoundref="devfs_8h" startline="42">devfs_devices::devName</references>
+        <references refid="structdevfs__devices_13316a35e21232bab1603df7426dded2d" compoundref="devfs_8h" startline="39">devfs_devices::devType</references>
+        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" compoundref="devfs_8h" startline="37">devfs_devices::next</references>
+        <references refid="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" compoundref="devfs_8h" startline="38">devfs_devices::prev</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</references>
+        <references refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" compoundref="strlen_8S" startline="4">strlen</references>
+        <references refid="mount_8h_1a8cc926aa9badb781158b6738b1b0f2d" compoundref="mount_8c" startline="132" endline="142">vfs_findMount</references>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="devfs_8c_1acec49d86336bd84c9feb9dea354381c" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int devfs_open</definition>
+        <argsstring>(char *file, fileDescriptor *fd)</argsstring>
+        <name>devfs_open</name>
+        <param>
+          <type>char *</type>
+          <declname>file</declname>
+        </param>
+        <param>
+          <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>This is the open routine called by the vfs when a fopen or open is called within the user or kernel space file - this is the file node fd - this is the file descriptor</para><para>This format will be changing down the road </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="71" bodyend="107"/>
+        <references refid="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" compoundref="devfs_8c" startline="44">devfs_len</references>
+        <references refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" compoundref="devfs_8c" startline="41">devfsSpinLock</references>
+        <references refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</references>
+        <references refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" compoundref="devfs_8h" startline="46">devfs_info::deviceList</references>
+        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
+        <references refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" compoundref="devfs_8h" startline="40">devfs_devices::devMajor</references>
+        <references refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" compoundref="devfs_8h" startline="41">devfs_devices::devMinor</references>
+        <references refid="structdevfs__devices_10200a09acd1456819501f7238df52474" compoundref="devfs_8h" startline="42">devfs_devices::devName</references>
+        <references refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" compoundref="mount_8h" startline="41">vfs_mountPoint::fsInfo</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structfileDescriptorStruct_18c43ddd6ff5fd5383bcdde5896846e98" compoundref="file_8h" startline="51">fileDescriptorStruct::mode</references>
+        <references refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" compoundref="file_8h" startline="49">fileDescriptorStruct::mp</references>
+        <references refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" compoundref="devfs_8h" startline="37">devfs_devices::next</references>
+        <references refid="structdevice__interface_182fda947114f5c8d53fb7acbd7eb0e21" compoundref="device_8h" startline="50">device_interface::size</references>
+        <references refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" compoundref="file_8h" startline="53">fileDescriptorStruct::size</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" compoundref="file_8h" startline="55">fileDescriptorStruct::start</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+        <referencedby refid="devfs_8h_1c74c840a034d38b197e93bf883001d0d" compoundref="devfs_8c" startline="215" endline="240">devfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="devfs_8c_1c6b73190c80703169760a556abafab22" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int devfs_read</definition>
+        <argsstring>(fileDescriptor *fd, char *data, long offset, long size)</argsstring>
+        <name>devfs_read</name>
+        <param>
+          <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Function: int readDevFS(fileDescriptor *fd,char *data,long offset,long size) Description: Read File Into Data Notes: </para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="114" bodyend="151"/>
+        <references refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" compoundref="file_8h" startline="57">fileDescriptorStruct::buffer</references>
+        <references refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</references>
+        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
+        <references refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" compoundref="devfs_8h" startline="40">devfs_devices::devMajor</references>
+        <references refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" compoundref="devfs_8h" startline="41">devfs_devices::devMinor</references>
+        <references refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" compoundref="device_8h" startline="52">device_interface::info</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structdevice__interface_16caf84418059d0121e76d873e305ddcb">device_interface::read</references>
+        <references refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" compoundref="file_8h" startline="55">fileDescriptorStruct::start</references>
+        <referencedby refid="devfs_8h_1c74c840a034d38b197e93bf883001d0d" compoundref="devfs_8c" startline="215" endline="240">devfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int devfs_write</definition>
+        <argsstring>(fileDescriptor *fd, char *data, long offset, long size)</argsstring>
+        <name>devfs_write</name>
+        <param>
+          <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+          <declname>fd</declname>
+        </param>
+        <param>
+          <type>char *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type>long</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="160" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="160" bodyend="175"/>
+        <references refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" compoundref="file_8h" startline="57">fileDescriptorStruct::buffer</references>
+        <references refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</references>
+        <references refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" compoundref="device_8h" startline="38">device_node::devInfo</references>
+        <references refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" compoundref="devfs_8h" startline="40">devfs_devices::devMajor</references>
+        <references refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" compoundref="devfs_8h" startline="41">devfs_devices::devMinor</references>
+        <references refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" compoundref="device_8h" startline="52">device_interface::info</references>
+        <references refid="structdevice__interface_16caf84418059d0121e76d873e305ddcb">device_interface::read</references>
+        <references refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" compoundref="file_8h" startline="55">fileDescriptorStruct::start</references>
+        <references refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df">device_interface::write</references>
+        <referencedby refid="devfs_8h_1c74c840a034d38b197e93bf883001d0d" compoundref="devfs_8c" startline="215" endline="240">devfs_init</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" prot="public" static="yes" mutable="no">
+        <type>int</type>
+        <definition>int devfs_len</definition>
+        <argsstring></argsstring>
+        <name>devfs_len</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="44" bodyend="-1"/>
+        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" prot="public" static="yes" mutable="no">
+        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
+        <definition>spinLock_t devfsSpinLock</definition>
+        <argsstring></argsstring>
+        <name>devfsSpinLock</name>
+        <initializer> SPIN_LOCK_INITIALIZER</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c" bodystart="41" bodyend="-1"/>
+        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: devfs_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="devfs_8h" kindref="compound">devfs/devfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vfs_8h" kindref="compound">vfs/vfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lib_2string_8h" kindref="compound">lib/string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Spinlock<sp/>for<sp/>devfs<sp/>we<sp/>should<sp/>start<sp/>converting<sp/>to<sp/>sem/mutex<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Length<sp/>of<sp/>dev<sp/>list<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" kindref="member">devfs_len</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" refkind="member"><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" kindref="member">devfs_initialize</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/>*mp)<sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__info" kindref="compound">devfs_info</ref><sp/>*fsInfo<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>memory<sp/>for<sp/>the<sp/>fsInfo<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((mp-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevfs__info" kindref="compound">devfs_info</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>devfs_info)))<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" kindref="member">K_PANIC</ref>(</highlight><highlight class="stringliteral">&quot;devfs:<sp/>failed<sp/>to<sp/>allocate<sp/>memor\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>fsInfo<sp/>=<sp/>mp-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>fsInfo-&gt;<ref refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" refkind="member"><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" kindref="member">devfs_open</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/>*fd)<sp/>{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__info" kindref="compound">devfs_info</ref><sp/><sp/><sp/><sp/>*fsInfo<sp/><sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" kindref="member">mp</ref>-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*tmpDev<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/><sp/><sp/>*<ref refid="structdevice" kindref="compound">device</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(file,</highlight><highlight class="stringliteral">&quot;/&quot;</highlight><highlight class="normal">)<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" kindref="member">start</ref><sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" kindref="member">size</ref><sp/><sp/>=<sp/><ref refid="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" kindref="member">devfs_len</ref>;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(file[0]<sp/>==<sp/></highlight><highlight class="charliteral">&apos;/&apos;</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>file++;<sp/><sp/></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpDev<sp/>=<sp/>fsInfo-&gt;<ref refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref>;tmpDev<sp/>!=<sp/>0x0;tmpDev<sp/>=<sp/>tmpDev-&gt;<ref refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(tmpDev-&gt;<ref refid="structdevfs__devices_10200a09acd1456819501f7238df52474" kindref="member">devName</ref>,file)<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>((fd-&gt;<ref refid="structfileDescriptorStruct_18c43ddd6ff5fd5383bcdde5896846e98" kindref="member">mode</ref><sp/>&amp;<sp/>0x3))<sp/>{</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0:</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>1:</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>device<sp/>=<sp/><ref refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" kindref="member">device_find</ref>(tmpDev-&gt;<ref refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" kindref="member">devMajor</ref>,tmpDev-&gt;<ref refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" kindref="member">devMinor</ref>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)fd-&gt;<ref refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" kindref="member">start</ref><sp/>=<sp/>tmpDev;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" kindref="member">size</ref><sp/><sp/>=<sp/>device-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_182fda947114f5c8d53fb7acbd7eb0e21" kindref="member">size</ref>;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>File<sp/>Mode\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="devfs_8c_1c6b73190c80703169760a556abafab22" refkind="member"><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_1c6b73190c80703169760a556abafab22" kindref="member">devfs_read</ref>(<ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/>*fd,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*data,</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>offset,</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0,x<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>sectors<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>diff<sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/><sp/><sp/>*<ref refid="structdevice" kindref="compound">device</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*tmpDev<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)fd-&gt;<ref refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" kindref="member">start</ref>;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/>if<sp/>(tmpDev<sp/>==<sp/>-1)<sp/>{</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Hi<sp/>Ubie<sp/>[%i]!!!\n&quot;</highlight><highlight class="normal">,<sp/>size);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;i<sp/>&lt;<sp/>size;i++)<sp/>{</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>data[i]<sp/>=<sp/></highlight><highlight class="charliteral">&apos;a&apos;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" kindref="member">buffer</ref>[i]<sp/>=<sp/></highlight><highlight class="charliteral">&apos;a&apos;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>data[size<sp/>-<sp/>1]<sp/>=<sp/></highlight><highlight class="charliteral">&apos;\n&apos;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(size);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/>device<sp/>=<sp/><ref refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" kindref="member">device_find</ref>(tmpDev-&gt;<ref refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" kindref="member">devMajor</ref>,tmpDev-&gt;<ref refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" kindref="member">devMinor</ref>);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/>sectors<sp/>=<sp/>((size+511)/512);</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/>diff<sp/><sp/><sp/><sp/>=<sp/>(offset<sp/>-<sp/>((offset/512)*512));</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0x0;i&lt;sectors;i++)<sp/>{</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/>device-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_16caf84418059d0121e76d873e305ddcb" kindref="member">read</ref>(device-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,fd-&gt;<ref refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" kindref="member">buffer</ref>,i<sp/>+<sp/>(offset/512),1);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x=0x0;x&lt;(size<sp/>-<sp/>(i*512));x++)<sp/>{</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(diff<sp/>&gt;<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data[x]<sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" kindref="member">buffer</ref>[x<sp/>+<sp/>diff];</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data[x]<sp/>=<sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" kindref="member">buffer</ref>[x];</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/>diff<sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/>data<sp/>+=<sp/>512;</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(size);</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="154"><highlight class="comment"></highlight></codeline>
+<codeline lineno="155"><highlight class="comment">Function:<sp/>int<sp/>writeDevFS(fileDescriptor<sp/>*fd,char<sp/>*data,long<sp/>offset,long<sp/>size)</highlight></codeline>
+<codeline lineno="156"><highlight class="comment">Description:<sp/>Write<sp/>Data<sp/>Into<sp/>File</highlight></codeline>
+<codeline lineno="157"><highlight class="comment">Notes:</highlight></codeline>
+<codeline lineno="158"><highlight class="comment"></highlight></codeline>
+<codeline lineno="159"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" kindref="member">devfs_write</ref>(<ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/>*fd,</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*data,</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>offset,</highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>size)<sp/>{</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0,x<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice__node" kindref="compound">device_node</ref><sp/><sp/><sp/>*<ref refid="structdevice" kindref="compound">device</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*tmpDev<sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)fd-&gt;<ref refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" kindref="member">start</ref>;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/>device<sp/>=<sp/><ref refid="device_8h_10002a4ec01ee11597c6751602f3e4c3d" kindref="member">device_find</ref>(tmpDev-&gt;<ref refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" kindref="member">devMajor</ref>,tmpDev-&gt;<ref refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" kindref="member">devMinor</ref>);</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0x0;i&lt;((size+511)/512);i++)<sp/>{</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>device-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_16caf84418059d0121e76d873e305ddcb" kindref="member">read</ref>(device-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,fd-&gt;<ref refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" kindref="member">buffer</ref>,i<sp/>+<sp/>(offset/512),1);</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(x=0x0;((x<sp/>&lt;<sp/>512)<sp/>&amp;&amp;<sp/>((x<sp/>+<sp/>(i<sp/>*<sp/>512))<sp/><sp/>&lt;<sp/>size));x++)<sp/>{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>fd-&gt;<ref refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" kindref="member">buffer</ref>[x]<sp/>=<sp/>data[x];</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/>device-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df" kindref="member">write</ref>(device-&gt;<ref refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" kindref="member">devInfo</ref>-&gt;<ref refid="structdevice__interface_1eacb2f431b14ddd1e9fe34db278dfc9e" kindref="member">info</ref>,fd-&gt;<ref refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" kindref="member">buffer</ref>,i<sp/>+<sp/>(offset/512),1);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/>data<sp/>+=<sp/>512;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(size);</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="178" refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_1d568bae84bef3691539f1b1d0f6a54b4" kindref="member">devfs_makeNode</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>type,<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>major,<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>minor)<sp/>{</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref><sp/><sp/>*mp<sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__info" kindref="compound">devfs_info</ref><sp/><sp/><sp/><sp/>*fsInfo<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*tmpDev<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/>mp<sp/>=<sp/><ref refid="mount_8h_1a8cc926aa9badb781158b6738b1b0f2d" kindref="member">vfs_findMount</ref>(</highlight><highlight class="stringliteral">&quot;devfs&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(mp<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error:<sp/>Can&apos;t<sp/>Find<sp/>Mount<sp/>Point\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(-1);</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/>fsInfo<sp/>=<sp/>mp-&gt;<ref refid="structvfs__mountPoint_19771ecae1bc4482ad0282aee5766bd9b" kindref="member">fsInfo</ref>;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/>tmpDev<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevfs__devices" kindref="compound">devfs_devices</ref>));</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevfs__devices_13316a35e21232bab1603df7426dded2d" kindref="member">devType</ref><sp/><sp/>=<sp/>type;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevfs__devices_1646beef3e609fb306cd3ddb202daf694" kindref="member">devMajor</ref><sp/>=<sp/>major;</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevfs__devices_15e53f9e07fd166b03c4cc94cb7ba6cf6" kindref="member">devMinor</ref><sp/>=<sp/>minor;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1c38cd16373d98782e1465bd3d5aba470" kindref="member">sprintf</ref>(tmpDev-&gt;<ref refid="structdevfs__devices_10200a09acd1456819501f7238df52474" kindref="member">devName</ref>,name);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><ref refid="devfs_8c_12858b8792372c6b992e3727e49fe0a8c" kindref="member">devfs_len</ref><sp/>+=<sp/><ref refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" kindref="member">strlen</ref>(name)<sp/>+<sp/>1;</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevfs__devices_18da644e221d63a17be9b429f67b6de1d" kindref="member">next</ref><sp/>=<sp/>fsInfo-&gt;<ref refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref>;</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/>tmpDev-&gt;<ref refid="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(fsInfo-&gt;<ref refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/>fsInfo-&gt;<ref refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref>-&gt;<ref refid="structdevfs__devices_1249566533e1645abb22645cbe47b4bf2" kindref="member">prev</ref><sp/>=<sp/>tmpDev;</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/>fsInfo-&gt;<ref refid="structdevfs__info_1290940b7d03a61782eab82c0148b0f06" kindref="member">deviceList</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpDev;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="devfs_8c_10b9ed1fd2d4151d3e7e76f3a584e9b27" kindref="member">devfsSpinLock</ref>);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/>}<sp/><sp/></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="215" refid="devfs_8h_1c74c840a034d38b197e93bf883001d0d" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="devfs_8c_1c74c840a034d38b197e93bf883001d0d" kindref="member">devfs_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Build<sp/>our<sp/>devfs<sp/>struct<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfileSystem" kindref="compound">fileSystem</ref><sp/>devFS<sp/>=</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/>{<ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>prev<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>next<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<ref refid="devfs_8c_17b312bcbbf9c2386ec31ccc73f1c3c63" kindref="member">devfs_initialize</ref>,<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsInitFS<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<ref refid="devfs_8c_1c6b73190c80703169760a556abafab22" kindref="member">devfs_read</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsRead<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<ref refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" kindref="member">devfs_write</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsWrite<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<ref refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" kindref="member">devfs_open</ref>,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsOpenFile<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsUnlink<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsMakeDir<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsRemDir<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/><sp/><sp/>NULL,<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsSync<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/>1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>vfsType<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/>};<sp/></highlight><highlight class="comment">/*<sp/>devFS<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="vfs_8h_18652b1ccbcf7d2a872c5781640f7d59a" kindref="member">vfsRegisterFS</ref>(devFS)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//sysErr(systemErr,&quot;Unable<sp/>To<sp/>Enable<sp/>DevFS&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Mount<sp/>our<sp/>devfs<sp/>this<sp/>will<sp/>build<sp/>the<sp/>devfs<sp/>container<sp/>node<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><ref refid="mount_8h_11255ebfdcd5f7048ffe187e836f8eb28" kindref="member">vfs_mount</ref>(0x0,0x0,0x0,0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>,</highlight><highlight class="stringliteral">&quot;devfs&quot;</highlight><highlight class="normal">,</highlight><highlight class="stringliteral">&quot;rw&quot;</highlight><highlight class="normal">);<sp/></highlight><highlight class="comment">//<sp/>Mount<sp/>Device<sp/>File<sp/>System</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="243"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="244"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/devfs/devfs.c"/>
+  </compounddef>
+</doxygen>

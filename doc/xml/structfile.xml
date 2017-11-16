@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structfile" kind="struct" prot="public">
+    <compoundname>file</compoundname>
+    <includes refid="kern__descrip_8h" local="no">kern_descrip.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfile_1314e5cc77afefbebb7f5e7d197b089ab" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int file::f_flag</definition>
+        <argsstring></argsstring>
+        <name>f_flag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="94" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
+        <referencedby refid="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="41" endline="51">pipe</referencedby>
+        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfile_15a1b356e191a81d71a02560074aacd2a" prot="public" static="no" mutable="no">
+        <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref> *</type>
+        <definition>fileDescriptor* file::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="96" bodyend="-1"/>
+        <referencedby refid="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="41" endline="51">pipe</referencedby>
+        <referencedby refid="gen__calls_8c_15eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="125" endline="144">read</referencedby>
+        <referencedby refid="vfs_8c_13ca4e48103cbadae2952d277d03687be" compoundref="vfs_8c" startline="148" endline="166">sys_open</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfile_148952da96dfce82445b051d594d7bbf6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char file::path[1024]</definition>
+        <argsstring>[1024]</argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="95" bodyend="-1"/>
+        <referencedby refid="vfs_8c_13ca4e48103cbadae2952d277d03687be" compoundref="vfs_8c" startline="148" endline="166">sys_open</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="471">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="470">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="471" relation="usage">
+          <edgelabel>devRec</edgelabel>
+        </childnode>
+        <childnode refid="472" relation="usage">
+          <edgelabel>devInfo</edgelabel>
+        </childnode>
+        <childnode refid="470" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="465">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="465" relation="usage">
+          <edgelabel>prev
+next
+parent
+fileListTail
+fileListHead</edgelabel>
+        </childnode>
+      </node>
+      <node id="468">
+        <label>ubixDiskLabel</label>
+        <link refid="structubixDiskLabel"/>
+        <childnode refid="469" relation="usage">
+          <edgelabel>partitions</edgelabel>
+        </childnode>
+      </node>
+      <node id="469">
+        <label>ubixDiskLabel::ubixPartitions</label>
+        <link refid="structubixDiskLabel_1_1ubixPartitions"/>
+      </node>
+      <node id="464">
+        <label>fileDescriptorStruct</label>
+        <link refid="structfileDescriptorStruct"/>
+        <childnode refid="465" relation="usage">
+          <edgelabel>cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="466" relation="usage">
+          <edgelabel>dmadat</edgelabel>
+        </childnode>
+        <childnode refid="467" relation="usage">
+          <edgelabel>mp</edgelabel>
+        </childnode>
+        <childnode refid="464" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="463">
+        <label>file</label>
+        <link refid="structfile"/>
+        <childnode refid="464" relation="usage">
+          <edgelabel>fd</edgelabel>
+        </childnode>
+      </node>
+      <node id="467">
+        <label>vfs_mountPoint</label>
+        <link refid="structvfs__mountPoint"/>
+        <childnode refid="468" relation="usage">
+          <edgelabel>diskLabel</edgelabel>
+        </childnode>
+        <childnode refid="470" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+        <childnode refid="473" relation="usage">
+          <edgelabel>fs</edgelabel>
+        </childnode>
+        <childnode refid="467" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="472">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+      <node id="466">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+      <node id="473">
+        <label>fileSystem</label>
+        <link refid="structfileSystem"/>
+        <childnode refid="473" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_descrip.h" bodystart="93" bodyend="97"/>
+    <listofallmembers>
+      <member refid="structfile_1314e5cc77afefbebb7f5e7d197b089ab" prot="public" virt="non-virtual"><scope>file</scope><name>f_flag</name></member>
+      <member refid="structfile_15a1b356e191a81d71a02560074aacd2a" prot="public" virt="non-virtual"><scope>file</scope><name>fd</name></member>
+      <member refid="structfile_148952da96dfce82445b051d594d7bbf6" prot="public" virt="non-virtual"><scope>file</scope><name>path</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,8 @@
+base referer
+rect $types_8h.html 599,132 719,159
+rect $sched_8h.html 271,132 393,159
+rect $__types_8h.html 769,132 873,159
+rect $tty_8h.html 447,107 545,134
+rect $file_8h.html 456,158 536,184
+rect $tss_8h.html 456,208 536,235
+rect $thread_8h.html 444,259 548,286

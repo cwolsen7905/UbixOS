@@ -1,0 +1,338 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="assert_8h" kind="file">
+    <compoundname>assert.h</compoundname>
+    <includedby refid="ne2k_8c" local="no">src/sys/isa/ne2k.c</includedby>
+    <includedby refid="bioscall_8c" local="no">src/sys/kernel/bioscall.c</includedby>
+    <includedby refid="exec_8c" local="no">src/sys/kernel/exec.c</includedby>
+    <includedby refid="fork_8c" local="no">src/sys/kernel/fork.c</includedby>
+    <includedby refid="gen__calls_8c" local="no">src/sys/kernel/gen_calls.c</includedby>
+    <includedby refid="kern__descrip_8c" local="no">src/sys/kernel/kern_descrip.c</includedby>
+    <includedby refid="kern__sig_8c" local="no">src/sys/kernel/kern_sig.c</includedby>
+    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
+    <includedby refid="pipe_8c" local="no">src/sys/kernel/pipe.c</includedby>
+    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
+    <includedby refid="time_8c" local="no">src/sys/kernel/time.c</includedby>
+    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
+    <includedby refid="assert_8c" local="no">src/sys/lib/assert.c</includedby>
+    <includedby refid="kmalloc_8c" local="no">src/sys/lib/kmalloc.c</includedby>
+    <includedby refid="device_8c" local="no">src/sys/sys/device.c</includedby>
+    <includedby refid="dirCache_8c" local="no">src/sys/ubixfs/dirCache.c</includedby>
+    <includedby refid="ubixfs_8c" local="no">src/sys/ubixfs/ubixfs.c</includedby>
+    <includedby refid="file_8c" local="no">src/sys/vfs/file.c</includedby>
+    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
+    <includedby refid="vmm__memory_8c" local="no">src/sys/vmm/vmm_memory.c</includedby>
+    <invincdepgraph>
+      <node id="3162">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="3157">
+        <label>src/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="3159">
+        <label>src/sys/kernel/pipe.c</label>
+        <link refid="pipe_8c"/>
+      </node>
+      <node id="3164">
+        <label>src/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="3169">
+        <label>src/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="3156">
+        <label>src/sys/kernel/kern_sig.c</label>
+        <link refid="kern__sig_8c"/>
+      </node>
+      <node id="3158">
+        <label>src/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="3153">
+        <label>src/sys/kernel/fork.c</label>
+        <link refid="fork_8c"/>
+      </node>
+      <node id="3160">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="3166">
+        <label>src/sys/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="3167">
+        <label>src/sys/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="3163">
+        <label>src/sys/lib/assert.c</label>
+        <link refid="assert_8c"/>
+      </node>
+      <node id="3151">
+        <label>src/sys/kernel/bioscall.c</label>
+        <link refid="bioscall_8c"/>
+      </node>
+      <node id="3165">
+        <label>src/sys/sys/device.c</label>
+        <link refid="device_8c"/>
+      </node>
+      <node id="3149">
+        <label>src/sys/include/assert.h</label>
+        <link refid="assert.h"/>
+        <childnode refid="3150" relation="include">
+        </childnode>
+        <childnode refid="3151" relation="include">
+        </childnode>
+        <childnode refid="3152" relation="include">
+        </childnode>
+        <childnode refid="3153" relation="include">
+        </childnode>
+        <childnode refid="3154" relation="include">
+        </childnode>
+        <childnode refid="3155" relation="include">
+        </childnode>
+        <childnode refid="3156" relation="include">
+        </childnode>
+        <childnode refid="3157" relation="include">
+        </childnode>
+        <childnode refid="3158" relation="include">
+        </childnode>
+        <childnode refid="3159" relation="include">
+        </childnode>
+        <childnode refid="3160" relation="include">
+        </childnode>
+        <childnode refid="3161" relation="include">
+        </childnode>
+        <childnode refid="3162" relation="include">
+        </childnode>
+        <childnode refid="3163" relation="include">
+        </childnode>
+        <childnode refid="3164" relation="include">
+        </childnode>
+        <childnode refid="3165" relation="include">
+        </childnode>
+        <childnode refid="3166" relation="include">
+        </childnode>
+        <childnode refid="3167" relation="include">
+        </childnode>
+        <childnode refid="3168" relation="include">
+        </childnode>
+        <childnode refid="3169" relation="include">
+        </childnode>
+        <childnode refid="3170" relation="include">
+        </childnode>
+      </node>
+      <node id="3150">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="3161">
+        <label>src/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="3170">
+        <label>src/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="3155">
+        <label>src/sys/kernel/kern_descrip.c</label>
+        <link refid="kern__descrip_8c"/>
+      </node>
+      <node id="3168">
+        <label>src/sys/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="3154">
+        <label>src/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="3152">
+        <label>src/sys/kernel/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="assert_8h_1568e6bde99652b7fd271ad206cfe38f5" prot="public" static="no">
+        <name>__BEGIN_DECLS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="assert_8h_1115472f6d0d1035f1885658ce0821537" prot="public" static="no">
+        <name>__END_DECLS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="assert_8h_1996f2029fe483c1b8a84dd3d389ee61f" prot="public" static="no">
+        <name>_assert</name>
+        <param><defname>e</defname></param>
+        <initializer>assert(e)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" prot="public" static="no">
+        <name>assert</name>
+        <param><defname>e</defname></param>
+        <initializer>((e) ? (void)0 : __assert(__func__, __FILE__, \
+			    __LINE__, #e))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" bodystart="64" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
+        <referencedby refid="file_8c_1789959682f4ac8df2d89ea6450efda8b" compoundref="file_8c" startline="398" endline="425">fclose</referencedby>
+        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
+        <referencedby refid="file_8c_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="kmalloc_8c_1eb1c3f1ef8eb9063c2e5c4af488dd2d0" compoundref="kmalloc_8c" startline="124" endline="173">insertFreeDesc</referencedby>
+        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
+        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+        <referencedby refid="ne2k_8c_145a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="164" endline="189">NICtoPC</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="ne2k_8c_1f6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="115" endline="162">PCtoNIC</referencedby>
+        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
+        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
+        <referencedby refid="dirCache_8c_1169a7d814e5ab80f123e5193a81b70b2" compoundref="dirCache_8c" startline="185" endline="199">ubixfs_cacheNew</referencedby>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
+        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="assert_8h_191f3470f2840aa744e4877bdc6ce1171" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void __assert</definition>
+        <argsstring>(const char *, const char *, int, const char *)</argsstring>
+        <name>__assert</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+<para>The underlying assertion call which is wrapped by <ref refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" kindref="member">assert()</ref>. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/assert.c" bodystart="38" bodyend="45"/>
+        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*-</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>1992,<sp/>1993</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>The<sp/>Regents<sp/>of<sp/>the<sp/>University<sp/>of<sp/>California.<sp/><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*<sp/>(c)<sp/>UNIX<sp/>System<sp/>Laboratories,<sp/>Inc.</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>All<sp/>or<sp/>some<sp/>portions<sp/>of<sp/>this<sp/>file<sp/>are<sp/>derived<sp/>from<sp/>material<sp/>licensed</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>to<sp/>the<sp/>University<sp/>of<sp/>California<sp/>by<sp/>American<sp/>Telephone<sp/>and<sp/>Telegraph</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>Co.<sp/>or<sp/>Unix<sp/>System<sp/>Laboratories,<sp/>Inc.<sp/>and<sp/>are<sp/>reproduced<sp/>herein<sp/>with</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>the<sp/>permission<sp/>of<sp/>UNIX<sp/>System<sp/>Laboratories,<sp/>Inc.</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>3.<sp/>All<sp/>advertising<sp/>materials<sp/>mentioning<sp/>features<sp/>or<sp/>use<sp/>of<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>must<sp/>display<sp/>the<sp/>following<sp/>acknowledgement:</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>This<sp/>product<sp/>includes<sp/>software<sp/>developed<sp/>by<sp/>the<sp/>University<sp/>of</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>California,<sp/>Berkeley<sp/>and<sp/>its<sp/>contributors.</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>4.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>University<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>REGENTS<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>REGENTS<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>@(#)assert.h<sp/><sp/><sp/><sp/>8.2<sp/>(Berkeley)<sp/>1/21/94</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*<sp/>$FreeBSD:<sp/>src/include/assert.h,v<sp/>1.4<sp/>2002/03/23<sp/>17:24:53<sp/>imp<sp/>Exp<sp/>$</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#if<sp/>defined(__cplusplus)</highlight></codeline>
+<codeline lineno="43"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__BEGIN_DECLS<sp/><sp/><sp/>extern<sp/>&quot;C&quot;<sp/>{</highlight></codeline>
+<codeline lineno="44"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__END_DECLS<sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="45"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#else</highlight></codeline>
+<codeline lineno="46" refid="assert_8h_1568e6bde99652b7fd271ad206cfe38f5" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__BEGIN_DECLS</highlight></codeline>
+<codeline lineno="47" refid="assert_8h_1115472f6d0d1035f1885658ce0821537" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__END_DECLS</highlight></codeline>
+<codeline lineno="48"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>*<sp/>Unlike<sp/>other<sp/>ANSI<sp/>header<sp/>files,<sp/>&lt;assert.h&gt;<sp/>may<sp/>usefully<sp/>be<sp/>included</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>*<sp/>multiple<sp/>times,<sp/>with<sp/>and<sp/>without<sp/>NDEBUG<sp/>defined.</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#undef<sp/>assert</highlight></codeline>
+<codeline lineno="56"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#undef<sp/>_assert</highlight></codeline>
+<codeline lineno="57"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>NDEBUG</highlight></codeline>
+<codeline lineno="59"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>assert(e)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>((void)0)</highlight></codeline>
+<codeline lineno="60"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_assert(e)<sp/><sp/><sp/><sp/><sp/><sp/>((void)0)</highlight></codeline>
+<codeline lineno="61"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#else</highlight></codeline>
+<codeline lineno="62" refid="assert_8h_1996f2029fe483c1b8a84dd3d389ee61f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_assert(e)<sp/><sp/><sp/><sp/><sp/><sp/>assert(e)</highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>assert(e)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>((e)<sp/>?<sp/>(void)0<sp/>:<sp/>__assert(__func__,<sp/>__FILE__,<sp/>\</highlight></codeline>
+<codeline lineno="65"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>__LINE__,<sp/>#e))</highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>NDEBUG<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><ref refid="assert_8h_1568e6bde99652b7fd271ad206cfe38f5" kindref="member">__BEGIN_DECLS</ref></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="assert_8h_191f3470f2840aa744e4877bdc6ce1171" kindref="member">__assert</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><ref refid="assert_8h_1115472f6d0d1035f1885658ce0821537" kindref="member">__END_DECLS</ref></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/assert.h"/>
+  </compounddef>
+</doxygen>

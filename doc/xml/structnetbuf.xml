@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structnetbuf" kind="struct" prot="public">
+    <compoundname>netbuf</compoundname>
+    <includes refid="api_8h" local="no">api.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structnetbuf_1efd0b92792db1bdb3547d1f1d3212f67" prot="public" static="no" mutable="no">
+        <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref></type>
+        <definition>err_t netbuf::err</definition>
+        <argsstring></argsstring>
+        <name>err</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="72" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1cb3ba0c7f21116c629f116e15e40ce2b" compoundref="sockets_8c" startline="305" endline="351">lwip_send</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetbuf_149224185e32ceccf52327cf1f97408d6" prot="public" static="no" mutable="no">
+        <type><ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+        <definition>struct ip_addr* netbuf::fromaddr</definition>
+        <argsstring></argsstring>
+        <name>fromaddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="70" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_18dd3c0551aa79d162b224ea5cd815b55" compoundref="api__lib_8c" startline="192" endline="195">netbuf_fromaddr</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetbuf_1e14783033660f4975f99dcd6c57e1c7b" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 netbuf::fromport</definition>
+        <argsstring></argsstring>
+        <name>fromport</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="71" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_16294b37d1aba1478329e1f084f39db5d" compoundref="api__lib_8c" startline="198" endline="201">netbuf_fromport</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetbuf_1e0c3ba45f7e26a90585c8d79d59c41bd" prot="public" static="no" mutable="no">
+        <type><ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+        <definition>struct pbuf* netbuf::p</definition>
+        <argsstring></argsstring>
+        <name>p</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="69" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_17770b72b0ae9e741fbb81f222e334a1a" compoundref="api__lib_8c" startline="78" endline="90">netbuf_alloc</referencedby>
+        <referencedby refid="api__lib_8c_1631e8bddd99b2397cd0b26973c659602" compoundref="api__lib_8c" startline="114" endline="119">netbuf_chain</referencedby>
+        <referencedby refid="api__lib_8c_19a5f4f669674daa2f3b7b303d7cea915" compoundref="api__lib_8c" startline="158" endline="183">netbuf_copy_partial</referencedby>
+        <referencedby refid="api__lib_8c_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</referencedby>
+        <referencedby refid="api__lib_8c_1222ad2a2eb871d603b216a87e9f9be51" compoundref="api__lib_8c" startline="152" endline="155">netbuf_first</referencedby>
+        <referencedby refid="api__lib_8c_102f82348ac23431a4b1512feae25f26b" compoundref="api__lib_8c" startline="93" endline="99">netbuf_free</referencedby>
+        <referencedby refid="api__lib_8c_16d20eca8f0316e4e71980108c1563581" compoundref="api__lib_8c" startline="122" endline="125">netbuf_len</referencedby>
+        <referencedby refid="api__lib_8c_1aba704cd963e35e71145de9f5112991d" compoundref="api__lib_8c" startline="51" endline="63">netbuf_new</referencedby>
+        <referencedby refid="api__lib_8c_1f038b56dbdd67a6e48bf0125c8ef61ba" compoundref="api__lib_8c" startline="102" endline="111">netbuf_ref</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetbuf_12301ad2b03edfb74049a2b0ef6cd2cd5" prot="public" static="no" mutable="no">
+        <type><ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+        <definition>struct pbuf * netbuf::ptr</definition>
+        <argsstring></argsstring>
+        <name>ptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="69" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_17770b72b0ae9e741fbb81f222e334a1a" compoundref="api__lib_8c" startline="78" endline="90">netbuf_alloc</referencedby>
+        <referencedby refid="api__lib_8c_1631e8bddd99b2397cd0b26973c659602" compoundref="api__lib_8c" startline="114" endline="119">netbuf_chain</referencedby>
+        <referencedby refid="api__lib_8c_1b47d915f31d9e5d1218ed238f0428386" compoundref="api__lib_8c" startline="128" endline="136">netbuf_data</referencedby>
+        <referencedby refid="api__lib_8c_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</referencedby>
+        <referencedby refid="api__lib_8c_1222ad2a2eb871d603b216a87e9f9be51" compoundref="api__lib_8c" startline="152" endline="155">netbuf_first</referencedby>
+        <referencedby refid="api__lib_8c_102f82348ac23431a4b1512feae25f26b" compoundref="api__lib_8c" startline="93" endline="99">netbuf_free</referencedby>
+        <referencedby refid="api__lib_8c_1aba704cd963e35e71145de9f5112991d" compoundref="api__lib_8c" startline="51" endline="63">netbuf_new</referencedby>
+        <referencedby refid="api__lib_8c_169b35485702388475866d2ee07b158cb" compoundref="api__lib_8c" startline="139" endline="149">netbuf_next</referencedby>
+        <referencedby refid="api__lib_8c_1f038b56dbdd67a6e48bf0125c8ef61ba" compoundref="api__lib_8c" startline="102" endline="111">netbuf_ref</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="257">
+        <label>ip_addr</label>
+        <link refid="structip__addr"/>
+      </node>
+      <node id="255">
+        <label>netbuf</label>
+        <link refid="structnetbuf"/>
+        <childnode refid="256" relation="usage">
+          <edgelabel>ptr
+p</edgelabel>
+        </childnode>
+        <childnode refid="257" relation="usage">
+          <edgelabel>fromaddr</edgelabel>
+        </childnode>
+      </node>
+      <node id="256">
+        <label>pbuf</label>
+        <link refid="structpbuf"/>
+        <childnode refid="256" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="68" bodyend="73"/>
+    <listofallmembers>
+      <member refid="structnetbuf_1efd0b92792db1bdb3547d1f1d3212f67" prot="public" virt="non-virtual"><scope>netbuf</scope><name>err</name></member>
+      <member refid="structnetbuf_149224185e32ceccf52327cf1f97408d6" prot="public" virt="non-virtual"><scope>netbuf</scope><name>fromaddr</name></member>
+      <member refid="structnetbuf_1e14783033660f4975f99dcd6c57e1c7b" prot="public" virt="non-virtual"><scope>netbuf</scope><name>fromport</name></member>
+      <member refid="structnetbuf_1e0c3ba45f7e26a90585c8d79d59c41bd" prot="public" virt="non-virtual"><scope>netbuf</scope><name>p</name></member>
+      <member refid="structnetbuf_12301ad2b03edfb74049a2b0ef6cd2cd5" prot="public" virt="non-virtual"><scope>netbuf</scope><name>ptr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,6 @@
+base referer
+rect $init_8h.html 293,5 501,32
+rect $ubthread_8h.html 273,56 521,83
+rect $ubthread_8c.html 571,81 763,108
+rect $syscall_8c.html 309,157 485,184
+rect $time_8c.html 317,208 477,235

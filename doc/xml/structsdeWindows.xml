@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structsdeWindows" kind="struct" prot="public">
+    <compoundname>sdeWindows</compoundname>
+    <includes refid="sde_8h" local="no">sde.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsdeWindows_12585673aa370729dbdcab42cbcc3c194" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* sdeWindows::buf</definition>
+        <argsstring></argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsdeWindows_1f008683ce89047f27f58653f2f5afb07" prot="public" static="no" mutable="no">
+        <type><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
+        <definition>struct sdeWindows* sdeWindows::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsdeWindows_10cb99c5d505a61eca246f095da2a5a67" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        <definition>pidType sdeWindows::pid</definition>
+        <argsstring></argsstring>
+        <name>pid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsdeWindows_1efa6d50e32f5dfa4c6556c65a067be6d" prot="public" static="no" mutable="no">
+        <type><ref refid="structsdeWindows" kindref="compound">sdeWindows</ref> *</type>
+        <definition>struct sdeWindows* sdeWindows::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsdeWindows_1445103adec37d00174102a06bddd94f5" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 sdeWindows::status</definition>
+        <argsstring></argsstring>
+        <name>status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="580">
+        <label>sdeWindows</label>
+        <link refid="structsdeWindows"/>
+        <childnode refid="580" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/sde.h" bodystart="44" bodyend="50"/>
+    <listofallmembers>
+      <member refid="structsdeWindows_12585673aa370729dbdcab42cbcc3c194" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>buf</name></member>
+      <member refid="structsdeWindows_1f008683ce89047f27f58653f2f5afb07" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>next</name></member>
+      <member refid="structsdeWindows_10cb99c5d505a61eca246f095da2a5a67" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>pid</name></member>
+      <member refid="structsdeWindows_1efa6d50e32f5dfa4c6556c65a067be6d" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>prev</name></member>
+      <member refid="structsdeWindows_1445103adec37d00174102a06bddd94f5" prot="public" virt="non-virtual"><scope>sdeWindows</scope><name>status</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

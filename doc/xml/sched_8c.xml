@@ -1,0 +1,916 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="sched_8c" kind="file">
+    <compoundname>sched.c</compoundname>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="mount_8h" local="no">vfs/mount.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="gdt_8h" local="no">sys/gdt.h</includes>
+    <includes refid="idt_8h" local="no">sys/idt.h</includes>
+    <includes refid="kern__descrip_8h" local="no">sys/kern_descrip.h</includes>
+    <includes refid="8259_8h" local="no">isa/8259.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="assert_8h" local="no">assert.h</includes>
+    <incdepgraph>
+      <node id="5418">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5419">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="5410">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+        <childnode refid="5413" relation="include">
+        </childnode>
+        <childnode refid="5414" relation="include">
+        </childnode>
+        <childnode refid="5417" relation="include">
+        </childnode>
+        <childnode refid="5418" relation="include">
+        </childnode>
+      </node>
+      <node id="5421">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+        <childnode refid="5410" relation="include">
+        </childnode>
+      </node>
+      <node id="5420">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5411">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5412" relation="include">
+        </childnode>
+      </node>
+      <node id="5412">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5425">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+        <childnode refid="5426" relation="include">
+        </childnode>
+        <childnode refid="5418" relation="include">
+        </childnode>
+      </node>
+      <node id="5432">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5414">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+        <childnode refid="5415" relation="include">
+        </childnode>
+        <childnode refid="5416" relation="include">
+        </childnode>
+      </node>
+      <node id="5417">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5422">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5424">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="5425" relation="include">
+        </childnode>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5409">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched.c"/>
+        <childnode refid="5410" relation="include">
+        </childnode>
+        <childnode refid="5419" relation="include">
+        </childnode>
+        <childnode refid="5420" relation="include">
+        </childnode>
+        <childnode refid="5421" relation="include">
+        </childnode>
+        <childnode refid="5416" relation="include">
+        </childnode>
+        <childnode refid="5422" relation="include">
+        </childnode>
+        <childnode refid="5423" relation="include">
+        </childnode>
+        <childnode refid="5424" relation="include">
+        </childnode>
+        <childnode refid="5428" relation="include">
+        </childnode>
+        <childnode refid="5429" relation="include">
+        </childnode>
+        <childnode refid="5430" relation="include">
+        </childnode>
+        <childnode refid="5431" relation="include">
+        </childnode>
+        <childnode refid="5432" relation="include">
+        </childnode>
+        <childnode refid="5433" relation="include">
+        </childnode>
+      </node>
+      <node id="5429">
+        <label>sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+        <childnode refid="5428" relation="include">
+        </childnode>
+      </node>
+      <node id="5416">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5423">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5430">
+        <label>sys/kern_descrip.h</label>
+        <link refid="kern__descrip_8h"/>
+        <childnode refid="5418" relation="include">
+        </childnode>
+        <childnode refid="5426" relation="include">
+        </childnode>
+        <childnode refid="5414" relation="include">
+        </childnode>
+      </node>
+      <node id="5428">
+        <label>sys/gdt.h</label>
+        <link refid="gdt_8h"/>
+      </node>
+      <node id="5433">
+        <label>assert.h</label>
+        <link refid="assert_8h"/>
+      </node>
+      <node id="5415">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5426">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="5427" relation="include">
+        </childnode>
+        <childnode refid="5418" relation="include">
+        </childnode>
+      </node>
+      <node id="5427">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5413">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+      <node id="5431">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="5411" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="sched_8c_1549a0c1cc47933fa045b200690965cbd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sched</definition>
+        <argsstring>()</argsstring>
+        <name>sched</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="84" bodyend="140"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b911fd9ca455f92c69c084484d5cd803c2">DEAD</references>
+        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b9eb5838b12f5849b4544c2d9d10dc6548">FORK</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="structtaskStruct_124272198855555e9548c0c0350f917ea" compoundref="sched_8h" startline="57">taskStruct::next</references>
+        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b96564f2f3e15be06b670547bbcaaf0798">READY</references>
+        <references refid="sched_8h_1e969273d772018d111e1f0344eb550f8" compoundref="sched_8c" startline="194" endline="201">sched_addDelTask</references>
+        <references refid="sched_8h_1086cc0adc0b6a3860ceeeb5bc5ea94ea" compoundref="sched_8c" startline="175" endline="192">sched_deleteTask</references>
+        <references refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" compoundref="sched_8c" startline="54">schedulerSpinLock</references>
+        <references refid="spinlock_8h_18f9173fadeddafa01754d6cbcc630198" compoundref="spinlock_8c" startline="48" endline="54">spinTryLock</references>
+        <references refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="62">taskStruct::state</references>
+        <referencedby refid="sched_8c_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_1ee1d1286c2a03f57a76d84682839d581" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_addDelTask</definition>
+        <argsstring>(kTask_t *tmpTask)</argsstring>
+        <name>sched_addDelTask</name>
+        <param>
+          <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+          <declname>tmpTask</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="194" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="194" bodyend="201"/>
+        <references refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" compoundref="sched_8c" startline="48">delList</references>
+        <references refid="structtaskStruct_124272198855555e9548c0c0350f917ea" compoundref="sched_8h" startline="57">taskStruct::next</references>
+        <references refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" compoundref="sched_8h" startline="56">taskStruct::prev</references>
+        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_118e47c4bb14b30f210b7b93c611a3782" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_deleteTask</definition>
+        <argsstring>(pidType id)</argsstring>
+        <name>sched_deleteTask</name>
+        <param>
+          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="175" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="175" bodyend="192"/>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="structtaskStruct_124272198855555e9548c0c0350f917ea" compoundref="sched_8h" startline="57">taskStruct::next</references>
+        <references refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" compoundref="sched_8h" startline="56">taskStruct::prev</references>
+        <references refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" compoundref="sched_8c" startline="47">taskList</references>
+        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_19608fa7a57005270e866d0a8b3a933f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* sched_getDelTask</definition>
+        <argsstring>()</argsstring>
+        <name>sched_getDelTask</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="203" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="203" bodyend="212"/>
+        <references refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" compoundref="sched_8c" startline="48">delList</references>
+        <references refid="structtaskStruct_124272198855555e9548c0c0350f917ea" compoundref="sched_8h" startline="57">taskStruct::next</references>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_1cc9c0d52122a455dbd018fabfc11ab59" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_init</definition>
+        <argsstring>()</argsstring>
+        <name>sched_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="69" bodyend="81"/>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="sched_8c_1dfbc9d1d85a9b69ee799f309066ddbf5" compoundref="sched_8c" startline="49">nextID</references>
+        <references refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" compoundref="sched_8c" startline="47">taskList</references>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_12cbadd034400c65dbd11fd4892ddf26e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int sched_setStatus</definition>
+        <argsstring>(pidType pid, tState state)</argsstring>
+        <name>sched_setStatus</name>
+        <param>
+          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <param>
+          <type><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b9" kindref="member">tState</ref></type>
+          <declname>state</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="281" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="281" bodyend="287"/>
+        <references refid="sched_8h_19cf37ade4c1f6184b33014ac2015e8ed" compoundref="sched_8c" startline="216" endline="226">schedFindTask</references>
+        <references refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="62">taskStruct::state</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+        <referencedby refid="endtask_8c_162d64dfdc841301f6ddfb8b79453a6c5" compoundref="endtask_8c" startline="46" endline="67">endTask</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_108933fe6d593a1c78b9080359f15a0b7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sched_yield</definition>
+        <argsstring>()</argsstring>
+        <name>sched_yield</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="259" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="259" bodyend="261"/>
+        <references refid="sched_8h_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</references>
+        <referencedby refid="idt_8c_1e4129d156580fb5d485a440995d24dc2" compoundref="idt_8c" startline="197" endline="201">_int0</referencedby>
+        <referencedby refid="idt_8c_1ce97dc326d244a0766e196bba26be437" compoundref="idt_8c" startline="203" endline="207">_int1</referencedby>
+        <referencedby refid="idt_8c_1e70dab5ac99d0fef2314f9cdf41751b1" compoundref="idt_8c" startline="263" endline="267">_int10</referencedby>
+        <referencedby refid="idt_8c_17fcf84f4c51eab2ed23e415bc89ad6e5" compoundref="idt_8c" startline="269" endline="273">_int11</referencedby>
+        <referencedby refid="idt_8c_152a2ea8642cffdd21dcd42dbb9f4fcb6" compoundref="idt_8c" startline="275" endline="279">_int12</referencedby>
+        <referencedby refid="idt_8c_1e8c1c195a8aae25a942c0078946da3cb" compoundref="idt_8c" startline="209" endline="213">_int2</referencedby>
+        <referencedby refid="idt_8c_1f5d44f2bc5a77196c3697d4560f5ae6a" compoundref="idt_8c" startline="215" endline="219">_int3</referencedby>
+        <referencedby refid="idt_8c_147bd8cbcfb5e3df37012c7c8dc253a71" compoundref="idt_8c" startline="221" endline="225">_int4</referencedby>
+        <referencedby refid="idt_8c_13d95bf7a1212d5078495fdae84a2f708" compoundref="idt_8c" startline="227" endline="231">_int5</referencedby>
+        <referencedby refid="idt_8c_1514bba9e7774eab1afba32c99c25cecb" compoundref="idt_8c" startline="233" endline="237">_int6</referencedby>
+        <referencedby refid="idt_8c_1fe33101eba72b18d919a8a49af733564" compoundref="idt_8c" startline="257" endline="261">_int9</referencedby>
+        <referencedby refid="endtask_8c_162d64dfdc841301f6ddfb8b79453a6c5" compoundref="endtask_8c" startline="46" endline="67">endTask</referencedby>
+        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
+        <referencedby refid="sched_8c_1ddf5d772556328769f19029d068d97e3" compoundref="sched_8c" startline="241" endline="244">schedEndTask</referencedby>
+        <referencedby refid="spinlock_8c_171f03d2ba55111c715b6068254847a53" compoundref="spinlock_8c" startline="56" endline="62">spinLock</referencedby>
+        <referencedby refid="file_8c_104b3a6449e24cc27188e1f4b9a9d8225" compoundref="file_8c" startline="59" endline="86">sysFgetc</referencedby>
+        <referencedby refid="syscall_8c_14fe050b57d00373f9f9810f1934244e7" compoundref="syscall_8c" startline="235" endline="237">sysSchedYield</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <referencedby refid="ubthread_8c_1996be9a927447a62f7168a082a046c54" compoundref="ubthread_8c" startline="105" endline="115">ubthread_cond_timedwait</referencedby>
+        <referencedby refid="ubthread_8c_130eb7c156c2422801ddb86326dbc3d81" compoundref="ubthread_8c" startline="117" endline="123">ubthread_cond_wait</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_1ddf5d772556328769f19029d068d97e3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void schedEndTask</definition>
+        <argsstring>(pidType pid)</argsstring>
+        <name>schedEndTask</name>
+        <param>
+          <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+          <declname>pid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="241" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="241" bodyend="244"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_19cf37ade4c1f6184b33014ac2015e8ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* schedFindTask</definition>
+        <argsstring>(uInt32 id)</argsstring>
+        <name>schedFindTask</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="217" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="216" bodyend="226"/>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="structtaskStruct_124272198855555e9548c0c0350f917ea" compoundref="sched_8h" startline="57">taskStruct::next</references>
+        <references refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" compoundref="sched_8c" startline="47">taskList</references>
+        <referencedby refid="sched_8c_12cbadd034400c65dbd11fd4892ddf26e" compoundref="sched_8c" startline="281" endline="287">sched_setStatus</referencedby>
+        <referencedby refid="syscall_8c_1618ade9098959166434c56fedf05f71a" compoundref="syscall_8c" startline="179" endline="187">sysCheckPid</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sched_8c_192458df2063761371869cdfe0c9b4ee3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* schedNewTask</definition>
+        <argsstring>()</argsstring>
+        <name>schedNewTask</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="143" bodyend="172"/>
+        <references refid="structfile_1314e5cc77afefbebb7f5e7d197b089ab" compoundref="kern__descrip_8h" startline="94">file::f_flag</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b9ec34b0b90541576a22697631105dc847">NEW</references>
+        <references refid="structtaskStruct_124272198855555e9548c0c0350f917ea" compoundref="sched_8h" startline="57">taskStruct::next</references>
+        <references refid="sched_8c_1dfbc9d1d85a9b69ee799f309066ddbf5" compoundref="sched_8c" startline="49">nextID</references>
+        <references refid="structthread_1b95afb0c8c9a817ce1638be443cb5b12" compoundref="thread_8h" startline="39">thread::o_files</references>
+        <references refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" compoundref="sched_8h" startline="56">taskStruct::prev</references>
+        <references refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" compoundref="sched_8c" startline="54">schedulerSpinLock</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="62">taskStruct::state</references>
+        <references refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" compoundref="sched_8c" startline="47">taskList</references>
+        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
+        <references refid="structtaskStruct_1fe3af11009b07961be7296b360827669" compoundref="sched_8h" startline="65">taskStruct::usedMath</references>
+        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="sched_8c_154397bfe18d5da4d50ff03b15f540858" prot="public" static="no" mutable="no">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* _current</definition>
+        <argsstring></argsstring>
+        <name>_current</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="51" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <referencedby refid="idt_8c_1e4129d156580fb5d485a440995d24dc2" compoundref="idt_8c" startline="197" endline="201">_int0</referencedby>
+        <referencedby refid="idt_8c_1ce97dc326d244a0766e196bba26be437" compoundref="idt_8c" startline="203" endline="207">_int1</referencedby>
+        <referencedby refid="idt_8c_1e70dab5ac99d0fef2314f9cdf41751b1" compoundref="idt_8c" startline="263" endline="267">_int10</referencedby>
+        <referencedby refid="idt_8c_17fcf84f4c51eab2ed23e415bc89ad6e5" compoundref="idt_8c" startline="269" endline="273">_int11</referencedby>
+        <referencedby refid="idt_8c_152a2ea8642cffdd21dcd42dbb9f4fcb6" compoundref="idt_8c" startline="275" endline="279">_int12</referencedby>
+        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
+        <referencedby refid="idt_8c_1e8c1c195a8aae25a942c0078946da3cb" compoundref="idt_8c" startline="209" endline="213">_int2</referencedby>
+        <referencedby refid="idt_8c_1f5d44f2bc5a77196c3697d4560f5ae6a" compoundref="idt_8c" startline="215" endline="219">_int3</referencedby>
+        <referencedby refid="idt_8c_147bd8cbcfb5e3df37012c7c8dc253a71" compoundref="idt_8c" startline="221" endline="225">_int4</referencedby>
+        <referencedby refid="idt_8c_13d95bf7a1212d5078495fdae84a2f708" compoundref="idt_8c" startline="227" endline="231">_int5</referencedby>
+        <referencedby refid="idt_8c_1514bba9e7774eab1afba32c99c25cecb" compoundref="idt_8c" startline="233" endline="237">_int6</referencedby>
+        <referencedby refid="idt_8c_12444cd2a62fc14b2d7f404b0fad5bf1b" compoundref="idt_8c" startline="239" endline="255">_int8</referencedby>
+        <referencedby refid="idt_8c_1fe33101eba72b18d919a8a49af733564" compoundref="idt_8c" startline="257" endline="261">_int9</referencedby>
+        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
+        <referencedby refid="endtask_8c_162d64dfdc841301f6ddfb8b79453a6c5" compoundref="endtask_8c" startline="46" endline="67">endTask</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
+        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
+        <referencedby refid="gen__calls_8c_12cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="59" endline="65">getgid</referencedby>
+        <referencedby refid="gen__calls_8c_14f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="41" endline="47">getpid</referencedby>
+        <referencedby refid="gen__calls_8c_15c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="50" endline="56">getuid</referencedby>
+        <referencedby refid="idt_8c_1dbf451ce0d6ecb3c485382616bee1de4" compoundref="idt_8c" startline="187" endline="195">intNull</referencedby>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+        <referencedby refid="idt_8c_16423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="424" endline="447">mathStateRestore</referencedby>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
+        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
+        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
+        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
+        <referencedby refid="sched_8c_1ddf5d772556328769f19029d068d97e3" compoundref="sched_8c" startline="241" endline="244">schedEndTask</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <referencedby refid="file_8c_1911a71c3e0e08149a11b2b05a50b3b97" compoundref="file_8c" startline="102" endline="109">sysChDir</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="syscall_8c_1fe946867553f08182c48bb1dac56f1ca" compoundref="syscall_8c" startline="174" endline="177">sysExit</referencedby>
+        <referencedby refid="file_8c_104b3a6449e24cc27188e1f4b9a9d8225" compoundref="file_8c" startline="59" endline="86">sysFgetc</referencedby>
+        <referencedby refid="file_8c_11a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="49" endline="57">sysFwrite</referencedby>
+        <referencedby refid="syscall_8c_1a1858601da45332a2cd7d43bb3bcb80d" compoundref="syscall_8c" startline="228" endline="233">sysGetCwd</referencedby>
+        <referencedby refid="syscall_8c_11db3bfbad534c2fa75c02646fcf80a90" compoundref="syscall_8c" startline="196" endline="204">sysGetFreePage</referencedby>
+        <referencedby refid="syscall_8c_1e96a621ca025dd8af6bc3c8288cc0cb7" compoundref="syscall_8c" startline="142" endline="146">sysGetGid</referencedby>
+        <referencedby refid="syscall_8c_1850d08e73e21c01850eea87fbe334fb6" compoundref="syscall_8c" startline="129" endline="134">sysGetpid</referencedby>
+        <referencedby refid="syscall_8c_120b15028f242e382e441fff69880b55b" compoundref="syscall_8c" startline="136" endline="140">sysGetUid</referencedby>
+        <referencedby refid="file_8c_181e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="436" endline="469">sysMkDir</referencedby>
+        <referencedby refid="syscall_8c_187ae7b6cdc0230fbdf65c167a776e9ad" compoundref="syscall_8c" startline="113" endline="117">sysPasswd</referencedby>
+        <referencedby refid="syscall_8c_1c21d2c80c103093157c7929814b23265" compoundref="syscall_8c" startline="161" endline="172">sysSetGid</referencedby>
+        <referencedby refid="syscall_8c_1201b5066c18eb41f32293f2f0338264b" compoundref="syscall_8c" startline="148" endline="159">sysSetUid</referencedby>
+        <referencedby refid="ubthread_8c_1a13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="81" endline="90">ubthread_mutex_lock</referencedby>
+        <referencedby refid="ubthread_8c_1fea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="92" endline="103">ubthread_mutex_unlock</referencedby>
+        <referencedby refid="ubthread_8c_172a362bc8127b8d63e1107062638664d" compoundref="ubthread_8c" startline="44" endline="46">ubthread_self</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="sched_8c_193c7d4c40424b17a73f34f6fd89b2804" prot="public" static="no" mutable="no">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* _usedMath</definition>
+        <argsstring></argsstring>
+        <name>_usedMath</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="52" bodyend="-1"/>
+        <referencedby refid="idt_8c_16423394f8797bc3cf7ec6a079b8d593f" compoundref="idt_8c" startline="424" endline="447">mathStateRestore</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" prot="public" static="yes" mutable="no">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* delList</definition>
+        <argsstring></argsstring>
+        <name>delList</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="48" bodyend="-1"/>
+        <referencedby refid="sched_8c_1ee1d1286c2a03f57a76d84682839d581" compoundref="sched_8c" startline="194" endline="201">sched_addDelTask</referencedby>
+        <referencedby refid="sched_8c_19608fa7a57005270e866d0a8b3a933f3" compoundref="sched_8c" startline="203" endline="212">sched_getDelTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="sched_8c_1dfbc9d1d85a9b69ee799f309066ddbf5" prot="public" static="yes" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 nextID</definition>
+        <argsstring></argsstring>
+        <name>nextID</name>
+        <initializer> -1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="49" bodyend="-1"/>
+        <referencedby refid="sched_8c_1cc9c0d52122a455dbd018fabfc11ab59" compoundref="sched_8c" startline="69" endline="81">sched_init</referencedby>
+        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" prot="public" static="yes" mutable="no">
+        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
+        <definition>spinLock_t schedulerSpinLock</definition>
+        <argsstring></argsstring>
+        <name>schedulerSpinLock</name>
+        <initializer> SPIN_LOCK_INITIALIZER</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="54" bodyend="-1"/>
+        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
+        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" prot="public" static="yes" mutable="no">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* taskList</definition>
+        <argsstring></argsstring>
+        <name>taskList</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c" bodystart="47" bodyend="-1"/>
+        <referencedby refid="sched_8c_118e47c4bb14b30f210b7b93c611a3782" compoundref="sched_8c" startline="175" endline="192">sched_deleteTask</referencedby>
+        <referencedby refid="sched_8c_1cc9c0d52122a455dbd018fabfc11ab59" compoundref="sched_8c" startline="69" endline="81">sched_init</referencedby>
+        <referencedby refid="sched_8c_19cf37ade4c1f6184b33014ac2015e8ed" compoundref="sched_8c" startline="216" endline="226">schedFindTask</referencedby>
+        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: sched_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mount_8h" kindref="compound">vfs/mount.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gdt_8h" kindref="compound">sys/gdt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="idt_8h" kindref="compound">sys/idt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kern__descrip_8h" kindref="compound">sys/kern_descrip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="assert_8h" kindref="compound">assert.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="48" refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="49" refid="sched_8c_1dfbc9d1d85a9b69ee799f309066ddbf5" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><ref refid="sched_8c_1dfbc9d1d85a9b69ee799f309066ddbf5" kindref="member">nextID</ref><sp/><sp/><sp/><sp/>=<sp/>-1;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="sched_8c_154397bfe18d5da4d50ff03b15f540858" refkind="member"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="52" refid="sched_8c_193c7d4c40424b17a73f34f6fd89b2804" refkind="member"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="sched_8h_193c7d4c40424b17a73f34f6fd89b2804" kindref="member">_usedMath</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" kindref="member">schedulerSpinLock</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"></highlight></codeline>
+<codeline lineno="58"><highlight class="comment">Function:<sp/>int<sp/>sched_init()</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"></highlight></codeline>
+<codeline lineno="60"><highlight class="comment">Description:<sp/>This<sp/>function<sp/>is<sp/>used<sp/>to<sp/>enable<sp/>the<sp/>kernel<sp/>scheduler</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"></highlight></codeline>
+<codeline lineno="62"><highlight class="comment">Notes:</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"></highlight></codeline>
+<codeline lineno="64"><highlight class="comment">02/20/2004<sp/>-<sp/>Approved<sp/>for<sp/>quality</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"></highlight></codeline>
+<codeline lineno="66"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="sched_8c_1cc9c0d52122a455dbd018fabfc11ab59" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sched_8h_1cc9c0d52122a455dbd018fabfc11ab59" kindref="member">sched_init</ref>()<sp/>{<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref><sp/>=<sp/>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref>));</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref><sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Unable<sp/>to<sp/>create<sp/>task<sp/>list&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/>=<sp/><ref refid="sched_8c_1dfbc9d1d85a9b69ee799f309066ddbf5" kindref="member">nextID</ref>++;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Print<sp/>out<sp/>information<sp/>on<sp/>scheduler<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;sched0<sp/>-<sp/>Address:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref>);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>we<sp/>know<sp/>everything<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);<sp/></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="sched_8h_1549a0c1cc47933fa045b200690965cbd" kindref="member">sched</ref>(){</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>memAddr<sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*delTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="spinlock_8h_18f9173fadeddafa01754d6cbcc630198" kindref="member">spinTryLock</ref>(&amp;<ref refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" kindref="member">schedulerSpinLock</ref>))</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>tmpTask<sp/>=<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//outportByte(0xE9,_current-&gt;id<sp/>+<sp/>&apos;0&apos;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>schedStart:</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Yield<sp/>the<sp/>next<sp/>task<sp/>from<sp/>the<sp/>current<sp/>prio<sp/>queue<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(;tmpTask<sp/>!=<sp/>0x0;<sp/>tmpTask<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>&gt;<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>==<sp/><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b9eb5838b12f5849b4544c2d9d10dc6548" kindref="member">FORK</ref>)</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b96564f2f3e15be06b670547bbcaaf0798" kindref="member">READY</ref>;</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>==<sp/><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b911fd9ca455f92c69c084484d5cd803c2" kindref="member">DEAD</ref>)</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>delTask<sp/><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmpTask<sp/><sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_1086cc0adc0b6a3860ceeeb5bc5ea94ea" kindref="member">sched_deleteTask</ref>(delTask-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_1e969273d772018d111e1f0344eb550f8" kindref="member">sched_addDelTask</ref>(delTask);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>schedStart;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Finished<sp/>all<sp/>the<sp/>tasks,<sp/>restarting<sp/>the<sp/>list<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(0x0<sp/>==<sp/>tmpTask)<sp/>{</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmpTask<sp/>=<sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref>;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>schedStart;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>&gt;<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_1befa906e51d2b28b2475a74e16219ded" kindref="member">v86Task</ref><sp/>==<sp/>0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>)</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="8259_8h_12b9ec30943ddb0a2ef3bd7ccfd2026c0" kindref="member">irqDisable</ref>(0x0);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;cli&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>memAddr<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)&amp;(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ubixGDT[4].descriptor.baseLow<sp/><sp/>=<sp/>(memAddr<sp/>&amp;<sp/>0xFFFF);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ubixGDT[4].descriptor.baseMed<sp/><sp/>=<sp/>((memAddr<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xFF);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ubixGDT[4].descriptor.baseHigh<sp/>=<sp/>(memAddr<sp/>&gt;&gt;<sp/>24);</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ubixGDT[4].descriptor.access<sp/><sp/><sp/>=<sp/>&apos;\x89&apos;;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" kindref="member">schedulerSpinLock</ref>);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;sti&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;ljmp<sp/>$0x20,$0\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" kindref="member">schedulerSpinLock</ref>);</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143" refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" refkind="member"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="sched_8h_192458df2063761371869cdfe0c9b4ee3" kindref="member">schedNewTask</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/><sp/>=<sp/>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref>));</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfile" kindref="compound">file</ref><sp/>*fp<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Error:<sp/>schedNewTask()<sp/>-<sp/>kmalloc<sp/>failed<sp/>trying<sp/>to<sp/>initialize<sp/>a<sp/>new<sp/>task<sp/>struct\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" kindref="member">memset</ref>(tmpTask,0x0,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(kTask_t));<sp/></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Filling<sp/>in<sp/>tasks<sp/>attrs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1fe3af11009b07961be7296b360827669" kindref="member">usedMath</ref><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b9ec34b0b90541576a22697631105dc847" kindref="member">NEW</ref>;</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>HACK<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;i&lt;3;i++)<sp/>{</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/><sp/><sp/>fp<sp/>=<sp/><ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structfile" kindref="compound">file</ref>));</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" kindref="member">td</ref>.<ref refid="structthread_1b95afb0c8c9a817ce1638be443cb5b12" kindref="member">o_files</ref>[i]<sp/>=<sp/>(<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref>)fp;</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>fp-&gt;<ref refid="structfile_1314e5cc77afefbebb7f5e7d197b089ab" kindref="member">f_flag</ref><sp/>=<sp/>0x4;</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" kindref="member">schedulerSpinLock</ref>);</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="sched_8c_1dfbc9d1d85a9b69ee799f309066ddbf5" kindref="member">nextID</ref>++;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/><sp/>=<sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref>;</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref>-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="sched_8c_1afdb68483104e5a41cb7f6e4ae631f69" kindref="member">schedulerSpinLock</ref>);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpTask);</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175" refid="sched_8c_118e47c4bb14b30f210b7b93c611a3782" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sched_8h_1086cc0adc0b6a3860ceeeb5bc5ea94ea" kindref="member">sched_deleteTask</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;<sp/></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Checking<sp/>each<sp/>task<sp/>from<sp/>the<sp/>prio<sp/>queue<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpTask<sp/>=<sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref>;<sp/>tmpTask<sp/>!=<sp/>0x0;<sp/>tmpTask<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/>==<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/>{</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>if<sp/>(tmpTask-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref>-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>if<sp/>(tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>if<sp/>(<ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref><sp/>==<sp/>tmpTask)</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref><sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="194" refid="sched_8c_1ee1d1286c2a03f57a76d84682839d581" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><ref refid="sched_8h_1e969273d772018d111e1f0344eb550f8" kindref="member">sched_addDelTask</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask)<sp/>{</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref><sp/>=<sp/><ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref>;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref><sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref>-&gt;<ref refid="structtaskStruct_1b3f996cf31b4c69ad5cadf21eb97b312" kindref="member">prev</ref><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>tmpTask;</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="203" refid="sched_8c_19608fa7a57005270e866d0a8b3a933f3" refkind="member"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="sched_8h_19608fa7a57005270e866d0a8b3a933f3" kindref="member">sched_getDelTask</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref><sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/>tmpTask<sp/>=<sp/><ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref>;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref><sp/>=<sp/><ref refid="sched_8c_1cb5b7561437e7d2fb6a222ba875057ca" kindref="member">delList</ref>-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpTask);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<sp/></highlight></codeline>
+<codeline lineno="216" refid="sched_8c_19cf37ade4c1f6184b33014ac2015e8ed" refkind="member"><highlight class="normal"><ref refid="sched_8h_19cf37ade4c1f6184b33014ac2015e8ed" kindref="member">schedFindTask</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)<sp/></highlight></codeline>
+<codeline lineno="217"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/>0x0;<sp/></highlight></codeline>
+<codeline lineno="219"><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(tmpTask<sp/>=<sp/><ref refid="sched_8c_1df65a6dfe4c14f58df9052c048df01a1" kindref="member">taskList</ref>;<sp/>tmpTask;<sp/>tmpTask<sp/>=<sp/>tmpTask-&gt;<ref refid="structtaskStruct_124272198855555e9548c0c0350f917ea" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref><sp/>==<sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">)</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(tmpTask);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"></highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="226"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight></codeline>
+<codeline lineno="229"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="230"><highlight class="comment"></highlight></codeline>
+<codeline lineno="231"><highlight class="comment"><sp/>Function:<sp/>void<sp/>schedEndTask()</highlight></codeline>
+<codeline lineno="232"><highlight class="comment"></highlight></codeline>
+<codeline lineno="233"><highlight class="comment"><sp/>Description:<sp/>This<sp/>function<sp/>will<sp/>end<sp/>a<sp/>task</highlight></codeline>
+<codeline lineno="234"><highlight class="comment"></highlight></codeline>
+<codeline lineno="235"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="236"><highlight class="comment"></highlight></codeline>
+<codeline lineno="237"><highlight class="comment"><sp/><sp/>02/20/2004<sp/>-<sp/>Approved<sp/>for<sp/>quality</highlight></codeline>
+<codeline lineno="238"><highlight class="comment"></highlight></codeline>
+<codeline lineno="239"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="241" refid="sched_8c_1ddf5d772556328769f19029d068d97e3" refkind="member"><highlight class="normal"><ref refid="sched_8h_1ddf5d772556328769f19029d068d97e3" kindref="member">schedEndTask</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid)<sp/>{</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="244"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="247"><highlight class="comment"></highlight></codeline>
+<codeline lineno="248"><highlight class="comment">Function:<sp/>int<sp/>schedEndTask()</highlight></codeline>
+<codeline lineno="249"><highlight class="comment"></highlight></codeline>
+<codeline lineno="250"><highlight class="comment">Description:<sp/>This<sp/>function<sp/>will<sp/>yield<sp/>a<sp/>task<sp/></highlight></codeline>
+<codeline lineno="251"><highlight class="comment"></highlight></codeline>
+<codeline lineno="252"><highlight class="comment">Notes:</highlight></codeline>
+<codeline lineno="253"><highlight class="comment"></highlight></codeline>
+<codeline lineno="254"><highlight class="comment">02/20/2004<sp/>-<sp/>Approved<sp/>for<sp/>quality</highlight></codeline>
+<codeline lineno="255"><highlight class="comment"></highlight></codeline>
+<codeline lineno="256"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"></highlight></codeline>
+<codeline lineno="258"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="259" refid="sched_8c_108933fe6d593a1c78b9080359f15a0b7" refkind="member"><highlight class="normal"><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_1549a0c1cc47933fa045b200690965cbd" kindref="member">sched</ref>();</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="264"><highlight class="comment">asm(</highlight></codeline>
+<codeline lineno="265"><highlight class="comment"><sp/><sp/>&quot;.globl<sp/>sched_yield<sp/>\n&quot;</highlight></codeline>
+<codeline lineno="266"><highlight class="comment"><sp/><sp/>&quot;sched_yield:<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight></codeline>
+<codeline lineno="267"><highlight class="comment"><sp/><sp/>&quot;<sp/><sp/>cli<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight></codeline>
+<codeline lineno="268"><highlight class="comment"><sp/><sp/>&quot;<sp/><sp/>call<sp/>sched<sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight></codeline>
+<codeline lineno="269"><highlight class="comment"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="270"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="271"><highlight class="normal"></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="273"><highlight class="comment"></highlight></codeline>
+<codeline lineno="274"><highlight class="comment">Function:<sp/>int<sp/>sched_setStatus(pidType<sp/>pid,tState<sp/>state)</highlight></codeline>
+<codeline lineno="275"><highlight class="comment"></highlight></codeline>
+<codeline lineno="276"><highlight class="comment">Description:<sp/>Change<sp/>the<sp/>tasks<sp/>status</highlight></codeline>
+<codeline lineno="277"><highlight class="comment"></highlight></codeline>
+<codeline lineno="278"><highlight class="comment">Notes:</highlight></codeline>
+<codeline lineno="279"><highlight class="comment"></highlight></codeline>
+<codeline lineno="280"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281" refid="sched_8c_12cbadd034400c65dbd11fd4892ddf26e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sched_8h_151101e12c9236ea1286477695c110482" kindref="member">sched_setStatus</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid,<ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b9" kindref="member">tState</ref><sp/>state)<sp/>{</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*tmpTask<sp/>=<sp/><ref refid="sched_8h_19cf37ade4c1f6184b33014ac2015e8ed" kindref="member">schedFindTask</ref>(pid);</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(tmpTask<sp/>==<sp/>0x0)</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/>tmpTask-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/>state;</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="288"><highlight class="normal"></highlight></codeline>
+<codeline lineno="289"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="290"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="291"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/sched.c"/>
+  </compounddef>
+</doxygen>

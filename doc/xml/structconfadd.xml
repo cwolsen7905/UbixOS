@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structconfadd" kind="struct" prot="public">
+    <compoundname>confadd</compoundname>
+    <includes refid="pci_8h" local="no">pci.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structconfadd_14a00014cb3b7ee070b7a755620f3d0fd" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 confadd::bus</definition>
+        <argsstring></argsstring>
+        <name>bus</name>
+        <bitfield>8</bitfield>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="72" bodyend="-1"/>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structconfadd_1b8dfe4e29583b1da869d95fdf0aedbc1" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 confadd::dev</definition>
+        <argsstring></argsstring>
+        <name>dev</name>
+        <bitfield>5</bitfield>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="71" bodyend="-1"/>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structconfadd_1c2dd33e1c67afa8930a230ff6c222615" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 confadd::enable</definition>
+        <argsstring></argsstring>
+        <name>enable</name>
+        <bitfield>1</bitfield>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structconfadd_1afb15c7a48b105117892b837bf2c23f2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 confadd::func</definition>
+        <argsstring></argsstring>
+        <name>func</name>
+        <bitfield>3</bitfield>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="70" bodyend="-1"/>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structconfadd_168dbcf1a10079c788ebf7b7cebb58125" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 confadd::reg</definition>
+        <argsstring></argsstring>
+        <name>reg</name>
+        <bitfield>8</bitfield>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structconfadd_15899cc614af11f99fab8391fbe8022b7" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 confadd::rsvd</definition>
+        <argsstring></argsstring>
+        <name>rsvd</name>
+        <bitfield>7</bitfield>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="68" bodyend="75"/>
+    <listofallmembers>
+      <member refid="structconfadd_14a00014cb3b7ee070b7a755620f3d0fd" prot="public" virt="non-virtual"><scope>confadd</scope><name>bus</name></member>
+      <member refid="structconfadd_1b8dfe4e29583b1da869d95fdf0aedbc1" prot="public" virt="non-virtual"><scope>confadd</scope><name>dev</name></member>
+      <member refid="structconfadd_1c2dd33e1c67afa8930a230ff6c222615" prot="public" virt="non-virtual"><scope>confadd</scope><name>enable</name></member>
+      <member refid="structconfadd_1afb15c7a48b105117892b837bf2c23f2" prot="public" virt="non-virtual"><scope>confadd</scope><name>func</name></member>
+      <member refid="structconfadd_168dbcf1a10079c788ebf7b7cebb58125" prot="public" virt="non-virtual"><scope>confadd</scope><name>reg</name></member>
+      <member refid="structconfadd_15899cc614af11f99fab8391fbe8022b7" prot="public" virt="non-virtual"><scope>confadd</scope><name>rsvd</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

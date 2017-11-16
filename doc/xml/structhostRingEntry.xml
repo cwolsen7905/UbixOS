@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structhostRingEntry" kind="struct" prot="public">
+    <compoundname>hostRingEntry</compoundname>
+    <includes refid="lnc_8h" local="no">lnc.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structhostRingEntry_1c161484f38e0d27a0923dcd5636dd150" prot="public" static="no" mutable="no">
+        <type>hostRingEntry::@0</type>
+        <definition>union hostRingEntry::@0 hostRingEntry::buff</definition>
+        <argsstring></argsstring>
+        <name>buff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="138"/>
+      </memberdef>
+      <memberdef kind="variable" id="structhostRingEntry_1ddc4bbce700597b4277125f8c0835a42" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* hostRingEntry::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="137" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structhostRingEntry_11d19c97563a6859a066762e7d0d32739" prot="public" static="no" mutable="no">
+        <type><ref refid="structmds" kindref="compound">mds</ref> *</type>
+        <definition>struct mds* hostRingEntry::md</definition>
+        <argsstring></argsstring>
+        <name>md</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="514">
+        <label>mds</label>
+        <link refid="structmds"/>
+      </node>
+      <node id="513">
+        <label>hostRingEntry</label>
+        <link refid="structhostRingEntry"/>
+        <childnode refid="514" relation="usage">
+          <edgelabel>md</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="133" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="133" bodyend="139"/>
+    <listofallmembers>
+      <member refid="structhostRingEntry_1c161484f38e0d27a0923dcd5636dd150" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>buff</name></member>
+      <member refid="structhostRingEntry_1ddc4bbce700597b4277125f8c0835a42" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>data</name></member>
+      <member refid="structhostRingEntry_11d19c97563a6859a066762e7d0d32739" prot="public" virt="non-virtual"><scope>hostRingEntry</scope><name>md</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

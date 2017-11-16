@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structTVESA__Rec" kind="struct" prot="public">
+    <compoundname>TVESA_Rec</compoundname>
+    <includes refid="ogDisplay__VESA_8h" local="no">ogDisplay_VESA.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structTVESA__Rec_15c9617eb93e857f6a924289bf56f722b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> paddington[474]</type>
+        <definition>uInt8 paddington [474] TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="57"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_13a1e6092e3d017ed3774be3bab0f586f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMProductRevPtr</type>
+        <definition>uInt32 OEMProductRevPtr TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="56"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_1d17286ae02ca833c34812d3d8fea15d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMProductNamePtr</type>
+        <definition>uInt32 OEMProductNamePtr TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="55"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_1643d2bcf5ef1b88d2e76a25316e9df72" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMVendorNamePtr</type>
+        <definition>uInt32 OEMVendorNamePtr TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="54"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_19b05544ebfd7271b3f7967b57a5f653d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> OEMSoftwareRev</type>
+        <definition>uInt16 OEMSoftwareRev TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="53"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_1376bef5473c65617023f5676fff48f86" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref> TotalMemory</type>
+        <definition>uInt16 TotalMemory TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="51"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_142d19bef484946e76046e3d8100b9821" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> VideoModePtr</type>
+        <definition>uInt32 VideoModePtr TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="50"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_1c02beaf0d88fb55b105fb8fbd0f559d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> Capabilities</type>
+        <definition>uInt32 Capabilities TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="49"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_1cae3036f592c377da02ef64c0a586272" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> OEMStringPtr</type>
+        <definition>uInt32 OEMStringPtr TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="48"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_183165020940eade8933255ae81f46349" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> majVersion</type>
+        <definition>uInt8 majVersion TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="47"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_1d0e8cb67070a69a452823b98f1b6b569" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref> minVersion</type>
+        <definition>uInt8 minVersion TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="46"/>
+      </memberdef>
+      <memberdef kind="function" id="structTVESA__Rec_1781338c9edaade8fe55d4e1788410d37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char VBESignature[4]</type>
+        <definition>char VBESignature [4] TVESA_Rec::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="45"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/ogDisplay_VESA.h" bodystart="44" bodyend="58"/>
+    <listofallmembers>
+      <member refid="structTVESA__Rec_1781338c9edaade8fe55d4e1788410d37" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_1d0e8cb67070a69a452823b98f1b6b569" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_183165020940eade8933255ae81f46349" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_1cae3036f592c377da02ef64c0a586272" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_1c02beaf0d88fb55b105fb8fbd0f559d2" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_142d19bef484946e76046e3d8100b9821" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_1376bef5473c65617023f5676fff48f86" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_19b05544ebfd7271b3f7967b57a5f653d" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_1643d2bcf5ef1b88d2e76a25316e9df72" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_1d17286ae02ca833c34812d3d8fea15d5" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_13a1e6092e3d017ed3774be3bab0f586f" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+      <member refid="structTVESA__Rec_15c9617eb93e857f6a924289bf56f722b" prot="public" virt="non-virtual"><scope>TVESA_Rec</scope><name>__attribute__</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

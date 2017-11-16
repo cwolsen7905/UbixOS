@@ -1,0 +1,10 @@
+base referer
+rect $atkbd_8c.html 331,6 477,32
+rect $exec_8c.html 324,56 484,83
+rect $kern__descrip_8c.html 296,107 512,134
+rect $kern__sig_8c.html 311,158 497,184
+rect $kern__sysctl_8c.html 301,208 507,235
+rect $sched_8c.html 319,259 489,286
+rect $syscall_8c.html 316,310 492,336
+rect $syscall__new_8c.html 300,360 508,387
+rect $idt_8c.html 340,411 468,438

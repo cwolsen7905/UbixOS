@@ -1,0 +1,12 @@
+base referer
+rect $vfs_8h.html 395,57 472,84
+rect $file_8h.html 544,108 624,135
+rect $sched_8h.html 372,159 495,185
+rect $vitals_8h.html 193,57 313,84
+rect $kpanic_8h.html 189,209 317,236
+rect $spinlock_8h.html 184,260 323,287
+rect $kmalloc_8h.html 200,311 307,337
+rect $lib_2string_8h.html 207,361 300,388
+rect $paging_8h.html 193,412 313,439
+rect $kprintf_8h.html 204,463 303,489
+rect $assert_8h.html 216,513 291,540

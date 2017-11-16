@@ -1,0 +1,12 @@
+base referer
+rect $hd_8h.html 180,5 255,32
+rect $device_8h.html 476,56 583,83
+rect $video_8h.html 316,107 415,133
+rect $io_8h.html 181,157 253,184
+rect $kmalloc_8h.html 476,157 583,184
+rect $kprintf_8h.html 316,259 415,285
+rect $devfs_8h.html 309,309 421,336
+rect $string_8h.html 181,360 253,387
+rect $ubixfs_8h.html 305,5 425,32
+rect $types_8h.html 633,183 753,209
+rect $file_8h.html 489,309 569,336

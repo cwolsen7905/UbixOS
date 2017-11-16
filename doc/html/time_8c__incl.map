@@ -1,0 +1,10 @@
+base referer
+rect $types_8h.html 743,156 863,183
+rect $time_8h.html 579,105 693,132
+rect $vitals_8h.html 216,156 336,183
+rect $kprintf_8h.html 408,257 507,284
+rect $assert_8h.html 239,257 313,284
+rect $__types_8h.html 913,156 1017,183
+rect $io_8h.html 767,105 839,132
+rect $ubthread_8h.html 385,156 529,183
+rect $vfs_8h.html 597,207 675,233

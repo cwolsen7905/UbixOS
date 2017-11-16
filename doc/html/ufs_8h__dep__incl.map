@@ -1,0 +1,5 @@
+base referer
+rect $init_8h.html 241,6 449,32
+rect $ffs_8c.html 283,56 408,83
+rect $ufs_8c.html 281,107 409,134
+rect $main_8c.html 499,6 643,32

@@ -1,0 +1,3 @@
+fd0a@devfs,sys,ubixfs,rw
+fd0b@devfs,tmp,ubixfs,rw
+ad0a@devfs,hd,ubixfs,rw

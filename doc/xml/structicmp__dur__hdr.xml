@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structicmp__dur__hdr" kind="struct" prot="public">
+    <compoundname>icmp_dur_hdr</compoundname>
+    <includes refid="ipv4_2icmp_8h" local="no">icmp.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structicmp__dur__hdr_16bb8b61c1b9376e532b6da9f87b255c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp_dur_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(uInt32 unused)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>unused</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="88"/>
+      </memberdef>
+      <memberdef kind="function" id="structicmp__dur__hdr_1a8f9921275f289e2f089066951e68048" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp_dur_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(uInt16 chksum)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>chksum</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="87"/>
+      </memberdef>
+      <memberdef kind="function" id="structicmp__dur__hdr_17fc1a2c96daa015d5e9c8c5581149dbe" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>icmp_dur_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(uInt16 _type_code)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>_type_code</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="86"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structicmp__dur__hdr_1da29ca70b725524f59ba969efed5c870" prot="public" static="no" mutable="no">
+        <type>u16_t</type>
+        <definition>u16_t icmp_dur_hdr::chksum</definition>
+        <argsstring></argsstring>
+        <name>chksum</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structicmp__dur__hdr_1ab7305d10b7cd3fd96ee3424ddba46c5" prot="public" static="no" mutable="no">
+        <type>u8_t</type>
+        <definition>u8_t icmp_dur_hdr::icode</definition>
+        <argsstring></argsstring>
+        <name>icode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structicmp__dur__hdr_1725c471d0a92b3ad5a47316df39b62e4" prot="public" static="no" mutable="no">
+        <type>u8_t</type>
+        <definition>u8_t icmp_dur_hdr::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structicmp__dur__hdr_102d25a41e6438d64e6b858c40f4e3f4f" prot="public" static="no" mutable="no">
+        <type>u32_t</type>
+        <definition>u32_t icmp_dur_hdr::unused</definition>
+        <argsstring></argsstring>
+        <name>unused</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/icmp.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv4/icmp.h" bodystart="85" bodyend="89"/>
+    <listofallmembers>
+      <member refid="structicmp__dur__hdr_1da29ca70b725524f59ba969efed5c870" prot="public" virt="non-virtual"><scope>icmp_dur_hdr</scope><name>chksum</name></member>
+      <member refid="structicmp__dur__hdr_1ab7305d10b7cd3fd96ee3424ddba46c5" prot="public" virt="non-virtual"><scope>icmp_dur_hdr</scope><name>icode</name></member>
+      <member refid="structicmp__dur__hdr_17fc1a2c96daa015d5e9c8c5581149dbe" prot="public" virt="non-virtual"><scope>icmp_dur_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp__dur__hdr_1a8f9921275f289e2f089066951e68048" prot="public" virt="non-virtual"><scope>icmp_dur_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp__dur__hdr_16bb8b61c1b9376e532b6da9f87b255c5" prot="public" virt="non-virtual"><scope>icmp_dur_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structicmp__dur__hdr_1725c471d0a92b3ad5a47316df39b62e4" prot="public" virt="non-virtual"><scope>icmp_dur_hdr</scope><name>type</name></member>
+      <member refid="structicmp__dur__hdr_102d25a41e6438d64e6b858c40f4e3f4f" prot="public" virt="non-virtual"><scope>icmp_dur_hdr</scope><name>unused</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

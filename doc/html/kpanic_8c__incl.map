@@ -1,0 +1,8 @@
+base referer
+rect $kpanic_8h.html 229,5 357,32
+rect $kprintf_8h.html 244,56 343,83
+rect $8259_8h.html 247,107 340,133
+rect $stdarg_8h.html 255,157 332,184
+rect $tty_8h.html 244,208 343,235
+rect $types_8h.html 407,107 527,133
+rect $__types_8h.html 577,107 681,133

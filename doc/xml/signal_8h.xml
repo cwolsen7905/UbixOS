@@ -1,0 +1,659 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="signal_8h" kind="file">
+    <compoundname>signal.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="sysproto_8h" local="no">src/sys/include/sys/sysproto.h</includedby>
+    <incdepgraph>
+      <node id="3786">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3787" relation="include">
+        </childnode>
+      </node>
+      <node id="3787">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3785">
+        <label>src/sys/include/sys/signal.h</label>
+        <link refid="signal.h"/>
+        <childnode refid="3786" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3810">
+        <label>src/sys/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="3835">
+        <label>src/sys/include/ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="3800" relation="include">
+        </childnode>
+        <childnode refid="3810" relation="include">
+        </childnode>
+        <childnode refid="3834" relation="include">
+        </childnode>
+      </node>
+      <node id="3813">
+        <label>src/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="3833">
+        <label>src/sys/include/ufs/ffs.h</label>
+        <link refid="ffs_8h"/>
+        <childnode refid="3810" relation="include">
+        </childnode>
+        <childnode refid="3834" relation="include">
+        </childnode>
+      </node>
+      <node id="3828">
+        <label>src/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="3841">
+        <label>src/sys/kernel/elf.c</label>
+        <link refid="elf_8c"/>
+      </node>
+      <node id="3837">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="3802">
+        <label>src/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="3820">
+        <label>src/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="3800" relation="include">
+        </childnode>
+        <childnode refid="3821" relation="include">
+        </childnode>
+        <childnode refid="3822" relation="include">
+        </childnode>
+        <childnode refid="3823" relation="include">
+        </childnode>
+        <childnode refid="3824" relation="include">
+        </childnode>
+        <childnode refid="3814" relation="include">
+        </childnode>
+        <childnode refid="3825" relation="include">
+        </childnode>
+        <childnode refid="3826" relation="include">
+        </childnode>
+        <childnode refid="3827" relation="include">
+        </childnode>
+        <childnode refid="3828" relation="include">
+        </childnode>
+        <childnode refid="3829" relation="include">
+        </childnode>
+        <childnode refid="3830" relation="include">
+        </childnode>
+        <childnode refid="3831" relation="include">
+        </childnode>
+        <childnode refid="3796" relation="include">
+        </childnode>
+        <childnode refid="3832" relation="include">
+        </childnode>
+      </node>
+      <node id="3794">
+        <label>src/sys/kernel/pipe.c</label>
+        <link refid="pipe_8c"/>
+      </node>
+      <node id="3843">
+        <label>src/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="3850">
+        <label>src/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="3817">
+        <label>src/sys/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="3834">
+        <label>src/sys/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="3798">
+        <label>src/sys/kernel/kern_sig.c</label>
+        <link refid="kern__sig_8c"/>
+      </node>
+      <node id="3827">
+        <label>src/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="3825">
+        <label>src/sys/kernel/systemtask.c</label>
+        <link refid="systemtask_8c"/>
+      </node>
+      <node id="3829">
+        <label>src/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
+      </node>
+      <node id="3838">
+        <label>src/sys/include/vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="3839" relation="include">
+        </childnode>
+        <childnode refid="3830" relation="include">
+        </childnode>
+      </node>
+      <node id="3836">
+        <label>src/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="3804">
+        <label>src/sys/include/sys/pipe.h</label>
+        <link refid="pipe_8h"/>
+        <childnode refid="3794" relation="include">
+        </childnode>
+      </node>
+      <node id="3824">
+        <label>src/sys/kernel/fork.c</label>
+        <link refid="fork_8c"/>
+      </node>
+      <node id="3845">
+        <label>src/sys/vmm/createvirtualspace.c</label>
+        <link refid="createvirtualspace_8c"/>
+      </node>
+      <node id="3853">
+        <label>src/sys/vmm/vmm_init.c</label>
+        <link refid="vmm__init_8c"/>
+      </node>
+      <node id="3815">
+        <label>src/sys/ubixfs/block.c</label>
+        <link refid="block_8c"/>
+      </node>
+      <node id="3799">
+        <label>src/sys/include/sys/kern_sysctl.h</label>
+        <link refid="kern__sysctl_8h"/>
+        <childnode refid="3800" relation="include">
+        </childnode>
+        <childnode refid="3802" relation="include">
+        </childnode>
+        <childnode refid="3803" relation="include">
+        </childnode>
+      </node>
+      <node id="3839">
+        <label>src/sys/include/vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="3800" relation="include">
+        </childnode>
+        <childnode refid="3840" relation="include">
+        </childnode>
+        <childnode refid="3841" relation="include">
+        </childnode>
+        <childnode refid="3823" relation="include">
+        </childnode>
+        <childnode refid="3842" relation="include">
+        </childnode>
+        <childnode refid="3824" relation="include">
+        </childnode>
+        <childnode refid="3836" relation="include">
+        </childnode>
+        <childnode refid="3795" relation="include">
+        </childnode>
+        <childnode refid="3814" relation="include">
+        </childnode>
+        <childnode refid="3825" relation="include">
+        </childnode>
+        <childnode refid="3837" relation="include">
+        </childnode>
+        <childnode refid="3843" relation="include">
+        </childnode>
+        <childnode refid="3844" relation="include">
+        </childnode>
+        <childnode refid="3803" relation="include">
+        </childnode>
+        <childnode refid="3845" relation="include">
+        </childnode>
+        <childnode refid="3846" relation="include">
+        </childnode>
+        <childnode refid="3847" relation="include">
+        </childnode>
+        <childnode refid="3848" relation="include">
+        </childnode>
+        <childnode refid="3849" relation="include">
+        </childnode>
+        <childnode refid="3850" relation="include">
+        </childnode>
+        <childnode refid="3851" relation="include">
+        </childnode>
+        <childnode refid="3852" relation="include">
+        </childnode>
+        <childnode refid="3853" relation="include">
+        </childnode>
+        <childnode refid="3832" relation="include">
+        </childnode>
+      </node>
+      <node id="3795">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="3851">
+        <label>src/sys/vmm/setpageattributes.c</label>
+        <link refid="setpageattributes_8c"/>
+      </node>
+      <node id="3790">
+        <label>src/sys/include/sys/gen_calls.h</label>
+        <link refid="gen__calls_8h"/>
+        <childnode refid="3791" relation="include">
+        </childnode>
+      </node>
+      <node id="3848">
+        <label>src/sys/vmm/getphysicaladdr.c</label>
+        <link refid="getphysicaladdr_8c"/>
+      </node>
+      <node id="3816">
+        <label>src/sys/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="3819">
+        <label>src/sys/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="3807">
+        <label>src/sys/include/vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="3808" relation="include">
+        </childnode>
+        <childnode refid="3809" relation="include">
+        </childnode>
+        <childnode refid="3811" relation="include">
+        </childnode>
+        <childnode refid="3800" relation="include">
+        </childnode>
+        <childnode refid="3820" relation="include">
+        </childnode>
+        <childnode refid="3833" relation="include">
+        </childnode>
+        <childnode refid="3835" relation="include">
+        </childnode>
+        <childnode refid="3836" relation="include">
+        </childnode>
+        <childnode refid="3837" relation="include">
+        </childnode>
+        <childnode refid="3818" relation="include">
+        </childnode>
+        <childnode refid="3819" relation="include">
+        </childnode>
+        <childnode refid="3810" relation="include">
+        </childnode>
+        <childnode refid="3834" relation="include">
+        </childnode>
+        <childnode refid="3830" relation="include">
+        </childnode>
+        <childnode refid="3796" relation="include">
+        </childnode>
+      </node>
+      <node id="3801">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="3811">
+        <label>src/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="ubixfs_8h"/>
+        <childnode refid="3812" relation="include">
+        </childnode>
+        <childnode refid="3800" relation="include">
+        </childnode>
+        <childnode refid="3814" relation="include">
+        </childnode>
+        <childnode refid="3815" relation="include">
+        </childnode>
+        <childnode refid="3816" relation="include">
+        </childnode>
+        <childnode refid="3817" relation="include">
+        </childnode>
+        <childnode refid="3818" relation="include">
+        </childnode>
+        <childnode refid="3819" relation="include">
+        </childnode>
+      </node>
+      <node id="3840">
+        <label>src/sys/kernel/bioscall.c</label>
+        <link refid="bioscall_8c"/>
+      </node>
+      <node id="3792">
+        <label>src/sys/include/sys/kern_descrip.h</label>
+        <link refid="kern__descrip_8h"/>
+        <childnode refid="3791" relation="include">
+        </childnode>
+        <childnode refid="3793" relation="include">
+        </childnode>
+        <childnode refid="3794" relation="include">
+        </childnode>
+        <childnode refid="3795" relation="include">
+        </childnode>
+        <childnode refid="3796" relation="include">
+        </childnode>
+      </node>
+      <node id="3814">
+        <label>src/sys/kernel/syscall.c</label>
+        <link refid="syscall_8c"/>
+      </node>
+      <node id="3797">
+        <label>src/sys/include/sys/kern_sig.h</label>
+        <link refid="kern__sig_8h"/>
+        <childnode refid="3798" relation="include">
+        </childnode>
+      </node>
+      <node id="3822">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="3812">
+        <label>src/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="3800" relation="include">
+        </childnode>
+        <childnode refid="3813" relation="include">
+        </childnode>
+      </node>
+      <node id="3821">
+        <label>src/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="3849">
+        <label>src/sys/vmm/pagefault.c</label>
+        <link refid="pagefault_8c"/>
+      </node>
+      <node id="3818">
+        <label>src/sys/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="3800">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="3801" relation="include">
+        </childnode>
+      </node>
+      <node id="3831">
+        <label>src/sys/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="3808">
+        <label>src/sys/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="3789">
+        <label>src/sys/include/sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="3790" relation="include">
+        </childnode>
+        <childnode refid="3792" relation="include">
+        </childnode>
+        <childnode refid="3797" relation="include">
+        </childnode>
+        <childnode refid="3799" relation="include">
+        </childnode>
+        <childnode refid="3804" relation="include">
+        </childnode>
+        <childnode refid="3805" relation="include">
+        </childnode>
+        <childnode refid="3807" relation="include">
+        </childnode>
+        <childnode refid="3838" relation="include">
+        </childnode>
+        <childnode refid="3793" relation="include">
+        </childnode>
+        <childnode refid="3798" relation="include">
+        </childnode>
+        <childnode refid="3802" relation="include">
+        </childnode>
+        <childnode refid="3794" relation="include">
+        </childnode>
+      </node>
+      <node id="3852">
+        <label>src/sys/vmm/unmappage.c</label>
+        <link refid="unmappage_8c"/>
+      </node>
+      <node id="3826">
+        <label>src/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="3832">
+        <label>src/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="3793">
+        <label>src/sys/kernel/kern_descrip.c</label>
+        <link refid="kern__descrip_8c"/>
+      </node>
+      <node id="3788">
+        <label>src/sys/include/sys/signal.h</label>
+        <link refid="signal.h"/>
+        <childnode refid="3789" relation="include">
+        </childnode>
+      </node>
+      <node id="3823">
+        <label>src/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="3830">
+        <label>src/sys/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="3846">
+        <label>src/sys/vmm/getfreepage.c</label>
+        <link refid="getfreepage_8c"/>
+      </node>
+      <node id="3844">
+        <label>src/sys/sys/idt.c</label>
+        <link refid="idt_8c"/>
+      </node>
+      <node id="3791">
+        <label>src/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="3806">
+        <label>src/sys/kernel/syscall_new.c</label>
+        <link refid="syscall__new_8c"/>
+      </node>
+      <node id="3842">
+        <label>src/sys/kernel/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+      <node id="3805">
+        <label>src/sys/include/ubixos/syscalls_new.h</label>
+        <link refid="syscalls__new_8h"/>
+        <childnode refid="3806" relation="include">
+        </childnode>
+      </node>
+      <node id="3809">
+        <label>src/sys/include/sys/buf.h</label>
+        <link refid="buf_8h"/>
+        <childnode refid="3810" relation="include">
+        </childnode>
+      </node>
+      <node id="3847">
+        <label>src/sys/vmm/getfreevirtualpage.c</label>
+        <link refid="getfreevirtualpage_8c"/>
+      </node>
+      <node id="3803">
+        <label>src/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+      <node id="3796">
+        <label>src/sys/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="struct____sigset" prot="public">__sigset</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="signal_8h_15581705b310d0437dd72be5318da09a1" prot="public" static="no">
+        <name>_SIG_BIT</name>
+        <param><defname>sig</defname></param>
+        <initializer>(1 &lt;&lt; (_SIG_IDX(sig) &amp; 31))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="signal_8h_10f808551c76652f020a80b2ebf6f9c09" prot="public" static="no">
+        <name>_SIG_IDX</name>
+        <param><defname>sig</defname></param>
+        <initializer>((sig) - 1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="signal_8h_17d46af6592da946cf17894b2abef7918" prot="public" static="no">
+        <name>_SIG_MAXSIG</name>
+        <initializer>128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="signal_8h_1aa7afa51bef1d14883e65b2a67a1a461" prot="public" static="no">
+        <name>_SIG_VALID</name>
+        <param><defname>sig</defname></param>
+        <initializer>((sig) &lt;= _SIG_MAXSIG &amp;&amp; (sig) &gt; 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="signal_8h_1cb1fafaac3c8e1fa21c6d29d124af109" prot="public" static="no">
+        <name>_SIG_WORD</name>
+        <param><defname>sig</defname></param>
+        <initializer>(_SIG_IDX(sig) &gt;&gt; 5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="signal_8h_122a11365f7d751fed253dd895ea8dd75" prot="public" static="no">
+        <name>_SIG_WORDS</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="signal_8h_1a24eb4b9ca7f211fec0cc5d1737c945a" prot="public" static="no">
+        <name>_SIGNALL_H</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="31" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="signal_8h_1a691d5a72600012df19e6d931101909c" prot="public" static="no">
+        <type><ref refid="struct____sigset" kindref="compound">__sigset</ref></type>
+        <definition>typedef struct __sigset  __sigset_t</definition>
+        <argsstring></argsstring>
+        <name>__sigset_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="44"/>
+      </memberdef>
+      <memberdef kind="typedef" id="signal_8h_1134f0411d52ec19a05b55b4ba2f87c3c" prot="public" static="no">
+        <type><ref refid="struct____sigset" kindref="compound">__sigset_t</ref></type>
+        <definition>typedef __sigset_t sigset_t</definition>
+        <argsstring></argsstring>
+        <name>sigset_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: signal_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SIGNAL_H</highlight></codeline>
+<codeline lineno="31" refid="signal_8h_1a24eb4b9ca7f211fec0cc5d1737c945a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SIGNALL_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="signal_8h_122a11365f7d751fed253dd895ea8dd75" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_SIG_WORDS<sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="36" refid="signal_8h_17d46af6592da946cf17894b2abef7918" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SIG_MAXSIG<sp/><sp/><sp/><sp/><sp/>128</highlight></codeline>
+<codeline lineno="37" refid="signal_8h_10f808551c76652f020a80b2ebf6f9c09" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SIG_IDX(sig)<sp/><sp/><sp/>((sig)<sp/>-<sp/>1)</highlight></codeline>
+<codeline lineno="38" refid="signal_8h_1cb1fafaac3c8e1fa21c6d29d124af109" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SIG_WORD(sig)<sp/><sp/>(_SIG_IDX(sig)<sp/>&gt;&gt;<sp/>5)</highlight></codeline>
+<codeline lineno="39" refid="signal_8h_15581705b310d0437dd72be5318da09a1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SIG_BIT(sig)<sp/><sp/><sp/>(1<sp/>&lt;&lt;<sp/>(_SIG_IDX(sig)<sp/>&amp;<sp/>31))</highlight></codeline>
+<codeline lineno="40" refid="signal_8h_1aa7afa51bef1d14883e65b2a67a1a461" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SIG_VALID(sig)<sp/>((sig)<sp/>&lt;=<sp/>_SIG_MAXSIG<sp/>&amp;&amp;<sp/>(sig)<sp/>&gt;<sp/>0)</highlight></codeline>
+<codeline lineno="41"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="struct____sigset" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="struct____sigset" kindref="compound">__sigset</ref><sp/>{</highlight></codeline>
+<codeline lineno="43" refid="struct____sigset_1f82a86c0ba3a93f568304f7df2e95867" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref><sp/><ref refid="struct____sigset_1f82a86c0ba3a93f568304f7df2e95867" kindref="member">__bits</ref>[<ref refid="signal_8h_122a11365f7d751fed253dd895ea8dd75" kindref="member">_SIG_WORDS</ref>];</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="struct____sigset" kindref="compound">__sigset_t</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="signal_8h_1134f0411d52ec19a05b55b4ba2f87c3c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="struct____sigset" kindref="compound">__sigset_t</ref><sp/><ref refid="struct____sigset" kindref="compound">sigset_t</ref>;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/signal.h"/>
+  </compounddef>
+</doxygen>

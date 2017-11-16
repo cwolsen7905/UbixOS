@@ -1,0 +1,10 @@
+base referer
+rect $devfs_8h.html 255,6 471,32
+rect $kern__descrip_8h.html 237,56 488,83
+rect $sched_8h.html 249,158 476,184
+rect $syscalls_8h.html 536,107 776,134
+rect $syscall_8c.html 824,158 1000,184
+rect $file_8c.html 592,208 720,235
+rect $vfs_8h.html 271,259 455,286
+rect $block_8c.html 280,360 445,387
+rect $directory_8c.html 269,411 456,438

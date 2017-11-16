@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structbNode" kind="struct" prot="public">
+    <compoundname>bNode</compoundname>
+    <includes refid="btree_8h" local="no">btree.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structbNode_1dc60a70ce9e94b001fdf07e5d6ec259e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char reserved[131]</type>
+        <definition>char reserved [131] bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="32"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_11f4727795f9ef938776bd92696103afd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref> leaf</type>
+        <definition>bool leaf bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="31"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_13ada5188967e1fdbe2b08bbb6f48d402" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> magic2</type>
+        <definition>uInt32 magic2 bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="30"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_14ad8c2eddcaf1c6a4c47524a773b9844" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> childCount[B_MAX_KEYS+1]</type>
+        <definition>uInt32 childCount [B_MAX_KEYS+1] bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="29"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_11c7255b2b4ee0a4fd2fee5cffdd67e2a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="unionuPtr" kindref="compound">uPtr</ref> tail[B_MAX_KEYS+1]</type>
+        <definition>uPtr tail [B_MAX_KEYS+1] bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="28"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_14fab6e90732c227483c2fd32eb1c049f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="unionuPtr" kindref="compound">uPtr</ref> head[B_MAX_KEYS+1]</type>
+        <definition>uPtr head [B_MAX_KEYS+1] bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="27"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_1f2ba9b31013886e23e345164ac9401a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref> present[B_MAX_KEYS+1]</type>
+        <definition>bool present [B_MAX_KEYS+1] bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="26"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_1d8641c4fa0876283489ac46115229f5d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char keys[B_MAX_KEYS][B_MAX_NAME_LENGTH]</type>
+        <definition>char keys [B_MAX_KEYS][B_MAX_NAME_LENGTH] bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="25"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_126ff018feece8605f8d1f88917d838d2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_13eb5cd6e01deaee22057b8182b791bd3" kindref="member">uInt64</ref> tag</type>
+        <definition>uInt64 tag bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="24"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_181ea6bc3b5d8754f9f315966ef10dd68" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="unionuPtr" kindref="compound">uPtr</ref> parent</type>
+        <definition>uPtr parent bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="23"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_17116d8f57cdf3f18704191346779f88f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> used</type>
+        <definition>uInt32 used bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="22"/>
+      </memberdef>
+      <memberdef kind="function" id="structbNode_18cd46327a348d2717169b3b5e0a51cf8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> magic1</type>
+        <definition>uInt32 magic1 bNode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="21"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="20" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="20" bodyend="33"/>
+    <listofallmembers>
+      <member refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_17116d8f57cdf3f18704191346779f88f" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_181ea6bc3b5d8754f9f315966ef10dd68" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_126ff018feece8605f8d1f88917d838d2" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_1d8641c4fa0876283489ac46115229f5d" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_1f2ba9b31013886e23e345164ac9401a7" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_14fab6e90732c227483c2fd32eb1c049f" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_11c7255b2b4ee0a4fd2fee5cffdd67e2a" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_14ad8c2eddcaf1c6a4c47524a773b9844" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_13ada5188967e1fdbe2b08bbb6f48d402" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_11f4727795f9ef938776bd92696103afd" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+      <member refid="structbNode_1dc60a70ce9e94b001fdf07e5d6ec259e" prot="public" virt="non-virtual"><scope>bNode</scope><name>__attribute__</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

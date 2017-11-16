@@ -1,0 +1,6 @@
+base referer
+rect $structarpcom.html 5,230 125,342
+rect $structnicInfo.html 149,214 259,358
+rect $structhostRingEntry.html 283,230 400,342
+rect $structmds.html 308,6 375,134
+rect $structinitBlock.html 424,198 504,374

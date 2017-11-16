@@ -1,0 +1,7 @@
+base referer
+rect $structcacheNode.html 6,310 123,582
+rect $structdmadat.html 251,382 334,510
+rect $structvfs__mountPoint.html 358,342 483,550
+rect $structubixDiskLabel.html 212,54 343,198
+rect $structdevice__node.html 367,46 474,206
+rect $structfileSystem.html 552,6 667,246

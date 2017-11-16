@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_538938396c33f4585b2c9d510e98cbd2" kind="dir">
+    <compoundname>src/sys/include/lib/</compoundname>
+    <innerfile refid="bioscall_8h">bioscall.h</innerfile>
+    <innerfile refid="kmalloc_8h">kmalloc.h</innerfile>
+    <innerfile refid="kprint_8h">kprint.h</innerfile>
+    <innerfile refid="kprintf_8h">kprintf.h</innerfile>
+    <innerfile refid="libcpp_8h">libcpp.h</innerfile>
+    <innerfile refid="lib_2string_8h">string.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structbsd__disklabel_1_1partition" kind="struct" prot="public">
+    <compoundname>bsd_disklabel::partition</compoundname>
+    <includes refid="hd_8h" local="no">hd.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbsd__disklabel_1_1partition_126963c89dd04bf274c1f31b1d76dee89" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref></type>
+        <definition>u_int16_t bsd_disklabel::partition::p_cpg</definition>
+        <argsstring></argsstring>
+        <name>p_cpg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="157" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="157" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbsd__disklabel_1_1partition_1d200bba4ef05cb1d2824c6b93092f711" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref></type>
+        <definition>u_int8_t bsd_disklabel::partition::p_frag</definition>
+        <argsstring></argsstring>
+        <name>p_frag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbsd__disklabel_1_1partition_128f6899ed90435dd6e7a0b737718d703" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bsd_disklabel::partition::p_fsize</definition>
+        <argsstring></argsstring>
+        <name>p_fsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="154" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="154" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbsd__disklabel_1_1partition_1234eea6a587c4d889251c2f07d982cef" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref></type>
+        <definition>u_int8_t bsd_disklabel::partition::p_fstype</definition>
+        <argsstring></argsstring>
+        <name>p_fstype</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="155" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="155" bodyend="-1"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structbsd__disklabel_1_1partition_18bc8426239533bd9dfdce0f25190da06" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bsd_disklabel::partition::p_offset</definition>
+        <argsstring></argsstring>
+        <name>p_offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="153" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="153" bodyend="-1"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structbsd__disklabel_1_1partition_15663ff994f70fcc34ce0587012a2339b" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t bsd_disklabel::partition::p_size</definition>
+        <argsstring></argsstring>
+        <name>p_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="152" bodyend="-1"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="151" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="151" bodyend="158"/>
+    <listofallmembers>
+      <member refid="structbsd__disklabel_1_1partition_126963c89dd04bf274c1f31b1d76dee89" prot="public" virt="non-virtual"><scope>bsd_disklabel::partition</scope><name>p_cpg</name></member>
+      <member refid="structbsd__disklabel_1_1partition_1d200bba4ef05cb1d2824c6b93092f711" prot="public" virt="non-virtual"><scope>bsd_disklabel::partition</scope><name>p_frag</name></member>
+      <member refid="structbsd__disklabel_1_1partition_128f6899ed90435dd6e7a0b737718d703" prot="public" virt="non-virtual"><scope>bsd_disklabel::partition</scope><name>p_fsize</name></member>
+      <member refid="structbsd__disklabel_1_1partition_1234eea6a587c4d889251c2f07d982cef" prot="public" virt="non-virtual"><scope>bsd_disklabel::partition</scope><name>p_fstype</name></member>
+      <member refid="structbsd__disklabel_1_1partition_18bc8426239533bd9dfdce0f25190da06" prot="public" virt="non-virtual"><scope>bsd_disklabel::partition</scope><name>p_offset</name></member>
+      <member refid="structbsd__disklabel_1_1partition_15663ff994f70fcc34ce0587012a2339b" prot="public" virt="non-virtual"><scope>bsd_disklabel::partition</scope><name>p_size</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

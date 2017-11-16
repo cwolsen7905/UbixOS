@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="ipv6_2inet_8h" kind="file">
+    <compoundname>inet.h</compoundname>
+    <includes refid="arch_8h" local="yes">net/arch.h</includes>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="pbuf_8h" local="yes">net/pbuf.h</includes>
+    <includes refid="ipv6_2ip__addr_8h" local="yes">net/ipv6/ip_addr.h</includes>
+    <incdepgraph>
+      <node id="720">
+        <label>src/sys/include/net/ipv6/inet.h</label>
+        <link refid="ipv6/inet.h"/>
+        <childnode refid="721" relation="include">
+        </childnode>
+        <childnode refid="724" relation="include">
+        </childnode>
+        <childnode refid="726" relation="include">
+        </childnode>
+        <childnode refid="728" relation="include">
+        </childnode>
+      </node>
+      <node id="722">
+        <label>arch/cpu.h</label>
+        <link refid="cpu_8h"/>
+      </node>
+      <node id="721">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="722" relation="include">
+        </childnode>
+        <childnode refid="723" relation="include">
+        </childnode>
+      </node>
+      <node id="728">
+        <label>net/ipv6/ip_addr.h</label>
+        <link refid="ipv6_2ip__addr_8h"/>
+        <childnode refid="721" relation="include">
+        </childnode>
+      </node>
+      <node id="725">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="724">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="725" relation="include">
+        </childnode>
+      </node>
+      <node id="726">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="727" relation="include">
+        </childnode>
+        <childnode refid="721" relation="include">
+        </childnode>
+      </node>
+      <node id="727">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="723">
+        <label>arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="ipv6_2inet_8h_1ed84a49b499a0d09a1237113b85ad0ab" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32_t</type>
+        <definition>u32_t htonl</definition>
+        <argsstring>(u32_t n)</argsstring>
+        <name>htonl</name>
+        <param>
+          <type>u32_t</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h" line="56"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2inet_8h_178bef775303fb875199620dac59960c5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u16_t</type>
+        <definition>u16_t htons</definition>
+        <argsstring>(u16_t n)</argsstring>
+        <name>htons</name>
+        <param>
+          <type>u16_t</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h" line="54"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2inet_8h_125865a5069a73d192b95687e4a894789" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u16_t</type>
+        <definition>u16_t inet_chksum</definition>
+        <argsstring>(void *data, u16_t len)</argsstring>
+        <name>inet_chksum</name>
+        <param>
+          <type>void *</type>
+          <declname>data</declname>
+        </param>
+        <param>
+          <type>u16_t</type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h" line="44"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2inet_8h_1b35967a50418358e194e8f80fdc3c865" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u16_t</type>
+        <definition>u16_t inet_chksum_pbuf</definition>
+        <argsstring>(struct pbuf *p)</argsstring>
+        <name>inet_chksum_pbuf</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h" line="45"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2inet_8h_1f3d36da67e72e759cc465423d98638d5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u16_t</type>
+        <definition>u16_t inet_chksum_pseudo</definition>
+        <argsstring>(struct pbuf *p, struct ip_addr *src, struct ip_addr *dest, u8_t proto, u32_t proto_len)</argsstring>
+        <name>inet_chksum_pseudo</name>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>src</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>dest</declname>
+        </param>
+        <param>
+          <type>u8_t</type>
+          <declname>proto</declname>
+        </param>
+        <param>
+          <type>u32_t</type>
+          <declname>proto_len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h" line="48"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2inet_8h_1b3ef2c882ab42295feaa7cd7d5ca8b34" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u32_t</type>
+        <definition>u32_t ntohl</definition>
+        <argsstring>(u32_t n)</argsstring>
+        <name>ntohl</name>
+        <param>
+          <type>u32_t</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h" line="57"/>
+      </memberdef>
+      <memberdef kind="function" id="ipv6_2inet_8h_14e817a3825f6d17c4e3a80614f65ac07" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>u16_t</type>
+        <definition>u16_t ntohs</definition>
+        <argsstring>(u16_t n)</argsstring>
+        <name>ntohs</name>
+        <param>
+          <type>u16_t</type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h" line="55"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: ipv6_2inet_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_INET_H__</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_INET_H__</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arch_8h" kindref="compound">net/arch.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="pbuf_8h" kindref="compound">net/pbuf.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ipv6_2ip__addr_8h" kindref="compound">net/ipv6/ip_addr.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal">u16_t<sp/><ref refid="ipv4_2inet_8h_116cd14e6fc469418d08be5ea916962a0" kindref="member">inet_chksum</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*data,<sp/>u16_t<sp/>len);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal">u16_t<sp/><ref refid="ipv4_2inet_8h_1b331ea88799c92300f66dbc77a0a660a" kindref="member">inet_chksum_pbuf</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal">u16_t<sp/><ref refid="ipv4_2inet_8h_169c3b48772e9e182d8a448ea8f0ae294" kindref="member">inet_chksum_pseudo</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*src,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*dest,</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>u8_t<sp/>proto,<sp/>u32_t<sp/>proto_len);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_MACHINE_ENDIAN_H_</highlight></codeline>
+<codeline lineno="52"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#ifndef<sp/>_NETINET_IN_H</highlight></codeline>
+<codeline lineno="53"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#ifndef<sp/>_LINUX_BYTEORDER_GENERIC_H</highlight></codeline>
+<codeline lineno="54"><highlight class="preprocessor"></highlight><highlight class="normal">u16_t<sp/><ref refid="ipv4_2inet_8h_1b7fffd06ef1d1a7d34f99eedbb9f44dd" kindref="member">htons</ref>(u16_t<sp/>n);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal">u16_t<sp/><ref refid="ipv4_2inet_8h_1118e9d76568ab81ad97f138d4ea1ddd2" kindref="member">ntohs</ref>(u16_t<sp/>n);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal">u32_t<sp/><ref refid="ipv4_2inet_8h_1f8185bfc3e242e1460a6d7de5320a875" kindref="member">htonl</ref>(u32_t<sp/>n);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal">u32_t<sp/><ref refid="ipv4_2inet_8h_16a20f63e739c4f61a0f7f74cf1963c3b" kindref="member">ntohl</ref>(u32_t<sp/>n);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>_LINUX_BYTEORDER_GENERIC_H<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>_NETINET_IN_H<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>_MACHINE_ENDIAN_H_<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_INET_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/ipv6/inet.h"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,565 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="netif_8h" kind="file">
+    <compoundname>netif.h</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="err_8h" local="yes">net/err.h</includes>
+    <includes refid="ipv4_2ip__addr_8h" local="yes">net/ipv4/ip_addr.h</includes>
+    <includes refid="ipv4_2inet_8h" local="yes">net/ipv4/inet.h</includes>
+    <includes refid="pbuf_8h" local="yes">net/pbuf.h</includes>
+    <includedby refid="ipv4_2icmp_8h" local="yes">src/sys/include/net/ipv4/icmp.h</includedby>
+    <includedby refid="ipv4_2ip_8h" local="yes">src/sys/include/net/ipv4/ip.h</includedby>
+    <includedby refid="arp_8h" local="yes">src/sys/include/netif/arp.h</includedby>
+    <includedby refid="ethernetif_8h" local="yes">src/sys/include/netif/ethernetif.h</includedby>
+    <includedby refid="loopif_8h" local="yes">src/sys/include/netif/loopif.h</includedby>
+    <incdepgraph>
+      <node id="886">
+        <label>src/sys/include/net/netif.h</label>
+        <link refid="netif.h"/>
+        <childnode refid="887" relation="include">
+        </childnode>
+        <childnode refid="889" relation="include">
+        </childnode>
+        <childnode refid="894" relation="include">
+        </childnode>
+        <childnode refid="897" relation="include">
+        </childnode>
+        <childnode refid="898" relation="include">
+        </childnode>
+      </node>
+      <node id="896">
+        <label>arch/cpu.h</label>
+        <link refid="cpu_8h"/>
+      </node>
+      <node id="890">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="891" relation="include">
+        </childnode>
+      </node>
+      <node id="891">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="895">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="896" relation="include">
+        </childnode>
+        <childnode refid="893" relation="include">
+        </childnode>
+      </node>
+      <node id="888">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="894">
+        <label>net/ipv4/ip_addr.h</label>
+        <link refid="ipv4_2ip__addr_8h"/>
+        <childnode refid="895" relation="include">
+        </childnode>
+      </node>
+      <node id="889">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="890" relation="include">
+        </childnode>
+        <childnode refid="892" relation="include">
+        </childnode>
+        <childnode refid="893" relation="include">
+        </childnode>
+      </node>
+      <node id="887">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="888" relation="include">
+        </childnode>
+      </node>
+      <node id="898">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="892" relation="include">
+        </childnode>
+        <childnode refid="895" relation="include">
+        </childnode>
+      </node>
+      <node id="892">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="897">
+        <label>net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="895" relation="include">
+        </childnode>
+        <childnode refid="887" relation="include">
+        </childnode>
+        <childnode refid="898" relation="include">
+        </childnode>
+        <childnode refid="894" relation="include">
+        </childnode>
+      </node>
+      <node id="893">
+        <label>net/arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="912">
+        <label>src/sys/net/net/udpecho.c</label>
+        <link refid="udpecho_8c"/>
+      </node>
+      <node id="915">
+        <label>src/sys/include/net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="902" relation="include">
+        </childnode>
+        <childnode refid="903" relation="include">
+        </childnode>
+        <childnode refid="901" relation="include">
+        </childnode>
+        <childnode refid="916" relation="include">
+        </childnode>
+        <childnode refid="906" relation="include">
+        </childnode>
+        <childnode refid="917" relation="include">
+        </childnode>
+        <childnode refid="913" relation="include">
+        </childnode>
+        <childnode refid="914" relation="include">
+        </childnode>
+      </node>
+      <node id="914">
+        <label>src/sys/net/netif/tcpdump.c</label>
+        <link refid="tcpdump_8c"/>
+      </node>
+      <node id="899">
+        <label>src/sys/include/net/netif.h</label>
+        <link refid="netif.h"/>
+        <childnode refid="900" relation="include">
+        </childnode>
+        <childnode refid="915" relation="include">
+        </childnode>
+        <childnode refid="918" relation="include">
+        </childnode>
+        <childnode refid="920" relation="include">
+        </childnode>
+        <childnode refid="921" relation="include">
+        </childnode>
+      </node>
+      <node id="913">
+        <label>src/sys/net/netif/loopif.c</label>
+        <link refid="loopif_8c"/>
+      </node>
+      <node id="916">
+        <label>src/sys/include/net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="902" relation="include">
+        </childnode>
+        <childnode refid="903" relation="include">
+        </childnode>
+        <childnode refid="906" relation="include">
+        </childnode>
+        <childnode refid="914" relation="include">
+        </childnode>
+      </node>
+      <node id="918">
+        <label>src/sys/include/netif/arp.h</label>
+        <link refid="arp_8h"/>
+        <childnode refid="917" relation="include">
+        </childnode>
+        <childnode refid="919" relation="include">
+        </childnode>
+      </node>
+      <node id="901">
+        <label>src/sys/include/net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="902" relation="include">
+        </childnode>
+        <childnode refid="903" relation="include">
+        </childnode>
+        <childnode refid="906" relation="include">
+        </childnode>
+        <childnode refid="913" relation="include">
+        </childnode>
+        <childnode refid="914" relation="include">
+        </childnode>
+      </node>
+      <node id="919">
+        <label>src/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="917">
+        <label>src/sys/net/netif/arp.c</label>
+        <link refid="arp_8c"/>
+      </node>
+      <node id="900">
+        <label>src/sys/include/net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="901" relation="include">
+        </childnode>
+      </node>
+      <node id="910">
+        <label>src/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
+      </node>
+      <node id="906">
+        <label>src/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="904">
+        <label>src/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="905" relation="include">
+        </childnode>
+        <childnode refid="906" relation="include">
+        </childnode>
+        <childnode refid="907" relation="include">
+        </childnode>
+      </node>
+      <node id="903">
+        <label>src/sys/include/net/api_msg.h</label>
+        <link refid="api__msg_8h"/>
+        <childnode refid="904" relation="include">
+        </childnode>
+        <childnode refid="908" relation="include">
+        </childnode>
+        <childnode refid="905" relation="include">
+        </childnode>
+      </node>
+      <node id="920">
+        <label>src/sys/include/netif/ethernetif.h</label>
+        <link refid="ethernetif_8h"/>
+        <childnode refid="907" relation="include">
+        </childnode>
+      </node>
+      <node id="911">
+        <label>src/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="908">
+        <label>src/sys/net/api/api_lib.c</label>
+        <link refid="api__lib_8c"/>
+      </node>
+      <node id="907">
+        <label>src/sys/net/net/init.c</label>
+        <link refid="init_8c"/>
+      </node>
+      <node id="902">
+        <label>src/sys/include/net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="903" relation="include">
+        </childnode>
+        <childnode refid="908" relation="include">
+        </childnode>
+        <childnode refid="909" relation="include">
+        </childnode>
+        <childnode refid="910" relation="include">
+        </childnode>
+        <childnode refid="911" relation="include">
+        </childnode>
+        <childnode refid="912" relation="include">
+        </childnode>
+      </node>
+      <node id="921">
+        <label>src/sys/include/netif/loopif.h</label>
+        <link refid="loopif_8h"/>
+        <childnode refid="907" relation="include">
+        </childnode>
+        <childnode refid="913" relation="include">
+        </childnode>
+      </node>
+      <node id="909">
+        <label>src/sys/net/api/sockets.c</label>
+        <link refid="sockets_8c"/>
+      </node>
+      <node id="905">
+        <label>src/sys/net/api/api_msg.c</label>
+        <link refid="api__msg_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structnetif" prot="public">netif</innerclass>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="netif_8h_12270b418f2081615edf85d7186880229" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structnetif" kindref="compound">netif</ref> *</type>
+        <definition>struct netif* netif_add</definition>
+        <argsstring>(struct ip_addr *ipaddr, struct ip_addr *netmask, struct ip_addr *gw, void(*init)(struct netif *netif), err_t(*input)(struct pbuf *p, struct netif *netif))</argsstring>
+        <name>netif_add</name>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>ipaddr</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>netmask</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>gw</declname>
+        </param>
+        <param>
+          <type>void(*)(struct <ref refid="structnetif" kindref="compound">netif</ref> *<ref refid="structnetif" kindref="compound">netif</ref>)</type>
+          <declname>init</declname>
+        </param>
+        <param>
+          <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref>(*)(struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *p, struct <ref refid="structnetif" kindref="compound">netif</ref> *<ref refid="structnetif" kindref="compound">netif</ref>)</type>
+          <declname>input</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="85"/>
+        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="netif_8h_14b744acecfae7ee43e1df3ed7c6f8832" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structnetif" kindref="compound">netif</ref> *</type>
+        <definition>struct netif* netif_find</definition>
+        <argsstring>(char *name)</argsstring>
+        <name>netif_find</name>
+        <param>
+          <type>char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="91"/>
+      </memberdef>
+      <memberdef kind="function" id="netif_8h_1ee2d169c9bbeb9dcfdb8bfc4e91bf2fc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void netif_init</definition>
+        <argsstring>()</argsstring>
+        <name>netif_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="80"/>
+        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="netif_8h_1c90f290edd005238d62aa94c4ac9dea3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void netif_set_default</definition>
+        <argsstring>(struct netif *netif)</argsstring>
+        <name>netif_set_default</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="93"/>
+        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="netif_8h_15b19d4bb83409f81c5ab3cb96b6b65a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void netif_set_gw</definition>
+        <argsstring>(struct netif *netif, struct ip_addr *gw)</argsstring>
+        <name>netif_set_gw</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>gw</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="97"/>
+      </memberdef>
+      <memberdef kind="function" id="netif_8h_1e17baa14001e3f2b2d32d291ca00cf50" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void netif_set_ipaddr</definition>
+        <argsstring>(struct netif *netif, struct ip_addr *ipaddr)</argsstring>
+        <name>netif_set_ipaddr</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>ipaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="95"/>
+      </memberdef>
+      <memberdef kind="function" id="netif_8h_162ef93007956d6816a96d5c90a1bed5b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void netif_set_netmask</definition>
+        <argsstring>(struct netif *netif, struct ip_addr *netmast)</argsstring>
+        <name>netif_set_netmask</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>netmast</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="96"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="netif_8h_13d0925cbce550ed461907aee816713ba" prot="public" static="no" mutable="no">
+        <type><ref refid="structnetif" kindref="compound">netif</ref> *</type>
+        <definition>struct netif* netif_default</definition>
+        <argsstring></argsstring>
+        <name>netif_default</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="76"/>
+      </memberdef>
+      <memberdef kind="variable" id="netif_8h_11c8141eaa98f6dc6dfddbb23a706656c" prot="public" static="no" mutable="no">
+        <type><ref refid="structnetif" kindref="compound">netif</ref> *</type>
+        <definition>struct netif* netif_list</definition>
+        <argsstring></argsstring>
+        <name>netif_list</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h" line="75"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: netif_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_NETIF_H__</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_NETIF_H__</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="err_8h" kindref="compound">net/err.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ipv4_2ip__addr_8h" kindref="compound">net/ipv4/ip_addr.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ipv4_2inet_8h" kindref="compound">net/ipv4/inet.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="pbuf_8h" kindref="compound">net/pbuf.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="structnetif" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>{</highlight></codeline>
+<codeline lineno="49" refid="structnetif_1e77736b64df442242795220d76be6b86" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif_1e77736b64df442242795220d76be6b86" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structnetif_179f6bfc95928144230b3cf9a8f15029b" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structnetif_179f6bfc95928144230b3cf9a8f15029b" kindref="member">num</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/><ref refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" kindref="member">ip_addr</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" kindref="member">ip_addr</ref><sp/><ref refid="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" kindref="member">netmask</ref>;<sp/><sp/></highlight><highlight class="comment">/*<sp/>netmask<sp/>in<sp/>network<sp/>byte<sp/>order<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" kindref="member">ip_addr</ref><sp/><ref refid="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" kindref="member">gw</ref>;</highlight></codeline>
+<codeline lineno="54" refid="structnetif_118e73df74457dd1cb02d61d24e3ba924" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structnetif_118e73df74457dd1cb02d61d24e3ba924" kindref="member">hwaddr</ref>[6];</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>This<sp/>function<sp/>is<sp/>called<sp/>by<sp/>the<sp/>network<sp/>device<sp/>driver</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>when<sp/>it<sp/>wants<sp/>to<sp/>pass<sp/>a<sp/>packet<sp/>to<sp/>the<sp/>TCP/IP<sp/>stack.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/>(*<sp/><ref refid="structnetif_16a3101eb624d17937618618a57e2e570" kindref="member">input</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*inp);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>The<sp/>following<sp/>two<sp/>fields<sp/>should<sp/>be<sp/>filled<sp/>in<sp/>by<sp/>the</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>initialization<sp/>function<sp/>for<sp/>the<sp/>device<sp/>driver.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="structnetif_132fca6ffd28bb9af3f891a378827a67e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structnetif_132fca6ffd28bb9af3f891a378827a67e" kindref="member">name</ref>[2];</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>This<sp/>function<sp/>is<sp/>called<sp/>by<sp/>the<sp/>IP<sp/>module<sp/>when<sp/>it<sp/>wants</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>to<sp/>send<sp/>a<sp/>packet<sp/>on<sp/>the<sp/>interface.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/>(*<sp/><ref refid="structnetif_1b180ab98b90830ed15503822405e5a23" kindref="member">output</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" kindref="member">ip_addr</ref><sp/>*ipaddr);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/>(*<sp/><ref refid="structnetif_1bf9e416b29a3de59c78b141b8eed37cc" kindref="member">linkoutput</ref>)(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>,<sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>This<sp/>field<sp/>can<sp/>be<sp/>set<sp/>bu<sp/>the<sp/>device<sp/>driver<sp/>and<sp/>could<sp/>point</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>to<sp/>state<sp/>information<sp/>for<sp/>the<sp/>device.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" kindref="member">state</ref>;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>list<sp/>of<sp/>network<sp/>interfaces.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="netif_8h_11c8141eaa98f6dc6dfddbb23a706656c" kindref="member">netif_list</ref>;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="netif_8h_13d0925cbce550ed461907aee816713ba" kindref="member">netif_default</ref>;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>netif_init()<sp/>must<sp/>be<sp/>called<sp/>first.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="netif_8h_1ee2d169c9bbeb9dcfdb8bfc4e91bf2fc" kindref="member">netif_init</ref>();</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="netif_8h_12270b418f2081615edf85d7186880229" kindref="member">netif_add</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*ipaddr,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*<ref refid="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" kindref="member">netmask</ref>,</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*<ref refid="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" kindref="member">gw</ref>,</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*<sp/>init)(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>),</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/>(*<sp/><ref refid="structnetif_16a3101eb624d17937618618a57e2e570" kindref="member">input</ref>)(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif));</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Returns<sp/>a<sp/>network<sp/>interface<sp/>given<sp/>its<sp/>name.<sp/>The<sp/>name<sp/>is<sp/>of<sp/>the<sp/>form</highlight></codeline>
+<codeline lineno="88"><highlight class="comment"><sp/><sp/><sp/>&quot;et0&quot;,<sp/>where<sp/>the<sp/>first<sp/>two<sp/>letters<sp/>are<sp/>the<sp/>&quot;name&quot;<sp/>field<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/><sp/><sp/>netif<sp/>structure,<sp/>and<sp/>the<sp/>digit<sp/>is<sp/>in<sp/>the<sp/>num<sp/>field<sp/>in<sp/>the<sp/>same</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/>structure.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">netif<sp/>*<ref refid="netif_8h_14b744acecfae7ee43e1df3ed7c6f8832" kindref="member">netif_find</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="netif_8h_1c90f290edd005238d62aa94c4ac9dea3" kindref="member">netif_set_default</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="netif_8h_1e17baa14001e3f2b2d32d291ca00cf50" kindref="member">netif_set_ipaddr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*ipaddr);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="netif_8h_162ef93007956d6816a96d5c90a1bed5b" kindref="member">netif_set_netmask</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*netmast);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="netif_8h_15b19d4bb83409f81c5ab3cb96b6b65a6" kindref="member">netif_set_gw</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*<ref refid="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" kindref="member">gw</ref>);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_NETIF_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/netif.h"/>
+  </compounddef>
+</doxygen>

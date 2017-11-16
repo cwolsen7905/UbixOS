@@ -1,0 +1,517 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="kprintf_8h" kind="file">
+    <compoundname>kprintf.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="devfs_8c" local="no">src/sys/devfs/devfs.c</includedby>
+    <includedby refid="main_8c" local="no">src/sys/init/main.c</includedby>
+    <includedby refid="static_8c" local="no">src/sys/init/static.c</includedby>
+    <includedby refid="8259_8c" local="no">src/sys/isa/8259.c</includedby>
+    <includedby refid="atkbd_8c" local="no">src/sys/isa/atkbd.c</includedby>
+    <includedby refid="fdc_8c" local="no">src/sys/isa/fdc.c</includedby>
+    <includedby refid="mouse_8c" local="no">src/sys/isa/mouse.c</includedby>
+    <includedby refid="ne2k_8c" local="no">src/sys/isa/ne2k.c</includedby>
+    <includedby refid="pit_8c" local="no">src/sys/isa/pit.c</includedby>
+    <includedby refid="endtask_8c" local="no">src/sys/kernel/endtask.c</includedby>
+    <includedby refid="exec_8c" local="no">src/sys/kernel/exec.c</includedby>
+    <includedby refid="gen__calls_8c" local="no">src/sys/kernel/gen_calls.c</includedby>
+    <includedby refid="kern__descrip_8c" local="no">src/sys/kernel/kern_descrip.c</includedby>
+    <includedby refid="kern__sig_8c" local="no">src/sys/kernel/kern_sig.c</includedby>
+    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="kpanic_8c" local="no">src/sys/kernel/kpanic.c</includedby>
+    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
+    <includedby refid="pipe_8c" local="no">src/sys/kernel/pipe.c</includedby>
+    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
+    <includedby refid="smp_8c" local="no">src/sys/kernel/smp.c</includedby>
+    <includedby refid="syscall_8c" local="no">src/sys/kernel/syscall.c</includedby>
+    <includedby refid="syscall__new_8c" local="no">src/sys/kernel/syscall_new.c</includedby>
+    <includedby refid="systemtask_8c" local="no">src/sys/kernel/systemtask.c</includedby>
+    <includedby refid="time_8c" local="no">src/sys/kernel/time.c</includedby>
+    <includedby refid="tty_8c" local="no">src/sys/kernel/tty.c</includedby>
+    <includedby refid="ubthread_8c" local="no">src/sys/kernel/ubthread.c</includedby>
+    <includedby refid="vitals_8c" local="no">src/sys/kernel/vitals.c</includedby>
+    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
+    <includedby refid="assert_8c" local="no">src/sys/lib/assert.c</includedby>
+    <includedby refid="kmalloc_8c" local="no">src/sys/lib/kmalloc.c</includedby>
+    <includedby refid="kprintf_8c" local="no">src/sys/lib/kprintf.c</includedby>
+    <includedby refid="net_8c" local="yes">src/sys/lib/net.c</includedby>
+    <includedby refid="hd_8c" local="no">src/sys/pci/hd.c</includedby>
+    <includedby refid="lnc_8c" local="no">src/sys/pci/lnc.c</includedby>
+    <includedby refid="pci_8c" local="no">src/sys/pci/pci.c</includedby>
+    <includedby refid="device_8c" local="no">src/sys/sys/device.c</includedby>
+    <includedby refid="idt_8c" local="no">src/sys/sys/idt.c</includedby>
+    <includedby refid="dirCache_8c" local="no">src/sys/ubixfs/dirCache.c</includedby>
+    <includedby refid="directory_8c" local="no">src/sys/ubixfs/directory.c</includedby>
+    <includedby refid="thread_8c" local="no">src/sys/ubixfs/thread.c</includedby>
+    <includedby refid="ubixfs_8c" local="no">src/sys/ubixfs/ubixfs.c</includedby>
+    <includedby refid="ffs_8c" local="no">src/sys/ufs/ffs.c</includedby>
+    <includedby refid="ufs_8c" local="no">src/sys/ufs/ufs.c</includedby>
+    <includedby refid="file_8c" local="no">src/sys/vfs/file.c</includedby>
+    <includedby refid="mount_8c" local="no">src/sys/vfs/mount.c</includedby>
+    <includedby refid="vfs_8c" local="no">src/sys/vfs/vfs.c</includedby>
+    <includedby refid="pagefault_8c" local="no">src/sys/vmm/pagefault.c</includedby>
+    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
+    <includedby refid="vmm__memory_8c" local="no">src/sys/vmm/vmm_memory.c</includedby>
+    <incdepgraph>
+      <node id="3280">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3281" relation="include">
+        </childnode>
+      </node>
+      <node id="3281">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3279">
+        <label>src/sys/include/lib/kprintf.h</label>
+        <link refid="kprintf.h"/>
+        <childnode refid="3280" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3324">
+        <label>src/sys/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="3316">
+        <label>src/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="3313">
+        <label>src/sys/lib/kprintf.c</label>
+        <link refid="kprintf_8c"/>
+      </node>
+      <node id="3315">
+        <label>src/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="3314">
+        <label>src/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+      <node id="3317">
+        <label>src/sys/pci/pci.c</label>
+        <link refid="pci_8c"/>
+      </node>
+      <node id="3309">
+        <label>src/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="3307">
+        <label>src/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="3310">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="3297">
+        <label>src/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="3300">
+        <label>src/sys/kernel/pipe.c</label>
+        <link refid="pipe_8c"/>
+      </node>
+      <node id="3312">
+        <label>src/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="3330">
+        <label>src/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="3321">
+        <label>src/sys/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="3325">
+        <label>src/sys/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="3296">
+        <label>src/sys/kernel/kern_sig.c</label>
+        <link refid="kern__sig_8c"/>
+      </node>
+      <node id="3308">
+        <label>src/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="3305">
+        <label>src/sys/kernel/systemtask.c</label>
+        <link refid="systemtask_8c"/>
+      </node>
+      <node id="3299">
+        <label>src/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="3285">
+        <label>src/sys/init/static.c</label>
+        <link refid="static_8c"/>
+      </node>
+      <node id="3301">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="3291">
+        <label>src/sys/isa/pit.c</label>
+        <link refid="pit_8c"/>
+      </node>
+      <node id="3320">
+        <label>src/sys/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="3323">
+        <label>src/sys/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="3282">
+        <label>src/sys/include/lib/kprintf.h</label>
+        <link refid="kprintf.h"/>
+        <childnode refid="3283" relation="include">
+        </childnode>
+        <childnode refid="3284" relation="include">
+        </childnode>
+        <childnode refid="3285" relation="include">
+        </childnode>
+        <childnode refid="3286" relation="include">
+        </childnode>
+        <childnode refid="3287" relation="include">
+        </childnode>
+        <childnode refid="3288" relation="include">
+        </childnode>
+        <childnode refid="3289" relation="include">
+        </childnode>
+        <childnode refid="3290" relation="include">
+        </childnode>
+        <childnode refid="3291" relation="include">
+        </childnode>
+        <childnode refid="3292" relation="include">
+        </childnode>
+        <childnode refid="3293" relation="include">
+        </childnode>
+        <childnode refid="3294" relation="include">
+        </childnode>
+        <childnode refid="3295" relation="include">
+        </childnode>
+        <childnode refid="3296" relation="include">
+        </childnode>
+        <childnode refid="3297" relation="include">
+        </childnode>
+        <childnode refid="3298" relation="include">
+        </childnode>
+        <childnode refid="3299" relation="include">
+        </childnode>
+        <childnode refid="3300" relation="include">
+        </childnode>
+        <childnode refid="3301" relation="include">
+        </childnode>
+        <childnode refid="3302" relation="include">
+        </childnode>
+        <childnode refid="3303" relation="include">
+        </childnode>
+        <childnode refid="3304" relation="include">
+        </childnode>
+        <childnode refid="3305" relation="include">
+        </childnode>
+        <childnode refid="3306" relation="include">
+        </childnode>
+        <childnode refid="3307" relation="include">
+        </childnode>
+        <childnode refid="3308" relation="include">
+        </childnode>
+        <childnode refid="3309" relation="include">
+        </childnode>
+        <childnode refid="3310" relation="include">
+        </childnode>
+        <childnode refid="3311" relation="include">
+        </childnode>
+        <childnode refid="3312" relation="include">
+        </childnode>
+        <childnode refid="3313" relation="include">
+        </childnode>
+        <childnode refid="3314" relation="include">
+        </childnode>
+        <childnode refid="3315" relation="include">
+        </childnode>
+        <childnode refid="3316" relation="include">
+        </childnode>
+        <childnode refid="3317" relation="include">
+        </childnode>
+        <childnode refid="3318" relation="include">
+        </childnode>
+        <childnode refid="3319" relation="include">
+        </childnode>
+        <childnode refid="3320" relation="include">
+        </childnode>
+        <childnode refid="3321" relation="include">
+        </childnode>
+        <childnode refid="3322" relation="include">
+        </childnode>
+        <childnode refid="3323" relation="include">
+        </childnode>
+        <childnode refid="3324" relation="include">
+        </childnode>
+        <childnode refid="3325" relation="include">
+        </childnode>
+        <childnode refid="3326" relation="include">
+        </childnode>
+        <childnode refid="3327" relation="include">
+        </childnode>
+        <childnode refid="3328" relation="include">
+        </childnode>
+        <childnode refid="3329" relation="include">
+        </childnode>
+        <childnode refid="3330" relation="include">
+        </childnode>
+        <childnode refid="3331" relation="include">
+        </childnode>
+      </node>
+      <node id="3311">
+        <label>src/sys/lib/assert.c</label>
+        <link refid="assert_8c"/>
+      </node>
+      <node id="3284">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="3318">
+        <label>src/sys/sys/device.c</label>
+        <link refid="device_8c"/>
+      </node>
+      <node id="3303">
+        <label>src/sys/kernel/syscall.c</label>
+        <link refid="syscall_8c"/>
+      </node>
+      <node id="3290">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="3287">
+        <label>src/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="3329">
+        <label>src/sys/vmm/pagefault.c</label>
+        <link refid="pagefault_8c"/>
+      </node>
+      <node id="3322">
+        <label>src/sys/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="3327">
+        <label>src/sys/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="3283">
+        <label>src/sys/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="3298">
+        <label>src/sys/kernel/kpanic.c</label>
+        <link refid="kpanic_8c"/>
+      </node>
+      <node id="3286">
+        <label>src/sys/isa/8259.c</label>
+        <link refid="8259_8c"/>
+      </node>
+      <node id="3302">
+        <label>src/sys/kernel/smp.c</label>
+        <link refid="smp_8c"/>
+      </node>
+      <node id="3306">
+        <label>src/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="3331">
+        <label>src/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="3295">
+        <label>src/sys/kernel/kern_descrip.c</label>
+        <link refid="kern__descrip_8c"/>
+      </node>
+      <node id="3292">
+        <label>src/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="3326">
+        <label>src/sys/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="3319">
+        <label>src/sys/sys/idt.c</label>
+        <link refid="idt_8c"/>
+      </node>
+      <node id="3294">
+        <label>src/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="3304">
+        <label>src/sys/kernel/syscall_new.c</label>
+        <link refid="syscall__new_8c"/>
+      </node>
+      <node id="3293">
+        <label>src/sys/kernel/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+      <node id="3288">
+        <label>src/sys/isa/fdc.c</label>
+        <link refid="fdc_8c"/>
+      </node>
+      <node id="3289">
+        <label>src/sys/isa/mouse.c</label>
+        <link refid="mouse_8c"/>
+      </node>
+      <node id="3328">
+        <label>src/sys/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kprintf_8h_1b2761bdf0cca73ad0fb5880895210cd8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kprintf</definition>
+        <argsstring>(const char *fmt,...)</argsstring>
+        <name>kprintf</name>
+        <param>
+          <type>const char *</type>
+          <declname>fmt</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprintf.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kprintf.c" bodystart="38" bodyend="49"/>
+        <references refid="video_8h_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</references>
+        <references refid="kprint_8h_1813254cfe6d658ea82f1dcdf2d927fb8" compoundref="kprintf_8c" startline="35">printOff</references>
+        <references refid="stdarg_8h_19eb66fe3016779da70a50f348919a850" compoundref="stdarg_8h" startline="43">vaEnd</references>
+        <references refid="stdarg_8h_18a3212be1635dea2009b962c2abe5237" compoundref="stdarg_8h" startline="35">vaStart</references>
+        <references refid="stdarg_8h_1621577c2df0ad5faa281223c56eeb7a5" compoundref="vsprintf_8c" startline="139" endline="280">vsprintf</references>
+      </memberdef>
+      <memberdef kind="function" id="kprintf_8h_13b4a66bf1f6583e65660f281b6014aa1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ogPrintf</definition>
+        <argsstring>(char *)</argsstring>
+        <name>ogPrintf</name>
+        <param>
+          <type>char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprintf.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/ogprintf.cc" bodystart="42" bodyend="84"/>
+        <references refid="structvitalsStruct_1260b45f68a92442f30b6e9a4005ea938" compoundref="vitals_8h" startline="49">vitalsStruct::font</references>
+        <references refid="structvitalsStruct_1e329bdf1a2ce69044a962e612a9eb1e6" compoundref="vitals_8h" startline="48">vitalsStruct::screen</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="kprintf_8h_120b3409b318c04fbc25a13dc10d1c34f" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int ogprintOff</definition>
+        <argsstring></argsstring>
+        <name>ogprintOff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprintf.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kprintf.c" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="kprintf_8h_1813254cfe6d658ea82f1dcdf2d927fb8" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int printOff</definition>
+        <argsstring></argsstring>
+        <name>printOff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprintf.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kprintf.c" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: kprintf_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KPRINTF_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_KPRINTF_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*fmt,<sp/>...);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kprintf_8h_13b4a66bf1f6583e65660f281b6014aa1" kindref="member">ogPrintf</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kprint_8h_1813254cfe6d658ea82f1dcdf2d927fb8" kindref="member">printOff</ref>;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kprintf_8h_120b3409b318c04fbc25a13dc10d1c34f" kindref="member">ogprintOff</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="42"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>$Log: kprintf_8h.xml,v $
+<codeline lineno="44"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
+<codeline lineno="44"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="44"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"></highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"></highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:40<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"></highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:00:27<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"></highlight></codeline>
+<codeline lineno="57"><highlight class="comment"></highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprintf.h"/>
+  </compounddef>
+</doxygen>

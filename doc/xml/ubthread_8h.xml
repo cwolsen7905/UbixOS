@@ -1,0 +1,680 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="ubthread_8h" kind="file">
+    <compoundname>ubthread.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="time_8h" local="no">ubixos/time.h</includes>
+    <includedby refid="vitals_8h" local="no">src/sys/include/ubixos/vitals.h</includedby>
+    <includedby refid="ubthread_8c" local="no">src/sys/kernel/ubthread.c</includedby>
+    <incdepgraph>
+      <node id="4694">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+      </node>
+      <node id="4688">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+        <childnode refid="4689" relation="include">
+        </childnode>
+        <childnode refid="4690" relation="include">
+        </childnode>
+        <childnode refid="4693" relation="include">
+        </childnode>
+        <childnode refid="4694" relation="include">
+        </childnode>
+      </node>
+      <node id="4686">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="4687" relation="include">
+        </childnode>
+      </node>
+      <node id="4687">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="4695">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+        <childnode refid="4696" relation="include">
+        </childnode>
+      </node>
+      <node id="4690">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+        <childnode refid="4691" relation="include">
+        </childnode>
+        <childnode refid="4692" relation="include">
+        </childnode>
+      </node>
+      <node id="4693">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+      </node>
+      <node id="4692">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+      </node>
+      <node id="4685">
+        <label>src/sys/include/ubixos/ubthread.h</label>
+        <link refid="ubthread.h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+        <childnode refid="4688" relation="include">
+        </childnode>
+        <childnode refid="4695" relation="include">
+        </childnode>
+      </node>
+      <node id="4691">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+      </node>
+      <node id="4689">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="4686" relation="include">
+        </childnode>
+      </node>
+      <node id="4696">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4709">
+        <label>src/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="4698">
+        <label>src/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="4699" relation="include">
+        </childnode>
+        <childnode refid="4701" relation="include">
+        </childnode>
+        <childnode refid="4702" relation="include">
+        </childnode>
+        <childnode refid="4703" relation="include">
+        </childnode>
+        <childnode refid="4704" relation="include">
+        </childnode>
+        <childnode refid="4705" relation="include">
+        </childnode>
+        <childnode refid="4706" relation="include">
+        </childnode>
+        <childnode refid="4707" relation="include">
+        </childnode>
+        <childnode refid="4708" relation="include">
+        </childnode>
+        <childnode refid="4709" relation="include">
+        </childnode>
+        <childnode refid="4710" relation="include">
+        </childnode>
+        <childnode refid="4711" relation="include">
+        </childnode>
+        <childnode refid="4712" relation="include">
+        </childnode>
+        <childnode refid="4713" relation="include">
+        </childnode>
+        <childnode refid="4714" relation="include">
+        </childnode>
+      </node>
+      <node id="4708">
+        <label>src/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="4706">
+        <label>src/sys/kernel/systemtask.c</label>
+        <link refid="systemtask_8c"/>
+      </node>
+      <node id="4710">
+        <label>src/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
+      </node>
+      <node id="4704">
+        <label>src/sys/kernel/fork.c</label>
+        <link refid="fork_8c"/>
+      </node>
+      <node id="4700">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="4697">
+        <label>src/sys/include/ubixos/ubthread.h</label>
+        <link refid="ubthread.h"/>
+        <childnode refid="4698" relation="include">
+        </childnode>
+        <childnode refid="4708" relation="include">
+        </childnode>
+      </node>
+      <node id="4705">
+        <label>src/sys/kernel/syscall.c</label>
+        <link refid="syscall_8c"/>
+      </node>
+      <node id="4702">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="4701">
+        <label>src/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="4699">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="4700" relation="include">
+        </childnode>
+      </node>
+      <node id="4712">
+        <label>src/sys/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="4707">
+        <label>src/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="4714">
+        <label>src/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="4703">
+        <label>src/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="4711">
+        <label>src/sys/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="4713">
+        <label>src/sys/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structubthread" prot="public">ubthread</innerclass>
+    <innerclass refid="structubthread__cond" prot="public">ubthread_cond</innerclass>
+    <innerclass refid="structubthread__cond__list" prot="public">ubthread_cond_list</innerclass>
+    <innerclass refid="structubthread__list" prot="public">ubthread_list</innerclass>
+    <innerclass refid="structubthread__mutex" prot="public">ubthread_mutex</innerclass>
+    <innerclass refid="structubthread__mutex__list" prot="public">ubthread_mutex_list</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ubthread_8h_1597718e59a8fc9c4d4ab63f5a34e28b1" prot="public" static="no">
+        <name>ETIMEDOUT</name>
+        <initializer>-1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubthread_8h_100de8f7e0b615f88335573ba3909583d" prot="public" static="no">
+        <name>LOCKED</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="ubthread_8c_130eb7c156c2422801ddb86326dbc3d81" compoundref="ubthread_8c" startline="117" endline="123">ubthread_cond_wait</referencedby>
+        <referencedby refid="ubthread_8c_1a13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="81" endline="90">ubthread_mutex_lock</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubthread_8h_1f0591d953a49374b660c9de8964825fe" prot="public" static="no">
+        <name>UNLOCKED</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="ubthread_8c_1cbb7170a68758468ab5b02512a320112" compoundref="ubthread_8c" startline="48" endline="54">ubthread_cond_init</referencedby>
+        <referencedby refid="ubthread_8c_164fb8f5f2da2564a6cae8c9f2c3bde10" compoundref="ubthread_8c" startline="125" endline="129">ubthread_cond_signal</referencedby>
+        <referencedby refid="ubthread_8c_1996be9a927447a62f7168a082a046c54" compoundref="ubthread_8c" startline="105" endline="115">ubthread_cond_timedwait</referencedby>
+        <referencedby refid="ubthread_8c_130eb7c156c2422801ddb86326dbc3d81" compoundref="ubthread_8c" startline="117" endline="123">ubthread_cond_wait</referencedby>
+        <referencedby refid="ubthread_8c_1b6bfc2169b55532821582f24b68dc855" compoundref="ubthread_8c" startline="56" endline="62">ubthread_mutex_init</referencedby>
+        <referencedby refid="ubthread_8c_1fea3530bab360f59c09a49f490d079dd" compoundref="ubthread_8c" startline="92" endline="103">ubthread_mutex_unlock</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" prot="public" static="no">
+        <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond</ref> *</type>
+        <definition>typedef struct ubthread_cond* ubthread_cond_t</definition>
+        <argsstring></argsstring>
+        <name>ubthread_cond_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" prot="public" static="no">
+        <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex</ref> *</type>
+        <definition>typedef struct ubthread_mutex* ubthread_mutex_t</definition>
+        <argsstring></argsstring>
+        <name>ubthread_mutex_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ubthread_8h_1d95f6922b782fa82362d6ec1edb5b63e" prot="public" static="no">
+        <type><ref refid="structubthread" kindref="compound">ubthread</ref> *</type>
+        <definition>typedef struct ubthread* ubthread_t</definition>
+        <argsstring></argsstring>
+        <name>ubthread_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="ubthread_8h_1e914fae69538736dc5e494c15ce93a17" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_cond_destroy</definition>
+        <argsstring>(ubthread_cond_t *cond)</argsstring>
+        <name>ubthread_cond_destroy</name>
+        <param>
+          <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref> *</type>
+          <declname>cond</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="64" bodyend="68"/>
+        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_1cbb7170a68758468ab5b02512a320112" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_cond_init</definition>
+        <argsstring>(ubthread_cond_t *cond, const uInt32 attr)</argsstring>
+        <name>ubthread_cond_init</name>
+        <param>
+          <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref> *</type>
+          <declname>cond</declname>
+        </param>
+        <param>
+          <type>const <ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>attr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="48" bodyend="54"/>
+        <references refid="structubthread__cond_19557e920c79c936de8ce6b9f9a65a245" compoundref="ubthread_8h" startline="51">ubthread_cond::id</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" compoundref="ubthread_8h" startline="52">ubthread_cond::locked</references>
+        <references refid="ubthread_8h_1f0591d953a49374b660c9de8964825fe" compoundref="ubthread_8h" startline="40">UNLOCKED</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_164fb8f5f2da2564a6cae8c9f2c3bde10" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_cond_signal</definition>
+        <argsstring>(ubthread_cond_t *cond)</argsstring>
+        <name>ubthread_cond_signal</name>
+        <param>
+          <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref> *</type>
+          <declname>cond</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="125" bodyend="129"/>
+        <references refid="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" compoundref="ubthread_8h" startline="52">ubthread_cond::locked</references>
+        <references refid="ubthread_8h_1f0591d953a49374b660c9de8964825fe" compoundref="ubthread_8h" startline="40">UNLOCKED</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_1996be9a927447a62f7168a082a046c54" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_cond_timedwait</definition>
+        <argsstring>(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime)</argsstring>
+        <name>ubthread_cond_timedwait</name>
+        <param>
+          <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref> *</type>
+          <declname>cond</declname>
+        </param>
+        <param>
+          <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <param>
+          <type>const struct <ref refid="structtimespec" kindref="compound">timespec</ref> *</type>
+          <declname>abstime</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="105" bodyend="115"/>
+        <references refid="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" compoundref="ubthread_8h" startline="52">ubthread_cond::locked</references>
+        <references refid="structubthread__mutex_12c01315899fa4f1eb42e4b1bba4130bd" compoundref="ubthread_8h" startline="57">ubthread_mutex::locked</references>
+        <references refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="42">mutex</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+        <references refid="structvitalsStruct_1d4f37dedcce6dcf9d87e1f01221c5b71" compoundref="vitals_8h" startline="41">vitalsStruct::sysUptime</references>
+        <references refid="ubthread_8h_1f0591d953a49374b660c9de8964825fe" compoundref="ubthread_8h" startline="40">UNLOCKED</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_130eb7c156c2422801ddb86326dbc3d81" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_cond_wait</definition>
+        <argsstring>(ubthread_cond_t *cond, ubthread_mutex_t *mutex)</argsstring>
+        <name>ubthread_cond_wait</name>
+        <param>
+          <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref> *</type>
+          <declname>cond</declname>
+        </param>
+        <param>
+          <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="117" bodyend="123"/>
+        <references refid="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" compoundref="ubthread_8h" startline="52">ubthread_cond::locked</references>
+        <references refid="ubthread_8h_100de8f7e0b615f88335573ba3909583d" compoundref="ubthread_8h" startline="39">LOCKED</references>
+        <references refid="structubthread__mutex_12c01315899fa4f1eb42e4b1bba4130bd" compoundref="ubthread_8h" startline="57">ubthread_mutex::locked</references>
+        <references refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="42">mutex</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <references refid="ubthread_8h_1f0591d953a49374b660c9de8964825fe" compoundref="ubthread_8h" startline="40">UNLOCKED</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_1a0af177ef44888f3c93883294207328e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_create</definition>
+        <argsstring>(kTask_t **thread, const uInt32 *attr, void(*tproc)(void), void *arg)</argsstring>
+        <name>ubthread_create</name>
+        <param>
+          <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> **</type>
+          <declname>thread</declname>
+        </param>
+        <param>
+          <type>const <ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> *</type>
+          <declname>attr</declname>
+        </param>
+        <param>
+          <type>void(*)(void)</type>
+          <declname>tproc</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="76" bodyend="79"/>
+        <references refid="exec_8h_1e9945e606ad208cb00dc9166d06452b4" compoundref="exec_8c" startline="55" endline="125">execThread</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" compoundref="start_8S" startline="51">x2000</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_1278f5d5b1e11b6668b75da6a285442e4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_mutex_destroy</definition>
+        <argsstring>(ubthread_mutex_t *mutex)</argsstring>
+        <name>ubthread_mutex_destroy</name>
+        <param>
+          <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="70" bodyend="74"/>
+        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
+        <references refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="42">mutex</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_1b6bfc2169b55532821582f24b68dc855" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_mutex_init</definition>
+        <argsstring>(ubthread_mutex_t *mutex, const uInt32 attr)</argsstring>
+        <name>ubthread_mutex_init</name>
+        <param>
+          <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <param>
+          <type>const <ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>attr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="56" bodyend="62"/>
+        <references refid="structubthread__mutex_157e2eddcab2e03f27fe5b75c7840b619" compoundref="ubthread_8h" startline="56">ubthread_mutex::id</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="structubthread__mutex_12c01315899fa4f1eb42e4b1bba4130bd" compoundref="ubthread_8h" startline="57">ubthread_mutex::locked</references>
+        <references refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="42">mutex</references>
+        <references refid="ubthread_8h_1f0591d953a49374b660c9de8964825fe" compoundref="ubthread_8h" startline="40">UNLOCKED</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_1a13bf141cd3e9bf0921fbf61ffc637d8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_mutex_lock</definition>
+        <argsstring>(ubthread_mutex_t *mutex)</argsstring>
+        <name>ubthread_mutex_lock</name>
+        <param>
+          <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="81" bodyend="90"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structubthread__mutex_12c01315899fa4f1eb42e4b1bba4130bd" compoundref="ubthread_8h" startline="57">ubthread_mutex::locked</references>
+        <references refid="ubthread_8h_100de8f7e0b615f88335573ba3909583d" compoundref="ubthread_8h" startline="39">LOCKED</references>
+        <references refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="42">mutex</references>
+        <references refid="structubthread__mutex_19c8643e4d9bec2a38ea1d45e82609f2a" compoundref="ubthread_8h" startline="58">ubthread_mutex::pid</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_1fea3530bab360f59c09a49f490d079dd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ubthread_mutex_unlock</definition>
+        <argsstring>(ubthread_mutex_t *mutex)</argsstring>
+        <name>ubthread_mutex_unlock</name>
+        <param>
+          <type><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref> *</type>
+          <declname>mutex</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="92" bodyend="103"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="structubthread__mutex_12c01315899fa4f1eb42e4b1bba4130bd" compoundref="ubthread_8h" startline="57">ubthread_mutex::locked</references>
+        <references refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" compoundref="ubthread_8c" startline="42">mutex</references>
+        <references refid="structubthread__mutex_19c8643e4d9bec2a38ea1d45e82609f2a" compoundref="ubthread_8h" startline="58">ubthread_mutex::pid</references>
+        <references refid="ubthread_8h_1f0591d953a49374b660c9de8964825fe" compoundref="ubthread_8h" startline="40">UNLOCKED</references>
+      </memberdef>
+      <memberdef kind="function" id="ubthread_8h_172a362bc8127b8d63e1107062638664d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* ubthread_self</definition>
+        <argsstring>()</argsstring>
+        <name>ubthread_self</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/ubthread.c" bodystart="44" bodyend="46"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: ubthread_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UBTHREAD_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_UBTHREAD_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="time_8h" kindref="compound">ubixos/time.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="ubthread_8h_1597718e59a8fc9c4d4ab63f5a34e28b1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ETIMEDOUT<sp/>-1</highlight></codeline>
+<codeline lineno="38"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="ubthread_8h_100de8f7e0b615f88335573ba3909583d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LOCKED<sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="40" refid="ubthread_8h_1f0591d953a49374b660c9de8964825fe" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UNLOCKED<sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="41"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="ubthread_8h_1d95f6922b782fa82362d6ec1edb5b63e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread" kindref="compound">ubthread</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structubthread" kindref="compound">ubthread_t</ref>;</highlight></codeline>
+<codeline lineno="43" refid="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__cond" kindref="compound">ubthread_cond</ref><sp/><sp/>*<ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref>;</highlight></codeline>
+<codeline lineno="44" refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex</ref><sp/>*<ref refid="structubthread__mutex" kindref="compound">ubthread_mutex_t</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="structubthread" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread" kindref="compound">ubthread</ref><sp/>{</highlight></codeline>
+<codeline lineno="47" refid="structubthread_17644a25394098d5a41d63f44852d5e84" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="structubthread_17644a25394098d5a41d63f44852d5e84" kindref="member">task</ref>;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="structubthread__cond" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__cond" kindref="compound">ubthread_cond</ref><sp/>{</highlight></codeline>
+<codeline lineno="51" refid="structubthread__cond_19557e920c79c936de8ce6b9f9a65a245" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structubthread__cond_19557e920c79c936de8ce6b9f9a65a245" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structubthread__cond_14c6eee2c8e90e2aed1983c934723b67f" kindref="member">locked</ref>;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="structubthread__mutex" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__mutex" kindref="compound">ubthread_mutex</ref><sp/>{</highlight></codeline>
+<codeline lineno="56" refid="structubthread__mutex_157e2eddcab2e03f27fe5b75c7840b619" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="structubthread__mutex_157e2eddcab2e03f27fe5b75c7840b619" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="57" refid="structubthread__mutex_12c01315899fa4f1eb42e4b1bba4130bd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><sp/><ref refid="structubthread__mutex_12c01315899fa4f1eb42e4b1bba4130bd" kindref="member">locked</ref>;</highlight></codeline>
+<codeline lineno="58" refid="structubthread__mutex_19c8643e4d9bec2a38ea1d45e82609f2a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/><ref refid="structubthread__mutex_19c8643e4d9bec2a38ea1d45e82609f2a" kindref="member">pid</ref>;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="structubthread__list" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__list" kindref="compound">ubthread_list</ref><sp/>{</highlight></codeline>
+<codeline lineno="62" refid="structubthread__list_16da62f642834ec7e9c202c1a560bf62e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__list" kindref="compound">ubthread_list</ref><sp/>*<ref refid="structubthread__list_16da62f642834ec7e9c202c1a560bf62e" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="63" refid="structubthread__list_13572ed1fb72d82b96ae66363967a89df" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ubthread_8h_1d95f6922b782fa82362d6ec1edb5b63e" kindref="member">ubthread_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structthread" kindref="compound">thread</ref>;</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="structubthread__cond__list" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__cond__list" kindref="compound">ubthread_cond_list</ref><sp/>{</highlight></codeline>
+<codeline lineno="67" refid="structubthread__cond__list_1d5cf73bd503d8318feca31d8d3e86c89" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__cond__list" kindref="compound">ubthread_cond_list</ref><sp/>*<ref refid="structubthread__cond__list_1d5cf73bd503d8318feca31d8d3e86c89" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="68" refid="structubthread__cond__list_1c6a0b68879515ad2121d705aa7571c7e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structubthread__cond__list_1c6a0b68879515ad2121d705aa7571c7e" kindref="member">cond</ref>;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71" refid="structubthread__mutex__list" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__mutex__list" kindref="compound">ubthread_mutex_list</ref><sp/>{</highlight></codeline>
+<codeline lineno="72" refid="structubthread__mutex__list_16095ff6c862e822ada5e3706bf538c46" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubthread__mutex__list" kindref="compound">ubthread_mutex_list</ref><sp/>*<ref refid="structubthread__mutex__list_16095ff6c862e822ada5e3706bf538c46" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="73" refid="structubthread__mutex__list_1020fa0de30d24e5984a2715a8f3a3c9c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<ref refid="structubthread__mutex__list_1020fa0de30d24e5984a2715a8f3a3c9c" kindref="member">mutex</ref>;</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*<ref refid="ubthread_8h_172a362bc8127b8d63e1107062638664d" kindref="member">ubthread_self</ref>();</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1cbb7170a68758468ab5b02512a320112" kindref="member">ubthread_cond_init</ref>(<ref refid="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref><sp/>*cond,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>attr);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1b6bfc2169b55532821582f24b68dc855" kindref="member">ubthread_mutex_init</ref>(<ref refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref><sp/>*<ref refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>attr);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1e914fae69538736dc5e494c15ce93a17" kindref="member">ubthread_cond_destroy</ref>(<ref refid="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref><sp/>*cond);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1278f5d5b1e11b6668b75da6a285442e4" kindref="member">ubthread_mutex_destroy</ref>(<ref refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref><sp/>*<ref refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1a0af177ef44888f3c93883294207328e" kindref="member">ubthread_create</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>**<ref refid="structthread" kindref="compound">thread</ref>,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*attr,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>(*<sp/>tproc)(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">),<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1a13bf141cd3e9bf0921fbf61ffc637d8" kindref="member">ubthread_mutex_lock</ref>(<ref refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref><sp/>*<ref refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1fea3530bab360f59c09a49f490d079dd" kindref="member">ubthread_mutex_unlock</ref>(<ref refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref><sp/>*<ref refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_1996be9a927447a62f7168a082a046c54" kindref="member">ubthread_cond_timedwait</ref>(<ref refid="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref><sp/>*cond,<sp/><ref refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref><sp/>*<ref refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtimespec" kindref="compound">timespec</ref><sp/>*abstime);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_130eb7c156c2422801ddb86326dbc3d81" kindref="member">ubthread_cond_wait</ref>(<ref refid="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref><sp/>*cond,<sp/><ref refid="ubthread_8h_12b33c44e0ad37a62d92aaeeb011860e0" kindref="member">ubthread_mutex_t</ref><sp/>*<ref refid="ubthread_8c_118b6be9ca0cec4b0643171232d6f10de" kindref="member">mutex</ref>);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ubthread_8h_164fb8f5f2da2564a6cae8c9f2c3bde10" kindref="member">ubthread_cond_signal</ref>(<ref refid="ubthread_8h_196521d8547d8b54e20e6f18d83c06901" kindref="member">ubthread_cond_t</ref><sp/>*cond);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="90"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>$Log: ubthread_8h.xml,v $
+<codeline lineno="92"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:53  reddawg
+<codeline lineno="92"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="92"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="93"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="94"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="95"><highlight class="comment"></highlight></codeline>
+<codeline lineno="96"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="97"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="98"><highlight class="comment"></highlight></codeline>
+<codeline lineno="99"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:57<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="100"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"></highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/09/07<sp/>20:58:35<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>time<sp/>to<sp/>roll<sp/>back<sp/>i<sp/>can&apos;t<sp/>think<sp/>straight<sp/>by<sp/>friday</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"></highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:20:00<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="107"><highlight class="comment"></highlight></codeline>
+<codeline lineno="108"><highlight class="comment"></highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="110"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h"/>
+  </compounddef>
+</doxygen>

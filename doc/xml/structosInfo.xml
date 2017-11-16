@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structosInfo" kind="struct" prot="public">
+    <compoundname>osInfo</compoundname>
+    <includes refid="sched_8h" local="no">sched.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structosInfo_1469e3f8b916794a9d0185a20f1459509" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 osInfo::controlKeys</definition>
+        <argsstring></argsstring>
+        <name>controlKeys</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structosInfo_1e9411eaa7df66cd0148237248848bbdf" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char osInfo::cwd[1024]</definition>
+        <argsstring>[1024]</argsstring>
+        <name>cwd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
+        <referencedby refid="file_8c_1911a71c3e0e08149a11b2b05a50b3b97" compoundref="file_8c" startline="102" endline="109">sysChDir</referencedby>
+        <referencedby refid="syscall_8c_1a1858601da45332a2cd7d43bb3bcb80d" compoundref="syscall_8c" startline="228" endline="233">sysGetCwd</referencedby>
+        <referencedby refid="file_8c_181e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="436" endline="469">sysMkDir</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structosInfo_1c823c4922598a3bb84c1603c4828d0cd" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* osInfo::stdin</definition>
+        <argsstring></argsstring>
+        <name>stdin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structosInfo_14a727abc7700ea2c32ed3f3b1654b466" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 osInfo::stdinSize</definition>
+        <argsstring></argsstring>
+        <name>stdinSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structosInfo_150f6d9f964aa8bcd88c5ff3bf693cec2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 osInfo::timer</definition>
+        <argsstring></argsstring>
+        <name>timer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool osInfo::v86If</definition>
+        <argsstring></argsstring>
+        <name>v86If</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structosInfo_1befa906e51d2b28b2475a74e16219ded" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 osInfo::v86Task</definition>
+        <argsstring></argsstring>
+        <name>v86Task</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structosInfo_12833c1fa4a221941b5d1141dfa5beefd" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 osInfo::vmStart</definition>
+        <argsstring></argsstring>
+        <name>vmStart</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="exec_8c_14b86d28d8fd56197042aef174de2fd58" compoundref="exec_8c" startline="55" endline="125">execThread</referencedby>
+        <referencedby refid="fork_8c_1193d99c9f4dbfbfaad8a1ef486582f2d" compoundref="fork_8c" startline="50" endline="98">fork_copyProcess</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <referencedby refid="paging_8c_15eb37b88b24489f7256232eec46de565" compoundref="paging_8c" startline="332" endline="399">vmmMapFromTask</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/sched.h" bodystart="43" bodyend="52"/>
+    <listofallmembers>
+      <member refid="structosInfo_1469e3f8b916794a9d0185a20f1459509" prot="public" virt="non-virtual"><scope>osInfo</scope><name>controlKeys</name></member>
+      <member refid="structosInfo_1e9411eaa7df66cd0148237248848bbdf" prot="public" virt="non-virtual"><scope>osInfo</scope><name>cwd</name></member>
+      <member refid="structosInfo_1c823c4922598a3bb84c1603c4828d0cd" prot="public" virt="non-virtual"><scope>osInfo</scope><name>stdin</name></member>
+      <member refid="structosInfo_14a727abc7700ea2c32ed3f3b1654b466" prot="public" virt="non-virtual"><scope>osInfo</scope><name>stdinSize</name></member>
+      <member refid="structosInfo_150f6d9f964aa8bcd88c5ff3bf693cec2" prot="public" virt="non-virtual"><scope>osInfo</scope><name>timer</name></member>
+      <member refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" prot="public" virt="non-virtual"><scope>osInfo</scope><name>v86If</name></member>
+      <member refid="structosInfo_1befa906e51d2b28b2475a74e16219ded" prot="public" virt="non-virtual"><scope>osInfo</scope><name>v86Task</name></member>
+      <member refid="structosInfo_12833c1fa4a221941b5d1141dfa5beefd" prot="public" virt="non-virtual"><scope>osInfo</scope><name>vmStart</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

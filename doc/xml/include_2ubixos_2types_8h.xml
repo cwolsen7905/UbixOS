@@ -1,0 +1,2639 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="include_2ubixos_2types_8h" kind="file">
+    <compoundname>types.h</compoundname>
+    <includes refid="__types_8h" local="no">sys/_types.h</includes>
+    <includedby refid="devfs_8c" local="no">src/sys/devfs/devfs.c</includedby>
+    <includedby refid="devfs_8h" local="no">src/sys/include/devfs/devfs.h</includedby>
+    <includedby refid="8259_8h" local="no">src/sys/include/isa/8259.h</includedby>
+    <includedby refid="fdc_8h" local="no">src/sys/include/isa/fdc.h</includedby>
+    <includedby refid="ne2k_8h" local="no">src/sys/include/isa/ne2k.h</includedby>
+    <includedby refid="bioscall_8h" local="no">src/sys/include/lib/bioscall.h</includedby>
+    <includedby refid="kmalloc_8h" local="no">src/sys/include/lib/kmalloc.h</includedby>
+    <includedby refid="kprint_8h" local="no">src/sys/include/lib/kprint.h</includedby>
+    <includedby refid="kprintf_8h" local="no">src/sys/include/lib/kprintf.h</includedby>
+    <includedby refid="libcpp_8h" local="no">src/sys/include/lib/libcpp.h</includedby>
+    <includedby refid="lib_2string_8h" local="no">src/sys/include/lib/string.h</includedby>
+    <includedby refid="math_8h" local="no">src/sys/include/math.h</includedby>
+    <includedby refid="mpi_8h" local="no">src/sys/include/mpi/mpi.h</includedby>
+    <includedby refid="err_8h" local="no">src/sys/include/net/err.h</includedby>
+    <includedby refid="mem_8h" local="no">src/sys/include/net/mem.h</includedby>
+    <includedby refid="memp_8h" local="no">src/sys/include/net/memp.h</includedby>
+    <includedby refid="net_8h" local="no">src/sys/include/net/net.h</includedby>
+    <includedby refid="sockets_8h" local="no">src/sys/include/net/sockets.h</includedby>
+    <includedby refid="lnc_8h" local="no">src/sys/include/pci/lnc.h</includedby>
+    <includedby refid="pci_8h" local="no">src/sys/include/pci/pci.h</includedby>
+    <includedby refid="sde_8h" local="no">src/sys/include/sde/sde.h</includedby>
+    <includedby refid="string_8h" local="no">src/sys/include/string.h</includedby>
+    <includedby refid="buf_8h" local="no">src/sys/include/sys/buf.h</includedby>
+    <includedby refid="cdefs_8h" local="no">src/sys/include/sys/cdefs.h</includedby>
+    <includedby refid="include_2sys_2device_8h" local="no">src/sys/include/sys/device.h</includedby>
+    <includedby refid="device_8old_8h" local="no">src/sys/include/sys/device.old.h</includedby>
+    <includedby refid="dma_8h" local="no">src/sys/include/sys/dma.h</includedby>
+    <includedby refid="driver_8h" local="no">src/sys/include/sys/driver.h</includedby>
+    <includedby refid="idt_8h" local="no">src/sys/include/sys/idt.h</includedby>
+    <includedby refid="signal_8h" local="no">src/sys/include/sys/signal.h</includedby>
+    <includedby refid="thread_8h" local="no">src/sys/include/sys/thread.h</includedby>
+    <includedby refid="tss_8h" local="no">src/sys/include/sys/tss.h</includedby>
+    <includedby refid="video_8h" local="no">src/sys/include/sys/video.h</includedby>
+    <includedby refid="dirCache_8h" local="no">src/sys/include/ubixfs/dirCache.h</includedby>
+    <includedby refid="include_2ubixfs_2ubixfs_8h" local="no">src/sys/include/ubixfs/ubixfs.h</includedby>
+    <includedby refid="elf_8h" local="no">src/sys/include/ubixos/elf.h</includedby>
+    <includedby refid="endtask_8h" local="no">src/sys/include/ubixos/endtask.h</includedby>
+    <includedby refid="exec_8h" local="no">src/sys/include/ubixos/exec.h</includedby>
+    <includedby refid="fork_8h" local="no">src/sys/include/ubixos/fork.h</includedby>
+    <includedby refid="kmod_8h" local="no">src/sys/include/ubixos/kmod.h</includedby>
+    <includedby refid="ld_8h" local="no">src/sys/include/ubixos/ld.h</includedby>
+    <includedby refid="sched_8h" local="no">src/sys/include/ubixos/sched.h</includedby>
+    <includedby refid="smp_8h" local="no">src/sys/include/ubixos/smp.h</includedby>
+    <includedby refid="spinlock_8h" local="no">src/sys/include/ubixos/spinlock.h</includedby>
+    <includedby refid="syscall_8h" local="no">src/sys/include/ubixos/syscall.h</includedby>
+    <includedby refid="systemtask_8h" local="no">src/sys/include/ubixos/systemtask.h</includedby>
+    <includedby refid="time_8h" local="no">src/sys/include/ubixos/time.h</includedby>
+    <includedby refid="times_8h" local="no">src/sys/include/ubixos/times.h</includedby>
+    <includedby refid="tty_8h" local="no">src/sys/include/ubixos/tty.h</includedby>
+    <includedby refid="ubthread_8h" local="no">src/sys/include/ubixos/ubthread.h</includedby>
+    <includedby refid="vitals_8h" local="no">src/sys/include/ubixos/vitals.h</includedby>
+    <includedby refid="ffs_8h" local="no">src/sys/include/ufs/ffs.h</includedby>
+    <includedby refid="ufs_8h" local="no">src/sys/include/ufs/ufs.h</includedby>
+    <includedby refid="include_2vfs_2file_8h" local="no">src/sys/include/vfs/file.h</includedby>
+    <includedby refid="mount_8h" local="no">src/sys/include/vfs/mount.h</includedby>
+    <includedby refid="include_2vfs_2vfs_8h" local="no">src/sys/include/vfs/vfs.h</includedby>
+    <includedby refid="paging_8h" local="no">src/sys/include/vmm/paging.h</includedby>
+    <includedby refid="vmm_8h" local="no">src/sys/include/vmm/vmm.h</includedby>
+    <includedby refid="8259_8c" local="no">src/sys/isa/8259.c</includedby>
+    <includedby refid="atkbd_8c" local="no">src/sys/isa/atkbd.c</includedby>
+    <includedby refid="fdc_8c" local="no">src/sys/isa/fdc.c</includedby>
+    <includedby refid="mouse_8c" local="no">src/sys/isa/mouse.c</includedby>
+    <includedby refid="endtask_8c" local="no">src/sys/kernel/endtask.c</includedby>
+    <includedby refid="fork_8c" local="no">src/sys/kernel/fork.c</includedby>
+    <includedby refid="gen__calls_8c" local="no">src/sys/kernel/gen_calls.c</includedby>
+    <includedby refid="kern__descrip_8c" local="no">src/sys/kernel/kern_descrip.c</includedby>
+    <includedby refid="kern__sig_8c" local="no">src/sys/kernel/kern_sig.c</includedby>
+    <includedby refid="kern__sysctl_8c" local="no">src/sys/kernel/kern_sysctl.c</includedby>
+    <includedby refid="ld_8c" local="no">src/sys/kernel/ld.c</includedby>
+    <includedby refid="pipe_8c" local="no">src/sys/kernel/pipe.c</includedby>
+    <includedby refid="syscall_8c" local="no">src/sys/kernel/syscall.c</includedby>
+    <includedby refid="syscall__new_8c" local="no">src/sys/kernel/syscall_new.c</includedby>
+    <includedby refid="time_8c" local="no">src/sys/kernel/time.c</includedby>
+    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
+    <includedby refid="bcopy_8c" local="no">src/sys/lib/bcopy.c</includedby>
+    <includedby refid="net_8c" local="no">src/sys/lib/net.c</includedby>
+    <includedby refid="strtok_8c" local="no">src/sys/lib/strtok.c</includedby>
+    <includedby refid="api__lib_8c" local="no">src/sys/net/api/api_lib.c</includedby>
+    <includedby refid="api__msg_8c" local="no">src/sys/net/api/api_msg.c</includedby>
+    <includedby refid="sockets_8c" local="no">src/sys/net/api/sockets.c</includedby>
+    <includedby refid="init_8c" local="no">src/sys/net/net/init.c</includedby>
+    <includedby refid="sys__arch_8c" local="no">src/sys/net/net/sys_arch.c</includedby>
+    <includedby refid="udpecho_8c" local="no">src/sys/net/net/udpecho.c</includedby>
+    <includedby refid="arp_8c" local="no">src/sys/net/netif/arp.c</includedby>
+    <includedby refid="ethernetif_8c" local="no">src/sys/net/netif/ethernetif.c</includedby>
+    <includedby refid="lnc_8c" local="no">src/sys/pci/lnc.c</includedby>
+    <includedby refid="pci_8c" local="no">src/sys/pci/pci.c</includedby>
+    <includedby refid="dma_8c" local="no">src/sys/sys/dma.c</includedby>
+    <includedby refid="video_8c" local="no">src/sys/sys/video.c</includedby>
+    <includedby refid="directory_8c" local="no">src/sys/ubixfs/directory.c</includedby>
+    <includedby refid="ubixfs_8c" local="no">src/sys/ubixfs/ubixfs.c</includedby>
+    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
+    <incdepgraph>
+      <node id="2465">
+        <label>src/sys/include/ubixos/types.h</label>
+        <link refid="include/ubixos/types.h"/>
+        <childnode refid="2466" relation="include">
+        </childnode>
+      </node>
+      <node id="2466">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2584">
+        <label>src/sys/ubixfsv2/ubixfs.cpp</label>
+        <link refid="ubixfs_8cpp"/>
+      </node>
+      <node id="2514">
+        <label>src/sys/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="2534">
+        <label>src/sys/net/net/udpecho.c</label>
+        <link refid="udpecho_8c"/>
+      </node>
+      <node id="2591">
+        <label>src/sys/include/ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2514" relation="include">
+        </childnode>
+        <childnode refid="2515" relation="include">
+        </childnode>
+      </node>
+      <node id="2625">
+        <label>src/sys/include/sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="2599" relation="include">
+        </childnode>
+        <childnode refid="2600" relation="include">
+        </childnode>
+        <childnode refid="2601" relation="include">
+        </childnode>
+        <childnode refid="2602" relation="include">
+        </childnode>
+        <childnode refid="2603" relation="include">
+        </childnode>
+        <childnode refid="2598" relation="include">
+        </childnode>
+        <childnode refid="2610" relation="include">
+        </childnode>
+        <childnode refid="2605" relation="include">
+        </childnode>
+        <childnode refid="2617" relation="include">
+        </childnode>
+        <childnode refid="2492" relation="include">
+        </childnode>
+        <childnode refid="2493" relation="include">
+        </childnode>
+        <childnode refid="2494" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2526" relation="include">
+        </childnode>
+      </node>
+      <node id="2541">
+        <label>src/sys/lib/string.c</label>
+        <link refid="string_8c"/>
+      </node>
+      <node id="2558">
+        <label>src/sys/include/net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="2553" relation="include">
+        </childnode>
+        <childnode refid="2554" relation="include">
+        </childnode>
+        <childnode refid="2559" relation="include">
+        </childnode>
+        <childnode refid="2562" relation="include">
+        </childnode>
+        <childnode refid="2505" relation="include">
+        </childnode>
+        <childnode refid="2535" relation="include">
+        </childnode>
+        <childnode refid="2560" relation="include">
+        </childnode>
+        <childnode refid="2561" relation="include">
+        </childnode>
+      </node>
+      <node id="2539">
+        <label>src/sys/include/lib/libcpp.h</label>
+        <link refid="libcpp_8h"/>
+        <childnode refid="2503" relation="include">
+        </childnode>
+      </node>
+      <node id="2482">
+        <label>src/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="2531">
+        <label>src/sys/lib/kprintf.c</label>
+        <link refid="kprintf_8c"/>
+      </node>
+      <node id="2580">
+        <label>src/sys/lib/memcpy.c</label>
+        <link refid="memcpy_8c"/>
+      </node>
+      <node id="2571">
+        <label>src/sys/include/net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="2506" relation="include">
+        </childnode>
+        <childnode refid="2508" relation="include">
+        </childnode>
+        <childnode refid="2509" relation="include">
+        </childnode>
+      </node>
+      <node id="2575">
+        <label>src/sys/include/pci/pci.h</label>
+        <link refid="pci_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2536" relation="include">
+        </childnode>
+      </node>
+      <node id="2546">
+        <label>src/sys/lib/divdi3.c</label>
+        <link refid="divdi3_8c"/>
+      </node>
+      <node id="2610">
+        <label>src/sys/include/ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="2547" relation="include">
+        </childnode>
+        <childnode refid="2611" relation="include">
+        </childnode>
+        <childnode refid="2612" relation="include">
+        </childnode>
+        <childnode refid="2613" relation="include">
+        </childnode>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2614" relation="include">
+        </childnode>
+        <childnode refid="2615" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2488" relation="include">
+        </childnode>
+        <childnode refid="2479" relation="include">
+        </childnode>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2578" relation="include">
+        </childnode>
+        <childnode refid="2492" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2616" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2528" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2502" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2509" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+        <childnode refid="2522" relation="include">
+        </childnode>
+        <childnode refid="2538" relation="include">
+        </childnode>
+        <childnode refid="2519" relation="include">
+        </childnode>
+      </node>
+      <node id="2473">
+        <label>src/sys/pci/hd.c</label>
+        <link refid="hd_8c"/>
+      </node>
+      <node id="2532">
+        <label>src/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+      <node id="2561">
+        <label>src/sys/net/netif/tcpdump.c</label>
+        <link refid="tcpdump_8c"/>
+      </node>
+      <node id="2563">
+        <label>src/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="2564" relation="include">
+        </childnode>
+        <childnode refid="2558" relation="include">
+        </childnode>
+        <childnode refid="2565" relation="include">
+        </childnode>
+        <childnode refid="2566" relation="include">
+        </childnode>
+        <childnode refid="2567" relation="include">
+        </childnode>
+      </node>
+      <node id="2574">
+        <label>src/sys/include/pci/lnc.h</label>
+        <link refid="lnc_8h"/>
+        <childnode refid="2482" relation="include">
+        </childnode>
+      </node>
+      <node id="2560">
+        <label>src/sys/net/netif/loopif.c</label>
+        <link refid="loopif_8c"/>
+      </node>
+      <node id="2536">
+        <label>src/sys/pci/pci.c</label>
+        <link refid="pci_8c"/>
+      </node>
+      <node id="2590">
+        <label>src/sys/include/ufs/ffs.h</label>
+        <link refid="ffs_8h"/>
+        <childnode refid="2514" relation="include">
+        </childnode>
+        <childnode refid="2515" relation="include">
+        </childnode>
+      </node>
+      <node id="2542">
+        <label>src/sys/lib/strtok.c</label>
+        <link refid="strtok_8c"/>
+      </node>
+      <node id="2635">
+        <label>src/sys/include/ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2527" relation="include">
+        </childnode>
+        <childnode refid="2616" relation="include">
+        </childnode>
+        <childnode refid="2528" relation="include">
+        </childnode>
+        <childnode refid="2498" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2502" relation="include">
+        </childnode>
+        <childnode refid="2504" relation="include">
+        </childnode>
+        <childnode refid="2509" relation="include">
+        </childnode>
+        <childnode refid="2510" relation="include">
+        </childnode>
+        <childnode refid="2628" relation="include">
+        </childnode>
+        <childnode refid="2511" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+        <childnode refid="2585" relation="include">
+        </childnode>
+        <childnode refid="2620" relation="include">
+        </childnode>
+        <childnode refid="2522" relation="include">
+        </childnode>
+        <childnode refid="2538" relation="include">
+        </childnode>
+        <childnode refid="2519" relation="include">
+        </childnode>
+        <childnode refid="2520" relation="include">
+        </childnode>
+      </node>
+      <node id="2611">
+        <label>src/sys/include/ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2493" relation="include">
+        </childnode>
+        <childnode refid="2494" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2528" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+      </node>
+      <node id="2487">
+        <label>src/sys/include/lib/bioscall.h</label>
+        <link refid="bioscall_8h"/>
+        <childnode refid="2488" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+      </node>
+      <node id="2634">
+        <label>src/sys/include/ubixos/smp.h</label>
+        <link refid="smp_8h"/>
+        <childnode refid="2527" relation="include">
+        </childnode>
+      </node>
+      <node id="2592">
+        <label>src/sys/include/sys/device.old.h</label>
+        <link refid="device_8old_8h"/>
+        <childnode refid="2485" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+      </node>
+      <node id="2509">
+        <label>src/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="2593">
+        <label>src/sys/include/sys/dma.h</label>
+        <link refid="dma_8h"/>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2594" relation="include">
+        </childnode>
+      </node>
+      <node id="2500">
+        <label>src/sys/kernel/vitals.c</label>
+        <link refid="vitals_8c"/>
+      </node>
+      <node id="2485">
+        <label>src/sys/include/isa/ne2k.h</label>
+        <link refid="ne2k_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+      </node>
+      <node id="2631">
+        <label>src/sys/kernel/elf.c</label>
+        <link refid="elf_8c"/>
+      </node>
+      <node id="2498">
+        <label>src/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="2562">
+        <label>src/sys/include/net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="2553" relation="include">
+        </childnode>
+        <childnode refid="2554" relation="include">
+        </childnode>
+        <childnode refid="2505" relation="include">
+        </childnode>
+        <childnode refid="2561" relation="include">
+        </childnode>
+      </node>
+      <node id="2469">
+        <label>src/sys/include/devfs/devfs.h</label>
+        <link refid="devfs_8h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2473" relation="include">
+        </childnode>
+      </node>
+      <node id="2551">
+        <label>src/sys/mpi/message.c</label>
+        <link refid="message_8c"/>
+      </node>
+      <node id="2501">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="2504">
+        <label>src/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+      </node>
+      <node id="2636">
+        <label>src/sys/include/ubixos/syscall.h</label>
+        <link refid="syscall_8h"/>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+      </node>
+      <node id="2495">
+        <label>src/sys/kernel/kern_sysctl.c</label>
+        <link refid="kern__sysctl_8c"/>
+      </node>
+      <node id="2565">
+        <label>src/sys/include/netif/arp.h</label>
+        <link refid="arp_8h"/>
+        <childnode refid="2535" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+      </node>
+      <node id="2545">
+        <label>src/sys/lib/atan.c</label>
+        <link refid="atan_8c"/>
+      </node>
+      <node id="2606">
+        <label>src/sys/include/ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2479" relation="include">
+        </childnode>
+        <childnode refid="2578" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2529" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+        <childnode refid="2500" relation="include">
+        </childnode>
+        <childnode refid="2607" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+        <childnode refid="2517" relation="include">
+        </childnode>
+        <childnode refid="2518" relation="include">
+        </childnode>
+        <childnode refid="2520" relation="include">
+        </childnode>
+      </node>
+      <node id="2526">
+        <label>src/sys/kernel/pipe.c</label>
+        <link refid="pipe_8c"/>
+      </node>
+      <node id="2502">
+        <label>src/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="2519">
+        <label>src/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="2512">
+        <label>src/sys/ubixfs/directory.c</label>
+        <link refid="directory_8c"/>
+      </node>
+      <node id="2515">
+        <label>src/sys/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="2494">
+        <label>src/sys/kernel/kern_sig.c</label>
+        <link refid="kern__sig_8c"/>
+      </node>
+      <node id="2559">
+        <label>src/sys/include/net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="2553" relation="include">
+        </childnode>
+        <childnode refid="2554" relation="include">
+        </childnode>
+        <childnode refid="2505" relation="include">
+        </childnode>
+        <childnode refid="2560" relation="include">
+        </childnode>
+        <childnode refid="2561" relation="include">
+        </childnode>
+      </node>
+      <node id="2637">
+        <label>src/sys/include/ubixos/systemtask.h</label>
+        <link refid="systemtask_8h"/>
+        <childnode refid="2471" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+      </node>
+      <node id="2499">
+        <label>src/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="2467">
+        <label>src/sys/include/ubixos/types.h</label>
+        <link refid="include/ubixos/types.h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2469" relation="include">
+        </childnode>
+        <childnode refid="2474" relation="include">
+        </childnode>
+        <childnode refid="2484" relation="include">
+        </childnode>
+        <childnode refid="2485" relation="include">
+        </childnode>
+        <childnode refid="2487" relation="include">
+        </childnode>
+        <childnode refid="2490" relation="include">
+        </childnode>
+        <childnode refid="2521" relation="include">
+        </childnode>
+        <childnode refid="2523" relation="include">
+        </childnode>
+        <childnode refid="2539" relation="include">
+        </childnode>
+        <childnode refid="2540" relation="include">
+        </childnode>
+        <childnode refid="2544" relation="include">
+        </childnode>
+        <childnode refid="2547" relation="include">
+        </childnode>
+        <childnode refid="2552" relation="include">
+        </childnode>
+        <childnode refid="2569" relation="include">
+        </childnode>
+        <childnode refid="2570" relation="include">
+        </childnode>
+        <childnode refid="2572" relation="include">
+        </childnode>
+        <childnode refid="2573" relation="include">
+        </childnode>
+        <childnode refid="2574" relation="include">
+        </childnode>
+        <childnode refid="2575" relation="include">
+        </childnode>
+        <childnode refid="2576" relation="include">
+        </childnode>
+        <childnode refid="2577" relation="include">
+        </childnode>
+        <childnode refid="2586" relation="include">
+        </childnode>
+        <childnode refid="2587" relation="include">
+        </childnode>
+        <childnode refid="2589" relation="include">
+        </childnode>
+        <childnode refid="2592" relation="include">
+        </childnode>
+        <childnode refid="2593" relation="include">
+        </childnode>
+        <childnode refid="2595" relation="include">
+        </childnode>
+        <childnode refid="2596" relation="include">
+        </childnode>
+        <childnode refid="2597" relation="include">
+        </childnode>
+        <childnode refid="2625" relation="include">
+        </childnode>
+        <childnode refid="2626" relation="include">
+        </childnode>
+        <childnode refid="2627" relation="include">
+        </childnode>
+        <childnode refid="2629" relation="include">
+        </childnode>
+        <childnode refid="2548" relation="include">
+        </childnode>
+        <childnode refid="2630" relation="include">
+        </childnode>
+        <childnode refid="2611" relation="include">
+        </childnode>
+        <childnode refid="2612" relation="include">
+        </childnode>
+        <childnode refid="2613" relation="include">
+        </childnode>
+        <childnode refid="2632" relation="include">
+        </childnode>
+        <childnode refid="2633" relation="include">
+        </childnode>
+        <childnode refid="2610" relation="include">
+        </childnode>
+        <childnode refid="2634" relation="include">
+        </childnode>
+        <childnode refid="2635" relation="include">
+        </childnode>
+        <childnode refid="2636" relation="include">
+        </childnode>
+        <childnode refid="2637" relation="include">
+        </childnode>
+        <childnode refid="2638" relation="include">
+        </childnode>
+        <childnode refid="2639" relation="include">
+        </childnode>
+        <childnode refid="2641" relation="include">
+        </childnode>
+        <childnode refid="2615" relation="include">
+        </childnode>
+        <childnode refid="2606" relation="include">
+        </childnode>
+        <childnode refid="2590" relation="include">
+        </childnode>
+        <childnode refid="2591" relation="include">
+        </childnode>
+        <childnode refid="2609" relation="include">
+        </childnode>
+        <childnode refid="2608" relation="include">
+        </childnode>
+        <childnode refid="2605" relation="include">
+        </childnode>
+        <childnode refid="2617" relation="include">
+        </childnode>
+        <childnode refid="2618" relation="include">
+        </childnode>
+        <childnode refid="2475" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2477" relation="include">
+        </childnode>
+        <childnode refid="2479" relation="include">
+        </childnode>
+        <childnode refid="2578" relation="include">
+        </childnode>
+        <childnode refid="2492" relation="include">
+        </childnode>
+        <childnode refid="2493" relation="include">
+        </childnode>
+        <childnode refid="2494" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2526" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2528" relation="include">
+        </childnode>
+        <childnode refid="2529" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2579" relation="include">
+        </childnode>
+        <childnode refid="2532" relation="include">
+        </childnode>
+        <childnode refid="2542" relation="include">
+        </childnode>
+        <childnode refid="2533" relation="include">
+        </childnode>
+        <childnode refid="2556" relation="include">
+        </childnode>
+        <childnode refid="2557" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2509" relation="include">
+        </childnode>
+        <childnode refid="2534" relation="include">
+        </childnode>
+        <childnode refid="2535" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+        <childnode refid="2482" relation="include">
+        </childnode>
+        <childnode refid="2536" relation="include">
+        </childnode>
+        <childnode refid="2594" relation="include">
+        </childnode>
+        <childnode refid="2628" relation="include">
+        </childnode>
+        <childnode refid="2512" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+        <childnode refid="2519" relation="include">
+        </childnode>
+      </node>
+      <node id="2572">
+        <label>src/sys/include/net/net.h</label>
+        <link refid="net_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+      </node>
+      <node id="2489">
+        <label>src/sys/kernel/systemtask.c</label>
+        <link refid="systemtask_8c"/>
+      </node>
+      <node id="2627">
+        <label>src/sys/include/sys/video.h</label>
+        <link refid="video_8h"/>
+        <childnode refid="2471" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2488" relation="include">
+        </childnode>
+        <childnode refid="2480" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2531" relation="include">
+        </childnode>
+        <childnode refid="2503" relation="include">
+        </childnode>
+        <childnode refid="2473" relation="include">
+        </childnode>
+        <childnode refid="2482" relation="include">
+        </childnode>
+        <childnode refid="2628" relation="include">
+        </childnode>
+      </node>
+      <node id="2486">
+        <label>src/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="2535">
+        <label>src/sys/net/netif/arp.c</label>
+        <link refid="arp_8c"/>
+      </node>
+      <node id="2564">
+        <label>src/sys/include/net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="2559" relation="include">
+        </childnode>
+      </node>
+      <node id="2544">
+        <label>src/sys/include/math.h</label>
+        <link refid="math_8h"/>
+        <childnode refid="2545" relation="include">
+        </childnode>
+        <childnode refid="2546" relation="include">
+        </childnode>
+      </node>
+      <node id="2540">
+        <label>src/sys/include/lib/string.h</label>
+        <link refid="lib_2string_8h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2488" relation="include">
+        </childnode>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2527" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2528" relation="include">
+        </childnode>
+        <childnode refid="2541" relation="include">
+        </childnode>
+        <childnode refid="2542" relation="include">
+        </childnode>
+        <childnode refid="2543" relation="include">
+        </childnode>
+        <childnode refid="2504" relation="include">
+        </childnode>
+        <childnode refid="2511" relation="include">
+        </childnode>
+        <childnode refid="2512" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+        <childnode refid="2514" relation="include">
+        </childnode>
+        <childnode refid="2515" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+        <childnode refid="2517" relation="include">
+        </childnode>
+        <childnode refid="2518" relation="include">
+        </childnode>
+      </node>
+      <node id="2594">
+        <label>src/sys/sys/dma.c</label>
+        <link refid="dma_8c"/>
+      </node>
+      <node id="2607">
+        <label>src/sys/lib/ogprintf.cc</label>
+        <link refid="ogprintf_8cc"/>
+      </node>
+      <node id="2617">
+        <label>src/sys/include/vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="2618" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+      </node>
+      <node id="2506">
+        <label>src/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
+      </node>
+      <node id="2588">
+        <label>src/sys/lib/strtol.c</label>
+        <link refid="strtol_8c"/>
+      </node>
+      <node id="2595">
+        <label>src/sys/include/sys/driver.h</label>
+        <link refid="driver_8h"/>
+      </node>
+      <node id="2577">
+        <label>src/sys/include/string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2578" relation="include">
+        </childnode>
+        <childnode refid="2492" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2498" relation="include">
+        </childnode>
+        <childnode refid="2500" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2502" relation="include">
+        </childnode>
+        <childnode refid="2579" relation="include">
+        </childnode>
+        <childnode refid="2581" relation="include">
+        </childnode>
+        <childnode refid="2532" relation="include">
+        </childnode>
+        <childnode refid="2506" relation="include">
+        </childnode>
+        <childnode refid="2508" relation="include">
+        </childnode>
+        <childnode refid="2473" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+        <childnode refid="2582" relation="include">
+        </childnode>
+        <childnode refid="2583" relation="include">
+        </childnode>
+        <childnode refid="2584" relation="include">
+        </childnode>
+        <childnode refid="2585" relation="include">
+        </childnode>
+        <childnode refid="2519" relation="include">
+        </childnode>
+      </node>
+      <node id="2638">
+        <label>src/sys/include/ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2615" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2529" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+      </node>
+      <node id="2609">
+        <label>src/sys/include/vfs/file.h</label>
+        <link refid="include_2vfs_2file_8h"/>
+        <childnode refid="2469" relation="include">
+        </childnode>
+        <childnode refid="2600" relation="include">
+        </childnode>
+        <childnode refid="2610" relation="include">
+        </childnode>
+        <childnode refid="2614" relation="include">
+        </childnode>
+        <childnode refid="2605" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2561" relation="include">
+        </childnode>
+        <childnode refid="2550" relation="include">
+        </childnode>
+        <childnode refid="2512" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+      </node>
+      <node id="2603">
+        <label>src/sys/include/sys/pipe.h</label>
+        <link refid="pipe_8h"/>
+        <childnode refid="2526" relation="include">
+        </childnode>
+      </node>
+      <node id="2496">
+        <label>src/sys/kernel/ld.c</label>
+        <link refid="ld_8c"/>
+      </node>
+      <node id="2578">
+        <label>src/sys/kernel/fork.c</label>
+        <link refid="fork_8c"/>
+      </node>
+      <node id="2626">
+        <label>src/sys/include/sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="2610" relation="include">
+        </childnode>
+        <childnode refid="2471" relation="include">
+        </childnode>
+        <childnode refid="2488" relation="include">
+        </childnode>
+      </node>
+      <node id="2568">
+        <label>src/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="2619">
+        <label>src/sys/vmm/createvirtualspace.c</label>
+        <link refid="createvirtualspace_8c"/>
+      </node>
+      <node id="2624">
+        <label>src/sys/vmm/vmm_init.c</label>
+        <link refid="vmm__init_8c"/>
+      </node>
+      <node id="2490">
+        <label>src/sys/include/lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2471" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2488" relation="include">
+        </childnode>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2492" relation="include">
+        </childnode>
+        <childnode refid="2493" relation="include">
+        </childnode>
+        <childnode refid="2494" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2498" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+        <childnode refid="2500" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2502" relation="include">
+        </childnode>
+        <childnode refid="2503" relation="include">
+        </childnode>
+        <childnode refid="2504" relation="include">
+        </childnode>
+        <childnode refid="2505" relation="include">
+        </childnode>
+        <childnode refid="2506" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2508" relation="include">
+        </childnode>
+        <childnode refid="2509" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+        <childnode refid="2473" relation="include">
+        </childnode>
+        <childnode refid="2482" relation="include">
+        </childnode>
+        <childnode refid="2510" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+        <childnode refid="2511" relation="include">
+        </childnode>
+        <childnode refid="2512" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+        <childnode refid="2514" relation="include">
+        </childnode>
+        <childnode refid="2515" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+        <childnode refid="2517" relation="include">
+        </childnode>
+        <childnode refid="2518" relation="include">
+        </childnode>
+        <childnode refid="2519" relation="include">
+        </childnode>
+        <childnode refid="2520" relation="include">
+        </childnode>
+      </node>
+      <node id="2524">
+        <label>src/sys/init/static.c</label>
+        <link refid="static_8c"/>
+      </node>
+      <node id="2505">
+        <label>src/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="2550">
+        <label>src/sys/ubixfs/block.c</label>
+        <link refid="block_8c"/>
+      </node>
+      <node id="2602">
+        <label>src/sys/include/sys/kern_sysctl.h</label>
+        <link refid="kern__sysctl_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2585" relation="include">
+        </childnode>
+      </node>
+      <node id="2555">
+        <label>src/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="2556" relation="include">
+        </childnode>
+        <childnode refid="2505" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+      </node>
+      <node id="2554">
+        <label>src/sys/include/net/api_msg.h</label>
+        <link refid="api__msg_8h"/>
+        <childnode refid="2555" relation="include">
+        </childnode>
+        <childnode refid="2533" relation="include">
+        </childnode>
+        <childnode refid="2556" relation="include">
+        </childnode>
+      </node>
+      <node id="2566">
+        <label>src/sys/include/netif/ethernetif.h</label>
+        <link refid="ethernetif_8h"/>
+        <childnode refid="2507" relation="include">
+        </childnode>
+      </node>
+      <node id="2618">
+        <label>src/sys/include/vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2488" relation="include">
+        </childnode>
+        <childnode refid="2479" relation="include">
+        </childnode>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2578" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2502" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+        <childnode refid="2585" relation="include">
+        </childnode>
+        <childnode refid="2619" relation="include">
+        </childnode>
+        <childnode refid="2620" relation="include">
+        </childnode>
+        <childnode refid="2522" relation="include">
+        </childnode>
+        <childnode refid="2621" relation="include">
+        </childnode>
+        <childnode refid="2538" relation="include">
+        </childnode>
+        <childnode refid="2519" relation="include">
+        </childnode>
+        <childnode refid="2622" relation="include">
+        </childnode>
+        <childnode refid="2623" relation="include">
+        </childnode>
+        <childnode refid="2624" relation="include">
+        </childnode>
+        <childnode refid="2520" relation="include">
+        </childnode>
+      </node>
+      <node id="2521">
+        <label>src/sys/include/lib/kprint.h</label>
+        <link refid="kprint_8h"/>
+        <childnode refid="2522" relation="include">
+        </childnode>
+      </node>
+      <node id="2481">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="2525">
+        <label>src/sys/isa/pit.c</label>
+        <link refid="pit_8c"/>
+      </node>
+      <node id="2508">
+        <label>src/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="2533">
+        <label>src/sys/net/api/api_lib.c</label>
+        <link refid="api__lib_8c"/>
+      </node>
+      <node id="2622">
+        <label>src/sys/vmm/setpageattributes.c</label>
+        <link refid="setpageattributes_8c"/>
+      </node>
+      <node id="2599">
+        <label>src/sys/include/sys/gen_calls.h</label>
+        <link refid="gen__calls_8h"/>
+        <childnode refid="2492" relation="include">
+        </childnode>
+      </node>
+      <node id="2547">
+        <label>src/sys/include/mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="2548" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2551" relation="include">
+        </childnode>
+        <childnode refid="2504" relation="include">
+        </childnode>
+      </node>
+      <node id="2621">
+        <label>src/sys/vmm/getphysicaladdr.c</label>
+        <link refid="getphysicaladdr_8c"/>
+      </node>
+      <node id="2613">
+        <label>src/sys/include/ubixos/fork.h</label>
+        <link refid="fork_8h"/>
+        <childnode refid="2578" relation="include">
+        </childnode>
+        <childnode refid="2508" relation="include">
+        </childnode>
+      </node>
+      <node id="2511">
+        <label>src/sys/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="2513">
+        <label>src/sys/ubixfs/ubixfs.c</label>
+        <link refid="ubixfs_8c"/>
+      </node>
+      <node id="2596">
+        <label>src/sys/include/sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2477" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2482" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+      </node>
+      <node id="2569">
+        <label>src/sys/include/net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="2559" relation="include">
+        </childnode>
+        <childnode refid="2506" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2508" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+        <childnode refid="2560" relation="include">
+        </childnode>
+      </node>
+      <node id="2507">
+        <label>src/sys/net/net/init.c</label>
+        <link refid="init_8c"/>
+      </node>
+      <node id="2570">
+        <label>src/sys/include/net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="2571" relation="include">
+        </childnode>
+        <childnode refid="2533" relation="include">
+        </childnode>
+        <childnode refid="2556" relation="include">
+        </childnode>
+        <childnode refid="2505" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+      </node>
+      <node id="2605">
+        <label>src/sys/include/vfs/vfs.h</label>
+        <link refid="include_2vfs_2vfs_8h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2586" relation="include">
+        </childnode>
+        <childnode refid="2548" relation="include">
+        </childnode>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2606" relation="include">
+        </childnode>
+        <childnode refid="2590" relation="include">
+        </childnode>
+        <childnode refid="2591" relation="include">
+        </childnode>
+        <childnode refid="2608" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2537" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+        <childnode refid="2514" relation="include">
+        </childnode>
+        <childnode refid="2515" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+        <childnode refid="2518" relation="include">
+        </childnode>
+      </node>
+      <node id="2608">
+        <label>src/sys/include/vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="2606" relation="include">
+        </childnode>
+        <childnode refid="2609" relation="include">
+        </childnode>
+        <childnode refid="2605" relation="include">
+        </childnode>
+        <childnode refid="2471" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2550" relation="include">
+        </childnode>
+        <childnode refid="2512" relation="include">
+        </childnode>
+        <childnode refid="2517" relation="include">
+        </childnode>
+      </node>
+      <node id="2523">
+        <label>src/sys/include/lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2471" relation="include">
+        </childnode>
+        <childnode refid="2524" relation="include">
+        </childnode>
+        <childnode refid="2475" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2477" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2525" relation="include">
+        </childnode>
+        <childnode refid="2479" relation="include">
+        </childnode>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2492" relation="include">
+        </childnode>
+        <childnode refid="2493" relation="include">
+        </childnode>
+        <childnode refid="2494" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2480" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2526" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2527" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2528" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2529" relation="include">
+        </childnode>
+        <childnode refid="2498" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+        <childnode refid="2500" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+        <childnode refid="2530" relation="include">
+        </childnode>
+        <childnode refid="2502" relation="include">
+        </childnode>
+        <childnode refid="2531" relation="include">
+        </childnode>
+        <childnode refid="2532" relation="include">
+        </childnode>
+        <childnode refid="2533" relation="include">
+        </childnode>
+        <childnode refid="2506" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2508" relation="include">
+        </childnode>
+        <childnode refid="2509" relation="include">
+        </childnode>
+        <childnode refid="2534" relation="include">
+        </childnode>
+        <childnode refid="2535" relation="include">
+        </childnode>
+        <childnode refid="2486" relation="include">
+        </childnode>
+        <childnode refid="2473" relation="include">
+        </childnode>
+        <childnode refid="2482" relation="include">
+        </childnode>
+        <childnode refid="2536" relation="include">
+        </childnode>
+        <childnode refid="2510" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+        <childnode refid="2511" relation="include">
+        </childnode>
+        <childnode refid="2512" relation="include">
+        </childnode>
+        <childnode refid="2537" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+        <childnode refid="2514" relation="include">
+        </childnode>
+        <childnode refid="2515" relation="include">
+        </childnode>
+        <childnode refid="2516" relation="include">
+        </childnode>
+        <childnode refid="2517" relation="include">
+        </childnode>
+        <childnode refid="2518" relation="include">
+        </childnode>
+        <childnode refid="2538" relation="include">
+        </childnode>
+        <childnode refid="2519" relation="include">
+        </childnode>
+        <childnode refid="2520" relation="include">
+        </childnode>
+      </node>
+      <node id="2633">
+        <label>src/sys/include/ubixos/ld.h</label>
+        <link refid="ld_8h"/>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+      </node>
+      <node id="2628">
+        <label>src/sys/sys/video.c</label>
+        <link refid="video_8c"/>
+      </node>
+      <node id="2581">
+        <label>src/sys/lib/memset.c</label>
+        <link refid="memset_8c"/>
+      </node>
+      <node id="2530">
+        <label>src/sys/lib/assert.c</label>
+        <link refid="assert_8c"/>
+      </node>
+      <node id="2632">
+        <label>src/sys/include/ubixos/kmod.h</label>
+        <link refid="kmod_8h"/>
+        <childnode refid="2501" relation="include">
+        </childnode>
+      </node>
+      <node id="2471">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="2548">
+        <label>src/sys/include/ubixfs/ubixfs.h</label>
+        <link refid="include_2ubixfs_2ubixfs_8h"/>
+        <childnode refid="2549" relation="include">
+        </childnode>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2550" relation="include">
+        </childnode>
+        <childnode refid="2511" relation="include">
+        </childnode>
+        <childnode refid="2512" relation="include">
+        </childnode>
+        <childnode refid="2537" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+      </node>
+      <node id="2488">
+        <label>src/sys/kernel/bioscall.c</label>
+        <link refid="bioscall_8c"/>
+      </node>
+      <node id="2600">
+        <label>src/sys/include/sys/kern_descrip.h</label>
+        <link refid="kern__descrip_8h"/>
+        <childnode refid="2492" relation="include">
+        </childnode>
+        <childnode refid="2493" relation="include">
+        </childnode>
+        <childnode refid="2526" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2518" relation="include">
+        </childnode>
+      </node>
+      <node id="2640">
+        <label>src/sys/include/net/arch/perf.h</label>
+        <link refid="perf_8h"/>
+      </node>
+      <node id="2552">
+        <label>src/sys/include/net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="2553" relation="include">
+        </childnode>
+        <childnode refid="2558" relation="include">
+        </childnode>
+        <childnode refid="2563" relation="include">
+        </childnode>
+        <childnode refid="2559" relation="include">
+        </childnode>
+        <childnode refid="2562" relation="include">
+        </childnode>
+        <childnode refid="2568" relation="include">
+        </childnode>
+      </node>
+      <node id="2510">
+        <label>src/sys/sys/device.c</label>
+        <link refid="device_8c"/>
+      </node>
+      <node id="2615">
+        <label>src/sys/include/ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="2606" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+        <childnode refid="2509" relation="include">
+        </childnode>
+      </node>
+      <node id="2587">
+        <label>src/sys/include/sys/cdefs.h</label>
+        <link refid="cdefs_8h"/>
+        <childnode refid="2588" relation="include">
+        </childnode>
+      </node>
+      <node id="2497">
+        <label>src/sys/kernel/syscall.c</label>
+        <link refid="syscall_8c"/>
+      </node>
+      <node id="2639">
+        <label>src/sys/include/ubixos/times.h</label>
+        <link refid="times_8h"/>
+        <childnode refid="2640" relation="include">
+        </childnode>
+      </node>
+      <node id="2553">
+        <label>src/sys/include/net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="2554" relation="include">
+        </childnode>
+        <childnode refid="2533" relation="include">
+        </childnode>
+        <childnode refid="2557" relation="include">
+        </childnode>
+        <childnode refid="2506" relation="include">
+        </childnode>
+        <childnode refid="2508" relation="include">
+        </childnode>
+        <childnode refid="2534" relation="include">
+        </childnode>
+      </node>
+      <node id="2629">
+        <label>src/sys/include/ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="2548" relation="include">
+        </childnode>
+        <childnode refid="2609" relation="include">
+        </childnode>
+        <childnode refid="2511" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+      </node>
+      <node id="2601">
+        <label>src/sys/include/sys/kern_sig.h</label>
+        <link refid="kern__sig_8h"/>
+        <childnode refid="2494" relation="include">
+        </childnode>
+      </node>
+      <node id="2576">
+        <label>src/sys/include/sde/sde.h</label>
+        <link refid="sde_8h"/>
+        <childnode refid="2489" relation="include">
+        </childnode>
+      </node>
+      <node id="2583">
+        <label>src/sys/ubixfsv2/ramdrive.cpp</label>
+        <link refid="ramdrive_8cpp"/>
+      </node>
+      <node id="2567">
+        <label>src/sys/include/netif/loopif.h</label>
+        <link refid="loopif_8h"/>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2560" relation="include">
+        </childnode>
+      </node>
+      <node id="2478">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="2579">
+        <label>src/sys/lib/bcopy.c</label>
+        <link refid="bcopy_8c"/>
+        <childnode refid="2580" relation="include">
+        </childnode>
+      </node>
+      <node id="2612">
+        <label>src/sys/include/ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="2471" relation="include">
+        </childnode>
+        <childnode refid="2491" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2499" relation="include">
+        </childnode>
+        <childnode refid="2505" relation="include">
+        </childnode>
+        <childnode refid="2507" relation="include">
+        </childnode>
+        <childnode refid="2513" relation="include">
+        </childnode>
+      </node>
+      <node id="2614">
+        <label>src/sys/include/ubixos/syscalls.h</label>
+        <link refid="syscalls_8h"/>
+        <childnode refid="2497" relation="include">
+        </childnode>
+      </node>
+      <node id="2549">
+        <label>src/sys/include/pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2473" relation="include">
+        </childnode>
+      </node>
+      <node id="2573">
+        <label>src/sys/include/net/sockets.h</label>
+        <link refid="sockets_8h"/>
+        <childnode refid="2532" relation="include">
+        </childnode>
+        <childnode refid="2557" relation="include">
+        </childnode>
+      </node>
+      <node id="2476">
+        <label>src/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="2538">
+        <label>src/sys/vmm/pagefault.c</label>
+        <link refid="pagefault_8c"/>
+      </node>
+      <node id="2537">
+        <label>src/sys/ubixfs/thread.c</label>
+        <link refid="thread_8c"/>
+      </node>
+      <node id="2470">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="ubixos_2init_8h"/>
+        <childnode refid="2471" relation="include">
+        </childnode>
+      </node>
+      <node id="2517">
+        <label>src/sys/vfs/mount.c</label>
+        <link refid="mount_8c"/>
+      </node>
+      <node id="2484">
+        <label>src/sys/include/isa/fdc.h</label>
+        <link refid="fdc_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+      </node>
+      <node id="2468">
+        <label>src/sys/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="2598">
+        <label>src/sys/include/sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="2599" relation="include">
+        </childnode>
+        <childnode refid="2600" relation="include">
+        </childnode>
+        <childnode refid="2601" relation="include">
+        </childnode>
+        <childnode refid="2602" relation="include">
+        </childnode>
+        <childnode refid="2603" relation="include">
+        </childnode>
+        <childnode refid="2604" relation="include">
+        </childnode>
+        <childnode refid="2605" relation="include">
+        </childnode>
+        <childnode refid="2617" relation="include">
+        </childnode>
+        <childnode refid="2493" relation="include">
+        </childnode>
+        <childnode refid="2494" relation="include">
+        </childnode>
+        <childnode refid="2495" relation="include">
+        </childnode>
+        <childnode refid="2526" relation="include">
+        </childnode>
+      </node>
+      <node id="2480">
+        <label>src/sys/kernel/kpanic.c</label>
+        <link refid="kpanic_8c"/>
+      </node>
+      <node id="2623">
+        <label>src/sys/vmm/unmappage.c</label>
+        <link refid="unmappage_8c"/>
+      </node>
+      <node id="2475">
+        <label>src/sys/isa/8259.c</label>
+        <link refid="8259_8c"/>
+      </node>
+      <node id="2527">
+        <label>src/sys/kernel/smp.c</label>
+        <link refid="smp_8c"/>
+      </node>
+      <node id="2529">
+        <label>src/sys/kernel/time.c</label>
+        <link refid="time_8c"/>
+      </node>
+      <node id="2543">
+        <label>src/sys/lib/vsprintf.c</label>
+        <link refid="vsprintf_8c"/>
+      </node>
+      <node id="2520">
+        <label>src/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="2630">
+        <label>src/sys/include/ubixos/elf.h</label>
+        <link refid="elf_8h"/>
+        <childnode refid="2610" relation="include">
+        </childnode>
+        <childnode refid="2631" relation="include">
+        </childnode>
+        <childnode refid="2496" relation="include">
+        </childnode>
+        <childnode refid="2497" relation="include">
+        </childnode>
+        <childnode refid="2501" relation="include">
+        </childnode>
+      </node>
+      <node id="2616">
+        <label>src/sys/kernel/spinlock.c</label>
+        <link refid="spinlock_8c"/>
+      </node>
+      <node id="2597">
+        <label>src/sys/include/sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="2598" relation="include">
+        </childnode>
+      </node>
+      <node id="2493">
+        <label>src/sys/kernel/kern_descrip.c</label>
+        <link refid="kern__descrip_8c"/>
+      </node>
+      <node id="2479">
+        <label>src/sys/kernel/endtask.c</label>
+        <link refid="endtask_8c"/>
+      </node>
+      <node id="2582">
+        <label>src/sys/ubixfsv2/btree.cpp</label>
+        <link refid="btree_8cpp"/>
+      </node>
+      <node id="2503">
+        <label>src/sys/lib/libcpp.cc</label>
+        <link refid="libcpp_8cc"/>
+      </node>
+      <node id="2641">
+        <label>src/sys/include/ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2610" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2578" relation="include">
+        </childnode>
+        <childnode refid="2480" relation="include">
+        </childnode>
+        <childnode refid="2489" relation="include">
+        </childnode>
+        <childnode refid="2498" relation="include">
+        </childnode>
+        <childnode refid="2628" relation="include">
+        </childnode>
+      </node>
+      <node id="2557">
+        <label>src/sys/net/api/sockets.c</label>
+        <link refid="sockets_8c"/>
+      </node>
+      <node id="2556">
+        <label>src/sys/net/api/api_msg.c</label>
+        <link refid="api__msg_8c"/>
+      </node>
+      <node id="2516">
+        <label>src/sys/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="2620">
+        <label>src/sys/vmm/getfreepage.c</label>
+        <link refid="getfreepage_8c"/>
+      </node>
+      <node id="2492">
+        <label>src/sys/kernel/gen_calls.c</label>
+        <link refid="gen__calls_8c"/>
+      </node>
+      <node id="2483">
+        <label>src/sys/sys/idt.c</label>
+        <link refid="idt_8c"/>
+      </node>
+      <node id="2528">
+        <label>src/sys/kernel/syscall_new.c</label>
+        <link refid="syscall__new_8c"/>
+      </node>
+      <node id="2491">
+        <label>src/sys/kernel/exec.c</label>
+        <link refid="exec_8c"/>
+      </node>
+      <node id="2474">
+        <label>src/sys/include/isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="2470" relation="include">
+        </childnode>
+        <childnode refid="2475" relation="include">
+        </childnode>
+        <childnode refid="2476" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2477" relation="include">
+        </childnode>
+        <childnode refid="2478" relation="include">
+        </childnode>
+        <childnode refid="2479" relation="include">
+        </childnode>
+        <childnode refid="2480" relation="include">
+        </childnode>
+        <childnode refid="2481" relation="include">
+        </childnode>
+        <childnode refid="2482" relation="include">
+        </childnode>
+        <childnode refid="2483" relation="include">
+        </childnode>
+      </node>
+      <node id="2604">
+        <label>src/sys/include/ubixos/syscalls_new.h</label>
+        <link refid="syscalls__new_8h"/>
+        <childnode refid="2528" relation="include">
+        </childnode>
+      </node>
+      <node id="2586">
+        <label>src/sys/include/sys/buf.h</label>
+        <link refid="buf_8h"/>
+        <childnode refid="2514" relation="include">
+        </childnode>
+      </node>
+      <node id="2472">
+        <label>src/sys/isa/fdc.c</label>
+        <link refid="fdc_8c"/>
+      </node>
+      <node id="2522">
+        <label>src/sys/vmm/getfreevirtualpage.c</label>
+        <link refid="getfreevirtualpage_8c"/>
+      </node>
+      <node id="2477">
+        <label>src/sys/isa/mouse.c</label>
+        <link refid="mouse_8c"/>
+      </node>
+      <node id="2589">
+        <label>src/sys/include/sys/device.h</label>
+        <link refid="include_2sys_2device_8h"/>
+        <childnode refid="2468" relation="include">
+        </childnode>
+        <childnode refid="2586" relation="include">
+        </childnode>
+        <childnode refid="2548" relation="include">
+        </childnode>
+        <childnode refid="2590" relation="include">
+        </childnode>
+        <childnode refid="2591" relation="include">
+        </childnode>
+        <childnode refid="2472" relation="include">
+        </childnode>
+        <childnode refid="2473" relation="include">
+        </childnode>
+        <childnode refid="2510" relation="include">
+        </childnode>
+        <childnode refid="2517" relation="include">
+        </childnode>
+      </node>
+      <node id="2585">
+        <label>src/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+      <node id="2518">
+        <label>src/sys/vfs/vfs.c</label>
+        <link refid="vfs_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="include_2ubixos_2types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" prot="public" static="no">
+        <name>NULL</name>
+        <initializer>0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_17da4753cd6945c5ad91f41c00b474b3f" prot="public" static="no">
+        <type><ref refid="__types_8h_1d43f5ff583ee6b60d455a66bd1c868db" kindref="member">__blkcnt_t</ref></type>
+        <definition>typedef __blkcnt_t blkcnt_t</definition>
+        <argsstring></argsstring>
+        <name>blkcnt_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="103" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1cac8eacbbc225743e88f8e5e8bf93581" prot="public" static="no">
+        <type><ref refid="__types_8h_19b5f96d324bf126dd679f4323d480355" kindref="member">__blksize_t</ref></type>
+        <definition>typedef __blksize_t blksize_t</definition>
+        <argsstring></argsstring>
+        <name>blksize_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="104" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1947150611d74d1400ef3f0af0776aadd" prot="public" static="no">
+        <type>char *</type>
+        <definition>typedef char* caddr_t</definition>
+        <argsstring></argsstring>
+        <name>caddr_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1ee689fd681d6f52c910a90af380155af" prot="public" static="no">
+        <type><ref refid="__types_8h_16d612a9db2a7b64083ddae102805217e" kindref="member">__fflags_t</ref></type>
+        <definition>typedef __fflags_t fflags_t</definition>
+        <argsstring></argsstring>
+        <name>fflags_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="105" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="105" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_19520fe38856d436aa8c5850ff21839ec" prot="public" static="no">
+        <type><ref refid="__types_8h_1b9c03aa3bb66a3ae3ce8efaf3295c749" kindref="member">__gid_t</ref></type>
+        <definition>typedef __gid_t gid_t</definition>
+        <argsstring></argsstring>
+        <name>gid_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="102" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_173341b7381d39d6e5b80ff9f23379dbd" prot="public" static="no">
+        <type><ref refid="__types_8h_12d94613be7241171120863f93f36e119" kindref="member">__ino_t</ref></type>
+        <definition>typedef __ino_t ino_t</definition>
+        <argsstring></argsstring>
+        <name>ino_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1292a71e839a94f0bafde3510df52d972" prot="public" static="no">
+        <type>short</type>
+        <definition>typedef short Int16</definition>
+        <argsstring></argsstring>
+        <name>Int16</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_13542c6a0490e65fc4fc407273126e64f" prot="public" static="no">
+        <type><ref refid="__types_8h_12f94d4e7ed665456e2c3d613dbd211ef" kindref="member">__int16_t</ref></type>
+        <definition>typedef __int16_t int16_t</definition>
+        <argsstring></argsstring>
+        <name>int16_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_11657cdc78acd17f92fb047e02f7a5f14" prot="public" static="no">
+        <type>long</type>
+        <definition>typedef long Int32</definition>
+        <argsstring></argsstring>
+        <name>Int32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_16f6221103820f185abcc62b874665a93" prot="public" static="no">
+        <type><ref refid="__types_8h_1479ed1d22a5d4badec9d1fa7246d05bf" kindref="member">__int32_t</ref></type>
+        <definition>typedef __int32_t int32_t</definition>
+        <argsstring></argsstring>
+        <name>int32_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_196411d49619f50e635418ee57651b95d" prot="public" static="no">
+        <type><ref refid="__types_8h_1ee0edd064977857105b173face02e89a" kindref="member">__int64_t</ref></type>
+        <definition>typedef __int64_t int64_t</definition>
+        <argsstring></argsstring>
+        <name>int64_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="92" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_13832cc814f0e7129add9a1cf7201c7ca" prot="public" static="no">
+        <type>char</type>
+        <definition>typedef char Int8</definition>
+        <argsstring></argsstring>
+        <name>Int8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_106ffba8acf5d133104191f183e67ac8c" prot="public" static="no">
+        <type><ref refid="__types_8h_100671532665dc0dbae7e64b82f703b06" kindref="member">__int8_t</ref></type>
+        <definition>typedef __int8_t int8_t</definition>
+        <argsstring></argsstring>
+        <name>int8_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" prot="public" static="no">
+        <type><ref refid="__types_8h_1ee0edd064977857105b173face02e89a" kindref="member">__int64_t</ref></type>
+        <definition>typedef __int64_t off_t</definition>
+        <argsstring></argsstring>
+        <name>off_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1288e13e815d43b06e75819f8939524df" prot="public" static="no">
+        <type>int</type>
+        <definition>typedef int pid_t</definition>
+        <argsstring></argsstring>
+        <name>pid_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="62" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1e438ba74394b14d7b24b6df3b3b8c252" prot="public" static="no">
+        <type>int</type>
+        <definition>typedef int pidType</definition>
+        <argsstring></argsstring>
+        <name>pidType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1b0580e7dfaba1bf72c220284778fd479" prot="public" static="no">
+        <type><ref refid="__types_8h_19f490fc8927ff1923bbc8d63eb4e6960" kindref="member">__uint64_t</ref></type>
+        <definition>typedef __uint64_t quad_t</definition>
+        <argsstring></argsstring>
+        <name>quad_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" prot="public" static="no">
+        <type>int</type>
+        <definition>typedef int size_t</definition>
+        <argsstring></argsstring>
+        <name>size_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_187bd983bf349d8b86901f3200d559e8e" prot="public" static="no">
+        <type><ref refid="__types_8h_10a768bafddb541c70e3fbefbd150b7c3" kindref="member">__ssize_t</ref></type>
+        <definition>typedef __ssize_t ssize_t</definition>
+        <argsstring></argsstring>
+        <name>ssize_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1c8234dac99fc3a2dcc8b7998afd40d49" prot="public" static="no">
+        <type><ref refid="__types_8h_1c9fb8d211b39b07df423f5c3238c5f5d" kindref="member">__time_t</ref></type>
+        <definition>typedef __time_t time_t</definition>
+        <argsstring></argsstring>
+        <name>time_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1e2b02ed168fc99cff3851603910b1fb6" prot="public" static="no">
+        <type>unsigned char</type>
+        <definition>typedef unsigned char u_char</definition>
+        <argsstring></argsstring>
+        <name>u_char</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1c319c165d52643e43249fe003e18bdf3" prot="public" static="no">
+        <type>unsigned int</type>
+        <definition>typedef unsigned int u_int</definition>
+        <argsstring></argsstring>
+        <name>u_int</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1f7b042408b9b104606f8a9b5035329f3" prot="public" static="no">
+        <type><ref refid="__types_8h_128989c8f3e511d5c6a9fd46b1adc1ee0" kindref="member">__uint16_t</ref></type>
+        <definition>typedef __uint16_t u_int16_t</definition>
+        <argsstring></argsstring>
+        <name>u_int16_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" prot="public" static="no">
+        <type><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
+        <definition>typedef __uint32_t u_int32_t</definition>
+        <argsstring></argsstring>
+        <name>u_int32_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1250ac047bf3984b5dae755276a305d64" prot="public" static="no">
+        <type><ref refid="__types_8h_19f490fc8927ff1923bbc8d63eb4e6960" kindref="member">__uint64_t</ref></type>
+        <definition>typedef __uint64_t u_int64_t</definition>
+        <argsstring></argsstring>
+        <name>u_int64_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1c7c42f52639b9aca7da966a0783996d7" prot="public" static="no">
+        <type><ref refid="__types_8h_125875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref></type>
+        <definition>typedef __uint8_t u_int8_t</definition>
+        <argsstring></argsstring>
+        <name>u_int8_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_18f25a50daf29ce2cee1ec038a4d744ea" prot="public" static="no">
+        <type>unsigned long</type>
+        <definition>typedef unsigned long u_long</definition>
+        <argsstring></argsstring>
+        <name>u_long</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1a1a19deefc008737e6397f44d983cfd4" prot="public" static="no">
+        <type>unsigned short</type>
+        <definition>typedef unsigned short u_short</definition>
+        <argsstring></argsstring>
+        <name>u_short</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_11844226d778badcda0a21b28310830ea" prot="public" static="no">
+        <type><ref refid="__types_8h_1b78e9d0e7ded311d6c9dbd234039b393" kindref="member">__uid_t</ref></type>
+        <definition>typedef __uid_t uid_t</definition>
+        <argsstring></argsstring>
+        <name>uid_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="101" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_187d141052bcd5ec8a80812a565c70369" prot="public" static="no">
+        <type>unsigned int</type>
+        <definition>typedef unsigned int uInt</definition>
+        <argsstring></argsstring>
+        <name>uInt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_13b65128d2644e9b80cec9a69bfa7e094" prot="public" static="no">
+        <type>unsigned short</type>
+        <definition>typedef unsigned short uInt16</definition>
+        <argsstring></argsstring>
+        <name>uInt16</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" prot="public" static="no">
+        <type>unsigned int</type>
+        <definition>typedef unsigned int uInt32</definition>
+        <argsstring></argsstring>
+        <name>uInt32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1a4e0f27a9aca905e340c06d2dcae843c" prot="public" static="no">
+        <type>unsigned char</type>
+        <definition>typedef unsigned char uInt8</definition>
+        <argsstring></argsstring>
+        <name>uInt8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="include_2ubixos_2types_8h_1d6f327965d9e330cd225ca2153ac0453" prot="public" static="no">
+        <type><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
+        <definition>typedef __uint32_t vm_offset_t</definition>
+        <argsstring></argsstring>
+        <name>vm_offset_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="99" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" prot="public" static="no">
+        <name>bool</name>
+        <enumvalue id="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a" prot="public">
+          <name>FALSE</name>
+          <initializer>0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" prot="public">
+          <name>TRUE</name>
+          <initializer>1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h" bodystart="67" bodyend="67"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: include_2ubixos_2types_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_TYPES_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_TYPES_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="__types_8h" kindref="compound">sys/_types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>NULL</highlight></codeline>
+<codeline lineno="36" refid="include_2ubixos_2types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NULL<sp/>0x0</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="38"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="include_2ubixos_2types_8h_1a4e0f27a9aca905e340c06d2dcae843c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>;</highlight></codeline>
+<codeline lineno="40" refid="include_2ubixos_2types_8h_13b65128d2644e9b80cec9a69bfa7e094" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>;</highlight></codeline>
+<codeline lineno="41" refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>;</highlight></codeline>
+<codeline lineno="42" refid="include_2ubixos_2types_8h_187d141052bcd5ec8a80812a565c70369" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref>;</highlight></codeline>
+<codeline lineno="43" refid="include_2ubixos_2types_8h_13832cc814f0e7129add9a1cf7201c7ca" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref>;</highlight></codeline>
+<codeline lineno="44" refid="include_2ubixos_2types_8h_1292a71e839a94f0bafde3510df52d972" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_1292a71e839a94f0bafde3510df52d972" kindref="member">Int16</ref>;</highlight></codeline>
+<codeline lineno="45" refid="include_2ubixos_2types_8h_11657cdc78acd17f92fb047e02f7a5f14" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_11657cdc78acd17f92fb047e02f7a5f14" kindref="member">Int32</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="include_2ubixos_2types_8h_1c7c42f52639b9aca7da966a0783996d7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_125875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>unsigned<sp/>integrals<sp/>(deprecated)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="include_2ubixos_2types_8h_1f7b042408b9b104606f8a9b5035329f3" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_128989c8f3e511d5c6a9fd46b1adc1ee0" kindref="member">__uint16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref>;</highlight></codeline>
+<codeline lineno="49" refid="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref>;</highlight></codeline>
+<codeline lineno="50" refid="include_2ubixos_2types_8h_1250ac047bf3984b5dae755276a305d64" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_19f490fc8927ff1923bbc8d63eb4e6960" kindref="member">__uint64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref>;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">//typedef<sp/>long<sp/>long<sp/>int<sp/>quad_t;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="include_2ubixos_2types_8h_1b0580e7dfaba1bf72c220284778fd479" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_19f490fc8927ff1923bbc8d63eb4e6960" kindref="member">__uint64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref>;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="include_2ubixos_2types_8h_1e2b02ed168fc99cff3851603910b1fb6" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1e2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref>;</highlight></codeline>
+<codeline lineno="55" refid="include_2ubixos_2types_8h_1a1a19deefc008737e6397f44d983cfd4" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1a1a19deefc008737e6397f44d983cfd4" kindref="member">u_short</ref>;</highlight></codeline>
+<codeline lineno="56" refid="include_2ubixos_2types_8h_1c319c165d52643e43249fe003e18bdf3" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref>;</highlight></codeline>
+<codeline lineno="57" refid="include_2ubixos_2types_8h_18f25a50daf29ce2cee1ec038a4d744ea" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_18f25a50daf29ce2cee1ec038a4d744ea" kindref="member">u_long</ref>;</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="include_2ubixos_2types_8h_1e438ba74394b14d7b24b6df3b3b8c252" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref>;</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="include_2ubixos_2types_8h_1288e13e815d43b06e75819f8939524df" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref>;</highlight></codeline>
+<codeline lineno="63" refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>;<sp/></highlight><highlight class="comment">/*<sp/>standart<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>NOBOOL</highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#ifndef<sp/>__cplusplus</highlight></codeline>
+<codeline lineno="67" refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/>{<sp/><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a" kindref="member">FALSE</ref>=0,<ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>=1<sp/>}<sp/><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref>;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="70"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_INO_T_DECLARED</highlight></codeline>
+<codeline lineno="72" refid="include_2ubixos_2types_8h_173341b7381d39d6e5b80ff9f23379dbd" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_12d94613be7241171120863f93f36e119" kindref="member">__ino_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_173341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inode<sp/>number<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_INO_T_DECLARED</highlight></codeline>
+<codeline lineno="74"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="75"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_INT8_T_DECLARED</highlight></codeline>
+<codeline lineno="77" refid="include_2ubixos_2types_8h_106ffba8acf5d133104191f183e67ac8c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_100671532665dc0dbae7e64b82f703b06" kindref="member">__int8_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref>;</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_INT8_T_DECLARED</highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="80"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_INT16_T_DECLARED</highlight></codeline>
+<codeline lineno="82" refid="include_2ubixos_2types_8h_13542c6a0490e65fc4fc407273126e64f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_12f94d4e7ed665456e2c3d613dbd211ef" kindref="member">__int16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_13542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_INT16_T_DECLARED</highlight></codeline>
+<codeline lineno="84"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_INT32_T_DECLARED</highlight></codeline>
+<codeline lineno="87" refid="include_2ubixos_2types_8h_16f6221103820f185abcc62b874665a93" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1479ed1d22a5d4badec9d1fa7246d05bf" kindref="member">__int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref>;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_INT32_T_DECLARED</highlight></codeline>
+<codeline lineno="89"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="90"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_INT64_T_DECLARED</highlight></codeline>
+<codeline lineno="92" refid="include_2ubixos_2types_8h_196411d49619f50e635418ee57651b95d" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1ee0edd064977857105b173face02e89a" kindref="member">__int64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref>;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_INT64_T_DECLARED</highlight></codeline>
+<codeline lineno="94"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="include_2ubixos_2types_8h_187bd983bf349d8b86901f3200d559e8e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_10a768bafddb541c70e3fbefbd150b7c3" kindref="member">__ssize_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_187bd983bf349d8b86901f3200d559e8e" kindref="member">ssize_t</ref>;</highlight></codeline>
+<codeline lineno="97" refid="include_2ubixos_2types_8h_1947150611d74d1400ef3f0af0776aadd" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref>;</highlight></codeline>
+<codeline lineno="98" refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1ee0edd064977857105b173face02e89a" kindref="member">__int64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>;</highlight></codeline>
+<codeline lineno="99" refid="include_2ubixos_2types_8h_1d6f327965d9e330cd225ca2153ac0453" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1d6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref>;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="include_2ubixos_2types_8h_11844226d778badcda0a21b28310830ea" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1b78e9d0e7ded311d6c9dbd234039b393" kindref="member">__uid_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_11844226d778badcda0a21b28310830ea" kindref="member">uid_t</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>user<sp/>id<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102" refid="include_2ubixos_2types_8h_19520fe38856d436aa8c5850ff21839ec" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1b9c03aa3bb66a3ae3ce8efaf3295c749" kindref="member">__gid_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_19520fe38856d436aa8c5850ff21839ec" kindref="member">gid_t</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>group<sp/>id<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="include_2ubixos_2types_8h_17da4753cd6945c5ad91f41c00b474b3f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1d43f5ff583ee6b60d455a66bd1c868db" kindref="member">__blkcnt_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_17da4753cd6945c5ad91f41c00b474b3f" kindref="member">blkcnt_t</ref>;</highlight></codeline>
+<codeline lineno="104" refid="include_2ubixos_2types_8h_1cac8eacbbc225743e88f8e5e8bf93581" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_19b5f96d324bf126dd679f4323d480355" kindref="member">__blksize_t</ref><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1cac8eacbbc225743e88f8e5e8bf93581" kindref="member">blksize_t</ref>;</highlight></codeline>
+<codeline lineno="105" refid="include_2ubixos_2types_8h_1ee689fd681d6f52c910a90af380155af" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_16d612a9db2a7b64083ddae102805217e" kindref="member">__fflags_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1ee689fd681d6f52c910a90af380155af" kindref="member">fflags_t</ref>;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_TIME_T_DECLARED</highlight></codeline>
+<codeline lineno="108" refid="include_2ubixos_2types_8h_1c8234dac99fc3a2dcc8b7998afd40d49" refkind="member"><highlight class="preprocessor"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1c9fb8d211b39b07df423f5c3238c5f5d" kindref="member">__time_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="time_8h_1c8234dac99fc3a2dcc8b7998afd40d49" kindref="member">time_t</ref>;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>_TIME_T_DECLARED</highlight></codeline>
+<codeline lineno="110"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="111"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="114"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="116"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="117"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/types.h"/>
+  </compounddef>
+</doxygen>

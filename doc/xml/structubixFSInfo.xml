@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structubixFSInfo" kind="struct" prot="public">
+    <compoundname>ubixFSInfo</compoundname>
+    <includes refid="ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structubixFSInfo_14f530e266f49e0310c763653399dafa2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ubixFSInfo::batEntries</definition>
+        <argsstring></argsstring>
+        <name>batEntries</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="133" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="133" bodyend="-1"/>
+        <referencedby refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</referencedby>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" prot="public" static="no" mutable="no">
+        <type><ref refid="structblockAllocationTableEntry" kindref="compound">blockAllocationTableEntry</ref> *</type>
+        <definition>struct blockAllocationTableEntry* ubixFSInfo::blockAllocationTable</definition>
+        <argsstring></argsstring>
+        <name>blockAllocationTable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="131" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="131" bodyend="-1"/>
+        <referencedby refid="block_8c_1182b9be545371d2fcda6981134de2b44" compoundref="block_8c" startline="79" endline="94">freeBlocks</referencedby>
+        <referencedby refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</referencedby>
+        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
+        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
+        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structubixFSInfo_16f64ea0bc1a21fca92dde6228bb194fc" prot="public" static="no" mutable="no">
+        <type><ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
+        <definition>struct cacheNode* ubixFSInfo::dirCache</definition>
+        <argsstring></argsstring>
+        <name>dirCache</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="132" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="132" bodyend="-1"/>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structubixFSInfo_18c58076e25df4115ed42bebce08d5181" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ubixFSInfo::rootDir</definition>
+        <argsstring></argsstring>
+        <name>rootDir</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="134" bodyend="-1"/>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="637">
+        <label>blockAllocationTableEntry</label>
+        <link refid="structblockAllocationTableEntry"/>
+      </node>
+      <node id="635">
+        <label>ubixFSInfo</label>
+        <link refid="structubixFSInfo"/>
+        <childnode refid="636" relation="usage">
+          <edgelabel>dirCache</edgelabel>
+        </childnode>
+        <childnode refid="637" relation="usage">
+          <edgelabel>blockAllocationTable</edgelabel>
+        </childnode>
+      </node>
+      <node id="636">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="636" relation="usage">
+          <edgelabel>prev
+next
+parent
+fileListTail
+fileListHead</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="130" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="130" bodyend="135"/>
+    <listofallmembers>
+      <member refid="structubixFSInfo_14f530e266f49e0310c763653399dafa2" prot="public" virt="non-virtual"><scope>ubixFSInfo</scope><name>batEntries</name></member>
+      <member refid="structubixFSInfo_103867f147dbbdf3c1d6cdd16a7a33097" prot="public" virt="non-virtual"><scope>ubixFSInfo</scope><name>blockAllocationTable</name></member>
+      <member refid="structubixFSInfo_16f64ea0bc1a21fca92dde6228bb194fc" prot="public" virt="non-virtual"><scope>ubixFSInfo</scope><name>dirCache</name></member>
+      <member refid="structubixFSInfo_18c58076e25df4115ed42bebce08d5181" prot="public" virt="non-virtual"><scope>ubixFSInfo</scope><name>rootDir</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

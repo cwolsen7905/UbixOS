@@ -1,0 +1,680 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="sockets_8h" kind="file">
+    <compoundname>sockets.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="net_8c" local="no">src/sys/lib/net.c</includedby>
+    <includedby refid="sockets_8c" local="yes">src/sys/net/api/sockets.c</includedby>
+    <incdepgraph>
+      <node id="986">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="987" relation="include">
+        </childnode>
+      </node>
+      <node id="987">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="985">
+        <label>src/sys/include/net/sockets.h</label>
+        <link refid="sockets.h"/>
+        <childnode refid="986" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="989">
+        <label>src/sys/lib/net.c</label>
+        <link refid="net_8c"/>
+      </node>
+      <node id="988">
+        <label>src/sys/include/net/sockets.h</label>
+        <link refid="sockets.h"/>
+        <childnode refid="989" relation="include">
+        </childnode>
+        <childnode refid="990" relation="include">
+        </childnode>
+      </node>
+      <node id="990">
+        <label>src/sys/net/api/sockets.c</label>
+        <link refid="sockets_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structin__addr" prot="public">in_addr</innerclass>
+    <innerclass refid="structsockaddr" prot="public">sockaddr</innerclass>
+    <innerclass refid="structsockaddr__in" prot="public">sockaddr_in</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="sockets_8h_19930604d0e32588eae76f43ca38e7826" prot="public" static="no">
+        <name>AF_INET</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sockets_8h_15d1940045dc2e7de552f3d4ff13a74ab" prot="public" static="no">
+        <name>INADDR_ANY</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="70" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sockets_8h_14a725f61ded23ce8a7dff8e82ed51986" prot="public" static="no">
+        <name>INADDR_BROADCAST</name>
+        <initializer>0xffffffff</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="71" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sockets_8h_194f83c72c1e5e6ef453e47cf59885fb5" prot="public" static="no">
+        <name>IPPROTO_TCP</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sockets_8h_1b332d40b15142f33a88d4fcb1d6a5920" prot="public" static="no">
+        <name>IPPROTO_UDP</name>
+        <initializer>17</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sockets_8h_13f5da0b5be27fe31ec7cc11bfa8d1a25" prot="public" static="no">
+        <name>PF_INET</name>
+        <initializer>AF_INET</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="sockets_8h_14db8b9a846c67404db0b6f014f9a9fdf" prot="public" static="no">
+        <name>SOCK_DGRAM</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="62" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1d1afafec89b608d54649d7d02117d17c" compoundref="sockets_8c" startline="383" endline="414">lwip_socket</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="sockets_8h_1249394484f9410a2e3f8eba24657feb9" prot="public" static="no">
+        <name>SOCK_STREAM</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1d1afafec89b608d54649d7d02117d17c" compoundref="sockets_8c" startline="383" endline="414">lwip_socket</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="sockets_8h_1f32c7d1377562b7b35fdd0535f6fa952" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_accept</definition>
+        <argsstring>(int s, struct sockaddr *addr, int *addrlen)</argsstring>
+        <name>lwip_accept</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsockaddr" kindref="compound">sockaddr</ref> *</type>
+          <declname>addr</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>addrlen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="91" bodyend="118"/>
+        <references refid="structip__addr_1aca6b7136a4c4efb4e0da1384d76f4b5" compoundref="ipv6_2ip__addr_8h" startline="43">ip_addr::addr</references>
+        <references refid="sockets_8c_1cfcb93611c8f8e67e69d87561a72c3ee" compoundref="sockets_8c" startline="74" endline="88">alloc_socket</references>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="api_8h_1b1ef5f260ad8147a3b5b70b317b489d2" compoundref="api__lib_8c" startline="416" endline="427">netconn_accept</references>
+        <references refid="api_8h_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</references>
+        <references refid="api_8h_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_11675042812d3bc6d5f9eeaa28c8f37a7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_bind</definition>
+        <argsstring>(int s, struct sockaddr *name, int namelen)</argsstring>
+        <name>lwip_bind</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsockaddr" kindref="compound">sockaddr</ref> *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>namelen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="121" bodyend="144"/>
+        <references refid="structip__addr_1aca6b7136a4c4efb4e0da1384d76f4b5" compoundref="ipv6_2ip__addr_8h" startline="43">ip_addr::addr</references>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" compoundref="err_8h" startline="48">ERR_OK</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="39">name</references>
+        <references refid="api_8h_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</references>
+        <references refid="ipv4_2inet_8h_1118e9d76568ab81ad97f138d4ea1ddd2" compoundref="ipv4_2inet_8h" startline="81">ntohs</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_1fd0897a2e23d99a5dffcc976c7e5d72c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_close</definition>
+        <argsstring>(int s)</argsstring>
+        <name>lwip_close</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="147" bodyend="166"/>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="debug_8h_18b52c1fca5671ffbfe068c8d50ca0065" compoundref="debug_8h" startline="92">DEBUGF</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="structlwip__socket_1f648ad335e1a066b00801f992d0de3a8" compoundref="sockets_8c" startline="47">lwip_socket::lastdata</references>
+        <references refid="structlwip__socket_1548897cb34e4f6254c0d466af80596ae" compoundref="sockets_8c" startline="48">lwip_socket::lastoffset</references>
+        <references refid="api_8h_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</references>
+        <references refid="api_8h_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="debug_8h_1509594f3ba7d8b1356628b50b55a0934" compoundref="debug_8h" startline="107">SOCKETS_DEBUG</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_19688d733f4d571cef85948fe74e0f6c7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_connect</definition>
+        <argsstring>(int s, struct sockaddr *name, int namelen)</argsstring>
+        <name>lwip_connect</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsockaddr" kindref="compound">sockaddr</ref> *</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>namelen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="169" bodyend="192"/>
+        <references refid="structip__addr_1aca6b7136a4c4efb4e0da1384d76f4b5" compoundref="ipv6_2ip__addr_8h" startline="43">ip_addr::addr</references>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" compoundref="err_8h" startline="48">ERR_OK</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" compoundref="pci_8c" startline="39">name</references>
+        <references refid="api_8h_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</references>
+        <references refid="ipv4_2inet_8h_1118e9d76568ab81ad97f138d4ea1ddd2" compoundref="ipv4_2inet_8h" startline="81">ntohs</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_1bee6ee286147cf334a1ba19f19b2e08b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_listen</definition>
+        <argsstring>(int s, int backlog)</argsstring>
+        <name>lwip_listen</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>backlog</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="195" bodyend="213"/>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" compoundref="err_8h" startline="48">ERR_OK</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="api_8h_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_16853356e8156a0b652fa13105dd77397" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_read</definition>
+        <argsstring>(int s, void *mem, int len)</argsstring>
+        <name>lwip_read</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>mem</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>len</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="293" bodyend="296"/>
+        <references refid="sockets_8h_147db87caa9030759f3ffd872df113661" compoundref="sockets_8c" startline="299" endline="302">lwip_recv</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_147db87caa9030759f3ffd872df113661" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_recv</definition>
+        <argsstring>(int s, void *mem, int len, unsigned int flags)</argsstring>
+        <name>lwip_recv</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>mem</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>unsigned int</type>
+          <declname>flags</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="299" bodyend="302"/>
+        <references refid="sockets_8h_1a433d1ebe9c87f57160c0d260e225705" compoundref="sockets_8c" startline="216" endline="290">lwip_recvfrom</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <referencedby refid="sockets_8c_16853356e8156a0b652fa13105dd77397" compoundref="sockets_8c" startline="293" endline="296">lwip_read</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_1a433d1ebe9c87f57160c0d260e225705" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_recvfrom</definition>
+        <argsstring>(int s, void *mem, int len, unsigned int flags, struct sockaddr *from, int *fromlen)</argsstring>
+        <name>lwip_recvfrom</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>mem</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>len</declname>
+        </param>
+        <param>
+          <type>unsigned int</type>
+          <declname>flags</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsockaddr" kindref="compound">sockaddr</ref> *</type>
+          <declname>from</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>fromlen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="216" bodyend="290"/>
+        <references refid="structip__addr_1aca6b7136a4c4efb4e0da1384d76f4b5" compoundref="ipv6_2ip__addr_8h" startline="43">ip_addr::addr</references>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="ipv4_2inet_8h_1b7fffd06ef1d1a7d34f99eedbb9f44dd" compoundref="ipv4_2inet_8h" startline="66">htons</references>
+        <references refid="structlwip__socket_1f648ad335e1a066b00801f992d0de3a8" compoundref="sockets_8c" startline="47">lwip_socket::lastdata</references>
+        <references refid="structlwip__socket_1548897cb34e4f6254c0d466af80596ae" compoundref="sockets_8c" startline="48">lwip_socket::lastoffset</references>
+        <references refid="api_8h_19a5f4f669674daa2f3b7b303d7cea915" compoundref="api__lib_8c" startline="158" endline="183">netbuf_copy_partial</references>
+        <references refid="api_8h_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</references>
+        <references refid="api_8h_18dd3c0551aa79d162b224ea5cd815b55" compoundref="api__lib_8c" startline="192" endline="195">netbuf_fromaddr</references>
+        <references refid="api_8h_16294b37d1aba1478329e1f084f39db5d" compoundref="api__lib_8c" startline="198" endline="201">netbuf_fromport</references>
+        <references refid="api_8h_16d20eca8f0316e4e71980108c1563581" compoundref="api__lib_8c" startline="122" endline="125">netbuf_len</references>
+        <references refid="api_8h_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a">NETCONN_TCP</references>
+        <references refid="api_8h_15ab1d6bb5e45b28125312f1b3c840853" compoundref="api__lib_8c" startline="281" endline="284">netconn_type</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <referencedby refid="sockets_8c_147db87caa9030759f3ffd872df113661" compoundref="sockets_8c" startline="299" endline="302">lwip_recv</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_1a36cb527b3501bc2ce42f7283a010e7a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_send</definition>
+        <argsstring>(int s, void *dataptr, int size, unsigned int flags)</argsstring>
+        <name>lwip_send</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>dataptr</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>unsigned int</type>
+          <declname>flags</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="305" bodyend="351"/>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="debug_8h_18b52c1fca5671ffbfe068c8d50ca0065" compoundref="debug_8h" startline="92">DEBUGF</references>
+        <references refid="structnetbuf_1efd0b92792db1bdb3547d1f1d3212f67" compoundref="api_8h" startline="72">netbuf::err</references>
+        <references refid="err_8h_18700518a3e3d0c7a4439a37dcbcf2143" compoundref="err_8h" startline="60">ERR_ARG</references>
+        <references refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" compoundref="err_8h" startline="48">ERR_OK</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="api_8h_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</references>
+        <references refid="api_8h_1aba704cd963e35e71145de9f5112991d" compoundref="api__lib_8c" startline="51" endline="63">netbuf_new</references>
+        <references refid="api_8h_1f038b56dbdd67a6e48bf0125c8ef61ba" compoundref="api__lib_8c" startline="102" endline="111">netbuf_ref</references>
+        <references refid="api_8h_1482106705a409ffb01daa6b18c159e5f" compoundref="api_8h" startline="50">NETCONN_COPY</references>
+        <references refid="api_8h_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a">NETCONN_TCP</references>
+        <references refid="api_8h_15ab1d6bb5e45b28125312f1b3c840853" compoundref="api__lib_8c" startline="281" endline="284">netconn_type</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d916b8ec191d69f7e639f4ab40779069636">NETCONN_UDP</references>
+        <references refid="api_8h_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="debug_8h_1509594f3ba7d8b1356628b50b55a0934" compoundref="debug_8h" startline="107">SOCKETS_DEBUG</references>
+        <referencedby refid="sockets_8c_18dba95d254d6cb221ba4039ad8f3337b" compoundref="sockets_8c" startline="354" endline="380">lwip_sendto</referencedby>
+        <referencedby refid="sockets_8c_1e3d92ccb1ddfafe7df89185dbc881ec2" compoundref="sockets_8c" startline="417" endline="445">lwip_write</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_1a8c27aa2c136dc815369a23d29e4f904" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_sendto</definition>
+        <argsstring>(int s, void *dataptr, int size, unsigned int flags, struct sockaddr *to, int tolen)</argsstring>
+        <name>lwip_sendto</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>dataptr</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size</declname>
+        </param>
+        <param>
+          <type>unsigned int</type>
+          <declname>flags</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structsockaddr" kindref="compound">sockaddr</ref> *</type>
+          <declname>to</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>tolen</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="354" bodyend="380"/>
+        <references refid="structip__addr_1aca6b7136a4c4efb4e0da1384d76f4b5" compoundref="ipv6_2ip__addr_8h" startline="43">ip_addr::addr</references>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="sockets_8h_1a36cb527b3501bc2ce42f7283a010e7a" compoundref="sockets_8c" startline="305" endline="351">lwip_send</references>
+        <references refid="api_8h_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</references>
+        <references refid="api_8h_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_1d1afafec89b608d54649d7d02117d17c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_socket</definition>
+        <argsstring>(int domain, int type, int protocol)</argsstring>
+        <name>lwip_socket</name>
+        <param>
+          <type>int</type>
+          <declname>domain</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>type</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>protocol</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="383" bodyend="414"/>
+        <references refid="sockets_8c_1cfcb93611c8f8e67e69d87561a72c3ee" compoundref="sockets_8c" startline="74" endline="88">alloc_socket</references>
+        <references refid="debug_8h_18b52c1fca5671ffbfe068c8d50ca0065" compoundref="debug_8h" startline="92">DEBUGF</references>
+        <references refid="api_8h_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</references>
+        <references refid="api_8h_1935860c5a91e85457369b6f558e638fd" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a">NETCONN_TCP</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d916b8ec191d69f7e639f4ab40779069636">NETCONN_UDP</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="sockets_8h_14db8b9a846c67404db0b6f014f9a9fdf" compoundref="sockets_8h" startline="62">SOCK_DGRAM</references>
+        <references refid="sockets_8h_1249394484f9410a2e3f8eba24657feb9" compoundref="sockets_8h" startline="61">SOCK_STREAM</references>
+        <references refid="debug_8h_1509594f3ba7d8b1356628b50b55a0934" compoundref="debug_8h" startline="107">SOCKETS_DEBUG</references>
+      </memberdef>
+      <memberdef kind="function" id="sockets_8h_1a5c59086cba10ace01715c8fa7348239" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lwip_write</definition>
+        <argsstring>(int s, void *dataptr, int size)</argsstring>
+        <name>lwip_write</name>
+        <param>
+          <type>int</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>dataptr</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>size</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/sockets.c" bodystart="417" bodyend="445"/>
+        <references refid="structlwip__socket_1cc08f8cc9af8dc159e035769a2f70013" compoundref="sockets_8c" startline="46">lwip_socket::conn</references>
+        <references refid="debug_8h_18b52c1fca5671ffbfe068c8d50ca0065" compoundref="debug_8h" startline="92">DEBUGF</references>
+        <references refid="err_8h_18700518a3e3d0c7a4439a37dcbcf2143" compoundref="err_8h" startline="60">ERR_ARG</references>
+        <references refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" compoundref="err_8h" startline="48">ERR_OK</references>
+        <references refid="sockets_8c_12c14650cba5521231ebeefa1ae807e67" compoundref="sockets_8c" startline="55" endline="71">get_socket</references>
+        <references refid="sockets_8h_1a36cb527b3501bc2ce42f7283a010e7a" compoundref="sockets_8c" startline="305" endline="351">lwip_send</references>
+        <references refid="api_8h_1482106705a409ffb01daa6b18c159e5f" compoundref="api_8h" startline="50">NETCONN_COPY</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a">NETCONN_TCP</references>
+        <references refid="api_8h_15ab1d6bb5e45b28125312f1b3c840853" compoundref="api__lib_8c" startline="281" endline="284">netconn_type</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d916b8ec191d69f7e639f4ab40779069636">NETCONN_UDP</references>
+        <references refid="api_8h_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="debug_8h_1509594f3ba7d8b1356628b50b55a0934" compoundref="debug_8h" startline="107">SOCKETS_DEBUG</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: sockets_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_SOCKETS_H__</highlight></codeline>
+<codeline lineno="38"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_SOCKETS_H__</highlight></codeline>
+<codeline lineno="39"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="structin__addr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structin__addr" kindref="compound">in_addr</ref><sp/>{</highlight></codeline>
+<codeline lineno="43" refid="structin__addr_18a06b11ad681c21d8474f014c4d49367" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="structin__addr_18a06b11ad681c21d8474f014c4d49367" kindref="member">s_addr</ref>;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="structsockaddr__in" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsockaddr__in" kindref="compound">sockaddr_in</ref><sp/>{</highlight></codeline>
+<codeline lineno="48" refid="structsockaddr__in_17b05be68e8f899a2e3d8da6bc4e09a08" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structsockaddr__in_17b05be68e8f899a2e3d8da6bc4e09a08" kindref="member">sin_len</ref>;</highlight></codeline>
+<codeline lineno="49" refid="structsockaddr__in_19d7a534d22d2349de3777cff41c7d7a3" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structsockaddr__in_19d7a534d22d2349de3777cff41c7d7a3" kindref="member">sin_family</ref>;</highlight></codeline>
+<codeline lineno="50" refid="structsockaddr__in_120e1a797fa2afa9a806252f8a57eee9a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structsockaddr__in_120e1a797fa2afa9a806252f8a57eee9a" kindref="member">sin_port</ref>;</highlight></codeline>
+<codeline lineno="51" refid="structsockaddr__in_14ea5f2f1138e5c8597097db255a9ec6c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structin__addr" kindref="compound">in_addr</ref><sp/><ref refid="structsockaddr__in_14ea5f2f1138e5c8597097db255a9ec6c" kindref="member">sin_addr</ref>;</highlight></codeline>
+<codeline lineno="52" refid="structsockaddr__in_10254bfac1c18e922cb6638c3f6139e09" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsockaddr__in_10254bfac1c18e922cb6638c3f6139e09" kindref="member">sin_zero</ref>[8];</highlight></codeline>
+<codeline lineno="53"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="structsockaddr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structsockaddr" kindref="compound">sockaddr</ref><sp/>{</highlight></codeline>
+<codeline lineno="56" refid="structsockaddr_1caec69be2220562fb105b1185e6039f4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structsockaddr_1caec69be2220562fb105b1185e6039f4" kindref="member">sa_len</ref>;</highlight></codeline>
+<codeline lineno="57" refid="structsockaddr_11460d18ba1ab1ba525819c9a2bb79fc4" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="structsockaddr_11460d18ba1ab1ba525819c9a2bb79fc4" kindref="member">sa_family</ref>;</highlight></codeline>
+<codeline lineno="58" refid="structsockaddr_1fd5d95d56d0f8959f5b56458b3b3c714" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structsockaddr_1fd5d95d56d0f8959f5b56458b3b3c714" kindref="member">sa_data</ref>[14];</highlight></codeline>
+<codeline lineno="59"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="sockets_8h_1249394484f9410a2e3f8eba24657feb9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SOCK_STREAM<sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="62" refid="sockets_8h_14db8b9a846c67404db0b6f014f9a9fdf" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SOCK_DGRAM<sp/><sp/><sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="sockets_8h_19930604d0e32588eae76f43ca38e7826" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>AF_INET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="65" refid="sockets_8h_13f5da0b5be27fe31ec7cc11bfa8d1a25" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PF_INET<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>AF_INET</highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="sockets_8h_194f83c72c1e5e6ef453e47cf59885fb5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IPPROTO_TCP<sp/><sp/><sp/><sp/><sp/>6</highlight></codeline>
+<codeline lineno="68" refid="sockets_8h_1b332d40b15142f33a88d4fcb1d6a5920" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IPPROTO_UDP<sp/><sp/><sp/><sp/><sp/>17</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="sockets_8h_15d1940045dc2e7de552f3d4ff13a74ab" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INADDR_ANY<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="71" refid="sockets_8h_14a725f61ded23ce8a7dff8e82ed51986" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INADDR_BROADCAST<sp/>0xffffffff</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1f32c7d1377562b7b35fdd0535f6fa952" kindref="member">lwip_accept</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsockaddr" kindref="compound">sockaddr</ref><sp/>*addr,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*addrlen);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_11675042812d3bc6d5f9eeaa28c8f37a7" kindref="member">lwip_bind</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsockaddr" kindref="compound">sockaddr</ref><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>namelen);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1fd0897a2e23d99a5dffcc976c7e5d72c" kindref="member">lwip_close</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_19688d733f4d571cef85948fe74e0f6c7" kindref="member">lwip_connect</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsockaddr" kindref="compound">sockaddr</ref><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>namelen);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1bee6ee286147cf334a1ba19f19b2e08b" kindref="member">lwip_listen</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>backlog);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_147db87caa9030759f3ffd872df113661" kindref="member">lwip_recv</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>len,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_16853356e8156a0b652fa13105dd77397" kindref="member">lwip_read</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>len);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1a433d1ebe9c87f57160c0d260e225705" kindref="member">lwip_recvfrom</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*mem,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>len,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags,</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsockaddr" kindref="compound">sockaddr</ref><sp/>*from,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*fromlen);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1a36cb527b3501bc2ce42f7283a010e7a" kindref="member">lwip_send</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*dataptr,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>size,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1a8c27aa2c136dc815369a23d29e4f904" kindref="member">lwip_sendto</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*dataptr,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>size,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>flags,</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structsockaddr" kindref="compound">sockaddr</ref><sp/>*to,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>tolen);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1d1afafec89b608d54649d7d02117d17c" kindref="member">lwip_socket</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>domain,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>type,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>protocol);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="sockets_8h_1a5c59086cba10ace01715c8fa7348239" kindref="member">lwip_write</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>s,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*dataptr,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>size);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_COMPAT_SOCKETS</highlight></codeline>
+<codeline lineno="89"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>accept(a,b,c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_accept(a,b,c)</highlight></codeline>
+<codeline lineno="90"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>bind(a,b,c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_bind(a,b,c)</highlight></codeline>
+<codeline lineno="91"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>close(s)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_close(s)</highlight></codeline>
+<codeline lineno="92"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>connect(a,b,c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_connect(a,b,c)</highlight></codeline>
+<codeline lineno="93"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>listen(a,b)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_listen(a,b)</highlight></codeline>
+<codeline lineno="94"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>recv(a,b,c,d)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_recv(a,b,c,d)</highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>read(a,b,c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_read(a,b,c)</highlight></codeline>
+<codeline lineno="96"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>recvfrom(a,b,c,d,e,f)<sp/>lwip_recvfrom(a,b,c,d,e,f)</highlight></codeline>
+<codeline lineno="97"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>send(a,b,c,d)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_send(a,b,c,d)</highlight></codeline>
+<codeline lineno="98"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>sendto(a,b,c,d,e,f)<sp/><sp/><sp/>lwip_sendto(a,b,c,d,e,f)</highlight></codeline>
+<codeline lineno="99"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>socket(a,b,c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_socket(a,b,c)</highlight></codeline>
+<codeline lineno="100"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>write(a,b,c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>lwip_write(a,b,c)</highlight></codeline>
+<codeline lineno="101"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_NO_COMPAT_SOCKETS<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_SOCKETS_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h"/>
+  </compounddef>
+</doxygen>

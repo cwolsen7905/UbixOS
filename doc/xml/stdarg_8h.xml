@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="stdarg_8h" kind="file">
+    <compoundname>stdarg.h</compoundname>
+    <includedby refid="kpanic_8c" local="no">src/sys/kernel/kpanic.c</includedby>
+    <includedby refid="kprintf_8c" local="no">src/sys/lib/kprintf.c</includedby>
+    <includedby refid="vsprintf_8c" local="no">src/sys/lib/vsprintf.c</includedby>
+    <invincdepgraph>
+      <node id="3471">
+        <label>src/sys/lib/kprintf.c</label>
+        <link refid="kprintf_8c"/>
+      </node>
+      <node id="3469">
+        <label>src/sys/include/stdarg.h</label>
+        <link refid="stdarg.h"/>
+        <childnode refid="3470" relation="include">
+        </childnode>
+        <childnode refid="3471" relation="include">
+        </childnode>
+        <childnode refid="3472" relation="include">
+        </childnode>
+      </node>
+      <node id="3470">
+        <label>src/sys/kernel/kpanic.c</label>
+        <link refid="kpanic_8c"/>
+      </node>
+      <node id="3472">
+        <label>src/sys/lib/vsprintf.c</label>
+        <link refid="vsprintf_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="stdarg_8h_119434d261abd3aca725fac4dace94a44" prot="public" static="no">
+        <name>vaArg</name>
+        <param><defname>ap</defname></param>
+        <param><defname>type</defname></param>
+        <initializer>((ap)[0] += \
+         ((sizeof(type) + sizeof(int) - 1) &amp; ~(sizeof(int) - 1)), \
+        (*(type *) ((ap)[0] \
+         - ((sizeof(type) + sizeof(int) - 1) &amp; ~(sizeof(int) - 1)) )))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="vsprintf_8c_1621577c2df0ad5faa281223c56eeb7a5" compoundref="vsprintf_8c" startline="139" endline="280">vsprintf</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="stdarg_8h_19eb66fe3016779da70a50f348919a850" prot="public" static="no">
+        <name>vaEnd</name>
+        <param><defname>ap</defname></param>
+        <initializer>((ap)[0] = 0, (void) 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="kpanic_8c_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</referencedby>
+        <referencedby refid="kprintf_8c_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</referencedby>
+        <referencedby refid="kprintf_8c_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="stdarg_8h_18a3212be1635dea2009b962c2abe5237" prot="public" static="no">
+        <name>vaStart</name>
+        <param><defname>ap</defname></param>
+        <param><defname>parm</defname></param>
+        <initializer>((ap)[0] = (char *) &amp;parm \
+         + ((sizeof(parm) + sizeof(int) - 1) &amp; ~(sizeof(int) - 1)), (void) 0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="kpanic_8c_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</referencedby>
+        <referencedby refid="kprintf_8c_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</referencedby>
+        <referencedby refid="kprintf_8c_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="stdarg_8h_1661698386a304e27be00e5e9125a6ec5" prot="public" static="no">
+        <type>char *</type>
+        <definition>typedef char* vaList[1]</definition>
+        <argsstring>[1]</argsstring>
+        <name>vaList</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" line="33" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" bodystart="33" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="stdarg_8h_1621577c2df0ad5faa281223c56eeb7a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int vsprintf</definition>
+        <argsstring>(char *buf, const char *fmt, vaList args)</argsstring>
+        <name>vsprintf</name>
+        <param>
+          <type>char *</type>
+          <declname>buf</declname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>fmt</declname>
+        </param>
+        <param>
+          <type><ref refid="stdarg_8h_1661698386a304e27be00e5e9125a6ec5" kindref="member">vaList</ref></type>
+          <declname>args</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/vsprintf.c" bodystart="139" bodyend="280"/>
+        <references refid="vsprintf_8c_12eb96152a52d739e41d16c53a2e419f3" compoundref="vsprintf_8c" startline="60">is_digit</references>
+        <references refid="vsprintf_8c_1437ef08681e7210d6678427030446a54" compoundref="vsprintf_8c" startline="75">LEFT</references>
+        <references refid="vsprintf_8c_1c2f4c669c6f6aa6caa5ab8adb1b07dd0" compoundref="vsprintf_8c" startline="84" endline="137">number</references>
+        <references refid="vsprintf_8c_10ea7ff5947c5f5430a29fdd98391eb2a" compoundref="vsprintf_8c" startline="73">PLUS</references>
+        <references refid="vsprintf_8c_19576d2d6eb782d532607bac077e87892" compoundref="vsprintf_8c" startline="72">SIGN</references>
+        <references refid="vsprintf_8c_13fa7c8ef8597579301cb4b5c59bc6d9a" compoundref="vsprintf_8c" startline="62" endline="69">skip_atoi</references>
+        <references refid="vsprintf_8c_109c78d2f8feb311dd9fc969a0bf84979" compoundref="vsprintf_8c" startline="77">SMALL</references>
+        <references refid="vsprintf_8c_15ff6e798033f03e74730e99f01936f84" compoundref="vsprintf_8c" startline="74">SPACE</references>
+        <references refid="vsprintf_8c_184acb423f634978b61ac46856de40a70" compoundref="vsprintf_8c" startline="76">SPECIAL</references>
+        <references refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" compoundref="strlen_8S" startline="4">strlen</references>
+        <references refid="stdarg_8h_119434d261abd3aca725fac4dace94a44" compoundref="stdarg_8h" startline="38">vaArg</references>
+        <references refid="vsprintf_8c_131373af6ef84e6fc25d9a9133522e4a6" compoundref="vsprintf_8c" startline="71">ZEROPAD</references>
+        <referencedby refid="kpanic_8c_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</referencedby>
+        <referencedby refid="kprintf_8c_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</referencedby>
+        <referencedby refid="kprintf_8c_1c38cd16373d98782e1465bd3d5aba470" compoundref="kprintf_8c" startline="51" endline="58">sprintf</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: stdarg_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_STDARG_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_STDARG_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="stdarg_8h_1661698386a304e27be00e5e9125a6ec5" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="stdarg_8h_1661698386a304e27be00e5e9125a6ec5" kindref="member">vaList</ref>[1];</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="stdarg_8h_18a3212be1635dea2009b962c2abe5237" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>vaStart(ap,<sp/>parm)<sp/><sp/>((ap)[0]<sp/>=<sp/>(char<sp/>*)<sp/>&amp;parm<sp/>\</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>+<sp/>((sizeof(parm)<sp/>+<sp/>sizeof(int)<sp/>-<sp/>1)<sp/>&amp;<sp/>~(sizeof(int)<sp/>-<sp/>1)),<sp/>(void)<sp/>0)</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="stdarg_8h_119434d261abd3aca725fac4dace94a44" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>vaArg(ap,<sp/>type)<sp/><sp/>((ap)[0]<sp/>+=<sp/>\</highlight></codeline>
+<codeline lineno="39"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((sizeof(type)<sp/>+<sp/>sizeof(int)<sp/>-<sp/>1)<sp/>&amp;<sp/>~(sizeof(int)<sp/>-<sp/>1)),<sp/>\</highlight></codeline>
+<codeline lineno="40"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(*(type<sp/>*)<sp/>((ap)[0]<sp/>\</highlight></codeline>
+<codeline lineno="41"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>-<sp/>((sizeof(type)<sp/>+<sp/>sizeof(int)<sp/>-<sp/>1)<sp/>&amp;<sp/>~(sizeof(int)<sp/>-<sp/>1))<sp/>)))</highlight></codeline>
+<codeline lineno="42"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="stdarg_8h_19eb66fe3016779da70a50f348919a850" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>vaEnd(ap)<sp/><sp/><sp/>((ap)[0]<sp/>=<sp/>0,<sp/>(void)<sp/>0)</highlight></codeline>
+<codeline lineno="44"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="stdarg_8h_1621577c2df0ad5faa281223c56eeb7a5" kindref="member">vsprintf</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*fmt,<sp/><ref refid="stdarg_8h_1661698386a304e27be00e5e9125a6ec5" kindref="member">vaList</ref><sp/>args);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>$Log: stdarg_8h.xml,v $
+<codeline lineno="51"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
+<codeline lineno="51"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="51"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"></highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"></highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:38<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"></highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:22:35<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"></highlight></codeline>
+<codeline lineno="64"><highlight class="comment"></highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/stdarg.h"/>
+  </compounddef>
+</doxygen>

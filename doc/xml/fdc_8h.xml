@@ -1,0 +1,874 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="fdc_8h" kind="file">
+    <compoundname>fdc.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
+    <includedby refid="fdc_8c" local="no">src/sys/isa/fdc.c</includedby>
+    <incdepgraph>
+      <node id="3205">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3206" relation="include">
+        </childnode>
+      </node>
+      <node id="3206">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3204">
+        <label>src/sys/include/isa/fdc.h</label>
+        <link refid="fdc.h"/>
+        <childnode refid="3205" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3209">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="3208">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="3209" relation="include">
+        </childnode>
+      </node>
+      <node id="3207">
+        <label>src/sys/include/isa/fdc.h</label>
+        <link refid="fdc.h"/>
+        <childnode refid="3208" relation="include">
+        </childnode>
+        <childnode refid="3210" relation="include">
+        </childnode>
+      </node>
+      <node id="3210">
+        <label>src/sys/isa/fdc.c</label>
+        <link refid="fdc_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structDrvGeom" prot="public">DrvGeom</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="fdc_8h_16f35816c0b01ac39832de24459d82e27" prot="public" static="no">
+        <name>cmdRead</name>
+        <initializer>(0xe6)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_18a2fef7d1ed07757e099b8c7b29bfb09" prot="public" static="no">
+        <name>cmdRecal</name>
+        <initializer>(0x07)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="fdc_8c_12a16ea9e09b5f3dc2a559351afdc75f3" compoundref="fdc_8c" startline="280" endline="286">recalibrate</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1e2d2411a8ccdc868ab718da2b15348a9" prot="public" static="no">
+        <name>cmdSeek</name>
+        <initializer>(0x0f)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="fdc_8c_15886a896e5f0361f36b40d007db6e683" compoundref="fdc_8c" startline="222" endline="239">seek</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_16afd950ba65e51d77abf2158216f0284" prot="public" static="no">
+        <name>cmdSensei</name>
+        <initializer>(0x08)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_16003c8e12dd1e4f765279854f016c0ae" prot="public" static="no">
+        <name>cmdSpecify</name>
+        <initializer>(0x03)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="fdc_8c_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1fcfbcbee1143a2a689afc3a656646bad" prot="public" static="no">
+        <name>cmdWrite</name>
+        <initializer>(0xc5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_195339d9d677a8ac74a7a7459ad130739" prot="public" static="no">
+        <name>dg144Gap3rw</name>
+        <initializer>0x1b</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="59" bodyend="-1"/>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1603e1e0a278c07c7338444e750ab35f3" prot="public" static="no">
+        <name>dg144Heads</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1874c835339ecb6a4a5fdd7aab7bfbe02" prot="public" static="no">
+        <name>dg144Spt</name>
+        <initializer>18</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1e502999ac4dc1f4ef9e0a9db76b11a9a" prot="public" static="no">
+        <name>dg144Tracks</name>
+        <initializer>80</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_151916e330bac103bdf860461ae359e1e" prot="public" static="no">
+        <name>dg168Gap3rw</name>
+        <initializer>0x1c</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="60" bodyend="-1"/>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1bcb9230a76b72528226c49a520db19f0" prot="public" static="no">
+        <name>fdcCcr</name>
+        <initializer>(0x3f7)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1298d327024dc99847e9064de3aa4388a" prot="public" static="no">
+        <name>fdcData</name>
+        <initializer>(0x3f5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1e266cdb34b69c65cfc108bbc72a4e3ff" compoundref="fdc_8c" startline="116" endline="127">getByte</referencedby>
+        <referencedby refid="fdc_8c_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_193ff9547b61a14618c87c5639a1252c5" prot="public" static="no">
+        <name>fdcDir</name>
+        <initializer>(0x3f7)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_1e3bc9df62f197b42804259efb8ba44ec" prot="public" static="no">
+        <name>fdcDor</name>
+        <initializer>(0x3f2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="fdc_8c_194483feb4903fca9643813faae8a76ee" compoundref="fdc_8c" startline="207" endline="212">motorOn</referencedby>
+        <referencedby refid="fdc_8c_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_100cfb48baa9e5c82b55842f2fdb5794c" prot="public" static="no">
+        <name>fdcDrs</name>
+        <initializer>(0x3f4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="fdc_8h_18ede3d2b611c5ae0d74bac02a68f998a" prot="public" static="no">
+        <name>fdcMsr</name>
+        <initializer>(0x3f4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1e266cdb34b69c65cfc108bbc72a4e3ff" compoundref="fdc_8c" startline="116" endline="127">getByte</referencedby>
+        <referencedby refid="fdc_8c_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</referencedby>
+        <referencedby refid="fdc_8c_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="fdc_8h_13a2c32c6da970b0c5efa169931f0c751" prot="public" static="no">
+        <type><ref refid="structDrvGeom" kindref="compound">DrvGeom</ref></type>
+        <definition>typedef struct DrvGeom  drvGeom</definition>
+        <argsstring></argsstring>
+        <name>drvGeom</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="39"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="fdc_8h_1a0f8325f93de9409e403e620f914e69f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void block2Hts</definition>
+        <argsstring>(int block, int *head, int *track, int *sector)</argsstring>
+        <name>block2Hts</name>
+        <param>
+          <type>int</type>
+          <declname>block</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>head</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>track</declname>
+        </param>
+        <param>
+          <type>int *</type>
+          <declname>sector</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="70" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="201" bodyend="205"/>
+        <references refid="fdc_8c_1af7080152f82d659c32dd37e1727c32d" compoundref="fdc_8c" startline="47">geometry</references>
+        <references refid="structDrvGeom_1edb24f8c9f3ae872be1cb104854dee1b" compoundref="fdc_8h" startline="36">DrvGeom::heads</references>
+        <references refid="structDrvGeom_1a8dd21b2e6459ec0fabd9fe49835646a" compoundref="fdc_8h" startline="38">DrvGeom::spt</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_12fad92b12d9ff56bf300b7e53875c75d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int fdc_init</definition>
+        <argsstring>()</argsstring>
+        <name>fdc_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="63" bodyend="77"/>
+        <references refid="devfs_8c_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</references>
+        <references refid="device_8h_1256b750ab99e3be9b83a9bfd37a22388" compoundref="device_8c" startline="51" endline="73">device_add</references>
+        <references refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" compoundref="gdt_8h" startline="37">dInt</references>
+        <references refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" compoundref="gdt_8h" startline="48">dPresent</references>
+        <references refid="fdc_8c_162847307f237f6b4240d1eb4718b13e7" compoundref="fdc_8c" startline="58" endline="61">fdcInit2</references>
+        <references refid="fdc_8h_1fbac0e2409458a8fda9ff689ecd31de9" compoundref="fdc_8c" startline="303" endline="308">fdcRead</references>
+        <references refid="fdc_8h_153a979dbcd632f57a4b004f66332f981" compoundref="fdc_8c" startline="309" endline="312">fdcWrite</references>
+        <references refid="fdc_8h_12c2196dd9229105994bb3840347e6f05">floppyIsr</references>
+        <references refid="structdevice__interface_192620413c2580ea3cf01e121bb54c254">device_interface::init</references>
+        <references refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a">irqEnable</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="structdevice__interface_17eb42b0bb3e06dbc9183531a5e59ddb8" compoundref="device_8h" startline="51">device_interface::major</references>
+        <references refid="8259_8h_17d84962c1a1c225344a94545309f92fc" compoundref="8259_8h" startline="42">mVec</references>
+        <references refid="structdevice__interface_16caf84418059d0121e76d873e305ddcb">device_interface::read</references>
+        <references refid="fdc_8h_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</references>
+        <references refid="structdevice__interface_1cbfb9de4fadc968479e1536fcef4a2d6">device_interface::reset</references>
+        <references refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</references>
+        <references refid="structdevice__interface_1f46913eec9f191290c82db23380bc5df">device_interface::write</references>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_1fbac0e2409458a8fda9ff689ecd31de9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fdcRead</definition>
+        <argsstring>(void *info, void *, uInt32 startSector, uInt32 sectorCount)</argsstring>
+        <name>fdcRead</name>
+        <param>
+          <type>void *</type>
+          <declname>info</declname>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>startSector</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>sectorCount</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="303" bodyend="308"/>
+        <references refid="fdc_8c_1bc402fcf53fee3aeee8c7a543727d183" compoundref="fdc_8c" startline="44">fdcSpinLock</references>
+        <references refid="fdc_8h_1a03242a5e44c4f2d10e15d296aca8c6b" compoundref="fdc_8c" startline="241" endline="250">readBlock</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_19d92103f483df5da1a07402347739e44" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool fdcRw</definition>
+        <argsstring>(int block, Int8 *blockBuffer, bool read, unsigned long numSectors)</argsstring>
+        <name>fdcRw</name>
+        <param>
+          <type>int</type>
+          <declname>block</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref> *</type>
+          <declname>blockBuffer</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+          <declname>read</declname>
+        </param>
+        <param>
+          <type>unsigned long</type>
+          <declname>numSectors</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="129" bodyend="199"/>
+        <references refid="fdc_8h_1a0f8325f93de9409e403e620f914e69f" compoundref="fdc_8c" startline="201" endline="205">block2Hts</references>
+        <references refid="fdc_8h_16f35816c0b01ac39832de24459d82e27" compoundref="fdc_8h" startline="50">cmdRead</references>
+        <references refid="fdc_8h_1fcfbcbee1143a2a689afc3a656646bad" compoundref="fdc_8h" startline="49">cmdWrite</references>
+        <references refid="fdc_8h_195339d9d677a8ac74a7a7459ad130739" compoundref="fdc_8h" startline="59">dg144Gap3rw</references>
+        <references refid="fdc_8h_1874c835339ecb6a4a5fdd7aab7bfbe02" compoundref="fdc_8h" startline="58">dg144Spt</references>
+        <references refid="fdc_8h_151916e330bac103bdf860461ae359e1e" compoundref="fdc_8h" startline="60">dg168Gap3rw</references>
+        <references refid="fdc_8c_1ee050d94ea7b1ff201263f7f7bfbbefc" compoundref="fdc_8c" startline="48">diskChange</references>
+        <references refid="dma_8h_17e2aa65e3e12777006ad192f7ff8bb5a" compoundref="dma_8c" startline="44" endline="57">dmaXfer</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="fdc_8h_1bcb9230a76b72528226c49a520db19f0" compoundref="fdc_8h" startline="45">fdcCcr</references>
+        <references refid="fdc_8h_193ff9547b61a14618c87c5639a1252c5" compoundref="fdc_8h" startline="44">fdcDir</references>
+        <references refid="fdc_8h_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</references>
+        <references refid="fdc_8c_1af7080152f82d659c32dd37e1727c32d" compoundref="fdc_8c" startline="47">geometry</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="video_8h_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="fdc_8h_1044fc0dea0fb35e6fab7f3c0badea2c9" compoundref="fdc_8c" startline="214" endline="220">motorOff</references>
+        <references refid="fdc_8h_194483feb4903fca9643813faae8a76ee" compoundref="fdc_8c" startline="207" endline="212">motorOn</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="fdc_8h_12a16ea9e09b5f3dc2a559351afdc75f3" compoundref="fdc_8c" startline="280" endline="286">recalibrate</references>
+        <references refid="fdc_8h_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</references>
+        <references refid="fdc_8h_15886a896e5f0361f36b40d007db6e683" compoundref="fdc_8c" startline="222" endline="239">seek</references>
+        <references refid="fdc_8h_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</references>
+        <references refid="structDrvGeom_1a8dd21b2e6459ec0fabd9fe49835646a" compoundref="fdc_8h" startline="38">DrvGeom::spt</references>
+        <references refid="fdc_8c_1e2746d1bf47d4f690105d083b966fa82" compoundref="fdc_8c" startline="54">status</references>
+        <references refid="fdc_8c_14235a63d122daa0852a95529c2f93498" compoundref="fdc_8c" startline="56">tbaddr</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <references refid="fdc_8h_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_1a03242a5e44c4f2d10e15d296aca8c6b" compoundref="fdc_8c" startline="241" endline="250">readBlock</referencedby>
+        <referencedby refid="fdc_8c_1ebbcd7bc8695e888491b97b5bf27bd9c" compoundref="fdc_8c" startline="252" endline="254">writeBlock</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_153a979dbcd632f57a4b004f66332f981" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void fdcWrite</definition>
+        <argsstring>(void *info, void *, uInt32 startSector, uInt32 sectorCount)</argsstring>
+        <name>fdcWrite</name>
+        <param>
+          <type>void *</type>
+          <declname>info</declname>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>startSector</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>sectorCount</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="309" bodyend="312"/>
+        <references refid="fdc_8h_1ebbcd7bc8695e888491b97b5bf27bd9c" compoundref="fdc_8c" startline="252" endline="254">writeBlock</references>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_12c2196dd9229105994bb3840347e6f05" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void floppyIsr</definition>
+        <argsstring>()</argsstring>
+        <name>floppyIsr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="65"/>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_15042dfaf2327990b6d1e1a7d3e01751c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void floppyIsrhndlr</definition>
+        <argsstring>()</argsstring>
+        <name>floppyIsrhndlr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="98" bodyend="101"/>
+        <references refid="fdc_8c_13041fe08ed5976302158f2668249f8b2" compoundref="fdc_8c" startline="46">done</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_1e266cdb34b69c65cfc108bbc72a4e3ff" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int getByte</definition>
+        <argsstring>()</argsstring>
+        <name>getByte</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="116" bodyend="127"/>
+        <references refid="fdc_8h_1298d327024dc99847e9064de3aa4388a" compoundref="fdc_8h" startline="43">fdcData</references>
+        <references refid="fdc_8h_18ede3d2b611c5ae0d74bac02a68f998a" compoundref="fdc_8h" startline="42">fdcMsr</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <referencedby refid="fdc_8c_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_1044fc0dea0fb35e6fab7f3c0badea2c9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void motorOff</definition>
+        <argsstring>(void)</argsstring>
+        <name>motorOff</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="214" bodyend="220"/>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="fdc_8c_17d4d19cb4b75718174baa280e7ceea9d" compoundref="fdc_8c" startline="49">motor</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_12a16ea9e09b5f3dc2a559351afdc75f3" compoundref="fdc_8c" startline="280" endline="286">recalibrate</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_194483feb4903fca9643813faae8a76ee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void motorOn</definition>
+        <argsstring>(void)</argsstring>
+        <name>motorOn</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="207" bodyend="212"/>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="fdc_8h_1e3bc9df62f197b42804259efb8ba44ec" compoundref="fdc_8h" startline="46">fdcDor</references>
+        <references refid="fdc_8c_17d4d19cb4b75718174baa280e7ceea9d" compoundref="fdc_8c" startline="49">motor</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_12a16ea9e09b5f3dc2a559351afdc75f3" compoundref="fdc_8c" startline="280" endline="286">recalibrate</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_1a03242a5e44c4f2d10e15d296aca8c6b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool readBlock</definition>
+        <argsstring>(int block, Int8 *blockBuffer, unsigned long numSectors)</argsstring>
+        <name>readBlock</name>
+        <param>
+          <type>int</type>
+          <declname>block</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref> *</type>
+          <declname>blockBuffer</declname>
+        </param>
+        <param>
+          <type>unsigned long</type>
+          <declname>numSectors</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="241" bodyend="250"/>
+        <references refid="fdc_8h_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <referencedby refid="fdc_8c_11f2029ff3278c4b819c4420c168cc082" compoundref="fdc_8c" startline="303" endline="308">fdcRead</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_12a16ea9e09b5f3dc2a559351afdc75f3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void recalibrate</definition>
+        <argsstring>(void)</argsstring>
+        <name>recalibrate</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="280" bodyend="286"/>
+        <references refid="fdc_8h_18a2fef7d1ed07757e099b8c7b29bfb09" compoundref="fdc_8h" startline="53">cmdRecal</references>
+        <references refid="fdc_8h_1044fc0dea0fb35e6fab7f3c0badea2c9" compoundref="fdc_8c" startline="214" endline="220">motorOff</references>
+        <references refid="fdc_8h_194483feb4903fca9643813faae8a76ee" compoundref="fdc_8c" startline="207" endline="212">motorOn</references>
+        <references refid="fdc_8h_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <references refid="fdc_8h_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_13aea9deb2a0bfea9ff05a898f4822e31" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void reset</definition>
+        <argsstring>(void)</argsstring>
+        <name>reset</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="288" bodyend="301"/>
+        <references refid="fdc_8h_16003c8e12dd1e4f765279854f016c0ae" compoundref="fdc_8h" startline="54">cmdSpecify</references>
+        <references refid="fdc_8c_1ee050d94ea7b1ff201263f7f7bfbbefc" compoundref="fdc_8c" startline="48">diskChange</references>
+        <references refid="fdc_8c_13041fe08ed5976302158f2668249f8b2" compoundref="fdc_8c" startline="46">done</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="fdc_8h_1e3bc9df62f197b42804259efb8ba44ec" compoundref="fdc_8h" startline="46">fdcDor</references>
+        <references refid="fdc_8c_17d4d19cb4b75718174baa280e7ceea9d" compoundref="fdc_8c" startline="49">motor</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="fdc_8h_12a16ea9e09b5f3dc2a559351afdc75f3" compoundref="fdc_8c" startline="280" endline="286">recalibrate</references>
+        <references refid="fdc_8h_15886a896e5f0361f36b40d007db6e683" compoundref="fdc_8c" startline="222" endline="239">seek</references>
+        <references refid="fdc_8h_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <references refid="fdc_8h_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</references>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_15886a896e5f0361f36b40d007db6e683" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool seek</definition>
+        <argsstring>(int track)</argsstring>
+        <name>seek</name>
+        <param>
+          <type>int</type>
+          <declname>track</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="222" bodyend="239"/>
+        <references refid="fdc_8h_1e2d2411a8ccdc868ab718da2b15348a9" compoundref="fdc_8h" startline="51">cmdSeek</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="fdc_8c_1bc6a2191073ccb560aaa9246c336fdd9" compoundref="fdc_8c" startline="50">fdcTrack</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="fdc_8h_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</references>
+        <references refid="fdc_8c_15772ef6ca96f12ff8ed997ce8bdbc6d7" compoundref="fdc_8c" startline="51">sr0</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <references refid="fdc_8h_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_1e708fa84d19a72e77185b3a214e81573" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void sendByte</definition>
+        <argsstring>(int Int8)</argsstring>
+        <name>sendByte</name>
+        <param>
+          <type>int</type>
+          <declname>Int8</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="103" bodyend="114"/>
+        <references refid="fdc_8h_1298d327024dc99847e9064de3aa4388a" compoundref="fdc_8h" startline="43">fdcData</references>
+        <references refid="fdc_8h_18ede3d2b611c5ae0d74bac02a68f998a" compoundref="fdc_8h" startline="42">fdcMsr</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_12a16ea9e09b5f3dc2a559351afdc75f3" compoundref="fdc_8c" startline="280" endline="286">recalibrate</referencedby>
+        <referencedby refid="fdc_8c_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
+        <referencedby refid="fdc_8c_15886a896e5f0361f36b40d007db6e683" compoundref="fdc_8c" startline="222" endline="239">seek</referencedby>
+        <referencedby refid="fdc_8c_1f5b6e5123d27381ca120b7b4fea7b242" compoundref="fdc_8c" startline="256" endline="278">waitFdc</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_1f5b6e5123d27381ca120b7b4fea7b242" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool waitFdc</definition>
+        <argsstring>(bool sensei)</argsstring>
+        <name>waitFdc</name>
+        <param>
+          <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+          <declname>sensei</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="256" bodyend="278"/>
+        <references refid="fdc_8h_16afd950ba65e51d77abf2158216f0284" compoundref="fdc_8h" startline="52">cmdSensei</references>
+        <references refid="fdc_8c_1ee050d94ea7b1ff201263f7f7bfbbefc" compoundref="fdc_8c" startline="48">diskChange</references>
+        <references refid="fdc_8c_13041fe08ed5976302158f2668249f8b2" compoundref="fdc_8c" startline="46">done</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="fdc_8h_193ff9547b61a14618c87c5639a1252c5" compoundref="fdc_8h" startline="44">fdcDir</references>
+        <references refid="fdc_8h_18ede3d2b611c5ae0d74bac02a68f998a" compoundref="fdc_8h" startline="42">fdcMsr</references>
+        <references refid="fdc_8c_1bc6a2191073ccb560aaa9246c336fdd9" compoundref="fdc_8c" startline="50">fdcTrack</references>
+        <references refid="fdc_8h_1e266cdb34b69c65cfc108bbc72a4e3ff" compoundref="fdc_8c" startline="116" endline="127">getByte</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="fdc_8h_1e708fa84d19a72e77185b3a214e81573" compoundref="fdc_8c" startline="103" endline="114">sendByte</references>
+        <references refid="fdc_8c_15772ef6ca96f12ff8ed997ce8bdbc6d7" compoundref="fdc_8c" startline="51">sr0</references>
+        <references refid="fdc_8c_1ee71be8badf158b1d3fc7ea1a47f82e7" compoundref="fdc_8c" startline="53">statSize</references>
+        <references refid="fdc_8c_1e2746d1bf47d4f690105d083b966fa82" compoundref="fdc_8c" startline="54">status</references>
+        <references refid="fdc_8c_1dea4d22e56b537ae3e8a8dd9b1555ce4" compoundref="fdc_8c" startline="52">timeOut</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="fdc_8c_12a16ea9e09b5f3dc2a559351afdc75f3" compoundref="fdc_8c" startline="280" endline="286">recalibrate</referencedby>
+        <referencedby refid="fdc_8c_13aea9deb2a0bfea9ff05a898f4822e31" compoundref="fdc_8c" startline="288" endline="301">reset</referencedby>
+        <referencedby refid="fdc_8c_15886a896e5f0361f36b40d007db6e683" compoundref="fdc_8c" startline="222" endline="239">seek</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="fdc_8h_1ebbcd7bc8695e888491b97b5bf27bd9c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool writeBlock</definition>
+        <argsstring>(int block, Int8 *blockBuffer, unsigned long numSectors)</argsstring>
+        <name>writeBlock</name>
+        <param>
+          <type>int</type>
+          <declname>block</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref> *</type>
+          <declname>blockBuffer</declname>
+        </param>
+        <param>
+          <type>unsigned long</type>
+          <declname>numSectors</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/fdc.c" bodystart="252" bodyend="254"/>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="fdc_8h_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</references>
+        <referencedby refid="fdc_8c_1cc9e5f35deea53f5b68798269b9be7c0" compoundref="fdc_8c" startline="309" endline="312">fdcWrite</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: fdc_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_FDC_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_FDC_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="structDrvGeom" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structDrvGeom" kindref="compound">DrvGeom</ref><sp/>{</highlight></codeline>
+<codeline lineno="36" refid="structDrvGeom_1edb24f8c9f3ae872be1cb104854dee1b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/><ref refid="structDrvGeom_1edb24f8c9f3ae872be1cb104854dee1b" kindref="member">heads</ref>;</highlight></codeline>
+<codeline lineno="37" refid="structDrvGeom_1a2752e58d5f53c17ce6331d3ee4e9cbf" refkind="member"><highlight class="normal"><sp/><sp/><sp/><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/><ref refid="structDrvGeom_1a2752e58d5f53c17ce6331d3ee4e9cbf" kindref="member">tracks</ref>;</highlight></codeline>
+<codeline lineno="38" refid="structDrvGeom_1a8dd21b2e6459ec0fabd9fe49835646a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/><ref refid="structDrvGeom_1a8dd21b2e6459ec0fabd9fe49835646a" kindref="member">spt</ref>;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal">}<sp/><ref refid="structDrvGeom" kindref="compound">drvGeom</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="fdc_8h_18ede3d2b611c5ae0d74bac02a68f998a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fdcMsr<sp/><sp/>(0x3f4)</highlight></codeline>
+<codeline lineno="43" refid="fdc_8h_1298d327024dc99847e9064de3aa4388a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>fdcData<sp/>(0x3f5)</highlight></codeline>
+<codeline lineno="44" refid="fdc_8h_193ff9547b61a14618c87c5639a1252c5" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>fdcDir<sp/><sp/>(0x3f7)</highlight></codeline>
+<codeline lineno="45" refid="fdc_8h_1bcb9230a76b72528226c49a520db19f0" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>fdcCcr<sp/><sp/>(0x3f7)</highlight></codeline>
+<codeline lineno="46" refid="fdc_8h_1e3bc9df62f197b42804259efb8ba44ec" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>fdcDor<sp/><sp/>(0x3f2)</highlight></codeline>
+<codeline lineno="47" refid="fdc_8h_100cfb48baa9e5c82b55842f2fdb5794c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>fdcDrs<sp/><sp/>(0x3f4)</highlight></codeline>
+<codeline lineno="48"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="fdc_8h_1fcfbcbee1143a2a689afc3a656646bad" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cmdWrite<sp/><sp/><sp/>(0xc5)</highlight></codeline>
+<codeline lineno="50" refid="fdc_8h_16f35816c0b01ac39832de24459d82e27" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>cmdRead<sp/><sp/><sp/><sp/>(0xe6)</highlight></codeline>
+<codeline lineno="51" refid="fdc_8h_1e2d2411a8ccdc868ab718da2b15348a9" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>cmdSeek<sp/><sp/><sp/><sp/>(0x0f)</highlight></codeline>
+<codeline lineno="52" refid="fdc_8h_16afd950ba65e51d77abf2158216f0284" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>cmdSensei<sp/><sp/>(0x08)</highlight></codeline>
+<codeline lineno="53" refid="fdc_8h_18a2fef7d1ed07757e099b8c7b29bfb09" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>cmdRecal<sp/><sp/><sp/>(0x07)</highlight></codeline>
+<codeline lineno="54" refid="fdc_8h_16003c8e12dd1e4f765279854f016c0ae" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>cmdSpecify<sp/>(0x03)</highlight></codeline>
+<codeline lineno="55"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="fdc_8h_1603e1e0a278c07c7338444e750ab35f3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dg144Heads<sp/><sp/>2<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>heads<sp/>per<sp/>drive<sp/>(1.44M)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="fdc_8h_1e502999ac4dc1f4ef9e0a9db76b11a9a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dg144Tracks<sp/>80</highlight></codeline>
+<codeline lineno="58" refid="fdc_8h_1874c835339ecb6a4a5fdd7aab7bfbe02" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>dg144Spt<sp/><sp/><sp/><sp/>18</highlight></codeline>
+<codeline lineno="59" refid="fdc_8h_195339d9d677a8ac74a7a7459ad130739" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>dg144Gap3rw<sp/>0x1b</highlight></codeline>
+<codeline lineno="60" refid="fdc_8h_151916e330bac103bdf860461ae359e1e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>dg168Gap3rw<sp/>0x1c</highlight></codeline>
+<codeline lineno="61"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_12fad92b12d9ff56bf300b7e53875c75d" kindref="member">fdc_init</ref>();</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_12c2196dd9229105994bb3840347e6f05" kindref="member">floppyIsr</ref>();</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_15042dfaf2327990b6d1e1a7d3e01751c" kindref="member">floppyIsrhndlr</ref>();</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1e708fa84d19a72e77185b3a214e81573" kindref="member">sendByte</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref>);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1e266cdb34b69c65cfc108bbc72a4e3ff" kindref="member">getByte</ref>();</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_19d92103f483df5da1a07402347739e44" kindref="member">fdcRw</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>block,<ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/>*blockBuffer,</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="gen__calls_8h_15eff3a25d417fafce7c4f211db219ca2" kindref="member">read</ref>,</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>numSectors);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1a0f8325f93de9409e403e620f914e69f" kindref="member">block2Hts</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>block,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*head,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*track,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>*sector);</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_194483feb4903fca9643813faae8a76ee" kindref="member">motorOn</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1044fc0dea0fb35e6fab7f3c0badea2c9" kindref="member">motorOff</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_15886a896e5f0361f36b40d007db6e683" kindref="member">seek</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>track);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1f5b6e5123d27381ca120b7b4fea7b242" kindref="member">waitFdc</ref>(</highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/>sensei);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1e266cdb34b69c65cfc108bbc72a4e3ff" kindref="member">getByte</ref>();</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1e708fa84d19a72e77185b3a214e81573" kindref="member">sendByte</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref>);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_12a16ea9e09b5f3dc2a559351afdc75f3" kindref="member">recalibrate</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_13aea9deb2a0bfea9ff05a898f4822e31" kindref="member">reset</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1ebbcd7bc8695e888491b97b5bf27bd9c" kindref="member">writeBlock</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>block,<ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/>*blockBuffer,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>numSectors);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1a03242a5e44c4f2d10e15d296aca8c6b" kindref="member">readBlock</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>block,<ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref><sp/>*blockBuffer,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/>numSectors);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_153a979dbcd632f57a4b004f66332f981" kindref="member">fdcWrite</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*info,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>startSector,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>sectorCount);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="fdc_8h_1fbac0e2409458a8fda9ff689ecd31de9" kindref="member">fdcRead</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*info,</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>startSector,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>sectorCount);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="87"><highlight class="comment"><sp/>$Log: fdc_8h.xml,v $
+<codeline lineno="87"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
+<codeline lineno="87"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="87"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="88"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="89"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"></highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="92"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="93"><highlight class="comment"></highlight></codeline>
+<codeline lineno="94"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:39<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="95"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="96"><highlight class="comment"></highlight></codeline>
+<codeline lineno="97"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/17<sp/>02:38:31<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="98"><highlight class="comment"><sp/>Fixed<sp/>a<sp/>few<sp/>problems</highlight></codeline>
+<codeline lineno="99"><highlight class="comment"></highlight></codeline>
+<codeline lineno="100"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/14<sp/>12:42:46<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/>fdc:<sp/>fdcInit<sp/>to<sp/>fdc_init</highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/>Changed<sp/>Startup<sp/>Routines</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"></highlight></codeline>
+<codeline lineno="104"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/05/21<sp/>14:57:16<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"></highlight></codeline>
+<codeline lineno="107"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="108"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h"/>
+  </compounddef>
+</doxygen>

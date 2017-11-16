@@ -1,0 +1,16 @@
+base referer
+rect $devfs_8c.html 269,6 432,32
+rect $buf_8h.html 257,56 444,83
+rect $ffs_8c.html 555,132 680,159
+rect $ubixfs_8h.html 239,411 463,438
+rect $init_8h.html 513,335 721,362
+rect $thread_8c.html 531,399 704,426
+rect $ubixfs_8c.html 532,456 703,483
+rect $vitals_8h.html 239,563 463,590
+rect $file_8c.html 553,538 681,564
+rect $vfs_8c.html 553,588 681,615
+rect $ffs_8h.html 260,158 441,184
+rect $ufs_8c.html 553,208 681,235
+rect $ufs_8h.html 259,259 443,286
+rect $ld_8c.html 280,664 421,691
+rect $kmod_8c.html 265,715 436,742

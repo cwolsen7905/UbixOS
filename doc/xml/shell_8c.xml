@@ -1,0 +1,721 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="shell_8c" kind="file">
+    <compoundname>shell.c</compoundname>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="fork_8h" local="no">ubixos/fork.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <includes refid="mem_8h" local="yes">net/mem.h</includes>
+    <includes refid="debug_8h" local="yes">net/debug.h</includes>
+    <includes refid="def_8h" local="yes">net/def.h</includes>
+    <includes refid="api_8h" local="yes">net/api.h</includes>
+    <includes refid="stats_8h" local="yes">net/stats.h</includes>
+    <includes refid="kprintf_8h" local="yes">lib/kprintf.h</includes>
+    <incdepgraph>
+      <node id="4031">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4047">
+        <label>net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="4038" relation="include">
+        </childnode>
+        <childnode refid="4041" relation="include">
+        </childnode>
+        <childnode refid="4044" relation="include">
+        </childnode>
+        <childnode refid="4048" relation="include">
+        </childnode>
+        <childnode refid="4049" relation="include">
+        </childnode>
+        <childnode refid="4050" relation="include">
+        </childnode>
+      </node>
+      <node id="4042">
+        <label>arch/lib.h</label>
+        <link refid="lib_8h"/>
+      </node>
+      <node id="4055">
+        <label>net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="4036" relation="include">
+        </childnode>
+        <childnode refid="4040" relation="include">
+        </childnode>
+        <childnode refid="4056" relation="include">
+        </childnode>
+      </node>
+      <node id="4022">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4023" relation="include">
+        </childnode>
+        <childnode refid="4024" relation="include">
+        </childnode>
+        <childnode refid="4025" relation="include">
+        </childnode>
+        <childnode refid="4032" relation="include">
+        </childnode>
+        <childnode refid="4031" relation="include">
+        </childnode>
+      </node>
+      <node id="4049">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="4036" relation="include">
+        </childnode>
+        <childnode refid="4050" relation="include">
+        </childnode>
+        <childnode refid="4048" relation="include">
+        </childnode>
+        <childnode refid="4051" relation="include">
+        </childnode>
+        <childnode refid="4044" relation="include">
+        </childnode>
+      </node>
+      <node id="4052">
+        <label>net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="4038" relation="include">
+        </childnode>
+        <childnode refid="4044" relation="include">
+        </childnode>
+        <childnode refid="4051" relation="include">
+        </childnode>
+        <childnode refid="4047" relation="include">
+        </childnode>
+        <childnode refid="4050" relation="include">
+        </childnode>
+      </node>
+      <node id="4039">
+        <label>arch/cpu.h</label>
+        <link refid="cpu_8h"/>
+      </node>
+      <node id="4046">
+        <label>arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+      </node>
+      <node id="4053">
+        <label>net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="4045" relation="include">
+        </childnode>
+        <childnode refid="4034" relation="include">
+        </childnode>
+        <childnode refid="4044" relation="include">
+        </childnode>
+        <childnode refid="4036" relation="include">
+        </childnode>
+        <childnode refid="4047" relation="include">
+        </childnode>
+        <childnode refid="4054" relation="include">
+        </childnode>
+        <childnode refid="4050" relation="include">
+        </childnode>
+      </node>
+      <node id="4019">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="4020" relation="include">
+        </childnode>
+      </node>
+      <node id="4020">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="4038">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="4039" relation="include">
+        </childnode>
+        <childnode refid="4040" relation="include">
+        </childnode>
+      </node>
+      <node id="4054">
+        <label>net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="4038" relation="include">
+        </childnode>
+        <childnode refid="4036" relation="include">
+        </childnode>
+        <childnode refid="4044" relation="include">
+        </childnode>
+        <childnode refid="4049" relation="include">
+        </childnode>
+      </node>
+      <node id="4033">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4025">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4026" relation="include">
+        </childnode>
+        <childnode refid="4027" relation="include">
+        </childnode>
+      </node>
+      <node id="4032">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4018">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4037">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="4017">
+        <label>src/sys/net/net/shell.c</label>
+        <link refid="shell.c"/>
+        <childnode refid="4018" relation="include">
+        </childnode>
+        <childnode refid="4021" relation="include">
+        </childnode>
+        <childnode refid="4033" relation="include">
+        </childnode>
+        <childnode refid="4034" relation="include">
+        </childnode>
+        <childnode refid="4035" relation="include">
+        </childnode>
+        <childnode refid="4041" relation="include">
+        </childnode>
+        <childnode refid="4043" relation="include">
+        </childnode>
+        <childnode refid="4055" relation="include">
+        </childnode>
+        <childnode refid="4057" relation="include">
+        </childnode>
+      </node>
+      <node id="4041">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="4042" relation="include">
+        </childnode>
+      </node>
+      <node id="4021">
+        <label>ubixos/fork.h</label>
+        <link refid="fork_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4022" relation="include">
+        </childnode>
+      </node>
+      <node id="4034">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4035" relation="include">
+        </childnode>
+        <childnode refid="4036" relation="include">
+        </childnode>
+        <childnode refid="4038" relation="include">
+        </childnode>
+      </node>
+      <node id="4056">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4035" relation="include">
+        </childnode>
+        <childnode refid="4040" relation="include">
+        </childnode>
+        <childnode refid="4037" relation="include">
+        </childnode>
+      </node>
+      <node id="4028">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4025" relation="include">
+        </childnode>
+        <childnode refid="4027" relation="include">
+        </childnode>
+        <childnode refid="4029" relation="include">
+        </childnode>
+        <childnode refid="4031" relation="include">
+        </childnode>
+      </node>
+      <node id="4027">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4028" relation="include">
+        </childnode>
+      </node>
+      <node id="4057">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4048">
+        <label>net/ipv4/ip_addr.h</label>
+        <link refid="ipv4_2ip__addr_8h"/>
+        <childnode refid="4038" relation="include">
+        </childnode>
+      </node>
+      <node id="4050">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+        <childnode refid="4035" relation="include">
+        </childnode>
+        <childnode refid="4040" relation="include">
+        </childnode>
+      </node>
+      <node id="4043">
+        <label>net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="4036" relation="include">
+        </childnode>
+        <childnode refid="4044" relation="include">
+        </childnode>
+        <childnode refid="4045" relation="include">
+        </childnode>
+        <childnode refid="4047" relation="include">
+        </childnode>
+        <childnode refid="4052" relation="include">
+        </childnode>
+        <childnode refid="4053" relation="include">
+        </childnode>
+        <childnode refid="4050" relation="include">
+        </childnode>
+      </node>
+      <node id="4026">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4036">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="4037" relation="include">
+        </childnode>
+      </node>
+      <node id="4029">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="4030" relation="include">
+        </childnode>
+        <childnode refid="4031" relation="include">
+        </childnode>
+      </node>
+      <node id="4023">
+        <label>ubixos/elf.h</label>
+        <link refid="elf_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4030">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4045">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="4040" relation="include">
+        </childnode>
+        <childnode refid="4046" relation="include">
+        </childnode>
+      </node>
+      <node id="4024">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="4019" relation="include">
+        </childnode>
+      </node>
+      <node id="4044">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="4035" relation="include">
+        </childnode>
+        <childnode refid="4038" relation="include">
+        </childnode>
+      </node>
+      <node id="4035">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="4051">
+        <label>net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="4038" relation="include">
+        </childnode>
+        <childnode refid="4036" relation="include">
+        </childnode>
+        <childnode refid="4044" relation="include">
+        </childnode>
+        <childnode refid="4048" relation="include">
+        </childnode>
+      </node>
+      <node id="4040">
+        <label>arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="shell_8c_101b18ac7f13565b70adf29fd1659f390" prot="public" static="no">
+        <name>ECLOSED</name>
+        <initializer>-4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="shell_8c_154c5298a76b9c539d23fd647b1df996d" prot="public" static="no">
+        <name>ESUCCESS</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="shell_8c_198b36a0ed522f3cb37f04c35ee597def" prot="public" static="no">
+        <name>ESYNTAX</name>
+        <initializer>-1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="shell_8c_1681466d5c0af1ead1a9fa7f16b2e1a7f" prot="public" static="no">
+        <name>ETOOFEW</name>
+        <initializer>-2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="shell_8c_1aef9b35226b00a69f4925e697da1e63e" prot="public" static="no">
+        <name>ETOOMANY</name>
+        <initializer>-3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="shell_8c_12af96877aff0e17f356f6d84e03f4d24" prot="public" static="no">
+        <name>NCONNS</name>
+        <initializer>10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="shell_8c_19eb3a8d732ca318a02ccf86b7356d826" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void prompt</definition>
+        <argsstring>(struct netconn *conn)</argsstring>
+        <name>prompt</name>
+        <param>
+          <type>struct <ref refid="structnetconn" kindref="compound">netconn</ref> *</type>
+          <declname>conn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="62" bodyend="64"/>
+        <references refid="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" compoundref="shell_8c" startline="58" endline="60">sendstr</references>
+        <referencedby refid="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" compoundref="shell_8c" startline="66" endline="92">shell_main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void sendstr</definition>
+        <argsstring>(const char *str, struct netconn *conn)</argsstring>
+        <name>sendstr</name>
+        <param>
+          <type>const char *</type>
+          <declname>str</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structnetconn" kindref="compound">netconn</ref> *</type>
+          <declname>conn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="58" bodyend="60"/>
+        <references refid="api_8h_17a469e67f62b0f7266c8526284bc38c9" compoundref="api_8h" startline="49">NETCONN_NOCOPY</references>
+        <references refid="api_8h_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</references>
+        <references refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" compoundref="strlen_8S" startline="4">strlen</references>
+        <referencedby refid="shell_8c_19eb3a8d732ca318a02ccf86b7356d826" compoundref="shell_8c" startline="62" endline="64">prompt</referencedby>
+        <referencedby refid="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" compoundref="shell_8c" startline="66" endline="92">shell_main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="shell_8c_169b075ef7e4d7bcf5a903d3d75baac02" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void shell_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>shell_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="114" bodyend="116"/>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" compoundref="shell_8c" startline="94" endline="112">shell_thread</references>
+        <references refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</references>
+        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void shell_main</definition>
+        <argsstring>(struct netconn *conn)</argsstring>
+        <name>shell_main</name>
+        <param>
+          <type>struct <ref refid="structnetconn" kindref="compound">netconn</ref> *</type>
+          <declname>conn</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="66" bodyend="92"/>
+        <references refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="api_8h_17c70594658105835086ed6fe19aa8067" compoundref="api__lib_8c" startline="186" endline="189">netbuf_copy</references>
+        <references refid="api_8h_19dfd3ddfe0ec65009cb140c68404b09d" compoundref="api__lib_8c" startline="66" endline="75">netbuf_delete</references>
+        <references refid="api_8h_16d20eca8f0316e4e71980108c1563581" compoundref="api__lib_8c" startline="122" endline="125">netbuf_len</references>
+        <references refid="api_8h_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</references>
+        <references refid="api_8h_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</references>
+        <references refid="shell_8c_19eb3a8d732ca318a02ccf86b7356d826" compoundref="shell_8c" startline="62" endline="64">prompt</references>
+        <references refid="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" compoundref="shell_8c" startline="58" endline="60">sendstr</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <referencedby refid="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" compoundref="shell_8c" startline="94" endline="112">shell_thread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void shell_thread</definition>
+        <argsstring>(void *arg)</argsstring>
+        <name>shell_thread</name>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="94" bodyend="112"/>
+        <references refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" compoundref="shell_8c" startline="47">buffer</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="api_8h_1b1ef5f260ad8147a3b5b70b317b489d2" compoundref="api__lib_8c" startline="416" endline="427">netconn_accept</references>
+        <references refid="api_8h_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</references>
+        <references refid="api_8h_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</references>
+        <references refid="api_8h_1935860c5a91e85457369b6f558e638fd" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</references>
+        <references refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a">NETCONN_TCP</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" compoundref="shell_8c" startline="66" endline="92">shell_main</references>
+        <referencedby refid="shell_8h_169b075ef7e4d7bcf5a903d3d75baac02" compoundref="shell_8c" startline="114" endline="116">shell_init</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* buffer</definition>
+        <argsstring></argsstring>
+        <name>buffer</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c" bodystart="47" bodyend="-1"/>
+        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
+        <referencedby refid="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" compoundref="shell_8c" startline="66" endline="92">shell_main</referencedby>
+        <referencedby refid="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" compoundref="shell_8c" startline="94" endline="112">shell_thread</referencedby>
+        <referencedby refid="gen__calls_8c_114173c973cb6d92a0e2ff34ee072f4d3" compoundref="gen__calls_8c" startline="67" endline="98">sys_write</referencedby>
+        <referencedby refid="udpecho_8c_1cd77ce4346d8d940f934ad6007214bf0" compoundref="udpecho_8c" startline="44" endline="75">udpecho_thread</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: shell_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="fork_8h" kindref="compound">ubixos/fork.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="mem_8h" kindref="compound">net/mem.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="debug_8h" kindref="compound">net/debug.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="def_8h" kindref="compound">net/def.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="api_8h" kindref="compound">net/api.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="stats_8h" kindref="compound">net/stats.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="shell_8c_154c5298a76b9c539d23fd647b1df996d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ESUCCESS<sp/>0</highlight></codeline>
+<codeline lineno="50" refid="shell_8c_198b36a0ed522f3cb37f04c35ee597def" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ESYNTAX<sp/>-1</highlight></codeline>
+<codeline lineno="51" refid="shell_8c_1681466d5c0af1ead1a9fa7f16b2e1a7f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ETOOFEW<sp/>-2</highlight></codeline>
+<codeline lineno="52" refid="shell_8c_1aef9b35226b00a69f4925e697da1e63e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ETOOMANY<sp/>-3</highlight></codeline>
+<codeline lineno="53" refid="shell_8c_101b18ac7f13565b70adf29fd1659f390" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ECLOSED<sp/>-4</highlight></codeline>
+<codeline lineno="54"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="shell_8c_12af96877aff0e17f356f6d84e03f4d24" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NCONNS<sp/>10</highlight></codeline>
+<codeline lineno="56"><highlight class="preprocessor"></highlight><highlight class="comment">//<sp/>UBU<sp/>static<sp/>struct<sp/>netconn<sp/>*conns[NCONNS];</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" kindref="member">sendstr</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*str,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetconn" kindref="compound">netconn</ref><sp/>*conn)<sp/>{</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="api_8h_19363929b6c680bc1dd3f302885128959" kindref="member">netconn_write</ref>(conn,<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)str,<sp/><ref refid="strlen_8S_10bcafbeba7f59f157715cc462036b8d3" kindref="member">strlen</ref>(str),<sp/><ref refid="api_8h_17a469e67f62b0f7266c8526284bc38c9" kindref="member">NETCONN_NOCOPY</ref>);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="shell_8c_19eb3a8d732ca318a02ccf86b7356d826" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="shell_8c_19eb3a8d732ca318a02ccf86b7356d826" kindref="member">prompt</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetconn" kindref="compound">netconn</ref><sp/>*conn)<sp/>{</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><ref refid="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" kindref="member">sendstr</ref>(</highlight><highlight class="stringliteral">&quot;uBixCube:@sys&gt;<sp/>&quot;</highlight><highlight class="normal">,<sp/>conn);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>}<sp/><sp/></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" kindref="member">shell_main</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetconn" kindref="compound">netconn</ref><sp/>*conn)<sp/>{</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetbuf" kindref="compound">netbuf</ref><sp/>*<ref refid="structbuf" kindref="compound">buf</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>len;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>UBU<sp/>int<sp/>i;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//<sp/>UBU<sp/>char<sp/>bufr[1500];</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="shell_8c_19eb3a8d732ca318a02ccf86b7356d826" kindref="member">prompt</ref>(conn);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1)<sp/>{</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>buf<sp/>=<sp/><ref refid="api_8h_1cbd0b5a0344c2c3fffe5a02445a2c2b3" kindref="member">netconn_recv</ref>(conn);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(buf<sp/>!=<sp/>0x0)</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="api_8h_17c70594658105835086ed6fe19aa8067" kindref="member">netbuf_copy</ref>(buf,<ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,1024);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>len<sp/>=<sp/><ref refid="api_8h_16d20eca8f0316e4e71980108c1563581" kindref="member">netbuf_len</ref>(buf);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="api_8h_19dfd3ddfe0ec65009cb140c68404b09d" kindref="member">netbuf_delete</ref>(buf);</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>[len-2]<sp/>=<sp/></highlight><highlight class="charliteral">&apos;\0&apos;</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Buffer:<sp/>[%s:%i]\n&quot;</highlight><highlight class="normal">,<ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,len);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(<ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,</highlight><highlight class="stringliteral">&quot;quit&quot;</highlight><highlight class="normal">))<sp/>{</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="api_8h_125bb1c1c9928f91f53149a026e2e2624" kindref="member">netconn_close</ref>(conn);</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(<ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,</highlight><highlight class="stringliteral">&quot;ls&quot;</highlight><highlight class="normal">))<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" kindref="member">sendstr</ref>(</highlight><highlight class="stringliteral">&quot;no\nfiles\nhere\n&quot;</highlight><highlight class="normal">,<sp/>conn);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" kindref="member">strcmp</ref>(<ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref>,</highlight><highlight class="stringliteral">&quot;uname&quot;</highlight><highlight class="normal">))<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="shell_8c_1b5fde1c96ac74a036a6d6a80f4a934ab" kindref="member">sendstr</ref>(</highlight><highlight class="stringliteral">&quot;UbixOS<sp/>v1.0<sp/>reddawg@devel.ubixos.com:/ubix.elf\n&quot;</highlight><highlight class="normal">,conn);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="shell_8c_19eb3a8d732ca318a02ccf86b7356d826" kindref="member">prompt</ref>(conn);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" kindref="member">shell_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg)<sp/>{</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetconn" kindref="compound">netconn</ref><sp/>*conn<sp/>=<sp/>0x0,<sp/>*newconn<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><ref refid="shell_8c_1ff2566f4c366b48d73479bef43ee4d2e" kindref="member">buffer</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(1024);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/>conn<sp/>=<sp/><ref refid="api_8h_1935860c5a91e85457369b6f558e638fd" kindref="member">netconn_new</ref>(<ref refid="api_8h_1aba260d28d105fb4bce9185fd0300d9175d14318b91af7a452230189f47e5e1a" kindref="member">NETCONN_TCP</ref>);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><ref refid="api_8h_1dc842fc0f1de512895ef3cc9c657272a" kindref="member">netconn_bind</ref>(conn,<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>,<sp/>23);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><ref refid="api_8h_1b917e0fc541447d966e5cf712ce24e58" kindref="member">netconn_listen</ref>(conn);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal">(1)<sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;1&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/>newconn<sp/>=<sp/><ref refid="api_8h_1b1ef5f260ad8147a3b5b70b317b489d2" kindref="member">netconn_accept</ref>(conn);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;2&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="shell_8c_1ac82cf7e63df29786725f476f0fbbe1b" kindref="member">shell_main</ref>(newconn);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;3&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//netconn_delete(newconn);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;4&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="shell_8h_169b075ef7e4d7bcf5a903d3d75baac02" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="shell_8c_169b075ef7e4d7bcf5a903d3d75baac02" kindref="member">shell_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/><sp/><sp/><sp/><sp/>{</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" kindref="member">sys_thread_new</ref>(<ref refid="shell_8c_1e3226909e3db2e0b07a909a852e8c8ab" kindref="member">shell_thread</ref>,<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="119"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="120"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/shell.c"/>
+  </compounddef>
+</doxygen>

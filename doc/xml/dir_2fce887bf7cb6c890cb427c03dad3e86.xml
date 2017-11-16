@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_2fce887bf7cb6c890cb427c03dad3e86" kind="dir">
+    <compoundname>src/sys/include/objgfx/</compoundname>
+    <innerfile refid="ogDisplay__VESA_8h">ogDisplay_VESA.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/objgfx/"/>
+  </compounddef>
+</doxygen>

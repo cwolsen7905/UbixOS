@@ -1,0 +1,905 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="debug_8h" kind="file">
+    <compoundname>debug.h</compoundname>
+    <includedby refid="err_8h" local="yes">src/sys/include/net/err.h</includedby>
+    <includedby refid="mem_8h" local="yes">src/sys/include/net/mem.h</includedby>
+    <includedby refid="memp_8h" local="yes">src/sys/include/net/memp.h</includedby>
+    <includedby refid="pbuf_8h" local="yes">src/sys/include/net/pbuf.h</includedby>
+    <includedby refid="api__lib_8c" local="yes">src/sys/net/api/api_lib.c</includedby>
+    <includedby refid="api__msg_8c" local="yes">src/sys/net/api/api_msg.c</includedby>
+    <includedby refid="sockets_8c" local="yes">src/sys/net/api/sockets.c</includedby>
+    <includedby refid="tcpip_8c" local="yes">src/sys/net/api/tcpip.c</includedby>
+    <includedby refid="bot_8c" local="yes">src/sys/net/net/bot.c</includedby>
+    <includedby refid="shell_8c" local="yes">src/sys/net/net/shell.c</includedby>
+    <includedby refid="sys__arch_8c" local="yes">src/sys/net/net/sys_arch.c</includedby>
+    <includedby refid="arp_8c" local="yes">src/sys/net/netif/arp.c</includedby>
+    <includedby refid="ethernetif_8c" local="yes">src/sys/net/netif/ethernetif.c</includedby>
+    <includedby refid="loopif_8c" local="yes">src/sys/net/netif/loopif.c</includedby>
+    <invincdepgraph>
+      <node id="579">
+        <label>src/sys/net/net/udpecho.c</label>
+        <link refid="udpecho_8c"/>
+      </node>
+      <node id="580">
+        <label>src/sys/include/net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="569" relation="include">
+        </childnode>
+        <childnode refid="570" relation="include">
+        </childnode>
+        <childnode refid="581" relation="include">
+        </childnode>
+        <childnode refid="584" relation="include">
+        </childnode>
+        <childnode refid="573" relation="include">
+        </childnode>
+        <childnode refid="585" relation="include">
+        </childnode>
+        <childnode refid="582" relation="include">
+        </childnode>
+        <childnode refid="583" relation="include">
+        </childnode>
+      </node>
+      <node id="595">
+        <label>src/sys/include/net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="577" relation="include">
+        </childnode>
+        <childnode refid="578" relation="include">
+        </childnode>
+        <childnode refid="596" relation="include">
+        </childnode>
+      </node>
+      <node id="583">
+        <label>src/sys/net/netif/tcpdump.c</label>
+        <link refid="tcpdump_8c"/>
+      </node>
+      <node id="586">
+        <label>src/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="587" relation="include">
+        </childnode>
+        <childnode refid="580" relation="include">
+        </childnode>
+        <childnode refid="588" relation="include">
+        </childnode>
+        <childnode refid="590" relation="include">
+        </childnode>
+        <childnode refid="591" relation="include">
+        </childnode>
+      </node>
+      <node id="582">
+        <label>src/sys/net/netif/loopif.c</label>
+        <link refid="loopif_8c"/>
+      </node>
+      <node id="599">
+        <label>src/sys/include/net/ipv6/inet.h</label>
+        <link refid="ipv6_2inet_8h"/>
+      </node>
+      <node id="596">
+        <label>src/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="584">
+        <label>src/sys/include/net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="569" relation="include">
+        </childnode>
+        <childnode refid="570" relation="include">
+        </childnode>
+        <childnode refid="573" relation="include">
+        </childnode>
+        <childnode refid="583" relation="include">
+        </childnode>
+      </node>
+      <node id="588">
+        <label>src/sys/include/netif/arp.h</label>
+        <link refid="arp_8h"/>
+        <childnode refid="585" relation="include">
+        </childnode>
+        <childnode refid="589" relation="include">
+        </childnode>
+      </node>
+      <node id="581">
+        <label>src/sys/include/net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="569" relation="include">
+        </childnode>
+        <childnode refid="570" relation="include">
+        </childnode>
+        <childnode refid="573" relation="include">
+        </childnode>
+        <childnode refid="582" relation="include">
+        </childnode>
+        <childnode refid="583" relation="include">
+        </childnode>
+      </node>
+      <node id="589">
+        <label>src/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="585">
+        <label>src/sys/net/netif/arp.c</label>
+        <link refid="arp_8c"/>
+      </node>
+      <node id="587">
+        <label>src/sys/include/net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="581" relation="include">
+        </childnode>
+      </node>
+      <node id="577">
+        <label>src/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
+      </node>
+      <node id="592">
+        <label>src/sys/net/api/err.c</label>
+        <link refid="err_8c"/>
+      </node>
+      <node id="573">
+        <label>src/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="571">
+        <label>src/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="572" relation="include">
+        </childnode>
+        <childnode refid="573" relation="include">
+        </childnode>
+        <childnode refid="574" relation="include">
+        </childnode>
+      </node>
+      <node id="570">
+        <label>src/sys/include/net/api_msg.h</label>
+        <link refid="api__msg_8h"/>
+        <childnode refid="571" relation="include">
+        </childnode>
+        <childnode refid="575" relation="include">
+        </childnode>
+        <childnode refid="572" relation="include">
+        </childnode>
+      </node>
+      <node id="590">
+        <label>src/sys/include/netif/ethernetif.h</label>
+        <link refid="ethernetif_8h"/>
+        <childnode refid="574" relation="include">
+        </childnode>
+      </node>
+      <node id="578">
+        <label>src/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="575">
+        <label>src/sys/net/api/api_lib.c</label>
+        <link refid="api__lib_8c"/>
+      </node>
+      <node id="593">
+        <label>src/sys/include/net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="581" relation="include">
+        </childnode>
+        <childnode refid="577" relation="include">
+        </childnode>
+        <childnode refid="574" relation="include">
+        </childnode>
+        <childnode refid="578" relation="include">
+        </childnode>
+        <childnode refid="589" relation="include">
+        </childnode>
+        <childnode refid="582" relation="include">
+        </childnode>
+      </node>
+      <node id="574">
+        <label>src/sys/net/net/init.c</label>
+        <link refid="init_8c"/>
+      </node>
+      <node id="594">
+        <label>src/sys/include/net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="595" relation="include">
+        </childnode>
+        <childnode refid="575" relation="include">
+        </childnode>
+        <childnode refid="572" relation="include">
+        </childnode>
+        <childnode refid="573" relation="include">
+        </childnode>
+        <childnode refid="574" relation="include">
+        </childnode>
+      </node>
+      <node id="568">
+        <label>src/sys/include/net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="569" relation="include">
+        </childnode>
+        <childnode refid="580" relation="include">
+        </childnode>
+        <childnode refid="586" relation="include">
+        </childnode>
+        <childnode refid="581" relation="include">
+        </childnode>
+        <childnode refid="584" relation="include">
+        </childnode>
+        <childnode refid="592" relation="include">
+        </childnode>
+      </node>
+      <node id="600">
+        <label>src/sys/include/netif/tcpdump.h</label>
+        <link refid="tcpdump_8h"/>
+        <childnode refid="574" relation="include">
+        </childnode>
+        <childnode refid="582" relation="include">
+        </childnode>
+        <childnode refid="583" relation="include">
+        </childnode>
+      </node>
+      <node id="569">
+        <label>src/sys/include/net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="570" relation="include">
+        </childnode>
+        <childnode refid="575" relation="include">
+        </childnode>
+        <childnode refid="576" relation="include">
+        </childnode>
+        <childnode refid="577" relation="include">
+        </childnode>
+        <childnode refid="578" relation="include">
+        </childnode>
+        <childnode refid="579" relation="include">
+        </childnode>
+      </node>
+      <node id="591">
+        <label>src/sys/include/netif/loopif.h</label>
+        <link refid="loopif_8h"/>
+        <childnode refid="574" relation="include">
+        </childnode>
+        <childnode refid="582" relation="include">
+        </childnode>
+      </node>
+      <node id="576">
+        <label>src/sys/net/api/sockets.c</label>
+        <link refid="sockets_8c"/>
+      </node>
+      <node id="572">
+        <label>src/sys/net/api/api_msg.c</label>
+        <link refid="api__msg_8c"/>
+      </node>
+      <node id="597">
+        <label>src/sys/include/net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="569" relation="include">
+        </childnode>
+        <childnode refid="570" relation="include">
+        </childnode>
+        <childnode refid="587" relation="include">
+        </childnode>
+        <childnode refid="598" relation="include">
+        </childnode>
+        <childnode refid="580" relation="include">
+        </childnode>
+        <childnode refid="599" relation="include">
+        </childnode>
+        <childnode refid="586" relation="include">
+        </childnode>
+        <childnode refid="581" relation="include">
+        </childnode>
+        <childnode refid="571" relation="include">
+        </childnode>
+        <childnode refid="584" relation="include">
+        </childnode>
+        <childnode refid="588" relation="include">
+        </childnode>
+        <childnode refid="600" relation="include">
+        </childnode>
+        <childnode refid="573" relation="include">
+        </childnode>
+        <childnode refid="589" relation="include">
+        </childnode>
+      </node>
+      <node id="567">
+        <label>src/sys/include/net/debug.h</label>
+        <link refid="debug.h"/>
+        <childnode refid="568" relation="include">
+        </childnode>
+        <childnode refid="593" relation="include">
+        </childnode>
+        <childnode refid="594" relation="include">
+        </childnode>
+        <childnode refid="597" relation="include">
+        </childnode>
+        <childnode refid="575" relation="include">
+        </childnode>
+        <childnode refid="572" relation="include">
+        </childnode>
+        <childnode refid="576" relation="include">
+        </childnode>
+        <childnode refid="573" relation="include">
+        </childnode>
+        <childnode refid="577" relation="include">
+        </childnode>
+        <childnode refid="578" relation="include">
+        </childnode>
+        <childnode refid="596" relation="include">
+        </childnode>
+        <childnode refid="585" relation="include">
+        </childnode>
+        <childnode refid="589" relation="include">
+        </childnode>
+        <childnode refid="582" relation="include">
+        </childnode>
+      </node>
+      <node id="598">
+        <label>src/sys/include/net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="586" relation="include">
+        </childnode>
+        <childnode refid="584" relation="include">
+        </childnode>
+        <childnode refid="585" relation="include">
+        </childnode>
+        <childnode refid="583" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="debug_8h_1671009550216f7dc03e67ba5751e3160" prot="public" static="no">
+        <name>API_LIB_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="105" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="105" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_14279d7ff9f986b2ff3eb068bb012b697" prot="public" static="no">
+        <name>API_MSG_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="106" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="106" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_119262c4096bf0c095d44e08596d59fbf" compoundref="api__msg_8c" startline="401" endline="416">do_accept</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_17fa8be0d28d77b4ab4f44d924d4d69e2" prot="public" static="no">
+        <name>ARP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="97" bodyend="-1"/>
+        <referencedby refid="arp_8c_1916d08dbb8f4a38e1e904a8a018b000c" compoundref="arp_8c" startline="181" endline="194">arp_ip_input</referencedby>
+        <referencedby refid="arp_8c_12cc298ed4c68289160da1376faf20938" compoundref="arp_8c" startline="104" endline="117">arp_tmr</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_10a3e46fec8345ab664843141b78b82a3" prot="public" static="no">
+        <name>ASSERT</name>
+        <param><defname>x</defname></param>
+        <param><defname>y</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="91" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_18b52c1fca5671ffbfe068c8d50ca0065" prot="public" static="no">
+        <name>DEBUGF</name>
+        <param><defname>debug</defname></param>
+        <param><defname>x</defname></param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="92" bodyend="-1"/>
+        <referencedby refid="arp_8c_1916d08dbb8f4a38e1e904a8a018b000c" compoundref="arp_8c" startline="181" endline="194">arp_ip_input</referencedby>
+        <referencedby refid="arp_8c_12cc298ed4c68289160da1376faf20938" compoundref="arp_8c" startline="104" endline="117">arp_tmr</referencedby>
+        <referencedby refid="api__msg_8c_119262c4096bf0c095d44e08596d59fbf" compoundref="api__msg_8c" startline="401" endline="416">do_accept</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+        <referencedby refid="sockets_8c_1fd0897a2e23d99a5dffcc976c7e5d72c" compoundref="sockets_8c" startline="147" endline="166">lwip_close</referencedby>
+        <referencedby refid="sockets_8c_1cb3ba0c7f21116c629f116e15e40ce2b" compoundref="sockets_8c" startline="305" endline="351">lwip_send</referencedby>
+        <referencedby refid="sockets_8c_1d1afafec89b608d54649d7d02117d17c" compoundref="sockets_8c" startline="383" endline="414">lwip_socket</referencedby>
+        <referencedby refid="sockets_8c_1e3d92ccb1ddfafe7df89185dbc881ec2" compoundref="sockets_8c" startline="417" endline="445">lwip_write</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_16e7412fadcce1ff78621a6f1e986af71" prot="public" static="no">
+        <name>DELIF_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="100" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="100" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1d750f695e056eb393ae1b1afb18ab04d" prot="public" static="no">
+        <name>DEMO_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_197927ceecabcdb5f41735bf372a05cee" prot="public" static="no">
+        <name>DHCP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1216676a659b5957851da6a5a41a8b0b4" prot="public" static="no">
+        <name>DROPIF_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="101" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_19595904a1cb9bfe0b9b1d958abdc923a" prot="public" static="no">
+        <name>ICMP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_178140cbe70258a65cb5c9e381843e4f3" prot="public" static="no">
+        <name>INET_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_15d3348778951e7bc5cd397c6575eef3a" prot="public" static="no">
+        <name>IP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="110" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_14cdc3e9a4a1c01d1f7f0e723a1b2ec33" prot="public" static="no">
+        <name>IP_REASS_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="111" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="111" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_12d7bc380695eeedb1af50c3808613afe" prot="public" static="no">
+        <name>MEM_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="112" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1d80231923f7a808d49eba5ec57d63616" prot="public" static="no">
+        <name>MEMP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="113" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_12dfad02b075a7f9a8791a66fe40864a4" prot="public" static="no">
+        <name>NETIF_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_15c3d44a0ec3bb8bd66f776c70d5c6a6c" prot="public" static="no">
+        <name>PBUF_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="99" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1509594f3ba7d8b1356628b50b55a0934" prot="public" static="no">
+        <name>SOCKETS_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="107" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="107" bodyend="-1"/>
+        <referencedby refid="sockets_8c_1fd0897a2e23d99a5dffcc976c7e5d72c" compoundref="sockets_8c" startline="147" endline="166">lwip_close</referencedby>
+        <referencedby refid="sockets_8c_1cb3ba0c7f21116c629f116e15e40ce2b" compoundref="sockets_8c" startline="305" endline="351">lwip_send</referencedby>
+        <referencedby refid="sockets_8c_1d1afafec89b608d54649d7d02117d17c" compoundref="sockets_8c" startline="383" endline="414">lwip_socket</referencedby>
+        <referencedby refid="sockets_8c_1e3d92ccb1ddfafe7df89185dbc881ec2" compoundref="sockets_8c" startline="417" endline="445">lwip_write</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_12960ae20008f05da8cc0714f36365642" prot="public" static="no">
+        <name>SYS_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1c58fd5f472139cd7e1540fb4e0619567" prot="public" static="no">
+        <name>TAPIF_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="104" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="104" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_166df03d8192cd978d3321a9d68bf5411" prot="public" static="no">
+        <name>TCP_CWND_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="120" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_14f43bb8a430c7a52a1ad5086d3f2803c" prot="public" static="no">
+        <name>TCP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_15895bee26e8e1a0b89d597e0f2580b23" prot="public" static="no">
+        <name>TCP_FR_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1f51dc2563536de56470146749f715ba8" prot="public" static="no">
+        <name>TCP_INPUT_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_19f70601fdc1feee490772bf7fcdb74fb" prot="public" static="no">
+        <name>TCP_OUTPUT_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1e7980c7f8eb45cd411bf410ff0a3fc55" prot="public" static="no">
+        <name>TCP_QLEN_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="124" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_13c6d576453b168f2c5f2178cc0bffd4c" prot="public" static="no">
+        <name>TCP_REXMIT_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_137596f7bbb9b7663826244ba54486679" prot="public" static="no">
+        <name>TCP_RST_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_1d6e52e37415d0d0cbe4931a28f5a9662" prot="public" static="no">
+        <name>TCP_RTO_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_13704f433e947d6342da77c74e33627e1" prot="public" static="no">
+        <name>TCP_WND_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="121" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_11ddf6bc3a7d9c615f5c9954c1d4ad696" prot="public" static="no">
+        <name>TCPDUMP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_152d6c83451936c3de3b0338d4a3f921f" prot="public" static="no">
+        <name>TCPIP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="126" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_105e4e792f5d82f9528e5fd08251a1aa2" prot="public" static="no">
+        <name>TUNIF_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="102" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_10393f312c5475a1c649b39ef9cfcaad4" prot="public" static="no">
+        <name>UDP_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="125" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="debug_8h_12329ea8c024d2a70b3ebabf9bc1bf1e3" prot="public" static="no">
+        <name>UNIXIF_DEBUG</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" line="103" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h" bodystart="103" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: debug_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_DEBUG_H__</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_DEBUG_H__</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>LWIP_DEBUG</highlight></codeline>
+<codeline lineno="39"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ASSERT(x,y)<sp/>if(!(y))<sp/>{printf(&quot;Assertion<sp/>\&quot;%s\&quot;<sp/>failed<sp/>at<sp/>line<sp/>%d<sp/>in<sp/>%s\n&quot;,<sp/>\</highlight></codeline>
+<codeline lineno="41"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>x,<sp/>__LINE__,<sp/>__FILE__);<sp/>fflush(NULL);<sp/>abort();}</highlight></codeline>
+<codeline lineno="42"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>These<sp/>defines<sp/>control<sp/>the<sp/>amount<sp/>of<sp/>debugging<sp/>output:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_TRACKING</highlight></codeline>
+<codeline lineno="45"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DEMO_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="47"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ARP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="49"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NETIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="51"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PBUF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="52"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DELIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="53"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DROPIF_DEBUG<sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="54"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TUNIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="55"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UNIXIF_DEBUG<sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="56"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TAPIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="57"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>API_LIB_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="59"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>API_MSG_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="60"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SOCKETS_DEBUG<sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="61"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ICMP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="62"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INET_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="63"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="64"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IP_REASS_DEBUG<sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="65"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEM_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="66"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEMP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SYS_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="68"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="69"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_INPUT_DEBUG<sp/><sp/>0</highlight></codeline>
+<codeline lineno="70"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_FR_DEBUG<sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_RTO_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_REXMIT_DEBUG<sp/>0</highlight></codeline>
+<codeline lineno="73"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_CWND_DEBUG<sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="74"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_WND_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="75"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_OUTPUT_DEBUG<sp/>0</highlight></codeline>
+<codeline lineno="76"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_RST_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="77"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_QLEN_DEBUG<sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="78"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UDP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCPIP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="80"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCPDUMP_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="81"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DHCP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="82"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DEBUGF(debug,<sp/>x)<sp/>do<sp/>{<sp/>if(debug){<sp/>printf<sp/>x;<sp/>}<sp/>}<sp/>while(0)</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="preprocessor">#else<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DEBUG<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>DEBUG<sp/>is<sp/>not<sp/>defined,<sp/>so<sp/>we<sp/>define<sp/>null<sp/>macros<sp/>for<sp/>ASSERT<sp/>and<sp/>DEBUGF<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="debug_8h_10a3e46fec8345ab664843141b78b82a3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ASSERT(x,y)</highlight></codeline>
+<codeline lineno="92" refid="debug_8h_18b52c1fca5671ffbfe068c8d50ca0065" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DEBUGF(debug,<sp/>x)</highlight></codeline>
+<codeline lineno="93"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>And<sp/>we<sp/>define<sp/>those<sp/>to<sp/>be<sp/>zero:<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96" refid="debug_8h_1d750f695e056eb393ae1b1afb18ab04d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DEMO_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="97" refid="debug_8h_17fa8be0d28d77b4ab4f44d924d4d69e2" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ARP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="98" refid="debug_8h_12dfad02b075a7f9a8791a66fe40864a4" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NETIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="99" refid="debug_8h_15c3d44a0ec3bb8bd66f776c70d5c6a6c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PBUF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="100" refid="debug_8h_16e7412fadcce1ff78621a6f1e986af71" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DELIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="101" refid="debug_8h_1216676a659b5957851da6a5a41a8b0b4" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DROPIF_DEBUG<sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="102" refid="debug_8h_105e4e792f5d82f9528e5fd08251a1aa2" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TUNIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="103" refid="debug_8h_12329ea8c024d2a70b3ebabf9bc1bf1e3" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UNIXIF_DEBUG<sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="104" refid="debug_8h_1c58fd5f472139cd7e1540fb4e0619567" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TAPIF_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="105" refid="debug_8h_1671009550216f7dc03e67ba5751e3160" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>API_LIB_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="106" refid="debug_8h_14279d7ff9f986b2ff3eb068bb012b697" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>API_MSG_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="107" refid="debug_8h_1509594f3ba7d8b1356628b50b55a0934" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SOCKETS_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="108" refid="debug_8h_19595904a1cb9bfe0b9b1d958abdc923a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ICMP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="109" refid="debug_8h_178140cbe70258a65cb5c9e381843e4f3" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INET_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="110" refid="debug_8h_15d3348778951e7bc5cd397c6575eef3a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="111" refid="debug_8h_14cdc3e9a4a1c01d1f7f0e723a1b2ec33" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IP_REASS_DEBUG<sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="112" refid="debug_8h_12d7bc380695eeedb1af50c3808613afe" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEM_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="113" refid="debug_8h_1d80231923f7a808d49eba5ec57d63616" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEMP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="114" refid="debug_8h_12960ae20008f05da8cc0714f36365642" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SYS_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="115" refid="debug_8h_14f43bb8a430c7a52a1ad5086d3f2803c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="116" refid="debug_8h_1f51dc2563536de56470146749f715ba8" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_INPUT_DEBUG<sp/><sp/>0</highlight></codeline>
+<codeline lineno="117" refid="debug_8h_15895bee26e8e1a0b89d597e0f2580b23" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_FR_DEBUG<sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="118" refid="debug_8h_1d6e52e37415d0d0cbe4931a28f5a9662" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_RTO_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="119" refid="debug_8h_13c6d576453b168f2c5f2178cc0bffd4c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_REXMIT_DEBUG<sp/>0</highlight></codeline>
+<codeline lineno="120" refid="debug_8h_166df03d8192cd978d3321a9d68bf5411" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_CWND_DEBUG<sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="121" refid="debug_8h_13704f433e947d6342da77c74e33627e1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_WND_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="122" refid="debug_8h_19f70601fdc1feee490772bf7fcdb74fb" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_OUTPUT_DEBUG<sp/>0</highlight></codeline>
+<codeline lineno="123" refid="debug_8h_137596f7bbb9b7663826244ba54486679" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_RST_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="124" refid="debug_8h_1e7980c7f8eb45cd411bf410ff0a3fc55" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_QLEN_DEBUG<sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="125" refid="debug_8h_10393f312c5475a1c649b39ef9cfcaad4" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UDP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="126" refid="debug_8h_152d6c83451936c3de3b0338d4a3f921f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCPIP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="127" refid="debug_8h_11ddf6bc3a7d9c615f5c9954c1d4ad696" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCPDUMP_DEBUG<sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="128" refid="debug_8h_197927ceecabcdb5f41735bf372a05cee" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>DHCP_DEBUG<sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="129"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>LWIP_DEBUG<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_DEBUG_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"></highlight></codeline>
+<codeline lineno="139"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/debug.h"/>
+  </compounddef>
+</doxygen>

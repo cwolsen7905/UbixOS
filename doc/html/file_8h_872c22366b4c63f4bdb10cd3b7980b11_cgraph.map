@@ -1,0 +1,17 @@
+base referer
+rect $kmalloc_8h.html#aa9ed6886459604cf73ccdbf6410e487 115,158 171,184
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 240,208 320,235
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 232,259 328,286
+rect $kmalloc_8c.html#eb1c3f1ef8eb9063c2e5c4af488dd2d0 219,56 341,83
+rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 551,107 617,134
+rect $lib_2string_8h.html#ce4b911463887af5e748326323e99a23 241,158 319,184
+rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 407,56 473,83
+rect $8259_8h.html#2b9ec30943ddb0a2ef3bd7ccfd2026c0 539,6 629,32
+rect $stdarg_8h.html#621577c2df0ad5faa281223c56eeb7a5 548,56 620,83
+rect $vsprintf_8c.html#c2f4c669c6f6aa6caa5ab8adb1b07dd0 713,70 788,96
+rect $vsprintf_8c.html#3fa7c8ef8597579301cb4b5c59bc6d9a 711,19 791,46
+rect $sched_8h.html#08933fe6d593a1c78b9080359f15a0b7 389,183 491,210
+rect $spinlock_8h.html#8f9173fadeddafa01754d6cbcc630198 701,234 800,260
+rect $sched_8h.html#549a0c1cc47933fa045b200690965cbd 553,183 615,210
+rect $sched_8h.html#e969273d772018d111e1f0344eb550f8 677,183 824,210
+rect $sched_8h.html#086cc0adc0b6a3860ceeeb5bc5ea94ea 681,132 820,159

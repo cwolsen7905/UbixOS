@@ -1,0 +1,430 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="pagefault_8c" kind="file">
+    <compoundname>pagefault.c</compoundname>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <incdepgraph>
+      <node id="6174">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6181">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="6175">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+        <childnode refid="6176" relation="include">
+        </childnode>
+        <childnode refid="6177" relation="include">
+        </childnode>
+        <childnode refid="6180" relation="include">
+        </childnode>
+        <childnode refid="6174" relation="include">
+        </childnode>
+      </node>
+      <node id="6182">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6170">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="6171" relation="include">
+        </childnode>
+      </node>
+      <node id="6171">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="6169">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+        <childnode refid="6172" relation="include">
+        </childnode>
+        <childnode refid="6174" relation="include">
+        </childnode>
+      </node>
+      <node id="6177">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+        <childnode refid="6178" relation="include">
+        </childnode>
+        <childnode refid="6179" relation="include">
+        </childnode>
+      </node>
+      <node id="6180">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6168">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="6169" relation="include">
+        </childnode>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6179">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6183">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6178">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6167">
+        <label>src/sys/vmm/pagefault.c</label>
+        <link refid="pagefault.c"/>
+        <childnode refid="6168" relation="include">
+        </childnode>
+        <childnode refid="6175" relation="include">
+        </childnode>
+        <childnode refid="6181" relation="include">
+        </childnode>
+        <childnode refid="6182" relation="include">
+        </childnode>
+        <childnode refid="6183" relation="include">
+        </childnode>
+      </node>
+      <node id="6172">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="6173" relation="include">
+        </childnode>
+        <childnode refid="6174" relation="include">
+        </childnode>
+      </node>
+      <node id="6173">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+      <node id="6176">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="6170" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void vmm_pageFault</definition>
+        <argsstring>(uInt32 memAddr, uInt32 eip, uInt32 esp)</argsstring>
+        <name>vmm_pageFault</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>memAddr</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>eip</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>esp</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/pagefault.c" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/pagefault.c" bodystart="53" bodyend="131"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="paging_8h_157d743cb60fe478f6720c42315e7e813" compoundref="paging_8h" startline="46">PAGE_COW</references>
+        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
+        <references refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" compoundref="paging_8h" startline="42">pageEntries</references>
+        <references refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" compoundref="pagefault_8c" startline="36">pageFaultSpinLock</references>
+        <references refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" compoundref="paging_8h" startline="44">parentPageDirAddr</references>
+        <references refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" compoundref="spinlock_8c" startline="56" endline="62">spinLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" compoundref="paging_8h" startline="43">tablesBaseAddress</references>
+        <references refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" compoundref="sched_8h" startline="67">taskStruct::td</references>
+        <references refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" compoundref="thread_8h" startline="40">thread::vm_daddr</references>
+        <references refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" compoundref="thread_8h" startline="41">thread::vm_dsize</references>
+        <references refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" compoundref="getphysicaladdr_8c" startline="40" endline="54">vmm_getPhysicalAddr</references>
+        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
+        <references refid="paging_8h_14b324672c4b25064eb8db1e3419337b1" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</references>
+        <references refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" compoundref="unmappage_8c" startline="50" endline="80">vmmUnmapPage</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="pagefault_8c_197eea32960b19607e9418f78aadc41db" prot="public" static="yes" mutable="no">
+        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
+        <definition>spinLock_t pageFaultSpinLock</definition>
+        <argsstring></argsstring>
+        <name>pageFaultSpinLock</name>
+        <initializer> SPIN_LOCK_INITIALIZER</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/pagefault.c" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/vmm/pagefault.c" bodystart="36" bodyend="-1"/>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: pagefault_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" kindref="member">pageFaultSpinLock</ref><sp/>=<sp/><ref refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" kindref="member">SPIN_LOCK_INITIALIZER</ref>;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"></highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>Function:<sp/><sp/><sp/><sp/>void<sp/>vmm_pageFault(uInt32<sp/>memAddr,uInt32<sp/>eip,uInt32<sp/>esp);</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>Description:<sp/>This<sp/>is<sp/>the<sp/>page<sp/>fault<sp/>handler,<sp/>it<sp/>will<sp/>handle<sp/>COW<sp/>and<sp/>trap<sp/>all<sp/>other</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>exceptions<sp/>and<sp/>segfault<sp/>the<sp/>thread.</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"></highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>Notes:</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="46"><highlight class="comment">07/30/02<sp/>-<sp/>Fixed<sp/>COW<sp/>However<sp/>I<sp/>Need<sp/>To<sp/>Think<sp/>Of<sp/>A<sp/>Way<sp/>To<sp/>Impliment</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>A<sp/>Paging<sp/>System<sp/>Also<sp/>Start<sp/>To<sp/>Add<sp/>Security<sp/>Levels</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="49"><highlight class="comment">07/27/04<sp/>-<sp/>Added<sp/>spin<sp/>locking<sp/>to<sp/>ensure<sp/>that<sp/>we<sp/>are<sp/>thread<sp/>safe.<sp/>I<sp/>know<sp/>that<sp/>spining<sp/>a<sp/></highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>cpu<sp/>is<sp/>a<sp/>waste<sp/>of<sp/>resources<sp/>but<sp/>for<sp/>now<sp/>it<sp/>prevents<sp/>errors.</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"></highlight></codeline>
+<codeline lineno="52"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="paging_8h_1442adfc886cbfedfc3edadf45c5f89a6" kindref="member">vmm_pageFault</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>memAddr,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>eip,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>i<sp/>=<sp/>0x0,<sp/>pageTableIndex<sp/>=<sp/>0x0,pageDirectoryIndex<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*pageDir<sp/>=<sp/>0x0,*pageTable<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*src<sp/>=<sp/>0x0,*dst<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Try<sp/>to<sp/>aquire<sp/>lock<sp/>otherwise<sp/>spin<sp/>till<sp/>we<sp/>do<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(&amp;<ref refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" kindref="member">pageFaultSpinLock</ref>);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>page<sp/>dir<sp/>pointer<sp/>to<sp/>the<sp/>address<sp/>of<sp/>the<sp/>visable<sp/>page<sp/>directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/>pageDir<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<ref refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" kindref="member">parentPageDirAddr</ref>;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>UBU<sp/>-<sp/>This<sp/>is<sp/>a<sp/>temp<sp/>panic<sp/>for<sp/>0x0<sp/>read<sp/>write<sp/>later<sp/>on<sp/>I<sp/>will<sp/>handle<sp/>this<sp/>differently<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(memAddr<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Segfault<sp/>At<sp/>Address:<sp/>[0x%X][0x%X][%i][0x%X]\n&quot;</highlight><highlight class="normal">,memAddr,esp,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,eip);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Error<sp/>We<sp/>Wrote<sp/>To<sp/>0x0\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Calculate<sp/>The<sp/>Page<sp/>Directory<sp/>Index<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>pageDirectoryIndex<sp/>=<sp/>(memAddr<sp/>&gt;&gt;<sp/>22);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Calculate<sp/>The<sp/>Page<sp/>Table<sp/>Index<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/>pageTableIndex<sp/>=<sp/>((memAddr<sp/>&gt;&gt;<sp/>12)<sp/>&amp;<sp/>0x3FF);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>UBU<sp/>-<sp/>This<sp/>is<sp/>a<sp/>temporary<sp/>routine<sp/>for<sp/>handling<sp/>access<sp/>to<sp/>a<sp/>page<sp/>of<sp/>a<sp/>non<sp/>existant<sp/>page<sp/>table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(pageDir[pageDirectoryIndex]<sp/>==<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Segfault<sp/>At<sp/>Address:<sp/>[0x%X][0x%X][%i][0x%X],<sp/>Not<sp/>A<sp/>Valid<sp/>Page<sp/>Table\n&quot;</highlight><highlight class="normal">,memAddr,esp,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,eip);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" kindref="member">pageFaultSpinLock</ref>);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>pageTable<sp/>To<sp/>Point<sp/>To<sp/>Virtual<sp/>Address<sp/>Of<sp/>Page<sp/>Table<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>pageTable<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)(<ref refid="paging_8h_1a432d41840ad8a583a7e6af86feece4f" kindref="member">tablesBaseAddress</ref><sp/>+<sp/>(0<ref refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" kindref="member">x1000</ref><sp/>*<sp/>pageDirectoryIndex));</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Test<sp/>if<sp/>this<sp/>is<sp/>a<sp/>COW<sp/>on<sp/>page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)pageTable[pageTableIndex]<sp/>&amp;<sp/><ref refid="paging_8h_157d743cb60fe478f6720c42315e7e813" kindref="member">PAGE_COW</ref>)<sp/>==<sp/>PAGE_COW)<sp/>{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>Src<sp/>To<sp/>Base<sp/>Address<sp/>Of<sp/>Page<sp/>To<sp/>Copy<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>src<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)(memAddr<sp/>&amp;<sp/>0xFFFFF000);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Allocate<sp/>A<sp/>Free<sp/>Page<sp/>For<sp/>Destination<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>USE<sp/>vmInfo<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>dst<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/><ref refid="paging_8h_14b324672c4b25064eb8db1e3419337b1" kindref="member">vmmGetFreeVirtualPage</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,1,0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Copy<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0;i&lt;<ref refid="paging_8h_1b80d68a13753e40b0df8e0dc0c4af870" kindref="member">pageEntries</ref>;i++)<sp/>{</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>dst[i]<sp/>=<sp/>src[i];</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Adjust<sp/>The<sp/>COW<sp/>Counter<sp/>For<sp/>Physical<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" kindref="member">adjustCowCounter</ref>(((<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)pageTable[pageTableIndex]<sp/>&amp;<sp/>0xFFFFF000),-1);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Remap<sp/>In<sp/>New<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>pageTable[pageTableIndex]<sp/>=<sp/>(uInt32)(<ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>((uInt32)dst)|(memAddr<sp/>&amp;<sp/>0xFFF));</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Unlink<sp/>From<sp/>Memory<sp/>Map<sp/>Allocated<sp/>Page<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="paging_8h_1fd94da50e455602f86ad7dae2fc9d1db" kindref="member">vmmUnmapPage</ref>((uInt32)dst,1);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(pageTable[pageTableIndex]<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Security<sp/>failed<sp/>pagetable<sp/>not<sp/>user<sp/>permission\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;pageTable:<sp/>[0x%X:0x%X:0x%X:0x%X]\n&quot;</highlight><highlight class="normal">,pageTable[pageTableIndex],pageTableIndex,pageDirectoryIndex,eip);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Segfault<sp/>At<sp/>Address:<sp/>[0x%X][0x%X][%i][0x%X]<sp/>Non<sp/>Mapped\n&quot;</highlight><highlight class="normal">,memAddr,esp,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,eip);</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" kindref="member">pageFaultSpinLock</ref>);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(memAddr<sp/>&lt;<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" kindref="member">td</ref>.<ref refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" kindref="member">vm_dsize</ref><sp/>+<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1481c2e7084fec272e616d3fb984036e2" kindref="member">td</ref>.<ref refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" kindref="member">vm_daddr</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>pageTable[pageTableIndex]<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)<ref refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" kindref="member">vmmFindFreePage</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>)<sp/>|<sp/><ref refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" kindref="member">PAGE_DEFAULT</ref>;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" kindref="member">pageFaultSpinLock</ref>);</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Need<sp/>To<sp/>Create<sp/>A<sp/>Routine<sp/>For<sp/>Attempting<sp/>To<sp/>Access<sp/>Non<sp/>Mapped<sp/>Memory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Segfault<sp/>At<sp/>Address:<sp/>[0x%X][0x%X][%i][0x%X]<sp/>Non<sp/>Mapped\n&quot;</highlight><highlight class="normal">,memAddr,esp,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,eip);</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Out<sp/>Of<sp/>Stack<sp/>Space:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,memAddr<sp/>&amp;<sp/>0xFF0000);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" kindref="member">pageFaultSpinLock</ref>);</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;movl<sp/>%cr3,%eax\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;movl<sp/>%eax,%cr3\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Release<sp/>the<sp/>spin<sp/>lock<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(&amp;<ref refid="pagefault_8c_197eea32960b19607e9418f78aadc41db" kindref="member">pageFaultSpinLock</ref>);</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="134"><highlight class="comment"><sp/>$Log: pagefault_8c.xml,v $
+<codeline lineno="134"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
+<codeline lineno="134"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="134"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="135"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2006/12/05<sp/>14:10:21<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="136"><highlight class="comment"><sp/>Workign<sp/>Distro</highlight></codeline>
+<codeline lineno="137"><highlight class="comment"></highlight></codeline>
+<codeline lineno="138"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2006/12/01<sp/>05:12:35<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="139"><highlight class="comment"><sp/>We&apos;re<sp/>almost<sp/>there...<sp/>:)</highlight></codeline>
+<codeline lineno="140"><highlight class="comment"></highlight></codeline>
+<codeline lineno="141"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2006/11/21<sp/>13:25:49<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="142"><highlight class="comment"><sp/>A<sp/>handful<sp/>of<sp/>changes<sp/>;)</highlight></codeline>
+<codeline lineno="143"><highlight class="comment"></highlight></codeline>
+<codeline lineno="144"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2006/11/06<sp/>19:10:12<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="145"><highlight class="comment"><sp/>Lots<sp/>Of<sp/>Updates...<sp/>Still<sp/>having<sp/>issues<sp/>with<sp/>brk();</highlight></codeline>
+<codeline lineno="146"><highlight class="comment"></highlight></codeline>
+<codeline lineno="147"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2006/10/31<sp/>20:44:19<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="148"><highlight class="comment"><sp/>Lots<sp/>of<sp/>changes</highlight></codeline>
+<codeline lineno="149"><highlight class="comment"></highlight></codeline>
+<codeline lineno="150"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="151"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="152"><highlight class="comment"></highlight></codeline>
+<codeline lineno="153"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:38<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="154"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="155"><highlight class="comment"></highlight></codeline>
+<codeline lineno="156"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:52<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="157"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="158"><highlight class="comment"></highlight></codeline>
+<codeline lineno="159"><highlight class="comment"><sp/>Revision<sp/>1.14<sp/><sp/>2004/08/25<sp/>22:02:41<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="160"><highlight class="comment"><sp/>task<sp/>switching<sp/>-<sp/>We<sp/>now<sp/>are<sp/>using<sp/>software<sp/>switching<sp/>to<sp/>be<sp/>consistant<sp/>with<sp/>the<sp/>rest<sp/>of<sp/>the<sp/>world<sp/>because<sp/>all<sp/>of<sp/>this<sp/>open<sp/>source<sp/>freaks<sp/>gave<sp/>me<sp/>a<sp/>hard<sp/>time<sp/>about<sp/>something<sp/>I<sp/>liked.<sp/>There<sp/>doesn&apos;t<sp/>seem<sp/>to<sp/>be<sp/>any<sp/>gain<sp/>in<sp/>performance<sp/>but<sp/>it<sp/>is<sp/>working<sp/>fine<sp/>and<sp/>flawlessly</highlight></codeline>
+<codeline lineno="161"><highlight class="comment"></highlight></codeline>
+<codeline lineno="162"><highlight class="comment"><sp/>Revision<sp/>1.13<sp/><sp/>2004/08/24<sp/>05:24:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="163"><highlight class="comment"><sp/>TCA<sp/>Is<sp/>A<sp/>BONER!!!!</highlight></codeline>
+<codeline lineno="164"><highlight class="comment"></highlight></codeline>
+<codeline lineno="165"><highlight class="comment"><sp/>Revision<sp/>1.12<sp/><sp/>2004/08/14<sp/>11:23:03<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="166"><highlight class="comment"><sp/>Changes</highlight></codeline>
+<codeline lineno="167"><highlight class="comment"></highlight></codeline>
+<codeline lineno="168"><highlight class="comment"><sp/>Revision<sp/>1.11<sp/><sp/>2004/07/28<sp/>15:05:43<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="169"><highlight class="comment"><sp/>Major:</highlight></codeline>
+<codeline lineno="170"><highlight class="comment"><sp/><sp/><sp/>Pages<sp/>now<sp/>have<sp/>strict<sp/>security<sp/>enforcement.</highlight></codeline>
+<codeline lineno="171"><highlight class="comment"><sp/><sp/><sp/>Many<sp/>null<sp/>dereferences<sp/>have<sp/>been<sp/>resolved.</highlight></codeline>
+<codeline lineno="172"><highlight class="comment"><sp/><sp/><sp/>When<sp/>apps<sp/>loaded<sp/>permissions<sp/>set<sp/>for<sp/>pages<sp/>rw<sp/>and<sp/>ro</highlight></codeline>
+<codeline lineno="173"><highlight class="comment"></highlight></codeline>
+<codeline lineno="174"><highlight class="comment"><sp/>Revision<sp/>1.10<sp/><sp/>2004/07/28<sp/>00:22:56<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="175"><highlight class="comment"><sp/>bah</highlight></codeline>
+<codeline lineno="176"><highlight class="comment"></highlight></codeline>
+<codeline lineno="177"><highlight class="comment"><sp/>Revision<sp/>1.9<sp/><sp/>2004/07/28<sp/>00:17:05<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="178"><highlight class="comment"><sp/>Major:</highlight></codeline>
+<codeline lineno="179"><highlight class="comment"><sp/><sp/><sp/>Disconnected<sp/>page<sp/>0x0<sp/>from<sp/>the<sp/>system...<sp/>Unfortunately<sp/>this<sp/>broke<sp/>many<sp/>things</highlight></codeline>
+<codeline lineno="180"><highlight class="comment"><sp/><sp/><sp/>all<sp/>of<sp/>which<sp/>have<sp/>been<sp/>fixed.<sp/>This<sp/>was<sp/>good<sp/>because<sp/>nothing<sp/>deferences<sp/>NULL</highlight></codeline>
+<codeline lineno="181"><highlight class="comment"><sp/><sp/><sp/>any<sp/>more.</highlight></codeline>
+<codeline lineno="182"><highlight class="comment"></highlight></codeline>
+<codeline lineno="183"><highlight class="comment"><sp/>Things<sp/>affected:</highlight></codeline>
+<codeline lineno="184"><highlight class="comment"><sp/><sp/><sp/>malloc,kmalloc,getfreepage,getfreevirtualpage,pagefault,fork,exec,ld,ld.so,exec,file</highlight></codeline>
+<codeline lineno="185"><highlight class="comment"></highlight></codeline>
+<codeline lineno="186"><highlight class="comment"><sp/>Revision<sp/>1.8<sp/><sp/>2004/07/27<sp/>07:09:38<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="187"><highlight class="comment"><sp/>Put<sp/>in<sp/>a<sp/>test<sp/>for<sp/>0x0</highlight></codeline>
+<codeline lineno="188"><highlight class="comment"></highlight></codeline>
+<codeline lineno="189"><highlight class="comment"><sp/>Revision<sp/>1.7<sp/><sp/>2004/07/26<sp/>19:15:49<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="190"><highlight class="comment"><sp/>test<sp/>code,<sp/>fixes<sp/>and<sp/>the<sp/>like</highlight></codeline>
+<codeline lineno="191"><highlight class="comment"></highlight></codeline>
+<codeline lineno="192"><highlight class="comment"><sp/>Revision<sp/>1.6<sp/><sp/>2004/07/24<sp/>23:04:44<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="193"><highlight class="comment"><sp/>Changes...<sp/>mark<sp/>let<sp/>me<sp/>know<sp/>if<sp/>you<sp/>fault<sp/>at<sp/>pid<sp/>185<sp/>when<sp/>you<sp/>type<sp/>stress</highlight></codeline>
+<codeline lineno="194"><highlight class="comment"></highlight></codeline>
+<codeline lineno="195"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/07/24<sp/>20:00:51<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="196"><highlight class="comment"><sp/>Lots<sp/>of<sp/>changes<sp/>to<sp/>the<sp/>vmm<sp/>subsystem....<sp/>Page<sp/>faults<sp/>have<sp/>been<sp/>adjust<sp/>to<sp/>now<sp/>be<sp/>blocking<sp/>on<sp/>a<sp/>per<sp/>thread<sp/>basis<sp/>not<sp/>system<sp/>wide.<sp/>This<sp/>has<sp/>resulted<sp/>in<sp/>no<sp/>more<sp/>deadlocks..<sp/>also<sp/>the<sp/>addition<sp/>of<sp/>per<sp/>thread<sp/>locking<sp/>has<sp/>removed<sp/>segfaults<sp/>as<sp/>a<sp/>result<sp/>of<sp/>COW<sp/>in<sp/>which<sp/>two<sp/>tasks<sp/>fault<sp/>the<sp/>same<sp/>COW<sp/>page<sp/>and<sp/>try<sp/>to<sp/>modify<sp/>it.</highlight></codeline>
+<codeline lineno="197"><highlight class="comment"></highlight></codeline>
+<codeline lineno="198"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/24<sp/>17:47:28<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="199"><highlight class="comment"><sp/>vmm_pageFault:<sp/>deadlock<sp/>resolved<sp/>thanks<sp/>to<sp/>a<sp/>propper<sp/>solution<sp/>suggested<sp/>by<sp/>geist</highlight></codeline>
+<codeline lineno="200"><highlight class="comment"></highlight></codeline>
+<codeline lineno="201"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/07/19<sp/>02:05:26<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="202"><highlight class="comment"><sp/>vmmPageFault:<sp/>had<sp/>a<sp/>potential<sp/>memory<sp/>leak<sp/>here<sp/>for<sp/>one<sp/>page<sp/>it<sp/>was<sp/>still<sp/>using<sp/>sysID<sp/>on<sp/>certain<sp/>COW<sp/>scenarios</highlight></codeline>
+<codeline lineno="203"><highlight class="comment"></highlight></codeline>
+<codeline lineno="204"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/06/10<sp/>22:23:56<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="205"><highlight class="comment"><sp/>Volatiles</highlight></codeline>
+<codeline lineno="206"><highlight class="comment"></highlight></codeline>
+<codeline lineno="207"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:06:52<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="208"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
+<codeline lineno="209"><highlight class="comment"></highlight></codeline>
+<codeline lineno="210"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/04/13<sp/>16:36:34<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="211"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
+<codeline lineno="212"><highlight class="comment"></highlight></codeline>
+<codeline lineno="213"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="214"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/vmm/pagefault.c"/>
+  </compounddef>
+</doxygen>

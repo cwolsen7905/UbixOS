@@ -1,0 +1,6 @@
+base referer
+rect $8259_8h.html#2b9ec30943ddb0a2ef3bd7ccfd2026c0 120,5 211,32
+rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 132,56 199,83
+rect $stdarg_8h.html#621577c2df0ad5faa281223c56eeb7a5 130,107 202,133
+rect $vsprintf_8c.html#c2f4c669c6f6aa6caa5ab8adb1b07dd0 263,81 338,108
+rect $vsprintf_8c.html#3fa7c8ef8597579301cb4b5c59bc6d9a 260,132 340,159

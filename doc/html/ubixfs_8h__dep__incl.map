@@ -1,0 +1,11 @@
+base referer
+rect $hd_8h.html 284,56 465,83
+rect $init_8h.html 519,5 727,32
+rect $syscall_8c.html 287,107 463,133
+rect $block_8c.html 292,157 457,184
+rect $dirCache_8c.html 280,208 469,235
+rect $directory_8c.html 281,259 468,285
+rect $thread_8c.html 288,309 461,336
+rect $ubixfs_8c.html 289,360 460,387
+rect $hd_8c.html 560,56 685,83
+rect $main_8c.html 776,5 920,32

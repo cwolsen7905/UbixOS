@@ -1,0 +1,16 @@
+base referer
+rect $ubixfs_8h.html#d2880707d0f942f5119f946db4e13e4e 159,56 273,83
+rect $kmalloc_8h.html#aa9ed6886459604cf73ccdbf6410e487 188,157 244,184
+rect $kmalloc_8h.html#150eab2ac4ce4553e21ca10e7f441762 179,208 253,235
+rect $lib_2string_8h.html#6f3dcb20ff11ff9db5904c3cfb61a38c 183,259 249,285
+rect $ubixfs_8h.html#99dfa2e54401fafb70357a6632c4ef10 347,5 421,32
+rect $kmalloc_8c.html#eb1c3f1ef8eb9063c2e5c4af488dd2d0 323,157 445,184
+rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 745,157 812,184
+rect $lib_2string_8h.html#ce4b911463887af5e748326323e99a23 549,309 627,336
+rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 739,487 819,513
+rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 731,309 827,336
+rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 555,157 621,184
+rect $sched_8h.html#08933fe6d593a1c78b9080359f15a0b7 875,461 976,488
+rect $spinlock_8h.html#8f9173fadeddafa01754d6cbcc630198 876,512 975,539
+rect $kmalloc_8c.html#f6c4ea5cb961c72548d92ff65d7e33a4 324,360 444,387
+rect $paging_8h.html#541f0b43826a40b9e978f5479080bb0e 493,411 683,437

@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structmMap" kind="struct" prot="public">
+    <compoundname>mMap</compoundname>
+    <includes refid="vmm_8h" local="no">vmm.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmMap_12fb919d9c0a2653979ed667d59a395cb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int mMap::cowCounter</definition>
+        <argsstring></argsstring>
+        <name>cowCounter</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmMap_1c8d077d6fec5b5f9a63f01f044444f2b" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 mMap::pageAddr</definition>
+        <argsstring></argsstring>
+        <name>pageAddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1288e13e815d43b06e75819f8939524df" kindref="member">pid_t</ref></type>
+        <definition>pid_t mMap::pid</definition>
+        <argsstring></argsstring>
+        <name>pid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmMap_11561717fd6d76d6526c9dac718925681" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 mMap::reserved</definition>
+        <argsstring></argsstring>
+        <name>reserved</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmMap_1cce32b3022c0d0fbed2760ecc118f664" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 mMap::status</definition>
+        <argsstring></argsstring>
+        <name>status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/vmm.h" bodystart="41" bodyend="47"/>
+    <listofallmembers>
+      <member refid="structmMap_12fb919d9c0a2653979ed667d59a395cb" prot="public" virt="non-virtual"><scope>mMap</scope><name>cowCounter</name></member>
+      <member refid="structmMap_1c8d077d6fec5b5f9a63f01f044444f2b" prot="public" virt="non-virtual"><scope>mMap</scope><name>pageAddr</name></member>
+      <member refid="structmMap_1d72d5f52b2195f98e60aa61ed52ae9b1" prot="public" virt="non-virtual"><scope>mMap</scope><name>pid</name></member>
+      <member refid="structmMap_11561717fd6d76d6526c9dac718925681" prot="public" virt="non-virtual"><scope>mMap</scope><name>reserved</name></member>
+      <member refid="structmMap_1cce32b3022c0d0fbed2760ecc118f664" prot="public" virt="non-virtual"><scope>mMap</scope><name>status</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

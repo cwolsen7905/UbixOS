@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="kprint_8h" kind="file">
+    <compoundname>kprint.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="getfreevirtualpage_8c" local="no">src/sys/vmm/getfreevirtualpage.c</includedby>
+    <incdepgraph>
+      <node id="3275">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3276" relation="include">
+        </childnode>
+      </node>
+      <node id="3276">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3274">
+        <label>src/sys/include/lib/kprint.h</label>
+        <link refid="kprint.h"/>
+        <childnode refid="3275" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="3277">
+        <label>src/sys/include/lib/kprint.h</label>
+        <link refid="kprint.h"/>
+        <childnode refid="3278" relation="include">
+        </childnode>
+      </node>
+      <node id="3278">
+        <label>src/sys/vmm/getfreevirtualpage.c</label>
+        <link refid="getfreevirtualpage_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kprintf</definition>
+        <argsstring>(const char *fmt,...)</argsstring>
+        <name>kprintf</name>
+        <param>
+          <type>const char *</type>
+          <declname>fmt</declname>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprint.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kprintf.c" bodystart="38" bodyend="49"/>
+        <referencedby refid="assert_8c_105f6680808cf2d1b1aef3c9c86901f16" compoundref="assert_8c" startline="38" endline="45">__assert</referencedby>
+        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
+        <referencedby refid="directory_8c_1756e1f497c4d9fed64ac0a2256f9fa46" compoundref="directory_8c" startline="66" endline="91">addDirEntry</referencedby>
+        <referencedby refid="smp_8c_170e557cb01aee676855cee05b0769288" compoundref="smp_8c" startline="234" endline="248">apicMagic</referencedby>
+        <referencedby refid="atkbd_8c_1d67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="157" endline="175">atkbd_init</referencedby>
+        <referencedby refid="kern__descrip_8c_1ec14600d2aa9db1288f00704ba3a55d7" compoundref="kern__descrip_8c" startline="90" endline="98">close</referencedby>
+        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+        <referencedby refid="ne2k_8c_120e9fce07d30c847b2f794191f55e5ea" compoundref="ne2k_8c" startline="297" endline="311">dp_pkt2user</referencedby>
+        <referencedby refid="ne2k_8c_193484a1eaa8e1b265202c6cccfed65f3" compoundref="ne2k_8c" startline="223" endline="277">dp_recv</referencedby>
+        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="kern__descrip_8c_19c93ac280b559128027746bda7c5d6d4" compoundref="kern__descrip_8c" startline="67" endline="88">falloc</referencedby>
+        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="ffs_8c_1ac9a795f42d582183e06192277305e47" compoundref="ffs_8c" startline="11" endline="23">ffs_read</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
+        <referencedby refid="kern__descrip_8c_1c26938ed109edd82077382276bc8258c" compoundref="kern__descrip_8c" startline="103" endline="109">getdtablesize</referencedby>
+        <referencedby refid="kern__descrip_8c_114e228d6e5391a882d3b20ff2466b2ac" compoundref="kern__descrip_8c" startline="141" endline="154">getfd</referencedby>
+        <referencedby refid="gen__calls_8c_12cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="59" endline="65">getgid</referencedby>
+        <referencedby refid="gen__calls_8c_14f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="41" endline="47">getpid</referencedby>
+        <referencedby refid="gen__calls_8c_1ff04064695f5ad2e284b51a24f351dc9" compoundref="gen__calls_8c" startline="118" endline="123">gettimeofday_new</referencedby>
+        <referencedby refid="gen__calls_8c_15c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="50" endline="56">getuid</referencedby>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+        <referencedby refid="8259_8c_18045101c57cc1791817412b1016794b4" compoundref="8259_8c" startline="42" endline="60">i8259_init</referencedby>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+        <referencedby refid="net_8c_1a9e522808a681d651832da7d16ff1ebb" compoundref="net_8c" startline="112" endline="209">inet_aton</referencedby>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="idt_8c_1dbf451ce0d6ecb3c485382616bee1de4" compoundref="idt_8c" startline="187" endline="195">intNull</referencedby>
+        <referencedby refid="syscall_8c_198fb463aa3c38a140b47e594bf9603d6" compoundref="syscall_8c" startline="251" endline="254">invalidCall</referencedby>
+        <referencedby refid="syscall_8c_1f7052cfb833f292be2fd73436e4c96b6" compoundref="syscall_8c" startline="83" endline="87">InvalidSystemCall</referencedby>
+        <referencedby refid="gen__calls_8c_1f33cddd66090ca898f9cfd38ea82d284" compoundref="gen__calls_8c" startline="100" endline="106">issetugid</referencedby>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
+        <referencedby refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="46" endline="73">kmod_add</referencedby>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="kpanic_8c_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+        <referencedby refid="ufs_8c_18b14c49128395a8745bc83cfcce7b9cf" compoundref="ufs_8c" startline="236" endline="269">lookup</referencedby>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+        <referencedby refid="mouse_8c_1db1403c2c7c25ea9b2826c504f8eb502" compoundref="mouse_8c" startline="141" endline="148">mouseHandler</referencedby>
+        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <referencedby refid="paging_8c_12ef18727032511b619759847d8c21720" compoundref="paging_8c" startline="516" endline="520">munmap</referencedby>
+        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
+        <referencedby refid="ne2k_8c_11e664af4b82fdc7971db793f0e9b3ebd" compoundref="ne2k_8c" startline="191" endline="221">ne2kHandler</referencedby>
+        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+        <referencedby refid="pit_8c_1d7178bcaf8f93f5c16d41305f7338951" compoundref="pit_8c" startline="64" endline="74">pit_init</referencedby>
+        <referencedby refid="gen__calls_8c_15eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="125" endline="144">read</referencedby>
+        <referencedby refid="gen__calls_8c_1111a32074b3f5f68a4fa5585fe8ab3a4" compoundref="gen__calls_8c" startline="108" endline="116">readlink</referencedby>
+        <referencedby refid="sched_8c_1cc9c0d52122a455dbd018fabfc11ab59" compoundref="sched_8c" startline="69" endline="81">sched_init</referencedby>
+        <referencedby refid="fdc_8c_15886a896e5f0361f36b40d007db6e683" compoundref="fdc_8c" startline="222" endline="239">seek</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="gen__calls_8c_114173c973cb6d92a0e2ff34ee072f4d3" compoundref="gen__calls_8c" startline="67" endline="98">sys_write</referencedby>
+        <referencedby refid="syscall_8c_1f53171b36a238440fc8e757c0d00a91f" compoundref="syscall_8c" startline="100" endline="111">sysAuth</referencedby>
+        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="file_8c_111af8c48fc1b1a08d97e8082d553c143" compoundref="file_8c" startline="122" endline="131">sysFopen</referencedby>
+        <referencedby refid="file_8c_181e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="436" endline="469">sysMkDir</referencedby>
+        <referencedby refid="syscall_8c_187ae7b6cdc0230fbdf65c167a776e9ad" compoundref="syscall_8c" startline="113" endline="117">sysPasswd</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <referencedby refid="time_8c_145c7647a44b3b3eef8e44809180e86b5" compoundref="time_8c" startline="56" endline="90">time_init</referencedby>
+        <referencedby refid="tty_8c_1ab365abb615be7027fa0bdb2c09569cb" compoundref="tty_8c" startline="42" endline="79">tty_init</referencedby>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <referencedby refid="thread_8c_1fb3cddd76d07e866207fefe920a5f76d" compoundref="thread_8c" startline="39" endline="59">ubixfs_thread</referencedby>
+        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
+        <referencedby refid="ubthread_8c_1a13bf141cd3e9bf0921fbf61ffc637d8" compoundref="ubthread_8c" startline="81" endline="90">ubthread_mutex_lock</referencedby>
+        <referencedby refid="ufs_8c_1c7d4e2f2c573b3657d8a7680131ba068" compoundref="ufs_8c" startline="295" endline="298">ufs_writeFile</referencedby>
+        <referencedby refid="vfs_8c_1ca585ca14c08d6c1a07e1b886fc9749a" compoundref="vfs_8c" startline="48" endline="57">vfs_init</referencedby>
+        <referencedby refid="mount_8c_18379310fce9e1a500f602059516e25f0" compoundref="mount_8c" startline="47" endline="94">vfs_mount</referencedby>
+        <referencedby refid="vfs_8c_1d8cb9693ae7b6b9fc419efc975778338" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</referencedby>
+        <referencedby refid="vitals_8c_134d7f48e003fe73f05d594c6c1f00d49" compoundref="vitals_8c" startline="48" endline="69">vitals_init</referencedby>
+        <referencedby refid="paging_8c_10444c8635648fabdbd6e702137aa1723" compoundref="paging_8c" startline="522" endline="559">vmm_cleanVirtualSpace</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="paging_8c_1f47a45e3f0802f5aac053808127aaaf1" compoundref="paging_8c" startline="59" endline="147">vmm_pagingInit</referencedby>
+        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+        <referencedby refid="vmm__memory_8c_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="kprint_8h_1813254cfe6d658ea82f1dcdf2d927fb8" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int printOff</definition>
+        <argsstring></argsstring>
+        <name>printOff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprint.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/kprintf.c" bodystart="35" bodyend="-1"/>
+        <referencedby refid="kprintf_8c_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: kprint_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KPRINT_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_KPRINT_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*fmt,<sp/>...);</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="kprint_8h_1813254cfe6d658ea82f1dcdf2d927fb8" kindref="member">printOff</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="40"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/>$Log: kprint_8h.xml,v $
+<codeline lineno="42"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
+<codeline lineno="42"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="42"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"></highlight></codeline>
+<codeline lineno="46"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="47"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="48"><highlight class="comment"></highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:40<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"></highlight></codeline>
+<codeline lineno="52"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>15:00:27<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"></highlight></codeline>
+<codeline lineno="55"><highlight class="comment"></highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/lib/kprint.h"/>
+  </compounddef>
+</doxygen>

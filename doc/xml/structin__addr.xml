@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structin__addr" kind="struct" prot="public">
+    <compoundname>in_addr</compoundname>
+    <includes refid="sockets_8h" local="no">sockets.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structin__addr_18a06b11ad681c21d8474f014c4d49367" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 in_addr::s_addr</definition>
+        <argsstring></argsstring>
+        <name>s_addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="net_8c_1a9e522808a681d651832da7d16ff1ebb" compoundref="net_8c" startline="112" endline="209">inet_aton</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="42" bodyend="44"/>
+    <listofallmembers>
+      <member refid="structin__addr_18a06b11ad681c21d8474f014c4d49367" prot="public" virt="non-virtual"><scope>in_addr</scope><name>s_addr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

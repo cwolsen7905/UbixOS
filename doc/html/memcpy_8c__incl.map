@@ -1,0 +1,5 @@
+base referer
+rect $bcopy_8c.html 217,56 289,83
+rect $types_8h.html 471,56 591,83
+rect $string_8h.html 344,107 416,134
+rect $__types_8h.html 641,56 745,83

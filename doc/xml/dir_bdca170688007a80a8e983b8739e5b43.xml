@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_bdca170688007a80a8e983b8739e5b43" kind="dir">
+    <compoundname>src/sys/include/net/arch/</compoundname>
+    <innerfile refid="cc_8h">cc.h</innerfile>
+    <innerfile refid="cpu_8h">cpu.h</innerfile>
+    <innerfile refid="net_2arch_2init_8h">init.h</innerfile>
+    <innerfile refid="lib_8h">lib.h</innerfile>
+    <innerfile refid="perf_8h">perf.h</innerfile>
+    <innerfile refid="sys__arch_8h">sys_arch.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/arch/"/>
+  </compounddef>
+</doxygen>

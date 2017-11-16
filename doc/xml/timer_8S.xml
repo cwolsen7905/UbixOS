@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="timer_8S" kind="file">
+    <compoundname>timer.S</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="timer_8S_1a38a66d3bb9e673984e1a52bc18713d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>globl timerInt text code32 dx <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> outb dx movl ecx</type>
+        <definition>globl timerInt text code32 dx mov ax outb dx movl ecx incl</definition>
+        <argsstring>(%ecx) movl 4(%ecx)</argsstring>
+        <name>incl</name>
+        <param>
+          <type>%</type>
+          <declname>ecx</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="40"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="timer_8S_17ad1377531ff708c70773b5d1c57387e" prot="public" static="no" mutable="no">
+        <type>globl timerInt text code32 dx <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> outb</type>
+        <definition>globl timerInt text code32 dx mov ax outb al</definition>
+        <argsstring></argsstring>
+        <name>al</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="timer_8S_1aa1f83238047e62298e33bed5682d71c" prot="public" static="no" mutable="no">
+        <type>globl timerInt text code32 dx <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> outb dx movl ecx <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> xor <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> div <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> test</type>
+        <definition>globl timerInt text code32 dx mov ax outb dx movl ecx eax ebx xor edx div ebx test edx</definition>
+        <argsstring></argsstring>
+        <name>edx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" prot="public" static="no" mutable="no">
+        <type>globl timerInt text code32 dx <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> outb dx movl ecx <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_11c50f544178eb7e0af39bd078c5a986f" kindref="member">ebx</ref> xor</type>
+        <definition>globl timerInt text code32 dx mov ax outb dx movl ecx eax ebx xor edx</definition>
+        <argsstring></argsstring>
+        <name>edx</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="timer_8S_1e987d7c277439abad5828bb7b0291042" prot="public" static="no" mutable="no">
+        <type>globl timerInt text code32 dx <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> outb dx movl ecx <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref></type>
+        <definition>globl _vmm_pageFault text code32 esp eax pushl ebx movl</definition>
+        <argsstring></argsstring>
+        <name>movl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="timer_8S_1dc95ab102f418b6c76681c5f12dcbaf6" prot="public" static="no" mutable="no">
+        <type>globl timerInt text code32 dx <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> outb dx movl</type>
+        <definition>globl timerInt text code32 dx mov ax outb dx movl systemVitals</definition>
+        <argsstring></argsstring>
+        <name>systemVitals</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="timer_8S_11dda6dc7fd189e16cfcc28348fd1f21c" prot="public" static="no" mutable="no">
+        <type>globl timerInt text code32</type>
+        <definition>globl timerInt text code32 timerInt</definition>
+        <argsstring></argsstring>
+        <name>timerInt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" bodystart="35" bodyend="-1"/>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="timer_8S_1ad733e790e2a3943e0633846a67875f5" prot="public" static="no" mutable="no">
+        <type>globl timerInt text code32 dx <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl timerInt text code32 dx mov x20</definition>
+        <argsstring></argsstring>
+        <name>x20</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S" bodystart="35" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: timer_8S.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal">.globl<sp/><ref refid="timer_8S_11dda6dc7fd189e16cfcc28348fd1f21c" kindref="member">timerInt</ref></highlight></codeline>
+<codeline lineno="31"><highlight class="normal">.text</highlight></codeline>
+<codeline lineno="32"><highlight class="normal">.code32</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><ref refid="timer_8S_11dda6dc7fd189e16cfcc28348fd1f21c" kindref="member">timerInt</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/>pusha<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>all<sp/>of<sp/>the<sp/>registers<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="timer_8S_1ad733e790e2a3943e0633846a67875f5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/>$0x20,%dx<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>The<sp/>Following<sp/>Sends<sp/>Our<sp/>EOI<sp/>To<sp/>The<sp/>MPIC<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/>$0x20,%<ref refid="ap-boot_8S_1fe6e6cf4fb15afcba9890a66d0b89ffd" kindref="member">ax</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/>outb<sp/>%<ref refid="ap-boot_8S_130e4a0d86bcf382b9396e2d95bcb31b2" kindref="member">al</ref>,%dx</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>,%ecx<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Put<sp/>Location<sp/>Of<sp/>System<sp/>Vitals<sp/>Into<sp/>ECX<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1a38a66d3bb9e673984e1a52bc18713d7" kindref="member">incl</ref><sp/>4(%ecx)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Increment<sp/>sysTicks<sp/>our<sp/>1000ms<sp/>counter<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/>4(%ecx),%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Increment<sp/>our<sp/>sysUptime<sp/>by<sp/>1S<sp/>if<sp/>1000MS<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="timer_8S_1e987d7c277439abad5828bb7b0291042" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/>$200,%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Have<sp/>Passed<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/>xor<sp/>%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref>,%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/>div<sp/>%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/>test<sp/>%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref>,%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/>jnz<sp/>next<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1a38a66d3bb9e673984e1a52bc18713d7" kindref="member">incl</ref><sp/>8(%ecx)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="47"><highlight class="normal">next:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/>4(%ecx),%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Test<sp/>If<sp/>quantum<sp/>Has<sp/>Passed<sp/>If<sp/>So<sp/>Then<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/>12(%ecx),%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>We<sp/>Can<sp/>CALL<sp/>sched<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>xor<sp/>%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref>,%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/>div<sp/>%<ref refid="ap-boot_8S_18771927de13b84dd7f9deec6024f83df" kindref="member">ebx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/>test<sp/>%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref>,%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>jnz<sp/><ref refid="fdc_8c_13041fe08ed5976302158f2668249f8b2" kindref="member">done</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/>call<sp/><ref refid="sched_8h_1549a0c1cc47933fa045b200690965cbd" kindref="member">sched</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><ref refid="fdc_8c_13041fe08ed5976302158f2668249f8b2" kindref="member">done</ref>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/>popa<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Restore<sp/>Registers<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/timer.S"/>
+  </compounddef>
+</doxygen>

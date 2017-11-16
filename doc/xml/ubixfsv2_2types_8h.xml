@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="ubixfsv2_2types_8h" kind="file">
+    <compoundname>types.h</compoundname>
+    <includedby refid="ubixfsv2_2ubixfs_8h" local="yes">src/sys/ubixfsv2/ubixfs.h</includedby>
+    <includedby refid="ubixfsv2_2device_8h" local="yes">src/sys/ubixfsv2/device.h</includedby>
+    <invincdepgraph>
+      <node id="2648">
+        <label>src/sys/ubixfsv2/ubixfs.cpp</label>
+        <link refid="ubixfs_8cpp"/>
+      </node>
+      <node id="2645">
+        <label>src/sys/ubixfsv2/btree.h</label>
+        <link refid="btree_8h"/>
+        <childnode refid="2646" relation="include">
+        </childnode>
+        <childnode refid="2647" relation="include">
+        </childnode>
+        <childnode refid="2648" relation="include">
+        </childnode>
+      </node>
+      <node id="2644">
+        <label>src/sys/ubixfsv2/ubixfs.h</label>
+        <link refid="ubixfsv2_2ubixfs_8h"/>
+        <childnode refid="2645" relation="include">
+        </childnode>
+        <childnode refid="2649" relation="include">
+        </childnode>
+        <childnode refid="2646" relation="include">
+        </childnode>
+        <childnode refid="2647" relation="include">
+        </childnode>
+        <childnode refid="2648" relation="include">
+        </childnode>
+      </node>
+      <node id="2647">
+        <label>src/sys/ubixfsv2/main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="2649">
+        <label>src/sys/ubixfsv2/file.h</label>
+        <link refid="ubixfsv2_2file_8h"/>
+        <childnode refid="2650" relation="include">
+        </childnode>
+        <childnode refid="2644" relation="include">
+        </childnode>
+        <childnode refid="2645" relation="include">
+        </childnode>
+      </node>
+      <node id="2650">
+        <label>src/sys/ubixfsv2/fsAbstract.h</label>
+        <link refid="fsAbstract_8h"/>
+        <childnode refid="2644" relation="include">
+        </childnode>
+      </node>
+      <node id="2643">
+        <label>src/sys/ubixfsv2/types.h</label>
+        <link refid="ubixfsv2/types.h"/>
+        <childnode refid="2644" relation="include">
+        </childnode>
+        <childnode refid="2651" relation="include">
+        </childnode>
+      </node>
+      <node id="2651">
+        <label>src/sys/ubixfsv2/device.h</label>
+        <link refid="ubixfsv2_2device_8h"/>
+        <childnode refid="2650" relation="include">
+        </childnode>
+        <childnode refid="2647" relation="include">
+        </childnode>
+        <childnode refid="2652" relation="include">
+        </childnode>
+        <childnode refid="2653" relation="include">
+        </childnode>
+      </node>
+      <node id="2653">
+        <label>src/sys/ubixfsv2/ramdrive.cpp</label>
+        <link refid="ramdrive_8cpp"/>
+      </node>
+      <node id="2652">
+        <label>src/sys/ubixfsv2/ramdrive.h</label>
+        <link refid="ramdrive_8h"/>
+        <childnode refid="2647" relation="include">
+        </childnode>
+      </node>
+      <node id="2646">
+        <label>src/sys/ubixfsv2/btree.cpp</label>
+        <link refid="btree_8cpp"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" prot="public" static="no">
+        <type>int</type>
+        <definition>typedef int int32</definition>
+        <argsstring></argsstring>
+        <name>int32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" line="7" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" bodystart="7" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ubixfsv2_2types_8h_187dc1c46a17e3ee6037afdb6aef76632" prot="public" static="no">
+        <type>signed long long</type>
+        <definition>typedef signed long long int64</definition>
+        <argsstring></argsstring>
+        <name>int64</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" line="9" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ubixfsv2_2types_8h_11b956fe1df85f3c132b21edb4e116458" prot="public" static="no">
+        <type>signed char</type>
+        <definition>typedef signed char int8</definition>
+        <argsstring></argsstring>
+        <name>int8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" line="4" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" bodystart="4" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" prot="public" static="no">
+        <type>unsigned int</type>
+        <definition>typedef unsigned int uInt32</definition>
+        <argsstring></argsstring>
+        <name>uInt32</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" line="6" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" bodystart="6" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ubixfsv2_2types_8h_13eb5cd6e01deaee22057b8182b791bd3" prot="public" static="no">
+        <type>unsigned long long</type>
+        <definition>typedef unsigned long long uInt64</definition>
+        <argsstring></argsstring>
+        <name>uInt64</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" line="8" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" bodystart="8" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ubixfsv2_2types_8h_1a4e0f27a9aca905e340c06d2dcae843c" prot="public" static="no">
+        <type>unsigned char</type>
+        <definition>typedef unsigned char uInt8</definition>
+        <argsstring></argsstring>
+        <name>uInt8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" line="5" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h" bodystart="5" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>TYPES_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TYPES_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4" refid="ubixfsv2_2types_8h_11b956fe1df85f3c132b21edb4e116458" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_11b956fe1df85f3c132b21edb4e116458" kindref="member">int8</ref>;</highlight></codeline>
+<codeline lineno="5" refid="ubixfsv2_2types_8h_1a4e0f27a9aca905e340c06d2dcae843c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref>;</highlight></codeline>
+<codeline lineno="6" refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>;</highlight></codeline>
+<codeline lineno="7" refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref>;</highlight></codeline>
+<codeline lineno="8" refid="ubixfsv2_2types_8h_13eb5cd6e01deaee22057b8182b791bd3" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_13eb5cd6e01deaee22057b8182b791bd3" kindref="member">uInt64</ref>;</highlight></codeline>
+<codeline lineno="9" refid="ubixfsv2_2types_8h_187dc1c46a17e3ee6037afdb6aef76632" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ubixfsv2_2types_8h_187dc1c46a17e3ee6037afdb6aef76632" kindref="member">int64</ref>;</highlight></codeline>
+<codeline lineno="10"><highlight class="normal"></highlight></codeline>
+<codeline lineno="11"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>!TYPES_H<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/types.h"/>
+  </compounddef>
+</doxygen>

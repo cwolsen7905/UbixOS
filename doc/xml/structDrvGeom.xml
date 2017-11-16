@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structDrvGeom" kind="struct" prot="public">
+    <compoundname>DrvGeom</compoundname>
+    <includes refid="fdc_8h" local="no">fdc.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structDrvGeom_1edb24f8c9f3ae872be1cb104854dee1b" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref></type>
+        <definition>Int8 DrvGeom::heads</definition>
+        <argsstring></argsstring>
+        <name>heads</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a0f8325f93de9409e403e620f914e69f" compoundref="fdc_8c" startline="201" endline="205">block2Hts</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structDrvGeom_1a8dd21b2e6459ec0fabd9fe49835646a" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref></type>
+        <definition>Int8 DrvGeom::spt</definition>
+        <argsstring></argsstring>
+        <name>spt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="fdc_8c_1a0f8325f93de9409e403e620f914e69f" compoundref="fdc_8c" startline="201" endline="205">block2Hts</referencedby>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structDrvGeom_1a2752e58d5f53c17ce6331d3ee4e9cbf" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13832cc814f0e7129add9a1cf7201c7ca" kindref="member">Int8</ref></type>
+        <definition>Int8 DrvGeom::tracks</definition>
+        <argsstring></argsstring>
+        <name>tracks</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/fdc.h" bodystart="35" bodyend="39"/>
+    <listofallmembers>
+      <member refid="structDrvGeom_1edb24f8c9f3ae872be1cb104854dee1b" prot="public" virt="non-virtual"><scope>DrvGeom</scope><name>heads</name></member>
+      <member refid="structDrvGeom_1a8dd21b2e6459ec0fabd9fe49835646a" prot="public" virt="non-virtual"><scope>DrvGeom</scope><name>spt</name></member>
+      <member refid="structDrvGeom_1a2752e58d5f53c17ce6331d3ee4e9cbf" prot="public" virt="non-virtual"><scope>DrvGeom</scope><name>tracks</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

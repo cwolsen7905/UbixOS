@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structgetpid__args" kind="struct" prot="public">
+    <compoundname>getpid_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structgetpid__args_1bb2b9573f51f030bf74f619f51d9f002" prot="public" static="no" mutable="no">
+        <type><ref refid="sysproto_8h_1bd887f2b4a8afbb86de77d05d77856db" kindref="member">register_t</ref></type>
+        <definition>register_t getpid_args::dummy</definition>
+        <argsstring></argsstring>
+        <name>dummy</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="79" bodyend="81"/>
+    <listofallmembers>
+      <member refid="structgetpid__args_1bb2b9573f51f030bf74f619f51d9f002" prot="public" virt="non-virtual"><scope>getpid_args</scope><name>dummy</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

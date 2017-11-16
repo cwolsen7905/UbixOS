@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structubixfsInode" kind="struct" prot="public">
+    <compoundname>ubixfsInode</compoundname>
+    <includes refid="ubixfsv2_2ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structubixfsInode_1ba5482701dfd87e49edbdc06b9ec6a5f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char smallData[3200]</type>
+        <definition>char smallData [3200] ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="129"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_1c49137abad04d83b8181da41d7b8ea90" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> refCount</type>
+        <definition>uInt32 refCount ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="128"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_135e179f1fc1a47de1d775313004d88be" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structdataStream" kindref="compound">dataStream</ref> blocks</type>
+        <definition>dataStream blocks ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="127"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_1115940bd9fcf00dedd56c139db17808e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="unionuPtr" kindref="compound">uPtr</ref> data</type>
+        <definition>uPtr data ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="126"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_1c3fcbeceaffc94eaa452bed2e683e24e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="unionuPtr" kindref="compound">uPtr</ref> prev</type>
+        <definition>uPtr prev ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="125"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_164abc23eca3ae648a923764bc2176dfa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="unionuPtr" kindref="compound">uPtr</ref> next</type>
+        <definition>uPtr next ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="124"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_10430682fedef593dffdd329e5dd27941" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="unionuPtr" kindref="compound">uPtr</ref> parent</type>
+        <definition>uPtr parent ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="123"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_1938f46e5878421cd9229b138993fddea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> inodeSize</type>
+        <definition>uInt32 inodeSize ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="122"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_1fa181070db8c24eb33abc87a2f984f38" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> type</type>
+        <definition>uInt32 type ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="121"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_1c20f331c6bcc590f9c72dadb513ce4ad" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">inodeAddr</ref> attributes</type>
+        <definition>inodeAddr attributes ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="120"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_18184fb92e0c725058ef3e6fdf1d25e54" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> flags</type>
+        <definition>int32 flags ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="117"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_19276bc1be1ab788789e9b09d69a55c65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> mode</type>
+        <definition>int32 mode ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="116"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_14fe07b428de344ec528ae1fa37e29518" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_19520fe38856d436aa8c5850ff21839ec" kindref="member">gid_t</ref> gid</type>
+        <definition>gid_t gid ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="115"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_16896c04467c841f7d36ac9dc866d358f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_11844226d778badcda0a21b28310830ea" kindref="member">uid_t</ref> uid</type>
+        <definition>uid_t uid ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="114"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_15b21fa84a76103ad04ef2b5fd38c3cf8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char <ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[MAX_FILENAME_LENGTH]</type>
+        <definition>char name [MAX_FILENAME_LENGTH] ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="113"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_184bc3bcf9a3deb7043d9cf95ee3d3cee" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">inodeAddr</ref> inodeNum</type>
+        <definition>inodeAddr inodeNum ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="112"/>
+      </memberdef>
+      <memberdef kind="function" id="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> magic1</type>
+        <definition>int32 magic1 ubixfsInode::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="111"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="110" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="110" bodyend="130"/>
+    <listofallmembers>
+      <member refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_184bc3bcf9a3deb7043d9cf95ee3d3cee" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_15b21fa84a76103ad04ef2b5fd38c3cf8" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_16896c04467c841f7d36ac9dc866d358f" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_14fe07b428de344ec528ae1fa37e29518" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_19276bc1be1ab788789e9b09d69a55c65" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_18184fb92e0c725058ef3e6fdf1d25e54" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_1c20f331c6bcc590f9c72dadb513ce4ad" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_1fa181070db8c24eb33abc87a2f984f38" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_1938f46e5878421cd9229b138993fddea" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_10430682fedef593dffdd329e5dd27941" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_164abc23eca3ae648a923764bc2176dfa" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_1c3fcbeceaffc94eaa452bed2e683e24e" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_1115940bd9fcf00dedd56c139db17808e" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_135e179f1fc1a47de1d775313004d88be" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_1c49137abad04d83b8181da41d7b8ea90" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+      <member refid="structubixfsInode_1ba5482701dfd87e49edbdc06b9ec6a5f" prot="public" virt="non-virtual"><scope>ubixfsInode</scope><name>__attribute__</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

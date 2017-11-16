@@ -1,0 +1,476 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="spinlock_8h" kind="file">
+    <compoundname>spinlock.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="devfs_8c" local="no">src/sys/devfs/devfs.c</includedby>
+    <includedby refid="atkbd_8c" local="no">src/sys/isa/atkbd.c</includedby>
+    <includedby refid="fdc_8c" local="no">src/sys/isa/fdc.c</includedby>
+    <includedby refid="ne2k_8c" local="no">src/sys/isa/ne2k.c</includedby>
+    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
+    <includedby refid="smp_8c" local="no">src/sys/kernel/smp.c</includedby>
+    <includedby refid="spinlock_8c" local="no">src/sys/kernel/spinlock.c</includedby>
+    <includedby refid="syscall__new_8c" local="no">src/sys/kernel/syscall_new.c</includedby>
+    <includedby refid="tty_8c" local="no">src/sys/kernel/tty.c</includedby>
+    <includedby refid="ubthread_8c" local="no">src/sys/kernel/ubthread.c</includedby>
+    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
+    <includedby refid="kmalloc_8c" local="no">src/sys/lib/kmalloc.c</includedby>
+    <includedby refid="system_8c" local="no">src/sys/mpi/system.c</includedby>
+    <includedby refid="device_8c" local="no">src/sys/sys/device.c</includedby>
+    <includedby refid="video_8c" local="no">src/sys/sys/video.c</includedby>
+    <includedby refid="dirCache_8c" local="no">src/sys/ubixfs/dirCache.c</includedby>
+    <includedby refid="file_8c" local="no">src/sys/vfs/file.c</includedby>
+    <includedby refid="copyvirtualspace_8c" local="no">src/sys/vmm/copyvirtualspace.c</includedby>
+    <includedby refid="getfreepage_8c" local="no">src/sys/vmm/getfreepage.c</includedby>
+    <includedby refid="getfreevirtualpage_8c" local="no">src/sys/vmm/getfreevirtualpage.c</includedby>
+    <includedby refid="pagefault_8c" local="no">src/sys/vmm/pagefault.c</includedby>
+    <includedby refid="paging_8c" local="no">src/sys/vmm/paging.c</includedby>
+    <includedby refid="vmm__memory_8c" local="no">src/sys/vmm/vmm_memory.c</includedby>
+    <incdepgraph>
+      <node id="4394">
+        <label>src/sys/include/ubixos/spinlock.h</label>
+        <link refid="spinlock.h"/>
+        <childnode refid="4395" relation="include">
+        </childnode>
+      </node>
+      <node id="4395">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="4396" relation="include">
+        </childnode>
+      </node>
+      <node id="4396">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4397">
+        <label>src/sys/include/ubixos/spinlock.h</label>
+        <link refid="spinlock.h"/>
+        <childnode refid="4398" relation="include">
+        </childnode>
+        <childnode refid="4399" relation="include">
+        </childnode>
+        <childnode refid="4400" relation="include">
+        </childnode>
+        <childnode refid="4401" relation="include">
+        </childnode>
+        <childnode refid="4402" relation="include">
+        </childnode>
+        <childnode refid="4403" relation="include">
+        </childnode>
+        <childnode refid="4404" relation="include">
+        </childnode>
+        <childnode refid="4405" relation="include">
+        </childnode>
+        <childnode refid="4406" relation="include">
+        </childnode>
+        <childnode refid="4407" relation="include">
+        </childnode>
+        <childnode refid="4408" relation="include">
+        </childnode>
+        <childnode refid="4409" relation="include">
+        </childnode>
+        <childnode refid="4410" relation="include">
+        </childnode>
+        <childnode refid="4411" relation="include">
+        </childnode>
+        <childnode refid="4412" relation="include">
+        </childnode>
+        <childnode refid="4413" relation="include">
+        </childnode>
+        <childnode refid="4414" relation="include">
+        </childnode>
+        <childnode refid="4415" relation="include">
+        </childnode>
+        <childnode refid="4416" relation="include">
+        </childnode>
+        <childnode refid="4417" relation="include">
+        </childnode>
+        <childnode refid="4418" relation="include">
+        </childnode>
+        <childnode refid="4419" relation="include">
+        </childnode>
+        <childnode refid="4420" relation="include">
+        </childnode>
+      </node>
+      <node id="4406">
+        <label>src/sys/kernel/tty.c</label>
+        <link refid="tty_8c"/>
+      </node>
+      <node id="4408">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="4410">
+        <label>src/sys/mpi/system.c</label>
+        <link refid="system_8c"/>
+      </node>
+      <node id="4409">
+        <label>src/sys/lib/kmalloc.c</label>
+        <link refid="kmalloc_8c"/>
+      </node>
+      <node id="4419">
+        <label>src/sys/vmm/paging.c</label>
+        <link refid="paging_8c"/>
+      </node>
+      <node id="4407">
+        <label>src/sys/kernel/ubthread.c</label>
+        <link refid="ubthread_8c"/>
+      </node>
+      <node id="4402">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="4413">
+        <label>src/sys/ubixfs/dirCache.c</label>
+        <link refid="dirCache_8c"/>
+      </node>
+      <node id="4412">
+        <label>src/sys/sys/video.c</label>
+        <link refid="video_8c"/>
+      </node>
+      <node id="4411">
+        <label>src/sys/sys/device.c</label>
+        <link refid="device_8c"/>
+      </node>
+      <node id="4401">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="4399">
+        <label>src/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="4418">
+        <label>src/sys/vmm/pagefault.c</label>
+        <link refid="pagefault_8c"/>
+      </node>
+      <node id="4398">
+        <label>src/sys/devfs/devfs.c</label>
+        <link refid="devfs_8c"/>
+      </node>
+      <node id="4403">
+        <label>src/sys/kernel/smp.c</label>
+        <link refid="smp_8c"/>
+      </node>
+      <node id="4420">
+        <label>src/sys/vmm/vmm_memory.c</label>
+        <link refid="vmm__memory_8c"/>
+      </node>
+      <node id="4404">
+        <label>src/sys/kernel/spinlock.c</label>
+        <link refid="spinlock_8c"/>
+      </node>
+      <node id="4414">
+        <label>src/sys/vfs/file.c</label>
+        <link refid="file_8c"/>
+      </node>
+      <node id="4416">
+        <label>src/sys/vmm/getfreepage.c</label>
+        <link refid="getfreepage_8c"/>
+      </node>
+      <node id="4405">
+        <label>src/sys/kernel/syscall_new.c</label>
+        <link refid="syscall__new_8c"/>
+      </node>
+      <node id="4400">
+        <label>src/sys/isa/fdc.c</label>
+        <link refid="fdc_8c"/>
+      </node>
+      <node id="4417">
+        <label>src/sys/vmm/getfreevirtualpage.c</label>
+        <link refid="getfreevirtualpage_8c"/>
+      </node>
+      <node id="4415">
+        <label>src/sys/vmm/copyvirtualspace.c</label>
+        <link refid="copyvirtualspace_8c"/>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" prot="public" static="no">
+        <name>SPIN_LOCK_INITIALIZER</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="spinlock_8c_12d24a3613a1841bfa55a7b235fb5d78f" compoundref="spinlock_8c" startline="33" endline="35">spinLockInit</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" prot="public" static="no">
+        <type>int</type>
+        <definition>typedef volatile int spinLock_t</definition>
+        <argsstring></argsstring>
+        <name>spinLock_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" bodystart="37" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void spinLock</definition>
+        <argsstring>(spinLock_t *)</argsstring>
+        <name>spinLock</name>
+        <param>
+          <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/spinlock.c" bodystart="56" bodyend="62"/>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <references refid="spinlock_8h_18f9173fadeddafa01754d6cbcc630198" compoundref="spinlock_8c" startline="48" endline="54">spinTryLock</references>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
+        <referencedby refid="device_8c_1b6cc746d95021f087eb5aef767050e71" compoundref="device_8c" startline="110" endline="145">device_remove</referencedby>
+        <referencedby refid="file_8c_1789959682f4ac8df2d89ea6450efda8b" compoundref="file_8c" startline="398" endline="425">fclose</referencedby>
+        <referencedby refid="fdc_8c_11f2029ff3278c4b819c4420c168cc082" compoundref="fdc_8c" startline="303" endline="308">fdcRead</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="kmalloc_8c_1f6c4ea5cb961c72548d92ff65d7e33a4" compoundref="kmalloc_8c" startline="67" endline="110">getEmptyDesc</referencedby>
+        <referencedby refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="123" endline="134">kernel_function</referencedby>
+        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
+        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
+        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
+        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
+        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <referencedby refid="ne2k_8c_1dae239918a8091c31abf996cee262c92" compoundref="ne2k_8c" startline="313" endline="339">ne2kAllocBuffer</referencedby>
+        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
+        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
+        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
+        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
+        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+        <referencedby refid="paging_8c_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</referencedby>
+        <referencedby refid="getfreepage_8c_197b73a5761e664ab5c0c24382971a2e6" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="spinlock_8h_14a5b56fc59f6a63a4d6cfac573889789" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void spinLock_scheduler</definition>
+        <argsstring>(spinLock_t *)</argsstring>
+        <name>spinLock_scheduler</name>
+        <param>
+          <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/spinlock.c" bodystart="64" bodyend="67"/>
+        <references refid="spinlock_8h_18f9173fadeddafa01754d6cbcc630198" compoundref="spinlock_8c" startline="48" endline="54">spinTryLock</references>
+      </memberdef>
+      <memberdef kind="function" id="spinlock_8h_17092f143f66f5cab13a9d49ed42ab4d3" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void spinLockInit</definition>
+        <argsstring>(spinLock_t *)</argsstring>
+        <name>spinLockInit</name>
+        <param>
+          <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/spinlock.c" bodystart="33" bodyend="35"/>
+        <references refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" compoundref="spinlock_8h" startline="35">SPIN_LOCK_INITIALIZER</references>
+      </memberdef>
+      <memberdef kind="function" id="spinlock_8h_1cba75fe5ed894dc88030f7458b114a94" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int spinLockLocked</definition>
+        <argsstring>(spinLock_t *)</argsstring>
+        <name>spinLockLocked</name>
+        <param>
+          <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/spinlock.c" bodystart="70" bodyend="72"/>
+        <referencedby refid="smp_8c_1c7cb5b4b2fbc61966a6dfc8044a7b800" compoundref="smp_8c" startline="137" endline="158">c_ap_boot</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="spinlock_8h_18f9173fadeddafa01754d6cbcc630198" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int spinTryLock</definition>
+        <argsstring>(spinLock_t *)</argsstring>
+        <name>spinTryLock</name>
+        <param>
+          <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/spinlock.c" bodystart="48" bodyend="54"/>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+        <referencedby refid="sched_8c_1549a0c1cc47933fa045b200690965cbd" compoundref="sched_8c" startline="84" endline="140">sched</referencedby>
+        <referencedby refid="spinlock_8c_171f03d2ba55111c715b6068254847a53" compoundref="spinlock_8c" startline="56" endline="62">spinLock</referencedby>
+        <referencedby refid="spinlock_8c_1c208390343fe1dffbe7a192df35c329e" compoundref="spinlock_8c" startline="64" endline="67">spinLock_scheduler</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void spinUnlock</definition>
+        <argsstring>(spinLock_t *)</argsstring>
+        <name>spinUnlock</name>
+        <param>
+          <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/spinlock.c" bodystart="37" bodyend="46"/>
+        <referencedby refid="vmm__memory_8c_1362d462b3a1e19b5e0ef95e1839dbf11" compoundref="vmm__memory_8c" startline="266" endline="283">adjustCowCounter</referencedby>
+        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <referencedby refid="devfs_8h_1d568bae84bef3691539f1b1d0f6a54b4" compoundref="devfs_8c" startline="178" endline="213">devfs_makeNode</referencedby>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
+        <referencedby refid="device_8c_1b6cc746d95021f087eb5aef767050e71" compoundref="device_8c" startline="110" endline="145">device_remove</referencedby>
+        <referencedby refid="file_8c_1789959682f4ac8df2d89ea6450efda8b" compoundref="file_8c" startline="398" endline="425">fclose</referencedby>
+        <referencedby refid="fdc_8c_11f2029ff3278c4b819c4420c168cc082" compoundref="fdc_8c" startline="303" endline="308">fdcRead</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="vmm__memory_8c_1e90be267d851fed04d4d9b1c6c10454a" compoundref="vmm__memory_8c" startline="228" endline="252">freePage</referencedby>
+        <referencedby refid="kmalloc_8c_1f6c4ea5cb961c72548d92ff65d7e33a4" compoundref="kmalloc_8c" startline="67" endline="110">getEmptyDesc</referencedby>
+        <referencedby refid="smp_8c_10844b0ab23ee41899fc5d622078d20d6" compoundref="smp_8c" startline="123" endline="134">kernel_function</referencedby>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+        <referencedby refid="kmalloc_8c_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</referencedby>
+        <referencedby refid="kmalloc_8c_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</referencedby>
+        <referencedby refid="system_8c_17fe5c18f6d5c29d15a74277234d18739" compoundref="system_8c" startline="69" endline="97">mpi_createMbox</referencedby>
+        <referencedby refid="system_8c_1bde5afef3a059fc7e8f355486f80a4cd" compoundref="system_8c" startline="234" endline="255">mpi_destroyMbox</referencedby>
+        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <referencedby refid="ne2k_8c_1dae239918a8091c31abf996cee262c92" compoundref="ne2k_8c" startline="313" endline="339">ne2kAllocBuffer</referencedby>
+        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+        <referencedby refid="smp_8c_1ce31619db109aa8b20a916d48969928d" compoundref="smp_8c" startline="161" endline="171">smpInit</referencedby>
+        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+        <referencedby refid="dirCache_8c_17d1df32bd197ba6541d9d7d2b3ada512" compoundref="dirCache_8c" startline="242" endline="259">ubixfs_cacheAdd</referencedby>
+        <referencedby refid="dirCache_8c_1569466a2e1237cf70320144d3de976c6" compoundref="dirCache_8c" startline="55" endline="182">ubixfs_cacheFind</referencedby>
+        <referencedby refid="paging_8c_1541f0b43826a40b9e978f5479080bb0e" compoundref="paging_8c" startline="401" endline="451">vmm_getFreeMallocPage</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="paging_8c_1f055cfbfef9c5d8dd82aa83829a06117" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</referencedby>
+        <referencedby refid="copyvirtualspace_8c_12d305244a54b4bb8c56698eca1b4c82c" compoundref="copyvirtualspace_8c" startline="53" endline="206">vmmCopyVirtualSpace</referencedby>
+        <referencedby refid="vmm__memory_8c_11be09ae74f7f41cd765042a0a7411c49" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</referencedby>
+        <referencedby refid="vmm__memory_8c_1a24b696e386ef97dfe88b9b434c671c6" compoundref="vmm__memory_8c" startline="296" endline="332">vmmFreeProcessPages</referencedby>
+        <referencedby refid="paging_8c_130a38035243b9dfb285b3793788126be" compoundref="paging_8c" startline="253" endline="301">vmmGetFreeKernelPage</referencedby>
+        <referencedby refid="getfreepage_8c_197b73a5761e664ab5c0c24382971a2e6" compoundref="getfreepage_8c" startline="48" endline="77">vmmGetFreePage</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="spinlock_8h_1061103633079320d29a623d5758623b1" prot="public" static="no" mutable="no">
+        <type><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref></type>
+        <definition>spinLock_t Master</definition>
+        <argsstring></argsstring>
+        <name>Master</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/syscall_new.c" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: spinlock_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_SPINLOCK_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_SPINLOCK_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="spinlock_8h_10fe85a4f3642683148b25916d6c5eafd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>SPIN_LOCK_INITIALIZER<sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/><ref refid="spinlock_8h_1061103633079320d29a623d5758623b1" kindref="member">Master</ref>;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_17092f143f66f5cab13a9d49ed42ab4d3" kindref="member">spinLockInit</ref>(<ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" kindref="member">spinUnlock</ref>(<ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_18f9173fadeddafa01754d6cbcc630198" kindref="member">spinTryLock</ref>(<ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_12cd9a4502680fb8e7f0fe6b029e558b1" kindref="member">spinLock</ref>(<ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_14a5b56fc59f6a63a4d6cfac573889789" kindref="member">spinLock_scheduler</ref>(<ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/>*);<sp/></highlight><highlight class="comment">/*<sp/>Only<sp/>use<sp/>this<sp/>spinlock<sp/>in<sp/>the<sp/>sched.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="spinlock_8h_1cba75fe5ed894dc88030f7458b114a94" kindref="member">spinLockLocked</ref>(<ref refid="spinlock_8h_1a240e9404b4ede1e0d714610080d1176" kindref="member">spinLock_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="51"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/spinlock.h"/>
+  </compounddef>
+</doxygen>

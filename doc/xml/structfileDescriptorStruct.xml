@@ -1,0 +1,416 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structfileDescriptorStruct" kind="struct" prot="public">
+    <compoundname>fileDescriptorStruct</compoundname>
+    <includes refid="file_8h" local="no">file.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* fileDescriptorStruct::buffer</definition>
+        <argsstring></argsstring>
+        <name>buffer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="57" bodyend="-1"/>
+        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
+        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
+        <referencedby refid="file_8c_1789959682f4ac8df2d89ea6450efda8b" compoundref="file_8c" startline="398" endline="425">fclose</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_10222d37f7abbfbf02d84c98a9a532c33" prot="public" static="no" mutable="no">
+        <type><ref refid="structcacheNode" kindref="compound">cacheNode</ref> *</type>
+        <definition>struct cacheNode* fileDescriptorStruct::cacheNode</definition>
+        <argsstring></argsstring>
+        <name>cacheNode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="59" bodyend="-1"/>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_162c52d66a6baff1f91fec689b624e3b3" prot="public" static="no" mutable="no">
+        <type><ref refid="structdmadat" kindref="compound">dmadat</ref> *</type>
+        <definition>struct dmadat* fileDescriptorStruct::dmadat</definition>
+        <argsstring></argsstring>
+        <name>dmadat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="ffs_8c_1ac9a795f42d582183e06192277305e47" compoundref="ffs_8c" startline="11" endline="23">ffs_read</referencedby>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <referencedby refid="ufs_8c_1e5b71ba2291b2d2ef07ece9e0de74a5d" compoundref="ufs_8c" startline="272" endline="289">ufs_openFile</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1c4a0e558e819f84243070ac2adaa6b11" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fileDescriptorStruct::dsk_meta</definition>
+        <argsstring></argsstring>
+        <name>dsk_meta</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="62" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_14ca84ca208f0bcd97d654f99a55724f6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fileDescriptorStruct::fileName[512]</definition>
+        <argsstring>[512]</argsstring>
+        <name>fileName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="56" bodyend="-1"/>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1fc289229a1011c71cde06dce77dadd7e" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 fileDescriptorStruct::ino</definition>
+        <argsstring></argsstring>
+        <name>ino</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="ufs_8c_1e5b71ba2291b2d2ef07ece9e0de74a5d" compoundref="ufs_8c" startline="272" endline="289">ufs_openFile</referencedby>
+        <referencedby refid="ufs_8c_19272216384babc589471d4a8e538d372" compoundref="ufs_8c" startline="291" endline="293">ufs_readFile</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1f4ee8935dc90d7f16ebffe20077a63eb" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 fileDescriptorStruct::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_18c43ddd6ff5fd5383bcdde5896846e98" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 fileDescriptorStruct::mode</definition>
+        <argsstring></argsstring>
+        <name>mode</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" prot="public" static="no" mutable="no">
+        <type><ref refid="structvfs__mountPoint" kindref="compound">vfs_mountPoint</ref> *</type>
+        <definition>struct vfs_mountPoint* fileDescriptorStruct::mp</definition>
+        <argsstring></argsstring>
+        <name>mp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="ufs_8c_127a0276d7cf729f1a89bd46dac8a9650" compoundref="ufs_8c" startline="51" endline="54">dskread</referencedby>
+        <referencedby refid="file_8c_1dfedd6c658c329d13d5a90a7462f5979" compoundref="file_8c" startline="251" endline="262">fgetc</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="file_8c_1c49e133f264f7aa16d63ba1f404be8ac" compoundref="file_8c" startline="234" endline="242">fputc</referencedby>
+        <referencedby refid="file_8c_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</referencedby>
+        <referencedby refid="block_8c_1182b9be545371d2fcda6981134de2b44" compoundref="block_8c" startline="79" endline="94">freeBlocks</referencedby>
+        <referencedby refid="file_8c_1ca6c1e5b57dc9f5d8551b41ea98bfbb7" compoundref="file_8c" startline="200" endline="206">fwrite</referencedby>
+        <referencedby refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
+        <referencedby refid="file_8c_181e426f86ee3d066c32986948fe3f6fd" compoundref="file_8c" startline="436" endline="469">sysMkDir</referencedby>
+        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
+        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1fe4f514afb8946b16aab3c8e50f8069c" prot="public" static="no" mutable="no">
+        <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptorStruct</ref> *</type>
+        <definition>struct fileDescriptorStruct* fileDescriptorStruct::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="file_8c_1789959682f4ac8df2d89ea6450efda8b" compoundref="file_8c" startline="398" endline="425">fclose</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1eedbb6c79fc5a34c4b8cf4ebbf6a0658" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 fileDescriptorStruct::offset</definition>
+        <argsstring></argsstring>
+        <name>offset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="directory_8c_1756e1f497c4d9fed64ac0a2256f9fa46" compoundref="directory_8c" startline="66" endline="91">addDirEntry</referencedby>
+        <referencedby refid="file_8c_1dfedd6c658c329d13d5a90a7462f5979" compoundref="file_8c" startline="251" endline="262">fgetc</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="file_8c_1c49e133f264f7aa16d63ba1f404be8ac" compoundref="file_8c" startline="234" endline="242">fputc</referencedby>
+        <referencedby refid="file_8c_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</referencedby>
+        <referencedby refid="file_8c_19e0ce64b32581a1d0337031d9ca07dfb" compoundref="file_8c" startline="208" endline="211">fseek</referencedby>
+        <referencedby refid="ufs_8c_1ccfc6cc8f916e7f58db4ac350bdc1e9b" compoundref="ufs_8c" startline="214" endline="233">fsfind</referencedby>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <referencedby refid="file_8c_1ca6c1e5b57dc9f5d8551b41ea98bfbb7" compoundref="file_8c" startline="200" endline="206">fwrite</referencedby>
+        <referencedby refid="file_8c_16ff1131020b7a50805dc848fcd9c03b2" compoundref="file_8c" startline="92" endline="100">sysFseek</referencedby>
+        <referencedby refid="ufs_8c_1e5b71ba2291b2d2ef07ece9e0de74a5d" compoundref="ufs_8c" startline="272" endline="289">ufs_openFile</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_111626b5d99a5da968f43bc37d2591c5c" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 fileDescriptorStruct::perms</definition>
+        <argsstring></argsstring>
+        <name>perms</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="60" bodyend="-1"/>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="ufs_8c_1e5b71ba2291b2d2ef07ece9e0de74a5d" compoundref="ufs_8c" startline="272" endline="289">ufs_openFile</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_13301f80684107656eeb91edfaed9e676" prot="public" static="no" mutable="no">
+        <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptorStruct</ref> *</type>
+        <definition>struct fileDescriptorStruct* fileDescriptorStruct::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="file_8c_1789959682f4ac8df2d89ea6450efda8b" compoundref="file_8c" startline="398" endline="425">fclose</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1c94ccd4c8160d17fa851fed274c5a8c4" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 fileDescriptorStruct::resid</definition>
+        <argsstring></argsstring>
+        <name>resid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 fileDescriptorStruct::size</definition>
+        <argsstring></argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="directory_8c_1756e1f497c4d9fed64ac0a2256f9fa46" compoundref="directory_8c" startline="66" endline="91">addDirEntry</referencedby>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
+        <referencedby refid="file_8c_111af8c48fc1b1a08d97e8082d553c143" compoundref="file_8c" startline="122" endline="131">sysFopen</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 fileDescriptorStruct::start</definition>
+        <argsstring></argsstring>
+        <name>start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
+        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfileDescriptorStruct_1dd78e2b569c4813dc1b171f4203f3e6b" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 fileDescriptorStruct::status</definition>
+        <argsstring></argsstring>
+        <name>status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="file_8c_16745ded7e707449e4f248d86dc76da4f" compoundref="file_8c" startline="220" endline="225">feof</referencedby>
+        <referencedby refid="file_8c_13c11b2679cf37c72b05eaab50c282e72" compoundref="file_8c" startline="274" endline="389">fopen</referencedby>
+        <referencedby refid="ubixfs_8c_151f5dd233a9470dd0254bb0d0e435b8d" compoundref="ubixfs_8c" startline="194" endline="222">readUbixFS</referencedby>
+        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="482">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="481">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="482" relation="usage">
+          <edgelabel>devRec</edgelabel>
+        </childnode>
+        <childnode refid="483" relation="usage">
+          <edgelabel>devInfo</edgelabel>
+        </childnode>
+        <childnode refid="481" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="476">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="476" relation="usage">
+          <edgelabel>prev
+next
+parent
+fileListTail
+fileListHead</edgelabel>
+        </childnode>
+      </node>
+      <node id="479">
+        <label>ubixDiskLabel</label>
+        <link refid="structubixDiskLabel"/>
+        <childnode refid="480" relation="usage">
+          <edgelabel>partitions</edgelabel>
+        </childnode>
+      </node>
+      <node id="480">
+        <label>ubixDiskLabel::ubixPartitions</label>
+        <link refid="structubixDiskLabel_1_1ubixPartitions"/>
+      </node>
+      <node id="475">
+        <label>fileDescriptorStruct</label>
+        <link refid="structfileDescriptorStruct"/>
+        <childnode refid="476" relation="usage">
+          <edgelabel>cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="477" relation="usage">
+          <edgelabel>dmadat</edgelabel>
+        </childnode>
+        <childnode refid="478" relation="usage">
+          <edgelabel>mp</edgelabel>
+        </childnode>
+        <childnode refid="475" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="478">
+        <label>vfs_mountPoint</label>
+        <link refid="structvfs__mountPoint"/>
+        <childnode refid="479" relation="usage">
+          <edgelabel>diskLabel</edgelabel>
+        </childnode>
+        <childnode refid="481" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+        <childnode refid="484" relation="usage">
+          <edgelabel>fs</edgelabel>
+        </childnode>
+        <childnode refid="478" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="483">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+      <node id="477">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+      <node id="484">
+        <label>fileSystem</label>
+        <link refid="structfileSystem"/>
+        <childnode refid="484" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="46" bodyend="64"/>
+    <listofallmembers>
+      <member refid="structfileDescriptorStruct_1cbc0897e87c2c167cdb8cb1beb77f598" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>buffer</name></member>
+      <member refid="structfileDescriptorStruct_10222d37f7abbfbf02d84c98a9a532c33" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>cacheNode</name></member>
+      <member refid="structfileDescriptorStruct_162c52d66a6baff1f91fec689b624e3b3" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>dmadat</name></member>
+      <member refid="structfileDescriptorStruct_1c4a0e558e819f84243070ac2adaa6b11" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>dsk_meta</name></member>
+      <member refid="structfileDescriptorStruct_14ca84ca208f0bcd97d654f99a55724f6" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>fileName</name></member>
+      <member refid="structfileDescriptorStruct_1fc289229a1011c71cde06dce77dadd7e" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>ino</name></member>
+      <member refid="structfileDescriptorStruct_1f4ee8935dc90d7f16ebffe20077a63eb" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>length</name></member>
+      <member refid="structfileDescriptorStruct_18c43ddd6ff5fd5383bcdde5896846e98" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>mode</name></member>
+      <member refid="structfileDescriptorStruct_1f8abeb5da4a430885db51246db1356f9" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>mp</name></member>
+      <member refid="structfileDescriptorStruct_1fe4f514afb8946b16aab3c8e50f8069c" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>next</name></member>
+      <member refid="structfileDescriptorStruct_1eedbb6c79fc5a34c4b8cf4ebbf6a0658" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>offset</name></member>
+      <member refid="structfileDescriptorStruct_111626b5d99a5da968f43bc37d2591c5c" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>perms</name></member>
+      <member refid="structfileDescriptorStruct_13301f80684107656eeb91edfaed9e676" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>prev</name></member>
+      <member refid="structfileDescriptorStruct_1c94ccd4c8160d17fa851fed274c5a8c4" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>resid</name></member>
+      <member refid="structfileDescriptorStruct_197eb3dcefe53610658dc341ca449e290" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>size</name></member>
+      <member refid="structfileDescriptorStruct_174b5825aa688ae7936fc0492743ae372" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>start</name></member>
+      <member refid="structfileDescriptorStruct_1dd78e2b569c4813dc1b171f4203f3e6b" prot="public" virt="non-virtual"><scope>fileDescriptorStruct</scope><name>status</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

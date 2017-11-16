@@ -1,0 +1,519 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="api__msg_8h" kind="file">
+    <compoundname>api_msg.h</compoundname>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="pbuf_8h" local="yes">net/pbuf.h</includes>
+    <includes refid="sys_8h" local="yes">net/sys.h</includes>
+    <includes refid="ipv4_2ip_8h" local="yes">net/ipv4/ip.h</includes>
+    <includes refid="udp_8h" local="yes">net/udp.h</includes>
+    <includes refid="tcp_8h" local="yes">net/tcp.h</includes>
+    <includes refid="api_8h" local="yes">net/api.h</includes>
+    <includedby refid="tcpip_8h" local="yes">src/sys/include/net/tcpip.h</includedby>
+    <includedby refid="api__lib_8c" local="yes">src/sys/net/api/api_lib.c</includedby>
+    <includedby refid="api__msg_8c" local="yes">src/sys/net/api/api_msg.c</includedby>
+    <incdepgraph>
+      <node id="353">
+        <label>net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="348" relation="include">
+        </childnode>
+        <childnode refid="354" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="356" relation="include">
+        </childnode>
+        <childnode refid="357" relation="include">
+        </childnode>
+        <childnode refid="358" relation="include">
+        </childnode>
+      </node>
+      <node id="355">
+        <label>arch/lib.h</label>
+        <link refid="lib_8h"/>
+      </node>
+      <node id="357">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="358" relation="include">
+        </childnode>
+        <childnode refid="356" relation="include">
+        </childnode>
+        <childnode refid="361" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+      </node>
+      <node id="362">
+        <label>net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="348" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="361" relation="include">
+        </childnode>
+        <childnode refid="353" relation="include">
+        </childnode>
+        <childnode refid="358" relation="include">
+        </childnode>
+      </node>
+      <node id="349">
+        <label>arch/cpu.h</label>
+        <link refid="cpu_8h"/>
+      </node>
+      <node id="352">
+        <label>arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+      </node>
+      <node id="363">
+        <label>net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="351" relation="include">
+        </childnode>
+        <childnode refid="364" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="353" relation="include">
+        </childnode>
+        <childnode refid="365" relation="include">
+        </childnode>
+        <childnode refid="358" relation="include">
+        </childnode>
+      </node>
+      <node id="359">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="360" relation="include">
+        </childnode>
+      </node>
+      <node id="360">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="348">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="349" relation="include">
+        </childnode>
+        <childnode refid="350" relation="include">
+        </childnode>
+      </node>
+      <node id="365">
+        <label>net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="348" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="357" relation="include">
+        </childnode>
+      </node>
+      <node id="345">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="343">
+        <label>src/sys/include/net/api_msg.h</label>
+        <link refid="api_msg.h"/>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="351" relation="include">
+        </childnode>
+        <childnode refid="353" relation="include">
+        </childnode>
+        <childnode refid="362" relation="include">
+        </childnode>
+        <childnode refid="363" relation="include">
+        </childnode>
+        <childnode refid="366" relation="include">
+        </childnode>
+      </node>
+      <node id="354">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="355" relation="include">
+        </childnode>
+      </node>
+      <node id="364">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="359" relation="include">
+        </childnode>
+        <childnode refid="347" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="348" relation="include">
+        </childnode>
+      </node>
+      <node id="356">
+        <label>net/ipv4/ip_addr.h</label>
+        <link refid="ipv4_2ip__addr_8h"/>
+        <childnode refid="348" relation="include">
+        </childnode>
+      </node>
+      <node id="358">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="359" relation="include">
+        </childnode>
+        <childnode refid="347" relation="include">
+        </childnode>
+        <childnode refid="350" relation="include">
+        </childnode>
+      </node>
+      <node id="366">
+        <label>net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="351" relation="include">
+        </childnode>
+        <childnode refid="353" relation="include">
+        </childnode>
+        <childnode refid="362" relation="include">
+        </childnode>
+        <childnode refid="363" relation="include">
+        </childnode>
+        <childnode refid="358" relation="include">
+        </childnode>
+      </node>
+      <node id="344">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="345" relation="include">
+        </childnode>
+      </node>
+      <node id="351">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="350" relation="include">
+        </childnode>
+        <childnode refid="352" relation="include">
+        </childnode>
+      </node>
+      <node id="346">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="347" relation="include">
+        </childnode>
+        <childnode refid="348" relation="include">
+        </childnode>
+      </node>
+      <node id="347">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="361">
+        <label>net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="348" relation="include">
+        </childnode>
+        <childnode refid="344" relation="include">
+        </childnode>
+        <childnode refid="346" relation="include">
+        </childnode>
+        <childnode refid="356" relation="include">
+        </childnode>
+      </node>
+      <node id="350">
+        <label>arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="370">
+        <label>src/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="368">
+        <label>src/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="369" relation="include">
+        </childnode>
+        <childnode refid="370" relation="include">
+        </childnode>
+        <childnode refid="371" relation="include">
+        </childnode>
+      </node>
+      <node id="367">
+        <label>src/sys/include/net/api_msg.h</label>
+        <link refid="api_msg.h"/>
+        <childnode refid="368" relation="include">
+        </childnode>
+        <childnode refid="372" relation="include">
+        </childnode>
+        <childnode refid="369" relation="include">
+        </childnode>
+      </node>
+      <node id="372">
+        <label>src/sys/net/api/api_lib.c</label>
+        <link refid="api__lib_8c"/>
+      </node>
+      <node id="371">
+        <label>src/sys/net/net/init.c</label>
+        <link refid="init_8c"/>
+      </node>
+      <node id="369">
+        <label>src/sys/net/api/api_msg.c</label>
+        <link refid="api__msg_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structapi__msg" prot="public">api_msg</innerclass>
+    <innerclass refid="structapi__msg__msg" prot="public">api_msg_msg</innerclass>
+      <sectiondef kind="enum">
+      <memberdef kind="enum" id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d" prot="public" static="no">
+        <name>api_msg_type</name>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dc485de441da7ee85ea691a892c7286c2" prot="public">
+          <name>API_MSG_NEWCONN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dda53fbecc71f69bfd0b98622b20f0c58" prot="public">
+          <name>API_MSG_DELCONN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76df07bc566f5626f8189745bca07e94a31" prot="public">
+          <name>API_MSG_BIND</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d384f86fe3736b156b8d16df7e355e571" prot="public">
+          <name>API_MSG_CONNECT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d46f2e21faec2f5d2773c8bb7db2d7aaa" prot="public">
+          <name>API_MSG_LISTEN</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dd05ed7d16a1807b336cea517bee5c148" prot="public">
+          <name>API_MSG_ACCEPT</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d951dbc12d5c7d0156077bd887fa7d36e" prot="public">
+          <name>API_MSG_SEND</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d7d2d29f00e09ebb6212968006c259307" prot="public">
+          <name>API_MSG_RECV</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76db61d9c706d0cd2be9779e238553c9755" prot="public">
+          <name>API_MSG_WRITE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d69663c2a794daeda40e795407074d588" prot="public">
+          <name>API_MSG_CLOSE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dda4368b873d948c0965e76c5450c6843" prot="public">
+          <name>API_MSG_MAX</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" bodystart="49" bodyend="66"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="api__msg_8h_1b15a981fb41b53567d7a4e9412c6f4c1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void api_msg_input</definition>
+        <argsstring>(struct api_msg *msg)</argsstring>
+        <name>api_msg_input</name>
+        <param>
+          <type>struct <ref refid="structapi__msg" kindref="compound">api_msg</ref> *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/api_msg.c" bodystart="517" bodyend="520"/>
+        <references refid="api__msg_8c_18db33774784c3abb518e237539b106e4" compoundref="api__msg_8c" startline="504">decode</references>
+        <references refid="structapi__msg__msg_1005b17bdb25aec7db177517b29a4bf70">api_msg_msg::msg</references>
+        <referencedby refid="tcpip_8c_161474ad2c2c25ba58cc774e2bcc4ef5f" compoundref="tcpip_8c" startline="68" endline="98">tcpip_thread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="api__msg_8h_1ee039fae0c665f1372f4a3ff8395ffeb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void api_msg_post</definition>
+        <argsstring>(struct api_msg *msg)</argsstring>
+        <name>api_msg_post</name>
+        <param>
+          <type>struct <ref refid="structapi__msg" kindref="compound">api_msg</ref> *</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/api/api_msg.c" bodystart="523" bodyend="526"/>
+        <references refid="structapi__msg__msg_1005b17bdb25aec7db177517b29a4bf70">api_msg_msg::msg</references>
+        <references refid="tcpip_8h_1d72ca05f74e20244cd26a8828711e9f2" compoundref="tcpip_8c" startline="121" endline="132">tcpip_apimsg</references>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: api__msg_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIP_API_MSG_H__</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIP_API_MSG_H__</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="pbuf_8h" kindref="compound">net/pbuf.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sys_8h" kindref="compound">net/sys.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ipv4_2ip_8h" kindref="compound">net/ipv4/ip.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="udp_8h" kindref="compound">net/udp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="tcp_8h" kindref="compound">net/tcp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="api_8h" kindref="compound">net/api.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d" kindref="member">api_msg_type</ref><sp/>{</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dc485de441da7ee85ea691a892c7286c2" kindref="member">API_MSG_NEWCONN</ref>,</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dda53fbecc71f69bfd0b98622b20f0c58" kindref="member">API_MSG_DELCONN</ref>,</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76df07bc566f5626f8189745bca07e94a31" kindref="member">API_MSG_BIND</ref>,</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d384f86fe3736b156b8d16df7e355e571" kindref="member">API_MSG_CONNECT</ref>,</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d46f2e21faec2f5d2773c8bb7db2d7aaa" kindref="member">API_MSG_LISTEN</ref>,</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dd05ed7d16a1807b336cea517bee5c148" kindref="member">API_MSG_ACCEPT</ref>,</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d951dbc12d5c7d0156077bd887fa7d36e" kindref="member">API_MSG_SEND</ref>,</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d7d2d29f00e09ebb6212968006c259307" kindref="member">API_MSG_RECV</ref>,</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76db61d9c706d0cd2be9779e238553c9755" kindref="member">API_MSG_WRITE</ref>,</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d69663c2a794daeda40e795407074d588" kindref="member">API_MSG_CLOSE</ref>,</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76dda4368b873d948c0965e76c5450c6843" kindref="member">API_MSG_MAX</ref></highlight></codeline>
+<codeline lineno="66"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="structapi__msg__msg" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structapi__msg__msg" kindref="compound">api_msg_msg</ref><sp/>{</highlight></codeline>
+<codeline lineno="69" refid="structapi__msg__msg_1c023c82b96e9db5e8ff36f25049618b7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetconn" kindref="compound">netconn</ref><sp/>*<ref refid="structapi__msg__msg_1c023c82b96e9db5e8ff36f25049618b7" kindref="member">conn</ref>;</highlight></codeline>
+<codeline lineno="70" refid="structapi__msg__msg_1c694cbf25981565d18a9a9d1ac2730ac" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="api_8h_15ab1d6bb5e45b28125312f1b3c840853" kindref="member">netconn_type</ref><sp/><ref refid="structapi__msg__msg_1c694cbf25981565d18a9a9d1ac2730ac" kindref="member">conntype</ref>;</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="72" refid="structapi__msg__msg_14fc5229c85bb1b1928871733dfdf0f3d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*<ref refid="structapi__msg__msg_14fc5229c85bb1b1928871733dfdf0f3d" kindref="member">p</ref>;<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="74" refid="structapi__msg__msg_1c4d390c23aa632317e92dedd9be29821" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*<ref refid="structapi__msg__msg_1c4d390c23aa632317e92dedd9be29821" kindref="member">ipaddr</ref>;</highlight></codeline>
+<codeline lineno="75" refid="structapi__msg__msg_15855988ea96f4a48664e328e91e9f425" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structapi__msg__msg_15855988ea96f4a48664e328e91e9f425" kindref="member">port</ref>;</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><ref refid="structapi__msg__msg_197ea2d17aa6bc11e99cb6bd6b563e094" kindref="member">bc</ref>;</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="78" refid="structapi__msg__msg_1344b636d2ffe3615e8c2323dbfcf939e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<ref refid="structapi__msg__msg_1344b636d2ffe3615e8c2323dbfcf939e" kindref="member">dataptr</ref>;</highlight></codeline>
+<codeline lineno="79" refid="structapi__msg__msg_1430df6234ff9e241deaa7a951cbf9e81" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structapi__msg__msg_1430df6234ff9e241deaa7a951cbf9e81" kindref="member">len</ref>;</highlight></codeline>
+<codeline lineno="80" refid="structapi__msg__msg_1cc37be0fc6b1d15cf1d09863e9439a30" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structapi__msg__msg_1cc37be0fc6b1d15cf1d09863e9439a30" kindref="member">copy</ref>;</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><ref refid="structapi__msg__msg_14f071675ee5451c073396ee03a5bb78f" kindref="member">w</ref>;<sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="82" refid="structapi__msg__msg_1016b541baf2129283415c428fbb18ea1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref><sp/><ref refid="structapi__msg__msg_1016b541baf2129283415c428fbb18ea1" kindref="member">mbox</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structapi__msg__msg_1430df6234ff9e241deaa7a951cbf9e81" kindref="member">len</ref>;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="structapi__msg__msg_1005b17bdb25aec7db177517b29a4bf70" kindref="member">msg</ref>;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87" refid="structapi__msg" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structapi__msg" kindref="compound">api_msg</ref><sp/>{</highlight></codeline>
+<codeline lineno="88" refid="structapi__msg_14b35b792fdec3605f27155b9db84a0bc" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">enum</highlight><highlight class="normal"><sp/><ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d" kindref="member">api_msg_type</ref><sp/><ref refid="structapi__msg_14b35b792fdec3605f27155b9db84a0bc" kindref="member">type</ref>;</highlight></codeline>
+<codeline lineno="89" refid="structapi__msg_11f51adb48728605e630ee4fa986a5ff4" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structapi__msg__msg" kindref="compound">api_msg_msg</ref><sp/><ref refid="structapi__msg_11f51adb48728605e630ee4fa986a5ff4" kindref="member">msg</ref>;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="api__msg_8h_1b15a981fb41b53567d7a4e9412c6f4c1" kindref="member">api_msg_input</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structapi__msg" kindref="compound">api_msg</ref><sp/>*<ref refid="structapi__msg__msg_1005b17bdb25aec7db177517b29a4bf70" kindref="member">msg</ref>);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="api__msg_8h_1ee039fae0c665f1372f4a3ff8395ffeb" kindref="member">api_msg_post</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structapi__msg" kindref="compound">api_msg</ref><sp/>*<ref refid="structapi__msg__msg_1005b17bdb25aec7db177517b29a4bf70" kindref="member">msg</ref>);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIP_API_MSG_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h"/>
+  </compounddef>
+</doxygen>

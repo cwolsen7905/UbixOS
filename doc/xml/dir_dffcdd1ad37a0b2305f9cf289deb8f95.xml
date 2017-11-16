@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_dffcdd1ad37a0b2305f9cf289deb8f95" kind="dir">
+    <compoundname>src/sys/init/</compoundname>
+    <innerfile refid="main_8c">main.c</innerfile>
+    <innerfile refid="start_8S">start.S</innerfile>
+    <innerfile refid="static_8c">static.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/init/"/>
+  </compounddef>
+</doxygen>

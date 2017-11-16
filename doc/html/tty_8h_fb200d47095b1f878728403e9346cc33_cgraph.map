@@ -1,0 +1,9 @@
+base referer
+rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 171,56 238,83
+rect $lib_2string_8h.html#e33b18edb618c656b9b795b9fce2316c 164,107 244,133
+rect $io_8h.html#8acc1a06073db2e7b92ffbd00fbd0cf1 154,157 255,184
+rect $8259_8h.html#2b9ec30943ddb0a2ef3bd7ccfd2026c0 304,5 395,32
+rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 316,56 383,83
+rect $stdarg_8h.html#621577c2df0ad5faa281223c56eeb7a5 314,107 386,133
+rect $vsprintf_8c.html#c2f4c669c6f6aa6caa5ab8adb1b07dd0 447,81 522,108
+rect $vsprintf_8c.html#3fa7c8ef8597579301cb4b5c59bc6d9a 444,132 524,159

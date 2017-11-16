@@ -1,0 +1,9 @@
+base referer
+rect $ubixfs_8h.html 220,132 340,159
+rect $file_8h.html 541,259 621,285
+rect $mount_8h.html 703,309 804,336
+rect $types_8h.html 873,157 993,184
+rect $vfs_8h.html 396,208 473,235
+rect $dirCache_8h.html 684,157 823,184
+rect $device_8h.html 528,5 635,32
+rect $mpi_8h.html 389,107 480,133

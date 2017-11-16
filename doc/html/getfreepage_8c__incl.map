@@ -1,0 +1,6 @@
+base referer
+rect $vmm_8h.html 269,6 376,32
+rect $kpanic_8h.html 259,56 387,83
+rect $spinlock_8h.html 435,107 573,134
+rect $paging_8h.html 444,6 564,32
+rect $types_8h.html 623,56 743,83

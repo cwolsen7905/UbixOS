@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structthread" kind="struct" prot="public">
+    <compoundname>thread</compoundname>
+    <includes refid="thread_8h" local="no">thread.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structthread_1b95afb0c8c9a817ce1638be443cb5b12" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+        <definition>u_int32_t thread::o_files[64]</definition>
+        <argsstring>[64]</argsstring>
+        <name>o_files</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_1ec14600d2aa9db1288f00704ba3a55d7" compoundref="kern__descrip_8c" startline="90" endline="98">close</referencedby>
+        <referencedby refid="kern__descrip_8c_19c93ac280b559128027746bda7c5d6d4" compoundref="kern__descrip_8c" startline="67" endline="88">falloc</referencedby>
+        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
+        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
+        <referencedby refid="kern__descrip_8c_114e228d6e5391a882d3b20ff2466b2ac" compoundref="kern__descrip_8c" startline="141" endline="154">getfd</referencedby>
+        <referencedby refid="sched_8c_192458df2063761371869cdfe0c9b4ee3" compoundref="sched_8c" startline="143" endline="172">schedNewTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1f3ec0788a84e5cb640a1646d1347998a" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int thread::td_retval[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>td_retval</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <referencedby refid="kern__descrip_8c_1ec14600d2aa9db1288f00704ba3a55d7" compoundref="kern__descrip_8c" startline="90" endline="98">close</referencedby>
+        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
+        <referencedby refid="kern__descrip_8c_1c26938ed109edd82077382276bc8258c" compoundref="kern__descrip_8c" startline="103" endline="109">getdtablesize</referencedby>
+        <referencedby refid="gen__calls_8c_12cbc84ec9b68d4c49474049bd74d1bb3" compoundref="gen__calls_8c" startline="59" endline="65">getgid</referencedby>
+        <referencedby refid="gen__calls_8c_14f4fe0a75329898241b9c7acc0580561" compoundref="gen__calls_8c" startline="41" endline="47">getpid</referencedby>
+        <referencedby refid="gen__calls_8c_15c560fabc59fcbcc62ce4827d10b222a" compoundref="gen__calls_8c" startline="50" endline="56">getuid</referencedby>
+        <referencedby refid="kern__descrip_8c_1899127227d8b9c9da3bcccc32332c749" compoundref="kern__descrip_8c" startline="131" endline="134">ioctl</referencedby>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+        <referencedby refid="pipe_8c_1cbd82ee803ba9432a295a8e2a0a3f249" compoundref="pipe_8c" startline="41" endline="51">pipe</referencedby>
+        <referencedby refid="gen__calls_8c_15eff3a25d417fafce7c4f211db219ca2" compoundref="gen__calls_8c" startline="125" endline="144">read</referencedby>
+        <referencedby refid="gen__calls_8c_1111a32074b3f5f68a4fa5585fe8ab3a4" compoundref="gen__calls_8c" startline="108" endline="116">readlink</referencedby>
+        <referencedby refid="vfs_8c_13ca4e48103cbadae2952d277d03687be" compoundref="vfs_8c" startline="148" endline="166">sys_open</referencedby>
+        <referencedby refid="gen__calls_8c_114173c973cb6d92a0e2ff34ee072f4d3" compoundref="gen__calls_8c" startline="67" endline="98">sys_write</referencedby>
+        <referencedby refid="syscall__new_8c_18227159f0d43f5d10bcc8f3fe198fed6" compoundref="syscall__new_8c" startline="41" endline="88">syscall</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_1c770300b493b2ea844e634b7c98c4f6a" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* thread::vm_daddr</definition>
+        <argsstring></argsstring>
+        <name>vm_daddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>int32_t thread::vm_dsize</definition>
+        <argsstring></argsstring>
+        <name>vm_dsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+        <referencedby refid="pagefault_8c_138aaad80f8ef516de9fe963e677fe273" compoundref="pagefault_8c" startline="53" endline="131">vmm_pageFault</referencedby>
+        <referencedby refid="getfreevirtualpage_8c_1fbc8bd5fa45d60baf5e8b5c47bf3f3b6" compoundref="getfreevirtualpage_8c" startline="47" endline="159">vmmGetFreeVirtualPage</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/thread.h" bodystart="37" bodyend="42"/>
+    <listofallmembers>
+      <member refid="structthread_1b95afb0c8c9a817ce1638be443cb5b12" prot="public" virt="non-virtual"><scope>thread</scope><name>o_files</name></member>
+      <member refid="structthread_1f3ec0788a84e5cb640a1646d1347998a" prot="public" virt="non-virtual"><scope>thread</scope><name>td_retval</name></member>
+      <member refid="structthread_1c770300b493b2ea844e634b7c98c4f6a" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_daddr</name></member>
+      <member refid="structthread_14ce0e0e5856efc85e111d2cb8748a0ee" prot="public" virt="non-virtual"><scope>thread</scope><name>vm_dsize</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

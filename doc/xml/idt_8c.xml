@@ -1,0 +1,1219 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="idt_8c" kind="file">
+    <compoundname>idt.c</compoundname>
+    <includes refid="idt_8h" local="no">sys/idt.h</includes>
+    <includes refid="gdt_8h" local="no">sys/gdt.h</includes>
+    <includes refid="io_8h" local="no">sys/io.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="8259_8h" local="no">isa/8259.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="vmm_8h" local="no">vmm/vmm.h</includes>
+    <includes refid="syscall_8h" local="no">ubixos/syscall.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="string_8h" local="no">string.h</includes>
+    <incdepgraph>
+      <node id="5873">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5882">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="5867">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+        <childnode refid="5868" relation="include">
+        </childnode>
+        <childnode refid="5869" relation="include">
+        </childnode>
+        <childnode refid="5872" relation="include">
+        </childnode>
+        <childnode refid="5873" relation="include">
+        </childnode>
+      </node>
+      <node id="5883">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+        <childnode refid="5867" relation="include">
+        </childnode>
+      </node>
+      <node id="5881">
+        <label>ubixos/syscall.h</label>
+        <link refid="syscall_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5863">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5864" relation="include">
+        </childnode>
+      </node>
+      <node id="5864">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5878">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+        <childnode refid="5879" relation="include">
+        </childnode>
+        <childnode refid="5873" relation="include">
+        </childnode>
+      </node>
+      <node id="5884">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5869">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+        <childnode refid="5870" relation="include">
+        </childnode>
+        <childnode refid="5871" relation="include">
+        </childnode>
+      </node>
+      <node id="5872">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5876">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5877">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="5878" relation="include">
+        </childnode>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5862">
+        <label>sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+        <childnode refid="5865" relation="include">
+        </childnode>
+      </node>
+      <node id="5871">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5875">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5865">
+        <label>sys/gdt.h</label>
+        <link refid="gdt_8h"/>
+      </node>
+      <node id="5870">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5879">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="5880" relation="include">
+        </childnode>
+        <childnode refid="5873" relation="include">
+        </childnode>
+      </node>
+      <node id="5880">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5868">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+      <node id="5866">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5861">
+        <label>src/sys/sys/idt.c</label>
+        <link refid="idt.c"/>
+        <childnode refid="5862" relation="include">
+        </childnode>
+        <childnode refid="5865" relation="include">
+        </childnode>
+        <childnode refid="5866" relation="include">
+        </childnode>
+        <childnode refid="5867" relation="include">
+        </childnode>
+        <childnode refid="5874" relation="include">
+        </childnode>
+        <childnode refid="5875" relation="include">
+        </childnode>
+        <childnode refid="5876" relation="include">
+        </childnode>
+        <childnode refid="5877" relation="include">
+        </childnode>
+        <childnode refid="5881" relation="include">
+        </childnode>
+        <childnode refid="5882" relation="include">
+        </childnode>
+        <childnode refid="5883" relation="include">
+        </childnode>
+        <childnode refid="5884" relation="include">
+        </childnode>
+      </node>
+      <node id="5874">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="5863" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="idt_8c_1814ba9bc4c42bb79af5cde78c8bbfaa3" prot="public" static="no">
+        <name>FP_TO_LINEAR</name>
+        <param><defname>seg</defname></param>
+        <param><defname>off</defname></param>
+        <initializer>((void*) ((((<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>) (seg)) &lt;&lt; 4) + ((<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>) (off))))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="43" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="idt_8c_1e4129d156580fb5d485a440995d24dc2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int0</definition>
+        <argsstring>()</argsstring>
+        <name>_int0</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="197" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="197" bodyend="201"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1ce97dc326d244a0766e196bba26be437" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int1</definition>
+        <argsstring>()</argsstring>
+        <name>_int1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="203" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="203" bodyend="207"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1e70dab5ac99d0fef2314f9cdf41751b1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int10</definition>
+        <argsstring>()</argsstring>
+        <name>_int10</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="263" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="263" bodyend="267"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_17fcf84f4c51eab2ed23e415bc89ad6e5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int11</definition>
+        <argsstring>()</argsstring>
+        <name>_int11</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="269" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="269" bodyend="273"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_152a2ea8642cffdd21dcd42dbb9f4fcb6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int12</definition>
+        <argsstring>()</argsstring>
+        <name>_int12</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="275" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="275" bodyend="279"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int13</definition>
+        <argsstring>()</argsstring>
+        <name>_int13</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="281" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="281" bodyend="421"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="idt_8h_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</references>
+        <references refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="57">tssStruct::cs</references>
+        <references refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b911fd9ca455f92c69c084484d5cd803c2">DEAD</references>
+        <references refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" compoundref="tss_8h" startline="50">tssStruct::eax</references>
+        <references refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="52">tssStruct::ebp</references>
+        <references refid="structtssStruct_175825d1693047c99df1911b3af4d613f" compoundref="tss_8h" startline="50">tssStruct::edx</references>
+        <references refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" compoundref="bioscall_8h" startline="36">EFLAG_IF</references>
+        <references refid="bioscall_8h_1c853c10e3eb19188c6b3b8d3ff6914e2" compoundref="bioscall_8h" startline="38">EFLAG_VM</references>
+        <references refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="49">tssStruct::eflags</references>
+        <references refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="48">tssStruct::eip</references>
+        <references refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="51">tssStruct::esp</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a">FALSE</references>
+        <references refid="idt_8c_1814ba9bc4c42bb79af5cde78c8bbfaa3" compoundref="idt_8c" startline="43">FP_TO_LINEAR</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="8259_8h_12b9ec30943ddb0a2ef3bd7ccfd2026c0">irqDisable</references>
+        <references refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a">irqEnable</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" compoundref="sched_8h" startline="60">taskStruct::oInfo</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structtssStruct_1340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="59">tssStruct::ss</references>
+        <references refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" compoundref="sched_8h" startline="62">taskStruct::state</references>
+        <references refid="structosInfo_150f6d9f964aa8bcd88c5ff3bf693cec2" compoundref="sched_8h" startline="44">osInfo::timer</references>
+        <references refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839">TRUE</references>
+        <references refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" compoundref="sched_8h" startline="58">taskStruct::tss</references>
+        <references refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" compoundref="sched_8h" startline="46">osInfo::v86If</references>
+        <referencedby refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</referencedby>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1e8c1c195a8aae25a942c0078946da3cb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int2</definition>
+        <argsstring>()</argsstring>
+        <name>_int2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="209" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="209" bodyend="213"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1f5d44f2bc5a77196c3697d4560f5ae6a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int3</definition>
+        <argsstring>()</argsstring>
+        <name>_int3</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="215" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="215" bodyend="219"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_147bd8cbcfb5e3df37012c7c8dc253a71" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int4</definition>
+        <argsstring>()</argsstring>
+        <name>_int4</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="221" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="221" bodyend="225"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_13d95bf7a1212d5078495fdae84a2f708" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int5</definition>
+        <argsstring>()</argsstring>
+        <name>_int5</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="227" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="227" bodyend="231"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1514bba9e7774eab1afba32c99c25cecb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int6</definition>
+        <argsstring>()</argsstring>
+        <name>_int6</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="233" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="233" bodyend="237"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1c9017b6a16e2b5b4359dc089db4832b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int7</definition>
+        <argsstring>()</argsstring>
+        <name>_int7</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="449"/>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_12444cd2a62fc14b2d7f404b0fad5bf1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int8</definition>
+        <argsstring>()</argsstring>
+        <name>_int8</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="239" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="239" bodyend="255"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="idt_8h_12444cd2a62fc14b2d7f404b0fad5bf1b" compoundref="idt_8c" startline="239" endline="255">_int8</references>
+        <references refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="47">tssStruct::cr3</references>
+        <references refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="57">tssStruct::cs</references>
+        <references refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="61">tssStruct::ds</references>
+        <references refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="52">tssStruct::ebp</references>
+        <references refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="49">tssStruct::eflags</references>
+        <references refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="48">tssStruct::eip</references>
+        <references refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="55">tssStruct::es</references>
+        <references refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="51">tssStruct::esp</references>
+        <references refid="structtssStruct_18114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="63">tssStruct::fs</references>
+        <references refid="structtssStruct_18dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="65">tssStruct::gs</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="70">tssStruct::io_map</references>
+        <references refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" compoundref="paging_8c" startline="40">kernelPageDirectory</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="structtssStruct_1340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="59">tssStruct::ss</references>
+        <referencedby refid="idt_8c_12444cd2a62fc14b2d7f404b0fad5bf1b" compoundref="idt_8c" startline="239" endline="255">_int8</referencedby>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1fe33101eba72b18d919a8a49af733564" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _int9</definition>
+        <argsstring>()</argsstring>
+        <name>_int9</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="257" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="257" bodyend="261"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" compoundref="sched_8c" startline="259" endline="261">sched_yield</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1999413254d5ab5cc7a3219397c9a6d4b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>asm</definition>
+        <argsstring>(&quot;.globl _int7              \n&quot;&quot;_int7:                    \n&quot;&quot;  pushl %eax              \n&quot;&quot;  clts                    \n&quot;&quot;  movl _current,%eax      \n&quot;&quot;  cmpl _usedMath,%eax     \n&quot;&quot;  je mathDone             \n&quot;&quot;  call mathStateRestore   \n&quot;&quot;mathDone:                 \n&quot;&quot;  popl %eax               \n&quot;&quot;  iret                    \n&quot;)</argsstring>
+        <name>asm</name>
+        <param>
+          <type>&quot;.globl _int7 \n&quot;&quot;_int7: \n&quot;&quot; pushl %<ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> \n&quot;&quot; clts \n&quot;&quot; movl </type>
+          <declname>_current</declname>
+        </param>
+        <param>
+          <type>%<ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref>\n&quot;&quot;cmpl</type>
+          <declname>_usedMath</declname>
+        </param>
+        <param>
+          <type>%<ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref>\n&quot;&quot;je mathDone\n&quot;&quot;call mathStateRestore\n&quot;&quot;mathDone:\n&quot;&quot;popl%<ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref>\n&quot;&quot;iret\n&quot;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="462"/>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1d2968ba244dc6df20e94c32861314906" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int idt_init</definition>
+        <argsstring>()</argsstring>
+        <name>idt_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="63" bodyend="152"/>
+        <references refid="idt_8h_1e4129d156580fb5d485a440995d24dc2" compoundref="idt_8c" startline="197" endline="201">_int0</references>
+        <references refid="idt_8h_1ce97dc326d244a0766e196bba26be437" compoundref="idt_8c" startline="203" endline="207">_int1</references>
+        <references refid="idt_8h_1e70dab5ac99d0fef2314f9cdf41751b1" compoundref="idt_8c" startline="263" endline="267">_int10</references>
+        <references refid="idt_8h_17fcf84f4c51eab2ed23e415bc89ad6e5" compoundref="idt_8c" startline="269" endline="273">_int11</references>
+        <references refid="idt_8h_152a2ea8642cffdd21dcd42dbb9f4fcb6" compoundref="idt_8c" startline="275" endline="279">_int12</references>
+        <references refid="idt_8h_1ef0711bd8a0f07c3f4b9877fc93930e1" compoundref="idt_8c" startline="281" endline="421">_int13</references>
+        <references refid="idt_8h_1e8c1c195a8aae25a942c0078946da3cb" compoundref="idt_8c" startline="209" endline="213">_int2</references>
+        <references refid="idt_8h_1f5d44f2bc5a77196c3697d4560f5ae6a" compoundref="idt_8c" startline="215" endline="219">_int3</references>
+        <references refid="idt_8h_147bd8cbcfb5e3df37012c7c8dc253a71" compoundref="idt_8c" startline="221" endline="225">_int4</references>
+        <references refid="idt_8h_13d95bf7a1212d5078495fdae84a2f708" compoundref="idt_8c" startline="227" endline="231">_int5</references>
+        <references refid="idt_8h_1514bba9e7774eab1afba32c99c25cecb" compoundref="idt_8c" startline="233" endline="237">_int6</references>
+        <references refid="idt_8h_1c9017b6a16e2b5b4359dc089db4832b5">_int7</references>
+        <references refid="idt_8h_12444cd2a62fc14b2d7f404b0fad5bf1b" compoundref="idt_8c" startline="239" endline="255">_int8</references>
+        <references refid="idt_8h_1fe33101eba72b18d919a8a49af733564" compoundref="idt_8c" startline="257" endline="261">_int9</references>
+        <references refid="sys__call_8S_1192876638875d3cda1a1b19dd187c2db" compoundref="sys__call_8S" startline="34">_sysCall</references>
+        <references refid="sys__call__new_8S_1735df2a5e087b5aaa2a36581952f7866" compoundref="sys__call__new_8S" startline="37">_sysCall_new</references>
+        <references refid="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" compoundref="page__fault_8S" startline="38">_vmm_pageFault</references>
+        <references refid="structtssStruct_1fecbe8ea2cfebfb4d1a0aa7b6ebcac2c" compoundref="tss_8h" startline="36">tssStruct::back_link</references>
+        <references refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" compoundref="tss_8h" startline="47">tssStruct::cr3</references>
+        <references refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" compoundref="tss_8h" startline="57">tssStruct::cs</references>
+        <references refid="gdt_8h_15ee8638767e24765a2690483745d60d0" compoundref="gdt_8h" startline="47">dDpl0</references>
+        <references refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" compoundref="gdt_8h" startline="44">dDpl3</references>
+        <references refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" compoundref="gdt_8h" startline="37">dInt</references>
+        <references refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" compoundref="gdt_8h" startline="48">dPresent</references>
+        <references refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" compoundref="tss_8h" startline="61">tssStruct::ds</references>
+        <references refid="gdt_8h_11521354f2c1fc307021a9a75dfc805f8" compoundref="gdt_8h" startline="39">dTask</references>
+        <references refid="gdt_8h_1b566353a8383ed84a5d0328677dc05dd" compoundref="gdt_8h" startline="40">dTrap</references>
+        <references refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" compoundref="tss_8h" startline="52">tssStruct::ebp</references>
+        <references refid="structtssStruct_1a52b515706cd37e166c8eba348d5e68b" compoundref="tss_8h" startline="54">tssStruct::edi</references>
+        <references refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" compoundref="tss_8h" startline="49">tssStruct::eflags</references>
+        <references refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" compoundref="tss_8h" startline="48">tssStruct::eip</references>
+        <references refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" compoundref="tss_8h" startline="55">tssStruct::es</references>
+        <references refid="structtssStruct_18beab5808aad776957d4544f6b139d4e" compoundref="tss_8h" startline="53">tssStruct::esi</references>
+        <references refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" compoundref="tss_8h" startline="51">tssStruct::esp</references>
+        <references refid="structtssStruct_11017372aed82d7305586c330fa222b3b" compoundref="tss_8h" startline="38">tssStruct::esp0</references>
+        <references refid="structtssStruct_1d5ef8867200562fd8262f70312beff4d" compoundref="tss_8h" startline="41">tssStruct::esp1</references>
+        <references refid="structtssStruct_160c88f3cd3f2110cb24be62444f42cfb" compoundref="tss_8h" startline="44">tssStruct::esp2</references>
+        <references refid="structtssStruct_18114a585123181ec835f8db3e029d390" compoundref="tss_8h" startline="63">tssStruct::fs</references>
+        <references refid="structtssStruct_18dfa44423504293405785371d0e7b076" compoundref="tss_8h" startline="65">tssStruct::gs</references>
+        <references refid="idt_8h_1dbf451ce0d6ecb3c485382616bee1de4" compoundref="idt_8c" startline="187" endline="195">intNull</references>
+        <references refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" compoundref="tss_8h" startline="70">tssStruct::io_map</references>
+        <references refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" compoundref="paging_8c" startline="40">kernelPageDirectory</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structtssStruct_1d7b6a367e1c2a38e1ee6c8e5dad955f7" compoundref="tss_8h" startline="67">tssStruct::ldt</references>
+        <references refid="idt_8c_1a780e1204e24a3b5a71b4cea837ab800">loadidt</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="idt_8h_1ee676dc504a8f6498927c2d5fb5e4c88" compoundref="idt_8c" startline="174" endline="183">setTaskVector</references>
+        <references refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</references>
+        <references refid="structtssStruct_1340a29782d3306ba84176c543725d70a" compoundref="tss_8h" startline="59">tssStruct::ss</references>
+        <references refid="structtssStruct_126d03018de8c122451661bfe9d030541" compoundref="tss_8h" startline="39">tssStruct::ss0</references>
+        <references refid="structtssStruct_16abf05d9a8f6356860a5606ffbadc989" compoundref="tss_8h" startline="42">tssStruct::ss1</references>
+        <references refid="structtssStruct_15a79ace5652b01cc25fc5ba7ff45bfa8" compoundref="tss_8h" startline="45">tssStruct::ss2</references>
+        <references refid="timer_8S_11dda6dc7fd189e16cfcc28348fd1f21c" compoundref="timer_8S" startline="35">timerInt</references>
+        <references refid="structtssStruct_152ac0b54c6b2c71450c62d7fc911f2e2" compoundref="tss_8h" startline="69">tssStruct::trace_bitmap</references>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1dbf451ce0d6ecb3c485382616bee1de4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void intNull</definition>
+        <argsstring>()</argsstring>
+        <name>intNull</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="187" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="187" bodyend="195"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_16423394f8797bc3cf7ec6a079b8d593f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void mathStateRestore</definition>
+        <argsstring>()</argsstring>
+        <name>mathStateRestore</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="424" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="424" bodyend="447"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="sched_8h_193c7d4c40424b17a73f34f6fd89b2804" compoundref="sched_8c" startline="52">_usedMath</references>
+        <references refid="structtaskStruct_1dd14a764ee7ba0830bd837b54a8cb003" compoundref="sched_8h" startline="59">taskStruct::i387</references>
+        <references refid="structtaskStruct_1fe3af11009b07961be7296b360827669" compoundref="sched_8h" startline="65">taskStruct::usedMath</references>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1ee676dc504a8f6498927c2d5fb5e4c88" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setTaskVector</definition>
+        <argsstring>(uInt8 interrupt, uInt16 controlMajor, uInt8 selector)</argsstring>
+        <name>setTaskVector</name>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>interrupt</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>controlMajor</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>selector</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="175" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="174" bodyend="183"/>
+        <references refid="structgdtGate_178486d8b9aa678859910a54e16ca043c" compoundref="gdt_8h" startline="73">gdtGate::access</references>
+        <references refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" compoundref="gdt_8h" startline="79">descriptorTableUnion::gate</references>
+        <references refid="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" compoundref="gdt_8h" startline="74">gdtGate::offsetHigh</references>
+        <references refid="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" compoundref="gdt_8h" startline="71">gdtGate::offsetLow</references>
+        <references refid="structgdtGate_171d7780bce5bd08890088cab94d6c415" compoundref="gdt_8h" startline="72">gdtGate::selector</references>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_1174a47ed653fc64fff6b5bb1b895c2cf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setVector</definition>
+        <argsstring>(void *handler, unsigned char interrupt, unsigned short controlMajor)</argsstring>
+        <name>setVector</name>
+        <param>
+          <type>void *</type>
+          <declname>handler</declname>
+        </param>
+        <param>
+          <type>unsigned char</type>
+          <declname>interrupt</declname>
+        </param>
+        <param>
+          <type>unsigned short</type>
+          <declname>controlMajor</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="156" bodyend="164"/>
+        <references refid="structgdtGate_178486d8b9aa678859910a54e16ca043c" compoundref="gdt_8h" startline="73">gdtGate::access</references>
+        <references refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" compoundref="gdt_8h" startline="79">descriptorTableUnion::gate</references>
+        <references refid="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" compoundref="gdt_8h" startline="74">gdtGate::offsetHigh</references>
+        <references refid="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" compoundref="gdt_8h" startline="71">gdtGate::offsetLow</references>
+        <references refid="structgdtGate_171d7780bce5bd08890088cab94d6c415" compoundref="gdt_8h" startline="72">gdtGate::selector</references>
+        <referencedby refid="atkbd_8c_1d67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="157" endline="175">atkbd_init</referencedby>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="idt_8c_11df124b58bebf401a9d9d6336e19e417" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>static</type>
+        <definition>static ubixDescriptorTable</definition>
+        <argsstring>(ubixIDT, 256)</argsstring>
+        <name>ubixDescriptorTable</name>
+        <param>
+          <type>ubixIDT</type>
+        </param>
+        <param>
+          <type>256</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" bodystart="45" bodyend="45"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="idt_8c_1a780e1204e24a3b5a71b4cea837ab800" prot="public" static="yes" mutable="no">
+        <type>struct @8</type>
+        <definition>struct @8  loadidt</definition>
+        <argsstring></argsstring>
+        <name>loadidt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c" line="52"/>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: idt_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="idt_8h" kindref="compound">sys/idt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gdt_8h" kindref="compound">sys/gdt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="syscall_8h" kindref="compound">ubixos/syscall.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="string_8h" kindref="compound">string.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="idt_8c_1814ba9bc4c42bb79af5cde78c8bbfaa3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FP_TO_LINEAR(seg,<sp/>off)<sp/>((void*)<sp/>((((uInt16)<sp/>(seg))<sp/>&lt;&lt;<sp/>4)<sp/>+<sp/>((uInt16)<sp/>(off))))</highlight></codeline>
+<codeline lineno="44"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="idt_8c_11df124b58bebf401a9d9d6336e19e417" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="gdt_8h_1f3cff64995ffb5584c82c7bf27ee802d" kindref="member">ubixDescriptorTable</ref>(ubixIDT,<sp/>256)<sp/>{<sp/>};</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>limit<sp/>__attribute__((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref><sp/>*idt<sp/>__attribute__((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="idt_8c_1a780e1204e24a3b5a71b4cea837ab800" kindref="member">loadidt</ref><sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>(256<sp/>*<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref>)<sp/>-<sp/>1),<sp/>ubixIDT</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>};</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"></highlight></codeline>
+<codeline lineno="56"><highlight class="comment">Function:<sp/>int<sp/>idtInit()</highlight></codeline>
+<codeline lineno="57"><highlight class="comment">Description:<sp/>This<sp/>function<sp/>is<sp/>used<sp/>to<sp/>enable<sp/>our<sp/>IDT<sp/>subsystem</highlight></codeline>
+<codeline lineno="58"><highlight class="comment">Notes:</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"></highlight></codeline>
+<codeline lineno="60"><highlight class="comment">02/20/2004<sp/>-<sp/>Approved<sp/>for<sp/>quality</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"></highlight></codeline>
+<codeline lineno="62"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="idt_8c_1d2968ba244dc6df20e94c32861314906" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1d2968ba244dc6df20e94c32861314906" kindref="member">idt_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*sfTSS<sp/><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*)0x6200;</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*gpfTSS<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*)0x4200;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>default<sp/>vector<sp/>table<sp/>for<sp/>all<sp/>possible<sp/>256<sp/>interrupts<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0x0;<sp/>i<sp/>&lt;<sp/>256;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1dbf451ce0d6ecb3c485382616bee1de4" kindref="member">intNull</ref>,<sp/>i,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Load<sp/>the<sp/>IDT<sp/>into<sp/>the<sp/>system<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;cli<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;lidt<sp/>(%0)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Load<sp/>the<sp/>IDT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;pushfl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Clear<sp/>the<sp/>NT<sp/>flag<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;andl<sp/>$0xffffbfff,(%%esp)<sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;popfl<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;sti<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;r&quot;</highlight><highlight class="normal"><sp/>((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)&amp;<ref refid="idt_8c_1a780e1204e24a3b5a71b4cea837ab800" kindref="member">loadidt</ref>)</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>the<sp/>basic<sp/>vectors<sp/>for<sp/>the<sp/>reserved<sp/>ints<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1e4129d156580fb5d485a440995d24dc2" kindref="member">_int0</ref>,<sp/>0,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1ce97dc326d244a0766e196bba26be437" kindref="member">_int1</ref>,<sp/>1,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1e8c1c195a8aae25a942c0078946da3cb" kindref="member">_int2</ref>,<sp/>2,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1f5d44f2bc5a77196c3697d4560f5ae6a" kindref="member">_int3</ref>,<sp/>3,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_147bd8cbcfb5e3df37012c7c8dc253a71" kindref="member">_int4</ref>,<sp/>4,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_13d95bf7a1212d5078495fdae84a2f708" kindref="member">_int5</ref>,<sp/>5,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1514bba9e7774eab1afba32c99c25cecb" kindref="member">_int6</ref>,<sp/>6,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1c9017b6a16e2b5b4359dc089db4832b5" kindref="member">_int7</ref>,7,<ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1ee676dc504a8f6498927c2d5fb5e4c88" kindref="member">setTaskVector</ref>(8,<ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_11521354f2c1fc307021a9a75dfc805f8" kindref="member">dTask</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>,<sp/>0x40);</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1fe33101eba72b18d919a8a49af733564" kindref="member">_int9</ref>,<sp/>9,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_1e70dab5ac99d0fef2314f9cdf41751b1" kindref="member">_int10</ref>,<sp/>10,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_17fcf84f4c51eab2ed23e415bc89ad6e5" kindref="member">_int11</ref>,<sp/>11,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="idt_8h_152a2ea8642cffdd21dcd42dbb9f4fcb6" kindref="member">_int12</ref>,<sp/>12,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1ee676dc504a8f6498927c2d5fb5e4c88" kindref="member">setTaskVector</ref>(13,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_11521354f2c1fc307021a9a75dfc805f8" kindref="member">dTask</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>,<sp/>0x38);</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="page__fault_8S_16091cb277c1dd3e3e4d1d4699f3b06e5" kindref="member">_vmm_pageFault</ref>,<sp/>14,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>);</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="sys__call_8S_1192876638875d3cda1a1b19dd187c2db" kindref="member">_sysCall</ref>,<sp/>128,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_1b566353a8383ed84a5d0328677dc05dd" kindref="member">dTrap</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>);</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="sys__call__new_8S_1735df2a5e087b5aaa2a36581952f7866" kindref="member">_sysCall_new</ref>,<sp/>0x81,<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_1b566353a8383ed84a5d0328677dc05dd" kindref="member">dTrap</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//setVector(_sysCallNew,<sp/>0x90,<sp/>dPresent<sp/>+<sp/>dTrap<sp/>+<sp/>dDpl3);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="timer_8S_11dda6dc7fd189e16cfcc28348fd1f21c" kindref="member">timerInt</ref>,<sp/>0x68,<sp/>(<ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_15ee8638767e24765a2690483745d60d0" kindref="member">dDpl0</ref>));</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1fecbe8ea2cfebfb4d1a0aa7b6ebcac2c" kindref="member">back_link</ref><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_11017372aed82d7305586c330fa222b3b" kindref="member">esp0</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_126d03018de8c122451661bfe9d030541" kindref="member">ss0</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1d5ef8867200562fd8262f70312beff4d" kindref="member">esp1</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_16abf05d9a8f6356860a5606ffbadc989" kindref="member">ss1</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_160c88f3cd3f2110cb24be62444f42cfb" kindref="member">esp2</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_15a79ace5652b01cc25fc5ba7ff45bfa8" kindref="member">ss2</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" kindref="member">cr3</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int)<ref refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" kindref="member">kernelPageDirectory</ref>;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int)&amp;<ref refid="idt_8h_1ef0711bd8a0f07c3f4b9877fc93930e1" kindref="member">_int13</ref>;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x206;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1D000;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" kindref="member">ebp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1D000;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_18beab5808aad776957d4544f6b139d4e" kindref="member">esi</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1a52b515706cd37e166c8eba348d5e68b" kindref="member">edi</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" kindref="member">es</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x08;</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1340a29782d3306ba84176c543725d70a" kindref="member">ss</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" kindref="member">ds</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_18114a585123181ec835f8db3e029d390" kindref="member">fs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_18dfa44423504293405785371d0e7b076" kindref="member">gs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1d7b6a367e1c2a38e1ee6c8e5dad955f7" kindref="member">ldt</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_152ac0b54c6b2c71450c62d7fc911f2e2" kindref="member">trace_bitmap</ref><sp/>=<sp/>0x0000;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" kindref="member">io_map</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8000;</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/><ref refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" kindref="member">memset</ref>(sfTSS,0x0,</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtssStruct" kindref="compound">tssStruct</ref>));</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" kindref="member">cr3</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int)<ref refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" kindref="member">kernelPageDirectory</ref>;</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int)&amp;<ref refid="idt_8h_12444cd2a62fc14b2d7f404b0fad5bf1b" kindref="member">_int8</ref>;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x206;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1C000;</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" kindref="member">ebp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1C000;</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" kindref="member">es</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x08;</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1340a29782d3306ba84176c543725d70a" kindref="member">ss</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" kindref="member">ds</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_18114a585123181ec835f8db3e029d390" kindref="member">fs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_18dfa44423504293405785371d0e7b076" kindref="member">gs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" kindref="member">io_map</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8000;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Print<sp/>out<sp/>information<sp/>for<sp/>the<sp/>IDT<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;idt0<sp/>-<sp/>Address:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<sp/>&amp;ubixIDT);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>so<sp/>we<sp/>know<sp/>all<sp/>went<sp/>well<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0x0);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Sets<sp/>Up<sp/>IDT<sp/>Vector<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="156" refid="idt_8c_1174a47ed653fc64fff6b5bb1b895c2cf" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*handler,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>interrupt,<sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>controlMajor)<sp/>{</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><sp/>codesegment<sp/>=<sp/>0x08;</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/>(</highlight><highlight class="stringliteral">&quot;movw<sp/>%%cs,%0&quot;</highlight><highlight class="normal">:</highlight><highlight class="stringliteral">&quot;=g&quot;</highlight><highlight class="normal"><sp/>(codesegment));</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" kindref="member">offsetLow</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>short)(((</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal">)handler)<sp/>&amp;<sp/>0xffff);</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_171d7780bce5bd08890088cab94d6c415" kindref="member">selector</ref><sp/>=<sp/>codesegment;</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_178486d8b9aa678859910a54e16ca043c" kindref="member">access</ref><sp/>=<sp/>controlMajor;</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" kindref="member">offsetHigh</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>short)(((</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal">)handler)<sp/>&gt;&gt;<sp/>16);</highlight></codeline>
+<codeline lineno="164"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"></highlight></codeline>
+<codeline lineno="166"><highlight class="normal"></highlight><highlight class="comment">/************************************************************************</highlight></codeline>
+<codeline lineno="167"><highlight class="comment"></highlight></codeline>
+<codeline lineno="168"><highlight class="comment">Function:<sp/>void<sp/>setTaskVector(uInt8,uInt16,uInt8);</highlight></codeline>
+<codeline lineno="169"><highlight class="comment">Description:<sp/>This<sp/>Function<sp/>Sets<sp/>Up<sp/>An<sp/>IDT<sp/>Task<sp/>Vector</highlight></codeline>
+<codeline lineno="170"><highlight class="comment">Notes:</highlight></codeline>
+<codeline lineno="171"><highlight class="comment"></highlight></codeline>
+<codeline lineno="172"><highlight class="comment">************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="174" refid="idt_8c_1ee676dc504a8f6498927c2d5fb5e4c88" refkind="member"><highlight class="normal"><ref refid="idt_8h_1ee676dc504a8f6498927c2d5fb5e4c88" kindref="member">setTaskVector</ref>(<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>interrupt,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>controlMajor,<sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>selector)</highlight></codeline>
+<codeline lineno="175"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>codesegment<sp/>=<sp/>0x08;</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">volatile</highlight><highlight class="normal"><sp/>(</highlight><highlight class="stringliteral">&quot;movw<sp/>%%cs,%0&quot;</highlight><highlight class="normal">:</highlight><highlight class="stringliteral">&quot;=g&quot;</highlight><highlight class="normal"><sp/>(codesegment));</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" kindref="member">offsetLow</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_171d7780bce5bd08890088cab94d6c415" kindref="member">selector</ref><sp/>=<sp/>selector;</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_178486d8b9aa678859910a54e16ca043c" kindref="member">access</ref><sp/>=<sp/>controlMajor;</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/>ubixIDT[interrupt].<ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>.<ref refid="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" kindref="member">offsetHigh</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="183"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Null<sp/>Intterupt<sp/>Descriptor<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="187" refid="idt_8c_1dbf451ce0d6ecb3c485382616bee1de4" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1dbf451ce0d6ecb3c485382616bee1de4" kindref="member">intNull</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Invalid<sp/>Interrupt[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="190"><highlight class="comment"><sp/><sp/>kpanic(&quot;Invalid<sp/>Interrupt[%i]\n&quot;,_current-&gt;id);</highlight></codeline>
+<codeline lineno="191"><highlight class="comment"><sp/><sp/>while<sp/>(1);</highlight></codeline>
+<codeline lineno="192"><highlight class="comment"><sp/><sp/>endTask(_current-&gt;id);</highlight></codeline>
+<codeline lineno="193"><highlight class="comment"><sp/><sp/>sched_yield();</highlight></codeline>
+<codeline lineno="194"><highlight class="comment">*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197" refid="idt_8c_1e4129d156580fb5d485a440995d24dc2" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1e4129d156580fb5d485a440995d24dc2" kindref="member">_int0</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int0:<sp/>Divide-by-Zero<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"></highlight></codeline>
+<codeline lineno="203" refid="idt_8c_1ce97dc326d244a0766e196bba26be437" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1ce97dc326d244a0766e196bba26be437" kindref="member">_int1</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int1:<sp/>Debug<sp/>exception<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"></highlight></codeline>
+<codeline lineno="209" refid="idt_8c_1e8c1c195a8aae25a942c0078946da3cb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1e8c1c195a8aae25a942c0078946da3cb" kindref="member">_int2</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int2:<sp/>unknown<sp/>error<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215" refid="idt_8c_1f5d44f2bc5a77196c3697d4560f5ae6a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1f5d44f2bc5a77196c3697d4560f5ae6a" kindref="member">_int3</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int3:<sp/>Breakpoint<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"></highlight></codeline>
+<codeline lineno="221" refid="idt_8c_147bd8cbcfb5e3df37012c7c8dc253a71" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_147bd8cbcfb5e3df37012c7c8dc253a71" kindref="member">_int4</ref>(){</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int4:<sp/>Overflow<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight></codeline>
+<codeline lineno="227" refid="idt_8c_13d95bf7a1212d5078495fdae84a2f708" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><ref refid="idt_8h_13d95bf7a1212d5078495fdae84a2f708" kindref="member">_int5</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int5:<sp/>Bounds<sp/>check<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight></codeline>
+<codeline lineno="233" refid="idt_8c_1514bba9e7774eab1afba32c99c25cecb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1514bba9e7774eab1afba32c99c25cecb" kindref="member">_int6</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int6:<sp/>Invalid<sp/>opcode!<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"></highlight></codeline>
+<codeline lineno="239" refid="idt_8c_12444cd2a62fc14b2d7f404b0fad5bf1b" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_12444cd2a62fc14b2d7f404b0fad5bf1b" kindref="member">_int8</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*sfTSS<sp/><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*)0x6200;</highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int8:<sp/>Double<sp/>Fault!<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_18d312ed3dd0ea7a0f801c08a8cc4afd0" kindref="member">cr3</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int)<ref refid="paging_8h_14e81de2626825c90dc6bb3cd7c8b344c" kindref="member">kernelPageDirectory</ref>;</highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int)&amp;<ref refid="idt_8h_12444cd2a62fc14b2d7f404b0fad5bf1b" kindref="member">_int8</ref>;</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x206;</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1C000;</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" kindref="member">ebp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1C000;</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1cd97dd6f6eabd83c0b819b6058b7041d" kindref="member">es</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x08;</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1340a29782d3306ba84176c543725d70a" kindref="member">ss</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_101ee01c7f45c9b9ee2ad8338c21e6d33" kindref="member">ds</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_18114a585123181ec835f8db3e029d390" kindref="member">fs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_18dfa44423504293405785371d0e7b076" kindref="member">gs</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"><sp/><sp/>sfTSS-&gt;<ref refid="structtssStruct_1611a0a044f99f092ace469ce2381bb33" kindref="member">io_map</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x8000;</highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1);</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/>}</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257" refid="idt_8c_1fe33101eba72b18d919a8a49af733564" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1fe33101eba72b18d919a8a49af733564" kindref="member">_int9</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int9:<sp/>Coprocessor<sp/>Segment<sp/>Overrun!<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263" refid="idt_8c_1e70dab5ac99d0fef2314f9cdf41751b1" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1e70dab5ac99d0fef2314f9cdf41751b1" kindref="member">_int10</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int10:<sp/>Invalid<sp/>TSS!<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="265"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="266"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="267"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="268"><highlight class="normal"></highlight></codeline>
+<codeline lineno="269" refid="idt_8c_17fcf84f4c51eab2ed23e415bc89ad6e5" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_17fcf84f4c51eab2ed23e415bc89ad6e5" kindref="member">_int11</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int11:<sp/>Segment<sp/>Not<sp/>Present!<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight></codeline>
+<codeline lineno="275" refid="idt_8c_152a2ea8642cffdd21dcd42dbb9f4fcb6" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_152a2ea8642cffdd21dcd42dbb9f4fcb6" kindref="member">_int12</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;int12:<sp/>Stack-Segment<sp/>Fault!<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_108933fe6d593a1c78b9080359f15a0b7" kindref="member">sched_yield</ref>();</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281" refid="idt_8c_1ef0711bd8a0f07c3f4b9877fc93930e1" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1ef0711bd8a0f07c3f4b9877fc93930e1" kindref="member">_int13</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*ip<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*stack<sp/>=<sp/>0x0,<sp/>*ivt<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*stack32<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>isOperand32<sp/>=<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a" kindref="member">FALSE</ref>,<sp/>isAddress32<sp/>=<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a" kindref="member">FALSE</ref>;</highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*gpfTSS<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structtssStruct" kindref="compound">tssStruct</ref><sp/>*)0x4200;</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><ref refid="8259_8h_12b9ec30943ddb0a2ef3bd7ccfd2026c0" kindref="member">irqDisable</ref>(0x0);</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>(</highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/>int)&amp;<ref refid="idt_8h_1ef0711bd8a0f07c3f4b9877fc93930e1" kindref="member">_int13</ref>;</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1D000;</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1c2d32620149e07c40ee87696ef2509c2" kindref="member">ebp</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x1D000;</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"><sp/><sp/>gpfTSS-&gt;<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x206;</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="295"><highlight class="normal"><sp/><sp/>ip<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/><ref refid="idt_8c_1814ba9bc4c42bb79af5cde78c8bbfaa3" kindref="member">FP_TO_LINEAR</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref>,<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref>);</highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/>ivt<sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>*)<sp/>0x0;</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><sp/><sp/>stack<sp/><sp/><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>*)<sp/><ref refid="idt_8c_1814ba9bc4c42bb79af5cde78c8bbfaa3" kindref="member">FP_TO_LINEAR</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1340a29782d3306ba84176c543725d70a" kindref="member">ss</ref>,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref>);</highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/>stack32<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/>stack;</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="normal">gpfStart:</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(ip[0])<sp/>{</highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xCD:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>INT<sp/>n<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(ip[1])<sp/>{</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0x69:</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Exit<sp/>Bios<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b911fd9ca455f92c69c084484d5cd803c2" kindref="member">DEAD</ref>;</highlight></codeline>
+<codeline lineno="307"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0x20:</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0x21:</highlight></codeline>
+<codeline lineno="310"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;GPF<sp/>OP<sp/>0x20/0x21\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="311"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="312"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="313"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>stack<sp/>-=<sp/>3;</highlight></codeline>
+<codeline lineno="314"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>=<sp/>((<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>&amp;<sp/>0xffff)<sp/>-<sp/>6)<sp/>&amp;<sp/>0xffff;</highlight></codeline>
+<codeline lineno="315"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>stack[0]<sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>2);</highlight></codeline>
+<codeline lineno="316"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>stack[1]<sp/>=<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref>;<sp/>stack[2]<sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref>;</highlight></codeline>
+<codeline lineno="317"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref>)</highlight></codeline>
+<codeline lineno="318"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stack[2]<sp/>|=<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="319"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="320"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stack[2]<sp/>&amp;=<sp/>~<ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="321"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref><sp/><sp/>=<sp/>ivt[ip[1]<sp/>*<sp/>2<sp/>+<sp/>1]<sp/>&amp;<sp/>0xFFFF;</highlight></codeline>
+<codeline lineno="322"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/><sp/><sp/><sp/>=<sp/>ivt[ip[1]<sp/>*<sp/>2]<sp/>&amp;<sp/>0xFFFF;</highlight></codeline>
+<codeline lineno="323"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="324"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="325"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="326"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0x66:</highlight></codeline>
+<codeline lineno="327"><highlight class="normal"><sp/><sp/><sp/><sp/>isOperand32<sp/>=<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>;</highlight></codeline>
+<codeline lineno="328"><highlight class="normal"><sp/><sp/><sp/><sp/>ip++;</highlight></codeline>
+<codeline lineno="329"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);<sp/></highlight></codeline>
+<codeline lineno="330"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>gpfStart;</highlight></codeline>
+<codeline lineno="331"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0x67:</highlight></codeline>
+<codeline lineno="333"><highlight class="normal"><sp/><sp/><sp/><sp/>isAddress32<sp/>=<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>;</highlight></codeline>
+<codeline lineno="334"><highlight class="normal"><sp/><sp/><sp/><sp/>ip++;</highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">goto</highlight><highlight class="normal"><sp/>gpfStart;</highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xF0:</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;GPF<sp/>OP<sp/>0xF0\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="342"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0x9C:</highlight></codeline>
+<codeline lineno="343"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(isOperand32<sp/>==<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="344"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>=<sp/>((<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>&amp;<sp/>0xffff)<sp/>-<sp/>4)<sp/>&amp;<sp/>0xffff;</highlight></codeline>
+<codeline lineno="345"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>stack32--;</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/>stack32[0]<sp/>=<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/>&amp;<sp/>0xDFF;</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref><sp/>==<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>)<sp/></highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stack32[0]<sp/>|=<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>stack32[0]<sp/>&amp;=<sp/>~<ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>=<sp/>((<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>&amp;<sp/>0xffff)<sp/>-<sp/>2)<sp/>&amp;<sp/>0xffff;</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>stack--;</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"></highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>stack[0]<sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref>;</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>if<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref><sp/>==<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>)<sp/>stack[0]<sp/>|=<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>stack[0]<sp/>&amp;=<sp/>~<ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="358"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="359"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="360"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="361"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0x9D:</highlight></codeline>
+<codeline lineno="362"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(isOperand32<sp/>==<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="363"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/>=<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref><sp/>|<sp/><ref refid="bioscall_8h_1c853c10e3eb19188c6b3b8d3ff6914e2" kindref="member">EFLAG_VM</ref><sp/>|<sp/>(stack32[0]<sp/>&amp;<sp/>0xDFF);</highlight></codeline>
+<codeline lineno="364"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref><sp/>=<sp/>(stack32[0]<sp/>&amp;<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>)<sp/>!=<sp/>0;</highlight></codeline>
+<codeline lineno="365"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>=<sp/>((<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>&amp;<sp/>0xffff)<sp/>+<sp/>4)<sp/>&amp;<sp/>0xffff;</highlight></codeline>
+<codeline lineno="366"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="367"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/>=<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref><sp/>|<sp/><ref refid="bioscall_8h_1c853c10e3eb19188c6b3b8d3ff6914e2" kindref="member">EFLAG_VM</ref><sp/>|<sp/>stack[0];</highlight></codeline>
+<codeline lineno="368"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref><sp/>=<sp/>(stack[0]<sp/>&amp;<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>)<sp/>!=<sp/>0;</highlight></codeline>
+<codeline lineno="369"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>=<sp/>((<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>&amp;<sp/>0xffff)<sp/>+<sp/>2)<sp/>&amp;<sp/>0xffff;</highlight></codeline>
+<codeline lineno="370"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="371"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="372"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kprintf(&quot;popf<sp/>[0x%X]\n&quot;,_current-&gt;id);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="373"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="374"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xFA:</highlight></codeline>
+<codeline lineno="375"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref><sp/>=<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a1e095cc966dbecf6a0d8aad75348d1a" kindref="member">FALSE</ref>;</highlight></codeline>
+<codeline lineno="376"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/>&amp;=<sp/>~<ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="377"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="378"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_150f6d9f964aa8bcd88c5ff3bf693cec2" kindref="member">timer</ref><sp/>=<sp/>0x1;</highlight></codeline>
+<codeline lineno="379"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="380"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xFB:</highlight></codeline>
+<codeline lineno="381"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref><sp/>=<sp/><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1a82764c3079aea4e60c80e45befbb839" kindref="member">TRUE</ref>;</highlight></codeline>
+<codeline lineno="382"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/>|=<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>;</highlight></codeline>
+<codeline lineno="383"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="384"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_150f6d9f964aa8bcd88c5ff3bf693cec2" kindref="member">timer</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="385"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kprintf(&quot;sti<sp/>[0x%X]\n&quot;,_current-&gt;id);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="386"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="387"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xCF:</highlight></codeline>
+<codeline lineno="388"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>stack[0];</highlight></codeline>
+<codeline lineno="389"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16d9085ec5af0fa1fe1de7015ad99c9e3" kindref="member">cs</ref><sp/>=<sp/>stack[1];</highlight></codeline>
+<codeline lineno="390"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_1a85f1fbaf622e0c6a39963da27de0194" kindref="member">eflags</ref><sp/>=<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref><sp/>|<sp/><ref refid="bioscall_8h_1c853c10e3eb19188c6b3b8d3ff6914e2" kindref="member">EFLAG_VM</ref><sp/>|<sp/>stack[2];</highlight></codeline>
+<codeline lineno="391"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_10933c70230d4ac8bc9953640c979f8d7" kindref="member">oInfo</ref>.<ref refid="structosInfo_158c4ea3c7eed801f6ab84f701b5684f1" kindref="member">v86If</ref><sp/>=<sp/>(stack[2]<sp/>&amp;<sp/><ref refid="bioscall_8h_19e06d707701fc3d835d8d0d366476d77" kindref="member">EFLAG_IF</ref>)<sp/>!=<sp/>0;</highlight></codeline>
+<codeline lineno="392"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>=<sp/>((<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_185412a87dbdb8eda612c77bce8055a2c" kindref="member">esp</ref><sp/>&amp;<sp/>0xffff)<sp/>+<sp/>6)<sp/>&amp;<sp/>0xffff;</highlight></codeline>
+<codeline lineno="393"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>kprintf(&quot;iret<sp/>[0x%X]\n&quot;,_current-&gt;id);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="394"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="395"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xEC:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>IN<sp/>AL,DX<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="396"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref><sp/>=<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref><sp/>&amp;<sp/>~0xFF)<sp/>|<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_175825d1693047c99df1911b3af4d613f" kindref="member">edx</ref>);</highlight></codeline>
+<codeline lineno="397"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="398"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="399"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xED:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>IN<sp/>AX,DX<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="400"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref><sp/>=<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref><sp/>&amp;<sp/>~0xFFFF)<sp/>|<sp/><ref refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" kindref="member">inportWord</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_175825d1693047c99df1911b3af4d613f" kindref="member">edx</ref>);</highlight></codeline>
+<codeline lineno="401"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="402"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="403"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xEE:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>OUT<sp/>DX,AL<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="404"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_175825d1693047c99df1911b3af4d613f" kindref="member">edx</ref>,<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref><sp/>&amp;<sp/>0xFF);</highlight></codeline>
+<codeline lineno="405"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="406"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="407"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xEF:</highlight></codeline>
+<codeline lineno="408"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_175825d1693047c99df1911b3af4d613f" kindref="member">edx</ref>,<sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_16f6c9fdd54cd0da7f2331dc35f7d8fc7" kindref="member">eax</ref>);</highlight></codeline>
+<codeline lineno="409"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="410"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="411"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/>0xF4:</highlight></codeline>
+<codeline lineno="412"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>=<sp/>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref>)<sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_14c8accd7c0d5bb5ce426dc982bfc8519" kindref="member">tss</ref>.<ref refid="structtssStruct_13e758f2138799d63fc803f7e4db4f5b4" kindref="member">eip</ref><sp/>+<sp/>1);</highlight></codeline>
+<codeline lineno="413"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="414"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>something<sp/>wrong<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="415"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;NonHandled<sp/>OpCode<sp/>[0x%X:0x%X]\n&quot;</highlight><highlight class="normal">,<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>,ip[0]);</highlight></codeline>
+<codeline lineno="416"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1b085a40e09975d9ebf55b393f9549710" kindref="member">state</ref><sp/>=<sp/><ref refid="sched_8h_13fb333b67375561d327e9b5a8ffa03b911fd9ca455f92c69c084484d5cd803c2" kindref="member">DEAD</ref>;</highlight></codeline>
+<codeline lineno="417"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="418"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="419"><highlight class="normal"><sp/><sp/><ref refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a" kindref="member">irqEnable</ref>(0);</highlight></codeline>
+<codeline lineno="420"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1);</highlight></codeline>
+<codeline lineno="421"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="422"><highlight class="normal"></highlight></codeline>
+<codeline lineno="423"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Removed<sp/>static<sp/>however<sp/>this<sp/>is<sp/>the<sp/>only<sp/>place<sp/>it&apos;s<sp/>called<sp/>from<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="424" refid="idt_8c_16423394f8797bc3cf7ec6a079b8d593f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8c_16423394f8797bc3cf7ec6a079b8d593f" kindref="member">mathStateRestore</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="425"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="sched_8h_193c7d4c40424b17a73f34f6fd89b2804" kindref="member">_usedMath</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="426"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="427"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;fnsave<sp/>%0&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="428"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="429"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;m&quot;</highlight><highlight class="normal"><sp/>(<ref refid="sched_8h_193c7d4c40424b17a73f34f6fd89b2804" kindref="member">_usedMath</ref>-&gt;<ref refid="structtaskStruct_1dd14a764ee7ba0830bd837b54a8cb003" kindref="member">i387</ref>)</highlight></codeline>
+<codeline lineno="430"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline lineno="431"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="432"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1fe3af11009b07961be7296b360827669" kindref="member">usedMath</ref><sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="433"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="434"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;frstor<sp/>%0&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="435"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>:</highlight></codeline>
+<codeline lineno="436"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>:<sp/></highlight><highlight class="stringliteral">&quot;m&quot;</highlight><highlight class="normal"><sp/>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1dd14a764ee7ba0830bd837b54a8cb003" kindref="member">i387</ref>)</highlight></codeline>
+<codeline lineno="437"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline lineno="438"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="439"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="440"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;fninit&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="441"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_1fe3af11009b07961be7296b360827669" kindref="member">usedMath</ref><sp/>=<sp/>0x1;</highlight></codeline>
+<codeline lineno="442"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="443"><highlight class="normal"></highlight></codeline>
+<codeline lineno="444"><highlight class="normal"><sp/><sp/><ref refid="sched_8h_193c7d4c40424b17a73f34f6fd89b2804" kindref="member">_usedMath</ref>=<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>;</highlight></codeline>
+<codeline lineno="445"><highlight class="normal"></highlight></codeline>
+<codeline lineno="446"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//Return</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="447"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="448"><highlight class="normal"></highlight></codeline>
+<codeline lineno="449"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="idt_8h_1c9017b6a16e2b5b4359dc089db4832b5" kindref="member">_int7</ref>();</highlight></codeline>
+<codeline lineno="450"><highlight class="normal"></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="451"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;.globl<sp/>_int7<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="452"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;_int7:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="453"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushl<sp/>%eax<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="454"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>clts<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="455"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>movl<sp/>_current,%eax<sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="456"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>cmpl<sp/>_usedMath,%eax<sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="457"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>je<sp/>mathDone<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="458"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>call<sp/>mathStateRestore<sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="459"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;mathDone:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="460"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popl<sp/>%eax<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="461"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="462"><highlight class="normal"><sp/><sp/>);</highlight></codeline>
+<codeline lineno="463"><highlight class="normal"></highlight></codeline>
+<codeline lineno="464"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="465"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="466"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/idt.c"/>
+  </compounddef>
+</doxygen>

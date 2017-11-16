@@ -1,0 +1,822 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="lnc_8c" kind="file">
+    <compoundname>lnc.c</compoundname>
+    <includes refid="lnc_8h" local="no">pci/lnc.h</includes>
+    <includes refid="io_8h" local="no">sys/io.h</includes>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="idt_8h" local="no">sys/idt.h</includes>
+    <includes refid="gdt_8h" local="no">sys/gdt.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="video_8h" local="no">sys/video.h</includes>
+    <includes refid="8259_8h" local="no">isa/8259.h</includes>
+    <incdepgraph>
+      <node id="5827">
+        <label>src/sys/pci/lnc.c</label>
+        <link refid="lnc.c"/>
+        <childnode refid="5828" relation="include">
+        </childnode>
+        <childnode refid="5831" relation="include">
+        </childnode>
+        <childnode refid="5829" relation="include">
+        </childnode>
+        <childnode refid="5832" relation="include">
+        </childnode>
+        <childnode refid="5833" relation="include">
+        </childnode>
+        <childnode refid="5834" relation="include">
+        </childnode>
+        <childnode refid="5835" relation="include">
+        </childnode>
+        <childnode refid="5836" relation="include">
+        </childnode>
+        <childnode refid="5837" relation="include">
+        </childnode>
+      </node>
+      <node id="5828">
+        <label>pci/lnc.h</label>
+        <link refid="lnc_8h"/>
+        <childnode refid="5829" relation="include">
+        </childnode>
+      </node>
+      <node id="5829">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5830" relation="include">
+        </childnode>
+      </node>
+      <node id="5830">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5836">
+        <label>sys/video.h</label>
+        <link refid="video_8h"/>
+        <childnode refid="5829" relation="include">
+        </childnode>
+      </node>
+      <node id="5834">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="5829" relation="include">
+        </childnode>
+      </node>
+      <node id="5832">
+        <label>sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="5829" relation="include">
+        </childnode>
+        <childnode refid="5833" relation="include">
+        </childnode>
+      </node>
+      <node id="5835">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5829" relation="include">
+        </childnode>
+      </node>
+      <node id="5833">
+        <label>sys/gdt.h</label>
+        <link refid="gdt_8h"/>
+      </node>
+      <node id="5831">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5837">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="5829" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="lnc_8c_110e372351df773baafe3ec272607d125" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>asm</definition>
+        <argsstring>(&quot;.global _lncInt     \n&quot;&quot;_lncInt   :         \n&quot;&quot;  pusha                \n&quot;&quot;  pushw %ds            \n&quot;&quot;  pushw %es            \n&quot;&quot;  pushw %ss            \n&quot;&quot;  pushw %ss            \n&quot;&quot;  popw %ds             \n&quot;&quot;  popw %es             \n&quot;&quot;  call lncInt \n&quot;&quot;  popw %es             \n&quot;&quot;  popw %ds             \n&quot;&quot;  popa                 \n&quot;&quot;  iret                 \n&quot;)</argsstring>
+        <name>asm</name>
+        <param>
+          <type>&quot;.global _lncInt \n&quot;&quot;_lncInt : \n&quot;&quot; pusha \n&quot;&quot; pushw %ds \n&quot;&quot; pushw %es \n&quot;&quot; pushw %ss \n&quot;&quot; pushw %ss \n&quot;&quot; popw %ds \n&quot;&quot; popw %es \n&quot;&quot; call lncInt \n&quot;&quot; popw %es \n&quot;&quot; popw %ds \n&quot;&quot; popa \n&quot;&quot; iret \n&quot;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="244"/>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void initLNC</definition>
+        <argsstring>()</argsstring>
+        <name>initLNC</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="104" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="104" bodyend="152"/>
+        <references refid="lnc_8h_1d155cde754cb2beb8403810b0a651ba7">_lncInt</references>
+        <references refid="structarpcom_18335c2422b63415a71353f12d70b1e05" compoundref="lnc_8h" startline="143">arpcom::ac_enaddr</references>
+        <references refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" compoundref="lnc_8h" startline="157">lncInfo::arpcom</references>
+        <references refid="structlncInfo_1e39a5151bfee43405df118538307a604" compoundref="lnc_8h" startline="164">lncInfo::bdp</references>
+        <references refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" compoundref="lnc_8h" startline="72">CSR0</references>
+        <references refid="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" compoundref="lnc_8h" startline="75">CSR3</references>
+        <references refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" compoundref="gdt_8h" startline="44">dDpl3</references>
+        <references refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" compoundref="gdt_8h" startline="37">dInt</references>
+        <references refid="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" compoundref="lnc_8h" startline="52">DMA_FIXED</references>
+        <references refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" compoundref="gdt_8h" startline="48">dPresent</references>
+        <references refid="lnc_8h_1bf4fcaacb1ad2010711b7c880ec2ed20" compoundref="lnc_8h" startline="42">ETHER_ADDR_LEN</references>
+        <references refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" compoundref="lnc_8h" startline="150">nicInfo::ic</references>
+        <references refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" compoundref="lnc_8h" startline="149">nicInfo::ident</references>
+        <references refid="lnc_8h_1ca0dae20ad119b8bf8f368693eb2bff8" compoundref="lnc_8h" startline="86">IDON</references>
+        <references refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" compoundref="lnc_8h" startline="88">INEA</references>
+        <references refid="lnc_8h_1b5889105dcd019008c9448dff61323f6" compoundref="lnc_8h" startline="94">INIT</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="lnc_8h_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</references>
+        <references refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" compoundref="lnc_8h" startline="151">nicInfo::memMode</references>
+        <references refid="8259_8h_17d84962c1a1c225344a94545309f92fc" compoundref="8259_8h" startline="42">mVec</references>
+        <references refid="lnc_8h_10f13e1c33c723fb1751c67d8dcd54df3" compoundref="lnc_8h" startline="49">NE2100</references>
+        <references refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" compoundref="lnc_8h" startline="158">lncInfo::nic</references>
+        <references refid="lnc_8h_19a6f0938f7533adf6aebf030c2cff3d6" compoundref="lnc_8h" startline="40">NRDRE</references>
+        <references refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" compoundref="lnc_8h" startline="165">lncInfo::nrdre</references>
+        <references refid="lnc_8h_15feb2f9782070ea70e997a934dba38b1" compoundref="lnc_8h" startline="41">NTDRE</references>
+        <references refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" compoundref="lnc_8h" startline="166">lncInfo::ntdre</references>
+        <references refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" compoundref="lnc_8h" startline="64">PCnet_32</references>
+        <references refid="lnc_8h_1a3d9c098a27fad92e011c8642149245a" compoundref="lnc_8h" startline="47">PCNET_BDP</references>
+        <references refid="lnc_8h_14b84cf377a1b65f8597fb5a1a6b165cf" compoundref="lnc_8h" startline="45">PCNET_RAP</references>
+        <references refid="lnc_8h_180e710fa02e057090e7212fc4e52a09f" compoundref="lnc_8h" startline="44">PCNET_RDP</references>
+        <references refid="lnc_8h_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <references refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</references>
+        <references refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</references>
+        <references refid="lnc_8h_139aaa2cb5148aec0a6c4599feaf3a7d3" compoundref="lnc_8h" startline="93">STRT</references>
+        <references refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</references>
+        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lanceProbe</definition>
+        <argsstring>(struct lncInfo *lnc)</argsstring>
+        <name>lanceProbe</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="192" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="192" bodyend="206"/>
+        <references refid="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" compoundref="lnc_8h" startline="60">C_LANCE</references>
+        <references refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" compoundref="lnc_8h" startline="72">CSR0</references>
+        <references refid="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" compoundref="lnc_8h" startline="75">CSR3</references>
+        <references refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" compoundref="lnc_8h" startline="88">INEA</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" compoundref="lnc_8h" startline="59">LANCE</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <references refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</references>
+        <references refid="lnc_8h_1e19b6bb2940d2fbe0a79852b070eeafd" compoundref="lnc_8h" startline="92">STOP</references>
+        <references refid="lnc_8h_1c1ae4add974b9cfc6b5aaf8a578f01ab" compoundref="lnc_8h" startline="58">UNKNOWN</references>
+        <references refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</references>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_186e977fd8113976b87da564f2b53a2d7" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int lncAttach</definition>
+        <argsstring>(struct lncInfo *lnc, int unit)</argsstring>
+        <name>lncAttach</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>unit</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="246" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="246" bodyend="308"/>
+        <references refid="structarpcom_18335c2422b63415a71353f12d70b1e05" compoundref="lnc_8h" startline="143">arpcom::ac_enaddr</references>
+        <references refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" compoundref="lnc_8h" startline="157">lncInfo::arpcom</references>
+        <references refid="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" compoundref="lnc_8h" startline="60">C_LANCE</references>
+        <references refid="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" compoundref="lnc_8h" startline="52">DMA_FIXED</references>
+        <references refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" compoundref="lnc_8h" startline="150">nicInfo::ic</references>
+        <references refid="lnc_8c_1f979fe05542c79a6de2a45efeb75cb01" compoundref="lnc_8c" startline="68">icIdent</references>
+        <references refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" compoundref="lnc_8h" startline="149">nicInfo::ident</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" compoundref="lnc_8h" startline="59">LANCE</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="lnc_8h_1f52baa205a87ca363ed5b4121a5f80a9" compoundref="lnc_8h" startline="37">MEM_SLEW</references>
+        <references refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" compoundref="lnc_8h" startline="151">nicInfo::memMode</references>
+        <references refid="structnicInfo_13dc304d78fecc9112cf979b7b1fc3525" compoundref="lnc_8h" startline="153">nicInfo::mode</references>
+        <references refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" compoundref="lnc_8h" startline="35">NDESC</references>
+        <references refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" compoundref="lnc_8h" startline="158">lncInfo::nic</references>
+        <references refid="lnc_8c_1efadd74e9a9786e9fb67f6d994da3366" compoundref="lnc_8c" startline="60">nicIdent</references>
+        <references refid="lnc_8h_11291f416b069313021b519eea62d5bf1" compoundref="lnc_8h" startline="36">NORMAL</references>
+        <references refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" compoundref="lnc_8h" startline="165">lncInfo::nrdre</references>
+        <references refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" compoundref="lnc_8h" startline="166">lncInfo::ntdre</references>
+        <references refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" compoundref="lnc_8h" startline="64">PCnet_32</references>
+        <references refid="lnc_8h_17f410619679156a88b8f9e878e5badcf" compoundref="lnc_8h" startline="39">RECVBUFSIZE</references>
+        <references refid="structlncInfo_149f921775c4d249ce90af5afed331bd9" compoundref="lnc_8h" startline="159">lncInfo::recvRing</references>
+        <references refid="lnc_8h_1ef3765fe92001684a71af27e0d738038" compoundref="lnc_8h" startline="54">SHMEM</references>
+        <references refid="lnc_8h_10d38de8b1de05fb25c7899244cc7a7df" compoundref="lnc_8h" startline="38">TRANSBUFSIZE</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_16fdabac3834c12782583e0a42f928295" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void lncInt</definition>
+        <argsstring>()</argsstring>
+        <name>lncInt</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="208" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="208" bodyend="226"/>
+        <references refid="lnc_8h_1735563036dced0b7d6cc98f97ea4978b" compoundref="lnc_8h" startline="79">ERR</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="lnc_8h_171e19ac3883e6cdbc2a19126e1b590ab" compoundref="lnc_8h" startline="87">INTR</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <references refid="lnc_8h_14810d8325791be718f1bcb2a92fd3a0f" compoundref="lnc_8h" startline="84">RINT</references>
+        <references refid="lnc_8h_1c6f30425a8221b25e8ebf4cdeb804b0e" compoundref="lnc_8h" startline="85">TINT</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_17b84655da5c5a354e1dd00faf729506c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int probe</definition>
+        <argsstring>(struct lncInfo *lnc)</argsstring>
+        <name>probe</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="154" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="154" bodyend="190"/>
+        <references refid="lnc_8h_105aca4c2607e5cf418d26c6471c6df91" compoundref="lnc_8h" startline="100">Am79C960</references>
+        <references refid="lnc_8h_191e4b6782cdb439f7d1493924b06036d" compoundref="lnc_8h" startline="101">Am79C961</references>
+        <references refid="lnc_8h_13e6e658373fd814ca74785d82fb483df" compoundref="lnc_8h" startline="102">Am79C961A</references>
+        <references refid="lnc_8h_1be2e36dbd6a0dda5f7132f496d560751" compoundref="lnc_8h" startline="103">Am79C965</references>
+        <references refid="lnc_8h_1901c0fbc5ca77f43baa5468a0c554148" compoundref="lnc_8h" startline="104">Am79C970</references>
+        <references refid="lnc_8h_126c7d28ffe133b74501f6c3cd3ee0afc" compoundref="lnc_8h" startline="105">Am79C970A</references>
+        <references refid="lnc_8h_177cd476f0f327589173897cace2a6d5d" compoundref="lnc_8h" startline="106">Am79C971</references>
+        <references refid="lnc_8h_1ec4eaac1bfb06a8d9d33802cd3481a71" compoundref="lnc_8h" startline="107">Am79C972</references>
+        <references refid="lnc_8h_12418761a3aa861593c41df8a9c75c84b" compoundref="lnc_8h" startline="108">Am79C973</references>
+        <references refid="lnc_8h_14377d3112a6628c997cd2a4fe9a5e3d8" compoundref="lnc_8h" startline="109">Am79C978</references>
+        <references refid="lnc_8h_1e3685f97383506d96630657d40139121" compoundref="lnc_8h" startline="98">AMD_MASK</references>
+        <references refid="lnc_8h_1c2969c1f9783df74d1315e32c8d7e512" compoundref="lnc_8h" startline="76">CSR88</references>
+        <references refid="lnc_8h_164a850bd91da43c547e18e1b4cba0af2" compoundref="lnc_8h" startline="77">CSR89</references>
+        <references refid="lnc_8h_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="lnc_8h_1f09868a61f66925c57b5d3e7fe36596b" compoundref="lnc_8h" startline="99">PART_MASK</references>
+        <references refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" compoundref="lnc_8h" startline="64">PCnet_32</references>
+        <references refid="lnc_8h_133e34c2221d08ac7e5e4a76ad5fe5f2c" compoundref="lnc_8h" startline="67">PCnet_FAST</references>
+        <references refid="lnc_8h_1132ccf085a33454d996e0a80d804c391" compoundref="lnc_8h" startline="68">PCnet_FASTplus</references>
+        <references refid="lnc_8h_142619f0c436d20482c7cb4b76fc643a5" compoundref="lnc_8h" startline="69">PCnet_Home</references>
+        <references refid="lnc_8h_13baa99ddd1afd3e15b0895fd678db39e" compoundref="lnc_8h" startline="61">PCnet_ISA</references>
+        <references refid="lnc_8h_1ed1e84c250032911bffed1b2f49fcf6e" compoundref="lnc_8h" startline="63">PCnet_ISA_II</references>
+        <references refid="lnc_8h_19ad716fd5d7913ddf296a963b88c74e6" compoundref="lnc_8h" startline="62">PCnet_ISAplus</references>
+        <references refid="lnc_8h_12da9a3ce30e040d19856a3aa23d11d09" compoundref="lnc_8h" startline="65">PCnet_PCI</references>
+        <references refid="lnc_8h_1e4152589aa28996d4f456ea1e3841613" compoundref="lnc_8h" startline="66">PCnet_PCI_II</references>
+        <references refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_1d560806451deb128b0e343a0caa8995f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 readBcr</definition>
+        <argsstring>(struct lncInfo *sc, uInt16 port)</argsstring>
+        <name>readBcr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>sc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="98" bodyend="101"/>
+        <references refid="structlncInfo_1e39a5151bfee43405df118538307a604" compoundref="lnc_8h" startline="164">lncInfo::bdp</references>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 readCsr</definition>
+        <argsstring>(struct lncInfo *lnc, uInt16 port)</argsstring>
+        <name>readCsr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="88" bodyend="91"/>
+        <references refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" compoundref="io_8c" startline="56" endline="64">inportWord</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_1c77dcbd7df5a9a8cacc3f684fd59e389" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeBcr</definition>
+        <argsstring>(struct lncInfo *lnc, uInt16 port, uInt16 val)</argsstring>
+        <name>writeBcr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="93" bodyend="96"/>
+        <references refid="structlncInfo_1e39a5151bfee43405df118538307a604" compoundref="lnc_8h" startline="164">lncInfo::bdp</references>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+      </memberdef>
+      <memberdef kind="function" id="lnc_8c_1af11bb0f1b848f3c3a5db96eec6d03bc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void writeCsr</definition>
+        <argsstring>(struct lncInfo *lnc, uInt16 port, uInt16 val)</argsstring>
+        <name>writeCsr</name>
+        <param>
+          <type>struct <ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+          <declname>lnc</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>port</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>val</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="83" bodyend="86"/>
+        <references refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" compoundref="lnc_8c" startline="58">lnc</references>
+        <references refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" compoundref="io_8c" startline="104" endline="110">outportWord</references>
+        <references refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" compoundref="lnc_8h" startline="162">lncInfo::rap</references>
+        <references refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" compoundref="lnc_8h" startline="163">lncInfo::rdp</references>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="lnc_8c_1f979fe05542c79a6de2a45efeb75cb01" prot="public" static="yes" mutable="no">
+        <type>char const *const</type>
+        <definition>char const* const icIdent[]</definition>
+        <argsstring>[]</argsstring>
+        <name>icIdent</name>
+        <initializer> {
+  &quot;Unknown&quot;,
+  &quot;LANCE&quot;,
+  &quot;C-LANCE&quot;,
+  &quot;PCnet-ISA&quot;,
+  &quot;PCnet-ISA+&quot;,
+  &quot;PCnet-ISA II&quot;,
+  &quot;PCnet-32 VL-Bus&quot;,
+  &quot;PCnet-PCI&quot;,
+  &quot;PCnet-PCI II&quot;,
+  &quot;PCnet-FAST&quot;,
+  &quot;PCnet-FAST+&quot;,
+  &quot;PCnet-Home&quot;,
+  }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="68" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="lnc_8c_1f5e66182cc3ee40ca7dab1a2449d002e" prot="public" static="no" mutable="no">
+        <type><ref refid="structlncInfo" kindref="compound">lncInfo</ref> *</type>
+        <definition>struct lncInfo* lnc</definition>
+        <argsstring></argsstring>
+        <name>lnc</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="58" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+        <referencedby refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" compoundref="lnc_8c" startline="154" endline="190">probe</referencedby>
+        <referencedby refid="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</referencedby>
+        <referencedby refid="lnc_8c_1c77dcbd7df5a9a8cacc3f684fd59e389" compoundref="lnc_8c" startline="93" endline="96">writeBcr</referencedby>
+        <referencedby refid="lnc_8c_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="lnc_8c_1efadd74e9a9786e9fb67f6d994da3366" prot="public" static="yes" mutable="no">
+        <type>char const *const</type>
+        <definition>char const* const nicIdent[]</definition>
+        <argsstring>[]</argsstring>
+        <name>nicIdent</name>
+        <initializer> {
+  &quot;Unknown&quot;,
+  &quot;BICC&quot;,
+  &quot;NE2100&quot;,
+  &quot;DEPCA&quot;,
+  &quot;CNET98S&quot;,      
+  }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c" bodystart="60" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Log: lnc_8c.xml,v $
+<codeline lineno="26"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:52  reddawg
+<codeline lineno="26"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="26"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:16<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"></highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"></highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:24:35<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="35"><highlight class="comment"></highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2004/04/15<sp/>12:07:15<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>UbixOS<sp/>v1.0</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"></highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/04/13<sp/>16:36:33<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>Changed<sp/>our<sp/>copyright,<sp/>it<sp/>is<sp/>all<sp/>now<sp/>under<sp/>a<sp/>BSD-Style<sp/>license</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"></highlight></codeline>
+<codeline lineno="42"><highlight class="comment"></highlight></codeline>
+<codeline lineno="43"><highlight class="comment"></highlight></codeline>
+<codeline lineno="44"><highlight class="comment"><sp/>$Id: lnc_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="45"><highlight class="comment"></highlight></codeline>
+<codeline lineno="46"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="lnc_8h" kindref="compound">pci/lnc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="idt_8h" kindref="compound">sys/idt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gdt_8h" kindref="compound">sys/gdt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="video_8h" kindref="compound">sys/video.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="8259_8h" kindref="compound">isa/8259.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="lnc_8c_1f5e66182cc3ee40ca7dab1a2449d002e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="lnc_8c_1efadd74e9a9786e9fb67f6d994da3366" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="lnc_8c_1efadd74e9a9786e9fb67f6d994da3366" kindref="member">nicIdent</ref>[]<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;Unknown&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;BICC&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;NE2100&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;DEPCA&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;CNET98S&quot;</highlight><highlight class="normal">,<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>PC-98<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="lnc_8c_1f979fe05542c79a6de2a45efeb75cb01" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="lnc_8c_1f979fe05542c79a6de2a45efeb75cb01" kindref="member">icIdent</ref>[]<sp/>=<sp/>{</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;Unknown&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;LANCE&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;C-LANCE&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-ISA&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-ISA+&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-ISA<sp/>II&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-32<sp/>VL-Bus&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-PCI&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-PCI<sp/>II&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-FAST&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-FAST+&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;PCnet-Home&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>};<sp/><sp/></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="lnc_8c_1af11bb0f1b848f3c3a5db96eec6d03bc" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" kindref="member">writeCsr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>val)<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" kindref="member">rap</ref>,<sp/>port);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" kindref="member">rdp</ref>,<sp/>val);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88" refid="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" refkind="member"><highlight class="normal"><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port)<sp/>{</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" kindref="member">rap</ref>,<sp/>port);</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(<ref refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" kindref="member">inportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" kindref="member">rdp</ref>));</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="lnc_8c_1c77dcbd7df5a9a8cacc3f684fd59e389" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1c77dcbd7df5a9a8cacc3f684fd59e389" kindref="member">writeBcr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>val)<sp/>{</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" kindref="member">rap</ref>,<sp/>port);</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1e39a5151bfee43405df118538307a604" kindref="member">bdp</ref>,<sp/>val);</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="lnc_8c_1d560806451deb128b0e343a0caa8995f" refkind="member"><highlight class="normal"><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="lnc_8h_1b26b4568cde86b4006a54e4aae74d0e7" kindref="member">readBcr</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*sc,<sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>port)<sp/>{</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(sc-&gt;<ref refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" kindref="member">rap</ref>,<sp/>port);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" kindref="member">inportWord</ref>(sc-&gt;<ref refid="structlncInfo_1e39a5151bfee43405df118538307a604" kindref="member">bdp</ref>));</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104" refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_10b7fb4f8833ed743dc1f3c4c90c28731" kindref="member">initLNC</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i<sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref><sp/>=<sp/><ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref>),-2);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" kindref="member">rap</ref><sp/>=<sp/>0x1000<sp/>+<sp/><ref refid="lnc_8h_14b84cf377a1b65f8597fb5a1a6b165cf" kindref="member">PCNET_RAP</ref>;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" kindref="member">rdp</ref><sp/>=<sp/>0x1000<sp/>+<sp/><ref refid="lnc_8h_180e710fa02e057090e7212fc4e52a09f" kindref="member">PCNET_RDP</ref>;</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1e39a5151bfee43405df118538307a604" kindref="member">bdp</ref><sp/>=<sp/>0x1000<sp/>+<sp/><ref refid="lnc_8h_1a3d9c098a27fad92e011c8642149245a" kindref="member">PCNET_BDP</ref>;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref><sp/>=<sp/><ref refid="lnc_8h_17b84655da5c5a354e1dd00faf729506c" kindref="member">probe</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>);</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref><sp/>&gt;<sp/>0)<sp/>&amp;&amp;<sp/>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref><sp/>&gt;=<sp/><ref refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" kindref="member">PCnet_32</ref>))<sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" kindref="member">ident</ref><sp/>=<sp/><ref refid="lnc_8h_10f13e1c33c723fb1751c67d8dcd54df3" kindref="member">NE2100</ref>;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" kindref="member">memMode</ref><sp/>=<sp/><ref refid="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" kindref="member">DMA_FIXED</ref>;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" kindref="member">nrdre</ref><sp/>=<sp/><ref refid="lnc_8h_19a6f0938f7533adf6aebf030c2cff3d6" kindref="member">NRDRE</ref>;</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" kindref="member">ntdre</ref><sp/>=<sp/><ref refid="lnc_8h_15feb2f9782070ea70e997a934dba38b1" kindref="member">NTDRE</ref>;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Extract<sp/>MAC<sp/>address<sp/>from<sp/>PROM<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/><ref refid="lnc_8h_1bf4fcaacb1ad2010711b7c880ec2ed20" kindref="member">ETHER_ADDR_LEN</ref>;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" kindref="member">arpcom</ref>.<ref refid="structarpcom_18335c2422b63415a71353f12d70b1e05" kindref="member">ac_enaddr</ref>[i]<sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0<ref refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" kindref="member">x1000</ref><sp/>+<sp/>i);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[0x%X]&quot;</highlight><highlight class="normal">,<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" kindref="member">arpcom</ref>.<ref refid="structarpcom_18335c2422b63415a71353f12d70b1e05" kindref="member">ac_enaddr</ref>[i]);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;LNC<sp/>Init<sp/>Error\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_186e977fd8113976b87da564f2b53a2d7" kindref="member">lncAttach</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,0);</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" kindref="member">writeCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" kindref="member">CSR3</ref>,<sp/>0);</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" kindref="member">writeCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" kindref="member">CSR0</ref>,<sp/><ref refid="lnc_8h_1b5889105dcd019008c9448dff61323f6" kindref="member">INIT</ref>);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>1000;<sp/>i++)</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" kindref="member">CSR0</ref>)<sp/>&amp;<sp/><ref refid="lnc_8h_1ca0dae20ad119b8bf8f368693eb2bff8" kindref="member">IDON</ref>)</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(lnc,<sp/><ref refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" kindref="member">CSR0</ref>)<sp/>&amp;<sp/>IDON)<sp/>{</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" kindref="member">writeCsr</ref>(lnc,<sp/><ref refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" kindref="member">CSR0</ref>,<sp/><ref refid="lnc_8h_139aaa2cb5148aec0a6c4599feaf3a7d3" kindref="member">STRT</ref><sp/>|<sp/><ref refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" kindref="member">INEA</ref>);</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" kindref="member">setVector</ref>(<ref refid="lnc_8h_1d155cde754cb2beb8403810b0a651ba7" kindref="member">_lncInt</ref>,<ref refid="8259_8h_17d84962c1a1c225344a94545309f92fc" kindref="member">mVec</ref>+9,<sp/>(<ref refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" kindref="member">dInt</ref><sp/>+<sp/><ref refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" kindref="member">dPresent</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>));</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>enableIrq(9);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/></highlight></codeline>
+<codeline lineno="142"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>sc-&gt;arpcom.ac_if.if_flags<sp/>|=<sp/>IFF_RUNNING;</highlight></codeline>
+<codeline lineno="143"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>sc-&gt;arpcom.ac_if.if_flags<sp/>&amp;=<sp/>~IFF_OACTIVE;</highlight></codeline>
+<codeline lineno="144"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*<sp/>lnc_start(&amp;sc-&gt;arpcom.ac_if);</highlight></codeline>
+<codeline lineno="145"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;LNC<sp/>init<sp/>Error\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154" refid="lnc_8c_17b84655da5c5a354e1dd00faf729506c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_17b84655da5c5a354e1dd00faf729506c" kindref="member">probe</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>chipId<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>type<sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((type<sp/>=<sp/><ref refid="lnc_8h_1c698a392b34b41b9aa3eed6ec7c2f8db" kindref="member">lanceProbe</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>)))<sp/>{</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/>chipId<sp/>=<sp/><ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_164a850bd91da43c547e18e1b4cba0af2" kindref="member">CSR89</ref>);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/>chipId<sp/>&lt;&lt;=<sp/>16;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"><sp/><sp/><sp/><sp/>chipId<sp/>|=<sp/><ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_1c2969c1f9783df74d1315e32c8d7e512" kindref="member">CSR88</ref>);</highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(chipId<sp/>&amp;<sp/><ref refid="lnc_8h_1e3685f97383506d96630657d40139121" kindref="member">AMD_MASK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>chipId<sp/>&gt;&gt;=<sp/>12;</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(chipId<sp/>&amp;<sp/><ref refid="lnc_8h_1f09868a61f66925c57b5d3e7fe36596b" kindref="member">PART_MASK</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_105aca4c2607e5cf418d26c6471c6df91" kindref="member">Am79C960</ref>:</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(<ref refid="lnc_8h_13baa99ddd1afd3e15b0895fd678db39e" kindref="member">PCnet_ISA</ref>);</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_191e4b6782cdb439f7d1493924b06036d" kindref="member">Am79C961</ref>:</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_19ad716fd5d7913ddf296a963b88c74e6" kindref="member">PCnet_ISAplus</ref>);</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_13e6e658373fd814ca74785d82fb483df" kindref="member">Am79C961A</ref>:</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1ed1e84c250032911bffed1b2f49fcf6e" kindref="member">PCnet_ISA_II</ref>);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1be2e36dbd6a0dda5f7132f496d560751" kindref="member">Am79C965</ref>:</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" kindref="member">PCnet_32</ref>);</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1901c0fbc5ca77f43baa5468a0c554148" kindref="member">Am79C970</ref>:</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_12da9a3ce30e040d19856a3aa23d11d09" kindref="member">PCnet_PCI</ref>);</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_126c7d28ffe133b74501f6c3cd3ee0afc" kindref="member">Am79C970A</ref>:</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1e4152589aa28996d4f456ea1e3841613" kindref="member">PCnet_PCI_II</ref>);</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_177cd476f0f327589173897cace2a6d5d" kindref="member">Am79C971</ref>:</highlight></codeline>
+<codeline lineno="178"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_133e34c2221d08ac7e5e4a76ad5fe5f2c" kindref="member">PCnet_FAST</ref>);</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1ec4eaac1bfb06a8d9d33802cd3481a71" kindref="member">Am79C972</ref>:</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_12418761a3aa861593c41df8a9c75c84b" kindref="member">Am79C973</ref>:</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1132ccf085a33454d996e0a80d804c391" kindref="member">PCnet_FASTplus</ref>);</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_14377d3112a6628c997cd2a4fe9a5e3d8" kindref="member">Am79C978</ref>:</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_142619f0c436d20482c7cb4b76fc643a5" kindref="member">PCnet_Home</ref>);</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(type);</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"></highlight></codeline>
+<codeline lineno="192" refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_1c698a392b34b41b9aa3eed6ec7c2f8db" kindref="member">lanceProbe</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" kindref="member">writeCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" kindref="member">CSR0</ref>,<sp/><ref refid="lnc_8h_1e19b6bb2940d2fbe0a79852b070eeafd" kindref="member">STOP</ref>);</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>((<ref refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" kindref="member">inportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" kindref="member">rdp</ref>)<sp/>&amp;<sp/><ref refid="lnc_8h_1e19b6bb2940d2fbe0a79852b070eeafd" kindref="member">STOP</ref>)<sp/>&amp;&amp;<sp/>!(<ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_1accfc3c68d398428c31b3c26cf3c7d5f" kindref="member">CSR3</ref>)))<sp/>{</highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1af11bb0f1b848f3c3a5db96eec6d03bc" kindref="member">writeCsr</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,<sp/><ref refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" kindref="member">CSR0</ref>,<sp/><ref refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" kindref="member">INEA</ref>);</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f2a608bc5f930aedcb878db277a6bad0" kindref="member">readCsr</ref>(lnc,<sp/><ref refid="lnc_8h_109512b5b7cf54991bf82200f66bd1b8c" kindref="member">CSR0</ref>)<sp/>&amp;<sp/><ref refid="lnc_8h_193d733faa9617c2136ecc02953be45d5" kindref="member">INEA</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(<ref refid="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" kindref="member">C_LANCE</ref>);</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(<ref refid="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" kindref="member">LANCE</ref>);</highlight></codeline>
+<codeline lineno="201"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(<ref refid="lnc_8h_1c1ae4add974b9cfc6b5aaf8a578f01ab" kindref="member">UNKNOWN</ref>);</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208" refid="lnc_8c_16fdabac3834c12782583e0a42f928295" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_16fdabac3834c12782583e0a42f928295" kindref="member">lncInt</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>csr0<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>((csr0<sp/>=<sp/><ref refid="io_8h_1fb703b187feb4b92444454df6c3dd9e6" kindref="member">inportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" kindref="member">rdp</ref>))<sp/>&amp;<sp/><ref refid="lnc_8h_171e19ac3883e6cdbc2a19126e1b590ab" kindref="member">INTR</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="io_8h_1243f6b6d22cc5948908b764d58efc2b0" kindref="member">outportWord</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" kindref="member">rdp</ref>,<sp/>csr0);</highlight></codeline>
+<codeline lineno="212"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;CSR0:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,csr0);</highlight></codeline>
+<codeline lineno="213"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(csr0<sp/>&amp;<sp/><ref refid="lnc_8h_1735563036dced0b7d6cc98f97ea4978b" kindref="member">ERR</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Error:<sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,csr0);</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(csr0<sp/>&amp;<sp/><ref refid="lnc_8h_14810d8325791be718f1bcb2a92fd3a0f" kindref="member">RINT</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;RINT\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(csr0<sp/>&amp;<sp/><ref refid="lnc_8h_1c6f30425a8221b25e8ebf4cdeb804b0e" kindref="member">TINT</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;TINT\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Finished!!!\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0<ref refid="start_8S_162df326d54f8b2ece412319c4360ef3e" kindref="member">x20</ref>,0<ref refid="start_8S_162df326d54f8b2ece412319c4360ef3e" kindref="member">x20</ref>);</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"></highlight></codeline>
+<codeline lineno="228"><highlight class="normal"></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;.global<sp/>_lncInt<sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="stringliteral">&quot;_lncInt<sp/><sp/><sp/>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pusha<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Save<sp/>all<sp/>registers<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushw<sp/>%ds<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>the<sp/>data<sp/>segment<sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushw<sp/>%es<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushw<sp/>%ss<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Note<sp/>that<sp/>ss<sp/>is<sp/>always<sp/>valid<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>pushw<sp/>%ss<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popw<sp/>%ds<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popw<sp/>%es<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>call<sp/>lncInt<sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popw<sp/>%es<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popw<sp/>%ds<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Restore<sp/>registers<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>popa<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/></highlight><highlight class="stringliteral">&quot;<sp/><sp/>iret<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\n&quot;</highlight><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/>Exit<sp/>interrupt<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/>);</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight></codeline>
+<codeline lineno="246" refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="lnc_8h_186e977fd8113976b87da564f2b53a2d7" kindref="member">lncAttach</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structlncInfo" kindref="compound">lncInfo</ref><sp/>*<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>unit)<sp/>{</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>lncMemSize<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"></highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/>lncMemSize<sp/>=<sp/>((<ref refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" kindref="member">NDESC</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" kindref="member">nrdre</ref>)<sp/>+<sp/><ref refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" kindref="member">NDESC</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" kindref="member">ntdre</ref>))<sp/>*<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structhostRingEntry" kindref="compound">hostRingEntry</ref>));</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"></highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" kindref="member">memMode</ref><sp/>!=<sp/><ref refid="lnc_8h_1ef3765fe92001684a71af27e0d738038" kindref="member">SHMEM</ref>)</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/><sp/><sp/>lncMemSize<sp/>+=<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structinitBlock" kindref="compound">initBlock</ref>)<sp/>+<sp/>(sizeof(struct<sp/>mds)<sp/>*<sp/>(<ref refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" kindref="member">NDESC</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" kindref="member">nrdre</ref>)<sp/>+<sp/><ref refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" kindref="member">NDESC</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" kindref="member">ntdre</ref>)))<sp/>+<sp/><ref refid="lnc_8h_1f52baa205a87ca363ed5b4121a5f80a9" kindref="member">MEM_SLEW</ref>;</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" kindref="member">memMode</ref><sp/>==<sp/><ref refid="lnc_8h_1c7329f246bfda2b0fc34bba5cae18380" kindref="member">DMA_FIXED</ref>)</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/>lncMemSize<sp/>+=<sp/>(<ref refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" kindref="member">NDESC</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" kindref="member">nrdre</ref>)<sp/>*<sp/><ref refid="lnc_8h_17f410619679156a88b8f9e878e5badcf" kindref="member">RECVBUFSIZE</ref>)<sp/>+<sp/>(<ref refid="lnc_8h_13924669c8950a7f0b9b30e2841c21986" kindref="member">NDESC</ref>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" kindref="member">ntdre</ref>)<sp/>*<sp/><ref refid="lnc_8h_10d38de8b1de05fb25c7899244cc7a7df" kindref="member">TRANSBUFSIZE</ref>);</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"></highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_11260a18062e5cb16aac9b3f2b253409c" kindref="member">memMode</ref><sp/>!=<sp/><ref refid="lnc_8h_1ef3765fe92001684a71af27e0d738038" kindref="member">SHMEM</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref><sp/>&lt;<sp/><ref refid="lnc_8h_1f1a6cf2caeea69b144932f488e69ef9a" kindref="member">PCnet_32</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>ISA<sp/>based<sp/>cards<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;ISA<sp/>Board\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sc-&gt;recv_ring<sp/>=<sp/>contigmalloc(lnc_mem_size,<sp/>M_DEVBUF,<sp/>M_NOWAIT,0ul,<sp/>0xfffffful,<sp/>4ul,<sp/>0x1000000);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="262"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="263"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="265"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>For<sp/>now<sp/>it<sp/>still<sp/>needs<sp/>to<sp/>be<sp/>below<sp/>16MB<sp/>because<sp/>the</highlight></codeline>
+<codeline lineno="266"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/>descriptor&apos;s<sp/>can<sp/>only<sp/>hold<sp/>16<sp/>bit<sp/>addresses.</highlight></codeline>
+<codeline lineno="267"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="268"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sc-&gt;recv_ring<sp/>=<sp/>contigmalloc(lnc_mem_size,<sp/>M_DEVBUF,<sp/>M_NOWAIT,0ul,<sp/>0xfffffful,<sp/>4ul,<sp/>0x1000000);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_149f921775c4d249ce90af5afed331bd9" kindref="member">recvRing</ref><sp/>=<sp/><ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(lncMemSize,-2);</highlight></codeline>
+<codeline lineno="270"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;PCI<sp/>Board\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="271"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="272"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="273"><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_149f921775c4d249ce90af5afed331bd9" kindref="member">recvRing</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="275"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;lnc%d:<sp/>Couldn&apos;t<sp/>allocate<sp/>memory<sp/>for<sp/>NIC\n&quot;</highlight><highlight class="normal">,<sp/>unit);</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>(0);</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"></highlight></codeline>
+<codeline lineno="279"><highlight class="normal"><sp/><sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_13dc304d78fecc9112cf979b7b1fc3525" kindref="member">mode</ref><sp/>=<sp/><ref refid="lnc_8h_11291f416b069313021b519eea62d5bf1" kindref="member">NORMAL</ref>;</highlight></codeline>
+<codeline lineno="280"><highlight class="normal"></highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Fill<sp/>in<sp/>arpcom<sp/>structure<sp/>entries<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="283"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_softc<sp/>=<sp/>sc;</highlight></codeline>
+<codeline lineno="284"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_name<sp/>=<sp/>lncdriver.name;</highlight></codeline>
+<codeline lineno="285"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_unit<sp/>=<sp/>unit;</highlight></codeline>
+<codeline lineno="286"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_mtu<sp/>=<sp/>ETHERMTU;</highlight></codeline>
+<codeline lineno="287"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_flags<sp/>=<sp/>IFF_BROADCAST<sp/>|<sp/>IFF_SIMPLEX<sp/>|<sp/>IFF_MULTICAST;</highlight></codeline>
+<codeline lineno="288"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_timer<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="289"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_output<sp/>=<sp/>ether_output;</highlight></codeline>
+<codeline lineno="290"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_start<sp/>=<sp/>lnc_start;</highlight></codeline>
+<codeline lineno="291"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_ioctl<sp/>=<sp/>lnc_ioctl;</highlight></codeline>
+<codeline lineno="292"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_watchdog<sp/>=<sp/>lnc_watchdog;</highlight></codeline>
+<codeline lineno="293"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_init<sp/>=<sp/>lnc_init;</highlight></codeline>
+<codeline lineno="294"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_type<sp/>=<sp/>IFT_ETHER;</highlight></codeline>
+<codeline lineno="295"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_addrlen<sp/>=<sp/>ETHER_ADDR_LEN;</highlight></codeline>
+<codeline lineno="296"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_hdrlen<sp/>=<sp/>ETHER_HDR_LEN;</highlight></codeline>
+<codeline lineno="297"><highlight class="comment"><sp/><sp/>lnc-&gt;arpcom.ac_if.if_snd.ifq_maxlen<sp/>=<sp/>IFQ_MAXLEN;</highlight></codeline>
+<codeline lineno="298"><highlight class="comment"><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>ether_ifattach(&amp;sc-&gt;arpcom.ac_if,<sp/>ETHER_BPF_SUPPORTED);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="300"><highlight class="normal"></highlight></codeline>
+<codeline lineno="301"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;lnc%d:<sp/>&quot;</highlight><highlight class="normal">,<sp/>unit);</highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref><sp/>==<sp/><ref refid="lnc_8h_167dedc055b2e31a97ac3561a4a16b9af" kindref="member">LANCE</ref><sp/>||<sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref><sp/>==<sp/><ref refid="lnc_8h_126eec45c0879e59438a7d2ca16fa8067" kindref="member">C_LANCE</ref>)</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;%s<sp/>(%s)&quot;</highlight><highlight class="normal">,<ref refid="lnc_8c_1efadd74e9a9786e9fb67f6d994da3366" kindref="member">nicIdent</ref>[<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1bc40ed67a91dece36218837e90a90218" kindref="member">ident</ref>],<sp/><ref refid="lnc_8c_1f979fe05542c79a6de2a45efeb75cb01" kindref="member">icIdent</ref>[<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref>]);</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="305"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;%s&quot;</highlight><highlight class="normal">,<sp/><ref refid="lnc_8c_1f979fe05542c79a6de2a45efeb75cb01" kindref="member">icIdent</ref>[<ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" kindref="member">nic</ref>.<ref refid="structnicInfo_1ce0bfd3296cc049fa333e59b1b272072" kindref="member">ic</ref>]);</highlight></codeline>
+<codeline lineno="306"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;<sp/>address<sp/>0x%X\n&quot;</highlight><highlight class="normal">,<sp/><ref refid="lnc_8h_1f5e66182cc3ee40ca7dab1a2449d002e" kindref="member">lnc</ref>-&gt;<ref refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" kindref="member">arpcom</ref>.<ref refid="structarpcom_18335c2422b63415a71353f12d70b1e05" kindref="member">ac_enaddr</ref>);<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="307"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(1);</highlight></codeline>
+<codeline lineno="308"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="309"><highlight class="normal"></highlight></codeline>
+<codeline lineno="310"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="311"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="312"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="313"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/pci/lnc.c"/>
+  </compounddef>
+</doxygen>

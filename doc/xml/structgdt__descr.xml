@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structgdt__descr" kind="struct" prot="public">
+    <compoundname>gdt_descr</compoundname>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structgdt__descr_19c540c5e1672426b7c6430e1b2f66fba" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> *base</type>
+        <definition>uInt32* base gdt_descr::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="66"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structgdt__descr_12c59f0ca24b900a4bfc00019185296b7" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 gdt_descr::limit</definition>
+        <argsstring></argsstring>
+        <name>limit</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="65" bodyend="-1"/>
+        <referencedby refid="smp_8c_1b9f1e8692e06eb164641f50aa4d7aed6" compoundref="smp_8c" startline="69" endline="94">GDT_fixer</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kernel/smp.c" bodystart="64" bodyend="67"/>
+    <listofallmembers>
+      <member refid="structgdt__descr_19c540c5e1672426b7c6430e1b2f66fba" prot="public" virt="non-virtual"><scope>gdt_descr</scope><name>__attribute__</name></member>
+      <member refid="structgdt__descr_12c59f0ca24b900a4bfc00019185296b7" prot="public" virt="non-virtual"><scope>gdt_descr</scope><name>limit</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

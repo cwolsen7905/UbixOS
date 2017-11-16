@@ -1,0 +1,1024 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="ethernetif_8c" kind="file">
+    <compoundname>ethernetif.c</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="device_8old_8h" local="no">sys/device.old.h</includes>
+    <includes refid="ne2k_8h" local="no">isa/ne2k.h</includes>
+    <includes refid="debug_8h" local="yes">net/debug.h</includes>
+    <includes refid="opt_8h" local="yes">net/opt.h</includes>
+    <includes refid="def_8h" local="yes">net/def.h</includes>
+    <includes refid="mem_8h" local="yes">net/mem.h</includes>
+    <includes refid="pbuf_8h" local="yes">net/pbuf.h</includes>
+    <includes refid="sys_8h" local="yes">net/sys.h</includes>
+    <includes refid="arp_8h" local="yes">netif/arp.h</includes>
+    <incdepgraph>
+      <node id="4151">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4161">
+        <label>arch/lib.h</label>
+        <link refid="lib_8h"/>
+      </node>
+      <node id="4142">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4143" relation="include">
+        </childnode>
+        <childnode refid="4144" relation="include">
+        </childnode>
+        <childnode refid="4145" relation="include">
+        </childnode>
+        <childnode refid="4152" relation="include">
+        </childnode>
+        <childnode refid="4151" relation="include">
+        </childnode>
+      </node>
+      <node id="4171">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="4158" relation="include">
+        </childnode>
+        <childnode refid="4172" relation="include">
+        </childnode>
+        <childnode refid="4170" relation="include">
+        </childnode>
+        <childnode refid="4173" relation="include">
+        </childnode>
+        <childnode refid="4166" relation="include">
+        </childnode>
+      </node>
+      <node id="4155">
+        <label>sys/device.old.h</label>
+        <link refid="device_8old_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4156">
+        <label>isa/ne2k.h</label>
+        <link refid="ne2k_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4155" relation="include">
+        </childnode>
+      </node>
+      <node id="4164">
+        <label>arch/cpu.h</label>
+        <link refid="cpu_8h"/>
+      </node>
+      <node id="4169">
+        <label>netif/arp.h</label>
+        <link refid="arp_8h"/>
+        <childnode refid="4166" relation="include">
+        </childnode>
+        <childnode refid="4170" relation="include">
+        </childnode>
+        <childnode refid="4171" relation="include">
+        </childnode>
+      </node>
+      <node id="4168">
+        <label>arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+      </node>
+      <node id="4140">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="4141" relation="include">
+        </childnode>
+      </node>
+      <node id="4141">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="4139">
+        <label>src/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif.c"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4142" relation="include">
+        </childnode>
+        <childnode refid="4153" relation="include">
+        </childnode>
+        <childnode refid="4154" relation="include">
+        </childnode>
+        <childnode refid="4155" relation="include">
+        </childnode>
+        <childnode refid="4156" relation="include">
+        </childnode>
+        <childnode refid="4157" relation="include">
+        </childnode>
+        <childnode refid="4158" relation="include">
+        </childnode>
+        <childnode refid="4160" relation="include">
+        </childnode>
+        <childnode refid="4162" relation="include">
+        </childnode>
+        <childnode refid="4166" relation="include">
+        </childnode>
+        <childnode refid="4167" relation="include">
+        </childnode>
+        <childnode refid="4169" relation="include">
+        </childnode>
+      </node>
+      <node id="4163">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="4164" relation="include">
+        </childnode>
+        <childnode refid="4165" relation="include">
+        </childnode>
+      </node>
+      <node id="4145">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4146" relation="include">
+        </childnode>
+        <childnode refid="4147" relation="include">
+        </childnode>
+      </node>
+      <node id="4152">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4153">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4159">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="4160">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="4161" relation="include">
+        </childnode>
+      </node>
+      <node id="4162">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4157" relation="include">
+        </childnode>
+        <childnode refid="4158" relation="include">
+        </childnode>
+        <childnode refid="4163" relation="include">
+        </childnode>
+      </node>
+      <node id="4148">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4145" relation="include">
+        </childnode>
+        <childnode refid="4147" relation="include">
+        </childnode>
+        <childnode refid="4149" relation="include">
+        </childnode>
+        <childnode refid="4151" relation="include">
+        </childnode>
+      </node>
+      <node id="4147">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4148" relation="include">
+        </childnode>
+      </node>
+      <node id="4154">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4170">
+        <label>net/ipv4/ip_addr.h</label>
+        <link refid="ipv4_2ip__addr_8h"/>
+        <childnode refid="4163" relation="include">
+        </childnode>
+      </node>
+      <node id="4172">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+        <childnode refid="4157" relation="include">
+        </childnode>
+        <childnode refid="4165" relation="include">
+        </childnode>
+      </node>
+      <node id="4146">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4158">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="4159" relation="include">
+        </childnode>
+      </node>
+      <node id="4149">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="4150" relation="include">
+        </childnode>
+        <childnode refid="4151" relation="include">
+        </childnode>
+      </node>
+      <node id="4143">
+        <label>ubixos/elf.h</label>
+        <link refid="elf_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4150">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4167">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="4165" relation="include">
+        </childnode>
+        <childnode refid="4168" relation="include">
+        </childnode>
+      </node>
+      <node id="4144">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="4140" relation="include">
+        </childnode>
+      </node>
+      <node id="4166">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="4157" relation="include">
+        </childnode>
+        <childnode refid="4163" relation="include">
+        </childnode>
+      </node>
+      <node id="4157">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="4173">
+        <label>net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="4163" relation="include">
+        </childnode>
+        <childnode refid="4158" relation="include">
+        </childnode>
+        <childnode refid="4166" relation="include">
+        </childnode>
+        <childnode refid="4170" relation="include">
+        </childnode>
+      </node>
+      <node id="4165">
+        <label>arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structethernetif" prot="public">ethernetif</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ethernetif_8c_1cd9e3df20507d5f895e80477aef74555" prot="public" static="no">
+        <name>IFNAME0</name>
+        <initializer>&apos;e&apos;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="62" bodyend="-1"/>
+        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ethernetif_8c_143b130296861cb255f1ad5b8c3787fd1" prot="public" static="no">
+        <name>IFNAME1</name>
+        <initializer>&apos;d&apos;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="63" bodyend="-1"/>
+        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="ethernetif_8c_1c94d6bae5aaeab8f812a6809ba4a6367" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void arp_timer</definition>
+        <argsstring>(void *arg)</argsstring>
+        <name>arp_timer</name>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="310" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="309" bodyend="313"/>
+        <references refid="arp_8h_12cc298ed4c68289160da1376faf20938" compoundref="arp_8c" startline="104" endline="117">arp_tmr</references>
+        <references refid="arp_8h_1aa3d8ed1eb1129f518345e37b38cfc37" compoundref="arp_8h" startline="58">ARP_TMR_INTERVAL</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="sys_8h_1eb917c25d96a51e1998478b9e6e78a44">sys_timeout</references>
+        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_164753cb7324510825069062660f10926" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ethernetif_init</definition>
+        <argsstring>(struct netif *netif)</argsstring>
+        <name>ethernetif_init</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="325" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="325" bodyend="341"/>
+        <references refid="arp_8h_1c8ad5a32790d172fcec2eac97a87ee9f" compoundref="arp_8c" startline="93" endline="101">arp_init</references>
+        <references refid="ethernetif_8c_1c94d6bae5aaeab8f812a6809ba4a6367" compoundref="ethernetif_8c" startline="309" endline="313">arp_timer</references>
+        <references refid="arp_8h_1aa3d8ed1eb1129f518345e37b38cfc37" compoundref="arp_8h" startline="58">ARP_TMR_INTERVAL</references>
+        <references refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</references>
+        <references refid="structnetif_118e73df74457dd1cb02d61d24e3ba924" compoundref="netif_8h" startline="54">netif::hwaddr</references>
+        <references refid="ethernetif_8c_1cd9e3df20507d5f895e80477aef74555" compoundref="ethernetif_8c" startline="62">IFNAME0</references>
+        <references refid="ethernetif_8c_143b130296861cb255f1ad5b8c3787fd1" compoundref="ethernetif_8c" startline="63">IFNAME1</references>
+        <references refid="structnetif_1bf9e416b29a3de59c78b141b8eed37cc">netif::linkoutput</references>
+        <references refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" compoundref="ethernetif_8c" startline="81" endline="101">low_level_init</references>
+        <references refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" compoundref="ethernetif_8c" startline="113" endline="130">low_level_output</references>
+        <references refid="mem_8h_1932aa40d85b14cb7331625e012d12335">mem_malloc</references>
+        <references refid="structnetif_132fca6ffd28bb9af3f891a378827a67e" compoundref="netif_8h" startline="63">netif::name</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="structnetif_1b180ab98b90830ed15503822405e5a23">netif::output</references>
+        <references refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" compoundref="netif_8h" startline="71">netif::state</references>
+        <references refid="sys_8h_1eb917c25d96a51e1998478b9e6e78a44">sys_timeout</references>
+        <referencedby refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void ethernetif_input</definition>
+        <argsstring>(struct netif *netif)</argsstring>
+        <name>ethernetif_input</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="275" bodyend="306"/>
+        <references refid="arp_8h_157a25dd51cf73f048ad5364ecc2f040b" compoundref="arp_8c" startline="197" endline="250">arp_arp_input</references>
+        <references refid="arp_8h_1916d08dbb8f4a38e1e904a8a018b000c" compoundref="arp_8c" startline="181" endline="194">arp_ip_input</references>
+        <references refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" compoundref="ethernetif_8c" startline="68">ethernetif::ethaddr</references>
+        <references refid="arp_8h_1dbc208bed02b2900ca2639a25d3f6198" compoundref="arp_8h" startline="60">ETHTYPE_ARP</references>
+        <references refid="arp_8h_1392234c1299a5f5c264e511d88a66e56" compoundref="arp_8h" startline="61">ETHTYPE_IP</references>
+        <references refid="ipv4_2inet_8h_1b7fffd06ef1d1a7d34f99eedbb9f44dd" compoundref="ipv4_2inet_8h" startline="66">htons</references>
+        <references refid="structnetif_16a3101eb624d17937618618a57e2e570">netif::input</references>
+        <references refid="ethernetif_8c_170bd3f580cdc400e75161e9751944836" compoundref="ethernetif_8c" startline="142" endline="173">low_level_input</references>
+        <references refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" compoundref="ethernetif_8c" startline="113" endline="130">low_level_output</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="71">pbuf::payload</references>
+        <references refid="pbuf_8h_1334112aa2ac402c254d604c0dbbbb746">pbuf_free</references>
+        <references refid="pbuf_8h_1c83243784ae907d307b4ac444282ccc5">pbuf_header</references>
+        <references refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" compoundref="netif_8h" startline="71">netif::state</references>
+        <referencedby refid="ethernetif_8c_1877b1f0a593d5d3c6e1d10624ee7a0fb" compoundref="ethernetif_8c" startline="345" endline="357">ethernetif_thread</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref></type>
+        <definition>static err_t ethernetif_output</definition>
+        <argsstring>(struct netif *netif, struct pbuf *p, struct ip_addr *ipaddr)</argsstring>
+        <name>ethernetif_output</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structip__addr" kindref="compound">ip_addr</ref> *</type>
+          <declname>ipaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="186" bodyend="263"/>
+        <references refid="arp_8h_1eec8fff4f036cca2ac1b5635fa46d21b" compoundref="arp_8c" startline="253" endline="263">arp_lookup</references>
+        <references refid="arp_8h_19d1287b9a80c370797b2ac5c63f70e2e" compoundref="arp_8c" startline="266" endline="302">arp_query</references>
+        <references refid="err_8h_16ab63185cc5dff3c50c61d99bdf98369" compoundref="err_8h" startline="49">ERR_MEM</references>
+        <references refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" compoundref="ethernetif_8c" startline="68">ethernetif::ethaddr</references>
+        <references refid="ethernetif_8c_16aac26114a085a1a287b32941ecd009e" compoundref="ethernetif_8c" startline="72">ethbroadcast</references>
+        <references refid="arp_8h_1392234c1299a5f5c264e511d88a66e56" compoundref="arp_8h" startline="61">ETHTYPE_IP</references>
+        <references refid="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" compoundref="netif_8h" startline="53">netif::gw</references>
+        <references refid="ipv4_2inet_8h_1b7fffd06ef1d1a7d34f99eedbb9f44dd" compoundref="ipv4_2inet_8h" startline="66">htons</references>
+        <references refid="ipv4_2ip__addr_8h_1ee091caef24dd1705876bb8dbe28035c" compoundref="ipv4_2ip__addr_8h" startline="83">ip4_addr2</references>
+        <references refid="ipv4_2ip__addr_8h_1ead691bee580ea8111b70e67cf971c40" compoundref="ipv4_2ip__addr_8h" startline="84">ip4_addr3</references>
+        <references refid="ipv4_2ip__addr_8h_178cbf5c1fd832f909f755c4cc9036f02" compoundref="ipv4_2ip__addr_8h" startline="85">ip4_addr4</references>
+        <references refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" compoundref="netif_8h" startline="51">netif::ip_addr</references>
+        <references refid="ipv4_2ip__addr_8h_10d51c2bb5f2af51392540af1c5df511a" compoundref="ipv4_2ip__addr_8h" startline="64">ip_addr_isany</references>
+        <references refid="ipv4_2ip__addr_8h_1ae42518ced1dbfbc55034642012055e9" compoundref="ipv4_2ip__addr_8h" startline="66">ip_addr_isbroadcast</references>
+        <references refid="ipv4_2ip__addr_8h_1312e629c950c8e0add5b5e5897334beb" compoundref="ipv4_2ip__addr_8h" startline="72">ip_addr_ismulticast</references>
+        <references refid="ipv4_2ip__addr_8h_1f656f30425e386d96d0e1a1b2dcb3952" compoundref="ipv4_2ip__addr_8h" startline="58">ip_addr_maskcmp</references>
+        <references refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" compoundref="ethernetif_8c" startline="113" endline="130">low_level_output</references>
+        <references refid="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" compoundref="netif_8h" startline="52">netif::netmask</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="71">pbuf::payload</references>
+        <references refid="pbuf_8h_1bb6c8efa7f7739e71cb286c6dd4a47ef">pbuf_alloc</references>
+        <references refid="pbuf_8h_1831c9a72bda1d3bd4c7b96f5a0e3b891">pbuf_chain</references>
+        <references refid="pbuf_8h_1334112aa2ac402c254d604c0dbbbb746">pbuf_free</references>
+        <references refid="pbuf_8h_1c83243784ae907d307b4ac444282ccc5">pbuf_header</references>
+        <references refid="pbuf_8h_1ee1baa59bb2f85ba575b5a8619ac1ebfb4de441e737330558b609a990cd17346">PBUF_LINK</references>
+        <references refid="pbuf_8h_1b3c589840cc5a202e7278f41463f97e7c5e9f28455bca98944a030d4b84ecfab">PBUF_RAM</references>
+        <references refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" compoundref="netif_8h" startline="71">netif::state</references>
+        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_1877b1f0a593d5d3c6e1d10624ee7a0fb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ethernetif_thread</definition>
+        <argsstring>(void *arg)</argsstring>
+        <name>ethernetif_thread</name>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="345" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="345" bodyend="357"/>
+        <references refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" compoundref="ethernetif_8c" startline="275" endline="306">ethernetif_input</references>
+        <references refid="structnicBuffer_1959ee09a7a6fc875f3d5d651576f37c4" compoundref="ne2k_8h" startline="53">nicBuffer::length</references>
+        <references refid="ne2k_8h_164fadb818ec0d7f27ef04cbceac2a828" compoundref="ne2k_8c" startline="353" endline="357">ne2kFreeBuffer</references>
+        <references refid="ne2k_8h_1954f14d0270247855900254097728c57" compoundref="ne2k_8c" startline="341" endline="351">ne2kGetBuffer</references>
+        <references refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" compoundref="ethernetif_8c" startline="65">tmpBuf</references>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_1e1cb890e22f516c0106d5c6c8e07ab74" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void ethernetif_thread</definition>
+        <argsstring>()</argsstring>
+        <name>ethernetif_thread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="77"/>
+        <referencedby refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" compoundref="ethernetif_8c" startline="81" endline="101">low_level_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void low_level_init</definition>
+        <argsstring>(struct netif *netif)</argsstring>
+        <name>low_level_init</name>
+        <param>
+          <type>struct <ref refid="structnetif" kindref="compound">netif</ref> *</type>
+          <declname>netif</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="81" bodyend="101"/>
+        <references refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" compoundref="ethernetif_8c" startline="78">dev</references>
+        <references refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" compoundref="ethernetif_8c" startline="68">ethernetif::ethaddr</references>
+        <references refid="ethernetif_8c_1e1cb890e22f516c0106d5c6c8e07ab74">ethernetif_thread</references>
+        <references refid="structdevice_19467302b748ed3627bae8e3ecee7af87" compoundref="device_8old_8h" startline="31">device::ioAddr</references>
+        <references refid="structdevice_1893bc785f272d1fedb2b4c14e31a7f35" compoundref="device_8old_8h" startline="32">device::irq</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" compoundref="netif_8h" startline="71">netif::state</references>
+        <references refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</references>
+        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_170bd3f580cdc400e75161e9751944836" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+        <definition>static struct pbuf* low_level_input</definition>
+        <argsstring>(struct ethernetif *ethernetif)</argsstring>
+        <name>low_level_input</name>
+        <param>
+          <type>struct <ref refid="structethernetif" kindref="compound">ethernetif</ref> *</type>
+          <declname>ethernetif</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="142" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="142" bodyend="173"/>
+        <references refid="lib_8h_104bffce8d62dbb1e8e4e80a5fcdfed9a" compoundref="bcopy_8c" startline="70" endline="138">bcopy</references>
+        <references refid="structnicBuffer_19679b6c2e76a7617884e422c11aa3eac" compoundref="ne2k_8h" startline="54">nicBuffer::buffer</references>
+        <references refid="structpbuf_1238f00a0024a32992599c9d1abf9bb44" compoundref="pbuf_8h" startline="76">pbuf::len</references>
+        <references refid="structnicBuffer_1959ee09a7a6fc875f3d5d651576f37c4" compoundref="ne2k_8h" startline="53">nicBuffer::length</references>
+        <references refid="structpbuf_15e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="67">pbuf::next</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="71">pbuf::payload</references>
+        <references refid="pbuf_8h_1bb6c8efa7f7739e71cb286c6dd4a47ef">pbuf_alloc</references>
+        <references refid="pbuf_8h_1ee1baa59bb2f85ba575b5a8619ac1ebfb4de441e737330558b609a990cd17346">PBUF_LINK</references>
+        <references refid="pbuf_8h_1b3c589840cc5a202e7278f41463f97e7e969347127387b9b59a23ccd24b76d21">PBUF_POOL</references>
+        <references refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" compoundref="ethernetif_8c" startline="65">tmpBuf</references>
+        <referencedby refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" compoundref="ethernetif_8c" startline="275" endline="306">ethernetif_input</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref></type>
+        <definition>static err_t low_level_output</definition>
+        <argsstring>(struct ethernetif *ethernetif, struct pbuf *p)</argsstring>
+        <name>low_level_output</name>
+        <param>
+          <type>struct <ref refid="structethernetif" kindref="compound">ethernetif</ref> *</type>
+          <declname>ethernetif</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+          <declname>p</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="113" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="113" bodyend="130"/>
+        <references refid="lib_8h_104bffce8d62dbb1e8e4e80a5fcdfed9a" compoundref="bcopy_8c" startline="70" endline="138">bcopy</references>
+        <references refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" compoundref="ethernetif_8c" startline="78">dev</references>
+        <references refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" compoundref="err_8h" startline="48">ERR_OK</references>
+        <references refid="structdevice_19467302b748ed3627bae8e3ecee7af87" compoundref="device_8old_8h" startline="31">device::ioAddr</references>
+        <references refid="structdevice_1893bc785f272d1fedb2b4c14e31a7f35" compoundref="device_8old_8h" startline="32">device::irq</references>
+        <references refid="structpbuf_1238f00a0024a32992599c9d1abf9bb44" compoundref="pbuf_8h" startline="76">pbuf::len</references>
+        <references refid="structpbuf_15e5763c94fd18d78937b0b58ce7df341" compoundref="pbuf_8h" startline="67">pbuf::next</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" compoundref="pbuf_8h" startline="71">pbuf::payload</references>
+        <references refid="ne2k_8h_1f6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="115" endline="162">PCtoNIC</references>
+        <references refid="structpbuf_13b42932c0b26c9ff2b8fe88bd25fb127" compoundref="pbuf_8h" startline="74">pbuf::tot_len</references>
+        <referencedby refid="ethernetif_8c_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</referencedby>
+        <referencedby refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" compoundref="ethernetif_8c" startline="275" endline="306">ethernetif_input</referencedby>
+        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" prot="public" static="no" mutable="no">
+        <type><ref refid="structdevice" kindref="compound">device</ref> *</type>
+        <definition>struct device* dev</definition>
+        <argsstring></argsstring>
+        <name>dev</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="78" bodyend="-1"/>
+        <referencedby refid="ne2k_8c_120e9fce07d30c847b2f794191f55e5ea" compoundref="ne2k_8c" startline="297" endline="311">dp_pkt2user</referencedby>
+        <referencedby refid="ne2k_8c_193484a1eaa8e1b265202c6cccfed65f3" compoundref="ne2k_8c" startline="223" endline="277">dp_recv</referencedby>
+        <referencedby refid="fdc_8c_162847307f237f6b4240d1eb4718b13e7" compoundref="fdc_8c" startline="58" endline="61">fdcInit2</referencedby>
+        <referencedby refid="ne2k_8c_182ba0a2f0d1c6dc1381e5c15118bb5ef" compoundref="ne2k_8c" startline="279" endline="295">getblock</referencedby>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" compoundref="ethernetif_8c" startline="81" endline="101">low_level_init</referencedby>
+        <referencedby refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" compoundref="ethernetif_8c" startline="113" endline="130">low_level_output</referencedby>
+        <referencedby refid="ne2k_8c_145a65b2b7a15b7e7c46fd8831528c8d0" compoundref="ne2k_8c" startline="164" endline="189">NICtoPC</referencedby>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <referencedby refid="ne2k_8c_1f6446fd497eb16b637ebed77c7a0aeaf" compoundref="ne2k_8c" startline="115" endline="162">PCtoNIC</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="ethernetif_8c_16aac26114a085a1a287b32941ecd009e" prot="public" static="yes" mutable="no">
+        <type>struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+        <definition>struct eth_addr ethbroadcast</definition>
+        <argsstring></argsstring>
+        <name>ethbroadcast</name>
+        <initializer> {{0xff,0xff,0xff,0xff,0xff,0xff}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="72" bodyend="-1"/>
+        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" prot="public" static="no" mutable="no">
+        <type><ref refid="structnicBuffer" kindref="compound">nicBuffer</ref> *</type>
+        <definition>struct nicBuffer* tmpBuf</definition>
+        <argsstring></argsstring>
+        <name>tmpBuf</name>
+        <initializer> 0x0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="65" bodyend="-1"/>
+        <referencedby refid="ne2k_8c_120e9fce07d30c847b2f794191f55e5ea" compoundref="ne2k_8c" startline="297" endline="311">dp_pkt2user</referencedby>
+        <referencedby refid="ethernetif_8c_1877b1f0a593d5d3c6e1d10624ee7a0fb" compoundref="ethernetif_8c" startline="345" endline="357">ethernetif_thread</referencedby>
+        <referencedby refid="ethernetif_8c_170bd3f580cdc400e75161e9751944836" compoundref="ethernetif_8c" startline="142" endline="173">low_level_input</referencedby>
+        <referencedby refid="ne2k_8c_1dae239918a8091c31abf996cee262c92" compoundref="ne2k_8c" startline="313" endline="339">ne2kAllocBuffer</referencedby>
+        <referencedby refid="ne2k_8c_1954f14d0270247855900254097728c57" compoundref="ne2k_8c" startline="341" endline="351">ne2kGetBuffer</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: ethernetif_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>a<sp/>skeleton<sp/>for<sp/>developing<sp/>Ethernet<sp/>network<sp/>interface</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*<sp/>drivers<sp/>for<sp/>lwIP.<sp/>Add<sp/>code<sp/>to<sp/>the<sp/>low_level<sp/>functions<sp/>and<sp/>do<sp/>a</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*<sp/>search-and-replace<sp/>for<sp/>the<sp/>word<sp/>&quot;ethernetif&quot;<sp/>to<sp/>replace<sp/>it<sp/>with</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/>*<sp/>something<sp/>that<sp/>better<sp/>describes<sp/>your<sp/>network<sp/>interface.</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="device_8old_8h" kindref="compound">sys/device.old.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ne2k_8h" kindref="compound">isa/ne2k.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="debug_8h" kindref="compound">net/debug.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="opt_8h" kindref="compound">net/opt.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="def_8h" kindref="compound">net/def.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="mem_8h" kindref="compound">net/mem.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="pbuf_8h" kindref="compound">net/pbuf.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="sys_8h" kindref="compound">net/sys.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="arp_8h" kindref="compound">netif/arp.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Define<sp/>those<sp/>to<sp/>better<sp/>describe<sp/>your<sp/>network<sp/>interface.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="ethernetif_8c_1cd9e3df20507d5f895e80477aef74555" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IFNAME0<sp/>&apos;e&apos;</highlight></codeline>
+<codeline lineno="63" refid="ethernetif_8c_143b130296861cb255f1ad5b8c3787fd1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IFNAME1<sp/>&apos;d&apos;</highlight></codeline>
+<codeline lineno="64"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnicBuffer" kindref="compound">nicBuffer</ref><sp/>*<ref refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" kindref="member">tmpBuf</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="structethernetif" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>{</highlight></codeline>
+<codeline lineno="68" refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>*<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Add<sp/>whatever<sp/>per-interface<sp/>state<sp/>that<sp/>is<sp/>needed<sp/>here.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="ethernetif_8c_16aac26114a085a1a287b32941ecd009e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/><ref refid="ethernetif_8c_16aac26114a085a1a287b32941ecd009e" kindref="member">ethbroadcast</ref><sp/>=<sp/>{{0xff,0xff,0xff,0xff,0xff,0xff}};</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Forward<sp/>declarations.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><ref refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" kindref="member">ethernetif_input</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/><ref refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" kindref="member">ethernetif_output</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*ipaddr);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ethernetif_8c_1e1cb890e22f516c0106d5c6c8e07ab74" kindref="member">ethernetif_thread</ref>();</highlight></codeline>
+<codeline lineno="78" refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice" kindref="compound">device</ref><sp/>*<ref refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" kindref="member">dev</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"></highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81" refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" kindref="member">low_level_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>*<ref refid="structethernetif" kindref="compound">ethernetif</ref>;</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/>ethernetif<sp/>=<sp/>netif-&gt;<ref refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" kindref="member">state</ref>;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" kindref="member">dev</ref><sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdevice" kindref="compound">device</ref><sp/>*)<ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdevice" kindref="compound">device</ref>));</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" kindref="member">dev</ref>-&gt;<ref refid="structdevice_19467302b748ed3627bae8e3ecee7af87" kindref="member">ioAddr</ref><sp/>=<sp/>0x280;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><ref refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" kindref="member">dev</ref>-&gt;<ref refid="structdevice_1893bc785f272d1fedb2b4c14e31a7f35" kindref="member">irq</ref><sp/><sp/><sp/><sp/>=<sp/>0x10;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Obtain<sp/>MAC<sp/>address<sp/>from<sp/>network<sp/>interface.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>-&gt;addr[0]<sp/>=<sp/>0x00;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>-&gt;addr[1]<sp/>=<sp/>0x00;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>-&gt;addr[2]<sp/>=<sp/>0xC0;</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>-&gt;addr[3]<sp/>=<sp/>0x97;</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>-&gt;addr[4]<sp/>=<sp/>0xC6;</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>-&gt;addr[5]<sp/>=<sp/>0x93;</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Do<sp/>whatever<sp/>else<sp/>is<sp/>needed<sp/>to<sp/>initialize<sp/>interface.<sp/>*/</highlight><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;NETIF:<sp/>[0x%X:0x%X]\n&quot;</highlight><highlight class="normal">,netif,<ref refid="ethernetif_8c_1e1cb890e22f516c0106d5c6c8e07ab74" kindref="member">ethernetif_thread</ref>);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" kindref="member">sys_thread_new</ref>(<ref refid="ethernetif_8c_1e1cb890e22f516c0106d5c6c8e07ab74" kindref="member">ethernetif_thread</ref>,<sp/>netif);</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"><sp/>*<sp/>low_level_output():</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/>*<sp/>Should<sp/>do<sp/>the<sp/>actual<sp/>transmission<sp/>of<sp/>the<sp/>packet.<sp/>The<sp/>packet<sp/>is</highlight></codeline>
+<codeline lineno="107"><highlight class="comment"><sp/>*<sp/>contained<sp/>in<sp/>the<sp/>pbuf<sp/>that<sp/>is<sp/>passed<sp/>to<sp/>the<sp/>function.<sp/>This<sp/>pbuf</highlight></codeline>
+<codeline lineno="108"><highlight class="comment"><sp/>*<sp/>might<sp/>be<sp/>chained.</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="110"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112"><highlight class="normal"></highlight></codeline>
+<codeline lineno="113" refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/><ref refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" kindref="member">low_level_output</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>*<ref refid="structethernetif" kindref="compound">ethernetif</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p)<sp/>{</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*q;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><ref refid="structbuf" kindref="compound">buf</ref>[1500];</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*bufptr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><ref refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" kindref="member">dev</ref>-&gt;<ref refid="structdevice_19467302b748ed3627bae8e3ecee7af87" kindref="member">ioAddr</ref><sp/>=<sp/>0x280;</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><ref refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" kindref="member">dev</ref>-&gt;<ref refid="structdevice_1893bc785f272d1fedb2b4c14e31a7f35" kindref="member">irq</ref><sp/><sp/><sp/><sp/>=<sp/>10;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/>bufptr<sp/>=<sp/>&amp;buf[0];</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(q<sp/>=<sp/>p;<sp/>q<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;<sp/>q<sp/>=<sp/>q-&gt;<ref refid="structpbuf_15e5763c94fd18d78937b0b58ce7df341" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="lib_8h_104bffce8d62dbb1e8e4e80a5fcdfed9a" kindref="member">bcopy</ref>(q-&gt;<ref refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>,<sp/>bufptr,<sp/>q-&gt;<ref refid="structpbuf_1238f00a0024a32992599c9d1abf9bb44" kindref="member">len</ref>);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/>bufptr<sp/>+=<sp/>q-&gt;<ref refid="structpbuf_1238f00a0024a32992599c9d1abf9bb44" kindref="member">len</ref>;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><ref refid="ne2k_8h_1f6446fd497eb16b637ebed77c7a0aeaf" kindref="member">PCtoNIC</ref>(<ref refid="ethernetif_8c_1cf6a82c73e7a9d99293d9ce0b8837faf" kindref="member">dev</ref>,buf,p-&gt;<ref refid="structpbuf_13b42932c0b26c9ff2b8fe88bd25fb127" kindref="member">tot_len</ref>);</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//kprintf(&quot;Sending<sp/>Data[%i]\n&quot;,p-&gt;tot_len);<sp/></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="err_8h_198c763adfeea8e9831c46ec269e47ae9" kindref="member">ERR_OK</ref>;</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="135"><highlight class="comment"><sp/>*<sp/>low_level_input():</highlight></codeline>
+<codeline lineno="136"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="137"><highlight class="comment"><sp/>*<sp/>Should<sp/>allocate<sp/>a<sp/>pbuf<sp/>and<sp/>transfer<sp/>the<sp/>bytes<sp/>of<sp/>the<sp/>incoming</highlight></codeline>
+<codeline lineno="138"><highlight class="comment"><sp/>*<sp/>packet<sp/>from<sp/>the<sp/>interface<sp/>into<sp/>the<sp/>pbuf.</highlight></codeline>
+<codeline lineno="139"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="140"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142" refid="ethernetif_8c_170bd3f580cdc400e75161e9751944836" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*<ref refid="ethernetif_8c_170bd3f580cdc400e75161e9751944836" kindref="member">low_level_input</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>*<ref refid="structethernetif" kindref="compound">ethernetif</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/>*q;</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><ref refid="structpbuf_1238f00a0024a32992599c9d1abf9bb44" kindref="member">len</ref>;</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*bufptr;</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structbuf" kindref="compound">buf</ref>;</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/>len<sp/>=<sp/><ref refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" kindref="member">tmpBuf</ref>-&gt;<ref refid="structnicBuffer_1959ee09a7a6fc875f3d5d651576f37c4" kindref="member">length</ref>;</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/>bufptr<sp/>=<sp/><ref refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" kindref="member">tmpBuf</ref>-&gt;<ref refid="structnicBuffer_19679b6c2e76a7617884e422c11aa3eac" kindref="member">buffer</ref>;</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>We<sp/>allocate<sp/>a<sp/>pbuf<sp/>chain<sp/>of<sp/>pbufs<sp/>from<sp/>the<sp/>pool.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/>p<sp/>=<sp/><ref refid="pbuf_8h_1bb6c8efa7f7739e71cb286c6dd4a47ef" kindref="member">pbuf_alloc</ref>(<ref refid="pbuf_8h_1ee1baa59bb2f85ba575b5a8619ac1ebfb4de441e737330558b609a990cd17346" kindref="member">PBUF_LINK</ref>,<sp/>len,<sp/><ref refid="pbuf_8h_1b3c589840cc5a202e7278f41463f97e7e969347127387b9b59a23ccd24b76d21" kindref="member">PBUF_POOL</ref>);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(p<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>We<sp/>iterate<sp/>over<sp/>the<sp/>pbuf<sp/>chain<sp/>until<sp/>we<sp/>have<sp/>read<sp/>the<sp/>entire</highlight></codeline>
+<codeline lineno="157"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>packet<sp/>into<sp/>the<sp/>pbuf.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//bufptr<sp/>=<sp/>&amp;buf[0];</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(q<sp/>=<sp/>p;<sp/>q<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;<sp/>q<sp/>=<sp/>q-&gt;<ref refid="structpbuf_15e5763c94fd18d78937b0b58ce7df341" kindref="member">next</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="160"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Read<sp/>enough<sp/>bytes<sp/>to<sp/>fill<sp/>this<sp/>pbuf<sp/>in<sp/>the<sp/>chain.<sp/>The</highlight></codeline>
+<codeline lineno="161"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>avaliable<sp/>data<sp/>in<sp/>the<sp/>pbuf<sp/>is<sp/>given<sp/>by<sp/>the<sp/>q-&gt;len</highlight></codeline>
+<codeline lineno="162"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>variable.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>read<sp/>data<sp/>into(q-&gt;payload,<sp/>q-&gt;len);<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="lib_8h_104bffce8d62dbb1e8e4e80a5fcdfed9a" kindref="member">bcopy</ref>(bufptr,<sp/>q-&gt;<ref refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>,<sp/>q-&gt;<ref refid="structpbuf_1238f00a0024a32992599c9d1abf9bb44" kindref="member">len</ref>);</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>buf<sp/>=<sp/>q-&gt;<ref refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>;</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bufptr<sp/>+=<sp/>q-&gt;<ref refid="structpbuf_1238f00a0024a32992599c9d1abf9bb44" kindref="member">len</ref>;</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>acknowledge<sp/>that<sp/>packet<sp/>has<sp/>been<sp/>read();<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>drop<sp/>packet();<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>p;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="176"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="178"><highlight class="comment"><sp/>*<sp/>ethernetif_output():</highlight></codeline>
+<codeline lineno="179"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="180"><highlight class="comment"><sp/>*<sp/>This<sp/>function<sp/>is<sp/>called<sp/>by<sp/>the<sp/>TCP/IP<sp/>stack<sp/>when<sp/>an<sp/>IP<sp/>packet</highlight></codeline>
+<codeline lineno="181"><highlight class="comment"><sp/>*<sp/>should<sp/>be<sp/>sent.<sp/>It<sp/>calls<sp/>the<sp/>function<sp/>called<sp/>low_level_output()<sp/>to</highlight></codeline>
+<codeline lineno="182"><highlight class="comment"><sp/>*<sp/>do<sp/>the<sp/>actuall<sp/>transmission<sp/>of<sp/>the<sp/>packet.</highlight></codeline>
+<codeline lineno="183"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="184"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186" refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/><ref refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" kindref="member">ethernetif_output</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*ipaddr)<sp/>{</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>*<ref refid="structethernetif" kindref="compound">ethernetif</ref>;</highlight></codeline>
+<codeline lineno="188"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*q;</highlight></codeline>
+<codeline lineno="189"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__hdr" kindref="compound">eth_hdr</ref><sp/>*ethhdr;</highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>*dest,<sp/>mcastaddr;</highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>*queryaddr;</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"><sp/><sp/><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref><sp/>err;</highlight></codeline>
+<codeline lineno="193"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>i;</highlight></codeline>
+<codeline lineno="194"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="195"><highlight class="normal"><sp/><sp/>ethernetif<sp/>=<sp/>netif-&gt;<ref refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" kindref="member">state</ref>;</highlight></codeline>
+<codeline lineno="196"><highlight class="normal"></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"></highlight></codeline>
+<codeline lineno="198"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Make<sp/>room<sp/>for<sp/>Ethernet<sp/>header.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<ref refid="pbuf_8h_1c83243784ae907d307b4ac444282ccc5" kindref="member">pbuf_header</ref>(p,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structeth__hdr" kindref="compound">eth_hdr</ref>))<sp/>!=<sp/>0)<sp/>{</highlight></codeline>
+<codeline lineno="200"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>The<sp/>pbuf_header()<sp/>call<sp/>shouldn&apos;t<sp/>fail,<sp/>but<sp/>we<sp/>allocate<sp/>an<sp/>extra</highlight></codeline>
+<codeline lineno="201"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pbuf<sp/>just<sp/>in<sp/>case.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/>q<sp/>=<sp/><ref refid="pbuf_8h_1bb6c8efa7f7739e71cb286c6dd4a47ef" kindref="member">pbuf_alloc</ref>(<ref refid="pbuf_8h_1ee1baa59bb2f85ba575b5a8619ac1ebfb4de441e737330558b609a990cd17346" kindref="member">PBUF_LINK</ref>,<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>eth_hdr),<sp/><ref refid="pbuf_8h_1b3c589840cc5a202e7278f41463f97e7c5e9f28455bca98944a030d4b84ecfab" kindref="member">PBUF_RAM</ref>);</highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(q<sp/>==<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="err_8h_16ab63185cc5dff3c50c61d99bdf98369" kindref="member">ERR_MEM</ref>;</highlight></codeline>
+<codeline lineno="205"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="206"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="pbuf_8h_1831c9a72bda1d3bd4c7b96f5a0e3b891" kindref="member">pbuf_chain</ref>(q,<sp/>p);</highlight></codeline>
+<codeline lineno="207"><highlight class="normal"><sp/><sp/><sp/><sp/>p<sp/>=<sp/>q;</highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Construct<sp/>Ethernet<sp/>header.<sp/>Start<sp/>with<sp/>looking<sp/>up<sp/>deciding<sp/>which</highlight></codeline>
+<codeline lineno="211"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>MAC<sp/>address<sp/>to<sp/>use<sp/>as<sp/>a<sp/>destination<sp/>address.<sp/>Broadcasts<sp/>and</highlight></codeline>
+<codeline lineno="212"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>multicasts<sp/>are<sp/>special,<sp/>all<sp/>other<sp/>addresses<sp/>are<sp/>looked<sp/>up<sp/>in<sp/>the</highlight></codeline>
+<codeline lineno="213"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>ARP<sp/>table.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"><sp/><sp/>queryaddr<sp/>=<sp/>ipaddr;</highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<ref refid="ipv4_2ip__addr_8h_10d51c2bb5f2af51392540af1c5df511a" kindref="member">ip_addr_isany</ref>(ipaddr)<sp/>||</highlight></codeline>
+<codeline lineno="216"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="ipv4_2ip__addr_8h_1ae42518ced1dbfbc55034642012055e9" kindref="member">ip_addr_isbroadcast</ref>(ipaddr,<sp/>&amp;(netif-&gt;<ref refid="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" kindref="member">netmask</ref>)))<sp/>{</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><sp/><sp/>dest<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>*)&amp;<ref refid="ethernetif_8c_16aac26114a085a1a287b32941ecd009e" kindref="member">ethbroadcast</ref>;</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<ref refid="ipv4_2ip__addr_8h_1312e629c950c8e0add5b5e5897334beb" kindref="member">ip_addr_ismulticast</ref>(ipaddr))<sp/>{</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Hash<sp/>IP<sp/>multicast<sp/>address<sp/>to<sp/>MAC<sp/>address.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/><sp/><sp/>mcastaddr.addr[0]<sp/>=<sp/>0x01;</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"><sp/><sp/><sp/><sp/>mcastaddr.addr[1]<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/>mcastaddr.addr[2]<sp/>=<sp/>0x5e;</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"><sp/><sp/><sp/><sp/>mcastaddr.addr[3]<sp/>=<sp/><ref refid="ipv4_2ip__addr_8h_1ee091caef24dd1705876bb8dbe28035c" kindref="member">ip4_addr2</ref>(ipaddr)<sp/>&amp;<sp/>0x7f;</highlight></codeline>
+<codeline lineno="224"><highlight class="normal"><sp/><sp/><sp/><sp/>mcastaddr.addr[4]<sp/>=<sp/><ref refid="ipv4_2ip__addr_8h_1ead691bee580ea8111b70e67cf971c40" kindref="member">ip4_addr3</ref>(ipaddr);</highlight></codeline>
+<codeline lineno="225"><highlight class="normal"><sp/><sp/><sp/><sp/>mcastaddr.addr[5]<sp/>=<sp/><ref refid="ipv4_2ip__addr_8h_178cbf5c1fd832f909f755c4cc9036f02" kindref="member">ip4_addr4</ref>(ipaddr);</highlight></codeline>
+<codeline lineno="226"><highlight class="normal"><sp/><sp/><sp/><sp/>dest<sp/>=<sp/>&amp;mcastaddr;</highlight></codeline>
+<codeline lineno="227"><highlight class="normal"><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="228"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(<ref refid="ipv4_2ip__addr_8h_1f656f30425e386d96d0e1a1b2dcb3952" kindref="member">ip_addr_maskcmp</ref>(ipaddr,<sp/>&amp;(netif-&gt;<ref refid="structnetif_1d666097c02e7d7e82ea838b0c721470d" kindref="member">ip_addr</ref>),<sp/>&amp;(netif-&gt;<ref refid="structnetif_1c4b9556c67758bde9a2b29f57f3e8cf2" kindref="member">netmask</ref>)))<sp/>{</highlight></codeline>
+<codeline lineno="229"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Use<sp/>destination<sp/>IP<sp/>address<sp/>if<sp/>the<sp/>destination<sp/>is<sp/>on<sp/>the<sp/>same</highlight></codeline>
+<codeline lineno="230"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>subnet<sp/>as<sp/>we<sp/>are.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>queryaddr<sp/>=<sp/>ipaddr;</highlight></codeline>
+<codeline lineno="232"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="233"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Otherwise<sp/>we<sp/>use<sp/>the<sp/>default<sp/>router<sp/>as<sp/>the<sp/>address<sp/>to<sp/>send</highlight></codeline>
+<codeline lineno="234"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>the<sp/>Ethernet<sp/>frame<sp/>to.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>queryaddr<sp/>=<sp/>&amp;(netif-&gt;<ref refid="structnetif_1abb83f0808c4b1bf23e5a16bc4e486a8" kindref="member">gw</ref>);</highlight></codeline>
+<codeline lineno="236"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="237"><highlight class="normal"><sp/><sp/><sp/><sp/>dest<sp/>=<sp/><ref refid="arp_8h_1eec8fff4f036cca2ac1b5635fa46d21b" kindref="member">arp_lookup</ref>(queryaddr);</highlight></codeline>
+<codeline lineno="238"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="239"><highlight class="normal"></highlight></codeline>
+<codeline lineno="240"><highlight class="normal"></highlight></codeline>
+<codeline lineno="241"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>If<sp/>the<sp/>arp_lookup()<sp/>didn&apos;t<sp/>find<sp/>an<sp/>address,<sp/>we<sp/>send<sp/>out<sp/>an<sp/>ARP</highlight></codeline>
+<codeline lineno="242"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/>query<sp/>for<sp/>the<sp/>IP<sp/>address.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(dest<sp/>==<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="244"><highlight class="normal"><sp/><sp/><sp/><sp/>q<sp/>=<sp/><ref refid="arp_8h_19d1287b9a80c370797b2ac5c63f70e2e" kindref="member">arp_query</ref>(netif,<sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>,<sp/>queryaddr);</highlight></codeline>
+<codeline lineno="245"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(q<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="246"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>err<sp/>=<sp/><ref refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" kindref="member">low_level_output</ref>(ethernetif,<sp/>q);</highlight></codeline>
+<codeline lineno="247"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pbuf_8h_1334112aa2ac402c254d604c0dbbbb746" kindref="member">pbuf_free</ref>(q);</highlight></codeline>
+<codeline lineno="248"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>err;</highlight></codeline>
+<codeline lineno="249"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="250"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="err_8h_16ab63185cc5dff3c50c61d99bdf98369" kindref="member">ERR_MEM</ref>;</highlight></codeline>
+<codeline lineno="251"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="252"><highlight class="normal"><sp/><sp/>ethhdr<sp/>=<sp/>p-&gt;<ref refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>;</highlight></codeline>
+<codeline lineno="253"><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal">(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>6;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="255"><highlight class="normal"><sp/><sp/><sp/><sp/>ethhdr-&gt;dest.addr[i]<sp/>=<sp/>dest-&gt;addr[i];</highlight></codeline>
+<codeline lineno="256"><highlight class="normal"><sp/><sp/><sp/><sp/>ethhdr-&gt;src.addr[i]<sp/>=<sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>-&gt;addr[i];</highlight></codeline>
+<codeline lineno="257"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="258"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="259"><highlight class="normal"><sp/><sp/>ethhdr-&gt;type<sp/>=<sp/><ref refid="ipv4_2inet_8h_1b7fffd06ef1d1a7d34f99eedbb9f44dd" kindref="member">htons</ref>(<ref refid="arp_8h_1392234c1299a5f5c264e511d88a66e56" kindref="member">ETHTYPE_IP</ref>);</highlight></codeline>
+<codeline lineno="260"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="261"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" kindref="member">low_level_output</ref>(ethernetif,<sp/>p);</highlight></codeline>
+<codeline lineno="262"><highlight class="normal"></highlight></codeline>
+<codeline lineno="263"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="264"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="265"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="266"><highlight class="comment"><sp/>*<sp/>ethernetif_input():</highlight></codeline>
+<codeline lineno="267"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="268"><highlight class="comment"><sp/>*<sp/>This<sp/>function<sp/>should<sp/>be<sp/>called<sp/>when<sp/>a<sp/>packet<sp/>is<sp/>ready<sp/>to<sp/>be<sp/>read</highlight></codeline>
+<codeline lineno="269"><highlight class="comment"><sp/>*<sp/>from<sp/>the<sp/>interface.<sp/>It<sp/>uses<sp/>the<sp/>function<sp/>low_level_input()<sp/>that</highlight></codeline>
+<codeline lineno="270"><highlight class="comment"><sp/>*<sp/>should<sp/>handle<sp/>the<sp/>actual<sp/>reception<sp/>of<sp/>bytes<sp/>from<sp/>the<sp/>network</highlight></codeline>
+<codeline lineno="271"><highlight class="comment"><sp/>*<sp/>interface.</highlight></codeline>
+<codeline lineno="272"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="273"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="275" refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" kindref="member">ethernetif_input</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="276"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>*<ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="277"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__hdr" kindref="compound">eth_hdr</ref><sp/>*ethhdr<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="278"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structpbuf" kindref="compound">pbuf</ref><sp/>*p<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="279"><highlight class="normal"></highlight></codeline>
+<codeline lineno="280"><highlight class="normal"><sp/><sp/>ethernetif<sp/>=<sp/>netif-&gt;<ref refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" kindref="member">state</ref>;</highlight></codeline>
+<codeline lineno="281"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="282"><highlight class="normal"><sp/><sp/>p<sp/>=<sp/><ref refid="ethernetif_8c_170bd3f580cdc400e75161e9751944836" kindref="member">low_level_input</ref>(ethernetif);</highlight></codeline>
+<codeline lineno="283"><highlight class="normal"></highlight></codeline>
+<codeline lineno="284"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(p<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="285"><highlight class="normal"></highlight></codeline>
+<codeline lineno="286"><highlight class="normal"><sp/><sp/><sp/><sp/>ethhdr<sp/>=<sp/>p-&gt;<ref refid="structpbuf_18d32dc3e964369d4eec638fc37fbc460" kindref="member">payload</ref>;</highlight></codeline>
+<codeline lineno="287"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal">(<ref refid="ipv4_2inet_8h_1b7fffd06ef1d1a7d34f99eedbb9f44dd" kindref="member">htons</ref>(ethhdr-&gt;type))<sp/>{</highlight></codeline>
+<codeline lineno="289"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="arp_8h_1392234c1299a5f5c264e511d88a66e56" kindref="member">ETHTYPE_IP</ref>:</highlight></codeline>
+<codeline lineno="290"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="arp_8h_1916d08dbb8f4a38e1e904a8a018b000c" kindref="member">arp_ip_input</ref>(netif,<sp/>p);</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pbuf_8h_1c83243784ae907d307b4ac444282ccc5" kindref="member">pbuf_header</ref>(p,<sp/>-14);</highlight></codeline>
+<codeline lineno="292"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>netif-&gt;<ref refid="structnetif_16a3101eb624d17937618618a57e2e570" kindref="member">input</ref>(p,<sp/>netif);</highlight></codeline>
+<codeline lineno="293"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/><ref refid="arp_8h_1dbc208bed02b2900ca2639a25d3f6198" kindref="member">ETHTYPE_ARP</ref>:</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>p<sp/>=<sp/><ref refid="arp_8h_157a25dd51cf73f048ad5364ecc2f040b" kindref="member">arp_arp_input</ref>(netif,<sp/>ethernetif-&gt;<ref refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" kindref="member">ethaddr</ref>,<sp/>p);</highlight></codeline>
+<codeline lineno="296"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(p<sp/>!=<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="297"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" kindref="member">low_level_output</ref>(ethernetif,<sp/>p);</highlight></codeline>
+<codeline lineno="298"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pbuf_8h_1334112aa2ac402c254d604c0dbbbb746" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline lineno="299"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="300"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="301"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="302"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pbuf_8h_1334112aa2ac402c254d604c0dbbbb746" kindref="member">pbuf_free</ref>(p);</highlight></codeline>
+<codeline lineno="303"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="304"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="305"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="306"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="307"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="308"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="309" refid="ethernetif_8c_1c94d6bae5aaeab8f812a6809ba4a6367" refkind="member"><highlight class="normal"><ref refid="ethernetif_8c_1c94d6bae5aaeab8f812a6809ba4a6367" kindref="member">arp_timer</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg)</highlight></codeline>
+<codeline lineno="310"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="311"><highlight class="normal"><sp/><sp/><ref refid="arp_8h_12cc298ed4c68289160da1376faf20938" kindref="member">arp_tmr</ref>();</highlight></codeline>
+<codeline lineno="312"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1eb917c25d96a51e1998478b9e6e78a44" kindref="member">sys_timeout</ref>(<ref refid="arp_8h_1aa3d8ed1eb1129f518345e37b38cfc37" kindref="member">ARP_TMR_INTERVAL</ref>,<sp/>(<ref refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" kindref="member">sys_timeout_handler</ref>)<ref refid="ethernetif_8c_1c94d6bae5aaeab8f812a6809ba4a6367" kindref="member">arp_timer</ref>,<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>);</highlight></codeline>
+<codeline lineno="313"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="314"><highlight class="normal"></highlight></codeline>
+<codeline lineno="315"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="316"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="317"><highlight class="comment"><sp/>*<sp/>ethernetif_init():</highlight></codeline>
+<codeline lineno="318"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="319"><highlight class="comment"><sp/>*<sp/>Should<sp/>be<sp/>called<sp/>at<sp/>the<sp/>beginning<sp/>of<sp/>the<sp/>program<sp/>to<sp/>set<sp/>up<sp/>the</highlight></codeline>
+<codeline lineno="320"><highlight class="comment"><sp/>*<sp/>network<sp/>interface.<sp/>It<sp/>calls<sp/>the<sp/>function<sp/>low_level_init()<sp/>to<sp/>do<sp/>the</highlight></codeline>
+<codeline lineno="321"><highlight class="comment"><sp/>*<sp/>actual<sp/>setup<sp/>of<sp/>the<sp/>hardware.</highlight></codeline>
+<codeline lineno="322"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="323"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="324"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="325" refid="ethernetif_8c_164753cb7324510825069062660f10926" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ethernetif_8h_164753cb7324510825069062660f10926" kindref="member">ethernetif_init</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="326"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structethernetif" kindref="compound">ethernetif</ref><sp/>*<ref refid="structethernetif" kindref="compound">ethernetif</ref>;</highlight></codeline>
+<codeline lineno="327"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="328"><highlight class="normal"><sp/><sp/>ethernetif<sp/>=<sp/><ref refid="mem_8h_1932aa40d85b14cb7331625e012d12335" kindref="member">mem_malloc</ref>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>ethernetif));</highlight></codeline>
+<codeline lineno="329"><highlight class="normal"><sp/><sp/>netif-&gt;<ref refid="structnetif_1809cc57c0dff09c5c9ae45b02c2002f3" kindref="member">state</ref><sp/>=<sp/>ethernetif;</highlight></codeline>
+<codeline lineno="330"><highlight class="normal"><sp/><sp/>netif-&gt;<ref refid="structnetif_132fca6ffd28bb9af3f891a378827a67e" kindref="member">name</ref>[0]<sp/>=<sp/><ref refid="ethernetif_8c_1cd9e3df20507d5f895e80477aef74555" kindref="member">IFNAME0</ref>;</highlight></codeline>
+<codeline lineno="331"><highlight class="normal"><sp/><sp/>netif-&gt;<ref refid="structnetif_132fca6ffd28bb9af3f891a378827a67e" kindref="member">name</ref>[1]<sp/>=<sp/><ref refid="ethernetif_8c_143b130296861cb255f1ad5b8c3787fd1" kindref="member">IFNAME1</ref>;</highlight></codeline>
+<codeline lineno="332"><highlight class="normal"><sp/><sp/>netif-&gt;<ref refid="structnetif_1b180ab98b90830ed15503822405e5a23" kindref="member">output</ref><sp/>=<sp/><ref refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" kindref="member">ethernetif_output</ref>;</highlight></codeline>
+<codeline lineno="333"><highlight class="normal"><sp/><sp/>netif-&gt;<ref refid="structnetif_1bf9e416b29a3de59c78b141b8eed37cc" kindref="member">linkoutput</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)<ref refid="ethernetif_8c_1a15293088795817d91d7ecdcfbcb7799" kindref="member">low_level_output</ref>;</highlight></codeline>
+<codeline lineno="334"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="335"><highlight class="normal"><sp/><sp/>ethernetif-&gt;ethaddr<sp/>=<sp/>(</highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>*)&amp;(netif-&gt;<ref refid="structnetif_118e73df74457dd1cb02d61d24e3ba924" kindref="member">hwaddr</ref>[0]);</highlight></codeline>
+<codeline lineno="336"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="337"><highlight class="normal"><sp/><sp/><ref refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" kindref="member">low_level_init</ref>(netif);</highlight></codeline>
+<codeline lineno="338"><highlight class="normal"><sp/><sp/><ref refid="arp_8h_1c8ad5a32790d172fcec2eac97a87ee9f" kindref="member">arp_init</ref>();</highlight></codeline>
+<codeline lineno="339"><highlight class="normal"></highlight></codeline>
+<codeline lineno="340"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1eb917c25d96a51e1998478b9e6e78a44" kindref="member">sys_timeout</ref>(<ref refid="arp_8h_1aa3d8ed1eb1129f518345e37b38cfc37" kindref="member">ARP_TMR_INTERVAL</ref>,<sp/>(<ref refid="sys_8h_11aa9ee90811cc556b2011559ae4154a8" kindref="member">sys_timeout_handler</ref>)<ref refid="ethernetif_8c_1c94d6bae5aaeab8f812a6809ba4a6367" kindref="member">arp_timer</ref>,<sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>);</highlight></codeline>
+<codeline lineno="341"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="342"><highlight class="normal"></highlight></codeline>
+<codeline lineno="343"><highlight class="normal"></highlight><highlight class="comment">/*-----------------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="344"><highlight class="normal"></highlight></codeline>
+<codeline lineno="345" refid="ethernetif_8c_1877b1f0a593d5d3c6e1d10624ee7a0fb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="ethernetif_8c_1e1cb890e22f516c0106d5c6c8e07ab74" kindref="member">ethernetif_thread</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg)<sp/>{</highlight></codeline>
+<codeline lineno="346"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structnetif" kindref="compound">netif</ref><sp/>*<ref refid="structnetif" kindref="compound">netif</ref><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="347"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="348"><highlight class="normal"><sp/><sp/>netif<sp/>=<sp/>arg;</highlight></codeline>
+<codeline lineno="349"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="350"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(1)<sp/>{</highlight></codeline>
+<codeline lineno="351"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" kindref="member">tmpBuf</ref><sp/>=<sp/><ref refid="ne2k_8h_1954f14d0270247855900254097728c57" kindref="member">ne2kGetBuffer</ref>();</highlight></codeline>
+<codeline lineno="352"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" kindref="member">tmpBuf</ref><sp/>&amp;&amp;<sp/><ref refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" kindref="member">tmpBuf</ref>-&gt;<ref refid="structnicBuffer_1959ee09a7a6fc875f3d5d651576f37c4" kindref="member">length</ref><sp/>&gt;<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="353"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" kindref="member">ethernetif_input</ref>(netif);<sp/><sp/></highlight></codeline>
+<codeline lineno="354"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="355"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="356"><highlight class="normal"><sp/><sp/><ref refid="ne2k_8h_164fadb818ec0d7f27ef04cbceac2a828" kindref="member">ne2kFreeBuffer</ref>(<ref refid="ethernetif_8c_14a11421d92a3c6d8d9fae9db3bb9f299" kindref="member">tmpBuf</ref>);</highlight></codeline>
+<codeline lineno="357"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c"/>
+  </compounddef>
+</doxygen>

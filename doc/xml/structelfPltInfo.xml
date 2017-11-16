@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structelfPltInfo" kind="struct" prot="public">
+    <compoundname>elfPltInfo</compoundname>
+    <includes refid="elf_8h" local="no">elf.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structelfPltInfo_1386532ff3627c9a0c6d93b9a8ba7d945" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfPltInfo::pltInfo</definition>
+        <argsstring></argsstring>
+        <name>pltInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="140" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="140" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfPltInfo_1fbe08b823da04c152efbf47537fc5aab" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfPltInfo::pltOffset</definition>
+        <argsstring></argsstring>
+        <name>pltOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="139" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="139" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="138" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="138" bodyend="141"/>
+    <listofallmembers>
+      <member refid="structelfPltInfo_1386532ff3627c9a0c6d93b9a8ba7d945" prot="public" virt="non-virtual"><scope>elfPltInfo</scope><name>pltInfo</name></member>
+      <member refid="structelfPltInfo_1fbe08b823da04c152efbf47537fc5aab" prot="public" virt="non-virtual"><scope>elfPltInfo</scope><name>pltOffset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
