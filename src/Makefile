@@ -3,6 +3,8 @@
 
 _ARCH?=  ${MACHINE_ARCH}
 
+_ARCH=i386
+
 MAKE=make
 
 OBJ_DIR?= ${CURDIR}/obj
@@ -24,7 +26,7 @@ WORLD_BIN_SRC=${CURDIR}/bin
 WORLD_INC=${CURDIR}/include.new
 WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm  OBJDUMP= OBJCOPY="objcopy"  RANLIB=ranlib
 
-WMAKE= ${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=../build
+WMAKE= ${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
 
 TMP_PATH=${PATH}
 ROOT=/ubixos

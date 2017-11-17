@@ -46,7 +46,7 @@ int main() {
 
 printf("Is this My ERROR?");
 
-  printf( "[0x%X]\n", ubix_test() );
+  //MrOlsen 2017-11-17 printf( "[0x%X]\n", ubix_test() );
 
   while ( 1 ) {
     aGain: printf( "%s@%s# ", machine, cwd );

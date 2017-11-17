@@ -17,7 +17,7 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o error.o commands.o exec.o input.o
 
-LIBRARIES = ../../lib/build/libc_old.so ../../lib/build/ubix_api.so
+LIBRARIES = ../../build/libc_old.so ../../build/ubix_api.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)
