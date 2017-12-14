@@ -204,9 +204,9 @@ int hdReset() {
 }
 
 int hdInit( struct device_node *dev ) {
-  char retVal = 0x0;
+  uInt8 retVal = 0x0;
   long counter = 0x0;
-  short *tmp = 0x0;
+  uInt16 *tmp = 0x0;
   struct driveInfo *hdd = dev->devInfo->info;
 
   for ( counter = 1000000; counter >= 0; counter-- ) {
@@ -241,11 +241,10 @@ int hdInit( struct device_node *dev ) {
 
   go:
 
-  tmp = (short *) hdd->ata_identify;
+  tmp = (uInt16 *) hdd->ata_identify;
 
   for ( counter = 0; counter < 256; counter++ ) {
     tmp[counter] = inportWord( hdd->hdPort + ATA_DATA );
-kprintf("[%i]", tmp[counter]);
   }
 
   retVal = tmp[0x2F] & 0xFF;
@@ -279,8 +278,12 @@ kprintf("[%i]", tmp[counter]);
     hdd->hdShift = 6;
     hdd->hdMulti = retVal;
     break;
+  case 128:
+    hdd->hdShift = 7;
+    hdd->hdMulti = retVal;
+    break;
   default:
-    kprintf( "Error BLOCK Mode Unavailable: [%i]\n", retVal );
+    kprintf( "Error BLOCK Mode Unavailable: [%x]\n", retVal );
     return (1);
   }
 

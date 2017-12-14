@@ -114,9 +114,9 @@ int kmain( uInt32 rootdev ) {
 
   /* New Root Mount Point */
   //Old 2 new 10
-  kprintf( "[0xX][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR( rootdev ), B_CONTROLLER( rootdev ), B_SLICE( rootdev ), B_UNIT( rootdev ), B_PARTITION( rootdev ), B_TYPE( rootdev ) );
+  kprintf( "[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR( rootdev ), B_CONTROLLER( rootdev ), B_SLICE( rootdev ), B_UNIT( rootdev ), B_PARTITION( rootdev ), B_TYPE( rootdev ) );
   //if ( vfs_mount( 0x1, B_PARTITION(rootdev) + 2, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
-  if ( vfs_mount( 0x1, 0x1, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
+  if ( vfs_mount( 0x1, 0x2, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
     kprintf( "Problem Mounting sys Mount Point\n" );
   }
   else
@@ -147,7 +147,7 @@ int kmain( uInt32 rootdev ) {
   execThread( systemTask, (uInt32) sysTask + 0x2000, 0x0 );
   kprintf( "Thread Start!\n" );
 
- //MrOlsen execFile( "sys:/bin/init", 0x0, 0x0, 0x0 ); /* OS Initializer    */
+  execFile( "sys:/bin/init", 0x0, 0x0, 0x0 ); /* OS Initializer    */
   //execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */
 
   irqEnable( 0x0 );
