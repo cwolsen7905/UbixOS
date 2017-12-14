@@ -58,7 +58,7 @@
  * the ``cgbase(fs, cg)'' macro.
  *
  * Depending on the architecture and the media, the superblock may
- * reside in any one of four places. For tiny media where every block 
+ * reside in any one of four places. For tiny media where every block
  * counts, it is placed at the very front of the partition. Historically,
  * UFS1 placed it 8K from the front to leave room for the disk label and
  * a small bootstrap. For UFS2 it got moved to 64K from the front to leave
@@ -69,10 +69,10 @@
  * SBLOCKSEARCH specifies the order in which the locations should be searched.
  */
 #define	SBLOCK_FLOPPY	     0
-#define	SBLOCK_UFS1	  8192
-#define	SBLOCK_UFS2	 65536
-#define	SBLOCK_PIGGY	262144
-#define	SBLOCKSIZE	  8192
+#define	SBLOCK_UFS1	  8192/512
+#define	SBLOCK_UFS2	 65536/512
+#define	SBLOCK_PIGGY	262144/512
+#define	SBLOCKSIZE	  8192/512
 #define	SBLOCKSEARCH \
 	{ SBLOCK_UFS2, SBLOCK_UFS1, SBLOCK_FLOPPY, SBLOCK_PIGGY, -1 }
 
@@ -351,7 +351,7 @@ struct fs {
 	int32_t  fs_sujfree;		/* SUJ free list */
 	int32_t	 fs_sparecon32[23];	/* reserved for future constants */
 	int32_t  fs_flags;		/* see FS_ flags below */
-	int32_t	 fs_contigsumsize;	/* size of cluster summary array */ 
+	int32_t	 fs_contigsumsize;	/* size of cluster summary array */
 	int32_t	 fs_maxsymlinklen;	/* max length of an internal symlink */
 	int32_t	 fs_old_inodefmt;	/* format of on-disk inodes */
 	u_int64_t fs_maxfilesize;	/* maximum representable file size */

@@ -55,15 +55,15 @@ int initHardDisk() {
   //GPT
   char *secbuf = 0x0;
 
-  hdd = (struct driveInfo *) kmalloc( sizeof(struct driveInfo) );
-  hdd->ata_identify = (struct ata_identify_data *) kmalloc( sizeof(struct ata_identify_data) );
+  hdd = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
+  hdd->ata_identify = (struct ata_identify_data *) kmalloc(sizeof(struct ata_identify_data));
   hdd->hdPort = 0x1F0;
   hdd->hdDev = 0x40;
   hdd->parOffset = 0x0;
   hdd->part = 0x2;
 
   /* Alloc memory for device structure and set it up correctly */
-  devInfo = (struct device_interface *) kmalloc( sizeof(struct device_interface) );
+  devInfo = (struct device_interface *) kmalloc(sizeof(struct device_interface));
   devInfo->read = (void *) &hdRead;
   devInfo->write = (void *) &hdWrite;
   devInfo->reset = (void *) &hdReset;
@@ -76,96 +76,94 @@ int initHardDisk() {
 
   devInfo->major = 0x1;
 
-  data = (char *) kmalloc( 512 );
+  data = (char *) kmalloc(512);
   d = (struct dos_partition *) (data + 0x1BE);
 
-  data2 = (char *) kmalloc( 512 );
+  data2 = (char *) kmalloc(512);
   bsdd = (struct bsd_disklabel *) data2;
 
-  if ( device_add( 0, 'c', devInfo ) == 0x0 ) {
-    kprintf( "ad0 - Start: [0x0], Size: [0x%x/0x%X]\n", hdd->hdSize, hdd->hdSize * 512 );
-    devfs_makeNode( "ad0", 'b', 0x1, 0x0 );
-    hdRead( devInfo->info, data, 0x0, 0x1 );
+  if (device_add(0, 'c', devInfo) == 0x0) {
+    kprintf("ad0 - Start: [0x0], Size: [0x%x/0x%X]\n", hdd->hdSize, hdd->hdSize * 512);
+    devfs_makeNode("ad0", 'b', 0x1, 0x0);
+    hdRead(devInfo->info, data, 0x0, 0x1);
 
-    if ( d[0].dp_type == 0xEE ) {
+    if (d[0].dp_type == 0xEE) {
       // MrOlsen (2016-01-14) DEBUG: This was just to help debug
       //kprintf( "%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", d[0].dp_start, d[0].dp_size );
 
-      secbuf = (char *)kmalloc(65536);
+      secbuf = (char *) kmalloc(65536);
 
       if (gptread(&freebsd_ufs_uuid, devInfo, secbuf) == -1) {
         kprintf("%s: unable to load GPT\n", "KERNEL");
         //return (-1);
-      }
-      else {
-          devInfo2 = (struct device_interface *) kmalloc( sizeof(struct device_interface) );
-          hdd2 = (struct driveInfo *) kmalloc( sizeof(struct driveInfo) );
-          memcpy( devInfo2, devInfo, sizeof(struct device_interface) );
-          memcpy( hdd2, hdd, sizeof(struct driveInfo) );
-          //hdd2->parOffset = d[i].dp_start;
-          devInfo2->info = hdd2;
-          minor++;
+      } else {
+        devInfo2 = (struct device_interface *) kmalloc(sizeof(struct device_interface));
+        hdd2 = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
+        memcpy(devInfo2, devInfo, sizeof(struct device_interface));
+        memcpy(hdd2, hdd, sizeof(struct driveInfo));
+        //hdd2->parOffset = d[i].dp_start;
+        devInfo2->info = hdd2;
+        minor++;
 
-      if (gptfind(&freebsd_ufs_uuid, devInfo2, hdd->part) == -1) {
-      //MrOlsen (2016-01-11) FIX: I am using "1" as partition 1
-       kprintf("%s: no UFS partition was found\n", "KERNEL");
-       //return (-1);
-      }
+        if (gptfind(&freebsd_ufs_uuid, devInfo2, hdd->part) == -1) {
+          //MrOlsen (2016-01-11) FIX: I am using "1" as partition 1
+          kprintf("%s: no UFS partition was found\n", "KERNEL");
+          //return (-1);
+        }
 
 //MrOlsen (2016-01-14) DEBUG: This was just debugging code
 //kprintf("[%i - %i]\n", hdd->parOffset, hdd2->parOffset);
 
-          if ( device_add( minor, 'c', devInfo2 ) == 0x0 ) {
-            sprintf( name, "ad0p%i", hdd->part);
-            kprintf( "%s - Type: [0x%X - %s], Start: [%i], Offset: [%i], Size: [%i]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", hdd2->lba_start, hdd2->parOffset, hdd2->lba_end - hdd2->lba_start);
-            devfs_makeNode( name, 'c', 0x1, minor );
-}
+        if (device_add(minor, 'c', devInfo2) == 0x0) {
+          sprintf(name, "ad0p%i", hdd->part);
+          kprintf("%s - Type: [0x%X - %s], Start: [%i], Offset: [%i], Size: [%i]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", hdd2->lba_start, hdd2->parOffset, hdd2->lba_end - hdd2->lba_start);
+          devfs_makeNode(name, 'c', 0x1, minor);
+        }
       }
 
-    }
-    else {
+    } else {
 
-      for ( i = 0x0; i < 0x4; i++ ) {
+      for (i = 0x0; i < 0x4; i++) {
 
         //MrOlsen (2016-01-14) DEBUG: This was just debugging code
         //kprintf( "Type: 0x%X\n", d[i].dp_type );
 
-        if ( d[i].dp_type == 0xEE )
-          kprintf( "Motherfucker Jones! We're GPT.... Lick My Nuts Now Bitch!\n" );
+        if (d[i].dp_type == 0xEE)
+          kprintf("Motherfucker Jones! We're GPT.... Lick My Nuts Now Bitch!\n");
 
-        if ( d[i].dp_type != 0x0 ) {
-          devInfo2 = (struct device_interface *) kmalloc( sizeof(struct device_interface) );
-          hdd2 = (struct driveInfo *) kmalloc( sizeof(struct driveInfo) );
-          memcpy( devInfo2, devInfo, sizeof(struct device_interface) );
-          memcpy( hdd2, hdd, sizeof(struct driveInfo) );
+        if (d[i].dp_type != 0x0) {
+          devInfo2 = (struct device_interface *) kmalloc(sizeof(struct device_interface));
+          hdd2 = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
+          memcpy(devInfo2, devInfo, sizeof(struct device_interface));
+          memcpy(hdd2, hdd, sizeof(struct driveInfo));
           hdd2->parOffset = d[i].dp_start;
           devInfo2->info = hdd2;
           minor++;
 
-          if ( device_add( minor, 'c', devInfo2 ) == 0x0 ) {
-            sprintf( name, "ad0s%i", i + 1 );
-            kprintf( "%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X]\n", name, d[i].dp_type, (d[i].dp_type >= 0 && d[i].dp_type <= 255) ? part_types[d[i].dp_type] : "Unknown", d[i].dp_start, d[i].dp_size );
-            devfs_makeNode( name, 'c', 0x1, minor );
+          if (device_add(minor, 'c', devInfo2) == 0x0) {
+            sprintf(name, "ad0s%i", i + 1);
+            kprintf("%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X]\n", name, d[i].dp_type, (d[i].dp_type >= 0 && d[i].dp_type <= 255) ? part_types[d[i].dp_type] : "Unknown", d[i].dp_start, d[i].dp_size);
+            devfs_makeNode(name, 'c', 0x1, minor);
 
-            if ( d[i].dp_type == 0xA5 ) {
+            if (d[i].dp_type == 0xA5) {
               //Why do i need to add 1?
-              hdRead( devInfo->info, data2, d[i].dp_start + 1, 0x1 );
+              hdRead(devInfo->info, data2, d[i].dp_start + 1, 0x1);
 
-              for ( x = 0; x < bsdd->d_npartitions; x++ ) {
-                if ( bsdd->d_partitions[x].p_size > 0 ) {
-                  sprintf( name, "ad0s%i%c", i + 1, 'a' + x );
+              for (x = 0; x < bsdd->d_npartitions; x++) {
+                if (bsdd->d_partitions[x].p_size > 0) {
+                  sprintf(name, "ad0s%i%c", i + 1, 'a' + x);
                   //New Nodes
-                  devInfo2 = (struct device_interface *) kmalloc( sizeof(struct device_interface) );
-                  hdd2 = (struct driveInfo *) kmalloc( sizeof(struct driveInfo) );
-                  memcpy( devInfo2, devInfo, sizeof(struct device_interface) );
-                  memcpy( hdd2, hdd, sizeof(struct driveInfo) );
+                  devInfo2 = (struct device_interface *) kmalloc(sizeof(struct device_interface));
+                  hdd2 = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
+                  memcpy(devInfo2, devInfo, sizeof(struct device_interface));
+                  memcpy(hdd2, hdd, sizeof(struct driveInfo));
                   //hdd2->parOffset = d[i].dp_start + bsdd->d_partitions[x].p_offset;
                   hdd2->parOffset = bsdd->d_partitions[x].p_offset;
                   devInfo2->info = hdd2;
                   minor++;
-                  device_add( minor, 'c', devInfo2 );
-                  devfs_makeNode( name, 'c', 0x1, minor );
-                  kprintf( "%s - Type: [%s], Start: [0x%X], Size: [0x%X], MM: [%i:%i]\n", name, fstypenames[bsdd->d_partitions[x].p_fstype], bsdd->d_partitions[x].p_offset, bsdd->d_partitions[x].p_size, devInfo->major, minor );
+                  device_add(minor, 'c', devInfo2);
+                  devfs_makeNode(name, 'c', 0x1, minor);
+                  kprintf("%s - Type: [%s], Start: [0x%X], Size: [0x%X], MM: [%i:%i]\n", name, fstypenames[bsdd->d_partitions[x].p_fstype], bsdd->d_partitions[x].p_offset, bsdd->d_partitions[x].p_size, devInfo->major, minor);
                 }
 
               }
@@ -179,77 +177,82 @@ int initHardDisk() {
       }
     }
   }
-  kfree( data );
+  kfree(data);
   return (0x0);
 }
 
 int hdStandby() {
+  /* Not Implemented */
   return (0x0);
 }
 
 int hdStart() {
+  /* Not Implemented */
   return (0x0);
 }
 
 int hdStop() {
+  /* Not Implemented */
   return (0x0);
 }
 
 int hdIoctl() {
+  /* Not Implemented */
   return (0x0);
 }
 
 int hdReset() {
+  /* Not Implemented */
   return (0x0);
 }
 
-int hdInit( struct device_node *dev ) {
+int hdInit(struct device_node *dev) {
   uInt8 retVal = 0x0;
-  long counter = 0x0;
+  int counter = 0x0;
   uInt16 *tmp = 0x0;
   struct driveInfo *hdd = dev->devInfo->info;
 
-  for ( counter = 1000000; counter >= 0; counter-- ) {
-    retVal = inportByte( hdd->hdPort + ATA_COMMAND ) & ATA_S_BUSY;
+  for (counter = 1000000; counter >= 0; counter--) {
+    retVal = inportByte(hdd->hdPort + ATA_COMMAND) & ATA_S_BUSY;
 
-    if ( !retVal )
+    if (!retVal)
       goto ready;
 
   }
 
-  kprintf( "Error Initializing Drive\n" );
+  kprintf("Error Initializing Drive\n");
   return (1);
 
   ready:
 
-  outportByte( hdd->hdPort + ATA_DRIVE, hdd->hdDev );
-  outportByte( hdd->hdPort + ATA_COMMAND, ATA_IDENTIFY );
+  outportByte(hdd->hdPort + ATA_DRIVE, hdd->hdDev);
+  outportByte(hdd->hdPort + ATA_COMMAND, ATA_IDENTIFY);
 
-  for ( counter = 1000000; counter >= 0; counter-- ) {
-    retVal = inportByte( hdd->hdPort + ATA_COMMAND );
-    if ( (retVal & 1) != 0x0 ) {
-      kprintf( "Error Drive Not Available\n" );
+  for (counter = 1000000; counter >= 0; counter--) {
+    retVal = inportByte(hdd->hdPort + ATA_COMMAND);
+    if ((retVal & 1) != 0x0) {
+      kprintf("Error Drive Not Available\n");
       return (1);
     }
-    if ( (retVal & 8) != 0x0 ) {
+    if ((retVal & 8) != 0x0) {
       goto go;
     }
   }
 
-  kprintf( "Time Out Waiting On Drive\n" );
+  kprintf("Time Out Waiting On Drive\n");
   return (1);
 
   go:
 
   tmp = (uInt16 *) hdd->ata_identify;
 
-  for ( counter = 0; counter < 256; counter++ ) {
-    tmp[counter] = inportWord( hdd->hdPort + ATA_DATA );
+  for (counter = 0; counter < 256; counter++) {
+    tmp[counter] = inportWord(hdd->hdPort + ATA_DATA);
   }
 
   retVal = tmp[0x2F] & 0xFF;
 
-  switch ( retVal ) {
+  switch (retVal) {
   case 0:
     hdd->hdShift = 0;
     hdd->hdMulti = 1;
@@ -283,11 +286,11 @@ int hdInit( struct device_node *dev ) {
     hdd->hdMulti = retVal;
     break;
   default:
-    kprintf( "Error BLOCK Mode Unavailable: [%x]\n", retVal );
+    kprintf("Error BLOCK Mode Unavailable: [%x]\n", retVal);
     return (1);
   }
 
-  if ( hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE ) {
+  if (hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE) {
     hdd->lba_high = hdd->ata_identify->max_48bit_lba[7] << 24;
     hdd->lba_high |= hdd->ata_identify->max_48bit_lba[6] << 16;
     hdd->lba_high |= hdd->ata_identify->max_48bit_lba[5] << 8;
@@ -297,8 +300,7 @@ int hdInit( struct device_node *dev ) {
     hdd->lba_low |= hdd->ata_identify->max_48bit_lba[2] << 16;
     hdd->lba_low |= hdd->ata_identify->max_48bit_lba[1] << 8;
     hdd->lba_low |= hdd->ata_identify->max_48bit_lba[0];
-  }
-  else {
+  } else {
     hdd->lba_high = 0;
     hdd->lba_low = hdd->ata_identify->total_num_sectors[3] << 24;
     hdd->lba_low |= hdd->ata_identify->total_num_sectors[2] << 16;
@@ -307,22 +309,21 @@ int hdInit( struct device_node *dev ) {
   }
 
   // If the ATA device reports its sector size (bit 12 of Word 106), then use that instead.
-  if ( hdd->ata_identify->physical_logical_sector_info & ATA_IDENTIFY_SECTOR_LARGER_THEN_512_ENABLE ) {
+  if (hdd->ata_identify->physical_logical_sector_info & ATA_IDENTIFY_SECTOR_LARGER_THEN_512_ENABLE) {
     hdd->sector_size = hdd->ata_identify->words_per_logical_sector[3] << 24;
     hdd->sector_size |= hdd->ata_identify->words_per_logical_sector[2] << 16;
     hdd->sector_size |= hdd->ata_identify->words_per_logical_sector[1] << 8;
     hdd->sector_size |= hdd->ata_identify->words_per_logical_sector[0];
-  }
-  else {
+  } else {
     // Default the sector size to 512 bytes
     hdd->sector_size = 512;
   }
 
-  kprintf( "LBA [0x%X - 0x%X], LBA_HIGH: %i, LBA_LOW: %i, SECTOR_SIZE: %i\n", hdd->ata_identify->command_set_enabled1, hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE, hdd->lba_high, hdd->lba_low, hdd->sector_size );
+  kprintf("LBA [0x%X - 0x%X], LBA_HIGH: %i, LBA_LOW: %i, SECTOR_SIZE: %i\n", hdd->ata_identify->command_set_enabled1, hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE, hdd->lba_high, hdd->lba_low, hdd->sector_size);
 
-  outportByte( hdd->hdPort + hdSecCount, retVal );
-  outportByte( hdd->hdPort + hdHead, hdd->hdDev );
-  outportByte( hdd->hdPort + hdCmd, 0xC6 );
+  outportByte(hdd->hdPort + hdSecCount, retVal);
+  outportByte(hdd->hdPort + hdHead, hdd->hdDev);
+  outportByte(hdd->hdPort + hdCmd, 0xC6);
 
   hdd->hdMask = retVal;
   //hdd->hdSize = (hdd->hdSector[0x7B] * 256 * 256 * 256) + (hdd->hdSector[0x7A] * 256 * 256) + (hdd->hdSector[0x79] * 256) + hdd->hdSector[0x78];
@@ -331,13 +332,13 @@ int hdInit( struct device_node *dev ) {
   hdd->hdSize = hdd->lba_low + hdd->lba_high;
   hdd->hdEnable = 1;
 
-  kprintf( "Drive: [0x%X/0x%X], Size: [%i Sectors/%i MB]\n", hdd->hdPort, hdd->hdDev, hdd->hdSize, hdd->hdSize / 2048 );
+  kprintf("Drive: [0x%X/0x%X], Size: [%i Sectors/%i MB]\n", hdd->hdPort, hdd->hdDev, hdd->hdSize, hdd->hdSize / 2048);
   dev->devInfo->size = hdd->hdSize * 512;
   dev->devInfo->initialized = 0x1;
   return (0x0);
 }
 
-int hdWrite( struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sectorCount ) {
+int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sectorCount) {
   long counter = 0x0;
   long retVal = 0x0;
   short transactionCount = 0x0;
@@ -345,62 +346,61 @@ int hdWrite( struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 s
   //startSector += hdd->parOffset;
   startSector += hdd->lba_start;
 
-  if ( hdd->hdEnable == 0x0 ) {
-    kprintf( "Invalid Drive\n" );
-    return(1);
+  if (hdd->hdEnable == 0x0) {
+    kprintf("Invalid Drive\n");
+    return (1);
   }
-  if ( (sectorCount >> hdd->hdShift) == 0x0 ) {
+  if ((sectorCount >> hdd->hdShift) == 0x0) {
     hdd->hdCalc = sectorCount; /* hdd->hdMask; */
     transactionCount = 1;
-  }
-  else {
+  } else {
     hdd->hdCalc = hdd->hdMulti;
     transactionCount = sectorCount >> hdd->hdShift;
   }
-  for ( ; transactionCount > 0; transactionCount-- ) {
-    for ( counter = 1000000; counter >= 0; counter-- ) {
-      retVal = inportByte( hdd->hdPort + hdStat ) & 0x80;
-      if ( !retVal )
+  for (; transactionCount > 0; transactionCount--) {
+    for (counter = 1000000; counter >= 0; counter--) {
+      retVal = inportByte(hdd->hdPort + hdStat) & 0x80;
+      if (!retVal)
         goto ready;
     }
-    kprintf( "Time Out Waiting On Drive\n" );
-    return(1);
-    ready: outportByte( hdd->hdPort + hdSecCount, hdd->hdCalc );
-    outportByte( hdd->hdPort + hdSecNum, (startSector & 0xFF) );
+    kprintf("Time Out Waiting On Drive\n");
+    return (1);
+    ready: outportByte(hdd->hdPort + hdSecCount, hdd->hdCalc);
+    outportByte(hdd->hdPort + hdSecNum, (startSector & 0xFF));
     retVal = startSector >> 8;
-    outportByte( hdd->hdPort + hdCylLow, (retVal & 0xFF) );
+    outportByte(hdd->hdPort + hdCylLow, (retVal & 0xFF));
     retVal >>= 8;
-    outportByte( hdd->hdPort + hdCylHi, (retVal & 0xFF) );
+    outportByte(hdd->hdPort + hdCylHi, (retVal & 0xFF));
     retVal >>= 8;
     retVal &= 0x0F;
     retVal |= (hdd->hdDev | 0xA0); //Test As Per TJ
-    outportByte( hdd->hdPort + hdHead, (retVal & 0xFF) );
-    if ( hdd->hdShift > 0 )
-      outportByte( hdd->hdPort + hdCmd, 0xC5 );
+    outportByte(hdd->hdPort + hdHead, (retVal & 0xFF));
+    if (hdd->hdShift > 0)
+      outportByte(hdd->hdPort + hdCmd, 0xC5);
     else
-      outportByte( hdd->hdPort + hdCmd, 0x30 );
-    for ( counter = 1000000; counter >= 0; counter-- ) {
-      retVal = inportByte( hdd->hdPort + hdStat );
-      if ( (retVal & 1) != 0x0 ) {
-        kprintf( "HD Write Error\n" );
-        return(1);
+      outportByte(hdd->hdPort + hdCmd, 0x30);
+    for (counter = 1000000; counter >= 0; counter--) {
+      retVal = inportByte(hdd->hdPort + hdStat);
+      if ((retVal & 1) != 0x0) {
+        kprintf("HD Write Error\n");
+        return (1);
       }
-      if ( (retVal & 8) != 0x0 ) {
+      if ((retVal & 8) != 0x0) {
         goto go;
       }
     }
-    kprintf( "Time Out Waiting On Drive\n" );
-    return(1);
-    go: for ( counter = 0; counter < (hdd->hdCalc << 8); counter++ ) {
-      outportWord( hdd->hdPort + hdData, (short) tmp[counter] );
+    kprintf("Time Out Waiting On Drive\n");
+    return (1);
+    go: for (counter = 0; counter < (hdd->hdCalc << 8); counter++) {
+      outportWord(hdd->hdPort + hdData, (short) tmp[counter]);
     }
     tmp += (counter + 0);
     startSector += hdd->hdCalc;
   }
-  return(0);
+  return (0);
 }
 
-int hdRead( struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sectorCount ) {
+int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sectorCount) {
   long counter = 0x0;
   long retVal = 0x0;
   short transactionCount = 0x0;
@@ -408,57 +408,56 @@ int hdRead( struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
   //startSector += hdd->parOffset;
   startSector += hdd->lba_start;
 
-kprintf("SS: [0x%X]", startSector);
+  kprintf("SS: [0x%X]", startSector);
 
-  if ( hdd->hdEnable == 0x0 ) {
-    kprintf( "Invalid Drive\n" );
-    return(1);
+  if (hdd->hdEnable == 0x0) {
+    kprintf("Invalid Drive\n");
+    return (1);
   }
-  if ( (sectorCount >> hdd->hdShift) == 0x0 ) {
+  if ((sectorCount >> hdd->hdShift) == 0x0) {
     hdd->hdCalc = sectorCount; /* hdd->hdMask); */
     transactionCount = 1;
-  }
-  else {
+  } else {
     hdd->hdCalc = hdd->hdMulti;
     transactionCount = sectorCount >> hdd->hdShift;
   }
-  for ( ; transactionCount > 0; transactionCount-- ) {
-    for ( counter = 1000000; counter >= 0; counter-- ) {
-      retVal = inportByte( hdd->hdPort + hdStat ) & 0x80;
-      if ( !retVal )
+  for (; transactionCount > 0; transactionCount--) {
+    for (counter = 1000000; counter >= 0; counter--) {
+      retVal = inportByte(hdd->hdPort + hdStat) & 0x80;
+      if (!retVal)
         goto ready;
     }
-    kprintf( "Time Out Waiting On Drive\n" );
-    return(1);
-    ready: outportByte( hdd->hdPort + hdSecCount, hdd->hdCalc );
-    outportByte( hdd->hdPort + hdSecNum, (startSector & 0xFF) );
+    kprintf("Time Out Waiting On Drive\n");
+    return (1);
+    ready: outportByte(hdd->hdPort + hdSecCount, hdd->hdCalc);
+    outportByte(hdd->hdPort + hdSecNum, (startSector & 0xFF));
     retVal = startSector >> 8;
-    outportByte( hdd->hdPort + hdCylLow, (retVal & 0xFF) );
+    outportByte(hdd->hdPort + hdCylLow, (retVal & 0xFF));
     retVal >>= 8;
-    outportByte( hdd->hdPort + hdCylHi, (retVal & 0xFF) );
+    outportByte(hdd->hdPort + hdCylHi, (retVal & 0xFF));
     retVal >>= 8;
     retVal &= 0x0F;
     retVal |= (hdd->hdDev | 0xA0); //Test as per TJ
     //retVal |= hdd->hdDev; //retVal |= (hdd->hdDev | 0xA0); //Test as per TJ
-    outportByte( hdd->hdPort + hdHead, (retVal & 0xFF) );
-    if ( hdd->hdShift > 0 )
-      outportByte( hdd->hdPort + hdCmd, 0xC4 );
+    outportByte(hdd->hdPort + hdHead, (retVal & 0xFF));
+    if (hdd->hdShift > 0)
+      outportByte(hdd->hdPort + hdCmd, 0xC4);
     else
-      outportByte( hdd->hdPort + hdCmd, 0x20 );
-    for ( counter = 1000000; counter >= 0; counter-- ) {
-      retVal = inportByte( hdd->hdPort + hdStat );
-      if ( (retVal & 1) != 0x0 ) {
-        kprintf( "HD Read Error: [%i:0x%X:%i]\n", counter, (uInt32) baseAddr, startSector );
-        return(1);
+      outportByte(hdd->hdPort + hdCmd, 0x20);
+    for (counter = 1000000; counter >= 0; counter--) {
+      retVal = inportByte(hdd->hdPort + hdStat);
+      if ((retVal & 1) != 0x0) {
+        kprintf("HD Read Error: [%i:0x%X:%i]\n", counter, (uInt32) baseAddr, startSector);
+        return (1);
       }
-      if ( (retVal & 8) != 0x0 ) {
+      if ((retVal & 8) != 0x0) {
         goto go;
       }
     }
-    kprintf( "Error: Time Out Waiting On Drive\n" );
-    return(1);
-    go: for ( counter = 0; counter < (hdd->hdCalc << 8); counter++ ) {
-      tmp[counter] = inportWord( hdd->hdPort + hdData );
+    kprintf("Error: Time Out Waiting On Drive\n");
+    return (1);
+    go: for (counter = 0; counter < (hdd->hdCalc << 8); counter++) {
+      tmp[counter] = inportWord(hdd->hdPort + hdData);
 //kprintf("[0x%X]", tmp[counter]);
     }
     tmp += (counter + 0);
