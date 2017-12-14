@@ -32,7 +32,7 @@ $(OUTPUT) : $(OBJS)
 #	$(CC) -fpic -nostdlib -shared -Wl,-soname,$(OUTPUT) -e .rtld_start -o $(OUTPUT) $(OBJS) $(LIBRARIES) $(SUBS)
 #	$(CC) $(CFLAGS)  -nostdlib -e .rtld_start -elf -shared -Wl,-Bsymbolic -o $(OUTPUT) $(OBJS) -lc_pic
 #	$(CC) $(CFLAGS)  -nostdlib -e .rtld_start -elf -shared -Wl,-Bsymbolic -o $(OUTPUT) $(OBJS) ./libc_pic.a #-lc_pic
-	$(CC) $(CFLAGS)  -nostdlib -e .rtld_start -elf -shared -Wl,-Bsymbolic -o ../../libexec/build/$(OUTPUT) $(OBJS) ../../lib/libc/pic.a #-lc_pic
+	$(CC) $(CFLAGS)  -nostdlib -e .rtld_start -elf -shared -Wl,-Bsymbolic -o ../../build/libexec/$(OUTPUT) $(OBJS) ../../lib/libc/pic.a #-lc_pic
 #	strip $(OUTPUT)
 
 # Compile the source files

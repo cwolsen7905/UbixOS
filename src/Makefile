@@ -7,6 +7,8 @@ _ARCH=i386
 
 MAKE=make
 
+CURDIR=${.CURDIR}
+
 OBJ_DIR?= ${CURDIR}/obj
 
 CLEANDIR=clean
@@ -111,13 +113,13 @@ install-world:
 	@echo "***************************************************************"
 	@echo "Step 1: Copy Binaries"
 	@echo "***************************************************************"
-	cp -pr bin/build/* ${ROOT}/bin/
+	cp -pr build/bin/* ${ROOT}/bin/
 	sync
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 2: Copy Libraries"
 	@echo "***************************************************************"
-	cp -pr lib/build/* ${ROOT}/lib/
+	cp -pr build/lib/* ${ROOT}/lib/
 	sync
 	@echo
 	@echo "***************************************************************"

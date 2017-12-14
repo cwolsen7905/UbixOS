@@ -245,6 +245,7 @@ int hdInit( struct device_node *dev ) {
 
   for ( counter = 0; counter < 256; counter++ ) {
     tmp[counter] = inportWord( hdd->hdPort + ATA_DATA );
+kprintf("[%i]", tmp[counter]);
   }
 
   retVal = tmp[0x2F] & 0xFF;

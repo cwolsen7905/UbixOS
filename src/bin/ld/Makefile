@@ -19,7 +19,7 @@ OBJS = main.o findlibrary.o findfunc.o addlibrary.o entry.o
 
 # Link The Binary
 $(OUTPUT) : $(OBJS)
-	$(CC) -m32 -nostdlib -shared -Wl,-soname,$(OUTPUT) -Wl,-m,elf_i386  -e _ld -o ../../build/$(OUTPUT) $(OBJS) $(LIBRARIES) $(SUBS)
+	$(CC) -m32 -nostdlib -shared -Wl,-soname,$(OUTPUT) -Wl,-m,elf_i386_fbsd  -e _ld -o ../../build/bin/$(OUTPUT) $(OBJS) $(LIBRARIES) $(SUBS)
 #	strip $(OUTPUT)
 
 # Compile the source files
@@ -39,8 +39,8 @@ $(OUTPUT) : $(OBJS)
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .S.o:
-	$(CC)  -Wall $(CLFAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 # Clean Up The junk
 clean:
-	$(REMOVE) $(OBJS) $(OUTPUT)
+	$(REMOVE) $(OBJS) ../../build/bin/$(OUTPUT)

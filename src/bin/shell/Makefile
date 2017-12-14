@@ -17,12 +17,12 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o error.o commands.o exec.o input.o
 
-LIBRARIES = ../../build/libc_old.so ../../build/ubix_api.so
+LIBRARIES = ../../build/lib/libc_old.so ../../build/lib/ubix_api.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(BUILD_DIR)/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	strip ${BUILD_DIR}/$(BINARY)
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	strip ${BUILD_DIR}/bin/$(BINARY)
 
 # Compile the source files
 .cpp.o:
@@ -45,4 +45,4 @@ $(BINARY) : $(OBJS)
  
 # Clean Up The junk
 clean:
-	$(REMOVE) $(OBJS) $(BUILD_DIR)/$(BINARY)
+	$(REMOVE) $(OBJS) $(BUILD_DIR)/bin/$(BINARY)

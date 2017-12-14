@@ -25,7 +25,7 @@ STARTUP = ../../lib/csu/*.o
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o ../build/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	$(CC) $(CFLAGS) -o ../../build/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
 	#strip $(BINARY)
 
 # Compile the source files
@@ -46,4 +46,4 @@ $(BINARY) : $(OBJS)
  
 # Clean Up The junk
 clean:
-	$(REMOVE) $(OBJS) $(BINARY)
+	$(REMOVE) $(OBJS) ../../build/bin/$(BINARY)

@@ -21,7 +21,7 @@ OBJS = main.o
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -static -o $(BUILD_DIR)/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	$(CC) $(CFLAGS) -static -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
 #	strip $(BINARY)
 
 # Compile the source files
@@ -42,4 +42,4 @@ $(BINARY) : $(OBJS)
  
 # Clean Up The junk
 clean:
-	$(REMOVE) $(OBJS) $(BUILD_DIR)/$(BINARY)
+	$(REMOVE) $(OBJS) $(BUILD_DIR)/bin/$(BINARY)

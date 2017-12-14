@@ -17,11 +17,11 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o
 
-#MrOlsen (2016-01-19) TEMP: This is just to make it static LIBRARIES = ../../lib/build/libc_old.so
+#MrOlsen (2016-01-19) TEMP: This is just to make it static LIBRARIES = ../../build/lib/libc_old.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(BUILD_DIR)/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
 #	strip $(BINARY)
 
 # Compile the source files
@@ -45,4 +45,4 @@ $(BINARY) : $(OBJS)
  
 # Clean Up The junk
 clean:
-	$(REMOVE) $(OBJS) $(BUILD_DIR)/$(BINARY)
+	$(REMOVE) $(OBJS) $(BUILD_DIR)/bin/$(BINARY)

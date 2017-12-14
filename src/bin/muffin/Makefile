@@ -28,7 +28,7 @@ INCLUDE = -I../../lib/libc/include -I../../lib/libcpp/include -I../../lib/objgfx
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o ../build/$@ $(STARTUP) $(LIBRARIES) $(LIBRARIES2) $(OBJS)
+	$(CC) $(CFLAGS) -o ../../build/bin/$@ $(STARTUP) $(LIBRARIES) $(LIBRARIES2) $(OBJS)
 	strip $(BINARY)
 
 # Compile the source files
@@ -49,4 +49,4 @@ $(BINARY) : $(OBJS)
  
 # Clean Up The junk
 clean:
-	$(REMOVE) $(OBJS) $(BINARY)
+	$(REMOVE) $(OBJS) ../../build/bin/$(BINARY)

@@ -16,7 +16,7 @@ OUTPUT = ubix_api.so
 
 lib.so: $(OBJS)
 	(cd test;make)
-	$(CC) -m32 -nostdlib -shared -Wl,-soname,ubix_api.so -o ${BUILD_DIR}/$(OUTPUT) $(OBJS) $(SUBS)
+	$(CC) -m32 -nostdlib -shared -Wl,-soname,ubix_api.so -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
 
 # Compile the source files
 .cc.o:

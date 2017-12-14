@@ -25,9 +25,9 @@ lib.so: $(OBJS)
 	(cd generic;make)
 	(cd gen;make)
 #	$(LD) $(LDFLAGS) -o $(OUTPUT) $(OBJS) ./stdio/*.o ./sys/*.o ./string/*.o ./stdlib/*.o
-#	$(CC) -nostdlib -shared -Wl,-soname,libc_old.so -o ${BUILD_DIR}/$(OUTPUT) $(OBJS) $(SUBS)
+#	$(CC) -nostdlib -shared -Wl,-soname,libc_old.so -o ${BUILD_DIR}/lib/$(OUTPUT) $(OBJS) $(SUBS)
 # tsort -q for BSD
-	$(CC) -m32 -nostdlib -ggdb -shared -Wl,-x -o ${BUILD_DIR}/$(OUTPUT).so -Wl,-soname,$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
+	$(CC) -m32 -nostdlib -ggdb -shared -Wl,-x -o ${BUILD_DIR}/lib/$(OUTPUT).so -Wl,-soname,$(OUTPUT).so `lorder $(OBJS) $(SUBS) | tsort`
 #	$(CC) -nostdlib -ggdb -static -Wl,-x -o ${BUILD_DIR}/$(OUTPUT).static.so -Wl,-soname,$(OUTPUT).static.so `lorder $(OBJS) $(SUBS) | tsort -q`
 
 # Compile the source files
