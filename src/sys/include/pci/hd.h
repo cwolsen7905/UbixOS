@@ -173,7 +173,7 @@ struct driveInfo {
   char hdFlags;
   char hdShift;
   long hdMask;
-  long hdMulti;
+  u_int32_t hdMulti;
   long hdPort;
   long hdSize;
   long hdCalc;

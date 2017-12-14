@@ -110,7 +110,7 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte, fileDescriptor *fd) 
 #endif
           ) && fs->fs_bsize <= MAXBSIZE && fs->fs_bsize >= sizeof(struct fs))
 				break;
-      kprintf("Finding SuperBlock: [0x%X][%i - %i]\n", fs->fs_magic, sblock_try[n], sblock_try[n] / DEV_BSIZE);
+      kprintf("Finding SBlock: [0x%X][%i - %i]\n", fs->fs_magic, sblock_try[n], sblock_try[n] / DEV_BSIZE);
 		}
 		if (sblock_try[n] == -1) {
 			kprintf("Not ufs\n");

@@ -408,6 +408,8 @@ int hdRead( struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
   //startSector += hdd->parOffset;
   startSector += hdd->lba_start;
 
+kprintf("SS: [0x%X]", startSector);
+
   if ( hdd->hdEnable == 0x0 ) {
     kprintf( "Invalid Drive\n" );
     return(1);
@@ -457,6 +459,7 @@ int hdRead( struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
     return(1);
     go: for ( counter = 0; counter < (hdd->hdCalc << 8); counter++ ) {
       tmp[counter] = inportWord( hdd->hdPort + hdData );
+//kprintf("[0x%X]", tmp[counter]);
     }
     tmp += (counter + 0);
     startSector += hdd->hdCalc;

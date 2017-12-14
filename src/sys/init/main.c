@@ -116,7 +116,7 @@ int kmain( uInt32 rootdev ) {
   //Old 2 new 10
   kprintf( "[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR( rootdev ), B_CONTROLLER( rootdev ), B_SLICE( rootdev ), B_UNIT( rootdev ), B_PARTITION( rootdev ), B_TYPE( rootdev ) );
   //if ( vfs_mount( 0x1, B_PARTITION(rootdev) + 2, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
-  if ( vfs_mount( 0x1, 0x2, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
+  if ( vfs_mount( 0x1, 0x3, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
     kprintf( "Problem Mounting sys Mount Point\n" );
   }
   else
