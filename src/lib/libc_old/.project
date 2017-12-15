@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>UbixOS</name>
+	<name>UbixOS Libc</name>
 	<comment></comment>
 	<projects>
-		<project>UbixOS Libc</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

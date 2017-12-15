@@ -158,6 +158,7 @@ int initHardDisk() {
                   memcpy(devInfo2, devInfo, sizeof(struct device_interface));
                   memcpy(hdd2, hdd, sizeof(struct driveInfo));
                   //hdd2->parOffset = d[i].dp_start + bsdd->d_partitions[x].p_offset;
+                  hdd2->lba_start = d[i].dp_start;
                   hdd2->parOffset = bsdd->d_partitions[x].p_offset;
                   devInfo2->info = hdd2;
                   minor++;
@@ -207,9 +208,9 @@ int hdReset() {
 }
 
 int hdInit(struct device_node *dev) {
-  uInt8 retVal = 0x0;
+  u_int8_t retVal = 0x0;
   int counter = 0x0;
-  uInt16 *tmp = 0x0;
+  u_int16_t *tmp = 0x0;
   struct driveInfo *hdd = dev->devInfo->info;
 
   for (counter = 1000000; counter >= 0; counter--) {
@@ -244,7 +245,7 @@ int hdInit(struct device_node *dev) {
 
   go:
 
-  tmp = (uInt16 *) hdd->ata_identify;
+  tmp = (u_int16_t *) hdd->ata_identify;
 
   for (counter = 0; counter < 256; counter++) {
     tmp[counter] = inportWord(hdd->hdPort + ATA_DATA);
@@ -407,15 +408,9 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
   long retVal = 0x0;
   short transactionCount = 0x0;
   short *tmp = (short *) baseAddr;
-  if (hdd->lba_start == 0) {
-    startSector += 0x3F + hdd->parOffset;
-    //kprintf("SS1: [0x%i][%i]", startSector, hdd->parOffset);
-    //MrOlsen OK I NEED TO GET lba_start configured to the correct offsets
-  }
-  else {
-    startSector += hdd->lba_start;
-    kprintf("SS2: [0x%i][%i]", startSector, hdd->lba_start);
-  }
+  startSector += hdd->parOffset;
+  startSector += hdd->lba_start;
+
 
 
   if (hdd->hdEnable == 0x0) {
