@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>UbixOS</name>
+	<name>UbixOS Kernel</name>
 	<comment></comment>
 	<projects>
-		<project>UbixOS Kernel</project>
-		<project>UbixOS Libc</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

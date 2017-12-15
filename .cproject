@@ -38,6 +38,14 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.toolchain.gnu.base.1467187978.643485524" name="copyvirtualspace.c" rcbsApplicability="disable" resourcePath="src/sys/vmm/copyvirtualspace.c" toolsToInvoke="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1018334610.189207299">
+						<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1018334610.189207299" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1018334610">
+							<option id="gnu.c.compiler.option.include.paths.184126302" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+								<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/src/sys/include}&quot;"/>
+							</option>
+							<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1501868848" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+						</tool>
+					</fileInfo>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -53,18 +61,6 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
-	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
-		<buildTargets>
-			<target name="UbixOS" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
-				<buildCommand>make</buildCommand>
-				<buildArguments/>
-				<buildTarget>UbixOS</buildTarget>
-				<stopOnError>true</stopOnError>
-				<useDefaultCommand>false</useDefaultCommand>
-				<runAllBuilders>true</runAllBuilders>
-			</target>
-		</buildTargets>
-	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1467187978;cdt.managedbuild.toolchain.gnu.base.1467187978.620202241;cdt.managedbuild.tool.gnu.c.compiler.base.60458381;cdt.managedbuild.tool.gnu.c.compiler.input.1011201132">
@@ -79,5 +75,8 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.1467187978;cdt.managedbuild.toolchain.gnu.base.1467187978.620202241;cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1018334610;cdt.managedbuild.tool.gnu.c.compiler.input.1313808258">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
+		<buildTargets/>
 	</storageModule>
 </cproject>

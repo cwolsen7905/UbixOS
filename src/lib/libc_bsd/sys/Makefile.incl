@@ -88,10 +88,6 @@ PSEUDO+=	${INTERPOSED:C/^.*$/_&.o/}
 # Add machine dependent asm sources:
 SRCS+=${MDASM}
 
-# Look though the complete list of syscalls (MIASM) for names that are
-# not defined with machine dependent implementations (MDASM) and are
-# not declared for no generation of default code (NOASM).  Add each
-# syscall that satisfies these conditions to the ASM list.
 .for _asm in ${MIASM}
 .if (${MDASM:R:M${_asm:R}} == "")
 .if (${NOASM:R:M${_asm:R}} == "")

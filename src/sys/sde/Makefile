@@ -2,7 +2,7 @@
 #  $Id: Makefile 89 2016-01-12 00:20:40Z reddawg $
 
 # Include Global 'Source' Options
-Makefile.incl
+include ../../Makefile.incl
 include ../Makefile.incl
 
 #  Linker

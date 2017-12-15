@@ -1,6 +1,8 @@
 # $Id: Makefile 134 2016-01-15 14:50:24Z reddawg $
 # Kernel Makefile (C) 2002 The UbixOS Project
 
+include ../Makefile.incl
+
 #all: kernel-code vmm-code init-code kmods-code kernel-img
 
 all: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code kernel-img

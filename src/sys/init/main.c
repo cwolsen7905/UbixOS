@@ -140,7 +140,7 @@ int kmain(uInt32 rootdev) {
 
   asm("nop");
 
-  if (sysTask == NULL)
+  if (sysTask == 0x0)
     kprintf("OS: Unable to allocate memory\n");
 
   execThread(systemTask, (uInt32) sysTask + 0x2000, 0x0);
