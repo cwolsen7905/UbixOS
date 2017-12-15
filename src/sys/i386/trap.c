@@ -47,7 +47,7 @@ void trap( struct trapframe *frame ) {
       kpanic( "INT OFF! KERN" );
   }
 
-  kprintf("trap_code: %i, EIP: 0x%X\n", frame->tf_trapno, frame->tf_eip);
+  kprintf("trap_code: %i(0x%X), EIP: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip);
 
   switch (trap_code) {
     case 0xC:
@@ -59,8 +59,7 @@ void trap( struct trapframe *frame ) {
   }
 
   kprintf("GOTTA RETURN!\n");
-  while(1)
-;
+  //while(1);
 }
 
 /***

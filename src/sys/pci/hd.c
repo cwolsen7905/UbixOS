@@ -343,7 +343,9 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
   long retVal = 0x0;
   short transactionCount = 0x0;
   short *tmp = (short *) baseAddr;
-  //startSector += hdd->parOffset;
+  if (hdd->lba_start == 0)
+    startSector += hdd->parOffset;
+  else
   startSector += hdd->lba_start;
 
   if (hdd->hdEnable == 0x0) {
@@ -405,10 +407,16 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
   long retVal = 0x0;
   short transactionCount = 0x0;
   short *tmp = (short *) baseAddr;
-  //startSector += hdd->parOffset;
-  startSector += hdd->lba_start;
+  if (hdd->lba_start == 0) {
+    startSector += 0x3F + hdd->parOffset;
+    //kprintf("SS1: [0x%i][%i]", startSector, hdd->parOffset);
+    //MrOlsen OK I NEED TO GET lba_start configured to the correct offsets
+  }
+  else {
+    startSector += hdd->lba_start;
+    kprintf("SS2: [0x%i][%i]", startSector, hdd->lba_start);
+  }
 
-  kprintf("SS: [0x%X]", startSector);
 
   if (hdd->hdEnable == 0x0) {
     kprintf("Invalid Drive\n");
