@@ -640,7 +640,7 @@ int vmm_cleanVirtualSpace( u_int32_t addr ) {
             pageTableSrc[y] = 0x0;
           }
           else if ( (pageTableSrc[y] & PAGE_STACK) == PAGE_STACK ) {
-            //kprintf( "Page Stack!: 0x%X", (x * 0x400000) + (y * 0x1000) );
+            kprintf("Page Stack!: 0x%X", (x * 0x400000) + (y * 0x1000));
             // pageTableSrc[y] = 0x0;
             //MrOlsen (2016-01-18) NOTE: WHat should I Do Here? kprintf( "STACK: (%i:%i)", x, y );
           }

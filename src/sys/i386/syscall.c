@@ -48,9 +48,9 @@
 #include <mpi/mpi.h>
 #include <vmm/vmm.h>
 
-long fuword( const void *base );
+//long fuword( const void *base );
 
-void sdeTestThread();
+//void sdeTestThread();
 
 int InvalidSystemCall() {
   kprintf( "attempt was made to an invalid system call\n" );
