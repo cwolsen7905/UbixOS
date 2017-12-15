@@ -21,12 +21,12 @@ all:
 	@echo "***************************************************************"
 	@echo "Step 2: Build Kernel Objects"
 	@echo "***************************************************************"
-	${MAKE} kernel
+	${KMAKE} kernel
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 3: Link Kernel Objects"
 	@echo "***************************************************************"
-	${MAKE} kernel
+	${KMAKE} kernel
 	@echo
 	@echo "***************************************************************"
 	@echo "Kernel Build For ${_ARCH} Completed On `LC_ALL=C date`"
