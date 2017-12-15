@@ -52,21 +52,7 @@ world:
 	@echo "World Build For ${_ARCH} Completed On `LC_ALL=C date`"
 	@echo "***************************************************************"
 
-install-kernel:
-	@echo
-	@echo "***************************************************************"
-	@echo "Kernel Install For ${_ARCH} Started On `LC_ALL=C date`"
-	@echo "***************************************************************"
-	@echo
-	@echo "***************************************************************"
-	@echo "Step 1: Copy Kernel"
-	@echo "***************************************************************"
-	cp sys/compile/kernel ${ROOT}/boot/kernel/
-	sync
-	@echo
-	@echo "***************************************************************"
-	@echo "Kernel Install For ${_ARCH} Completed On `LC_ALL=C date`"
-	@echo "***************************************************************"
+
 
 install-world:
 	@echo
@@ -99,7 +85,8 @@ install-world:
 clean-kernel:
 	(cd sys;${KMAKE} clean)
 
-install: install-kernel install-world
+install: install-world
+	(cd sys;${KMAKE} install kernel)
 	
 clean:
 	(cd sys;${KMAKE} clean)

@@ -505,7 +505,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
           }
         }
 
-        if ( programHeader[i].phFlags & PF_X && text_size < seg_size ) {
+      if ((programHeader[i].phFlags & PF_X) && text_size < seg_size) {
           kprintf( "setting text: 0x%X - 0x%X\n", seg_addr, seg_size );
           text_size = seg_size;
           text_addr = seg_addr;
