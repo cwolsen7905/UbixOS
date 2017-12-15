@@ -5,7 +5,32 @@ include ../Makefile.incl
 
 #all: kernel-code vmm-code init-code kmods-code kernel-img
 
-all: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code kernel-img
+kernel: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code kernel-img
+
+all:
+	@echo
+	@echo "***************************************************************"
+	@echo "Kernel Build For ${_ARCH} Started On `LC_ALL=C date`"
+	@echo "***************************************************************"
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 1: Clean Kernel"
+	@echo "***************************************************************"
+	${MAKE} clean
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 2: Build Kernel Objects"
+	@echo "***************************************************************"
+	${MAKE} all
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 3: Link Kernel Objects"
+	@echo "***************************************************************"
+	${MAKE} all
+	@echo
+	@echo "***************************************************************"
+	@echo "Kernel Build For ${_ARCH} Completed On `LC_ALL=C date`"
+	@echo "***************************************************************"
 
 generic-code: generic
 	(cd generic;make)

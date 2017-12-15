@@ -9,8 +9,11 @@
 #LD = ld
 #AR = ar
 
-
 #Glogal Override And Defs
+_ARCH?=${MACHINE_ARCH}
+
+_ARCH=i386
+
 REMOVE = rm -rf
 
 FD_DEVICE = /dev/md0

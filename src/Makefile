@@ -1,10 +1,6 @@
 # $Id: Makefile 148 2016-01-18 19:34:32Z reddawg $
 # The System Makefile (C) 2002 The UbixOS Project
 
-_ARCH?=${MACHINE_ARCH}
-
-_ARCH=i386
-
 MAKE=make
 
 CURDIR=${.CURDIR}
@@ -12,7 +8,6 @@ CURDIR=${.CURDIR}
 OBJ_DIR?= ${CURDIR}/obj
 
 CLEANDIR=clean
-
 
 KMAKE= ${MAKE} ${KERNEL_FLAGS} INCLUDE=${KERNEL_INC} KERNEL=${KERNEL_NAME}
 
