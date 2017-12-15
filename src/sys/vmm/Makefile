@@ -2,8 +2,8 @@
 #  $Id: Makefile 132 2016-01-15 14:30:19Z reddawg $
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+include ../../Makefile.incl
+include ../Makefile.incl
 
 #  Objects
 OBJS = page_fault.o pagefault.o getfreevirtualpage.o copyvirtualspace.o setpageattributes.o unmappage.o getphysicaladdr.o getfreepage.o createvirtualspace.o vmm_memory.o paging.o vmm_init.o vmm_mmap.o

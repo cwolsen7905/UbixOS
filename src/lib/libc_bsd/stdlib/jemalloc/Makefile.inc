@@ -1,4 +1,4 @@
-# $FreeBSD: releng/10.2/lib/libc/stdlib/jemalloc/Makefile.inc 234370 2012-04-17 07:22:14Z jasone $
+Makefile.incl 234370 2012-04-17 07:22:14Z jasone $
 
 .PATH: ${.CURDIR}/stdlib/jemalloc
 

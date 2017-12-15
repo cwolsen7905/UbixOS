@@ -2,9 +2,10 @@
 # Kernel Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../Makefile.inc
+include ../../Makefile.incl
+include ../Makefile.incl
 
-CC=gcc
+#CC=gcc
 
 #Kernel File Name
 #BINARY = format

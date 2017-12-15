@@ -2,8 +2,8 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
 
 #Objects
 OBJS = fprintf.o fseek.o printf.o vsprintf.o fd.o vfprintf.o fopen.o fread.o fwrite.o fgetc.o sprintf.o gets.o fclose.o

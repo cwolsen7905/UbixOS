@@ -3,11 +3,14 @@
 
 # allow you to change your default compiler without affecting your other work
 #MrOlsen (2016-01-10) NOTE: I pass all this now
-CFLAGS = -m32 
+#CFLAGS = -m32 
 #CC = cc
 #CXX = c++
 #LD = ld
 #AR = ar
+
+
+#Glogal Override And Defs
 REMOVE = rm -rf
 
 FD_DEVICE = /dev/md0

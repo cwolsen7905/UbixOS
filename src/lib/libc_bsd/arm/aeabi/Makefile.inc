@@ -1,4 +1,4 @@
-# $FreeBSD: releng/10.2/lib/libc/arm/aeabi/Makefile.inc 273471 2014-10-22 13:50:38Z andrew $
+Makefile.incl 273471 2014-10-22 13:50:38Z andrew $
 
 .PATH: ${.CURDIR}/arm/aeabi
 

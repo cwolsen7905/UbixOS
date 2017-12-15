@@ -62,50 +62,50 @@ MDASM=
 MIASM=
 NOASM=
 
-.include "${.CURDIR}/${LIBC_ARCH}/Makefile.inc"
-.include "${.CURDIR}/db/Makefile.inc"
-.include "${.CURDIR}/compat-43/Makefile.inc"
-.include "${.CURDIR}/gdtoa/Makefile.inc"
-.include "${.CURDIR}/gen/Makefile.inc"
-.include "${.CURDIR}/gmon/Makefile.inc"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
 .if ${MK_ICONV} != "no"
-.include "${.CURDIR}/iconv/Makefile.inc"
+Makefile.incl"
 .endif
-.include "${.CURDIR}/inet/Makefile.inc"
-.include "${.CURDIR}/isc/Makefile.inc"
-.include "${.CURDIR}/locale/Makefile.inc"
-.include "${.CURDIR}/md/Makefile.inc"
-.include "${.CURDIR}/nameser/Makefile.inc"
-.include "${.CURDIR}/net/Makefile.inc"
-.include "${.CURDIR}/nls/Makefile.inc"
-.include "${.CURDIR}/posix1e/Makefile.inc"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
 .if ${LIBC_ARCH} != "amd64" && \
     ${LIBC_ARCH} != "ia64" && \
     ${LIBC_ARCH} != "powerpc64" && \
     ${LIBC_ARCH} != "sparc64" && \
     ${MACHINE_ARCH:Mmipsn32*} == "" && \
     ${MACHINE_ARCH:Mmips64*} == ""
-.include "${.CURDIR}/quad/Makefile.inc"
+Makefile.incl"
 .endif
-.include "${.CURDIR}/regex/Makefile.inc"
-.include "${.CURDIR}/resolv/Makefile.inc"
-.include "${.CURDIR}/stdio/Makefile.inc"
-.include "${.CURDIR}/stdlib/Makefile.inc"
-.include "${.CURDIR}/stdlib/jemalloc/Makefile.inc"
-.include "${.CURDIR}/stdtime/Makefile.inc"
-.include "${.CURDIR}/string/Makefile.inc"
-.include "${.CURDIR}/sys/Makefile.inc"
-.include "${.CURDIR}/rpc/Makefile.inc"
-.include "${.CURDIR}/uuid/Makefile.inc"
-.include "${.CURDIR}/xdr/Makefile.inc"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
+Makefile.incl"
 .if ${LIBC_ARCH} == "arm" || ${LIBC_ARCH} == "mips"
-.include "${.CURDIR}/softfloat/Makefile.inc"
+Makefile.incl"
 .endif
 .if ${MK_NIS} != "no"
 CFLAGS+= -DYP
-.include "${.CURDIR}/yp/Makefile.inc"
+Makefile.incl"
 .endif
-.include "${.CURDIR}/capability/Makefile.inc"
+Makefile.incl"
 .if ${MK_HESIOD} != "no"
 CFLAGS+= -DHESIOD
 .endif

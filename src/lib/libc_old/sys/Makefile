@@ -2,8 +2,8 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
 
 #Objects
 OBJS = mpi.o startsde.o mmap.o error.o getuptime.o gettime.o getdrives.o setuid.o setgid.o getuid.o getgid.o exec.o getpid.o fork.o pidstatus.o getpage.o sched.o auth.o execve.o

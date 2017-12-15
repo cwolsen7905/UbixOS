@@ -1,7 +1,7 @@
 # $Id: Makefile 89 2016-01-12 00:20:40Z reddawg $
 # Kernel Makefile (C) 2002 The UbixOS Project
 
-include ../../../Makefile.inc
+Makefile.incl
 
 #Objects
 OBJS = sStyle.o sTypes.o vContext.o vButton.o vMenuBar.o vView.o vCanvas.o vDesktop.o vTitleTab.o

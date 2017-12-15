@@ -2,7 +2,7 @@
 # Application Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
+Makefile.incl
 
 #Compiler Flags
 CFLAGS = -I../../lib/libc/include -fno-builtin -nostdlib -nostdinc

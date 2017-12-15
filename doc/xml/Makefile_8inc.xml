@@ -14,6 +14,6 @@
 <codeline lineno="5"><highlight class="normal">CFLAGS<sp/>=<sp/>-Wall<sp/>-nostdlib<sp/>-nostdinc<sp/>-fno-builtin<sp/>-fno-exceptions<sp/>-O</highlight></codeline>
 <codeline lineno="6"><highlight class="normal">KERNEL<sp/>=<sp/>ubix.elf</highlight></codeline>
     </programlisting>
-    <location file="/usr/home/reddawg/source/ubix2/src/sys/Makefile.inc"/>
+Makefile.incl"/>
   </compounddef>
 </doxygen>

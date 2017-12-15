@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 10/24/94
-# $FreeBSD: releng/10.2/lib/libc/sys/Makefile.inc 281981 2015-04-25 08:14:08Z kib $
+Makefile.incl 281981 2015-04-25 08:14:08Z kib $
 
 # sys sources
 .PATH: ${.CURDIR}/${LIBC_ARCH}/sys ${.CURDIR}/sys
@@ -13,7 +13,7 @@
 # MDASM names override the default syscall names in MIASM.
 # NOASM will prevent the default syscall code from being generated.
 #
-.sinclude "${.CURDIR}/${LIBC_ARCH}/sys/Makefile.inc"
+Makefile.incl"
 
 SRCS+= clock_gettime.c gettimeofday.c __vdso_gettimeofday.c
 NOASM+=  clock_gettime.o gettimeofday.o

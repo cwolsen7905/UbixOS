@@ -52,8 +52,8 @@ typedef __uint16_t u_int16_t;
 typedef __uint32_t u_int32_t;
 typedef __uint64_t u_int64_t;
 //typedef long long int quad_t;
-//typedef __uint64_t      quad_t;
-typedef __uint32_t quad_t;
+typedef __uint64_t quad_t;
+//typedef __uint32_t quad_t;
 
 typedef unsigned char u_char;
 typedef unsigned short u_short;

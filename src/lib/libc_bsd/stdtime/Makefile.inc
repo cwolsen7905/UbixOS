@@ -1,5 +1,5 @@
 #	Makefile.inc,v 1.2 1994/09/13 21:26:01 wollman Exp
-# $FreeBSD: releng/10.2/lib/libc/stdtime/Makefile.inc 248672 2013-03-24 01:35:37Z dim $
+Makefile.incl 248672 2013-03-24 01:35:37Z dim $
 
 .PATH:	${.CURDIR}/stdtime ${.CURDIR}/../locale \
 	${.CURDIR}/../../contrib/tzcode/stdtime

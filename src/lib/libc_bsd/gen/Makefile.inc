@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.6 (Berkeley) 5/4/95
-# $FreeBSD: releng/10.2/lib/libc/gen/Makefile.inc 277317 2015-01-18 11:54:20Z kib $
+Makefile.incl 277317 2015-01-18 11:54:20Z kib $
 
 # machine-independent gen sources
 .PATH: ${.CURDIR}/${LIBC_ARCH}/gen ${.CURDIR}/gen
@@ -166,7 +166,7 @@ cancelpoints_${src}:
 SYM_MAPS+=${.CURDIR}/gen/Symbol.map
 
 # machine-dependent gen sources
-.sinclude "${.CURDIR}/${LIBC_ARCH}/gen/Makefile.inc"
+Makefile.incl"
 
 MAN+=	alarm.3 \
 	arc4random.3 \

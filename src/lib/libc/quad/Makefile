@@ -2,9 +2,9 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
-include ../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
+include ../Makefile.incl
 
 #Objects
 #OBJS = anddi3.o adddi3.o qdivrem.o umoddi3.o udivdi3.o divdi3.o

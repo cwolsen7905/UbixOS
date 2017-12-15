@@ -1,4 +1,4 @@
-# $FreeBSD: releng/10.2/lib/libc/md/Makefile.inc 270837 2014-08-30 09:55:38Z ume $
+Makefile.incl 270837 2014-08-30 09:55:38Z ume $
 
 .PATH: ${.CURDIR}/../libmd
 

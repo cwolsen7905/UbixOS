@@ -88,7 +88,7 @@ LIBFICL=	${.OBJDIR}/../../ficl/libficl.a
 
 # Always add MI sources
 .PATH:		${.CURDIR}/../../common
-.include	"${.CURDIR}/../../common/Makefile.inc"
+Makefile.incl"
 CFLAGS+=	-I${.CURDIR}/../../common
 CFLAGS+=	-I.
 
@@ -100,7 +100,7 @@ LDFLAGS=	-nostdlib -static -T ${.CURDIR}/ldscript.${MACHINE_CPUARCH}
 
 # Pull in common loader code
 .PATH:		${.CURDIR}/../../uboot/common
-.include	"${.CURDIR}/../../uboot/common/Makefile.inc"
+Makefile.incl"
 CFLAGS+=	-I${.CURDIR}/../../uboot/common
 
 # U-Boot standalone support library
@@ -147,7 +147,7 @@ CLEANFILES+=	ldscript.abs ldscript.pie ubldr ubldr.pie ubldr.bin
 
 .if !defined(LOADER_ONLY)
 .PATH: ${.CURDIR}/../../forth
-.include	"${.CURDIR}/../../forth/Makefile.inc"
+Makefile.incl"
 
 # Install loader.rc.
 FILES+=	loader.rc

@@ -69,10 +69,10 @@
  * SBLOCKSEARCH specifies the order in which the locations should be searched.
  */
 #define	SBLOCK_FLOPPY	     0
-#define	SBLOCK_UFS1	  8192/512
-#define	SBLOCK_UFS2	 65536/512
-#define	SBLOCK_PIGGY	262144/512
-#define	SBLOCKSIZE	  8192/512
+#define	SBLOCK_UFS1	  8192
+#define	SBLOCK_UFS2	 65536
+#define	SBLOCK_PIGGY	262144
+#define	SBLOCKSIZE	  8192
 #define	SBLOCKSEARCH \
 	{ SBLOCK_UFS2, SBLOCK_UFS1, SBLOCK_FLOPPY, SBLOCK_PIGGY, -1 }
 

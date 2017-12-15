@@ -1,8 +1,8 @@
 # $Id: Makefile 89 2016-01-12 00:20:40Z reddawg $
 # Kernel Makefile (C) 2002 The UbixOS Project
 
-include ../../Makefile.inc
-include ../Makefile.inc
+Makefile.incl
+Makefile.incl
 
 #Delete Program
 REMOVE = rm -f

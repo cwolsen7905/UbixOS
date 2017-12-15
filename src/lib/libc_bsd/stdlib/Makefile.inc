@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.3 (Berkeley) 2/4/95
-# $FreeBSD: releng/10.2/lib/libc/stdlib/Makefile.inc 237573 2012-06-25 21:51:40Z issyl0 $
+Makefile.incl 237573 2012-06-25 21:51:40Z issyl0 $
 
 # machine-independent stdlib sources
 .PATH: ${.CURDIR}/${LIBC_ARCH}/stdlib ${.CURDIR}/stdlib
@@ -16,7 +16,7 @@ MISRCS+=_Exit.c a64l.c abort.c abs.c atexit.c atof.c atoi.c atol.c atoll.c \
 SYM_MAPS+= ${.CURDIR}/stdlib/Symbol.map
 
 # machine-dependent stdlib sources
-.sinclude "${.CURDIR}/${LIBC_ARCH}/stdlib/Makefile.inc"
+Makefile.incl"
 
 MAN+=	a64l.3 abort.3 abs.3 alloca.3 atexit.3 atof.3 \
 	atoi.3 atol.3 at_quick_exit.3 bsearch.3 \

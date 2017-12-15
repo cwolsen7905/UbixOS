@@ -3,8 +3,8 @@
 #  $Id: Makefile 54 2016-01-11 01:29:55Z reddawg $
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+Makefile.incl
+include ../../Makefile.incl
 
 #  Objects
 OBJS = api_lib.o api_msg.o err.o sockets.o tcpip.o 

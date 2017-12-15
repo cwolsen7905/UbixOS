@@ -75,22 +75,22 @@
 
  *****************************************************************************************/
 ubixDescriptorTable(ubixGDT, 11) {
-  { .dummy = 0},
-  ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
-  ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
-  ubixStandardDescriptor(0x0000, 0xFFFFF, (dLdt)),
-  ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
-  ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim + dDpl3)),
-  ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
-  ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss)),
-  ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
-  ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
-  ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
+{ .dummy = 0},
+ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
+ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
+ubixStandardDescriptor(0x0000, 0xFFFFF, (dLdt)),
+ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
+ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim + dDpl3)),
+ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
+ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss)),
+ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
+ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
+ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
 };
 
 struct {
-    unsigned short limit __attribute__ ((packed));
-    union descriptorTableUnion *gdt __attribute__ ((packed));
+  unsigned short limit __attribute__ ((packed));
+  union descriptorTableUnion *gdt __attribute__ ((packed));
 } loadGDT = { (11 * sizeof(union descriptorTableUnion) - 1), ubixGDT };
 
 /**
@@ -98,7 +98,7 @@ struct {
  *
  * \param rootdev address of root device structure
  */
-int kmain( uInt32 rootdev ) {
+int kmain(uInt32 rootdev) {
   /* Set up counter for startup routine */
   int i = 0x0;
   uInt32 *sysTask = 0x0;
@@ -107,20 +107,19 @@ int kmain( uInt32 rootdev ) {
   clearScreen();
 
   /* Modify src/sys/include/ubixos/init.h to add a startup routine */
-  for ( i = 0x0; i < init_tasksTotal; i++ ) {
-    if ( init_tasks[i]() != 0x0 )
-      kpanic( "Error: Initializing System.\n" );
+  for (i = 0x0; i < init_tasksTotal; i++) {
+    if (init_tasks[i]() != 0x0)
+      kpanic("Error: Initializing System.\n");
   }
 
   /* New Root Mount Point */
   //Old 2 new 10
-  kprintf( "[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR( rootdev ), B_CONTROLLER( rootdev ), B_SLICE( rootdev ), B_UNIT( rootdev ), B_PARTITION( rootdev ), B_TYPE( rootdev ) );
+  kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR(rootdev), B_CONTROLLER(rootdev), B_SLICE(rootdev), B_UNIT(rootdev), B_PARTITION(rootdev), B_TYPE(rootdev));
   //if ( vfs_mount( 0x1, B_PARTITION(rootdev) + 2, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
-  if ( vfs_mount( 0x1, 0x2, 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
-    kprintf( "Problem Mounting sys Mount Point\n" );
-  }
-  else
-    kprintf( "Mounted sys\n" );
+  if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "sys", "rw") != 0x0) {
+    kprintf("Problem Mounting sys Mount Point\n");
+  } else
+    kprintf("Mounted sys\n");
 
   /* Do our mounting */
   /*
@@ -133,26 +132,26 @@ int kmain( uInt32 rootdev ) {
    */
 
   /* Initialize the system */
-  kprintf( "Free Pages: [%i]\n", systemVitals->freePages );
-  kprintf( "MemoryMap:  [0x%X]\n", vmmMemoryMap );
-  kprintf( "Starting OS\n" );
+  kprintf("Free Pages: [%i]\n", systemVitals->freePages);
+  kprintf("MemoryMap:  [0x%X]\n", vmmMemoryMap);
+  kprintf("Starting OS\n");
 
-  sysTask = kmalloc( 0x2000 );
+  sysTask = kmalloc(0x2000);
 
   asm("nop");
 
-  if ( sysTask == NULL )
-    kprintf( "OS: Unable to allocate memory\n" );
+  if (sysTask == NULL)
+    kprintf("OS: Unable to allocate memory\n");
 
-  execThread( systemTask, (uInt32) sysTask + 0x2000, 0x0 );
-  kprintf( "Thread Start!\n" );
+  execThread(systemTask, (uInt32) sysTask + 0x2000, 0x0);
+  kprintf("Thread Start!\n");
 
-  //execFile( "sys:/bin/init", 0x0, 0x0, 0x0 ); /* OS Initializer    */
-  execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */
+  execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
+  //execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */
 
-  irqEnable( 0x0 );
+  irqEnable(0x0);
 
-  while ( 0x1 )
+  while (0x1)
     asm("hlt");
 
   /* Keep haulting until the scheduler reacts */

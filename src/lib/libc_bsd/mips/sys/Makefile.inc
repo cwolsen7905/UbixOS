@@ -1,4 +1,4 @@
-# $FreeBSD: releng/10.2/lib/libc/mips/sys/Makefile.inc 246117 2013-01-30 12:48:16Z kib $
+Makefile.incl 246117 2013-01-30 12:48:16Z kib $
 
 SRCS+=	__vdso_gettc.c
 

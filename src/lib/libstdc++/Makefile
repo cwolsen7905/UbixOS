@@ -2,8 +2,8 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+Makefile.incl
+Makefile.incl
 
 #Objects
 OBJS = sinst.o

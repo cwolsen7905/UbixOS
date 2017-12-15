@@ -2,8 +2,8 @@
 # Application Makefile (C) 2002-2004 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+Makefile.incl
+Makefile.incl
 
 #Linker
 LD = ld

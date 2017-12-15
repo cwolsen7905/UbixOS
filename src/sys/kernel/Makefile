@@ -2,8 +2,8 @@
 #  $Id: Makefile 150 2016-01-18 19:59:43Z reddawg $
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+include ../../Makefile.incl
+include ../Makefile.incl
 
 #  Objects
 OBJS = tty.o kern_sig.o pipe.o kern_descrip.o kern_sysctl.o gen_calls.o endtask.o ld.o time.o syscall_new.o elf.o ubthread.o vitals.o access.o syscalls.o

@@ -2,8 +2,8 @@
 #  $Id: Makefile 54 2016-01-11 01:29:55Z reddawg $
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+Makefile.incl
+include ../../Makefile.incl
 
 #  Objects
 OBJS = udpecho.o init.o sys_arch.o shell.o bot.o

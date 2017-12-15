@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.1 (Berkeley) 6/4/93
-# $FreeBSD: releng/10.2/lib/libc/string/Makefile.inc 281570 2015-04-16 00:24:21Z allanjude $
+Makefile.incl 281570 2015-04-16 00:24:21Z allanjude $
 
 .PATH: ${.CURDIR}/${LIBC_ARCH}/string ${.CURDIR}/string
 
@@ -26,7 +26,7 @@ SYM_MAPS+=	${.CURDIR}/string/Symbol.map
 
 
 # machine-dependent string sources
-.sinclude "${.CURDIR}/${LIBC_ARCH}/string/Makefile.inc"
+Makefile.incl"
 
 MAN+=	bcmp.3 bcopy.3 bstring.3 bzero.3 ffs.3 index.3 memccpy.3 memchr.3 \
 	memcmp.3 memcpy.3 memmem.3 memmove.3 memset.3 strcasecmp.3 strcat.3 \

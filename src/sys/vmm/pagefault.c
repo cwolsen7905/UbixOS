@@ -52,7 +52,7 @@ static spinLock_t pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
 
  *****************************************************************************************/
 /* void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) { */
-void vmm_pageFault( struct trapframe *frame, u_int32_t cr2 ) {
+void vmm_pageFault(struct trapframe *frame, u_int32_t cr2) {
   uInt32 i = 0x0, pageTableIndex = 0x0, pageDirectoryIndex = 0x0;
   uInt32 *pageDir = 0x0, *pageTable = 0x0;
   uInt32 *src = 0x0, *dst = 0x0;
@@ -61,18 +61,18 @@ void vmm_pageFault( struct trapframe *frame, u_int32_t cr2 ) {
   u_int32_t eip = frame->tf_eip;
   u_int32_t memAddr = cr2;
 
-kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
+//MrOlsen 2017-12-15 - kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
 
   /* Try to aquire lock otherwise spin till we do */
-  spinLock( &pageFaultSpinLock );
+  spinLock(&pageFaultSpinLock);
 
   /* Set page dir pointer to the address of the visable page directory */
   pageDir = (uInt32 *) PD_BASE_ADDR;
 
   /* UBU - This is a temp panic for 0x0 read write later on I will handle this differently */
-  if ( memAddr == 0x0 ) {
-    kprintf( "Segfault At Address: [0x%X][0x%X][%i][0x%X]\n", memAddr, esp, _current->id, eip );
-    kpanic( "Error We Wrote To 0x0\n" );
+  if (memAddr == 0x0) {
+    kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X]\n", memAddr, esp, _current->id, eip);
+    kpanic("Error We Wrote To 0x0\n");
   }
 
   /* Calculate The Page Directory Index */
@@ -82,53 +82,49 @@ kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err
   pageTableIndex = ((memAddr >> 12) & 0x3FF);
 
   /* UBU - This is a temporary routine for handling access to a page of a non existant page table */
-  if ( pageDir[pageDirectoryIndex] == 0x0 ) {
-    kprintf( "Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip );
-    spinUnlock( &pageFaultSpinLock );
-    endTask( _current->id );
-  }
-  else {
+  if (pageDir[pageDirectoryIndex] == 0x0) {
+    kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip);
+    spinUnlock(&pageFaultSpinLock);
+    endTask(_current->id);
+  } else {
     /* Set pageTable To Point To Virtual Address Of Page Table */
     pageTable = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
 
     /* Test if this is a COW on page */
-    if ( ((uInt32) pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW ) {
+    if (((uInt32) pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW) {
       /* Set Src To Base Address Of Page To Copy */
       src = (uInt32 *) (memAddr & 0xFFFFF000);
       /* Allocate A Free Page For Destination */
       /* USE vmInfo */
-      dst = (uInt32 *) vmmGetFreeVirtualPage( _current->id, 1, 0x1 );
+      dst = (uInt32 *) vmmGetFreeVirtualPage(_current->id, 1, 0x1);
       /* Copy Memory */
-      for ( i = 0; i < PD_ENTRIES; i++ ) {
+      for (i = 0; i < PD_ENTRIES; i++) {
         dst[i] = src[i];
       }
       /* Adjust The COW Counter For Physical Page */
-      adjustCowCounter( ((uInt32) pageTable[pageTableIndex] & 0xFFFFF000), -1 );
+      adjustCowCounter(((uInt32) pageTable[pageTableIndex] & 0xFFFFF000), -1);
       /* Remap In New Page */
-      pageTable[pageTableIndex] = (uInt32)( vmm_getPhysicalAddr( (uInt32) dst ) | (memAddr & 0xFFF) );
+      pageTable[pageTableIndex] = (uInt32) (vmm_getPhysicalAddr((uInt32) dst) | (memAddr & 0xFFF));
       /* Unlink From Memory Map Allocated Page */
-      vmmUnmapPage( (uInt32) dst, 1 );
-    }
-    else if ( pageTable[pageTableIndex] != 0x0 ) {
-      kprintf( "Security failed pagetable not user permission\n" );
-      kprintf( "pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
-      kprintf( "pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip );
-      kprintf( "Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n", memAddr, esp, _current->id, eip );
-      spinUnlock( &pageFaultSpinLock );
-      endTask( _current->id );
-    }
-    else if ( memAddr < (_current->td.vm_dsize + _current->td.vm_daddr) ) {
-      pageTable[pageTableIndex] = (uInt32) vmmFindFreePage( _current->id ) | PAGE_DEFAULT;
-    }
-    else {
-      spinUnlock( &pageFaultSpinLock );
+      vmmUnmapPage((uInt32) dst, 1);
+    } else if (pageTable[pageTableIndex] != 0x0) {
+      kprintf("Security failed pagetable not user permission\n");
+      kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
+      kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
+      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n", memAddr, esp, _current->id, eip);
+      spinUnlock(&pageFaultSpinLock);
+      endTask(_current->id);
+    } else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
+      pageTable[pageTableIndex] = (uInt32) vmmFindFreePage(_current->id) | PAGE_DEFAULT;
+    } else {
+      spinUnlock(&pageFaultSpinLock);
       /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
-      kprintf( "pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
-      kprintf( "pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip );
-      kprintf( "Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n", memAddr, esp, _current->id, eip );
-      kprintf( "Out Of Stack Space: [0x%X]\n", memAddr & 0xFF0000 );
-      spinUnlock( &pageFaultSpinLock );
-      endTask( _current->id );
+      kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
+      kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
+      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n", memAddr, esp, _current->id, eip);
+      kprintf("Out Of Stack Space: [0x%X]\n", memAddr & 0xFF0000);
+      spinUnlock(&pageFaultSpinLock);
+      endTask(_current->id);
     }
   }
   asm volatile(
@@ -137,7 +133,7 @@ kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err
   );
 
   /* Release the spin lock */
-  spinUnlock( &pageFaultSpinLock );
+  spinUnlock(&pageFaultSpinLock);
   return;
 }
 

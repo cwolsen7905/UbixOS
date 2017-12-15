@@ -1,4 +1,4 @@
-# $FreeBSD: releng/10.2/lib/libc/resolv/Makefile.inc 270838 2014-08-30 10:16:25Z ume $
+Makefile.incl 270838 2014-08-30 10:16:25Z ume $
 
 # resolv sources
 .PATH: ${.CURDIR}/resolv

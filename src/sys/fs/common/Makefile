@@ -2,8 +2,8 @@
 #  $Id: Makefile 102 2016-01-12 03:59:34Z reddawg $
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
 
 #  Objects
 OBJS = crc32.o gpt.o

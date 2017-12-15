@@ -2,8 +2,8 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+include ../../Makefile.incl
+include ../Makefile.incl
 
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-uninitialized -O2 -fno-strict-aliasing -pipe -Wsystem-headers -Werror -Wall -Wno-format-y2k -W -Wno-unused-parameter -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wshadow -Wcast-align -Wunused-parameter -Wchar-subscripts -Winline -Wnested-externs -Wredundant-decls #-DGCRT
 

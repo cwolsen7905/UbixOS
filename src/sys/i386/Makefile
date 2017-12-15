@@ -2,8 +2,8 @@
 #  $Id: Makefile 202 2016-01-23 15:21:35Z reddawg $
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+include ../../Makefile.incl
+include ../Makefile.incl
 
 #  Objects
 OBJS = schedyield.o kpanic.o timer.o spinlock.o i386_exec.o sys_call_new.o sys_call.o syscall.o bioscall.o fork.o systemtask.o sched.o cpu.o trap.o 

@@ -2,8 +2,8 @@
 #  $Id: Makefile 54 2016-01-11 01:29:55Z reddawg $
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+include ../../Makefile.incl
+include ../Makefile.incl
 
 #  Objects
 OBJS = mouse.o atkbd.o fdc.o 8259.o pit.o

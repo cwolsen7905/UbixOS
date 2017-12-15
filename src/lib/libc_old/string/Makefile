@@ -2,8 +2,8 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
 #Objects
 OBJS = swab.o strstr.o strspn.o strsep.o strpbrk.o strnstr.o strncpy.o strncmp.o strncat.o strmode.o strdup.o strcspn.o strcat.o strchr.o stpcpy.o memchr.o memccpy.o strcasecmp.o rindex.o index.o ffs.o bzero.o bcopy.o bcmp.o memmove.o strrchr.o strlcat.o strlcpy.o strerror.o strtok.o memcpy.o memset.o memcmp.o strlen.o strcmp.o strcasestr.o
 

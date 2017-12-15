@@ -1,5 +1,5 @@
 #	@(#)Makefile.inc	8.3 (Berkeley) 4/17/94
-# $FreeBSD: releng/10.2/lib/libc/stdio/Makefile.inc 254151 2013-08-09 17:24:23Z jilles $
+Makefile.incl 254151 2013-08-09 17:24:23Z jilles $
 
 # stdio sources
 .PATH: ${.CURDIR}/stdio

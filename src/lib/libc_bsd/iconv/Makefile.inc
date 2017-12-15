@@ -1,4 +1,4 @@
-# $FreeBSD: releng/10.2/lib/libc/iconv/Makefile.inc 258750 2013-11-29 19:44:30Z gjb $
+Makefile.incl 258750 2013-11-29 19:44:30Z gjb $
 
 # iconv sources
 .PATH: ${.CURDIR}/iconv

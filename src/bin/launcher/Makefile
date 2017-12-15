@@ -2,8 +2,8 @@
 # Application Makefile (C) 2002-2004 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../Makefile.inc
-include ../Makefile.inc
+Makefile.incl
+Makefile.incl
 
 INCLUDES += -I./include -I../../lib/views/sunlight/include -I../../lib/libcpp/include -I../../lib/objgfx40/objgfx40
 CFLAGS = -nostdlib -fno-exceptions -frtti

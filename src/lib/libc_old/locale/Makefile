@@ -2,8 +2,8 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
 
 #Objects
 OBJS = mbrtowc.o srune.o none.o wcrtomb.o table.o runetype.o toupper.o tolower.o

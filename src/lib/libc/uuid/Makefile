@@ -2,9 +2,9 @@
 # The System Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
-include ../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
+include ../Makefile.incl
 
 #Objects
 OBJS = uuid_compare.o uuid_create.o uuid_create_nil.o uuid_equal.o uuid_from_string.o uuid_hash.o uuid_is_nil.o uuid_to_string.o

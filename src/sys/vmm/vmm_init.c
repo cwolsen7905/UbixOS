@@ -39,13 +39,13 @@
 
  */
 int vmm_init() {
-  if ( vmmMemMapInit() != 0x0 )
-    K_PANIC( "Couldn't Initialize vmmMemMap" );
+  if (vmmMemMapInit() != 0x0)
+    K_PANIC("Couldn't Initialize vmmMemMap");
 
-  if ( vmm_pagingInit() != 0x0 )
-    K_PANIC( "Couldn't Initialize paging system" );
+  if (vmm_pagingInit() != 0x0)
+    K_PANIC("Couldn't Initialize paging system");
 
-  return ( 0x0 );
+  return (0x0);
 }
 
 /***

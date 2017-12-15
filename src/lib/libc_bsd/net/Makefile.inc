@@ -1,5 +1,5 @@
 #	from @(#)Makefile.inc	8.2 (Berkeley) 9/5/93
-# $FreeBSD: releng/10.2/lib/libc/net/Makefile.inc 237402 2012-06-21 15:47:06Z obrien $
+Makefile.incl 237402 2012-06-21 15:47:06Z obrien $
 
 # machine-independent net sources
 .PATH: ${.CURDIR}/net
