@@ -2,10 +2,7 @@
 # Kernel Makefile (C) 2002 The UbixOS Project
 
 include ../Makefile.incl
-
-#all: kernel-code vmm-code init-code kmods-code kernel-img
-
-kernel: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code kernel-img
+include Makefile.incl
 
 all:
 	@echo
@@ -21,16 +18,18 @@ all:
 	@echo "***************************************************************"
 	@echo "Step 2: Build Kernel Objects"
 	@echo "***************************************************************"
-	${KMAKE} kernel
+	${KMAKE} kernel-build
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 3: Link Kernel Objects"
 	@echo "***************************************************************"
-	${KMAKE} kernel
+	${KMAKE} kernel-build
 	@echo
 	@echo "***************************************************************"
 	@echo "Kernel Build For ${_ARCH} Completed On `LC_ALL=C date`"
 	@echo "***************************************************************"
+
+kernel-build: init-code sys-code arch-code kernel-code vmm-code mpi-code fs-code lib-code isa-code pci-code kernel-img
 
 generic-code: generic
 	(cd generic;make)
@@ -42,7 +41,6 @@ arch-code: ${_ARCH}
 	(cd ${_ARCH};make)
 	
 kernel-code: kernel
-	(echo ${_ARCH})
 	(cd kernel;make)
 	
 isa-code: isa
@@ -93,6 +91,22 @@ install:
 #	(cd boot;make install)
 #	(cd ../tools/;make format-dsk)
 	(cd ../tools/;make install-ubix)
+
+install-kernel:
+	@echo
+	@echo "***************************************************************"
+	@echo "Kernel Install For ${_ARCH} Started On `LC_ALL=C date`"
+	@echo "***************************************************************"
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 1: Copy Kernel"
+	@echo "***************************************************************"
+	cp sys/compile/kernel ${ROOT}/boot/kernel/
+	sync
+	@echo
+	@echo "***************************************************************"
+	@echo "Kernel Install For ${_ARCH} Completed On `LC_ALL=C date`"
+	@echo "***************************************************************"
 
 clean:
 	(cd init;make clean)
