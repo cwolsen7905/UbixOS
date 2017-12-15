@@ -24,29 +24,7 @@ all: kernel world install-kernel install-world
 # depend kernel tools
 
 kernel:
-	@echo
-	@echo "***************************************************************"
-	@echo "Kernel Build For ${_ARCH} Started On `LC_ALL=C date`"
-	@echo "***************************************************************"
-	@echo
-	@echo "***************************************************************"
-	@echo "Step 1: Clean Kernel"
-	@echo "***************************************************************"
-	#cd ${KERNEL_SRC}; ${KMAKE} ${CLEANDIR}
-	@echo
-	@echo "***************************************************************"
-	@echo "Step 2: Build Kernel Objects"
-	@echo "***************************************************************"
-	cd ${KERNEL_SRC}; ${KMAKE} all
-	@echo
-	@echo "***************************************************************"
-	@echo "Step 3: Link Kernel Objects"
-	@echo "***************************************************************"
-	cd ${KERNEL_SRC}; ${KMAKE} all
-	@echo
-	@echo "***************************************************************"
-	@echo "Kernel Build For ${_ARCH} Completed On `LC_ALL=C date`"
-	@echo "***************************************************************"
+	@cd sys;make
 
 world:
 	@echo

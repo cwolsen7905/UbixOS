@@ -124,7 +124,7 @@ int sysCheckPid( int pid, int *ptr ) {
  ************************************************************************/
 int sysGetFreePage( struct thread *td, u_int32_t *count) {
   kprintf("sysGetFreePage - Count: %i\n", *count);
-  return(vmmGetFreeVirtualPage(_current->id, *count, VM_THRD));
+  return((int) vmmGetFreeVirtualPage(_current->id, *count, VM_THRD));
   //return(vmmGetFreeVirtualPage(_current->id, *count, VM_TASK));
 }
 

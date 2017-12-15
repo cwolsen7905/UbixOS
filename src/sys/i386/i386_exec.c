@@ -265,7 +265,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
 
       }
       _current->oInfo.vmStart = 0x80000000;
-      _current->td.vm_daddr = (char *) (programHeader[i].phVaddr & 0xFFFFF000);
+      _current->td.vm_daddr = (u_long) (programHeader[i].phVaddr & 0xFFFFF000);
       /* Now Load Section To Memory */
       fseek( tmpFd, programHeader[i].phOffset, 0 );
       fread( (void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, tmpFd );
@@ -281,7 +281,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
 
   /* Set Virtual Memory Start */
   _current->oInfo.vmStart = 0x80000000;
-  _current->td.vm_daddr = (char *) (programHeader[i].phVaddr & 0xFFFFF000);
+  _current->td.vm_daddr = (u_long) (programHeader[i].phVaddr & 0xFFFFF000);
 
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
@@ -799,7 +799,7 @@ int sys_exec_dead( char *file, char *ap ) {
         }
         else {
           _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-          _current->td.vm_daddr = (char *) seg_addr;
+          _current->td.vm_daddr = (u_long) seg_addr;
         }
 
         _current->oInfo.vmStart = ((programHeader[i].phVaddr & 0xFFFFF000) + 0xA900000);
@@ -831,10 +831,10 @@ int sys_exec_dead( char *file, char *ap ) {
   kprintf( "[0x%X][0x%X]\n", eip, addr );
 
   _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-  _current->td.vm_daddr = (char *) seg_addr;
+  _current->td.vm_daddr = (u_long) seg_addr;
 
   //! copy in arg strings
-  argv = ap;
+  argv = (char **)ap;
 
   if ( argv[1] != 0x0 ) {
     argc = (int) argv[0];
