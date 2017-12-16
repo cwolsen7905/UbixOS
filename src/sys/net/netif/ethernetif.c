@@ -40,7 +40,7 @@
  * something that better describes your network interface.
  */
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 #include <ubixos/sched.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>

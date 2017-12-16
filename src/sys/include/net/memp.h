@@ -36,7 +36,7 @@
 #ifndef __LWIP_MEMP_H__
 #define __LWIP_MEMP_H__
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/debug.h"
 #include "net/arch/cc.h"

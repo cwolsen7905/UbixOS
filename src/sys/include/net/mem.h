@@ -35,7 +35,7 @@
 #ifndef __LWIP_MEM_H__
 #define __LWIP_MEM_H__
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/debug.h"
 #include "net/opt.h"

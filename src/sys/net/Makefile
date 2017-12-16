@@ -3,7 +3,7 @@
 
 all: core-code net-code api-code netif-code
 
-core-code: core 
+core-code: core
 	(cd core;make)
 
 net-code: net

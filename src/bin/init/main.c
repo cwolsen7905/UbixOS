@@ -40,12 +40,12 @@ int main(int argc,char **argv) {
 
 
   /* Create a mailbox for this task */
-/*
+  /*
   if (mpi_createMbox("init") != 0x0) {
     printf("Error: Failed to creating mail box: init\n");
     exit(0x1);
     }
-*/
+  */
 
   /* Make sure we have superuser permissions if not exit */
   if ((getuid() != 0x0) || (getgid() != 0x0)) {
@@ -56,25 +56,19 @@ int main(int argc,char **argv) {
   printf("Initializing UbixOS\n");
 
 
-#if 0
-
   /* Start TTYD */
-    printf("About To Fork!\n");
+/*
   i = fork();
-    printf("FORKED: %i!\n", i);
 
 
   if (0x0 == i) {
     printf("Error: Could not start TTYD\n");
-    exec("sys:/ttyd",0x0);
+    execve("sys:/bin/ttyd",0x0,0x0);
     printf("Error: Could not start TTYD\n");
     exit(0x0);
-    }
+  }
+*/
     
-  while (pidStatus(i) > 0x0)
-    sched_yield();
-
-#endif
 
 /*
   i = fork();
@@ -101,10 +95,8 @@ int main(int argc,char **argv) {
     exit(0x0);
   }
 
-while (1)
-;
-
   while (pidStatus(i) > 0x0) {
+    /*
     fetchAgain:
     if (mpi_fetchMessage("init",&myMsg) == 0x0) {
       switch (myMsg.header) {
@@ -117,6 +109,7 @@ while (1)
         }
       goto fetchAgain;
       }
+    */
     sched_yield();
     }
   printf("login exited?");

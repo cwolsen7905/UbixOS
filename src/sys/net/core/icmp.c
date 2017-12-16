@@ -36,7 +36,7 @@
 /* Some ICMP messages should be passed to the transport protocols. This
    is not implemented. */
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/debug.h"
 
@@ -192,11 +192,3 @@ icmp_time_exceeded(struct pbuf *p, enum icmp_te_type t)
 	    ICMP_TTL, IP_PROTO_ICMP);
   pbuf_free(q);
 }
-
-
-
-
-
-
-
-

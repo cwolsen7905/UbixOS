@@ -6,7 +6,7 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 #  Objects
-OBJS = hd.o pci.o
+OBJS = hd.o pci.o lnc.o
 
 all: $(OBJS)
 

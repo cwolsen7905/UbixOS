@@ -51,16 +51,18 @@
 #include <sys/kern_sysctl.h>
 #include <ubixos/vitals.h>
 #include <ubixos/syscalls.h>
+#include <pci/lnc.h>
 
 typedef int (*intFunctionPTR)( void );
 
 intFunctionPTR init_tasks[] = { vmm_init, static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init,
-//net_init,
+net_init,
 //ne2k_init,
     devfs_init,
-    //pci_init,
+    pci_init,
     //ubixfs_init,
     //fdc_init,
+    initLNC,
     tty_init, ufs_init, initHardDisk, };
 
 int init_tasksTotal = sizeof(init_tasks) / sizeof(intFunctionPTR);

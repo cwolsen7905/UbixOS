@@ -33,7 +33,7 @@
  * $Id: api_msg.c 54 2016-01-11 01:29:55Z reddawg $
  */
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/debug.h"
 #include "net/arch.h"

@@ -34,7 +34,7 @@
  *
  */
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 #include <lib/kprintf.h>
 
 #include "net/debug.h"

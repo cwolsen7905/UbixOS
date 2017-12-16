@@ -33,7 +33,7 @@
  * $Id: memp.c,v 1.1 2004/04/15 12:38:25 reddawg Exp $
  */
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/lwipopts.h"
 

@@ -42,7 +42,7 @@
  */
 /*-----------------------------------------------------------------------------------*/
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/debug.h"
 
@@ -67,9 +67,11 @@ static uInt32
 chksum(void *dataptr, int len)
 {
   uInt32 acc;
+  uInt32 *ptr = dataptr;
     
   for(acc = 0; len > 1; len -= 2) {
-    acc += *((uInt16 *)dataptr)++;
+    //acc += *((uInt16 *)dataptr)++;
+    acc += *ptr++;
   }
 
   /* add up any odd byte */

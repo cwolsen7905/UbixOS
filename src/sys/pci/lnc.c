@@ -47,7 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <pci/lnc.h>
 #include <sys/io.h>
-#include <ubixos/types.h>
+#include <sys/types.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <lib/kmalloc.h>
@@ -103,13 +103,22 @@ uInt16 readBcr(struct lncInfo *sc, uInt16 port) {
 
 void initLNC() {
   int            i    = 0x0;
-  lnc = kmalloc(sizeof(struct lncInfo),-2);
+  lnc = kmalloc(sizeof(struct lncInfo));
   
-  lnc->rap = 0x1000 + PCNET_RAP;
-  lnc->rdp = 0x1000 + PCNET_RDP;
-  lnc->bdp = 0x1000 + PCNET_BDP;
+  lnc->rap = 0xE2000000 + PCNET_RAP;
+  lnc->rdp = 0xE2000000 + PCNET_RDP;
+  lnc->bdp = 0xE2000000 + PCNET_BDP;
 
+   kprintf("[0x%X]", inportDWord(0xE2000000 + 0x18));
+   kprintf("[0x%X]", inportWord(0xE2000000 + 0x14));
+
+   outportDWord(0xE2000000 + 0x10, 0);
+   for (i = 0; i < 4;i++)
+   kprintf("[0x%X]", inportDWord(0xE2000000 + (0x4 * i)));
+
+   kprintf("[0x%X]", inportDWord(0xE2000000 + 0x00));
   lnc->nic.ic = probe(lnc);
+kprintf("[0x%X]\n", lnc->nic.ic);
   if ((lnc->nic.ic > 0) && (lnc->nic.ic >= PCnet_32)) {
     lnc->nic.ident = NE2100;
     lnc->nic.memMode = DMA_FIXED;
@@ -119,7 +128,7 @@ void initLNC() {
 
     /* Extract MAC address from PROM */
     for (i = 0; i < ETHER_ADDR_LEN; i++) {
-      lnc->arpcom.ac_enaddr[i] = inportByte(0x1000 + i);
+      lnc->arpcom.ac_enaddr[i] = inportByte(0xE2000000 + i);
       kprintf("[0x%X]",lnc->arpcom.ac_enaddr[i]);
       }
     }
@@ -137,7 +146,7 @@ void initLNC() {
   if (readCsr(lnc, CSR0) & IDON) {
     writeCsr(lnc, CSR0, STRT | INEA);
     setVector(_lncInt,mVec+9, (dInt + dPresent + dDpl3));
-    enableIrq(9);
+    irqEnable(9);
     /* 
      * sc->arpcom.ac_if.if_flags |= IFF_RUNNING;
      * sc->arpcom.ac_if.if_flags &= ~IFF_OACTIVE;
@@ -157,6 +166,7 @@ int probe(struct lncInfo *lnc) {
 
   if ((type = lanceProbe(lnc))) {
     chipId = readCsr(lnc, CSR89);
+kprintf("chipId: %i", chipId);
     chipId <<= 16;
     chipId |= readCsr(lnc, CSR88);
     if (chipId & AMD_MASK) {
@@ -190,8 +200,11 @@ int probe(struct lncInfo *lnc) {
   }
 
 int lanceProbe(struct lncInfo *lnc) {
+  uInt16 inW = 0;
   writeCsr(lnc, CSR0, STOP);
-  if ((inportWord(lnc->rdp) & STOP) && !(readCsr(lnc, CSR3))) {
+  inW = inportWord(lnc->rdp);
+  kprintf("[inW: 0x%X - 0x%X - 0x%X - (0x%X)]",inW, STOP, inW & STOP, readCsr(lnc, CSR3));
+  if ((inW & STOP) && !(readCsr(lnc, CSR3))) {
     writeCsr(lnc, CSR0, INEA);
     if (readCsr(lnc, CSR0) & INEA) {
       return(C_LANCE);
@@ -266,7 +279,7 @@ int lncAttach(struct lncInfo *lnc,int unit) {
       * descriptor's can only hold 16 bit addresses.
       */
       /* sc->recv_ring = contigmalloc(lnc_mem_size, M_DEVBUF, M_NOWAIT,0ul, 0xfffffful, 4ul, 0x1000000); */
-      lnc->recvRing = kmalloc(lncMemSize,-2);
+      lnc->recvRing = kmalloc(lncMemSize);
       kprintf("PCI Board\n");
       }      
     }

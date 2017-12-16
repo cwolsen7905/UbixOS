@@ -36,7 +36,7 @@
 /* This is the part of the API that is linked with
    the application */
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/debug.h"
 #include "net/api.h"

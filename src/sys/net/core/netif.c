@@ -33,7 +33,7 @@
  * $Id: netif.c,v 1.7 2004/10/07 21:55:44 kurlon Exp $
  */
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 #include <lib/kprintf.h>
 
 #include "net/debug.h"

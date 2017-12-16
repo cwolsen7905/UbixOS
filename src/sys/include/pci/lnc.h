@@ -30,7 +30,7 @@
 #ifndef _LNC_H
 #define _LNC_H
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #define NDESC(len2) (1 << len2)
 #define NORMAL 0

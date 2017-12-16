@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 *****************************************************************************************/
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
 
@@ -75,9 +75,9 @@ void netMainThread() {
 
   kprintf("TCP/IP initialized.\n");
 
-  IP4_ADDR(&gw, 10,4,0,1);
-  IP4_ADDR(&ipaddr, 10,4,0,69);
-  IP4_ADDR(&netmask, 255,255,255,0);
+  IP4_ADDR(&gw, 10,50,0,7);
+  IP4_ADDR(&ipaddr, 10,50,0,1);
+  IP4_ADDR(&netmask, 255,255,0,0);
   netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
 
   IP4_ADDR(&gw, 127,0,0,1);

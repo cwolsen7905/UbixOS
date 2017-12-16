@@ -41,7 +41,7 @@
  */
 /*-----------------------------------------------------------------------------------*/
 
-#include <ubixos/types.h>
+#include <sys/types.h>
 
 #include "net/debug.h"
 
@@ -598,14 +598,3 @@ tcp_rst(uInt32 seqno, uInt32 ackno,
   DEBUGF(TCP_RST_DEBUG, ("tcp_rst: seqno %lu ackno %lu.\n", seqno, ackno));
 }
 /*-----------------------------------------------------------------------------------*/
-
-
-
-
-
-
-
-
-
-
-
