@@ -27,14 +27,22 @@
 
  *****************************************************************************************/
 
-#ifndef _TYPES_H
-#define _TYPES_H
+#ifndef _SYS_TYPES_H
+#define _SYS_TYPES_H
 
 #include <sys/_types.h>
 
 #ifndef NULL
 #define NULL 0x0
 #endif
+
+/* unsigned integrals */
+typedef __uint8_t  uint8_t;
+typedef __uint16_t uint16_t;
+typedef __uint32_t uint32_t;
+typedef __uint64_t uint64_t;
+typedef __uint64_t uquad_t;
+
 
 typedef __int64_t       daddr_t;        /* disk address */
 typedef __uint32_t       u_daddr_t;      /* unsigned disk address */
@@ -156,8 +164,3 @@ typedef unsigned int qshift_t;
 #define COMBINE(a, b) (((u_long)(a) << HALF_BITS) | (b))
 
 #endif
-
-/***
- END
- ***/
-
