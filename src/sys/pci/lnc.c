@@ -101,24 +101,21 @@ uInt16 readBcr(struct lncInfo *sc, uInt16 port) {
   }
 
 
-void initLNC() {
+int initLNC() {
   int            i    = 0x0;
   lnc = kmalloc(sizeof(struct lncInfo));
   
-  lnc->rap = 0xE2000000 + PCNET_RAP;
-  lnc->rdp = 0xE2000000 + PCNET_RDP;
-  lnc->bdp = 0xE2000000 + PCNET_BDP;
+  lnc->rap = 0xD000 + PCNET_RAP;
+  lnc->rdp = 0xD000 + PCNET_RDP;
+  lnc->bdp = 0xD000 + PCNET_BDP;
 
-   kprintf("[0x%X]", inportDWord(0xE2000000 + 0x18));
-   kprintf("[0x%X]", inportWord(0xE2000000 + 0x14));
+  inportDWord(0xD000 + 0x18);
+  inportWord(0xD000 + 0x14);
 
-   outportDWord(0xE2000000 + 0x10, 0);
-   for (i = 0; i < 4;i++)
-   kprintf("[0x%X]", inportDWord(0xE2000000 + (0x4 * i)));
+  //outportDWord(0xD000 + 0x10, 0);
 
-   kprintf("[0x%X]", inportDWord(0xE2000000 + 0x00));
   lnc->nic.ic = probe(lnc);
-kprintf("[0x%X]\n", lnc->nic.ic);
+
   if ((lnc->nic.ic > 0) && (lnc->nic.ic >= PCnet_32)) {
     lnc->nic.ident = NE2100;
     lnc->nic.memMode = DMA_FIXED;
@@ -128,13 +125,13 @@ kprintf("[0x%X]\n", lnc->nic.ic);
 
     /* Extract MAC address from PROM */
     for (i = 0; i < ETHER_ADDR_LEN; i++) {
-      lnc->arpcom.ac_enaddr[i] = inportByte(0xE2000000 + i);
+      lnc->arpcom.ac_enaddr[i] = inportByte(0xD000 + i);
       kprintf("[0x%X]",lnc->arpcom.ac_enaddr[i]);
       }
     }
   else {
     kprintf("LNC Init Error\n");
-    return;
+    return(-1);
     }
   lncAttach(lnc,0);
   writeCsr(lnc, CSR3, 0);
@@ -155,9 +152,9 @@ kprintf("[0x%X]\n", lnc->nic.ic);
     }
   else {
     kprintf("LNC init Error\n");
-    return;
+    return(-1);
     }
-  return;
+  return(0);
   }
 
 int probe(struct lncInfo *lnc) {
@@ -166,7 +163,6 @@ int probe(struct lncInfo *lnc) {
 
   if ((type = lanceProbe(lnc))) {
     chipId = readCsr(lnc, CSR89);
-kprintf("chipId: %i", chipId);
     chipId <<= 16;
     chipId |= readCsr(lnc, CSR88);
     if (chipId & AMD_MASK) {
@@ -203,7 +199,7 @@ int lanceProbe(struct lncInfo *lnc) {
   uInt16 inW = 0;
   writeCsr(lnc, CSR0, STOP);
   inW = inportWord(lnc->rdp);
-  kprintf("[inW: 0x%X - 0x%X - 0x%X - (0x%X)]",inW, STOP, inW & STOP, readCsr(lnc, CSR3));
+  //MrOlsen (2017-12-16) - kprintf("[inW: {0x%X} 0x%X - 0x%X - 0x%X - (0x%X)]", lnc->rdp,inW, STOP, inW & STOP, readCsr(lnc, CSR3));
   if ((inW & STOP) && !(readCsr(lnc, CSR3))) {
     writeCsr(lnc, CSR0, INEA);
     if (readCsr(lnc, CSR0) & INEA) {

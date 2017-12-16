@@ -254,11 +254,11 @@ bool pciProbe(int bus, int dev, int func,struct pciConfig *cfg) {
   cfg->func = func;
   cfg->subsysVendor = pciRead(bus, dev, func, 0x2c, 2);
   cfg->subsys = pciRead(bus, dev, func, 0x2e, 2);
-if (cfg->vendorId == 0x1022) {
+//if (cfg->vendorId == 0x1022) {
   kprintf("Device Info: /bus/pci/%d/%d/%d\n",bus,dev,func);
   kprintf("  * Vendor: %X   Device: %X  Class/SubClass/Interface %X/%X/%X\n",cfg->vendorId,cfg->deviceId,cfg->baseClass,cfg->subClass,cfg->interface);
   kprintf("  * Status: %X  Command: %X  BIST/Type/Lat/CLS: %X/%X/%X/%X\n",cfg->status, cfg->command, cfg->bist, cfg->headerType,cfg->latencyTimer, cfg->cacheLineSize);
-}
+//}
   switch(cfg->headerType & 0x7F){
     case 0: /* normal device */
       for(i=0;i<6;i++) {
@@ -308,7 +308,8 @@ int pci_init() {
           /* kprintf("  * Vendor: %X   Device: %X  Class/SubClass/Interface %X/%X/%X\n",pcfg.vendorId,pcfg.deviceId,pcfg.baseClass,pcfg.subClass,pcfg.interface); */
           for (i=0x0;i<countof(pciClasses);i++) {
             if (pcfg.baseClass == pciClasses[i].baseClass && pcfg.subClass == pciClasses[i].subClass && pcfg.interface == pciClasses[i].interface) {
-              kprintf("PCI Device: %s @ IRQ: 0x%X, BAR0: 0x%X, BAR1: 0x%X\n",pciClasses[i].name,pcfg.irq,pcfg.base[0],pcfg.base[1]);
+              kprintf("PCI Device: %s @ IRQ: 0x%X\n",pciClasses[i].name,pcfg.irq);
+              //kprintf("PCI Device: %s @ IRQ: 0x%X, BAR0: 0x%X, BAR1: 0x%X\n",pciClasses[i].name,pcfg.irq,pcfg.base[0],pcfg.base[1]);
             //if (pcfg.vendorId == 0x1022)
               //while(1);
               break;

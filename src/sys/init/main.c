@@ -109,7 +109,7 @@ int kmain(uInt32 rootdev) {
   /* Modify src/sys/include/ubixos/init.h to add a startup routine */
   for (i = 0x0; i < init_tasksTotal; i++) {
     if (init_tasks[i]() != 0x0)
-      kpanic("Error: Initializing System.\n");
+      kpanic("Error: Initializing System Task[%i].\n", i);
   }
 
   /* New Root Mount Point */

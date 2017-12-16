@@ -173,7 +173,7 @@ uInt16 readCsr(struct lncInfo *lnc, uInt16 port);
 void writeBcr(struct lncInfo *lnc, uInt16 port, uInt16 val);
 uInt16 readBcr(struct lncInfo *lnc, uInt16 port);
 
-void initLNC();
+int initLNC();
 int probe(struct lncInfo *lnc);
 int lanceProbe(struct lncInfo *lnc);
 int lncAttach(struct lncInfo *lnc,int unit);
