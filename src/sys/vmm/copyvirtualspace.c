@@ -197,7 +197,7 @@ void *vmmCopyVirtualSpace( pidType pid ) {
   newPageDirectory[PD_INDEX( PD_BASE_ADDR )] = (u_int32_t)( vmm_getPhysicalAddr( (uInt32) newPageTable ) | PAGE_DEFAULT );
 
   newPageTable[0] = (u_int32_t)( (u_int32_t)( newPageDirectoryAddress ) | PAGE_DEFAULT );
-  kprintf( "PD3: %i - 0x%X - 0x%X\n", PD_INDEX( PD_BASE_ADDR ), newPageDirectoryAddress, newPageTable[0] );
+  //MrOlsen (2017-12-15) - kprintf( "PD3: %i - 0x%X - 0x%X\n", PD_INDEX( PD_BASE_ADDR ), newPageDirectoryAddress, newPageTable[0] );
 
   vmmUnmapPage( (uInt32) newPageTable, 1 );
 

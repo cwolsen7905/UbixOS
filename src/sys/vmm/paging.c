@@ -636,7 +636,7 @@ int vmm_cleanVirtualSpace( u_int32_t addr ) {
       for ( y = 0; y < 1024; y++ ) {
         if ( (pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT ) {
           if ( (pageTableSrc[y] & PAGE_COW) == PAGE_COW ) {
-            kprintf( "COW: 0x%X", (x * 0x400000) + (y * 0x1000) );
+            //kprintf( "COW: 0x%X", (x * 0x400000) + (y * 0x1000) );
             pageTableSrc[y] = 0x0;
           }
           else if ( (pageTableSrc[y] & PAGE_STACK) == PAGE_STACK ) {

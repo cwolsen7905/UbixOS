@@ -26,6 +26,6 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 void exit(int status) {
   asm(
     "int %0\n"
-    : : "i" (0x80),"a" (2),"b" (status)
+    : : "i" (0x80),"a" (1),"b" (status)
     );
   }

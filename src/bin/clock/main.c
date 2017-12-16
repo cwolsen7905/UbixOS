@@ -92,11 +92,6 @@ int main(int argc,char **argv) {
   sec = sysTime;
 
   printf("[%s][%02d/%02d/%i, %02d:%02d.%02d]\n",argv[0],month,day,year,hour,min,sec);
-  /*
-  for (i = 0x0;i < argc;i++) {
-    printf("argv[%i](0x%X:%s),__progrname(%s), argc: %i\n",i,argv[i],argv[i],__progname,argc);
-    }
-   */
   return(0);
   }
 

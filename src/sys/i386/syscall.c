@@ -123,7 +123,7 @@ int sysCheckPid( int pid, int *ptr ) {
 
  ************************************************************************/
 int sysGetFreePage( struct thread *td, u_int32_t *count) {
-  kprintf("sysGetFreePage - Count: %i\n", *count);
+  //MrOlsen 2017-12-15 kprintf("sysGetFreePage - Count: %i\n", *count);
   return((int) vmmGetFreeVirtualPage(_current->id, *count, VM_THRD));
   //return(vmmGetFreeVirtualPage(_current->id, *count, VM_TASK));
 }
@@ -159,6 +159,7 @@ int sysGetTime( uInt32 *ptr ) {
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
   if ( args->buf )
     sprintf( args->buf, "%s", _current->oInfo.cwd );
+kprintf("[CWD: %s]", _current->oInfo.cwd);
   return (0);
 }
 

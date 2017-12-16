@@ -499,10 +499,10 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
           /* Make readonly and read/write !!! */
           if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 ) {
             K_PANIC( "Error: Remap Page Failed" );
-          }
+          } /*
           else {
             kprintf("rP[0x%X]", (programHeader[i].phVaddr & 0xFFFFF000) + x);
-          }
+          } */
 
           memset( (void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000 );
 
@@ -589,7 +589,6 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
        */
     }
   }
-  kprintf("WTF");
   /*
    _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
    _current->td.vm_daddr = (char *) seg_addr;
@@ -630,7 +629,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   //! Adjust iframe
 //  iFrame = (struct i386_frame *) (_current->tss.esp0 - sizeof(struct i386_frame));
 
-  kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
+  //kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
   iFrame->ebp = STACK_ADDR;
   iFrame->eip = binaryHeader->eEntry;
@@ -638,13 +637,13 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
 
-  kprintf( "STACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
+  //kprintf( "STACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
 
   //! build argc and argv[]
 /*MrOlsen Did I Fuck Up Stack?
   *tmp-- = argc;
 
-  kprintf( "xSTACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
+  //kprintf( "xSTACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
 
   if ( argc == 1 ) {
     *tmp-- = 0x0;
@@ -732,8 +731,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 */
   tmp = (char *)iFrame->eip;
 
-  kprintf("N:[0x%X]\n", tmp[0]);
-  kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X], CR3: [0x%X-0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp, cr3, kernelPageDirectory );
+  //kprintf("N:[0x%X]\n", tmp[0]);
+  //kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X], CR3: [0x%X-0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp, cr3, kernelPageDirectory );
   return (0x0);
 }
 

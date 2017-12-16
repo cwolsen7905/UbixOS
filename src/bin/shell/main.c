@@ -65,11 +65,9 @@ printf( "m-arg: [%i]\n", inBuf->args->arg );
 
     if ( inBuf->args->arg != 0x0 ) {
 
-      execProgram( inBuf );
-      /*
+//      execProgram( inBuf );
        if (!commands(inBuf))
        execProgram(inBuf);
-       */
     }
 
     freeArgs( inBuf );
