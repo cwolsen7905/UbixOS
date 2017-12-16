@@ -157,8 +157,8 @@ struct lncInfo {
   struct arpcom        arpcom;
   struct nicInfo       nic;
   struct hostRingEntry *recvRing;
-  struct hostRingEntry *transRings;
-  struct initBlock     *initBloack;
+  struct hostRingEntry *transRing;
+  struct initBlock     *initBlock;
   int                  rap;
   int                  rdp;
   int                  bdp;
@@ -172,6 +172,7 @@ void writeCsr(struct lncInfo *lnc, uInt16 port, uInt16 val);
 uInt16 readCsr(struct lncInfo *lnc, uInt16 port);
 void writeBcr(struct lncInfo *lnc, uInt16 port, uInt16 val);
 uInt16 readBcr(struct lncInfo *lnc, uInt16 port);
+uInt32 readBCR32(struct lncInfo *lnc, uInt32 port);
 
 int initLNC();
 int probe(struct lncInfo *lnc);
@@ -181,6 +182,8 @@ int lncAttach(struct lncInfo *lnc,int unit);
 
 void lncInt();
 void _lncInt();
+
+int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uInt8 *dest);
 
 #endif
 

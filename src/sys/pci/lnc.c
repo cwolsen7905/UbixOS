@@ -57,6 +57,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 struct lncInfo *lnc = 0x0;
 
+struct leinit {
+        uInt16 init_mode;             /* +0x0000 */
+        uInt16 init_padr[3];          /* +0x0002 */
+        uInt16 init_ladrf[4];         /* +0x0008 */
+        uInt16 init_rdra;             /* +0x0010 */
+        uInt16 init_rlen;             /* +0x0012 */
+        uInt16 init_tdra;             /* +0x0014 */
+        uInt16 init_tlen;             /* +0x0016 */
+        uInt16 pad0[4];               /* Pad to 16 shorts. */
+} __packed;
+
+
 static char const * const nicIdent[] = {
   "Unknown",
   "BICC",
@@ -80,6 +92,8 @@ static char const * const icIdent[] = {
   "PCnet-Home",
   };  
 
+struct leinit *init = 0x0;
+
 void writeCsr(struct lncInfo *lnc, uInt16 port, uInt16 val) {
   outportWord(lnc->rap, port);
   outportWord(lnc->rdp, val);
@@ -95,10 +109,15 @@ void writeBcr(struct lncInfo *lnc, uInt16 port, uInt16 val) {
   outportWord(lnc->bdp, val);
   }
 
-uInt16 readBcr(struct lncInfo *sc, uInt16 port) {
-  outportWord(sc->rap, port);
-  return (inportWord(sc->bdp));
-  }
+uInt16 readBcr(struct lncInfo *lnc, uInt16 port) {
+  outportWord(lnc->rap, port);
+  return (inportWord(lnc->bdp));
+}
+
+uInt32 readBCR32(struct lncInfo *lnc, uInt32 port) {
+  outportDWord(lnc->rap, port);
+  return (inportDWord(lnc->bdp));
+}
 
 
 int initLNC() {
@@ -109,12 +128,16 @@ int initLNC() {
   lnc->rdp = 0xD000 + PCNET_RDP;
   lnc->bdp = 0xD000 + PCNET_BDP;
 
+  init = kmalloc(sizeof(struct leinit));
+
   inportDWord(0xD000 + 0x18);
   inportWord(0xD000 + 0x14);
 
   //outportDWord(0xD000 + 0x10, 0);
 
   lnc->nic.ic = probe(lnc);
+
+  kprintf("ID: %i\n", lnc->nic.ic);
 
   if ((lnc->nic.ic > 0) && (lnc->nic.ic >= PCnet_32)) {
     lnc->nic.ident = NE2100;
@@ -133,17 +156,37 @@ int initLNC() {
     kprintf("LNC Init Error\n");
     return(-1);
     }
+
   lncAttach(lnc,0);
+
+
+  memset(init,0x0,sizeof(struct leinit));
+
+  init->init_mode = 0x8000;
+  init->init_padr[0] = (lnc->arpcom.ac_enaddr[1] << 8) | lnc->arpcom.ac_enaddr[0];
+  init->init_padr[1] = (lnc->arpcom.ac_enaddr[3] << 8) | lnc->arpcom.ac_enaddr[2];
+  init->init_padr[2] = (lnc->arpcom.ac_enaddr[5] << 8) | lnc->arpcom.ac_enaddr[4];
+
+  init->init_rdra = lnc->recvRing;
+  init->init_rlen = 3;
+
+  init->init_tdra = lnc->recvRing;
+  init->init_tlen = 3;
+
+  writeCsr(lnc, CSR1, (int)init & 0xFFFF);
+  writeCsr(lnc, CSR2, (int)init >> 16);
+
   writeCsr(lnc, CSR3, 0);
   writeCsr(lnc, CSR0, INIT);
+
   for (i = 0; i < 1000; i++)
     if (readCsr(lnc, CSR0) & IDON)
       break;
 
   if (readCsr(lnc, CSR0) & IDON) {
-    writeCsr(lnc, CSR0, STRT | INEA);
     setVector(_lncInt,mVec+9, (dInt + dPresent + dDpl3));
     irqEnable(9);
+    writeCsr(lnc, CSR0, STRT | INEA );
     /* 
      * sc->arpcom.ac_if.if_flags |= IFF_RUNNING;
      * sc->arpcom.ac_if.if_flags &= ~IFF_OACTIVE;
@@ -151,9 +194,22 @@ int initLNC() {
      */
     }
   else {
-    kprintf("LNC init Error\n");
+    kprintf("LNC: init Error\n");
     return(-1);
     }
+
+  uInt16 iW = 0;
+
+  iW = readBcr(lnc, 0x2);
+  kprintf("BCR2.0: [0x%X]",iW);
+
+  iW = readBcr(lnc, 0x4);
+  kprintf("BCR2.1: [0x%X]",iW);
+
+
+  while (1)
+  lnc_sendPacket(lnc,0x0,32,0x0);
+
   return(0);
   }
 
@@ -197,9 +253,13 @@ int probe(struct lncInfo *lnc) {
 
 int lanceProbe(struct lncInfo *lnc) {
   uInt16 inW = 0;
+
   writeCsr(lnc, CSR0, STOP);
+
   inW = inportWord(lnc->rdp);
+
   //MrOlsen (2017-12-16) - kprintf("[inW: {0x%X} 0x%X - 0x%X - 0x%X - (0x%X)]", lnc->rdp,inW, STOP, inW & STOP, readCsr(lnc, CSR3));
+
   if ((inW & STOP) && !(readCsr(lnc, CSR3))) {
     writeCsr(lnc, CSR0, INEA);
     if (readCsr(lnc, CSR0) & INEA) {
@@ -216,6 +276,8 @@ int lanceProbe(struct lncInfo *lnc) {
 
 void lncInt() {
   uInt16 csr0 = 0x0;
+  kprintf("TEST");
+  while (1);
   while ((csr0 = inportWord(lnc->rdp)) & INTR) {
     outportWord(lnc->rdp, csr0);
     kprintf("CSR0: [0x%X]\n",csr0);
@@ -255,7 +317,8 @@ asm(
 int lncAttach(struct lncInfo *lnc,int unit) {
   int lncMemSize = 0x0;
 
-  lncMemSize = ((NDESC(lnc->nrdre) + NDESC(lnc->ntdre)) * sizeof(struct hostRingEntry));
+  //lncMemSize = ((NDESC(lnc->nrdre) + NDESC(lnc->ntdre)) * sizeof(struct hostRingEntry));
+  lncMemSize = (NDESC(lnc->nrdre) * sizeof(struct hostRingEntry));
 
   if (lnc->nic.memMode != SHMEM)
     lncMemSize += sizeof(struct initBlock) + (sizeof(struct mds) * (NDESC(lnc->nrdre) + NDESC(lnc->ntdre))) + MEM_SLEW;
@@ -282,8 +345,17 @@ int lncAttach(struct lncInfo *lnc,int unit) {
 
   if (!lnc->recvRing) {
     kprintf("lnc%d: Couldn't allocate memory for NIC\n", unit);
-    return (0);
-    }
+    return (-1);
+  }
+
+
+  lncMemSize = (NDESC(lnc->ntdre) * sizeof(struct hostRingEntry));
+  lnc->transRing = kmalloc(lncMemSize);
+
+  if (!lnc->recvRing) {
+    kprintf("lnc%d: Couldn't allocate memory for NIC\n", unit);
+    return (-1);
+  }
 
   lnc->nic.mode = NORMAL;
 
@@ -312,9 +384,28 @@ int lncAttach(struct lncInfo *lnc,int unit) {
     kprintf("%s (%s)",nicIdent[lnc->nic.ident], icIdent[lnc->nic.ic]);
   else
     kprintf("%s", icIdent[lnc->nic.ic]);
+
   kprintf(" address 0x%X\n", lnc->arpcom.ac_enaddr);   
+
   return(1);
   }
+
+int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uInt8 *dest) {
+  int tx_ptr = 0;
+  char data[1548] = "SDFSDF";
+
+  char *tdes = lnc->transRing;
+
+  tdes[(tx_ptr * 16) + 7] |= 0x2;
+  tdes[(tx_ptr * 16) + 7] |= 0x1;
+
+  uInt16 bcnt = (uInt16)(-len);
+  bcnt &= 0xFFF;
+  bcnt |= 0xF000;
+  *(uInt16 *)&tdes[tx_ptr * 16 + 4] = bcnt;
+  tdes[tx_ptr * 16 + 7] |= 0x80;
+   
+}
 
 /***
  END
