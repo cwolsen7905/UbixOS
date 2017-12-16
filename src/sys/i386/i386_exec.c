@@ -411,6 +411,10 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   asm("movl %%cr3, %0;" : "=r" (cr3));
 
+  //! Clean the virtual of COW pages left over from the fork
+  vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
+  //MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
+
   fd = fopen( file, "r" );
 
   /* If the file doesn't exist fail */
@@ -618,10 +622,6 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
    memcpy( iFrameNew, iFrame, sizeof(struct i386_frame) );
    */
-
-  //! Clean the virtual of COW pages left over from the fork
-//MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
-  //vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
 
   //! Adjust iframe
 //  iFrame = (struct i386_frame *) (_current->tss.esp0 - sizeof(struct i386_frame));
