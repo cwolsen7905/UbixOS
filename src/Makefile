@@ -83,10 +83,12 @@ install-world:
 	@echo "***************************************************************"
 
 clean-kernel:
-	(cd sys;${KMAKE} clean)
+	(cd sys;${MAKE} clean)
 
-install: install-world
-	(cd sys;${KMAKE} install kernel)
+install-kernel:
+	(cd sys;${MAKE} install-kernel)
+
+install: install-world install-kernel
 	
 clean:
 	(cd sys;${KMAKE} clean)

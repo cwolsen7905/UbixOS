@@ -61,7 +61,8 @@ void vmm_pageFault(struct trapframe *frame, u_int32_t cr2) {
   u_int32_t eip = frame->tf_eip;
   u_int32_t memAddr = cr2;
 
-//MrOlsen 2017-12-15 - kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
+//MrOlsen 2017-12-15 - 
+kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
 
   /* Try to aquire lock otherwise spin till we do */
   spinLock(&pageFaultSpinLock);
@@ -71,7 +72,7 @@ void vmm_pageFault(struct trapframe *frame, u_int32_t cr2) {
 
   /* UBU - This is a temp panic for 0x0 read write later on I will handle this differently */
   if (memAddr == 0x0) {
-    kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X]\n", memAddr, esp, _current->id, eip);
+    kprintf("Segfault At Address: [0x%X], ESP: [0x%X], PID: [%i], EIP: [0x%X]\n", memAddr, esp, _current->id, eip);
     kpanic("Error We Wrote To 0x0\n");
   }
 
@@ -115,6 +116,7 @@ void vmm_pageFault(struct trapframe *frame, u_int32_t cr2) {
       spinUnlock(&pageFaultSpinLock);
       endTask(_current->id);
     } else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
+kprintf("THIS IS BAD");
       pageTable[pageTableIndex] = (uInt32) vmmFindFreePage(_current->id) | PAGE_DEFAULT;
     } else {
       spinUnlock(&pageFaultSpinLock);
@@ -134,6 +136,7 @@ void vmm_pageFault(struct trapframe *frame, u_int32_t cr2) {
 
   /* Release the spin lock */
   spinUnlock(&pageFaultSpinLock);
+kprintf("CR2-RET");
   return;
 }
 

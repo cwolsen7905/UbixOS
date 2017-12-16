@@ -54,12 +54,13 @@ void trap( struct trapframe *frame ) {
        cr2 = rcr2();
        asm("sti"); /* Turn Back On Ints! */
        vmm_pageFault(frame, cr2);
+       kprintf("Called page Fault\n");
     default:
       break;
   }
 
   kprintf("GOTTA RETURN!\n");
-  //while(1);
+  while(1);
 }
 
 /***

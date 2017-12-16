@@ -60,7 +60,9 @@
 
 /* Temp Holder */
 int sys_execve( struct thread *td, struct sys_execve_args *args ) {
-  return (sys_exec( td, args->fname, args->argv, args->envp ));
+  int ret = sys_exec( td, args->fname, args->argv, args->envp );
+  kprintf("RETURNING: [%i]\n", ret);
+  return (ret);
 }
 
 /*****************************************************************************************
@@ -487,8 +489,12 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
          */
         for ( x = 0x0; x < (round_page( programHeader[i].phMemsz )); x += 0x1000 ) {
           /* Make readonly and read/write !!! */
-          if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 )
+          if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 ) {
             K_PANIC( "Error: Remap Page Failed" );
+          }
+          else {
+            kprintf("rP[0x%X]", (programHeader[i].phVaddr & 0xFFFFF000) + x);
+          }
 
           memset( (void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000 );
 
@@ -627,6 +633,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   kprintf( "STACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
 
   //! build argc and argv[]
+/*MrOlsen Did I Fuck Up Stack?
   *tmp-- = argc;
 
   kprintf( "xSTACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
@@ -641,8 +648,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
     }
   }
 
-  *tmp-- = 0x0; /* ARGV Terminator */
-  *tmp-- = 0x0; /* ENV Terminator */
+  *tmp-- = 0x0; // ARGV Terminator
+  *tmp-- = 0x0; // ENV Terminator
+*/
 
   /*
    * App Entry Stack
@@ -670,7 +678,6 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   //kprintf( "EBP-3(%i): [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
   //kprintf( "Done EXEC\n" );
-  kprintf( "EBP-4(%i): [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
   /*
    asm("cli");
@@ -680,7 +687,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    _current->tss.ebp = iFrameNew->ebp;
    */
   /* Set these up to be ring 3 tasks */
-  /*
+
+/*
    _current->tss.es = 0x30 + 3;
    _current->tss.cs = 0x28 + 3;
    _current->tss.ss = 0x30 + 3;
@@ -691,7 +699,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    _current->tss.ldt = 0x18;
    _current->tss.trace_bitmap = 0x0000;
    _current->tss.io_map = 0x8000;
+*/
 
+  /*
    kfree (iFrameNew);
 
    memAddr = (u_int32_t) & (_current->tss);
@@ -704,12 +714,16 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    ubixGDT[10].descriptor.baseMed = ((STACK_ADDR >> 16) & 0xFF);
    ubixGDT[10].descriptor.baseHigh = (STACK_ADDR >> 24);
 
+   */
+
+/*
    asm(
    "sti\n"
    "ljmp $0x20,$0\n"
    );
-   */
-  return (-1);
+*/
+  kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp );
+  return (0x0);
 }
 
 /*!

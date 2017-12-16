@@ -101,7 +101,7 @@ int sys_fork( struct thread *td, struct sys_fork_args *args ) {
     sched_yield();
 
   /* Return Id of Proccess */
-  kprintf("Returning! [%i]\n", _current->id);
+  kprintf("Returning! [%i][0x%X]\n", _current->id,newProcess->tss.cr3);
   return (newProcess->id);
 
 }
