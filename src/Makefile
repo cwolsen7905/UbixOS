@@ -70,6 +70,7 @@ install-world:
 	@echo "Step 2: Copy Libraries"
 	@echo "***************************************************************"
 	cp -pr build/lib/* ${ROOT}/lib/
+	cp -pr build/libexec/* ${ROOT}/libexec/
 	sync
 	@echo
 	@echo "***************************************************************"

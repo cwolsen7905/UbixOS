@@ -380,6 +380,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   int i = 0x0;
   int x = 0x0;
   int argc = 0x0;
+  u_int32_t cr3 = 0x0;
 
   unsigned int *tmp = 0x0;
   //u_int32_t memAddr = 0x0;
@@ -407,6 +408,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   //struct i386_frame *iFrameNew = 0x0;
 
   Elf_Auxargs *auxargs = 0x0;
+
+  asm("movl %%cr3, %0;" : "=r" (cr3));
 
   fd = fopen( file, "r" );
 
@@ -617,7 +620,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    */
 
   //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
+//MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
+  //vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
 
   //! Adjust iframe
 //  iFrame = (struct i386_frame *) (_current->tss.esp0 - sizeof(struct i386_frame));
@@ -722,7 +726,10 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    "ljmp $0x20,$0\n"
    );
 */
-  kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp );
+  tmp = (char *)iFrame->eip;
+
+  kprintf("N:[0x%X]\n", tmp[0]);
+  kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X], CR3: [0x%X-0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp, cr3, kernelPageDirectory );
   return (0x0);
 }
 
