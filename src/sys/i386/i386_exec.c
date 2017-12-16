@@ -428,8 +428,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   _current->imageFd = fd;
 
   //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
+  //vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
   //MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
+  vmm_cleanVirtualSpace( (u_int32_t) 0x8048000 );
 
   /* Load ELF Header */
   if ( (binaryHeader = (elfHeader *) kmalloc( sizeof(elfHeader) )) == 0x0 )
@@ -575,6 +576,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
         tmp = (void *) elfDynamicS[i].dynPtr;
         if ( tmp == 0x0 )
           kpanic( "tmp: NULL\n" );
+        else
+          kprintf("[0x%X]", tmp);
         tmp[2] = (uInt32) ldAddr;
         tmp[1] = (uInt32) fd;
         break;
@@ -586,6 +589,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
        */
     }
   }
+  kprintf("WTF");
   /*
    _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
    _current->td.vm_daddr = (char *) seg_addr;

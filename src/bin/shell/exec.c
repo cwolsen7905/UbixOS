@@ -37,11 +37,13 @@ void execProgram(inputBuffer *data) {
   //printf("Executing App\n");
 
   cPid = fork();
+printf("Forked: [%i]\n", cPid);
 
   if (!cPid) {
     sprintf(file, "%s%s", cwd, data->argv[1]);
  //   if (boo == 0)
-      execve(file,data->argv, 0x0);
+      //execve(file,data->argv, 0x0);
+      execve(file,0x0, 0x0);
    /*
     else
       execn(file,&data->argv);
