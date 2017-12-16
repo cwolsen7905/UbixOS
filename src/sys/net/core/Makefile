@@ -2,8 +2,8 @@
 #  $Id: Makefile,v 1.2 2004/07/20 21:17:05 reddawg Exp $
 
 # Include Global 'Source' Options
-include ../../../Makefile.inc
-include ../../Makefile.inc
+include ../../../Makefile.incl
+include ../../Makefile.incl
 
 #  Objects
 OBJS = inet.o mem.o memp.o netif.o pbuf.o stats.o sys.o tcp.o tcp_input.o tcp_output.o udp.o ip.o icmp.o ip_addr.o 
