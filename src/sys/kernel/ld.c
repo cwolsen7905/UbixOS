@@ -55,7 +55,7 @@ uInt32 ldEnable() {
   elfPltInfo       *elfRel        = 0x0;
 
   /* Open our dynamic linker */
-  ldFd = fopen("sys:/lib/ld.so","rb");
+  ldFd = fopen("sys:/libexec/ld.so","rb");
 
   if (ldFd == 0x0) {
     kprintf("Can not open ld.so\n");

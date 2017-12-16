@@ -137,7 +137,7 @@ void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
 
   if ( type == VM_THRD ) {
     _current->td.vm_dsize += btoc( count * 0x1000 );
-    kprintf( "vm_dsize: [0x%X]][0x%X]\n", ctob( _current->td.vm_dsize ), _current->td.vm_dsize );
+    //kprintf( "vm_dsize: [0x%X]][0x%X]\n", ctob( _current->td.vm_dsize ), _current->td.vm_dsize );
   }
   else if ( type == VM_TASK )
     _current->oInfo.vmStart += count * 0x1000;
@@ -146,7 +146,7 @@ void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
    * MMAP Return
    */
 
-  kprintf( "mmap: [0x%x]\n", start_page );
+  //kprintf( "mmap: [0x%x]\n", start_page );
   /* If No Free Page Was Found Return NULL */
   spinUnlock( &fvpSpinLock );
   return (start_page);

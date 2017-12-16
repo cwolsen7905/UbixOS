@@ -17,12 +17,12 @@ REMOVE = rm -f
 #Objects
 OBJS = main.o
 
-LIBRARIES = ../../lib/libc_old/libc_old.so
+LIBRARIES = ../../build/lib/libc_old.so
 
 # Link The Binary
 $(BINARY) : $(OBJS)
 	$(CC) $(CFLAGS) -o ../../build/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	strip $(BINARY)
+	#strip $(BINARY)
 
 # Compile the source files
 .cpp.o:

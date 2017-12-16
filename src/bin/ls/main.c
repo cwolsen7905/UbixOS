@@ -23,6 +23,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <unistd.h>
 
 
@@ -34,14 +35,14 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 
 //UbixFS Directory Entry
 struct directoryEntry {
-  u_int32_t  startCluster;   //Starting Cluster Of File
-  u_int32_t  size;           //Size Of File
-  u_int32_t  creationDate;  //Date Created
-  u_int32_t  lastModified;  //Date Last Modified
-  u_int32_t  uid;           //UID Of Owner
-  u_int32_t  gid;           //GID Of Owner
-  u_int16_t attributes;    //Files Attributes
-  u_int16_t permissions;   //Files Permissions
+  uint32_t  startCluster;   //Starting Cluster Of File
+  uint32_t  size;           //Size Of File
+  uint32_t  creationDate;  //Date Created
+  uint32_t  lastModified;  //Date Last Modified
+  uint32_t  uid;           //UID Of Owner
+  uint32_t  gid;           //GID Of Owner
+  uint16_t attributes;    //Files Attributes
+  uint16_t permissions;   //Files Permissions
   char   fileName[256]; //File Name
   };
 
@@ -62,6 +63,7 @@ int main(int argc,char **argv) {
 
   if (argv == 0x0) {
       getcwd(pwd,256);
+printf("PWD1: %s\n", pwd);
     if ((fd = fopen(pwd,"rb")) == 0x0) {
       printf("Error: Reading Directory\n");
       exit(1);
@@ -69,12 +71,15 @@ int main(int argc,char **argv) {
     }
   else if (argv[1] == 0x0) {
     getcwd(pwd,256);
+printf("PWD2: %s\n", pwd);
     if ((fd = fopen(pwd,"rb")) == 0x0) {
       printf("Error: Reading Directory\n");
       exit(1);
       }
     }
   else {
+    getcwd(pwd,256);
+printf("PWD3: %s\n", pwd);
     fd = fopen(argv[1],"rb");
     if (fd->fd == 0x0) {
       printf("Error: Reading Directory\n");
@@ -85,6 +90,7 @@ int main(int argc,char **argv) {
   fread(dirEntry,fd->size,1,fd);
   pwd[0] = '/';
   for (i=0;i<(fd->size/sizeof(struct directoryEntry));i++) {
+printf("[fN: %s]", dirEntry[i].fileName);
     if ((dirEntry[i].fileName[0] > 0) && (dirEntry[i].fileName[0] != '/')) {
       for (x=0;x<12;x++) {
         permsData[x] = '-';

@@ -86,11 +86,18 @@ void syscall( struct trapframe *frame ) {
     else
       error = (int) systemCalls[code].sc_entry( td, params );
 
+if ( systemCalls[code].sc_status == SYSCALL_DUMMY ) {
+  kprintf("RET1");
+return;
+}
+
     switch ( error ) {
       case 0:
         frame->tf_eax = td->td_retval[0];
         frame->tf_edx = td->td_retval[1];
         frame->tf_eflags &= ~PSL_C;
+if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
+  kprintf("RET3");
         break;
 /*
       case ERESTART:
@@ -104,6 +111,10 @@ void syscall( struct trapframe *frame ) {
         frame->tf_eflags |= PSL_C;
         break;
 
+if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
+  kprintf("RET2");
+if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
+  kprintf("RET2.1");
     }
   }
 }

@@ -60,7 +60,9 @@
 
 /* Temp Holder */
 int sys_execve( struct thread *td, struct sys_execve_args *args ) {
-  return (sys_exec( td, args->fname, args->argv, args->envp ));
+  int ret = sys_exec( td, args->fname, args->argv, args->envp );
+  kprintf("RETURNING: [%i]\n", ret);
+  return (ret);
 }
 
 /*****************************************************************************************
@@ -265,7 +267,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
 
       }
       _current->oInfo.vmStart = 0x80000000;
-      _current->td.vm_daddr = (char *) (programHeader[i].phVaddr & 0xFFFFF000);
+      _current->td.vm_daddr = (u_long) (programHeader[i].phVaddr & 0xFFFFF000);
       /* Now Load Section To Memory */
       fseek( tmpFd, programHeader[i].phOffset, 0 );
       fread( (void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, tmpFd );
@@ -281,7 +283,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
 
   /* Set Virtual Memory Start */
   _current->oInfo.vmStart = 0x80000000;
-  _current->td.vm_daddr = (char *) (programHeader[i].phVaddr & 0xFFFFF000);
+  _current->td.vm_daddr = (u_long) (programHeader[i].phVaddr & 0xFFFFF000);
 
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
@@ -378,6 +380,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   int i = 0x0;
   int x = 0x0;
   int argc = 0x0;
+  u_int32_t cr3 = 0x0;
 
   unsigned int *tmp = 0x0;
   //u_int32_t memAddr = 0x0;
@@ -406,6 +409,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   Elf_Auxargs *auxargs = 0x0;
 
+  asm("movl %%cr3, %0;" : "=r" (cr3));
+
   fd = fopen( file, "r" );
 
   /* If the file doesn't exist fail */
@@ -421,6 +426,11 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   /* Set Threads FD to open FD */
   _current->imageFd = fd;
+
+  //! Clean the virtual of COW pages left over from the fork
+  //vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
+  //MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
+  vmm_cleanVirtualSpace( (u_int32_t) 0x8048000 );
 
   /* Load ELF Header */
   if ( (binaryHeader = (elfHeader *) kmalloc( sizeof(elfHeader) )) == 0x0 )
@@ -487,8 +497,12 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
          */
         for ( x = 0x0; x < (round_page( programHeader[i].phMemsz )); x += 0x1000 ) {
           /* Make readonly and read/write !!! */
-          if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 )
+          if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 ) {
             K_PANIC( "Error: Remap Page Failed" );
+          } /*
+          else {
+            kprintf("rP[0x%X]", (programHeader[i].phVaddr & 0xFFFFF000) + x);
+          } */
 
           memset( (void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000 );
 
@@ -562,6 +576,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
         tmp = (void *) elfDynamicS[i].dynPtr;
         if ( tmp == 0x0 )
           kpanic( "tmp: NULL\n" );
+        else
+          kprintf("[0x%X]", tmp);
         tmp[2] = (uInt32) ldAddr;
         tmp[1] = (uInt32) fd;
         break;
@@ -610,13 +626,10 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    memcpy( iFrameNew, iFrame, sizeof(struct i386_frame) );
    */
 
-  //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
-
   //! Adjust iframe
 //  iFrame = (struct i386_frame *) (_current->tss.esp0 - sizeof(struct i386_frame));
 
-  kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
+  //kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
   iFrame->ebp = STACK_ADDR;
   iFrame->eip = binaryHeader->eEntry;
@@ -624,12 +637,13 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
 
-  kprintf( "STACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
+  //kprintf( "STACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
 
   //! build argc and argv[]
+/*MrOlsen Did I Fuck Up Stack?
   *tmp-- = argc;
 
-  kprintf( "xSTACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
+  //kprintf( "xSTACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
 
   if ( argc == 1 ) {
     *tmp-- = 0x0;
@@ -641,8 +655,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
     }
   }
 
-  *tmp-- = 0x0; /* ARGV Terminator */
-  *tmp-- = 0x0; /* ENV Terminator */
+  *tmp-- = 0x0; // ARGV Terminator
+  *tmp-- = 0x0; // ENV Terminator
+*/
 
   /*
    * App Entry Stack
@@ -670,7 +685,6 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   //kprintf( "EBP-3(%i): [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
   //kprintf( "Done EXEC\n" );
-  kprintf( "EBP-4(%i): [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
   /*
    asm("cli");
@@ -680,7 +694,8 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    _current->tss.ebp = iFrameNew->ebp;
    */
   /* Set these up to be ring 3 tasks */
-  /*
+
+/*
    _current->tss.es = 0x30 + 3;
    _current->tss.cs = 0x28 + 3;
    _current->tss.ss = 0x30 + 3;
@@ -691,7 +706,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    _current->tss.ldt = 0x18;
    _current->tss.trace_bitmap = 0x0000;
    _current->tss.io_map = 0x8000;
+*/
 
+  /*
    kfree (iFrameNew);
 
    memAddr = (u_int32_t) & (_current->tss);
@@ -704,12 +721,19 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    ubixGDT[10].descriptor.baseMed = ((STACK_ADDR >> 16) & 0xFF);
    ubixGDT[10].descriptor.baseHigh = (STACK_ADDR >> 24);
 
+   */
+
+/*
    asm(
    "sti\n"
    "ljmp $0x20,$0\n"
    );
-   */
-  return (-1);
+*/
+  tmp = (char *)iFrame->eip;
+
+  //kprintf("N:[0x%X]\n", tmp[0]);
+  //kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X], CR3: [0x%X-0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp, cr3, kernelPageDirectory );
+  return (0x0);
 }
 
 /*!
@@ -799,7 +823,7 @@ int sys_exec_dead( char *file, char *ap ) {
         }
         else {
           _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-          _current->td.vm_daddr = (char *) seg_addr;
+          _current->td.vm_daddr = (u_long) seg_addr;
         }
 
         _current->oInfo.vmStart = ((programHeader[i].phVaddr & 0xFFFFF000) + 0xA900000);
@@ -831,10 +855,10 @@ int sys_exec_dead( char *file, char *ap ) {
   kprintf( "[0x%X][0x%X]\n", eip, addr );
 
   _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-  _current->td.vm_daddr = (char *) seg_addr;
+  _current->td.vm_daddr = (u_long) seg_addr;
 
   //! copy in arg strings
-  argv = ap;
+  argv = (char **)ap;
 
   if ( argv[1] != 0x0 ) {
     argc = (int) argv[0];
