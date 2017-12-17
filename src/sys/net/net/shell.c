@@ -101,7 +101,7 @@ static void shell_thread(void *arg) {
   netconn_listen(conn);
 
   while(1) {
-    kprintf("1");
+    kprintf("shell1");
     newconn = netconn_accept(conn);
     kprintf("2");
     shell_main(newconn);

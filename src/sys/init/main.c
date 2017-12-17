@@ -111,6 +111,8 @@ int kmain(uInt32 rootdev) {
     if (init_tasks[i]() != 0x0)
       kpanic("Error: Initializing System Task[%i].\n", i);
   }
+  irqEnable(0x0);
+while(1);
 
   /* New Root Mount Point */
   //Old 2 new 10

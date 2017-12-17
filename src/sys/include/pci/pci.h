@@ -34,44 +34,59 @@
 
 
 struct pciConfig {
-  uInt16 vendorId;
-  uInt16 deviceId;
+  uint16_t vendorId;
+  uint16_t deviceId;
 
-  uInt16 command;
-  uInt16 status;
+  uint16_t command;
+  uint16_t status;
 
-  uInt8  revisionId;
-  uInt8  interface;
-  uInt8  subClass;
-  uInt8  baseClass;
+  uint8_t  revisionId;
+  uint8_t  interface;
+  uint8_t  subClass;
+  uint8_t  baseClass;
 
-  uInt8  cacheLineSize;
-  uInt8  latencyTimer;
-  uInt8  headerType;
-  uInt8  bist;
+  uint8_t  cacheLineSize;
+  uint8_t  latencyTimer;
+  uint8_t  headerType;
+  uint8_t  bist;
+
+  uint32_t bar[6];
+
+  uint32_t cisPointer;
+  uint16_t subsysVendorID;
+  uint16_t subsystemID;
+  uint32_t epromAddr;
+  uint16_t capabilites;
+  uint16_t res1;
+  uint32_t res2;
+  uint8_t intLine;
+  uint8_t intPin;
+  uint8_t minGrant;
+  uint8_t maxLatency;
 
   /* device info */
-  uInt8  bus;
-  uInt8  dev;
-  uInt8  func;
-  uInt8  irq;
+  //uint8_t  bus;
+  //uint8_t  dev;
+  //uint8_t  func;
+  //uint8_t  irq;
+  //uint8_t irqLine;
 
   /* base registers */
-  uInt32 base[6];
-  uInt32 size[6];
+  //uInt32 base[6];
+  //uInt32 size[6];
 
-  uInt16 subsysVendor;
-  uInt16 subsys;
+  //uint16_t subsysVendor;
+  //uint16_t subsys;
   
   };
 
 struct confadd {
-  uInt8 reg:8;
-  uInt8 func:3;
-  uInt8 dev:5;
-  uInt8 bus:8;
-  uInt8 rsvd:7;
-  uInt8 enable:1;
+  uint8_t reg:8;
+  uint8_t func:3;
+  uint8_t dev:5;
+  uint8_t bus:8;
+  uint8_t rsvd:7;
+  uint8_t enable:1;
   };
 
 #define countof(a)     (sizeof(a) / sizeof(a[0]))

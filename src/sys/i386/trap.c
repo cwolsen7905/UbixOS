@@ -44,7 +44,7 @@ void trap( struct trapframe *frame ) {
     if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM))
       kpanic( "INT OFF! USER" );
     else
-      kpanic( "INT OFF! KERN" );
+      kpanic( "INT OFF! KERN[0x%X]", trap_code );
   }
 
   kprintf("trap_code: %i(0x%X), EIP: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip);

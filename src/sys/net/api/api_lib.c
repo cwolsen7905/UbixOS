@@ -375,7 +375,7 @@ netconn_connect(struct netconn *conn, struct ip_addr *addr,
   msg->msg.conn = conn;  
   msg->msg.msg.bc.ipaddr = addr;
   msg->msg.msg.bc.port = port;
-  kprintf("1");
+  kprintf("api1");
   api_msg_post(msg);
   kprintf("2: [0x%X]",conn->mbox);
   sys_mbox_fetch(conn->mbox, NULL);

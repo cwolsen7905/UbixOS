@@ -46,6 +46,7 @@
 #include <lib/kprintf.h>
 #include <sys/device.old.h>
 #include <isa/ne2k.h>
+#include <pci/lnc.h>
 
 
 #include "net/debug.h"
@@ -83,20 +84,20 @@ static void low_level_init(struct netif *netif) {
 
   ethernetif = netif->state;
   dev = (struct device *)kmalloc(sizeof(struct device));
-  dev->ioAddr = 0x280;
-  dev->irq    = 0x10;
+  dev->ioAddr = 0xD000;
+  dev->irq    = 0x9;
   
   /* Obtain MAC address from network interface. */
-  ethernetif->ethaddr->addr[0] = 0x00;
+  ethernetif->ethaddr->addr[0] = 0x08;
   ethernetif->ethaddr->addr[1] = 0x00;
-  ethernetif->ethaddr->addr[2] = 0xC0;
-  ethernetif->ethaddr->addr[3] = 0x97;
-  ethernetif->ethaddr->addr[4] = 0xC6;
-  ethernetif->ethaddr->addr[5] = 0x93;
+  ethernetif->ethaddr->addr[2] = 0x27;
+  ethernetif->ethaddr->addr[3] = 0x73;
+  ethernetif->ethaddr->addr[4] = 0xC1;
+  ethernetif->ethaddr->addr[5] = 0xB6;
 
   /* Do whatever else is needed to initialize interface. */  
-  kprintf("NETIF: [0x%X:0x%X]\n",netif,ethernetif_thread);
-  sys_thread_new(ethernetif_thread, netif);
+  kprintf("NETIF: [0x%X:0x%X]MrOlsen NOT STARTED THREAD\n",netif,ethernetif_thread);
+  //sys_thread_new(ethernetif_thread, netif);
  
   }
 /*-----------------------------------------------------------------------------------*/
@@ -124,7 +125,8 @@ static err_t low_level_output(struct ethernetif *ethernetif, struct pbuf *p) {
     bcopy(q->payload, bufptr, q->len);
     bufptr += q->len;
     }
-  PCtoNIC(dev,buf,p->tot_len);
+  //MrOlsen 2017PCtoNIC(dev,buf,p->tot_len);
+  lnc_sendPacket(lnc,buf,p->tot_len,0x0);
   //kprintf("Sending Data[%i]\n",p->tot_len); 
   return ERR_OK;
   }
@@ -346,6 +348,7 @@ void ethernetif_thread(void *arg) {
   struct netif *netif = 0x0;
  
   netif = arg;
+  /* MrOlsen 2017-12-16 
   
   while (1) {
     tmpBuf = ne2kGetBuffer();
@@ -354,4 +357,5 @@ void ethernetif_thread(void *arg) {
       }
     }
   ne2kFreeBuffer(tmpBuf);
+*/
   }

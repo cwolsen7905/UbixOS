@@ -285,6 +285,8 @@ if (cfg->vendorId == 0x1022) {
       }
       v = pciRead(bus,dev,func,0x3c,1);
       cfg->irq = (v == 0xff ? 0 : v);
+      v = pciRead(bus,dev,func,0x40,1);
+      cfg->irqLine = (v == 0xff ? 0 : v);
       break;
     case 1:
       kprintf("  * PCI <-> PCI Bridge\n");
@@ -309,8 +311,8 @@ int pci_init() {
           for (i=0x0;i<countof(pciClasses);i++) {
             if (pcfg.baseClass == pciClasses[i].baseClass && pcfg.subClass == pciClasses[i].subClass && pcfg.interface == pciClasses[i].interface) {
               if (pcfg.vendorId == 0x1022)
-              kprintf("PCI Device: %s @ IRQ: 0x%X\n",pciClasses[i].name,pcfg.irq);
-              //kprintf("PCI Device: %s @ IRQ: 0x%X, BAR0: 0x%X, BAR1: 0x%X\n",pciClasses[i].name,pcfg.irq,pcfg.base[0],pcfg.base[1]);
+              kprintf("PCI Device: %s @ IRQ: 0x%X.0x%X\n",pciClasses[i].name,pcfg.irq,pcfg.irqLine);
+              //kprintf("PCI Device: %s @ IRQ: 0x%X.0x%X, BAR0: 0x%X, BAR1: 0x%X\n",pciClasses[i].name,pcfg.irq,pcfg.base[0],pcfg.base[1]);
               //while(1);
               break;
               }

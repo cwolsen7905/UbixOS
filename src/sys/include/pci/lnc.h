@@ -89,28 +89,28 @@ struct hostRingEntry {
 };
 
 struct arpcom {
-    //struct  ifnet ac_if;            /* network-visible interface */
-    uint8_t ac_enaddr[6]; /* ethernet hardware address */
-    int ac_multicnt; /* length of ac_multiaddrs list */
-    void *ac_netgraph; /* ng_ether(4) netgraph node info */
+  //struct  ifnet ac_if;            /* network-visible interface */
+  uint8_t ac_enaddr[6]; /* ethernet hardware address */
+  int ac_multicnt; /* length of ac_multiaddrs list */
+  void *ac_netgraph; /* ng_ether(4) netgraph node info */
 };
 
 struct nicInfo {
-    int ident; /* Type of card */
-    int ic; /* Type of ic, Am7990, Am79C960 etc. */
-    int memMode;
-    int iobase;
-    int mode; /* Mode setting at initialization */
+  int ident; /* Type of card */
+  int ic; /* Type of ic, Am7990, Am79C960 etc. */
+  int memMode;
+  int iobase;
+  int mode; /* Mode setting at initialization */
 };
 
 struct initBlock16 {
-    uint16_t mode;    // Mode register
-    uint8_t padr[6];  // Ethernet address
-    uint8_t ladrf[8]; // Logical address filter (multicast)
-    uint16_t rdra;    // Low order pointer to receive ring
-    uint16_t rlen;    // High order pointer and no. rings
-    uint16_t tdra;    // Low order pointer to transmit ring
-    uint16_t tlen;    // High order pointer and no rings
+  uint16_t mode;    // Mode register
+  uint8_t padr[6];  // Ethernet address
+  uint8_t ladrf[8]; // Logical address filter (multicast)
+  uint16_t rdra;    // Low order pointer to receive ring
+  uint16_t rlen;    // High order pointer and no. rings
+  uint16_t tdra;    // Low order pointer to transmit ring
+  uint16_t tlen;    // High order pointer and no rings
 };
 
 struct initBlock32 {
@@ -136,7 +136,7 @@ struct lncInfo {
     unsigned int ioAddr;
     int nrdre;
     int ntdre;
-    const int bufferSize = 1548;
+    int bufferSize;
     int txPtr;
 };
 

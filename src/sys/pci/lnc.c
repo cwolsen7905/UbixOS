@@ -86,12 +86,14 @@ int initLNC() {
   char data[64] = "abcDEFghiJKLmnoPQRstuVWXyz";
 
   lnc = kmalloc(sizeof(struct lncInfo));
+  memset(lnc, 0x0, sizeof(struct lncInfo));
 
+  lnc->bufferSize = 1548;
   lnc->ioAddr = 0xD000;
 
   lnc->nic.ic = lnc_probe(lnc);
 
-  kprintf("ID: %i\n", lnc->nic.ic);
+  //kprintf("ID: %i\n", lnc->nic.ic);
 
   if ((lnc->nic.ic > 0) && (lnc->nic.ic >= PCnet_32)) {
     lnc->nic.ident = NE2100;
@@ -127,7 +129,7 @@ int initLNC() {
 
   iW = lnc_readBCR32(lnc, 0x2);
   iW |= 0x2;
-  lnc_writeBCR32(lnc, 2, iW);
+  lnc_writeBCR32(lnc, 0x2, iW);
 
   lnc->init.mode = 0x0;
 
@@ -140,11 +142,13 @@ int initLNC() {
 
   lnc->init.rdra = (uint32_t) vmm_getRealAddr(lnc->rxRing);
   lnc->init.rlen = 3 << 4;
+  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->rxRing, vmm_getRealAddr(lnc->rxRing));
 
   lnc->init.tdra = (uint32_t) vmm_getRealAddr(lnc->txRing);
   lnc->init.tlen = 3 << 4;
+  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", lnc->txRing, vmm_getRealAddr(lnc->txRing));
 
-  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr(&lnc->init));
+  //kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr(&lnc->init));
 
   iW = vmm_getRealAddr(&lnc->init);
 
@@ -160,8 +164,8 @@ int initLNC() {
 
   if (lnc_readCSR32(lnc, CSR0) & IDON) {
     setVector(&lnc_isr, mVec + 0x9, (dInt + dPresent + dDpl0));
-    irqEnable(0x9);
     lnc_writeCSR32(lnc, CSR0, STRT | INEA);
+    irqEnable(0x9);
     /* 
      * sc->arpcom.ac_if.if_flags |= IFF_RUNNING;
      * sc->arpcom.ac_if.if_flags &= ~IFF_OACTIVE;
@@ -173,14 +177,14 @@ int initLNC() {
     return (-1);
   }
 
+  /*
   kprintf("SENDING PACKET");
   while (1) {
     iW = lnc_sendPacket(lnc, &data, strlen(data), 0x0);
-    if (iW)
-      kprintf("Sent %i Bytes", iW);
-    else
-      kprintf("Unable To Send %i Bytes", iW);
+    if (!iW)
+      kprintf("Sending Failed");
   }
+  */
 
   return (0);
 }
@@ -191,7 +195,7 @@ int lnc_probe(struct lncInfo *lnc) {
   int type = 0x0;
 
   if ((type = lanceProbe(lnc))) {
-    kprintf("Type: [0x%X]", type);
+    //kprintf("Type: [0x%X]", type);
     chipId = lnc_readCSR(lnc, CSR89);
     chipId <<= 16;
     chipId |= lnc_readCSR(lnc, CSR88);
@@ -249,7 +253,9 @@ int lanceProbe(struct lncInfo *lnc) {
 }
 
 void lncInt() {
+  while (1) {
   kprintf("Finished!!!\n");
+  }
   outportByte(0x20, 0x20);
   return;
   uInt16 csr0 = 0x0;
@@ -310,12 +316,11 @@ asm(
 int lncAttach(struct lncInfo *lnc, int unit) {
   int i = 0;
   uint32_t lncSize = 0x0;
-  char *tmpBuffer = 0x0;
   uint16_t bcnt = 0x0;
 
   /* Initialize rxRing */
   lncSize = (NDESC(lnc->nrdre) * sizeof(struct hostRingEntry));
-  kprintf("rxRing Size: [%i]", lncSize);
+  //kprintf("rxRing Size: [%i]", lncSize);
   lnc->rxRing = kmalloc(lncSize);
 
   if (!lnc->rxRing) {
@@ -327,7 +332,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 
   /* Initialize rxBuffer */
   lncSize = (NDESC(lnc->nrdre) * lnc->bufferSize);
-  kprintf("rxBuffer Size: [%i]\n", lncSize);
+  //kprintf("rxBuffer Size: [%i]\n", lncSize);
   lnc->rxBuffer = kmalloc(lncSize);
   if (!lnc->rxBuffer) {
     kprintf("lnc%d: Couldn't allocate memory for rXBuffer\n", unit);
@@ -337,16 +342,18 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 
   /* Setup the RX Ring */
   for (i = 0; i < NDESC(lnc->nrdre); i++) {
-    lnc->rxRing->addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->rxRing + (i * lnc->bufferSize));
+    lnc->rxRing[i].addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->rxRing + (i * lnc->bufferSize));
     bcnt = (uint16_t) (-lnc->bufferSize);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000;
-    lnc->rxRing->bcnt = bcnt;
+//kprintf("rxR[%i].addr = 0x%X, BCNT 0x%X", i, lnc->rxRing[i].addr,bcnt);
+    lnc->rxRing[i].bcnt = bcnt;
+    lnc->rxRing[i].md[1] = 0x80;
   }
 
   /* Initialize txRing */
   lncSize = (NDESC(lnc->ntdre) * sizeof(struct hostRingEntry));
-  kprintf("txRing Size: [%i]", lncSize);
+  //kprintf("txRing Size: [%i]", lncSize);
   lnc->txRing = kmalloc(lncSize);
 
   if (!lnc->txRing) {
@@ -358,7 +365,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 
   /* Initialize txBuffer */
   lncSize = (NDESC(lnc->ntdre) * lnc->bufferSize);
-  kprintf("txBuffer Size: [%i]\n", lncSize);
+  //kprintf("txBuffer Size: [%i]\n", lncSize);
   lnc->txBuffer = kmalloc(lncSize);
   if (!lnc->txBuffer) {
     kprintf("lnc%d: Couldn't allocate memory for txBuffer\n", unit);
@@ -368,12 +375,12 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 
   /* Setup the TX Ring */
   for (i = 0; i < NDESC(lnc->ntdre); i++) {
-    lnc->txRing->addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->txRing + (i * lnc->bufferSize));
+    lnc->txRing[i].addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->txRing + (i * lnc->bufferSize));
     bcnt = (uint16_t) (-lnc->bufferSize);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000;
-    lnc->txRing->bcnt = bcnt;
-    lnc->txRing->md[0] = 0x80;
+    //kprintf("txR[%i].addr = 0x%X, BCNT 0x%X", i, lnc->txRing[i].addr,bcnt);
+    lnc->txRing[i].bcnt = bcnt;
   }
 
   /* MrOlsen 2017-12-16
@@ -422,7 +429,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 }
 
 int lnc_driverOwns(struct lncInfo *lnc) {
-  return (lnc->txRing[lnc->txPtr]->md[0] & 0x80) == 0;
+  return (lnc->txRing[lnc->txPtr].md[1] & 0x80) == 0;
 }
 
 int lnc_nextTxPtr(struct lncInfo *lnc) {
@@ -432,27 +439,29 @@ int lnc_nextTxPtr(struct lncInfo *lnc) {
     ret = 0;
   }
 
-  return ret;
+  lnc->txPtr = ret;
+
+  return(0);
 }
 
 int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest) {
   if (!lnc_driverOwns(lnc))
     return (0);
 
-  memcpy((void *) (lnc->rxBuffer + (lnc->txPtr * lnc->bufferSize)), packet, len);
+  memcpy((void *) (lnc->txBuffer + (lnc->txPtr * lnc->bufferSize)), packet, len);
 
-  lnc->txRing[lnc->txPtr]->md[0] |= 0x2;
-  lnc->txRing[lnc->txPtr]->md[0] |= 0x1;
+  lnc->txRing[lnc->txPtr].md[1] |= 0x2;
+  lnc->txRing[lnc->txPtr].md[1] |= 0x1;
   //tdes[(tx_ptr * 16) + 7] |= 0x2;
   //tdes[(tx_ptr * 16) + 7] |= 0x1;
 
-  uInt16 bcnt = (uint16_t) (-len);
+  uint16_t bcnt = (uint16_t) (-len);
   bcnt &= 0xFFF;
   bcnt |= 0xF000;
-  lnc->rxRing[lnc->txPtr]->bcnt = bcnt;
+  lnc->txRing[lnc->txPtr].bcnt = bcnt;
 
   //*(uint16_t *) &tdes[tx_ptr * 16 + 4] = bcnt;
-  lnc->txRing[lnc->txPtr]->md[0] |= 0x80;
+  lnc->txRing[lnc->txPtr].md[1] |= 0x80;
 
   //tdes[tx_ptr * 16 + 7] |= 0x80;
 

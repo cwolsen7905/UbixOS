@@ -6,7 +6,8 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 #  Objects
-OBJS = mouse.o atkbd.o fdc.o 8259.o pit.o ne2k.o
+OBJS = mouse.o atkbd.o fdc.o 8259.o pit.o
+# ne2k.o
 
 all: $(OBJS)
 
