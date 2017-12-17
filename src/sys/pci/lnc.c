@@ -178,6 +178,8 @@ int initLNC() {
     iW = lnc_sendPacket(lnc, &data, strlen(data), 0x0);
     if (iW)
       kprintf("Sent %i Bytes", iW);
+    else
+      kprintf("Unable To Send %i Bytes", iW);
   }
 
   return (0);
