@@ -138,11 +138,14 @@ lnc->init.padr[2] = lnc->arpcom.ac_enaddr[2];
 lnc->init.padr[3] = lnc->arpcom.ac_enaddr[3];
 lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
 lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
-  lnc->init.rdra = (uint32_t)lnc->rxRing;
+
+  lnc->init.rdra = (uint32_t)vmm_getRealAddr(lnc->rxRing);
   lnc->init.rlen = 3 << 4;
 
-  lnc->init.tdra = (uint32_t)lnc->txRing;
+  lnc->init.tdra = (uint32_t)vmm_getRealAddr(lnc->txRing);
   lnc->init.tlen = 3 << 4;
+
+  kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr(&lnc->init));
 
   lnc_writeCSR32(lnc, CSR1, (uint32_t) vmm_getRealAddr(&lnc->init) & 0xFFFF);
   lnc_writeCSR32(lnc, CSR2, ((uint32_t) vmm_getRealAddr(&lnc->init) >> 16) &0xFFFF);
