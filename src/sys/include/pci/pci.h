@@ -34,16 +34,16 @@
 
 
 struct pciConfig {
-  uint16_t vendorId;
-  uint16_t deviceId;
+  uint16_t vendorID;
+  uint16_t deviceID;
 
   uint16_t command;
   uint16_t status;
 
-  uint8_t  revisionId;
-  uint8_t  interface;
+  uint8_t  revisionID;
+  uint8_t  progIf;
   uint8_t  subClass;
-  uint8_t  baseClass;
+  uint8_t  classCode;
 
   uint8_t  cacheLineSize;
   uint8_t  latencyTimer;
@@ -52,9 +52,9 @@ struct pciConfig {
 
   uint32_t bar[6];
 
-  uint32_t cisPointer;
+  uint32_t cbPointer;
   uint16_t subsysVendorID;
-  uint16_t subsystemID;
+  uint16_t subsysID;
   uint32_t epromAddr;
   uint16_t capabilites;
   uint16_t res1;
@@ -78,6 +78,12 @@ struct pciConfig {
   //uint16_t subsysVendor;
   //uint16_t subsys;
   
+  /* Device Info */
+  //Move this to anotther struct eventually
+  uint8_t bus;
+  uint8_t dev;
+  uint8_t func;
+
   };
 
 struct confadd {
