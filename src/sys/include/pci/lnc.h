@@ -129,11 +129,15 @@ struct lncInfo {
     struct arpcom arpcom;
     struct nicInfo nic;
     struct hostRingEntry *rxRing;
+    char *rxBuffer;
     struct hostRingEntry *txRing;
+    char *txBuffer;
     struct initBlock32 init;
     unsigned int ioAddr;
     int nrdre;
     int ntdre;
+    const int bufferSize = 1548;
+    int txPtr;
 };
 
 /* Functions */

@@ -83,6 +83,8 @@ uint32_t lnc_readBCR32(struct lncInfo *lnc, uint32_t port) {
 int initLNC() {
   int i = 0x0;
 
+  char data[64] = "abcDEFghiJKLmnoPQRstuVWXyz";
+
   lnc = kmalloc(sizeof(struct lncInfo));
 
   lnc->ioAddr = 0xD000;
@@ -127,31 +129,29 @@ int initLNC() {
   iW |= 0x2;
   lnc_writeBCR32(lnc, 2, iW);
 
-  lnc->init.mode = 0x8000;
-  //lnc->init.padr[0] = (lnc->arpcom.ac_enaddr[1] << 8) | lnc->arpcom.ac_enaddr[0];
-  //lnc->init.padr[1] = (lnc->arpcom.ac_enaddr[3] << 8) | lnc->arpcom.ac_enaddr[2];
-  //lnc->init.padr[2] = (lnc->arpcom.ac_enaddr[5] << 8) | lnc->arpcom.ac_enaddr[4];
+  lnc->init.mode = 0x0;
 
-lnc->init.padr[0] = lnc->arpcom.ac_enaddr[0];
-lnc->init.padr[1] = lnc->arpcom.ac_enaddr[1];
-lnc->init.padr[2] = lnc->arpcom.ac_enaddr[2];
-lnc->init.padr[3] = lnc->arpcom.ac_enaddr[3];
-lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
-lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
+  lnc->init.padr[0] = lnc->arpcom.ac_enaddr[0];
+  lnc->init.padr[1] = lnc->arpcom.ac_enaddr[1];
+  lnc->init.padr[2] = lnc->arpcom.ac_enaddr[2];
+  lnc->init.padr[3] = lnc->arpcom.ac_enaddr[3];
+  lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
+  lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
 
-  lnc->init.rdra = (uint32_t)vmm_getRealAddr(lnc->rxRing);
+  lnc->init.rdra = (uint32_t) vmm_getRealAddr(lnc->rxRing);
   lnc->init.rlen = 3 << 4;
 
-  lnc->init.tdra = (uint32_t)vmm_getRealAddr(lnc->txRing);
+  lnc->init.tdra = (uint32_t) vmm_getRealAddr(lnc->txRing);
   lnc->init.tlen = 3 << 4;
 
   kprintf("Virt Addr: 0x%X, Real Addr: 0x%X", &lnc->init, vmm_getRealAddr(&lnc->init));
 
-  lnc_writeCSR32(lnc, CSR1, (uint32_t) vmm_getRealAddr(&lnc->init) & 0xFFFF);
-  lnc_writeCSR32(lnc, CSR2, ((uint32_t) vmm_getRealAddr(&lnc->init) >> 16) &0xFFFF);
+  iW = vmm_getRealAddr(&lnc->init);
+
+  lnc_writeCSR32(lnc, CSR1, iW & 0xFFFF);
+  lnc_writeCSR32(lnc, CSR2, (iW >> 16) & 0xFFFF);
 
   lnc_writeCSR32(lnc, CSR3, 0);
-
   lnc_writeCSR32(lnc, CSR0, INIT);
 
   for (i = 0; i < 1000; i++)
@@ -174,8 +174,11 @@ lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
   }
 
   kprintf("SENDING PACKET");
-  while(1)
-    lnc_sendPacket(lnc, 0x0, 32, 0x0);
+  while (1) {
+    iW = lnc_sendPacket(lnc, &data, strlen(data), 0x0);
+    if (iW)
+      kprintf("Sent %i Bytes", iW);
+  }
 
   return (0);
 }
@@ -284,95 +287,105 @@ asm(
 );
 
 asm(
-    ".globl lnc_isr       \n"
-    "lnc_isr:             \n"
-    "  pusha                \n" /* Save all registers           */
-    "  push %ss             \n"
-    "  push %ds             \n"
-    "  push %es             \n"
-    "  push %fs             \n"
-    "  push %gs             \n"
-    "  call lncInt          \n"
-    "  pop %gs              \n"
-    "  pop %fs              \n"
-    "  pop %es              \n"
-    "  pop %ds              \n"
-    "  pop %ss              \n"
-    "  popa                 \n"
-    "  iret                 \n" /* Exit interrupt                           */
+  ".globl lnc_isr       \n"
+  "lnc_isr:             \n"
+  "  pusha                \n" /* Save all registers           */
+  "  push %ss             \n"
+  "  push %ds             \n"
+  "  push %es             \n"
+  "  push %fs             \n"
+  "  push %gs             \n"
+  "  call lncInt          \n"
+  "  pop %gs              \n"
+  "  pop %fs              \n"
+  "  pop %es              \n"
+  "  pop %ds              \n"
+  "  pop %ss              \n"
+  "  popa                 \n"
+  "  iret                 \n" /* Exit interrupt                           */
 );
-
-
 
 int lncAttach(struct lncInfo *lnc, int unit) {
   int i = 0;
-  int lncMemSize = 0x0;
+  uint32_t lncSize = 0x0;
   char *tmpBuffer = 0x0;
   uint16_t bcnt = 0x0;
-  const int buffer_size = 1548;
 
-  //lncMemSize = ((NDESC(lnc->nrdre) + NDESC(lnc->ntdre)) * sizeof(struct hostRingEntry));
-
-  /* MrOlsen 2017-12-16
-  if (lnc->nic.memMode != SHMEM)
-    lncMemSize += sizeof(struct initBlock) + (sizeof(struct mds) * (NDESC(lnc->nrdre) + NDESC(lnc->ntdre))) + MEM_SLEW;
-
-  if (lnc->nic.memMode == DMA_FIXED)
-    lncMemSize += (NDESC(lnc->nrdre) * RECVBUFSIZE) + (NDESC(lnc->ntdre) * TRANSBUFSIZE);
-  */
-
-  if (lnc->nic.memMode != SHMEM) {
-    if (lnc->nic.ic < PCnet_32) {
-      /* ISA based cards */
-      kprintf("ISA Board\n");
-      /* sc->recv_ring = contigmalloc(lnc_mem_size, M_DEVBUF, M_NOWAIT,0ul, 0xfffffful, 4ul, 0x1000000); */
-    }
-    else {
-      /*
-       * For now it still needs to be below 16MB because the
-       * descriptor's can only hold 16 bit addresses.
-       */
-      /* sc->recv_ring = contigmalloc(lnc_mem_size, M_DEVBUF, M_NOWAIT,0ul, 0xfffffful, 4ul, 0x1000000); */
-  //lncMemSize = (sizeof(struct hostRingEntry) * lnc->nrdre);
-  lncMemSize = (NDESC(lnc->nrdre) * sizeof(struct hostRingEntry));
-  kprintf("lncMemSize: [%i]", lncMemSize);
-      lnc->rxRing = kmalloc(lncMemSize);
-  memset(lnc->rxRing,0x0,lncMemSize);
-  for (i = 0;i < NDESC(lnc->nrdre);i++) {
-    tmpBuffer = kmalloc(buffer_size);
-    lnc->rxRing->addr = (uint32_t)vmm_getRealAddr(tmpBuffer);
-    bcnt = (uint16_t)(-buffer_size);
-    bcnt &= 0x0FFF;
-    bcnt |= 0xF000; 
-    lnc->rxRing->bcnt = bcnt;
-}
-      kprintf("PCI Board\n");
-    }
-  }
+  /* Initialize rxRing */
+  lncSize = (NDESC(lnc->nrdre) * sizeof(struct hostRingEntry));
+  kprintf("rxRing Size: [%i]", lncSize);
+  lnc->rxRing = kmalloc(lncSize);
 
   if (!lnc->rxRing) {
-    kprintf("lnc%d: Couldn't allocate memory for NIC\n", unit);
+    kprintf("lnc%d: Couldn't allocate memory for rxRing\n", unit);
     return (-1);
   }
 
-  lncMemSize = (NDESC(lnc->ntdre) * sizeof(struct hostRingEntry));
-  lnc->txRing = kmalloc(lncMemSize);
-  memset(lnc->txRing,0x0,lncMemSize);
-  for (i = 0;i < NDESC(lnc->ntdre);i++) {
-    tmpBuffer = kmalloc(buffer_size);
-    lnc->txRing->addr = (uint32_t)vmm_getRealAddr(tmpBuffer);
-    bcnt = (uint16_t)(-buffer_size);
+  memset(lnc->rxRing, 0x0, lncSize);
+
+  /* Initialize rxBuffer */
+  lncSize = (NDESC(lnc->nrdre) * lnc->bufferSize);
+  kprintf("rxBuffer Size: [%i]\n", lncSize);
+  lnc->rxBuffer = kmalloc(lncSize);
+  if (!lnc->rxBuffer) {
+    kprintf("lnc%d: Couldn't allocate memory for rXBuffer\n", unit);
+    return (-1);
+  }
+  memset(lnc->rxBuffer, 0x0, lncSize);
+
+  /* Setup the RX Ring */
+  for (i = 0; i < NDESC(lnc->nrdre); i++) {
+    lnc->rxRing->addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->rxRing + (i * lnc->bufferSize));
+    bcnt = (uint16_t) (-lnc->bufferSize);
+    bcnt &= 0x0FFF;
+    bcnt |= 0xF000;
+    lnc->rxRing->bcnt = bcnt;
+  }
+
+  /* Initialize txRing */
+  lncSize = (NDESC(lnc->ntdre) * sizeof(struct hostRingEntry));
+  kprintf("txRing Size: [%i]", lncSize);
+  lnc->txRing = kmalloc(lncSize);
+
+  if (!lnc->txRing) {
+    kprintf("lnc%d: Couldn't allocate memory for txRing\n", unit);
+    return (-1);
+  }
+
+  memset(lnc->txRing, 0x0, lncSize);
+
+  /* Initialize txBuffer */
+  lncSize = (NDESC(lnc->ntdre) * lnc->bufferSize);
+  kprintf("txBuffer Size: [%i]\n", lncSize);
+  lnc->txBuffer = kmalloc(lncSize);
+  if (!lnc->txBuffer) {
+    kprintf("lnc%d: Couldn't allocate memory for txBuffer\n", unit);
+    return (-1);
+  }
+  memset(lnc->txBuffer, 0x0, lncSize);
+
+  /* Setup the TX Ring */
+  for (i = 0; i < NDESC(lnc->ntdre); i++) {
+    lnc->txRing->addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->txRing + (i * lnc->bufferSize));
+    bcnt = (uint16_t) (-lnc->bufferSize);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000;
     lnc->txRing->bcnt = bcnt;
     lnc->txRing->md[0] = 0x80;
   }
 
+  /* MrOlsen 2017-12-16
+   if (lnc->nic.memMode != SHMEM)
+   lncMemSize += sizeof(struct initBlock) + (sizeof(struct mds) * (NDESC(lnc->nrdre) + NDESC(lnc->ntdre))) + MEM_SLEW;
+   if (lnc->nic.memMode == DMA_FIXED)
+   lncMemSize += (NDESC(lnc->nrdre) * RECVBUFSIZE) + (NDESC(lnc->ntdre) * TRANSBUFSIZE);
+   */
 
-  if (!lnc->txRing) {
-    kprintf("lnc%d: Couldn't allocate memory for NIC\n", unit);
-    return (-1);
-  }
+  if (lnc->nic.memMode != SHMEM)
+    if (lnc->nic.ic < PCnet_32)
+      kprintf("ISA Board\n");
+    else
+      kprintf("PCI Board\n");
 
   lnc->nic.mode = NORMAL;
 
@@ -402,28 +415,47 @@ int lncAttach(struct lncInfo *lnc, int unit) {
   else
     kprintf("%s", icIdent[lnc->nic.ic]);
 
-  kprintf(" address 0x%X\n", lnc->arpcom.ac_enaddr);
-
+  kprintf(" address %x:%x:%x:%x:%x:%x\n", lnc->arpcom.ac_enaddr[0], lnc->arpcom.ac_enaddr[1], lnc->arpcom.ac_enaddr[2], lnc->arpcom.ac_enaddr[3], lnc->arpcom.ac_enaddr[4], lnc->arpcom.ac_enaddr[5]);
   return (1);
 }
 
-int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uInt8 *dest) {
-  int tx_ptr = 0;
-  char data[1548] = "SDFSDF";
+int lnc_driverOwns(struct lncInfo *lnc) {
+  return (lnc->txRing[lnc->txPtr]->md[0] & 0x80) == 0;
+}
 
-  char *tdes = (char *)lnc->txRing;
+int lnc_nextTxPtr(struct lncInfo *lnc) {
+  int ret = lnc->txPtr + 1;
 
-  //memcpy((void *)(tx_buffers + (tx_ptr * buffer_size), packet, len);
+  if (ret == NDESC(lnc->ntdre)) {
+    ret = 0;
+  }
 
-  tdes[(tx_ptr * 16) + 7] |= 0x2;
-  tdes[(tx_ptr * 16) + 7] |= 0x1;
+  return ret;
+}
 
-  uInt16 bcnt = (uInt16) (-len);
+int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest) {
+  if (!lnc_driverOwns(lnc))
+    return (0);
+
+  memcpy((void *) (lnc->rxBuffer + (lnc->txPtr * lnc->bufferSize)), packet, len);
+
+  lnc->txRing[lnc->txPtr]->md[0] |= 0x2;
+  lnc->txRing[lnc->txPtr]->md[0] |= 0x1;
+  //tdes[(tx_ptr * 16) + 7] |= 0x2;
+  //tdes[(tx_ptr * 16) + 7] |= 0x1;
+
+  uInt16 bcnt = (uint16_t) (-len);
   bcnt &= 0xFFF;
   bcnt |= 0xF000;
-  *(uInt16 *) &tdes[tx_ptr * 16 + 4] = bcnt;
-  tdes[tx_ptr * 16 + 7] |= 0x80;
-  return(len);
+  lnc->rxRing[lnc->txPtr]->bcnt = bcnt;
+
+  //*(uint16_t *) &tdes[tx_ptr * 16 + 4] = bcnt;
+  lnc->txRing[lnc->txPtr]->md[0] |= 0x80;
+
+  //tdes[tx_ptr * 16 + 7] |= 0x80;
+
+  lnc_nextTxPtr(lnc);
+  return (len);
 }
 
 int lnc_getMode(struct lncInfo *lnc) {
@@ -434,7 +466,6 @@ int lnc_getMode(struct lncInfo *lnc) {
   lnc_reset(lnc);
   if (lnc_readCSR(lnc, CSR0) == CSR0_STOP)
     return MODE_16;
-
 
   return (MODE_INVALID);
 }
@@ -453,7 +484,6 @@ int lnc_switchDWord(struct lncInfo *lnc) {
   outportDWord(lnc->ioAddr + RDP, 0);
 
   /* a dword write to RDP sets controller into 32-bit I/O mode */
-  //kprintf("BCR20.1: [0x%X][0x%X]", lnc_readBCR32(lnc, BCR20), lnc_readBCR32(lnc, BCR18) & BCR18_DWIO);
   if (!(lnc_readBCR32(lnc, BCR18) & BCR18_DWIO)) {
     kprintf("Cannot Swithc To 32 Bit");
   }
@@ -462,6 +492,6 @@ int lnc_switchDWord(struct lncInfo *lnc) {
   _csr58 |= 2;
   lnc_writeCSR32(lnc, CSR58, _csr58);
 
-  return(0);
+  return (0);
 
 }
