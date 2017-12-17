@@ -144,8 +144,8 @@ lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
   lnc->init.tdra = (uint32_t)lnc->txRing;
   lnc->init.tlen = 3 << 4;
 
-  lnc_writeCSR32(lnc, CSR1, (uint32_t) &lnc->init & 0xFFFF);
-  lnc_writeCSR32(lnc, CSR2, ((uint32_t) &lnc->init >> 16) &0xFFFF);
+  lnc_writeCSR32(lnc, CSR1, (uint32_t) vmm_getRealAddr(&lnc->init) & 0xFFFF);
+  lnc_writeCSR32(lnc, CSR2, ((uint32_t) vmm_getRealAddr(&lnc->init) >> 16) &0xFFFF);
 
   lnc_writeCSR32(lnc, CSR3, 0);
 
@@ -337,7 +337,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
   memset(lnc->rxRing,0x0,lncMemSize);
   for (i = 0;i < NDESC(lnc->nrdre);i++) {
     tmpBuffer = kmalloc(buffer_size);
-    lnc->rxRing->addr = (uint32_t)tmpBuffer;
+    lnc->rxRing->addr = (uint32_t)vmm_getRealAddr(tmpBuffer);
     bcnt = (uint16_t)(-buffer_size);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000; 
@@ -357,7 +357,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
   memset(lnc->txRing,0x0,lncMemSize);
   for (i = 0;i < NDESC(lnc->ntdre);i++) {
     tmpBuffer = kmalloc(buffer_size);
-    lnc->txRing->addr = (uint32_t)tmpBuffer;
+    lnc->txRing->addr = (uint32_t)vmm_getRealAddr(tmpBuffer);
     bcnt = (uint16_t)(-buffer_size);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000;

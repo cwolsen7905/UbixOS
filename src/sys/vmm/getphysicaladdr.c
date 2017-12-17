@@ -53,6 +53,23 @@ u_int32_t vmm_getPhysicalAddr(uInt32 pageAddr) {
   return ((uInt32)(pageTable[pageTableIndex] & 0xFFFFF000));
   }
 
+
+u_int32_t vmm_getRealAddr(uint32_t addr) {
+  int       pageDirectoryIndex = 0x0, pageTableIndex = 0x0;
+  uint32_t *pageTable = 0x0;
+
+  //Calculate The Page Directory Index
+  pageDirectoryIndex = (addr >> 22);
+
+  //Calculate The Page Table Index
+  pageTableIndex = ((addr >> 12) & 0x3FF);
+
+  /* Set pageTable To The Virtual Address Of Table */
+  pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+  /* Return The Physical Address Of The Page */
+  return ((uint32_t)(pageTable[pageTableIndex] & 0xFFFFF000) + (addr & 0xFFF));
+  }
+
 /***
  END
  ***/
