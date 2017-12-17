@@ -39,14 +39,126 @@
 #define BDP      0x16 // 16Bit
 #define BDP32    0x1C // 32Bit
 
+// BCR18
+#define BCR18      18
+#define BCR18_DWIO 0x0080
+
+// BCR20
+#define BCR20        0x0014 
+
 // Modes
 #define MODE_16      0
 #define MODE_32      1
 #define MODE_INVALID 3
 
 
-// CSR0 Commands
+// CSR0
+#define CSR0         0x0000
 #define CSR0_STOP    0x0004
+
+// CSR15
+#define CSR15         15
+#define CSR15_DXMTFCS 0x0008
+#define CSR15_DRTY    0x0020
+#define CSR15_PROM    0x8000
+
+// CSR58
+#define CSR58 0x003A
+
+/* Structs */
+struct mds {
+    uint16_t md0;
+    uint16_t md1;
+    short md2;
+    uint16_t md3;
+};
+
+struct hostRingEntry_old {
+  struct mds *md;
+  union {
+    //struct mbuf *mbuf;
+    char *data;
+  } buff;
+};
+
+struct hostRingEntry {
+  uint32_t addr;
+  uint16_t bcnt;
+  uint8_t  md[6];
+  uint32_t reserved;
+};
+
+struct arpcom {
+    //struct  ifnet ac_if;            /* network-visible interface */
+    uint8_t ac_enaddr[6]; /* ethernet hardware address */
+    int ac_multicnt; /* length of ac_multiaddrs list */
+    void *ac_netgraph; /* ng_ether(4) netgraph node info */
+};
+
+struct nicInfo {
+    int ident; /* Type of card */
+    int ic; /* Type of ic, Am7990, Am79C960 etc. */
+    int memMode;
+    int iobase;
+    int mode; /* Mode setting at initialization */
+};
+
+struct initBlock16 {
+    uint16_t mode;    // Mode register
+    uint8_t padr[6];  // Ethernet address
+    uint8_t ladrf[8]; // Logical address filter (multicast)
+    uint16_t rdra;    // Low order pointer to receive ring
+    uint16_t rlen;    // High order pointer and no. rings
+    uint16_t tdra;    // Low order pointer to transmit ring
+    uint16_t tlen;    // High order pointer and no rings
+};
+
+struct initBlock32 {
+  uint16_t mode;
+  uint8_t rlen;
+  uint8_t tlen;
+  uint8_t padr[6];
+  uint16_t res;
+  uint8_t ladrf[8];
+  uint32_t rdra;
+  uint32_t tdra;
+};
+
+
+struct lncInfo {
+    struct arpcom arpcom;
+    struct nicInfo nic;
+    struct hostRingEntry *rxRing;
+    struct hostRingEntry *txRing;
+    struct initBlock32 init;
+    unsigned int ioAddr;
+    int nrdre;
+    int ntdre;
+};
+
+/* Functions */
+void lnc_writeCSR(struct lncInfo *, uint16_t, uint16_t);
+void lnc_writeCSR32(struct lncInfo *, uint32_t, uint32_t);
+
+uint16_t lnc_readCSR(struct lncInfo *, uint16_t);
+uint32_t lnc_readCSR32(struct lncInfo *, uint32_t);
+
+void lnc_writeBCR(struct lncInfo *, uint16_t, uint16_t);
+void lnc_writeBCR32(struct lncInfo *, uint32_t, uint32_t);
+
+uint16_t lnc_readBCR(struct lncInfo *, uint16_t);
+uint32_t lnc_readBCR32(struct lncInfo *, uint32_t);
+
+void lnc_reset(struct lncInfo *);
+void lnc_reset32(struct lncInfo *);
+
+int lnc_probe(struct lncInfo *);
+
+int lnc_switchDWord(struct lncInfo *);
+
+int lnc_getMode(struct lncInfo *);
+
+void lnc_isr();
 
 // OLD
 
@@ -83,7 +195,6 @@
 #define PCnet_Home      11       /* Am79C978 */
 
 /******** AM7990 Specifics **************/
-#define CSR0    0x0000
 #define CSR1    1
 #define CSR2    2
 #define CSR3    3
@@ -121,64 +232,9 @@
 #define Am79C973  0x2625
 #define Am79C978  0x2626
 
-struct initBlock {
-    uint16_t mode;    // Mode register
-    uint8_t padr[6];  // Ethernet address
-    uint8_t ladrf[8]; // Logical address filter (multicast)
-    uint16_t rdra;    // Low order pointer to receive ring
-    uint16_t rlen;    // High order pointer and no. rings
-    uint16_t tdra;    // Low order pointer to transmit ring
-    uint16_t tlen;    // High order pointer and no rings
-};
-
-struct mds {
-    uint16_t md0;
-    uint16_t md1;
-    short md2;
-    uint16_t md3;
-};
-
-struct hostRingEntry {
-  struct mds *md;
-  union {
-    //struct mbuf *mbuf;
-    char *data;
-  } buff;
-};
-
-struct arpcom {
-    //struct  ifnet ac_if;            /* network-visible interface */
-    uint8_t ac_enaddr[6]; /* ethernet hardware address */
-    int ac_multicnt; /* length of ac_multiaddrs list */
-    void *ac_netgraph; /* ng_ether(4) netgraph node info */
-};
-
-struct nicInfo {
-    int ident; /* Type of card */
-    int ic; /* Type of ic, Am7990, Am79C960 etc. */
-    int memMode;
-    int iobase;
-    int mode; /* Mode setting at initialization */
-};
-
-struct lncInfo {
-    struct arpcom arpcom;
-    struct nicInfo nic;
-    struct hostRingEntry *rxRing;
-    struct hostRingEntry *txRing;
-    struct initBlock *initBlock;
-    unsigned int ioAddr;
-    int nrdre;
-    int ntdre;
-};
 
 extern struct lncInfo *lnc;
 
-void writeCsr(struct lncInfo *lnc, uInt16 port, uInt16 val);
-uInt16 readCsr(struct lncInfo *lnc, uInt16 port);
-void writeBcr(struct lncInfo *lnc, uInt16 port, uInt16 val);
-uInt16 readBcr(struct lncInfo *lnc, uInt16 port);
-uInt32 readBCR32(struct lncInfo *lnc, uInt32 port);
 
 int initLNC();
 int probe(struct lncInfo *lnc);

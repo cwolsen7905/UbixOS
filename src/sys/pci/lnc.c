@@ -56,8 +56,8 @@ uint16_t lnc_readCSR(struct lncInfo *lnc, uint16_t port) {
 }
 
 uint32_t lnc_readCSR32(struct lncInfo *lnc, uint32_t port) {
-  outportWord(lnc->ioAddr + RAP32, port);
-  return (inportWord(lnc->ioAddr + RDP32));
+  outportDWord(lnc->ioAddr + RAP32, port);
+  return (inportDWord(lnc->ioAddr + RDP32));
 }
 
 void lnc_writeBCR(struct lncInfo *lnc, uint16_t port, uint16_t val) {
@@ -65,9 +65,9 @@ void lnc_writeBCR(struct lncInfo *lnc, uint16_t port, uint16_t val) {
   outportWord(lnc->ioAddr + BDP, val);
 }
 
-void lnc_writeBCR32(struct lncInfo *lnc, uint16_t port, uint16_t val) {
-  outportWord(lnc->ioAddr + RAP, port);
-  outportWord(lnc->ioAddr + BDP, val);
+void lnc_writeBCR32(struct lncInfo *lnc, uint32_t port, uint32_t val) {
+  outportDWord(lnc->ioAddr + RAP32, port);
+  outportDWord(lnc->ioAddr + BDP32, val);
 }
 
 uint16_t lnc_readBCR(struct lncInfo *lnc, uint16_t port) {
@@ -111,33 +111,54 @@ int initLNC() {
 
   lncAttach(lnc, 0);
 
-  /*
-   init->init_mode = 0x8000;
-   init->init_padr[0] = (lnc->arpcom.ac_enaddr[1] << 8) | lnc->arpcom.ac_enaddr[0];
-   init->init_padr[1] = (lnc->arpcom.ac_enaddr[3] << 8) | lnc->arpcom.ac_enaddr[2];
-   init->init_padr[2] = (lnc->arpcom.ac_enaddr[5] << 8) | lnc->arpcom.ac_enaddr[4];
+  i = lnc_getMode(lnc);
+  if (i == MODE_16)
+    kprintf("16 Bit");
+  else if (i == MODE_32)
+    kprintf("32 Bit");
+  else
+    kprintf("Invalid Mode: [%i]", i);
 
-   init->init_rdra = lnc->recvRing;
-   init->init_rlen = 3;
+  lnc_switchDWord(lnc);
 
-   init->init_tdra = lnc->recvRing;
-   init->init_tlen = 3;
+  uint32_t iW = 0;
 
-   writeCsr(lnc, CSR1, (int) init & 0xFFFF);
-   writeCsr(lnc, CSR2, (int) init >> 16);
-   */
+  iW = lnc_readBCR32(lnc, 0x2);
+  iW |= 0x2;
+  lnc_writeBCR32(lnc, 2, iW);
 
-  writeCsr(lnc, CSR3, 0);
-  writeCsr(lnc, CSR0, INIT);
+  lnc->init.mode = 0x8000;
+  //lnc->init.padr[0] = (lnc->arpcom.ac_enaddr[1] << 8) | lnc->arpcom.ac_enaddr[0];
+  //lnc->init.padr[1] = (lnc->arpcom.ac_enaddr[3] << 8) | lnc->arpcom.ac_enaddr[2];
+  //lnc->init.padr[2] = (lnc->arpcom.ac_enaddr[5] << 8) | lnc->arpcom.ac_enaddr[4];
+
+lnc->init.padr[0] = lnc->arpcom.ac_enaddr[0];
+lnc->init.padr[1] = lnc->arpcom.ac_enaddr[1];
+lnc->init.padr[2] = lnc->arpcom.ac_enaddr[2];
+lnc->init.padr[3] = lnc->arpcom.ac_enaddr[3];
+lnc->init.padr[4] = lnc->arpcom.ac_enaddr[4];
+lnc->init.padr[5] = lnc->arpcom.ac_enaddr[5];
+  lnc->init.rdra = (uint32_t)lnc->rxRing;
+  lnc->init.rlen = 3 << 4;
+
+  lnc->init.tdra = (uint32_t)lnc->txRing;
+  lnc->init.tlen = 3 << 4;
+
+  lnc_writeCSR32(lnc, CSR1, (uint32_t) &lnc->init & 0xFFFF);
+  lnc_writeCSR32(lnc, CSR2, ((uint32_t) &lnc->init >> 16) &0xFFFF);
+
+  lnc_writeCSR32(lnc, CSR3, 0);
+
+  lnc_writeCSR32(lnc, CSR0, INIT);
 
   for (i = 0; i < 1000; i++)
-    if (readCsr(lnc, CSR0) & IDON)
+    if (lnc_readCSR32(lnc, CSR0) & IDON)
       break;
 
-  if (readCsr(lnc, CSR0) & IDON) {
-    setVector(_lncInt, mVec + 9, (dInt + dPresent + dDpl3));
-    irqEnable(9);
-    writeCsr(lnc, CSR0, STRT | INEA);
+  if (lnc_readCSR32(lnc, CSR0) & IDON) {
+    setVector(&lnc_isr, mVec + 0x9, (dInt + dPresent + dDpl0));
+    irqEnable(0x9);
+    lnc_writeCSR32(lnc, CSR0, STRT | INEA);
     /* 
      * sc->arpcom.ac_if.if_flags |= IFF_RUNNING;
      * sc->arpcom.ac_if.if_flags &= ~IFF_OACTIVE;
@@ -149,15 +170,8 @@ int initLNC() {
     return (-1);
   }
 
-  uInt16 iW = 0;
-
-  iW = readBcr(lnc, 0x2);
-  kprintf("BCR2.0: [0x%X]", iW);
-
-  iW = readBcr(lnc, 0x4);
-  kprintf("BCR2.1: [0x%X]", iW);
-
-  while (1)
+  kprintf("SENDING PACKET");
+  while(1)
     lnc_sendPacket(lnc, 0x0, 32, 0x0);
 
   return (0);
@@ -169,10 +183,10 @@ int lnc_probe(struct lncInfo *lnc) {
   int type = 0x0;
 
   if ((type = lanceProbe(lnc))) {
-    kprint("Type: [0x%X]", type);
-    chipId = readCsr(lnc, CSR89);
+    kprintf("Type: [0x%X]", type);
+    chipId = lnc_readCSR(lnc, CSR89);
     chipId <<= 16;
-    chipId |= readCsr(lnc, CSR88);
+    chipId |= lnc_readCSR(lnc, CSR88);
     if (chipId & AMD_MASK) {
       chipId >>= 12;
       switch (chipId & PART_MASK) {
@@ -206,15 +220,15 @@ int lnc_probe(struct lncInfo *lnc) {
 int lanceProbe(struct lncInfo *lnc) {
   uInt16 inW = 0;
 
-  writeCsr(lnc, CSR0, CSR0_STOP);
+  lnc_writeCSR(lnc, CSR0, CSR0_STOP);
 
   inW = inportWord(lnc->ioAddr + RDP);
 
-  if ((inW & CSR0_STOP) && !(readCsr(lnc, CSR3))) {
+  if ((inW & CSR0_STOP) && !(lnc_readCSR(lnc, CSR3))) {
 
-    writeCsr(lnc, CSR0, INEA);
+    lnc_writeCSR(lnc, CSR0, INEA);
 
-    if (readCsr(lnc, CSR0) & INEA) {
+    if (lnc_readCSR(lnc, CSR0) & INEA) {
       return (C_LANCE);
     }
     else {
@@ -227,12 +241,12 @@ int lanceProbe(struct lncInfo *lnc) {
 }
 
 void lncInt() {
+  kprintf("Finished!!!\n");
+  outportByte(0x20, 0x20);
+  return;
   uInt16 csr0 = 0x0;
-  kprintf("TEST");
-  while (1)
-    ;
   while ((csr0 = inportWord(lnc->ioAddr + RDP)) & INTR) {
-    outportWord(lnc->rdp, csr0);
+    outportWord(lnc->ioAddr + RDP, csr0);
     kprintf("CSR0: [0x%X]\n", csr0);
     if (csr0 & ERR) {
       kprintf("Error: [0x%X]\n", csr0);
@@ -245,7 +259,6 @@ void lncInt() {
     }
   }
   kprintf("Finished!!!\n");
-  outportByte(0x20, 0x20);
   return;
 }
 
@@ -267,17 +280,43 @@ asm(
   "  iret                 \n" /* Exit interrupt               */
 );
 
+asm(
+    ".globl lnc_isr       \n"
+    "lnc_isr:             \n"
+    "  pusha                \n" /* Save all registers           */
+    "  push %ss             \n"
+    "  push %ds             \n"
+    "  push %es             \n"
+    "  push %fs             \n"
+    "  push %gs             \n"
+    "  call lncInt          \n"
+    "  pop %gs              \n"
+    "  pop %fs              \n"
+    "  pop %es              \n"
+    "  pop %ds              \n"
+    "  pop %ss              \n"
+    "  popa                 \n"
+    "  iret                 \n" /* Exit interrupt                           */
+);
+
+
+
 int lncAttach(struct lncInfo *lnc, int unit) {
+  int i = 0;
   int lncMemSize = 0x0;
+  char *tmpBuffer = 0x0;
+  uint16_t bcnt = 0x0;
+  const int buffer_size = 1548;
 
   //lncMemSize = ((NDESC(lnc->nrdre) + NDESC(lnc->ntdre)) * sizeof(struct hostRingEntry));
-  lncMemSize = (NDESC(lnc->nrdre) * sizeof(struct hostRingEntry));
 
+  /* MrOlsen 2017-12-16
   if (lnc->nic.memMode != SHMEM)
     lncMemSize += sizeof(struct initBlock) + (sizeof(struct mds) * (NDESC(lnc->nrdre) + NDESC(lnc->ntdre))) + MEM_SLEW;
 
   if (lnc->nic.memMode == DMA_FIXED)
     lncMemSize += (NDESC(lnc->nrdre) * RECVBUFSIZE) + (NDESC(lnc->ntdre) * TRANSBUFSIZE);
+  */
 
   if (lnc->nic.memMode != SHMEM) {
     if (lnc->nic.ic < PCnet_32) {
@@ -291,20 +330,43 @@ int lncAttach(struct lncInfo *lnc, int unit) {
        * descriptor's can only hold 16 bit addresses.
        */
       /* sc->recv_ring = contigmalloc(lnc_mem_size, M_DEVBUF, M_NOWAIT,0ul, 0xfffffful, 4ul, 0x1000000); */
-      lnc->recvRing = kmalloc(lncMemSize);
+  //lncMemSize = (sizeof(struct hostRingEntry) * lnc->nrdre);
+  lncMemSize = (NDESC(lnc->nrdre) * sizeof(struct hostRingEntry));
+  kprintf("lncMemSize: [%i]", lncMemSize);
+      lnc->rxRing = kmalloc(lncMemSize);
+  memset(lnc->rxRing,0x0,lncMemSize);
+  for (i = 0;i < NDESC(lnc->nrdre);i++) {
+    tmpBuffer = kmalloc(buffer_size);
+    lnc->rxRing->addr = (uint32_t)tmpBuffer;
+    bcnt = (uint16_t)(-buffer_size);
+    bcnt &= 0x0FFF;
+    bcnt |= 0xF000; 
+    lnc->rxRing->bcnt = bcnt;
+}
       kprintf("PCI Board\n");
     }
   }
 
-  if (!lnc->recvRing) {
+  if (!lnc->rxRing) {
     kprintf("lnc%d: Couldn't allocate memory for NIC\n", unit);
     return (-1);
   }
 
   lncMemSize = (NDESC(lnc->ntdre) * sizeof(struct hostRingEntry));
-  lnc->transRing = kmalloc(lncMemSize);
+  lnc->txRing = kmalloc(lncMemSize);
+  memset(lnc->txRing,0x0,lncMemSize);
+  for (i = 0;i < NDESC(lnc->ntdre);i++) {
+    tmpBuffer = kmalloc(buffer_size);
+    lnc->txRing->addr = (uint32_t)tmpBuffer;
+    bcnt = (uint16_t)(-buffer_size);
+    bcnt &= 0x0FFF;
+    bcnt |= 0xF000;
+    lnc->txRing->bcnt = bcnt;
+    lnc->txRing->md[0] = 0x80;
+  }
 
-  if (!lnc->recvRing) {
+
+  if (!lnc->txRing) {
     kprintf("lnc%d: Couldn't allocate memory for NIC\n", unit);
     return (-1);
   }
@@ -346,7 +408,9 @@ int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uInt8 *dest) {
   int tx_ptr = 0;
   char data[1548] = "SDFSDF";
 
-  char *tdes = lnc->transRing;
+  char *tdes = (char *)lnc->txRing;
+
+  //memcpy((void *)(tx_buffers + (tx_ptr * buffer_size), packet, len);
 
   tdes[(tx_ptr * 16) + 7] |= 0x2;
   tdes[(tx_ptr * 16) + 7] |= 0x1;
@@ -356,18 +420,18 @@ int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uInt8 *dest) {
   bcnt |= 0xF000;
   *(uInt16 *) &tdes[tx_ptr * 16 + 4] = bcnt;
   tdes[tx_ptr * 16 + 7] |= 0x80;
-
+  return(len);
 }
 
 int lnc_getMode(struct lncInfo *lnc) {
+  lnc_reset32(lnc);
+  if (lnc_readCSR32(lnc, CSR0) == CSR0_STOP)
+    return MODE_32;
 
   lnc_reset(lnc);
   if (lnc_readCSR(lnc, CSR0) == CSR0_STOP)
     return MODE_16;
 
-  lnc_reset32(lnc);
-  if (lnc_readCSR32(lnc, CSR0) == CSR0_STOP)
-    return MODE_32;
 
   return (MODE_INVALID);
 }
@@ -378,4 +442,23 @@ void lnc_reset(struct lncInfo *lnc) {
 
 void lnc_reset32(struct lncInfo *lnc) {
   inportDWord(lnc->ioAddr + RESET32);
+}
+
+int lnc_switchDWord(struct lncInfo *lnc) {
+  inportDWord(lnc->ioAddr + RESET32);
+  inportWord(lnc->ioAddr + RESET);
+  outportDWord(lnc->ioAddr + RDP, 0);
+
+  /* a dword write to RDP sets controller into 32-bit I/O mode */
+  //kprintf("BCR20.1: [0x%X][0x%X]", lnc_readBCR32(lnc, BCR20), lnc_readBCR32(lnc, BCR18) & BCR18_DWIO);
+  if (!(lnc_readBCR32(lnc, BCR18) & BCR18_DWIO)) {
+    kprintf("Cannot Swithc To 32 Bit");
+  }
+  uint32_t _csr58 = lnc_readCSR32(lnc, CSR58);
+  _csr58 &= 0xFFF0;
+  _csr58 |= 2;
+  lnc_writeCSR32(lnc, CSR58, _csr58);
+
+  return(0);
+
 }

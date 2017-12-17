@@ -93,8 +93,8 @@ install: install-world install-kernel
 	
 clean:
 	(cd sys;${MAKE} clean)
-	(cd bin;${MAKE} clean)
-	(cd lib;${MAKE} clean)
+	(cd bin;${WMAKE} clean)
+	(cd lib;${WMAKE} clean)
 #	(cd src/lib/ubix;make clean)
 #	(cd src/lib/objgfx40;make clean)
 #	(cd src/lib/libcpp;make clean)
