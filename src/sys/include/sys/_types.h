@@ -27,7 +27,6 @@
 #ifndef __TYPES_H
 #define __TYPES_H
 
-
 typedef __signed char __int8_t;
 typedef unsigned char __uint8_t;
 typedef short __int16_t;
@@ -44,5 +43,35 @@ typedef __uint16_t          __mode_t; typedef __uint16_t          __nlink_t;/* l
 typedef __uint32_t          __uid_t; typedef __uint32_t          __gid_t; typedef __int32_t           __time_t; typedef __int64_t           __blkcnt_t;/* file block count */
 typedef __uint32_t          __blksize_t;/* file block size */
 typedef __uint32_t          __fflags_t;/* file flags */
+
+typedef       __int8_t       __int_fast8_t;
+typedef       __uint8_t      __uint_fast8_t;
+typedef       __int16_t       __int_fast16_t;
+typedef       __uint16_t      __uint_fast16_t;
+typedef       __int32_t       __int_fast32_t;
+typedef       __uint32_t      __uint_fast32_t;
+typedef       __int64_t       __int_fast64_t;
+typedef       __uint64_t      __uint_fast64_t;
+typedef       __int32_t      __intptr_t;
+typedef       __uint32_t      __uintptr_t;
+typedef       __uint32_t      __size_t;
+typedef       __int64_t       __intmax_t;
+typedef       __uint64_t       __uintmax_t;
+typedef       __int32_t       __ptrdiff_t;
+typedef       __uint8_t       __uint_least8_t;
+typedef       __uint16_t      __uint_least16_t;
+typedef       __uint32_t      __uint_least32_t;
+typedef       __uint64_t      __uint_least64_t;
+typedef       __int8_t       __int_least8_t;
+typedef       __int16_t      __int_least16_t;
+typedef       __int32_t      __int_least32_t;
+typedef       __int64_t      __int_least64_t;
+typedef       int             ___wchar_t;
+
+#if !defined(__clang__) || !defined(__cplusplus)
+typedef __uint_least16_t __char16_t;
+typedef __uint_least32_t __char32_t;
+#endif
+
 
 #endif

@@ -206,12 +206,18 @@ arp_arp_input(struct netif *netif, struct eth_addr *ethaddr, struct pbuf *p)
   }
 
   hdr = p->payload;
+
+  //kprintf("HDR->OPCODE: [0x%X]\n", hdr->opcode);
   
   switch(htons(hdr->opcode)) {
   case ARP_REQUEST:
+ //   kprintf("ARP_REQUEST");
+//ip_addr_debug_print(&hdr->dipaddr);
+//ip_addr_debug_print(&netif->ip_addr);
     /* ARP request. If it asked for our address, we send out a
        reply. */
     if(ip_addr_cmp(&(hdr->dipaddr), &(netif->ip_addr))) {
+//kprintf("MATCHED!\n");
       hdr->opcode = htons(ARP_REPLY);
 
       ip_addr_set(&(hdr->dipaddr), &(hdr->sipaddr));
@@ -235,6 +241,7 @@ arp_arp_input(struct netif *netif, struct eth_addr *ethaddr, struct pbuf *p)
     }
     break;
   case ARP_REPLY:    
+    kprintf("ARP_RREPLY");
     /* ARP reply. We insert or update the ARP table. */
     if(ip_addr_cmp(&(hdr->dipaddr), &(netif->ip_addr))) {
       add_arp_entry(&(hdr->sipaddr), &(hdr->shwaddr));

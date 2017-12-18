@@ -111,8 +111,8 @@ int kmain(uInt32 rootdev) {
     if (init_tasks[i]() != 0x0)
       kpanic("Error: Initializing System Task[%i].\n", i);
   }
-  irqEnable(0x0);
-while(1);
+ // irqEnable(0x0);
+//while(1);
 
   /* New Root Mount Point */
   //Old 2 new 10
@@ -147,6 +147,10 @@ while(1);
 
   execThread(systemTask, (uInt32) sysTask + 0x2000, 0x0);
   kprintf("Thread Start!\n");
+
+   irqEnable(0x0);
+   while (0x1)
+     asm("hlt");
 
   execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
   //execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */

@@ -30,6 +30,7 @@
 #define	_SYS_UUID_H_
 
 #include <sys/cdefs.h>
+#include <sys/types.h>
 
 /* Length of a node address (an IEEE 802 address). */
 #define	_UUID_NODE_LEN		6
@@ -42,12 +43,12 @@
  * A DCE 1.1 compatible source representation of UUIDs.
  */
 struct uuid {
-	u_int32_t	time_low;
-	u_int16_t	time_mid;
-	u_int16_t	time_hi_and_version;
-	u_int8_t		clock_seq_hi_and_reserved;
-	u_int8_t		clock_seq_low;
-	u_int8_t		node[_UUID_NODE_LEN];
+	uint32_t	time_low;
+	uint16_t	time_mid;
+	uint16_t	time_hi_and_version;
+	uint8_t		clock_seq_hi_and_reserved;
+	uint8_t		clock_seq_low;
+	uint8_t		node[_UUID_NODE_LEN];
 };
 
 #ifdef _KERNEL
@@ -58,8 +59,8 @@ struct sbuf;
 
 struct uuid *kern_uuidgen(struct uuid *, size_t);
 
-int uuid_ether_add(const u_int8_t *);
-int uuid_ether_del(const u_int8_t *);
+int uuid_ether_add(const uint8_t *);
+int uuid_ether_del(const uint8_t *);
 
 int snprintf_uuid(char *, size_t, struct uuid *);
 int printf_uuid(struct uuid *);

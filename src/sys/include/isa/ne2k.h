@@ -48,12 +48,6 @@ typedef union etheraddr {
 } ether_addr;
 
 
-struct nicBuffer {
-  struct nicBuffer *next;
-  int               length;
-  char             *buffer;
-  };
-
 #define RSR_FO         0x08
 #define RSR_PRX                0x01
 #define DEF_ENABLED    0x200

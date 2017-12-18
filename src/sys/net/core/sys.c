@@ -61,18 +61,28 @@ sys_mbox_fetch(sys_mbox_t mbox, void **msg)
 
     
  again:
+  kprintf("timeout0");
   timeouts = sys_arch_timeouts();
+  kprintf("timeout1");
     
   if(timeouts->next == NULL) {
+    kprintf("Z0");
     sys_arch_mbox_fetch(mbox, msg, 0);
+    kprintf("Z0");
   } else {
+    kprintf("Z1");
     if(timeouts->next->time > 0) {
+    kprintf("Z2");
       time = sys_arch_mbox_fetch(mbox, msg, timeouts->next->time);
+    kprintf("Z3");
     } else {
+    kprintf("Z4");
       time = 0;
     }
 
+    kprintf("Z5");
     if(time == 0) {
+    kprintf("Z6");
       /* If time == 0, a timeout occured before a message could be
 	 fetched. We should now call the timeout handler and
 	 deallocate the memory allocated for the timeout. */
@@ -81,7 +91,9 @@ sys_mbox_fetch(sys_mbox_t mbox, void **msg)
       h = tmptimeout->h;
       arg = tmptimeout->arg;
       memp_free(MEMP_SYS_TIMEOUT, tmptimeout);
+    kprintf("Z7");
       h(arg);
+    kprintf("Z8");
       
       /* We try again to fetch a message from the mbox. */
       goto again;
@@ -107,12 +119,11 @@ sys_sem_wait(sys_sem_t sem)
   struct sys_timeout *tmptimeout;
   sys_timeout_handler h;
   void *arg;
-  
-  /*  while(sys_arch_sem_wait(sem, 1000) == 0);
-      return;*/
+
+  while(sys_arch_sem_wait(sem, 1000) == 0);
+     return;
 
  again:
-  
   timeouts = sys_arch_timeouts();
   
   if(timeouts->next == NULL) {

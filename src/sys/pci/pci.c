@@ -174,8 +174,10 @@ uint32_t pciProbe(int bus, int dev, int func) {
   cfg->dev = dev;
   cfg->func = func;
 
+  /*
   if (cfg->vendorID == 0x1022)
     pciWrite(bus, dev, func, 0x3C, 0x5,1);
+  */
 
   switch(cfg->headerType & 0x7F) {
     case 0x0: /* normal device */
@@ -186,7 +188,7 @@ uint32_t pciProbe(int bus, int dev, int func) {
         kprintf("Device Info: /bus/pci/%d/%d/%d\n", bus, dev, func);
         kprintf("  * Vendor: %X   Device: %X  Class/SubClass/Interface %X/%X/%X\n", cfg->vendorID, cfg->deviceID, cfg->classCode, cfg->subClass, cfg->progIf);
         kprintf("  * Status: %X  Command: %X  BIST/Type/Lat/CLS: %X/%X/%X/%X\n", cfg->status, cfg->command, cfg->bist, cfg->headerType, cfg->latencyTimer, cfg->cacheLineSize);
-        kprintf("  * IRQ: 0x%X.0x%X\n", cfg->intLine, cfg->intPin);
+        kprintf("  * IRQ: 0x%X.0x%X, BAR[0]: 0x%X\n", cfg->intLine, cfg->intPin, cfg->bar[0]);
       }
       break;
     case 0x1:

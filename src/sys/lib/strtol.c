@@ -97,7 +97,7 @@ noconv:
         cutoff = 0x0;//UBU
 	} else if (neg)
 		acc = -acc;
-	if (endptr != NULL)
+	if (endptr != 0x0)
 		*endptr = (char *)(any ? s - 1 : nptr);
 	return (acc);
 }

@@ -66,6 +66,12 @@
 #define CSR58 0x003A
 
 /* Structs */
+struct lncBuffer {
+  struct nicBuffer *next;
+  int               length;
+  char             *buffer;
+};
+
 struct mds {
     uint16_t md0;
     uint16_t md1;
@@ -138,6 +144,7 @@ struct lncInfo {
     int ntdre;
     int bufferSize;
     int txPtr;
+    int rxPtr;
 };
 
 /* Functions */
@@ -163,6 +170,12 @@ int lnc_switchDWord(struct lncInfo *);
 int lnc_getMode(struct lncInfo *);
 
 void lnc_isr();
+int lnc_driverOwnsRX(struct lncInfo *);
+int lnc_driverOwnsRX(struct lncInfo *);
+
+void lnc_INT();
+void lnc_rxINT();
+void lnc_txINT();
 
 // OLD
 

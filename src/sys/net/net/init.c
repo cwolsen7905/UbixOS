@@ -70,14 +70,16 @@ void netMainThread() {
   netif_init();
   sem = sys_sem_new(0);
   tcpip_init(tcpip_init_done, &sem);
+  kprintf("WAIT: %i]",_current->id);
   sys_sem_wait(sem);
+  kprintf("FREE");
   sys_sem_free(sem);
 
   kprintf("TCP/IP initialized.\n");
 
   IP4_ADDR(&gw, 10,50,0,1);
   IP4_ADDR(&ipaddr, 10,50,0,7);
-  IP4_ADDR(&netmask, 255,255,0,0);
+  IP4_ADDR(&netmask, 255,255,255,0);
   netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
 
   IP4_ADDR(&gw, 127,0,0,1);
@@ -88,6 +90,7 @@ void netMainThread() {
   //udpecho_init();
   shell_init();
   //bot_init();
+  irqEnable(0x9);
   endTask(_current->id);
   }
 
@@ -95,7 +98,9 @@ void netMainThread() {
 static void tcpip_init_done(void *arg) {
   sys_sem_t *sem = 0x0;
   sem = arg;
+  kprintf("SIG");
   sys_sem_signal(*sem);
+  kprintf("NAL");
   }
 
 /***

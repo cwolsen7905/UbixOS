@@ -33,6 +33,7 @@
 #include <lib/kprintf.h>
 #include <sys/video.h>
 #include <isa/8259.h>
+#include <net/netif.h>
 
 struct lncInfo *lnc = 0x0;
 
@@ -89,7 +90,7 @@ int initLNC() {
   memset(lnc, 0x0, sizeof(struct lncInfo));
 
   lnc->bufferSize = 1548;
-  lnc->ioAddr = 0xD000;
+  lnc->ioAddr = 0xD020;
 
 
   lnc->nic.ic = lnc_probe(lnc);
@@ -105,7 +106,7 @@ int initLNC() {
 
     /* Extract MAC address from PROM */
     for (i = 0; i < ETHER_ADDR_LEN; i++) {
-      lnc->arpcom.ac_enaddr[i] = inportByte(0xD000 + i);
+      lnc->arpcom.ac_enaddr[i] = inportByte(lnc->ioAddr + i);
       kprintf("[0x%X]", lnc->arpcom.ac_enaddr[i]);
     }
   }
@@ -130,8 +131,8 @@ int initLNC() {
 
   iW = lnc_readBCR32(lnc, 0x2);
   iW |= 0x2;
-  iW |= 0x40;
   lnc_writeBCR32(lnc, 0x2, iW);
+  //kprintf("BCR2: [0x%X]", lnc_readBCR32(lnc, 0x2));
 
   lnc->init.mode = 0x0;
 
@@ -165,28 +166,14 @@ int initLNC() {
       break;
 
   if (lnc_readCSR32(lnc, CSR0) & IDON) {
-    setVector(&lnc_isr, mVec + 0x5, (dInt + dPresent + dDpl3));
-    irqEnable(0x5);
+    setVector(&lnc_isr, sVec + 0x1, (dInt + dPresent + dDpl3));
+    irqEnable(2);
+    //irqEnable(0x9);
     lnc_writeCSR32(lnc, CSR0, STRT | INEA);
   }
   else {
     kprintf("LNC: init Error\n");
     return (-1);
-  }
-
-
-  kprintf("SENDING PACKET [0x%X]", lnc_readCSR32(lnc, CSR3));
-  iW = lnc_sendPacket(lnc, &data, strlen(data), 0x0);
-
-  while (1)
-    asm("nop");
-
-  while (1) {
-    iW = lnc_sendPacket(lnc, &data, strlen(data), 0x0);
-/*
-    if (iW == 0)
-      kprintf("Sending Failed");
-*/
   }
 
   return (0);
@@ -255,6 +242,98 @@ int lanceProbe(struct lncInfo *lnc) {
   }
 }
 
+void lnc_INT() {
+  uint16_t csr0 = 0x0;
+
+  //kprintf("\nINTR\n");
+  while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
+    //kprintf("CSR0: [0x%X]\n", csr0);
+    if (csr0 & ERR) {
+      kprintf("Error: [0x%X]\n", csr0);
+    }
+    if (csr0 & RINT) {
+      lnc_rxINT();
+/*
+asm(
+  "  mov $0xA0,%dx        \n"
+  "  mov $0x20,%ax        \n"
+  "  outb %al,%dx         \n"
+  "  mov $0x20,%dx        \n"
+  "  mov $0x20,%ax        \n"
+  "  outb %al,%dx         \n"
+);
+*/
+    }
+    if (csr0 & TINT) {
+       kprintf("TINT");
+       //lnc_txINT();
+/*
+asm(
+  "  mov $0xA0,%dx        \n"
+  "  mov $0x20,%ax        \n"
+  "  outb %al,%dx         \n"
+  "  mov $0x20,%dx        \n"
+  "  mov $0x20,%ax        \n"
+  "  outb %al,%dx         \n"
+);
+*/
+    }
+    lnc_writeCSR32(lnc, CSR0, 0x7940);//csr0);
+    //kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
+  }
+
+  kprintf("INT DONE");
+}
+
+void lnc_rxINT() {
+  int i = 0;
+
+  //kprintf("RINT\n");
+
+  if (tmpBuf == 0x0) {
+    tmpBuf = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
+    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+  }
+  else {
+    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+  }
+
+  while (lnc_driverOwnsRX(lnc)) {
+    //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
+    int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff ) - 4;
+/*
+    if (plen > 0)
+      kprintf("plen.0: [0x%X]", plen);
+*/
+
+    tmpBuf->length = plen;
+    tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
+
+    ethernetif_input(netif_default);
+    lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
+    lnc_nextRxPtr(lnc);
+  }
+  //kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+  
+}
+
+void lnc_txINT() {
+  uint16_t status = 0x0;
+
+
+  kprintf("TINT\n");
+  status = lnc->txRing[lnc->txPtr].md[1] + (lnc->txRing[lnc->txPtr].md[1] << 16); 
+  kprintf("Status: [0x%X]\n", status);
+
+  while (!lnc_driverOwnsTX(lnc)) {
+    status = lnc->txRing[lnc->txPtr].md[1] + (lnc->txRing[lnc->txPtr].md[1] << 16); 
+     kprintf("md[1]: 0x%X(%i)[0x%X]\n", lnc->txRing[lnc->txPtr].md[1], lnc->txPtr, status);
+     lnc->txRing[lnc->txPtr].md[1] = 0x0;
+     lnc_nextTxPtr(lnc);
+  }
+  kprintf("TINT-DONE\n");
+}
+
 void lncInt() {
   while (1) {
   kprintf("Finished!!!\n");
@@ -274,6 +353,8 @@ void lncInt() {
     if (csr0 & TINT) {
       kprintf("TINT\n");
     }
+    outportWord(lnc->ioAddr + RDP, csr0);
+    kprintf("CSR0: [0x%X]\n", csr0);
   }
   kprintf("Finished!!!\n");
   return;
@@ -288,7 +369,13 @@ asm(
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
-  "  call lncInt          \n"
+  "  call lnc_INT       \n"
+  "  mov $0xA0,%dx        \n"
+  "  mov $0x20,%ax        \n"
+  "  outb %al,%dx         \n"
+  "  mov $0x20,%dx        \n"
+  "  mov $0x20,%ax        \n"
+  "  outb %al,%dx         \n"
   "  pop %gs              \n"
   "  pop %fs              \n"
   "  pop %es              \n"
@@ -327,7 +414,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 
   /* Setup the RX Ring */
   for (i = 0; i < NDESC(lnc->nrdre); i++) {
-    lnc->rxRing[i].addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->rxRing + (i * lnc->bufferSize));
+    lnc->rxRing[i].addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->rxBuffer + (i * lnc->bufferSize));
     bcnt = (uint16_t) (-lnc->bufferSize);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000;
@@ -360,7 +447,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 
   /* Setup the TX Ring */
   for (i = 0; i < NDESC(lnc->ntdre); i++) {
-    lnc->txRing[i].addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->txRing + (i * lnc->bufferSize));
+    lnc->txRing[i].addr = (uint32_t) vmm_getRealAddr((uint32_t) lnc->txBuffer + (i * lnc->bufferSize));
     bcnt = (uint16_t) (-lnc->bufferSize);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000;
@@ -393,8 +480,12 @@ int lncAttach(struct lncInfo *lnc, int unit) {
   return (1);
 }
 
-int lnc_driverOwns(struct lncInfo *lnc) {
+int lnc_driverOwnsTX(struct lncInfo *lnc) {
   return (lnc->txRing[lnc->txPtr].md[1] & 0x80) == 0;
+}
+
+int lnc_driverOwnsRX(struct lncInfo *lnc) {
+  return (lnc->rxRing[lnc->rxPtr].md[1] & 0x80) == 0;
 }
 
 int lnc_nextTxPtr(struct lncInfo *lnc) {
@@ -409,9 +500,25 @@ int lnc_nextTxPtr(struct lncInfo *lnc) {
   return(0);
 }
 
+int lnc_nextRxPtr(struct lncInfo *lnc) {
+  int ret = lnc->rxPtr + 1;
+
+  if (ret == NDESC(lnc->nrdre)) {
+    ret = 0;
+  }
+
+  lnc->rxPtr = ret;
+
+  return(0);
+}
+
+
 int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest) {
-  if (!lnc_driverOwns(lnc))
+  kprintf("SEND PACKET1!\n");
+  if (!lnc_driverOwnsTX(lnc))
     return (0);
+
+  kprintf("SEND PACKET2!\n");
 
   memcpy((void *) (lnc->txBuffer + (lnc->txPtr * lnc->bufferSize)), packet, len);
 

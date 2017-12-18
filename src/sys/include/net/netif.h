@@ -44,6 +44,13 @@
 
 #include "net/pbuf.h"
 
+struct nicBuffer {
+  struct nicBuffer *next;
+  int               length;
+  char             *buffer;
+};
+
+struct nicBuffer *tmpBuf;
 
 struct netif {
   struct netif *next;
@@ -95,5 +102,7 @@ void netif_set_default(struct netif *netif);
 void netif_set_ipaddr(struct netif *netif, struct ip_addr *ipaddr);
 void netif_set_netmask(struct netif *netif, struct ip_addr *netmast);
 void netif_set_gw(struct netif *netif, struct ip_addr *gw);
+//static void  ethernetif_input(struct netif *);
+void ethernetif_input(struct netif *);
 
 #endif /* __LWIP_NETIF_H__ */

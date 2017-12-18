@@ -64,7 +64,7 @@ int i8259_init() {
  *
  * \param irqNo IRQ to enable
  */
-void irqEnable(u_int16_t irqNo) {
+void irqEnable_old(u_int16_t irqNo) {
   irqMask &= ~(1 << irqNo);
   if (irqNo >= 8) {
     irqMask &= ~(1 << 2);
@@ -73,12 +73,27 @@ void irqEnable(u_int16_t irqNo) {
   outportByte(sPic+1, (irqMask >> 8) & 0xFF);
   }
 
+void irqEnable(uint16_t irqNo) {
+  uint16_t port;
+  uint8_t value;
+ 
+  if(irqNo < 8) {
+    port = mImr;
+  }
+  else {
+    port = sImr;
+    irqNo -= 8;
+  }
+  value = inportByte(port) & ~(1 << irqNo);
+  outportByte(port, value);
+}
+
 /*!
  * \brief disable specified IRQ
  *
  * \param irqNo IRQ to disable
  */
-void irqDisable(u_int16_t irqNo) {
+void irqDisable_old(u_int16_t irqNo) {
   irqMask |= (1 << irqNo);
   if ((irqMask & 0xFF00)==0xFF00) {
     irqMask |= (1 << 2);
@@ -86,6 +101,21 @@ void irqDisable(u_int16_t irqNo) {
   outportByte(mPic+1, irqMask & 0xFF);
   outportByte(sPic+1, (irqMask >> 8) & 0xFF);
   }
+
+void irqDisable(uint16_t irqNo) {
+  uint16_t port;
+  uint8_t value;
+ 
+  if (irqNo < 8) {
+    port = mImr;
+  }
+  else {
+    port = sImr;
+    irqNo -= 8;
+  }
+  value = inportByte(port) | (1 << irqNo);
+  outportByte(port, value);        
+}
 
 /***
  END

@@ -69,9 +69,11 @@ tcpip_thread(void *arg)
 {
   struct tcpip_msg *msg;
 
+  kprintf("Started TCP THread");
   ip_init();
   udp_init();
   tcp_init();
+  kprintf("Started TCP THread");
 
   sys_timeout(TCP_TMR_INTERVAL, (sys_timeout_handler)tcpip_tcp_timer, NULL);
   
@@ -80,7 +82,9 @@ tcpip_thread(void *arg)
   }
 
   while(1) {                          /* MAIN Loop */
+    kprintf("mbf1");
     sys_mbox_fetch(mbox, (void *)&msg);
+    kprintf("mbf1");
     switch(msg->type) {
     case TCPIP_MSG_API:
       //kprintf("tcpip_thread: API message %p\n", msg);
@@ -104,11 +108,13 @@ tcpip_input(struct pbuf *p, struct netif *inp)
   
   msg = memp_mallocp(MEMP_TCPIP_MSG);
   if(msg == NULL) {
-    //kprintf("BAD MESSAGE!!!\n");
+    kprintf("BAD MESSAGE!!!\n");
+    while (1)
+      asm("nop");
     pbuf_free(p);    
     return ERR_MEM;  
   }
-  //kprintf("GOOD MESSAGE\n");
+  kprintf("GOOD MESSAGE\n");
   
   msg->type = TCPIP_MSG_INPUT;
   msg->msg.inp.p = p;

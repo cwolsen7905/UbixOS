@@ -39,6 +39,15 @@
 #define LOCKED     1
 #define UNLOCKED   0
 
+/*MROLSEN TEMP BOOL*/
+#define false   0
+#define true    1
+
+#define bool    _Bool
+#if __STDC_VERSION__ < 199901L && __GNUC__ < 3 && !defined(__INTEL_COMPILER)
+typedef int     _Bool;
+#endif
+
 typedef struct ubthread       *ubthread_t;
 typedef struct ubthread_cond  *ubthread_cond_t;
 typedef struct ubthread_mutex *ubthread_mutex_t;
@@ -49,12 +58,14 @@ struct ubthread {
 
 struct ubthread_cond {
   int   id;
-  uInt8 locked;
+  //uInt8 locked;
+  _Atomic bool lock;
   };
 
 struct ubthread_mutex {
   int     id;
-  uInt8   locked;
+  //uInt8   locked;
+  _Atomic bool lock;
   pidType pid;
   };
 

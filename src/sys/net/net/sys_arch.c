@@ -106,7 +106,7 @@ struct sys_mbox_msg {
 #define SYS_MBOX_SIZE 100
 
 struct sys_mbox {
-  uInt16 first, last;
+  uint16_t first, last;
   void *msgs[SYS_MBOX_SIZE];
   struct sys_sem *mail;
   struct sys_sem *mutex;
@@ -130,19 +130,22 @@ static struct timeval starttime;
 static struct sys_sem *sys_sem_new_(uInt8 count);
 static void sys_sem_free_(struct sys_sem *sem);
 
-static uInt16 cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uInt16 timeout);
+static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
 
 static struct sys_thread *current_thread(void) {
   struct sys_thread *st;
   kTask_t *pt;
   pt = ubthread_self();
+  //kprintf("SL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinLock(&netThreadSpinlock);
   for(st = threads; st != NULL; st = st->next) {
     if(st->ubthread == pt) {
+      //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
       spinUnlock(&netThreadSpinlock);
       return st;
     }
   }
+  //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinUnlock(&netThreadSpinlock);
   kprintf("sys: current_thread: could not find current thread!\n");
   kprintf("This is due to a race condition in the LinuxThreads\n");
@@ -175,12 +178,15 @@ void sys_thread_new(void (* function)(void), void *arg) {
   kprintf("sys_thread: [0x%X]\n",sizeof(struct sys_thread));
   
   thread = kmalloc(sizeof(struct sys_thread));
+  memset(thread,0x0,sizeof(struct sys_thread));
   kprintf("THREAD: [0x%X]\n",thread);
+  //kprintf("SL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinLock(&netThreadSpinlock);
   thread->next = threads;
   thread->timeouts.next = NULL;
   thread->ubthread = 0x0;
   threads = thread;
+  //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinUnlock(&netThreadSpinlock);
   
 
@@ -205,6 +211,7 @@ struct sys_mbox *sys_mbox_new() {
   struct sys_mbox *mbox;
 
   mbox = kmalloc(sizeof(struct sys_mbox));
+  memset(mbox,0x0,sizeof(struct sys_mbox));
   mbox->first = mbox->last = 0;
   mbox->mail = sys_sem_new_(0);
   mbox->mutex = sys_sem_new_(1);
@@ -251,31 +258,42 @@ void sys_mbox_post(struct sys_mbox *mbox, void *msg) {
   sys_sem_signal(mbox->mutex);
   }
 
-uInt16 sys_arch_mbox_fetch(struct sys_mbox *mbox, void **msg, uInt16 timeout) {
-  uInt16 time = 1;
+uint16_t sys_arch_mbox_fetch(struct sys_mbox *mbox, void **msg, uint16_t timeout) {
+  uint16_t time = 1;
   
   /* The mutex lock is quick so we don't bother with the timeout
      stuff here. */
+kprintf("sem wait0");
   sys_arch_sem_wait(mbox->mutex, 0);
+kprintf("sem wait1");
   
   while(mbox->first == mbox->last) {
+kprintf("sem wait2");
     sys_sem_signal(mbox->mutex);
+kprintf("sem wait3");
     
     /* We block while waiting for a mail to arrive in the mailbox. We
        must be prepared to timeout. */
     if(timeout != 0) {
+kprintf("sem wait4");
       time = sys_arch_sem_wait(mbox->mail, timeout);
+kprintf("sem wait5");
       
       /* If time == 0, the sem_wait timed out, and we return 0. */
       if(time == 0) {
 	return 0;
       }
     } else {
+kprintf("sem wait6");
       sys_arch_sem_wait(mbox->mail, 0);
+kprintf("sem wait7");
     }
     
+kprintf("sem wait8");
     sys_arch_sem_wait(mbox->mutex, 0);
+kprintf("sem wait9");
   }
+kprintf("sem wait10");
   
   if(msg != NULL) {
     //kprintf("sys_mbox_fetch: mbox %p msg %p\n", mbox, *msg);
@@ -300,15 +318,17 @@ static struct sys_sem *sys_sem_new_(uInt8 count) {
   struct sys_sem *sem;
   
   sem = kmalloc(sizeof(struct sys_sem));
+  memset(sem,0x0,sizeof(struct sys_sem));
   sem->c = count;
   
   ubthread_cond_init(&(sem->cond), NULL);
   ubthread_mutex_init(&(sem->mutex), NULL);
+  kprintf("C: 0x%X, M: 0x%X, ID: %i]",&(sem->cond),&(sem->mutex),_current->id);
   
   return sem;
   }
 
-static uInt16 cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uInt16 timeout) {
+static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout) {
   unsigned int tdiff;
   unsigned long sec, usec;
   struct timeval rtime1, rtime2;
@@ -348,8 +368,9 @@ static uInt16 cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uInt16 t
     }
   }
 
-uInt16 sys_arch_sem_wait(struct sys_sem *sem, uInt16 timeout) {
-  uInt16 time = 1;
+uint16_t sys_arch_sem_wait(struct sys_sem *sem, uint16_t timeout) {
+  kprintf("Or Here? %i:%i-0x%X]", _current->id, sem->mutex->pid,&(sem->mutex));
+  uint16_t time = 1;
   ubthread_mutex_lock(&(sem->mutex));
   while(sem->c <= 0) {
     if(timeout > 0) {
@@ -368,6 +389,7 @@ uInt16 sys_arch_sem_wait(struct sys_sem *sem, uInt16 timeout) {
   }
 
 void sys_sem_signal(struct sys_sem *sem) {
+  kprintf("HERE: %i", _current->id);
   ubthread_mutex_lock(&(sem->mutex));
   sem->c++;
   if(sem->c > 1)

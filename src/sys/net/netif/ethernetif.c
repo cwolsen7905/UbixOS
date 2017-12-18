@@ -73,7 +73,7 @@ struct ethernetif {
 static const struct eth_addr ethbroadcast = {{0xff,0xff,0xff,0xff,0xff,0xff}};
 
 /* Forward declarations. */
-static void  ethernetif_input(struct netif *netif);
+//static void  ethernetif_input(struct netif *netif);
 static err_t ethernetif_output(struct netif *netif, struct pbuf *p, struct ip_addr *ipaddr);
 static void ethernetif_thread();
 struct device *dev = 0x0;
@@ -150,6 +150,7 @@ static struct pbuf *low_level_input(struct ethernetif *ethernetif) {
   len = tmpBuf->length;
   bufptr = tmpBuf->buffer;
 
+  //kprintf("LEN: 0x%X", len);
 
   /* We allocate a pbuf chain of pbufs from the pool. */
   p = pbuf_alloc(PBUF_LINK, len, PBUF_POOL);
@@ -169,6 +170,7 @@ static struct pbuf *low_level_input(struct ethernetif *ethernetif) {
     }
     /* acknowledge that packet has been read(); */
   } else {
+    kprintf("Couldn't Alloc PBUF!");
     /* drop packet(); */
   }
   return p;
@@ -274,26 +276,37 @@ static err_t ethernetif_output(struct netif *netif, struct pbuf *p, struct ip_ad
  *
  */
 /*-----------------------------------------------------------------------------------*/
-static void ethernetif_input(struct netif *netif) {
+//static void ethernetif_input(struct netif *netif) {
+void ethernetif_input(struct netif *netif) {
   struct ethernetif *ethernetif = 0x0;
   struct eth_hdr *ethhdr = 0x0;
   struct pbuf *p = 0x0;
 
   ethernetif = netif->state;
+
+ // kprintf("tmpBuf->length: [0x%X]", tmpBuf->length);
  
   p = low_level_input(ethernetif);
 
-  if(p != NULL) {
+  //kprintf("p: [0x%X]", p);
 
+  if(p != NULL) {
     ethhdr = p->payload;
+//kprintf("type-> [0x%X]\n", htons(ethhdr->type));
     
     switch(htons(ethhdr->type)) {
     case ETHTYPE_IP:
+      kprintf("IP..................");
       arp_ip_input(netif, p);
       pbuf_header(p, -14);
       netif->input(p, netif);
+      //MR Olsen I added this i am getting no ability to alloc pbuf
+      if (p != NULL) {
+        pbuf_free(p);
+      }
       break;
     case ETHTYPE_ARP:
+      //kprintf("ARP..................");
       p = arp_arp_input(netif, ethernetif->ethaddr, p);
       if(p != NULL) {
 	low_level_output(ethernetif, p);
@@ -301,6 +314,7 @@ static void ethernetif_input(struct netif *netif) {
       }
       break;
     default:
+      kprintf("Invalid Type: [0x%X]", htons(ethhdr->type));
       pbuf_free(p);
       break;
     }
