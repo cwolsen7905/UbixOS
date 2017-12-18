@@ -91,6 +91,7 @@ int initLNC() {
   lnc->bufferSize = 1548;
   lnc->ioAddr = 0xD000;
 
+
   lnc->nic.ic = lnc_probe(lnc);
 
   //kprintf("ID: %i\n", lnc->nic.ic);
@@ -129,6 +130,7 @@ int initLNC() {
 
   iW = lnc_readBCR32(lnc, 0x2);
   iW |= 0x2;
+  iW |= 0x40;
   lnc_writeBCR32(lnc, 0x2, iW);
 
   lnc->init.mode = 0x0;
@@ -163,28 +165,29 @@ int initLNC() {
       break;
 
   if (lnc_readCSR32(lnc, CSR0) & IDON) {
-    setVector(&lnc_isr, mVec + 0x9, (dInt + dPresent + dDpl0));
+    setVector(&lnc_isr, mVec + 0x5, (dInt + dPresent + dDpl3));
+    irqEnable(0x5);
     lnc_writeCSR32(lnc, CSR0, STRT | INEA);
-    irqEnable(0x9);
-    /* 
-     * sc->arpcom.ac_if.if_flags |= IFF_RUNNING;
-     * sc->arpcom.ac_if.if_flags &= ~IFF_OACTIVE;
-     * lnc_start(&sc->arpcom.ac_if);
-     */
   }
   else {
     kprintf("LNC: init Error\n");
     return (-1);
   }
 
-  /*
-  kprintf("SENDING PACKET");
+
+  kprintf("SENDING PACKET [0x%X]", lnc_readCSR32(lnc, CSR3));
+  iW = lnc_sendPacket(lnc, &data, strlen(data), 0x0);
+
+  while (1)
+    asm("nop");
+
   while (1) {
     iW = lnc_sendPacket(lnc, &data, strlen(data), 0x0);
-    if (!iW)
+/*
+    if (iW == 0)
       kprintf("Sending Failed");
+*/
   }
-  */
 
   return (0);
 }
@@ -277,24 +280,6 @@ void lncInt() {
 }
 
 asm(
-  ".global _lncInt     \n"
-  "_lncInt   :         \n"
-
-  "  pusha                \n" /* Save all registers           */
-  "  pushw %ds            \n" /* Set up the data segment      */
-  "  pushw %es            \n"
-  "  pushw %ss            \n" /* Note that ss is always valid */
-  "  pushw %ss            \n"
-  "  popw %ds             \n"
-  "  popw %es             \n"
-  "  call lncInt \n"
-  "  popw %es             \n"
-  "  popw %ds             \n" /* Restore registers            */
-  "  popa                 \n"
-  "  iret                 \n" /* Exit interrupt               */
-);
-
-asm(
   ".globl lnc_isr       \n"
   "lnc_isr:             \n"
   "  pusha                \n" /* Save all registers           */
@@ -346,7 +331,7 @@ int lncAttach(struct lncInfo *lnc, int unit) {
     bcnt = (uint16_t) (-lnc->bufferSize);
     bcnt &= 0x0FFF;
     bcnt |= 0xF000;
-//kprintf("rxR[%i].addr = 0x%X, BCNT 0x%X", i, lnc->rxRing[i].addr,bcnt);
+    //kprintf("rxR[%i].addr = 0x%X, BCNT 0x%X", i, lnc->rxRing[i].addr,bcnt);
     lnc->rxRing[i].bcnt = bcnt;
     lnc->rxRing[i].md[1] = 0x80;
   }
@@ -398,26 +383,6 @@ int lncAttach(struct lncInfo *lnc, int unit) {
 
   lnc->nic.mode = NORMAL;
 
-  /* Fill in arpcom structure entries */
-  /*
-   lnc->arpcom.ac_if.if_softc = sc;
-   lnc->arpcom.ac_if.if_name = lncdriver.name;
-   lnc->arpcom.ac_if.if_unit = unit;
-   lnc->arpcom.ac_if.if_mtu = ETHERMTU;
-   lnc->arpcom.ac_if.if_flags = IFF_BROADCAST | IFF_SIMPLEX | IFF_MULTICAST;
-   lnc->arpcom.ac_if.if_timer = 0;
-   lnc->arpcom.ac_if.if_output = ether_output;
-   lnc->arpcom.ac_if.if_start = lnc_start;
-   lnc->arpcom.ac_if.if_ioctl = lnc_ioctl;
-   lnc->arpcom.ac_if.if_watchdog = lnc_watchdog;
-   lnc->arpcom.ac_if.if_init = lnc_init;
-   lnc->arpcom.ac_if.if_type = IFT_ETHER;
-   lnc->arpcom.ac_if.if_addrlen = ETHER_ADDR_LEN;
-   lnc->arpcom.ac_if.if_hdrlen = ETHER_HDR_LEN;
-   lnc->arpcom.ac_if.if_snd.ifq_maxlen = IFQ_MAXLEN;
-   */
-  /* ether_ifattach(&sc->arpcom.ac_if, ETHER_BPF_SUPPORTED); */
-
   kprintf("lnc%d: ", unit);
   if (lnc->nic.ic == LANCE || lnc->nic.ic == C_LANCE)
     kprintf("%s (%s)", nicIdent[lnc->nic.ident], icIdent[lnc->nic.ic]);
@@ -452,18 +417,13 @@ int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest)
 
   lnc->txRing[lnc->txPtr].md[1] |= 0x2;
   lnc->txRing[lnc->txPtr].md[1] |= 0x1;
-  //tdes[(tx_ptr * 16) + 7] |= 0x2;
-  //tdes[(tx_ptr * 16) + 7] |= 0x1;
 
   uint16_t bcnt = (uint16_t) (-len);
   bcnt &= 0xFFF;
   bcnt |= 0xF000;
   lnc->txRing[lnc->txPtr].bcnt = bcnt;
 
-  //*(uint16_t *) &tdes[tx_ptr * 16 + 4] = bcnt;
   lnc->txRing[lnc->txPtr].md[1] |= 0x80;
-
-  //tdes[tx_ptr * 16 + 7] |= 0x80;
 
   lnc_nextTxPtr(lnc);
   return (len);

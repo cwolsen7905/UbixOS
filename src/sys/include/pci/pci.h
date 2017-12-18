@@ -53,12 +53,17 @@ struct pciConfig {
   uint32_t bar[6];
 
   uint32_t cbPointer;
+
   uint16_t subsysVendorID;
   uint16_t subsysID;
+
   uint32_t epromAddr;
+
   uint16_t capabilites;
   uint16_t res1;
+
   uint32_t res2;
+
   uint8_t intLine;
   uint8_t intPin;
   uint8_t minGrant;
@@ -100,7 +105,7 @@ struct confadd {
 int pci_init();
 
 
-bool pciProbe(int bus,int dev,int func,struct pciConfig *cfg);
+uint32_t pciProbe(int bus,int dev,int func);
 uInt32 pciRead(int bus, int dev, int func, int reg, int bytes);
 void pciWrite(int bus,int dev,int func,int reg,uInt32 v,int bytes);
 

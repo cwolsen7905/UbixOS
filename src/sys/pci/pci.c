@@ -137,45 +137,56 @@ void pciWrite(int bus, int dev, int func, int reg, uInt32 v, int bytes) {
   }
 }
 
-bool pciProbe(int bus, int dev, int func, struct pciConfig *cfg) {
-  uint32_t *word = (uint32_t *) cfg;
+uint32_t pciProbe(int bus, int dev, int func) {
+  struct pciConfig *cfg = 0x0;
   uint32_t v;
   int i;
 
-  for (i = 0; i < 4; i++) {
+  cfg = kmalloc(sizeof(struct pciConfig));
+  memset(cfg, 0x0, sizeof(struct pciConfig));
 
+  uint32_t *word = (uint32_t *)cfg;
+
+  for (i = 0; i < 4; i++) {
     word[i] = pciRead(bus, dev, func, 4 * i, 4);
 
     /* This is TEMPORARY */
     if (cfg->vendorID == 0x1022 && i == 1) {
       kprintf("got it: 0x%X", word[i]);
       word[i] &= 0xffff0000;
-      word[i] |= 0x5;
+      word[i] |= 0x5; //0x1 //0x5;
       pciWrite(bus, dev, func, 4 * i, word[i], 4);
-      kprintf("set it: 0x%X[0x%X]", word[i], pciRead(bus, dev, func, 0x10, 4));
+      kprintf("set it: 0x%X\n", word[i]);
     }
   }
 
-  if (cfg->vendorID == 0xffff)
-    return FALSE;
+  if (cfg->vendorID == 0xffff) {
+    kfree(cfg);
+    return 0x0;
+  }
 
-  if (cfg->vendorID == 0x0)
-    return FALSE; /* Quick Hack */
+  if (cfg->vendorID == 0x0) {
+    kfree(cfg);
+    return 0x0;
+  }
 
   cfg->bus = bus;
   cfg->dev = dev;
   cfg->func = func;
 
+  if (cfg->vendorID == 0x1022)
+    pciWrite(bus, dev, func, 0x3C, 0x5,1);
 
   switch(cfg->headerType & 0x7F) {
     case 0x0: /* normal device */
-      for (i = 4;i<12;i++) {
+      for (i = 4;i<=16;i++) {
         word[i] = pciRead(bus, dev, func, 4 * i, 4);
       }
       if (cfg->vendorID == 0x1022) {
         kprintf("Device Info: /bus/pci/%d/%d/%d\n", bus, dev, func);
         kprintf("  * Vendor: %X   Device: %X  Class/SubClass/Interface %X/%X/%X\n", cfg->vendorID, cfg->deviceID, cfg->classCode, cfg->subClass, cfg->progIf);
         kprintf("  * Status: %X  Command: %X  BIST/Type/Lat/CLS: %X/%X/%X/%X\n", cfg->status, cfg->command, cfg->bist, cfg->headerType, cfg->latencyTimer, cfg->cacheLineSize);
+        kprintf("  * IRQ: 0x%X.0x%X\n", cfg->intLine, cfg->intPin);
       }
       break;
     case 0x1:
@@ -189,6 +200,7 @@ bool pciProbe(int bus, int dev, int func, struct pciConfig *cfg) {
       break;
 
   }
+
 
   /*
   switch (cfg->headerType & 0x7F) {
@@ -226,7 +238,7 @@ bool pciProbe(int bus, int dev, int func, struct pciConfig *cfg) {
   }
   */
 
-  return (TRUE);
+  return ((uint32_t)cfg);
 }
 
 int pci_init() {
@@ -234,17 +246,18 @@ int pci_init() {
 
   int i = 0x0;
 
-  struct pciConfig pcfg;
+  struct pciConfig *pcfg;
 
-  for (bus = 0x0; bus < 0x2; bus++) { /* 255 */
-    for (dev = 0; dev < 32; dev++) { /* 32 */
-      for (func = 0; func < 8; func++) { /* 8 */
-        if (pciProbe(bus, dev, func, &pcfg) == TRUE) {
-          /* kprintf("  * Vendor: %X   Device: %X  Class/SubClass/Interface %X/%X/%X\n",pcfg.vendorId,pcfg.deviceId,pcfg.baseClass,pcfg.subClass,pcfg.interface); */
+  for (bus = 0x0; bus < 0x2; bus++) {
+    for (dev = 0; dev < 32; dev++) { 
+      for (func = 0; func < 8; func++) {
+        pcfg = (struct pciConfig *)pciProbe(bus, dev, func);
+        if (pcfg != 0x0) {
           for (i = 0x0; i < countof(pciClasses); i++) {
-            if (pcfg.classCode == pciClasses[i].baseClass && pcfg.subClass == pciClasses[i].subClass && pcfg.progIf == pciClasses[i].interface) {
-              if (pcfg.vendorID == 0x1022)
-                kprintf("PCI Device: %s @ IRQ: 0x%X.0x%X\n", pciClasses[i].name, pcfg.intPin, pcfg.intLine);
+            if (pcfg->classCode == pciClasses[i].baseClass && pcfg->subClass == pciClasses[i].subClass && pcfg->progIf == pciClasses[i].interface) {
+              if (pcfg->vendorID == 0x1022) {
+                kprintf("PCI Device: %s @ IRQ: 0x%X.0x%X\n", pciClasses[i].name, pcfg->intPin, pcfg->intLine);
+              }
               break;
             }
           }
