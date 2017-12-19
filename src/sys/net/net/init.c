@@ -49,6 +49,17 @@ void netMainThread();
 static void tcpip_init_done(void *arg);
 
 int net_init() {
+  tcpip_init(NULL, NULL);
+
+  IP4_ADDR(&gw, 10, 50, 0, 1);
+  IP4_ADDR(&ipaddr, 10, 50, 0, 7);
+  IP4_ADDR(&netmask, 255, 255, 0, 0);
+  netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
+
+  return(0x0);
+}
+
+int net_init_dead() {
   sys_init();
   mem_init();
   memp_init();
