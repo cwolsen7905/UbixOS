@@ -124,7 +124,6 @@ struct sys_thread {
   kTask_t *ubthread;
 };
 
-
 static struct timeval starttime;
 
 static struct sys_sem *sys_sem_new_(uInt8 count);
@@ -138,8 +137,8 @@ static struct sys_thread *current_thread(void) {
   pt = ubthread_self();
   //kprintf("SL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinLock(&netThreadSpinlock);
-  for(st = threads; st != NULL; st = st->next) {
-    if(st->ubthread == pt) {
+  for (st = threads; st != NULL; st = st->next) {
+    if (st->ubthread == pt) {
       //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
       spinUnlock(&netThreadSpinlock);
       return st;
@@ -150,183 +149,178 @@ static struct sys_thread *current_thread(void) {
   kprintf("sys: current_thread: could not find current thread!\n");
   kprintf("This is due to a race condition in the LinuxThreads\n");
   kprintf("ubthreads implementation. Start the program again.\n");
-  
-  kpanic("ABORT");
-  return(0x0);
-  }
 
+  kpanic("ABORT");
+  return (0x0);
+}
 
 struct thread_start_param {
   struct sys_thread *thread;
-  void (* function)(void *);
+  void (*function)(void *);
   void *arg;
-  };
+};
 
 /*
-static void *thread_start(void *arg) {
-  struct thread_start_param *tp = arg;
-  tp->thread->ubthread = ubthread_self();
-  tp->function(tp->arg);
-  kfree(tp);
-  return(NULL);
-  }
-*/
+ static void *thread_start(void *arg) {
+ struct thread_start_param *tp = arg;
+ tp->thread->ubthread = ubthread_self();
+ tp->function(tp->arg);
+ kfree(tp);
+ return(NULL);
+ }
+ */
 
-void sys_thread_new(void (* function)(void), void *arg) {
+void sys_thread_new(void (*function)(void), void *arg) {
   struct sys_thread *thread = 0x0;
   //struct thread_start_param *thread_param;
-  kprintf("sys_thread: [0x%X]\n",sizeof(struct sys_thread));
   
+  kprintf("sys_thread: [0x%X]\n", sizeof(struct sys_thread));
+
   thread = kmalloc(sizeof(struct sys_thread));
-  memset(thread,0x0,sizeof(struct sys_thread));
-  kprintf("THREAD: [0x%X]\n",thread);
-  //kprintf("SL: %i-0x%X]", _current->id, &netThreadSpinlock);
+  memset(thread, 0x0, sizeof(struct sys_thread));
+  kprintf("THREAD: [0x%X]\n", thread);
+
+
   spinLock(&netThreadSpinlock);
   thread->next = threads;
   thread->timeouts.next = NULL;
   thread->ubthread = 0x0;
   threads = thread;
-  //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinUnlock(&netThreadSpinlock);
-  
 
   /*
-  thread_param = kmalloc(sizeof(struct thread_start_param));
-  
-  thread_param->function = function;
-  thread_param->arg = arg;
-  thread_param->thread = thread;
-  */
+   thread_param = kmalloc(sizeof(struct thread_start_param));
+
+   thread_param->function = function;
+   thread_param->arg = arg;
+   thread_param->thread = thread;
+   */
   //execThread((void *)function,0x0,0x0);
- 
-  kprintf("thread->ubthread: [0x%X]\n",thread->ubthread);
-  if(ubthread_create(&thread->ubthread, 0x0,(void *)(function), arg) != 0x0) {
+  kprintf("thread->ubthread: [0x%X]\n", thread->ubthread);
+  if (ubthread_create(&thread->ubthread, 0x0, (void *) (function), arg) != 0x0) {
     kpanic("sys_thread_new: ubthread_create");
-    }
-  kprintf("thread->ubthread: [0x%X]\n",thread->ubthread); 
-  
   }
+  kprintf("thread->ubthread: [0x%X]\n", thread->ubthread);
+
+}
 
 struct sys_mbox *sys_mbox_new() {
   struct sys_mbox *mbox;
 
   mbox = kmalloc(sizeof(struct sys_mbox));
-  memset(mbox,0x0,sizeof(struct sys_mbox));
+  memset(mbox, 0x0, sizeof(struct sys_mbox));
   mbox->first = mbox->last = 0;
   mbox->mail = sys_sem_new_(0);
   mbox->mutex = sys_sem_new_(1);
-  
-  return(mbox);
-  }
+
+  return (mbox);
+}
 
 void sys_mbox_free(struct sys_mbox *mbox) {
   if (mbox != SYS_MBOX_NULL) {
     sys_sem_wait(mbox->mutex);
-    
     sys_sem_free_(mbox->mail);
     sys_sem_free_(mbox->mutex);
     mbox->mail = mbox->mutex = NULL;
-    //kprintf("sys_mbox_free: mbox 0x%lx\n", mbox);
     kfree(mbox);
-    }
   }
+}
 
 void sys_mbox_post(struct sys_mbox *mbox, void *msg) {
   uInt8 first;
-  
+
   sys_sem_wait(mbox->mutex);
-  
+
   //kprintf("sys_mbox_post: mbox %p msg %p\n", mbox, msg);
 
   mbox->msgs[mbox->last] = msg;
 
-  if (mbox->last == mbox->first) {
+  if (mbox->last == mbox->first)
     first = 1;
-    }
-  else {
+  else
     first = 0;
-    }
-  
-  mbox->last++;
-  if(mbox->last == SYS_MBOX_SIZE) {
-    mbox->last = 0;
-    }
 
-  if(first) {
+  mbox->last++;
+
+  if (mbox->last == SYS_MBOX_SIZE)
+    mbox->last = 0;
+
+
+  if (first)
     sys_sem_signal(mbox->mail);
-    }
+
   sys_sem_signal(mbox->mutex);
-  }
+}
 
 uint16_t sys_arch_mbox_fetch(struct sys_mbox *mbox, void **msg, uint16_t timeout) {
   uint16_t time = 1;
-  
+
   /* The mutex lock is quick so we don't bother with the timeout
-     stuff here. */
-kprintf("sem wait0");
+   stuff here. */
+  kprintf("sem wait0");
   sys_arch_sem_wait(mbox->mutex, 0);
-kprintf("sem wait1");
-  
-  while(mbox->first == mbox->last) {
-kprintf("sem wait2");
+  kprintf("sem wait1");
+
+  while (mbox->first == mbox->last) {
+    kprintf("sem wait2");
     sys_sem_signal(mbox->mutex);
-kprintf("sem wait3");
-    
+    kprintf("sem wait3");
+
     /* We block while waiting for a mail to arrive in the mailbox. We
-       must be prepared to timeout. */
-    if(timeout != 0) {
-kprintf("sem wait4");
+     must be prepared to timeout. */
+    if (timeout != 0) {
+      kprintf("sem wait4");
       time = sys_arch_sem_wait(mbox->mail, timeout);
-kprintf("sem wait5");
-      
+      kprintf("sem wait5");
+
       /* If time == 0, the sem_wait timed out, and we return 0. */
-      if(time == 0) {
-	return 0;
+      if (time == 0) {
+        return 0;
       }
-    } else {
-kprintf("sem wait6");
-      sys_arch_sem_wait(mbox->mail, 0);
-kprintf("sem wait7");
     }
-    
-kprintf("sem wait8");
+    else {
+      kprintf("sem wait6");
+      sys_arch_sem_wait(mbox->mail, 0);
+      kprintf("sem wait7");
+    }
+
+    kprintf("sem wait8");
     sys_arch_sem_wait(mbox->mutex, 0);
-kprintf("sem wait9");
+    kprintf("sem wait9");
   }
-kprintf("sem wait10");
-  
-  if(msg != NULL) {
+  kprintf("sem wait10");
+
+  if (msg != NULL) {
     //kprintf("sys_mbox_fetch: mbox %p msg %p\n", mbox, *msg);
     *msg = mbox->msgs[mbox->first];
   }
-  
+
   mbox->first++;
-  if(mbox->first == SYS_MBOX_SIZE) {
+  if (mbox->first == SYS_MBOX_SIZE) {
     mbox->first = 0;
-  }    
-  
-  sys_sem_signal(mbox->mutex);
-  
-  return(time);
   }
+
+  sys_sem_signal(mbox->mutex);
+
+  return (time);
+}
 
 struct sys_sem *sys_sem_new(uInt8 count) {
   return sys_sem_new_(count);
-  }
+}
 
-static struct sys_sem *sys_sem_new_(uInt8 count) {
+static struct sys_sem *sys_sem_new_(uint8_t count) {
   struct sys_sem *sem;
-  
+
   sem = kmalloc(sizeof(struct sys_sem));
-  memset(sem,0x0,sizeof(struct sys_sem));
+  memset(sem, 0x0, sizeof(struct sys_sem));
   sem->c = count;
-  
+
   ubthread_cond_init(&(sem->cond), NULL);
   ubthread_mutex_init(&(sem->mutex), NULL);
-  kprintf("C: 0x%X, M: 0x%X, ID: %i]",&(sem->cond),&(sem->mutex),_current->id);
-  
+
   return sem;
-  }
+}
 
 static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout) {
   unsigned int tdiff;
@@ -341,52 +335,52 @@ static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16
     gettimeofday(&rtime1, &tz);
     sec = rtime1.tv_sec;
     usec = rtime1.tv_usec;
-    usec += timeout % 1000 * 1000;  
-    sec += (int)(timeout / 1000) + (int)(usec / 1000000);
+    usec += timeout % 1000 * 1000;
+    sec += (int) (timeout / 1000) + (int) (usec / 1000000);
     usec = usec % 1000000;
     ts.tv_nsec = usec * 1000;
     ts.tv_sec = sec;
-    
+
     retval = ubthread_cond_timedwait(cond, mutex, &ts);
     if (retval == ETIMEDOUT) {
       return 0;
-      }
+    }
     else {
       /* Calculate for how long we waited for the cond. */
       gettimeofday(&rtime2, &tz);
-      tdiff = (rtime2.tv_sec - rtime1.tv_sec) * 1000 +	
-	(rtime2.tv_usec - rtime1.tv_usec) / 1000;
+      tdiff = (rtime2.tv_sec - rtime1.tv_sec) * 1000 + (rtime2.tv_usec - rtime1.tv_usec) / 1000;
       if (tdiff == 0) {
-	return 1;
-        }
-      return tdiff;
+        return 1;
       }
+      return tdiff;
     }
+  }
   else {
     ubthread_cond_wait(cond, mutex);
     return 0;
-    }
   }
+}
 
 uint16_t sys_arch_sem_wait(struct sys_sem *sem, uint16_t timeout) {
   //kprintf("Or Here? %i:%i-0x%X]", _current->id, sem->mutex->pid,&(sem->mutex));
   uint16_t time = 1;
   ubthread_mutex_lock(&(sem->mutex));
-  while(sem->c <= 0) {
-    if(timeout > 0) {
+  while (sem->c <= 0) {
+    if (timeout > 0) {
       time = cond_wait(&(sem->cond), &(sem->mutex), timeout);
-      if(time == 0) {
-	ubthread_mutex_unlock(&(sem->mutex));
-	return 0;
+      if (time == 0) {
+        ubthread_mutex_unlock(&(sem->mutex));
+        return 0;
       }
-    } else {
+    }
+    else {
       cond_wait(&(sem->cond), &(sem->mutex), 0);
     }
   }
   sem->c--;
   ubthread_mutex_unlock(&(sem->mutex));
-  return(time);
-  }
+  return (time);
+}
 
 void sys_sem_signal(struct sys_sem *sem) {
   //kprintf("HERE: %i:0x%X", _current->id,&(sem->mutex));
@@ -394,24 +388,24 @@ void sys_sem_signal(struct sys_sem *sem) {
   ubthread_mutex_lock(&(sem->mutex));
 
   sem->c++;
-  if(sem->c > 1)
+  if (sem->c > 1)
     sem->c = 1;
 
   ubthread_cond_signal(&(sem->cond));
   ubthread_mutex_unlock(&(sem->mutex));
-  }
+}
 
 void sys_sem_free(struct sys_sem *sem) {
-  if(sem != SYS_SEM_NULL) {
+  if (sem != SYS_SEM_NULL) {
     sys_sem_free_(sem);
-    } 
   }
+}
 
 static void sys_sem_free_(struct sys_sem *sem) {
   ubthread_cond_destroy(&(sem->cond));
   ubthread_mutex_destroy(&(sem->mutex));
   kfree(sem);
-  }
+}
 
 unsigned long sys_unix_now() {
   struct timeval tv;
@@ -424,18 +418,18 @@ unsigned long sys_unix_now() {
   usec = tv.tv_usec - starttime.tv_usec;
   msec = sec * 1000 + usec / 1000;
   return msec;
-  }
+}
 
 void sys_init() {
   struct timezone tz;
   gettimeofday(&starttime, &tz);
-  }
+}
 
 struct sys_timeouts *sys_arch_timeouts(void) {
   struct sys_thread *thread;
   thread = current_thread();
-  return(&thread->timeouts);
-  }
+  return (&thread->timeouts);
+}
 
 /***
  END

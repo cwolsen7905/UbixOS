@@ -40,22 +40,20 @@
 #include "net/sys.h"
 
 /*-----------------------------------------------------------------------------------*/
-void 
-udpecho_thread(void *arg)
-{
+void udpecho_thread(void *arg) {
   static struct netconn *conn;
   static struct netbuf *buf;
   static struct ip_addr *addr;
   static unsigned short port;
   char buffer[4096];
-  
+
   kprintf("1");
   conn = netconn_new(NETCONN_UDP);
   kprintf("2");
   netconn_bind(conn, NULL, 7);
   kprintf("3");
 
-  while(1) {
+  while (1) {
     kprintf("a");
     buf = netconn_recv(conn);
     kprintf("b");
@@ -74,8 +72,6 @@ udpecho_thread(void *arg)
   }
 }
 /*-----------------------------------------------------------------------------------*/
-void
-udpecho_init(void)
-{
+void udpecho_init(void) {
   sys_thread_new(udpecho_thread, NULL);
 }

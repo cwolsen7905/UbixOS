@@ -56,12 +56,12 @@ char *buffer = 0x0;
 // UBU static struct netconn *conns[NCONNS];
 
 static void sendstr(const char *str, struct netconn *conn) {
-  netconn_write(conn, (void *)str, strlen(str), NETCONN_NOCOPY);
-  }
+  netconn_write(conn, (void *) str, strlen(str), NETCONN_NOCOPY);
+}
 
 static void prompt(struct netconn *conn) {
   sendstr("uBixCube:@sys> ", conn);
-  }  
+}
 
 static void shell_main(struct netconn *conn) {
   struct netbuf *buf = 0x0;
@@ -72,35 +72,35 @@ static void shell_main(struct netconn *conn) {
   while (1) {
     buf = netconn_recv(conn);
     if (buf != 0x0)
-      netbuf_copy(buf,buffer,1024);
-      len = netbuf_len(buf);
-      netbuf_delete(buf);
-      buffer[len-2] = '\0';
-      kprintf("Buffer: [%s:%i]\n",buffer,len);
-      if (!strcmp(buffer,"quit")) {
-        netconn_close(conn);
-        break;
-	}
-      else if (!strcmp(buffer,"ls")) {
-        sendstr("no\nfiles\nhere\n", conn);
-	}
-      else if (!strcmp(buffer,"uname")) {
-        sendstr("UbixOS v1.0 reddawg@devel.ubixos.com:/ubix.elf\n",conn);
-	}
-      prompt(conn);
-      }
+      netbuf_copy(buf, buffer, 1024);
+    len = netbuf_len(buf);
+    netbuf_delete(buf);
+    buffer[len - 2] = '\0';
+    kprintf("Buffer: [%s:%i]\n", buffer, len);
+    if (!strcmp(buffer, "quit")) {
+      netconn_close(conn);
+      break;
+    }
+    else if (!strcmp(buffer, "ls")) {
+      sendstr("no\nfiles\nhere\n", conn);
+    }
+    else if (!strcmp(buffer, "uname")) {
+      sendstr("UbixOS v1.0 reddawg@devel.ubixos.com:/ubix.elf\n", conn);
+    }
+    prompt(conn);
   }
+}
 
 static void shell_thread(void *arg) {
   struct netconn *conn = 0x0, *newconn = 0x0;
-  
-  buffer = (char *)kmalloc(1024);
- 
+
+  buffer = (char *) kmalloc(1024);
+
   conn = netconn_new(NETCONN_TCP);
   netconn_bind(conn, NULL, 23);
   netconn_listen(conn);
 
-  while(1) {
+  while (1) {
     kprintf("shell1");
     newconn = netconn_accept(conn);
     kprintf("2");
@@ -108,12 +108,12 @@ static void shell_thread(void *arg) {
     kprintf("3");
     //netconn_delete(newconn);
     kprintf("4");
-    }
   }
+}
 
-void shell_init(void)     {
+void shell_init(void) {
   sys_thread_new(shell_thread, NULL);
-  }
+}
 
 /***
  END

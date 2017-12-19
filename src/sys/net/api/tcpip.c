@@ -51,22 +51,18 @@
 
 #include "net/tcpip.h"
 
-static void (* tcpip_init_done)(void *arg) = NULL;
+static void (*tcpip_init_done)(void *arg) = NULL;
 static void *tcpip_init_done_arg;
 static sys_mbox_t mbox;
 
 /*-----------------------------------------------------------------------------------*/
-static void
-tcpip_tcp_timer(void *arg)
-{
+static void tcpip_tcp_timer(void *arg) {
   tcp_tmr();
-  sys_timeout(TCP_TMR_INTERVAL, (sys_timeout_handler)tcpip_tcp_timer, NULL);
+  sys_timeout(TCP_TMR_INTERVAL, (sys_timeout_handler) tcpip_tcp_timer, NULL);
 }
 /*-----------------------------------------------------------------------------------*/
 
-static void
-tcpip_thread(void *arg)
-{
+static void tcpip_thread(void *arg) {
   struct tcpip_msg *msg;
 
   kprintf("Started TCP THread");
@@ -75,47 +71,45 @@ tcpip_thread(void *arg)
   tcp_init();
   kprintf("Started TCP THread");
 
-  sys_timeout(TCP_TMR_INTERVAL, (sys_timeout_handler)tcpip_tcp_timer, NULL);
-  
-  if(tcpip_init_done != NULL) {
+  sys_timeout(TCP_TMR_INTERVAL, (sys_timeout_handler) tcpip_tcp_timer, NULL);
+
+  if (tcpip_init_done != NULL) {
     tcpip_init_done(tcpip_init_done_arg);
   }
 
-  while(1) {                          /* MAIN Loop */
+  while (1) { /* MAIN Loop */
     kprintf("mbf1");
-    sys_mbox_fetch(mbox, (void *)&msg);
+    sys_mbox_fetch(mbox, (void *) &msg);
     kprintf("mbf1");
-    switch(msg->type) {
-    case TCPIP_MSG_API:
-      //kprintf("tcpip_thread: API message %p\n", msg);
-      api_msg_input(msg->msg.apimsg);
+    switch (msg->type) {
+      case TCPIP_MSG_API:
+        //kprintf("tcpip_thread: API message %p\n", msg);
+        api_msg_input(msg->msg.apimsg);
       break;
-    case TCPIP_MSG_INPUT:
-      //kprintf("tcpip_thread: IP packet %p\n", msg);
-      ip_input(msg->msg.inp.p, msg->msg.inp.netif);
+      case TCPIP_MSG_INPUT:
+        //kprintf("tcpip_thread: IP packet %p\n", msg);
+        ip_input(msg->msg.inp.p, msg->msg.inp.netif);
       break;
-    default:
+      default:
       break;
     }
     memp_freep(MEMP_TCPIP_MSG, msg);
   }
 }
 /*-----------------------------------------------------------------------------------*/
-err_t
-tcpip_input(struct pbuf *p, struct netif *inp)
-{
+err_t tcpip_input(struct pbuf *p, struct netif *inp) {
   struct tcpip_msg *msg;
-  
+
   msg = memp_mallocp(MEMP_TCPIP_MSG);
-  if(msg == NULL) {
+  if (msg == NULL) {
     kprintf("BAD MESSAGE!!!\n");
     while (1)
-      asm("nop");
-    pbuf_free(p);    
-    return ERR_MEM;  
+      sched_yeild();
+    pbuf_free(p);
+    return ERR_MEM;
   }
   kprintf("GOOD MESSAGE\n");
-  
+
   msg->type = TCPIP_MSG_INPUT;
   msg->msg.inp.p = p;
   msg->msg.inp.netif = inp;
@@ -123,12 +117,10 @@ tcpip_input(struct pbuf *p, struct netif *inp)
   return ERR_OK;
 }
 /*-----------------------------------------------------------------------------------*/
-void
-tcpip_apimsg(struct api_msg *apimsg)
-{
+void tcpip_apimsg(struct api_msg *apimsg) {
   struct tcpip_msg *msg;
   msg = memp_mallocp(MEMP_TCPIP_MSG);
-  if(msg == NULL) {
+  if (msg == NULL) {
     memp_free(MEMP_TCPIP_MSG, apimsg);
     return;
   }
@@ -137,15 +129,11 @@ tcpip_apimsg(struct api_msg *apimsg)
   sys_mbox_post(mbox, msg);
 }
 /*-----------------------------------------------------------------------------------*/
-void
-tcpip_init(void (* initfunc)(void *), void *arg)
-{
+void tcpip_init(void (*initfunc)(void *), void *arg) {
   tcpip_init_done = initfunc;
   tcpip_init_done_arg = arg;
   mbox = sys_mbox_new();
-  sys_thread_new((void *)tcpip_thread, NULL);
+  sys_thread_new((void *) tcpip_thread, NULL);
 }
 /*-----------------------------------------------------------------------------------*/
-
-
 
