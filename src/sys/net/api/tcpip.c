@@ -80,7 +80,7 @@ static void tcpip_thread(void *arg) {
   while (1) { /* MAIN Loop */
     kprintf("MBF1");
     sys_mbox_fetch(mbox, (void *) &msg);
-    kprintf("MBF1");
+    kprintf("MBF2");
     switch (msg->type) {
       case TCPIP_MSG_API:
         //kprintf("tcpip_thread: API message %p\n", msg);
@@ -103,8 +103,6 @@ err_t tcpip_input(struct pbuf *p, struct netif *inp) {
   msg = memp_mallocp(MEMP_TCPIP_MSG);
   if (msg == NULL) {
     kprintf("BAD MESSAGE!!!\n");
-    while (1)
-      sched_yeild();
     pbuf_free(p);
     return ERR_MEM;
   }
