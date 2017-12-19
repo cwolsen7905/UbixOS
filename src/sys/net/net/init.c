@@ -36,9 +36,7 @@
 #include <net/memp.h>
 #include <net/tcpip.h>
 
-#include <netif/loopif.h>
-#include <netif/tcpdump.h>
-#include <netif/ethernetif.h>
+#include <netif/ethernet.h>
 
 #include <ubixos/exec.h>
 #include <lib/kmalloc.h>

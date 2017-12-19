@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #  Objects
-OBJS = sys_arch.o 
+OBJS = sys_arch.o init.o 
 #shell.o udpecho.o init.o sys_arch.o bot.o
 
 all: $(OBJS)
