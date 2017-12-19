@@ -1,8 +1,3 @@
-/**
- * @file
- *
- * lwIP Options Configuration
- */
 
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
@@ -74,35 +69,23 @@
    ------------------------------------
 */
 /**
- * @defgroup lwip_opts_nosys NO_SYS
- * @ingroup lwip_opts_infrastructure
- * @{
- */
-/**
  * NO_SYS==1: Use lwIP without OS-awareness (no thread, semaphores, mutexes or
  * mboxes). This means threaded APIs cannot be used (socket, netconn,
  * i.e. everything in the 'api' folder), only the callback-style raw API is
  * available (and you have to watch out for yourself that you don't access
  * lwIP functions/structures from more than one context at a time!)
  */
-#if !defined NO_SYS || defined __DOXYGEN__
+#if !defined NO_SYS
 #define NO_SYS                          0
 #endif
-/**
- * @}
- */
 
-/**
- * @defgroup lwip_opts_timers Timers
- * @ingroup lwip_opts_infrastructure
- * @{
- */
+
 /**
  * LWIP_TIMERS==0: Drop support for sys_timeout and lwip-internal cyclic timers.
  * (the array of lwip-internal cyclic timers is still provided)
  * (check NO_SYS_NO_TIMERS for compatibility to old versions)
  */
-#if !defined LWIP_TIMERS || defined __DOXYGEN__
+#if !defined LWIP_TIMERS
 #ifdef NO_SYS_NO_TIMERS
 #define LWIP_TIMERS                     (!NO_SYS || (NO_SYS && !NO_SYS_NO_TIMERS))
 #else
@@ -117,23 +100,15 @@
  * will be required: sys_timeouts_init(), sys_timeout(), sys_untimeout(),
  *                   sys_timeouts_mbox_fetch()
  */
-#if !defined LWIP_TIMERS_CUSTOM || defined __DOXYGEN__
+#if !defined LWIP_TIMERS_CUSTOM
 #define LWIP_TIMERS_CUSTOM              0
 #endif
-/**
- * @}
- */
 
-/**
- * @defgroup lwip_opts_memcpy memcpy
- * @ingroup lwip_opts_infrastructure
- * @{
- */
 /**
  * MEMCPY: override this if you have a faster implementation at hand than the
  * one included in your C library
  */
-#if !defined MEMCPY || defined __DOXYGEN__
+#if !defined MEMCPY
 #define MEMCPY(dst,src,len)             memcpy(dst,src,len)
 #endif
 
@@ -141,12 +116,9 @@
  * SMEMCPY: override this with care! Some compilers (e.g. gcc) can inline a
  * call to memcpy() if the length is known at compile time and is small.
  */
-#if !defined SMEMCPY || defined __DOXYGEN__
+#if !defined SMEMCPY
 #define SMEMCPY(dst,src,len)            memcpy(dst,src,len)
 #endif
-/**
- * @}
- */
 
 /*
    ------------------------------------
@@ -154,18 +126,13 @@
    ------------------------------------
 */
 /**
- * @defgroup lwip_opts_lock Core locking and MPU
- * @ingroup lwip_opts_infrastructure
- * @{
- */
-/**
  * LWIP_MPU_COMPATIBLE: enables special memory management mechanism
  * which makes lwip able to work on MPU (Memory Protection Unit) system
  * by not passing stack-pointers to other threads
  * (this decreases performance as memory is allocated from pools instead
  * of keeping it on the stack)
  */
-#if !defined LWIP_MPU_COMPATIBLE || defined __DOXYGEN__
+#if !defined LWIP_MPU_COMPATIBLE
 #define LWIP_MPU_COMPATIBLE             0
 #endif
 
@@ -177,7 +144,7 @@
  * UNLOCK_TCPIP_CORE().
  * Your system should provide mutexes supporting priority inversion to use this.
  */
-#if !defined LWIP_TCPIP_CORE_LOCKING || defined __DOXYGEN__
+#if !defined LWIP_TCPIP_CORE_LOCKING
 #define LWIP_TCPIP_CORE_LOCKING         1
 #endif
 

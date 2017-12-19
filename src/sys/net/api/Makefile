@@ -13,9 +13,9 @@ all: $(OBJS)
 
 #  Compile Types
 .cc.o:
-	$(CXX) ${CFLAGS}-DNOBOOL -I../../include -c -o $@ $<
+	$(CXX) ${CFLAGS} -DNOBOOL -I../../include -c -o $@ $<
 .cc.s:
-	$(CXX) ${CFLAGS}-DNOBOOL -I../../include -S -o $@ $<
+	$(CXX) ${CFLAGS} -DNOBOOL -I../../include -S -o $@ $<
 .c.o:
 	$(CC) ${CFLAGS} -I../../include -c -o $@ $<
 .c.s:
