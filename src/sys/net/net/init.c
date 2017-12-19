@@ -73,7 +73,7 @@ void netMainThread() {
   kprintf("TCP/IP initialized.\n");
 
   IP4_ADDR(&gw, 10, 50, 0, 1);
-  IP4_ADDR(&ipaddr, 10, 50, 6, 65);
+  IP4_ADDR(&ipaddr, 10, 50, 0, 7);
   IP4_ADDR(&netmask, 255, 255, 0, 0);
   netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
 

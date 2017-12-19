@@ -515,11 +515,13 @@ int lnc_nextRxPtr(struct lncInfo *lnc) {
 
 
 int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest) {
-  kprintf("SEND PACKET1!\n");
-  if (!lnc_driverOwnsTX(lnc))
+  //kprintf("SEND PACKET1!\n");
+  if (!lnc_driverOwnsTX(lnc)) {
+    kpanic("NO TX BUFFERS");
     return (0);
+  }
 
-  kprintf("SEND PACKET2!\n");
+  //kprintf("SEND PACKET2!\n");
 
   memcpy((void *) (lnc->txBuffer + (lnc->txPtr * lnc->bufferSize)), packet, len);
 
