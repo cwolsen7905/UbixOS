@@ -89,6 +89,7 @@ static void tcpip_thread(void *arg) {
         ip_input(msg->msg.inp.p, msg->msg.inp.netif);
       break;
       default:
+        kprintf("MSG TYPE:[0x%X]\n", msg->type);
       break;
     }
     memp_freep(MEMP_TCPIP_MSG, msg);
@@ -100,11 +101,10 @@ err_t tcpip_input(struct pbuf *p, struct netif *inp) {
 
   msg = memp_mallocp(MEMP_TCPIP_MSG);
   if (msg == NULL) {
-    //kprintf("BAD MESSAGE!!!\n");
+    kprintf("Cannot Allocate MEMP Dropping Packet");
     pbuf_free(p);
     return ERR_MEM;
   }
-  //kprintf("GOOD MESSAGE\n");
 
   msg->type = TCPIP_MSG_INPUT;
   msg->msg.inp.p = p;

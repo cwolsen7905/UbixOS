@@ -41,7 +41,6 @@
  * $Id: sys.c,v 1.1 2004/04/15 12:38:25 reddawg Exp $
  */
 
-
 #include <sys/types.h>
 #include <net/debug.h>
 #include <net/sys.h>
@@ -50,160 +49,159 @@
 #include <net/memp.h>
 
 /*-----------------------------------------------------------------------------------*/
-void
-sys_mbox_fetch(sys_mbox_t mbox, void **msg)
-{
+void sys_mbox_fetch(sys_mbox_t mbox, void **msg) {
   uInt16 time;
   struct sys_timeouts *timeouts;
   struct sys_timeout *tmptimeout;
   sys_timeout_handler h;
   void *arg;
 
-    
- again:
-  kprintf("timeout0");
+  again: kprintf("timeout0");
   timeouts = sys_arch_timeouts();
   kprintf("timeout1");
-    
-  if(timeouts->next == NULL) {
+
+  if (timeouts->next == NULL) {
     kprintf("Z0");
     sys_arch_mbox_fetch(mbox, msg, 0);
     kprintf("Z0");
-  } else {
+  }
+  else {
     kprintf("Z1");
-    if(timeouts->next->time > 0) {
-    kprintf("Z2");
+    if (timeouts->next->time > 0) {
+      kprintf("Z2");
       time = sys_arch_mbox_fetch(mbox, msg, timeouts->next->time);
-    kprintf("Z3");
-    } else {
-    kprintf("Z4");
+      kprintf("Z3");
+    }
+    else {
+      kprintf("Z4");
       time = 0;
     }
 
     kprintf("Z5");
-    if(time == 0) {
-    kprintf("Z6");
+    if (time == 0) {
+      kprintf("Z6");
       /* If time == 0, a timeout occured before a message could be
-	 fetched. We should now call the timeout handler and
-	 deallocate the memory allocated for the timeout. */
+       fetched. We should now call the timeout handler and
+       deallocate the memory allocated for the timeout. */
       tmptimeout = timeouts->next;
       timeouts->next = tmptimeout->next;
       h = tmptimeout->h;
       arg = tmptimeout->arg;
       memp_free(MEMP_SYS_TIMEOUT, tmptimeout);
-    kprintf("Z7");
+      kprintf("Z7");
       h(arg);
-    kprintf("Z8");
-      
+      kprintf("Z8");
+
       /* We try again to fetch a message from the mbox. */
       goto again;
-    } else {
+    }
+    else {
       /* If time > 0, a message was received before the timeout
-	 occured. The time variable is set to the number of
-	 microseconds we waited for the message. */
-      if(time <= timeouts->next->time) {
-	timeouts->next->time -= time;
-      } else {
-	timeouts->next->time = 0;
+       occured. The time variable is set to the number of
+       microseconds we waited for the message. */
+      if (time <= timeouts->next->time) {
+        timeouts->next->time -= time;
+      }
+      else {
+        timeouts->next->time = 0;
       }
     }
-    
+
   }
 }
 /*-----------------------------------------------------------------------------------*/
-void
-sys_sem_wait(sys_sem_t sem)
-{
+void sys_sem_wait(sys_sem_t sem) {
   uInt16 time;
   struct sys_timeouts *timeouts;
   struct sys_timeout *tmptimeout;
   sys_timeout_handler h;
   void *arg;
 
-  while(sys_arch_sem_wait(sem, 1000) == 0);
-     return;
+  while (sys_arch_sem_wait(sem, 1000) == 0)
+    ;
+  return;
 
- again:
-  timeouts = sys_arch_timeouts();
-  
-  if(timeouts->next == NULL) {
+  again: timeouts = sys_arch_timeouts();
+
+  if (timeouts->next == NULL) {
     sys_arch_sem_wait(sem, 0);
-  } else {
-    if(timeouts->next->time > 0) {
+  }
+  else {
+    if (timeouts->next->time > 0) {
       time = sys_arch_sem_wait(sem, timeouts->next->time);
-    } else {
+    }
+    else {
       time = 0;
     }
 
-    if(time == 0) {
+    if (time == 0) {
       /* If time == 0, a timeout occured before a message could be
-	 fetched. We should now call the timeout handler and
-	 deallocate the memory allocated for the timeout. */
+       fetched. We should now call the timeout handler and
+       deallocate the memory allocated for the timeout. */
       tmptimeout = timeouts->next;
       timeouts->next = tmptimeout->next;
       h = tmptimeout->h;
       arg = tmptimeout->arg;
       memp_free(MEMP_SYS_TIMEOUT, tmptimeout);
       h(arg);
-	    
-      
+
       /* We try again to fetch a message from the mbox. */
       goto again;
-    } else {
+    }
+    else {
       /* If time > 0, a message was received before the timeout
-	 occured. The time variable is set to the number of
-	 microseconds we waited for the message. */
-      if(time <= timeouts->next->time) {
-	timeouts->next->time -= time;
-      } else {
-	timeouts->next->time = 0;
+       occured. The time variable is set to the number of
+       microseconds we waited for the message. */
+      if (time <= timeouts->next->time) {
+        timeouts->next->time -= time;
+      }
+      else {
+        timeouts->next->time = 0;
       }
     }
-    
+
   }
 }
 /*-----------------------------------------------------------------------------------*/
-void
-sys_timeout(uInt16 msecs, sys_timeout_handler h, void *arg)
-{
+void sys_timeout(uInt16 msecs, sys_timeout_handler h, void *arg) {
   struct sys_timeouts *timeouts;
   struct sys_timeout *timeout, *t;
 
   timeout = memp_malloc(MEMP_SYS_TIMEOUT);
-  if(timeout == NULL) {
+  if (timeout == NULL) {
     return;
   }
   timeout->next = NULL;
   timeout->h = h;
   timeout->arg = arg;
   timeout->time = msecs;
-  
+
   timeouts = sys_arch_timeouts();
-  
-  if(timeouts->next == NULL) {
+
+  if (timeouts->next == NULL) {
     timeouts->next = timeout;
     return;
-  }  
-  
-  if(timeouts->next->time > msecs) {
+  }
+
+  if (timeouts->next->time > msecs) {
     timeouts->next->time -= msecs;
     timeout->next = timeouts->next;
     timeouts->next = timeout;
-  } else {
-    for(t = timeouts->next; t != NULL; t = t->next) {
+  }
+  else {
+    for (t = timeouts->next; t != NULL; t = t->next) {
       timeout->time -= t->time;
-      if(t->next == NULL ||
-	 t->next->time > timeout->time) {
-	if(t->next != NULL) {
-	  t->next->time -= timeout->time;
-	}
-	timeout->next = t->next;
-	t->next = timeout;
-	break;
+      if (t->next == NULL || t->next->time > timeout->time) {
+        if (t->next != NULL) {
+          t->next->time -= timeout->time;
+        }
+        timeout->next = t->next;
+        t->next = timeout;
+        break;
       }
     }
   }
-  
+
 }
 /*-----------------------------------------------------------------------------------*/
 
