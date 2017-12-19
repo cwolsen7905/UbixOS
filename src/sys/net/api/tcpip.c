@@ -104,7 +104,7 @@ err_t tcpip_input(struct pbuf *p, struct netif *inp) {
   if (msg == NULL) {
     kprintf("BAD MESSAGE!!!\n");
     while (1)
-      sched_yeild();
+      sched_yield();
     pbuf_free(p);
     return ERR_MEM;
   }
