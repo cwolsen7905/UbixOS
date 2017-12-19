@@ -93,6 +93,7 @@ static void tcpip_thread(void *arg) {
       default:
       break;
     }
+    kprintf("ML_END");
     memp_freep(MEMP_TCPIP_MSG, msg);
   }
 }
@@ -102,11 +103,11 @@ err_t tcpip_input(struct pbuf *p, struct netif *inp) {
 
   msg = memp_mallocp(MEMP_TCPIP_MSG);
   if (msg == NULL) {
-    kprintf("BAD MESSAGE!!!\n");
+    //kprintf("BAD MESSAGE!!!\n");
     pbuf_free(p);
     return ERR_MEM;
   }
-  kprintf("GOOD MESSAGE\n");
+  //kprintf("GOOD MESSAGE\n");
 
   msg->type = TCPIP_MSG_INPUT;
   msg->msg.inp.p = p;

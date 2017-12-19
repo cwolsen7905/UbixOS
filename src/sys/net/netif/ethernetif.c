@@ -296,7 +296,7 @@ void ethernetif_input(struct netif *netif) {
     
     switch(htons(ethhdr->type)) {
     case ETHTYPE_IP:
-      kprintf("IP..................");
+      //kprintf("IP..................");
       arp_ip_input(netif, p);
       pbuf_header(p, -14);
       netif->input(p, netif);

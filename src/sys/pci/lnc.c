@@ -265,7 +265,8 @@ asm(
 */
     }
     if (csr0 & TINT) {
-       kprintf("TINT");
+      asm("nop");
+       //kprintf("TINT");
        //lnc_txINT();
 /*
 asm(
