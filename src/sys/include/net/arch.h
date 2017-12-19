@@ -45,7 +45,7 @@
 #define BIG_ENDIAN 4321
 #endif
 
-#include "arch/cc.h"
+#include <net/arch/cc.h>
 
 /**
  * @defgroup compiler_abstraction Compiler/platform abstraction
@@ -75,11 +75,13 @@
  * in turn pull in a lot of standard libary code. In resource-constrained 
  * systems, this should be defined to something less resource-consuming.
  */
+/* MrOlsen 2017-12-18
 #ifndef LWIP_PLATFORM_DIAG
 #define LWIP_PLATFORM_DIAG(x) do {printf x;} while(0)
 #include <stdio.h>
 #include <stdlib.h>
 #endif
+*/
 
 /** Platform specific assertion handling.\n
  * Note the default implementation pulls in printf, fflush and abort, which may
@@ -89,8 +91,11 @@
 #ifndef LWIP_PLATFORM_ASSERT
 #define LWIP_PLATFORM_ASSERT(x) do {printf("Assertion \"%s\" failed at line %d in %s\n", \
                                      x, __LINE__, __FILE__); fflush(NULL); abort();} while(0)
+/*
+MrOlsen 2017-12-18
 #include <stdio.h>
 #include <stdlib.h>
+*/
 #endif
 
 /** Define this to 1 in arch/cc.h of your port if you do not want to
@@ -102,7 +107,10 @@
 #endif
 
 #if !LWIP_NO_STDDEF_H
-#include <stddef.h> /* for size_t */
+/* for size_t */
+/* MrOlsen 2017-12-17
+#include <stddef.h>
+*/
 #endif
 
 /** Define this to 1 in arch/cc.h of your port if your compiler does not provide
@@ -115,7 +123,9 @@
 
 /* Define generic types used in lwIP */
 #if !LWIP_NO_STDINT_H
+/* MrOlsen 2017-12-17
 #include <stdint.h>
+*/
 typedef uint8_t   u8_t;
 typedef int8_t    s8_t;
 typedef uint16_t  u16_t;
@@ -135,7 +145,9 @@ typedef uintptr_t mem_ptr_t;
 
 /* Define (sn)printf formatters for these lwIP types */
 #if !LWIP_NO_INTTYPES_H
+/* MrOlsen
 #include <inttypes.h>
+*/
 #ifndef X8_F
 #define X8_F  "02" PRIx8
 #endif
@@ -172,7 +184,9 @@ typedef uintptr_t mem_ptr_t;
 
 /* Include limits.h? */
 #if !LWIP_NO_LIMITS_H
+/*
 #include <limits.h>
+*/
 #endif
 
 /** C++ const_cast<target_type>(val) equivalent to remove constness from a value (GCC -Wcast-qual) */
