@@ -257,21 +257,21 @@ uint16_t sys_arch_mbox_fetch(struct sys_mbox *mbox, void **msg, uint16_t timeout
 
   /* The mutex lock is quick so we don't bother with the timeout
    stuff here. */
-  kprintf("sem wait0");
+  //kprintf("sem wait0");
   sys_arch_sem_wait(mbox->mutex, 0);
-  kprintf("sem wait1");
+  //kprintf("sem wait1");
 
   while (mbox->first == mbox->last) {
-    kprintf("sem wait2");
+    //kprintf("sem wait2");
     sys_sem_signal(mbox->mutex);
-    kprintf("sem wait3");
+    //kprintf("sem wait3");
 
     /* We block while waiting for a mail to arrive in the mailbox. We
      must be prepared to timeout. */
     if (timeout != 0) {
-      kprintf("sem wait4");
+     // kprintf("sem wait4");
       time = sys_arch_sem_wait(mbox->mail, timeout);
-      kprintf("sem wait5");
+      //kprintf("sem wait5");
 
       /* If time == 0, the sem_wait timed out, and we return 0. */
       if (time == 0) {
@@ -279,16 +279,16 @@ uint16_t sys_arch_mbox_fetch(struct sys_mbox *mbox, void **msg, uint16_t timeout
       }
     }
     else {
-      kprintf("sem wait6");
+      //kprintf("sem wait6");
       sys_arch_sem_wait(mbox->mail, 0);
-      kprintf("sem wait7");
+      //kprintf("sem wait7");
     }
 
-    kprintf("sem wait8");
+    //kprintf("sem wait8");
     sys_arch_sem_wait(mbox->mutex, 0);
-    kprintf("sem wait9");
+   // kprintf("sem wait9");
   }
-  kprintf("sem wait10");
+  //kprintf("sem wait10");
 
   if (msg != NULL) {
     //kprintf("sys_mbox_fetch: mbox %p msg %p\n", mbox, *msg);

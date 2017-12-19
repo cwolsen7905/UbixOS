@@ -78,22 +78,19 @@ static void tcpip_thread(void *arg) {
   }
 
   while (1) { /* MAIN Loop */
-    kprintf("MBF1");
     sys_mbox_fetch(mbox, (void *) &msg);
-    kprintf("MBF2");
     switch (msg->type) {
       case TCPIP_MSG_API:
-        //kprintf("tcpip_thread: API message %p\n", msg);
+        kprintf("tcpip_thread: API message %p\n", msg);
         api_msg_input(msg->msg.apimsg);
       break;
       case TCPIP_MSG_INPUT:
-        //kprintf("tcpip_thread: IP packet %p\n", msg);
+        kprintf("tcpip_thread: IP packet %p\n", msg);
         ip_input(msg->msg.inp.p, msg->msg.inp.netif);
       break;
       default:
       break;
     }
-    kprintf("ML_END");
     memp_freep(MEMP_TCPIP_MSG, msg);
   }
 }

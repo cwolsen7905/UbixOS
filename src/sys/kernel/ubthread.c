@@ -90,7 +90,7 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
   //if (ubmutex->locked == LOCKED) {
   if (ubmutex->lock == true) {
     kprintf("Mutex Already Lock By %x Trying To Be Relocked By %x\n",ubmutex->pid,_current->id);
-    kpanic("WHAT");
+    //kpanic("WHAT");
     //while (ubmutex->locked == LOCKED);
     while (ubmutex->lock == true)
       sched_yield();
