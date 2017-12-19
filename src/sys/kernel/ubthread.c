@@ -1,5 +1,5 @@
 /*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
+ Copyright (c) 2002-2004, 2017 The UbixOS Project
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
@@ -46,24 +46,24 @@ kTask_t *ubthread_self() {
   return(_current);
   }
 
-int ubthread_cond_init(ubthread_cond_t *cond,const uInt32 attr) { 
+int ubthread_cond_init(ubthread_cond_t *cond,const uint32_t attr) {
   ubthread_cond_t  ubcond = kmalloc(sizeof(struct ubthread_cond));
   memset(ubcond, 0x0, sizeof(struct ubthread_cond));
+
   ubcond->id     = (int)cond;
   ubcond->lock = ATOMIC_VAR_INIT(0);
-  //atomic_exchange(&ubcond->locked, UNLOCKED);
-  //ubcond->locked = UNLOCKED;
+
   *cond = ubcond;
   return(0x0);
   }
 
-int ubthread_mutex_init(ubthread_mutex_t *mutex,const uInt32 attr) { 
+int ubthread_mutex_init(ubthread_mutex_t *mutex,const uint32_t attr) {
   ubthread_mutex_t ubmutex = kmalloc(sizeof(struct ubthread_mutex));
   memset(ubmutex, 0x0, sizeof(struct ubthread_mutex));
+
   ubmutex->id     = (int)mutex;
   ubmutex->lock = ATOMIC_VAR_INIT(0);
-  //atomic_exchange(&ubcond->locked, UNLOCKED);
-  //ubmutex->locked = UNLOCKED;
+
   *mutex = ubmutex;
   return(0x0);
   }
@@ -87,15 +87,16 @@ int ubthread_create(kTask_t **thread,const uInt32 *attr,void (* tproc)(void), vo
 
 int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
   ubthread_mutex_t ubmutex = *mutex;
-  //if (ubmutex->locked == LOCKED) {
+
   if (ubmutex->lock == true && ubmutex->pid != _current->id) {
-    kprintf("Mutex Already Lock By %x Trying To Be Relocked By %x\n",ubmutex->pid,_current->id);
+    kprintf("Mutex Already Lock By PID %x Wiating To Be Relocked By %x\n",ubmutex->pid,_current->id);
     while (ubmutex->lock == true)
       sched_yield();
     }
   else if (ubmutex->lock == true && ubmutex->pid == _current->id) {
     kprintf("Mutex Already Locked By This Thread");
   }
+
   atomic_exchange(&ubmutex->lock, true);
   ubmutex->pid = _current->id;
   return(0x0);
@@ -103,9 +104,9 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
 
 int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
   ubthread_mutex_t ubmutex = *mutex;
+
  if (ubmutex->pid == _current->id) {
     atomic_exchange(&ubmutex->lock, false);
-    //ubmutex->locked = UNLOCKED;
     return(0x0);
     }
   else {
@@ -113,37 +114,29 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
     while (ubmutex->pid != _current->id)
       sched_yield();
     kprintf("GOT IT UNLOCKING");
-    //kpanic("FU");
     atomic_exchange(&ubmutex->lock, false);
     return(0x0);
-    //ubmutex->locked = UNLOCKED;
-    //return(-1);
     }
   }
 
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime) {
   ubthread_cond_t  ubcond  = *cond;
   ubthread_mutex_t ubmutex = *mutex;
+
   uInt32 enterTime = systemVitals->sysUptime+20;
+
   ubthread_mutex_unlock(mutex);
+
   while (enterTime > systemVitals->sysUptime) {
     if (ubcond->lock == false) break;
     sched_yield();
     }
-  //atomic_exchange(&ubmutex->lock, false);
+
   ubthread_mutex_lock(mutex);
-  //ubmutex->locked = UNLOCKED;
+
   return(0x0);
   }
 
-int ubthread_cond_wait_old(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
-  ubthread_cond_t  ubcond  = *cond;
-  ubthread_mutex_t ubmutex = *mutex;
-  while (ubcond->lock == true) sched_yield();
-  atomic_exchange(&ubcond->lock, false);
-  //ubmutex->locked = UNLOCKED;
-  return(0x0);
-  }
 
 int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
   ubthread_cond_t ubcond = *cond;
@@ -156,11 +149,5 @@ int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
 int ubthread_cond_signal(ubthread_cond_t *cond) {
   ubthread_cond_t ubcond = *cond;
   atomic_exchange(&ubcond->lock, false);
-  //ubcond->locked = UNLOCKED;
   return(0x0);
   }
-
-/***
- END
- ***/
-
