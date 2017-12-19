@@ -38,7 +38,7 @@
 #include <isa/pit.h>
 #include <isa/atkbd.h>
 #include <ubixos/time.h>
-#include <net/net.h>
+#include <net/tcpip.h>
 #include <isa/ne2k.h>
 #include <devfs/devfs.h>
 #include <pci/pci.h>
@@ -56,7 +56,7 @@
 typedef int (*intFunctionPTR)( void );
 
 intFunctionPTR init_tasks[] = { vmm_init, static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init,
-    pci_init, devfs_init, tty_init, ufs_init, initHardDisk, initLNC, net_init };
+    pci_init, devfs_init, tty_init, ufs_init, initHardDisk, initLNC, tcpip_init };
 
 //ne2k_init,
 //ubixfs_init,

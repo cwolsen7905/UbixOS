@@ -19,4 +19,6 @@ struct sys_timeouts {
   struct sys_timeout *next;
 };
 
+void sys_thread_new(void (*)(void), void *);
+
 #endif
