@@ -124,12 +124,12 @@ void tcpip_apimsg(struct api_msg *apimsg) {
   msg->msg.apimsg = apimsg;
   sys_mbox_post(mbox, msg);
 }
-/*-----------------------------------------------------------------------------------*/
+
 void tcpip_init(void (*initfunc)(void *), void *arg) {
   tcpip_init_done = initfunc;
   tcpip_init_done_arg = arg;
+  if (mbox != 0x0)
+    kpanic("Already Allocated!");
   mbox = sys_mbox_new();
   sys_thread_new((void *) tcpip_thread, NULL);
 }
-/*-----------------------------------------------------------------------------------*/
-
