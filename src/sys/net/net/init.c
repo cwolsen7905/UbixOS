@@ -64,9 +64,10 @@ void netMainThread() {
   sys_sem_t sem;
 
   netif_init();
-  sem = sys_sem_new(0);
 
+  sem = sys_sem_new(0);
   tcpip_init(tcpip_init_done, &sem);
+
   sys_sem_wait(sem);
   sys_sem_free(sem);
 
@@ -87,6 +88,8 @@ void netMainThread() {
   //bot_init();
   irqEnable(0x9);
   endTask(_current->id);
+  while (1)
+    sched_yield();
 }
 
 static void tcpip_init_done(void *arg) {
