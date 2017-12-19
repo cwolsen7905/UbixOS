@@ -362,7 +362,6 @@ static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16
 }
 
 uint16_t sys_arch_sem_wait(struct sys_sem *sem, uint16_t timeout) {
-  //kprintf("Or Here? %i:%i-0x%X]", _current->id, sem->mutex->pid,&(sem->mutex));
   uint16_t time = 1;
   ubthread_mutex_lock(&(sem->mutex));
   while (sem->c <= 0) {
@@ -412,6 +411,7 @@ unsigned long sys_unix_now() {
   struct timezone tz;
   long sec, usec;
   unsigned long msec;
+
   gettimeofday(&tv, &tz);
 
   sec = tv.tv_sec - starttime.tv_sec;
