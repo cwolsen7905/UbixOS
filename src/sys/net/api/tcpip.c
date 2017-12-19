@@ -78,9 +78,9 @@ static void tcpip_thread(void *arg) {
   }
 
   while (1) { /* MAIN Loop */
-    kprintf("mbf1");
+    kprintf("MBF1");
     sys_mbox_fetch(mbox, (void *) &msg);
-    kprintf("mbf1");
+    kprintf("MBF1");
     switch (msg->type) {
       case TCPIP_MSG_API:
         //kprintf("tcpip_thread: API message %p\n", msg);
