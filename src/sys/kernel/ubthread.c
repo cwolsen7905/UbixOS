@@ -124,14 +124,12 @@ int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, cons
   ubthread_mutex_t ubmutex = *mutex;
   uInt32 enterTime = systemVitals->sysUptime+20;
   atomic_exchange(&ubmutex->lock, false);
-  kprintf("timedwait!");
   while (enterTime > systemVitals->sysUptime) {
     if (ubcond->lock == false) break;
     sched_yield();
     }
   //atomic_exchange(&ubmutex->lock, false);
   atomic_exchange(&ubmutex->lock, true);
-  kprintf("timedwait END!");
   //ubmutex->locked = UNLOCKED;
   return(0x0);
   }
