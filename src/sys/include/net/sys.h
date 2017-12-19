@@ -45,8 +45,7 @@ extern "C" {
 
 #if NO_SYS
 
-/* For a totally minimal and standalone system, we provide null
-   definitions of the sys_ functions. */
+/* For a totally minimal and standalone system, we provide null definitions of the sys_ functions. */
 typedef u8_t sys_sem_t;
 typedef u8_t sys_mutex_t;
 typedef u8_t sys_mbox_t;
@@ -91,8 +90,8 @@ typedef u8_t sys_mbox_t;
  */
 #define SYS_MBOX_EMPTY SYS_ARCH_TIMEOUT
 
-#include "lwip/err.h"
-#include "arch/sys_arch.h"
+#include "net/err.h"
+#include "net/arch/sys_arch.h"
 
 /** Function prototype for thread functions */
 typedef void (*lwip_thread_fn)(void *arg);
