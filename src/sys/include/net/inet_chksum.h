@@ -37,10 +37,10 @@
 #ifndef LWIP_HDR_INET_CHKSUM_H
 #define LWIP_HDR_INET_CHKSUM_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
-#include "lwip/pbuf.h"
-#include "lwip/ip_addr.h"
+#include "net/pbuf.h"
+#include "net/ip_addr.h"
 
 /** Swap the bytes in an u16_t: much like lwip_htons() for little-endian */
 #ifndef SWAP_BYTES_IN_WORD

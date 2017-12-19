@@ -55,19 +55,19 @@
 /* This is the part of the API that is linked with
    the application */
 
-#include "lwip/opt.h"
+#include <net/opt.h>
 
 #if LWIP_NETCONN /* don't build if not configured for use in lwipopts.h */
 
-#include "lwip/api.h"
-#include "lwip/memp.h"
+#include <net/api.h>
+#include <net/memp.h>
 
-#include "lwip/ip.h"
-#include "lwip/raw.h"
-#include "lwip/udp.h"
-#include "lwip/priv/api_msg.h"
-#include "lwip/priv/tcp_priv.h"
-#include "lwip/priv/tcpip_priv.h"
+#include <net/ip.h>
+#include <net/raw.h>
+#include <net/udp.h>
+#include <net/priv/api_msg.h>
+#include <net/priv/tcp_priv.h>
+#include <net/priv/tcpip_priv.h>
 
 #include <string.h>
 

@@ -37,13 +37,13 @@
 #ifndef LWIP_HDR_TCPIP_PRIV_H
 #define LWIP_HDR_TCPIP_PRIV_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #if !NO_SYS /* don't build if not configured for use in lwipopts.h */
 
-#include "lwip/tcpip.h"
-#include "lwip/sys.h"
-#include "lwip/timeouts.h"
+#include "net/tcpip.h"
+#include "net/sys.h"
+#include "net/timeouts.h"
 
 #ifdef __cplusplus
 extern "C" {

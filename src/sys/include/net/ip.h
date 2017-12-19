@@ -37,16 +37,16 @@
 #ifndef LWIP_HDR_IP_H
 #define LWIP_HDR_IP_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
-#include "lwip/def.h"
-#include "lwip/pbuf.h"
-#include "lwip/ip_addr.h"
-#include "lwip/err.h"
-#include "lwip/netif.h"
-#include "lwip/ip4.h"
-#include "lwip/ip6.h"
-#include "lwip/prot/ip.h"
+#include "net/def.h"
+#include "net/pbuf.h"
+#include "net/ip_addr.h"
+#include "net/err.h"
+#include "net/netif.h"
+#include "net/ip4.h"
+#include "net/ip6.h"
+#include "net/prot/ip.h"
 
 #ifdef __cplusplus
 extern "C" {

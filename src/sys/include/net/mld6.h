@@ -43,12 +43,12 @@
 #ifndef LWIP_HDR_MLD6_H
 #define LWIP_HDR_MLD6_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #if LWIP_IPV6_MLD && LWIP_IPV6  /* don't build if not configured for use in lwipopts.h */
 
-#include "lwip/pbuf.h"
-#include "lwip/netif.h"
+#include "net/pbuf.h"
+#include "net/netif.h"
 
 #ifdef __cplusplus
 extern "C" {

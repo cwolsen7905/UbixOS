@@ -37,9 +37,9 @@
 #ifndef LWIP_HDR_PROT_ETHARP_H
 #define LWIP_HDR_PROT_ETHARP_H
 
-#include "lwip/arch.h"
-#include "lwip/prot/ethernet.h"
-#include "lwip/ip4_addr.h"
+#include "net/arch.h"
+#include "net/prot/ethernet.h"
+#include "net/ip4_addr.h"
 
 #ifdef __cplusplus
 extern "C" {

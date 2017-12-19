@@ -37,14 +37,14 @@
 #ifndef LWIP_HDR_ICMP_H
 #define LWIP_HDR_ICMP_H
 
-#include "lwip/opt.h"
-#include "lwip/pbuf.h"
-#include "lwip/ip_addr.h"
-#include "lwip/netif.h"
-#include "lwip/prot/icmp.h"
+#include "net/opt.h"
+#include "net/pbuf.h"
+#include "net/ip_addr.h"
+#include "net/netif.h"
+#include "net/prot/icmp.h"
 
 #if LWIP_IPV6 && LWIP_ICMP6
-#include "lwip/icmp6.h"
+#include "net/icmp6.h"
 #endif
 
 #ifdef __cplusplus

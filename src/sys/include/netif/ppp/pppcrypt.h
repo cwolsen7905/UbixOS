@@ -42,7 +42,7 @@
  * If included PolarSSL copy is not used, user is expected to include
  * external libraries in arch/cc.h (which is included by lwip/arch.h).
  */
-#include "lwip/arch.h"
+#include "net/arch.h"
 
 /*
  * Map hashes and ciphers functions to PolarSSL

@@ -37,14 +37,14 @@
 #ifndef PPP_H
 #define PPP_H
 
-#include "lwip/def.h"
-#include "lwip/stats.h"
-#include "lwip/mem.h"
-#include "lwip/netif.h"
-#include "lwip/sys.h"
-#include "lwip/timeouts.h"
+#include "net/def.h"
+#include "net/stats.h"
+#include "net/mem.h"
+#include "net/netif.h"
+#include "net/sys.h"
+#include "net/timeouts.h"
 #if PPP_IPV6_SUPPORT
-#include "lwip/ip6_addr.h"
+#include "net/ip6_addr.h"
 #endif /* PPP_IPV6_SUPPORT */
 
 /* Disable non-working or rarely used PPP feature, so rarely that we don't want to bloat ppp_opts.h with them */

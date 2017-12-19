@@ -37,19 +37,19 @@
 #ifndef LWIP_HDR_API_MSG_H
 #define LWIP_HDR_API_MSG_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #if LWIP_NETCONN || LWIP_SOCKET /* don't build if not configured for use in lwipopts.h */
 /* Note: Netconn API is always available when sockets are enabled -
  * sockets are implemented on top of them */
 
-#include "lwip/arch.h"
-#include "lwip/ip_addr.h"
-#include "lwip/err.h"
-#include "lwip/sys.h"
-#include "lwip/igmp.h"
-#include "lwip/api.h"
-#include "lwip/priv/tcpip_priv.h"
+#include "net/arch.h"
+#include "net/ip_addr.h"
+#include "net/err.h"
+#include "net/sys.h"
+#include "net/igmp.h"
+#include "net/api.h"
+#include "net/priv/tcpip_priv.h"
 
 #ifdef __cplusplus
 extern "C" {

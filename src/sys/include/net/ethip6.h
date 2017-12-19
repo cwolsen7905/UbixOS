@@ -42,14 +42,14 @@
 #ifndef LWIP_HDR_ETHIP6_H
 #define LWIP_HDR_ETHIP6_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #if LWIP_IPV6 && LWIP_ETHERNET /* don't build if not configured for use in lwipopts.h */
 
-#include "lwip/pbuf.h"
-#include "lwip/ip6.h"
-#include "lwip/ip6_addr.h"
-#include "lwip/netif.h"
+#include "net/pbuf.h"
+#include "net/ip6.h"
+#include "net/ip6_addr.h"
+#include "net/netif.h"
 
 
 #ifdef __cplusplus

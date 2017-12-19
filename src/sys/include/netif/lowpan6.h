@@ -46,10 +46,10 @@
 
 #if LWIP_IPV6 && LWIP_6LOWPAN /* don't build if not configured for use in lwipopts.h */
 
-#include "lwip/pbuf.h"
-#include "lwip/ip.h"
-#include "lwip/ip_addr.h"
-#include "lwip/netif.h"
+#include "net/pbuf.h"
+#include "net/ip.h"
+#include "net/ip_addr.h"
+#include "net/netif.h"
 
 #ifdef __cplusplus
 extern "C" {

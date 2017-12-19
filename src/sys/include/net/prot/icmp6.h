@@ -37,7 +37,7 @@
 #ifndef LWIP_HDR_PROT_ICMP6_H
 #define LWIP_HDR_PROT_ICMP6_H
 
-#include "lwip/arch.h"
+#include "net/arch.h"
 
 #ifdef __cplusplus
 extern "C" {

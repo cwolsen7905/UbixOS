@@ -37,17 +37,25 @@
 #ifndef LWIP_HDR_NETIF_H
 #define LWIP_HDR_NETIF_H
 
-#include "lwip/opt.h"
+#include <net/opt.h>
 
 #define ENABLE_LOOPBACK (LWIP_NETIF_LOOPBACK || LWIP_HAVE_LOOPIF)
 
-#include "lwip/err.h"
+#include <net/err.h>
 
-#include "lwip/ip_addr.h"
+#include <net/ip_addr.h>
 
-#include "lwip/def.h"
-#include "lwip/pbuf.h"
-#include "lwip/stats.h"
+#include <net/def.h>
+#include <net/pbuf.h>
+#include <net/stats.h>
+
+struct nicBuffer {
+  struct nicBuffer *next;
+  int               length;
+  char             *buffer;
+};
+
+struct nicBuffer *tmpBuf;
 
 #ifdef __cplusplus
 extern "C" {
@@ -470,5 +478,8 @@ err_t netif_add_ip6_address(struct netif *netif, const ip6_addr_t *ip6addr, s8_t
 #ifdef __cplusplus
 }
 #endif
+
+/*MrOlsen 2017-12-17 LWIP */
+void ethernetif_input(struct netif *);
 
 #endif /* LWIP_HDR_NETIF_H */

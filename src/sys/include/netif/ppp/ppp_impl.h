@@ -46,9 +46,9 @@
 #include <string.h>
 #include <stdlib.h> /* strtol() */
 
-#include "lwip/netif.h"
-#include "lwip/def.h"
-#include "lwip/timeouts.h"
+#include "net/netif.h"
+#include "net/def.h"
+#include "net/timeouts.h"
 
 #include "ppp.h"
 #include "pppdebug.h"

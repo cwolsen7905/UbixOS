@@ -41,7 +41,7 @@
 #ifndef LWIP_HDR_LOWPAN6_OPTS_H
 #define LWIP_HDR_LOWPAN6_OPTS_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #ifndef LWIP_6LOWPAN
 #define LWIP_6LOWPAN                     0

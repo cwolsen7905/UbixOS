@@ -28,7 +28,7 @@
 #ifndef LWIP_PPP_OPTS_H
 #define LWIP_PPP_OPTS_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 /**
  * PPP_SUPPORT==1: Enable PPP.

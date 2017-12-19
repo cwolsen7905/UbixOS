@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #  Objects
-OBJS = inet.o mem.o memp.o netif.o pbuf.o stats.o sys.o tcp.o tcp_input.o tcp_output.o udp.o ip.o icmp.o ip_addr.o 
+OBJS = def.o dns.o inet_chksum.o init.o ip.o mem.o memp.o netif.o pbuf.o raw.o stats.o sys.o tcp.o tcp_in.o tcp_out.o timeouts.o udp.o
 
 all: $(OBJS)
 

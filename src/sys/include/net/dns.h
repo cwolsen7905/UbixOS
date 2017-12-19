@@ -39,11 +39,11 @@
 #ifndef LWIP_HDR_DNS_H
 #define LWIP_HDR_DNS_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #if LWIP_DNS
 
-#include "lwip/ip_addr.h"
+#include "net/ip_addr.h"
 
 #ifdef __cplusplus
 extern "C" {

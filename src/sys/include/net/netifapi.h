@@ -32,15 +32,15 @@
 #ifndef LWIP_HDR_NETIFAPI_H
 #define LWIP_HDR_NETIFAPI_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #if LWIP_NETIF_API /* don't build if not configured for use in lwipopts.h */
 
-#include "lwip/sys.h"
-#include "lwip/netif.h"
-#include "lwip/dhcp.h"
-#include "lwip/autoip.h"
-#include "lwip/priv/tcpip_priv.h"
+#include "net/sys.h"
+#include "net/netif.h"
+#include "net/dhcp.h"
+#include "net/autoip.h"
+#include "net/priv/tcpip_priv.h"
 
 #ifdef __cplusplus
 extern "C" {

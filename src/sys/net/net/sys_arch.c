@@ -90,13 +90,24 @@
 #include "net/sys.h"
 #include "net/opt.h"
 #include "net/stats.h"
+#include <net/arch/sys_arch.h>
 
 #include <ubixos/spinlock.h>
 
+static struct timeval starttime;
+static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
+static struct sys_thread *threads = 0x0;
+
+struct sys_thread {
+  struct sys_thread *next;
+  struct sys_timeouts timeouts;
+  kTask_t *ubthread;
+};
+
+#ifdef _BALLS
+
 #define UMAX(a, b)      ((a) > (b) ? (a) : (b))
 
-static struct sys_thread *threads = 0x0;
-static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 
 struct sys_mbox_msg {
   struct sys_mbox_msg *next;
@@ -118,41 +129,13 @@ struct sys_sem {
   ubthread_mutex_t mutex;
 };
 
-struct sys_thread {
-  struct sys_thread *next;
-  struct sys_timeouts timeouts;
-  kTask_t *ubthread;
-};
 
-static struct timeval starttime;
 
 static struct sys_sem *sys_sem_new_(uInt8 count);
 static void sys_sem_free_(struct sys_sem *sem);
 
 static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
 
-static struct sys_thread *current_thread(void) {
-  struct sys_thread *st;
-  kTask_t *pt;
-  pt = ubthread_self();
-  //kprintf("SL: %i-0x%X]", _current->id, &netThreadSpinlock);
-  spinLock(&netThreadSpinlock);
-  for (st = threads; st != NULL; st = st->next) {
-    if (st->ubthread == pt) {
-      //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
-      spinUnlock(&netThreadSpinlock);
-      return st;
-    }
-  }
-  //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
-  spinUnlock(&netThreadSpinlock);
-  kprintf("sys: current_thread: could not find current thread!\n");
-  kprintf("This is due to a race condition in the LinuxThreads\n");
-  kprintf("ubthreads implementation. Start the program again.\n");
-
-  kpanic("ABORT");
-  return (0x0);
-}
 
 struct thread_start_param {
   struct sys_thread *thread;
@@ -406,6 +389,41 @@ static void sys_sem_free_(struct sys_sem *sem) {
   kfree(sem);
 }
 
+void sys_init() {
+  struct timezone tz;
+  gettimeofday(&starttime, &tz);
+}
+#endif
+
+static struct sys_thread *current_thread(void) {
+  struct sys_thread *st;
+  kTask_t *pt;
+  pt = ubthread_self();
+  //kprintf("SL: %i-0x%X]", _current->id, &netThreadSpinlock);
+  spinLock(&netThreadSpinlock);
+  for (st = threads; st != NULL; st = st->next) {
+    if (st->ubthread == pt) {
+      //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
+      spinUnlock(&netThreadSpinlock);
+      return st;
+    }
+  }
+  //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
+  spinUnlock(&netThreadSpinlock);
+  kprintf("sys: current_thread: could not find current thread!\n");
+  kprintf("This is due to a race condition in the LinuxThreads\n");
+  kprintf("ubthreads implementation. Start the program again.\n");
+
+  kpanic("ABORT");
+  return (0x0);
+}
+
+struct sys_timeouts *sys_arch_timeouts(void) {
+  struct sys_thread *thread;
+  thread = current_thread();
+  return (&thread->timeouts);
+}
+
 unsigned long sys_unix_now() {
   struct timeval tv;
   struct timezone tz;
@@ -420,15 +438,8 @@ unsigned long sys_unix_now() {
   return msec;
 }
 
-void sys_init() {
-  struct timezone tz;
-  gettimeofday(&starttime, &tz);
-}
-
-struct sys_timeouts *sys_arch_timeouts(void) {
-  struct sys_thread *thread;
-  thread = current_thread();
-  return (&thread->timeouts);
+uint32_t sys_now() {
+  return(sys_unix_now());
 }
 
 /***

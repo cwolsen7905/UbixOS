@@ -35,8 +35,8 @@
 #ifndef SIO_H
 #define SIO_H
 
-#include "lwip/arch.h"
-#include "lwip/opt.h"
+#include "net/arch.h"
+#include "net/opt.h"
 
 #ifdef __cplusplus
 extern "C" {

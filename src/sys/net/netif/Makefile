@@ -6,7 +6,8 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #  Objects
-OBJS = ethernetif.o loopif.o tcpdump.o arp.o
+OBJS = ethernet.o ethernetif.o
+# loopif.o arp.o tcpdump.o
 
 all: $(OBJS)
 

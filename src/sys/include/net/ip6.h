@@ -41,17 +41,17 @@
 #ifndef LWIP_HDR_IP6_H
 #define LWIP_HDR_IP6_H
 
-#include "lwip/opt.h"
+#include "net/opt.h"
 
 #if LWIP_IPV6  /* don't build if not configured for use in lwipopts.h */
 
-#include "lwip/ip6_addr.h"
-#include "lwip/prot/ip6.h"
-#include "lwip/def.h"
-#include "lwip/pbuf.h"
-#include "lwip/netif.h"
+#include "net/ip6_addr.h"
+#include "net/prot/ip6.h"
+#include "net/def.h"
+#include "net/pbuf.h"
+#include "net/netif.h"
 
-#include "lwip/err.h"
+#include "net/err.h"
 
 #ifdef __cplusplus
 extern "C" {

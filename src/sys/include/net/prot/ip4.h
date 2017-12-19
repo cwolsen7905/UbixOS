@@ -37,8 +37,8 @@
 #ifndef LWIP_HDR_PROT_IP4_H
 #define LWIP_HDR_PROT_IP4_H
 
-#include "lwip/arch.h"
-#include "lwip/ip4_addr.h"
+#include "net/arch.h"
+#include "net/ip4_addr.h"
 
 #ifdef __cplusplus
 extern "C" {

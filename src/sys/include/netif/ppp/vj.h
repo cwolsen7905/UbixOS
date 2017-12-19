@@ -28,8 +28,8 @@
 #ifndef VJ_H
 #define VJ_H
 
-#include "lwip/ip.h"
-#include "lwip/priv/tcp_priv.h"
+#include "net/ip.h"
+#include "net/priv/tcp_priv.h"
 
 #define MAX_SLOTS 16 /* must be > 2 and < 256 */
 #define MAX_HDR   128

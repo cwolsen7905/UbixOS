@@ -22,59 +22,10 @@ OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTE
 HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Log: net.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:16  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:12  reddawg
- no message
-
- Revision 1.6  2004/07/21 10:02:09  reddawg
- devfs: renamed functions
- device system: renamed functions
- fdc: fixed a few potential bugs and cleaned up some unused variables
- strol: fixed definition
- endtask: made it print out freepage debug info
- kmalloc: fixed a huge memory leak we had some unhandled descriptor insertion so some descriptors were lost
- ld: fixed a pointer conversion
- file: cleaned up a few unused variables
- sched: broke task deletion
- kprintf: fixed ogPrintf definition
-
- Revision 1.5  2004/06/28 23:12:58  reddawg
- file format now container:/path/to/file
-
- Revision 1.4  2004/06/17 03:14:59  flameshadow
- chg: added missing #include for kprintf()
-
- Revision 1.3  2004/05/20 22:54:02  reddawg
- Cleaned Up Warrnings
-
- Revision 1.2  2004/04/30 14:16:04  reddawg
- Fixed all the datatypes to be consistant uInt8,uInt16,uInt32,Int8,Int16,Int32
-
- Revision 1.1.1.1  2004/04/15 12:07:10  reddawg
- UbixOS v1.0
-
- Revision 1.8  2004/04/13 21:29:52  reddawg
- We now have sockets working. Lots of functionality to be added to continually
- improve on the existing layers now its clean up time to get things in a better
- working order.
-
- Revision 1.7  2004/04/13 16:36:33  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
-
-
- $Id: net.c 79 2016-01-11 16:21:27Z reddawg $
-
 *****************************************************************************************/
 
 #include <sys/types.h>
+#include <net/inet.h>
 #include <net/sockets.h>
 #include <string.h>
 
@@ -85,6 +36,7 @@ typedef uInt32        in_addr_t;
 #define _IN_ADDR_T_DECLARED
 #endif
 
+/*
 uInt32 htonl(uInt32 n) {
   uInt32 retVal = 0x0;
   retVal += ((n & 0xff) << 24); 
@@ -93,12 +45,15 @@ uInt32 htonl(uInt32 n) {
   retVal += ((n & 0xff000000) >> 24);
   return(retVal);
   }
+*/
 
+/*
 uInt32 htons(uInt32 n) {
   uInt32 retVal = 0x0;
   retVal = (((n & 0xff) << 8) | ((n & 0xff00) >> 8));
   return(retVal);
   }
+*/
 
 void bcopy(const void *src, void *dest, int len) {
   memcpy(dest,src,len);
@@ -108,7 +63,7 @@ void bzero(void *data, int n) {
   memset(data, 0, n);
   }
 
-
+#ifdef _INET_ATON
 int inet_aton(cp, addr)
         const char *cp;
         struct in_addr *addr;
@@ -207,6 +162,7 @@ int inet_aton(cp, addr)
                 addr->s_addr = htonl(val);
         return (1);
 }
+#endif
 
 /***
  END

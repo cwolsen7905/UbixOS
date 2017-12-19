@@ -1,207 +1,106 @@
-/*
- * Copyright (c) 2001, Swedish Institute of Computer Science.
- * All rights reserved. 
+/**
+ * @file
+ * lwIP Operating System abstraction
  *
- * Redistribution and use in source and binary forms, with or without 
- * modification, are permitted provided that the following conditions 
- * are met: 
- * 1. Redistributions of source code must retain the above copyright 
- *    notice, this list of conditions and the following disclaimer. 
- * 2. Redistributions in binary form must reproduce the above copyright 
- *    notice, this list of conditions and the following disclaimer in the 
- *    documentation and/or other materials provided with the distribution. 
- * 3. Neither the name of the Institute nor the names of its contributors 
- *    may be used to endorse or promote products derived from this software 
- *    without specific prior written permission. 
- *
- * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND 
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE 
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS 
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY 
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- * SUCH DAMAGE. 
- *
- * This file is part of the lwIP TCP/IP stack.
- * 
- * Author: Adam Dunkels <adam@sics.se>
- *
- * $Log: sys.c,v $
- * Revision 1.1  2004/04/15 12:38:25  reddawg
- * Fixed to compile
- *
- * Revision 1.6  2004/04/13 19:40:50  reddawg
- * Fixed typedefs
- *
- *
- * $Id: sys.c,v 1.1 2004/04/15 12:38:25 reddawg Exp $
  */
 
-#include <sys/types.h>
-#include <net/debug.h>
-#include <net/sys.h>
-#include <net/opt.h>
-#include <net/def.h>
-#include <net/memp.h>
+/*
+ * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ * 3. The name of the author may not be used to endorse or promote products
+ *    derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT
+ * SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+ * IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+ * OF SUCH DAMAGE.
+ *
+ * This file is part of the lwIP TCP/IP stack.
+ *
+ * Author: Adam Dunkels <adam@sics.se>
+ *
+ */
 
-/*-----------------------------------------------------------------------------------*/
-void sys_mbox_fetch(sys_mbox_t mbox, void **msg) {
-  uInt16 time;
-  struct sys_timeouts *timeouts;
-  struct sys_timeout *tmptimeout;
-  sys_timeout_handler h;
-  void *arg;
+/**
+ * @defgroup sys_layer Porting (system abstraction layer)
+ * @ingroup lwip
+ * @verbinclude "sys_arch.txt"
+ *
+ * @defgroup sys_os OS abstraction layer
+ * @ingroup sys_layer
+ * No need to implement functions in this section in NO_SYS mode.
+ *
+ * @defgroup sys_sem Semaphores
+ * @ingroup sys_os
+ *
+ * @defgroup sys_mutex Mutexes
+ * @ingroup sys_os
+ * Mutexes are recommended to correctly handle priority inversion,
+ * especially if you use LWIP_CORE_LOCKING .
+ *
+ * @defgroup sys_mbox Mailboxes
+ * @ingroup sys_os
+ *
+ * @defgroup sys_time Time
+ * @ingroup sys_layer
+ *
+ * @defgroup sys_prot Critical sections
+ * @ingroup sys_layer
+ * Used to protect short regions of code against concurrent access.
+ * - Your system is a bare-metal system (probably with an RTOS)
+ *   and interrupts are under your control:
+ *   Implement this as LockInterrupts() / UnlockInterrupts()
+ * - Your system uses an RTOS with deferred interrupt handling from a
+ *   worker thread: Implement as a global mutex or lock/unlock scheduler
+ * - Your system uses a high-level OS with e.g. POSIX signals:
+ *   Implement as a global mutex
+ *
+ * @defgroup sys_misc Misc
+ * @ingroup sys_os
+ */
 
-  again: kprintf("timeout0");
-  timeouts = sys_arch_timeouts();
-  kprintf("timeout1");
+#include "net/opt.h"
 
-  if (timeouts->next == NULL) {
-    kprintf("Z0");
-    sys_arch_mbox_fetch(mbox, msg, 0);
-    kprintf("Z0");
-  }
-  else {
-    kprintf("Z1");
-    if (timeouts->next->time > 0) {
-      kprintf("Z2");
-      time = sys_arch_mbox_fetch(mbox, msg, timeouts->next->time);
-      kprintf("Z3");
+#include "net/sys.h"
+
+/* Most of the functions defined in sys.h must be implemented in the
+ * architecture-dependent file sys_arch.c */
+
+#if !NO_SYS
+
+#ifndef sys_msleep
+/**
+ * Sleep for some ms. Timeouts are NOT processed while sleeping.
+ *
+ * @param ms number of milliseconds to sleep
+ */
+void
+sys_msleep(u32_t ms)
+{
+  if (ms > 0) {
+    sys_sem_t delaysem;
+    err_t err = sys_sem_new(&delaysem, 0);
+    if (err == ERR_OK) {
+      sys_arch_sem_wait(&delaysem, ms);
+      sys_sem_free(&delaysem);
     }
-    else {
-      kprintf("Z4");
-      time = 0;
-    }
-
-    kprintf("Z5");
-    if (time == 0) {
-      kprintf("Z6");
-      /* If time == 0, a timeout occured before a message could be
-       fetched. We should now call the timeout handler and
-       deallocate the memory allocated for the timeout. */
-      tmptimeout = timeouts->next;
-      timeouts->next = tmptimeout->next;
-      h = tmptimeout->h;
-      arg = tmptimeout->arg;
-      memp_free(MEMP_SYS_TIMEOUT, tmptimeout);
-      kprintf("Z7");
-      h(arg);
-      kprintf("Z8");
-
-      /* We try again to fetch a message from the mbox. */
-      goto again;
-    }
-    else {
-      /* If time > 0, a message was received before the timeout
-       occured. The time variable is set to the number of
-       microseconds we waited for the message. */
-      if (time <= timeouts->next->time) {
-        timeouts->next->time -= time;
-      }
-      else {
-        timeouts->next->time = 0;
-      }
-    }
-
   }
 }
-/*-----------------------------------------------------------------------------------*/
-void sys_sem_wait(sys_sem_t sem) {
-  uInt16 time;
-  struct sys_timeouts *timeouts;
-  struct sys_timeout *tmptimeout;
-  sys_timeout_handler h;
-  void *arg;
+#endif /* sys_msleep */
 
-  while (sys_arch_sem_wait(sem, 1000) == 0)
-    ;
-  return;
-
-  again: timeouts = sys_arch_timeouts();
-
-  if (timeouts->next == NULL) {
-    sys_arch_sem_wait(sem, 0);
-  }
-  else {
-    if (timeouts->next->time > 0) {
-      time = sys_arch_sem_wait(sem, timeouts->next->time);
-    }
-    else {
-      time = 0;
-    }
-
-    if (time == 0) {
-      /* If time == 0, a timeout occured before a message could be
-       fetched. We should now call the timeout handler and
-       deallocate the memory allocated for the timeout. */
-      tmptimeout = timeouts->next;
-      timeouts->next = tmptimeout->next;
-      h = tmptimeout->h;
-      arg = tmptimeout->arg;
-      memp_free(MEMP_SYS_TIMEOUT, tmptimeout);
-      h(arg);
-
-      /* We try again to fetch a message from the mbox. */
-      goto again;
-    }
-    else {
-      /* If time > 0, a message was received before the timeout
-       occured. The time variable is set to the number of
-       microseconds we waited for the message. */
-      if (time <= timeouts->next->time) {
-        timeouts->next->time -= time;
-      }
-      else {
-        timeouts->next->time = 0;
-      }
-    }
-
-  }
-}
-/*-----------------------------------------------------------------------------------*/
-void sys_timeout(uInt16 msecs, sys_timeout_handler h, void *arg) {
-  struct sys_timeouts *timeouts;
-  struct sys_timeout *timeout, *t;
-
-  timeout = memp_malloc(MEMP_SYS_TIMEOUT);
-  if (timeout == NULL) {
-    return;
-  }
-  timeout->next = NULL;
-  timeout->h = h;
-  timeout->arg = arg;
-  timeout->time = msecs;
-
-  timeouts = sys_arch_timeouts();
-
-  if (timeouts->next == NULL) {
-    timeouts->next = timeout;
-    return;
-  }
-
-  if (timeouts->next->time > msecs) {
-    timeouts->next->time -= msecs;
-    timeout->next = timeouts->next;
-    timeouts->next = timeout;
-  }
-  else {
-    for (t = timeouts->next; t != NULL; t = t->next) {
-      timeout->time -= t->time;
-      if (t->next == NULL || t->next->time > timeout->time) {
-        if (t->next != NULL) {
-          t->next->time -= timeout->time;
-        }
-        timeout->next = t->next;
-        t->next = timeout;
-        break;
-      }
-    }
-  }
-
-}
-/*-----------------------------------------------------------------------------------*/
-
+#endif /* !NO_SYS */

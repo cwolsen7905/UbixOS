@@ -65,13 +65,6 @@
 // CSR58
 #define CSR58 0x003A
 
-/* Structs */
-struct lncBuffer {
-  struct nicBuffer *next;
-  int               length;
-  char             *buffer;
-};
-
 struct mds {
     uint16_t md0;
     uint16_t md1;
