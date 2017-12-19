@@ -38,8 +38,8 @@
 #ifndef LWIP_HDR_PBUF_H
 #define LWIP_HDR_PBUF_H
 
-#include "lwip/opt.h"
-#include "lwip/err.h"
+#include <net/opt.h>
+#include <net/err.h>
 
 #ifdef __cplusplus
 extern "C" {

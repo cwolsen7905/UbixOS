@@ -37,10 +37,10 @@
 #ifndef LWIP_HDR_STATS_H
 #define LWIP_HDR_STATS_H
 
-#include "lwip/opt.h"
+#include <net/opt.h>
 
-#include "lwip/mem.h"
-#include "lwip/memp.h"
+#include <net/mem.h>
+#include <net/memp.h>
 
 #ifdef __cplusplus
 extern "C" {

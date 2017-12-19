@@ -38,7 +38,7 @@
 #ifndef LWIP_HDR_MEMP_H
 #define LWIP_HDR_MEMP_H
 
-#include "lwip/opt.h"
+#include <net/opt.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,17 +46,17 @@ extern "C" {
 
 /* run once with empty definition to handle all custom includes in lwippools.h */
 #define LWIP_MEMPOOL(name,num,size,desc)
-#include "lwip/priv/memp_std.h"
+#include <net/priv/memp_std.h>
 
 /** Create the list of all memory pools managed by memp. MEMP_MAX represents a NULL pool at the end */
 typedef enum {
 #define LWIP_MEMPOOL(name,num,size,desc)  MEMP_##name,
-#include "lwip/priv/memp_std.h"
+#include <net/priv/memp_std.h>
   MEMP_MAX
 } memp_t;
 
-#include "lwip/priv/memp_priv.h"
-#include "lwip/stats.h"
+#include <net/priv/memp_priv.h>
+#include <net/stats.h>
 
 extern const struct memp_desc* const memp_pools[MEMP_MAX];
 
