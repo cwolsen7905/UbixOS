@@ -369,7 +369,7 @@ static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16
   }
 
 uint16_t sys_arch_sem_wait(struct sys_sem *sem, uint16_t timeout) {
-  kprintf("Or Here? %i:%i-0x%X]", _current->id, sem->mutex->pid,&(sem->mutex));
+  //kprintf("Or Here? %i:%i-0x%X]", _current->id, sem->mutex->pid,&(sem->mutex));
   uint16_t time = 1;
   ubthread_mutex_lock(&(sem->mutex));
   while(sem->c <= 0) {
@@ -389,11 +389,14 @@ uint16_t sys_arch_sem_wait(struct sys_sem *sem, uint16_t timeout) {
   }
 
 void sys_sem_signal(struct sys_sem *sem) {
-  kprintf("HERE: %i", _current->id);
+  //kprintf("HERE: %i:0x%X", _current->id,&(sem->mutex));
+
   ubthread_mutex_lock(&(sem->mutex));
+
   sem->c++;
   if(sem->c > 1)
     sem->c = 1;
+
   ubthread_cond_signal(&(sem->cond));
   ubthread_mutex_unlock(&(sem->mutex));
   }

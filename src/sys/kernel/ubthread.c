@@ -110,11 +110,12 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
     return(0x0);
     }
   else {
-    kprintf("Trying To Unlock Mutex From No Locking Thread[%i - %i:0x%X]\n", ubmutex->pid, _current->id,*ubmutex);
-    kpanic("FU");
+    //kprintf("Trying To Unlock Mutex From No Locking Thread[%i - %i:0x%X]\n", ubmutex->pid, _current->id,*ubmutex);
+    //kpanic("FU");
     atomic_exchange(&ubmutex->lock, false);
+    return(0x0);
     //ubmutex->locked = UNLOCKED;
-    return(-1);
+    //return(-1);
     }
   }
 
@@ -131,7 +132,7 @@ int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, cons
   return(0x0);
   }
 
-int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
+int ubthread_cond_wait_old(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
   ubthread_cond_t  ubcond  = *cond;
   ubthread_mutex_t ubmutex = *mutex;
   while (ubcond->lock == true) sched_yield();
@@ -139,6 +140,14 @@ int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
   //ubmutex->locked = UNLOCKED;
   return(0x0);
   }
+
+int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
+  ubthread_cond_t ubcond = *cond;
+  ubthread_mutex_unlock(mutex);
+  while (ubcond->lock == true) sched_yield();
+  ubthread_mutex_lock(mutex);
+  return(0x0);
+}
 
 int ubthread_cond_signal(ubthread_cond_t *cond) {
   ubthread_cond_t ubcond = *cond;
