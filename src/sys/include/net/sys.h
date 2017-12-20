@@ -38,6 +38,7 @@
 #define LWIP_HDR_SYS_H
 
 #include <net/opt.h>
+#include <net/arch/sys_arch.h>
 
 #ifdef __cplusplus
 extern "C" {

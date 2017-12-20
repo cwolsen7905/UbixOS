@@ -48,6 +48,7 @@
 #include <sys/types.h>
 #include <net/arch/cc.h>
 #include <lib/kprintf.h>
+#include <ubixos/kpanic.h>
 
 /**
  * @defgroup compiler_abstraction Compiler/platform abstraction
@@ -87,8 +88,7 @@
  * systems, this should be defined to something less resource-consuming.
  */
 #ifndef LWIP_PLATFORM_ASSERT
-#define LWIP_PLATFORM_ASSERT(x) do {kprintf("Assertion \"%s\" failed at line %d in %s\n", \
-                                     x, __LINE__, __FILE__); kpanic("asserted");} while(0)
+#define LWIP_PLATFORM_ASSERT(x) do {kprintf("Assertion \"%s\" failed at line %d in %s\n", x, __LINE__, __FILE__); kpanic("asserted");} while(0)
 #endif
 
 /** Define this to 1 in arch/cc.h of your port if you do not want to

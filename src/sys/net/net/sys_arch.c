@@ -98,27 +98,26 @@ static struct timeval starttime;
 static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
-struct sys_thread {
-  struct sys_thread *next;
-  struct sys_timeouts timeouts;
-  kTask_t *ubthread;
-};
-
-void sys_thread_new(void (*function)(void), void *arg) {
-  struct sys_thread *thread = 0x0;
+sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *arg, int stacksize, int prio) {
+  //void sys_thread_new(void (*function)(void), void *arg) {
+  struct sys_thread *new_thread = 0x0;
   //struct thread_start_param *thread_param;
+
+
+	LWIP_ASSERT("Non-positive prio", prio > 0);
+	LWIP_ASSERT("Prio is too big", prio < 20);
 
   kprintf("sys_thread: [0x%X]\n", sizeof(struct sys_thread));
 
-  thread = kmalloc(sizeof(struct sys_thread));
-  memset(thread, 0x0, sizeof(struct sys_thread));
-  kprintf("THREAD: [0x%X]\n", thread);
+  new_thread = kmalloc(sizeof(struct sys_thread));
+  memset(new_thread, 0x0, sizeof(struct sys_thread));
+  kprintf("THREAD: [0x%X]\n", new_thread);
 
   spinLock(&netThreadSpinlock);
-  thread->next = threads;
-  thread->timeouts.next = NULL;
-  thread->ubthread = 0x0;
-  threads = thread;
+  new_thread->next = threads;
+  new_thread->timeouts.next = NULL;
+  new_thread->ubthread = 0x0;
+  threads = new_thread;
   spinUnlock(&netThreadSpinlock);
 
   /*
@@ -129,11 +128,11 @@ void sys_thread_new(void (*function)(void), void *arg) {
    thread_param->thread = thread;
    */
   //execThread((void *)function,0x0,0x0);
-  kprintf("thread->ubthread: [0x%X]\n", thread->ubthread);
-  if (ubthread_create(&thread->ubthread, 0x0, (void *) (function), arg) != 0x0) {
+  kprintf("thread->ubthread: [0x%X]\n", new_thread->ubthread);
+  if (ubthread_create(&new_thread->ubthread, 0x0, (void *) (thread), arg) != 0x0) {
     kpanic("sys_thread_new: ubthread_create");
   }
-  kprintf("thread->ubthread: [0x%X]\n", thread->ubthread);
+  kprintf("thread->ubthread: [0x%X]\n", new_thread->ubthread);
 
 }
 

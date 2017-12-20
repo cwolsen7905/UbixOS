@@ -29,6 +29,7 @@
  * Author: Simon Goldschmidt
  *
  */
+
 #ifndef LWIP_HDR_LWIPOPTS_H
 #define LWIP_HDR_LWIPOPTS_H
 
@@ -41,8 +42,7 @@
 #define LWIP_TCPIP_CORE_LOCKING   1
 #define LWIP_TCPIP_CORE_LOCKING_INPUT   0
 
-#define SYS_LIGHTWEIGHT_PROT   1
-
+#define SYS_LIGHTWEIGHT_PROT   0
 #define MEM_LIBC_MALLOC   0
 
 #define MEMP_MEM_MALLOC   0
@@ -225,7 +225,6 @@
 #define TCP_WND_UPDATE_THRESHOLD   LWIP_MIN((TCP_WND / 4), (TCP_MSS * 4))
 
 #define LWIP_EVENT_API   0
-
 #define LWIP_WND_SCALE   0
 
 #define PBUF_LINK_HLEN   (14 + ETH_PAD_SIZE)
@@ -421,31 +420,31 @@
 
 #define LWIP_IPV6_DHCP6 0
 
-#define LWIP_HOOK_FILENAME "path/to/my/lwip_hooks.h"
+//#define LWIP_HOOK_FILENAME "path/to/my/lwip_hooks.h"
 
-#define LWIP_HOOK_TCP_ISN(local_ip, local_port, remote_ip, remote_port)
+//#define LWIP_HOOK_TCP_ISN(local_ip, local_port, remote_ip, remote_port)
 
-#define LWIP_HOOK_IP4_INPUT(pbuf, input_netif)
+//#define LWIP_HOOK_IP4_INPUT(pbuf, input_netif)
 
-#define LWIP_HOOK_IP4_ROUTE()
+//#define LWIP_HOOK_IP4_ROUTE()
 
-#define LWIP_HOOK_IP4_ROUTE_SRC(dest, src)
+//#define LWIP_HOOK_IP4_ROUTE_SRC(dest, src)
 
-#define LWIP_HOOK_ETHARP_GET_GW(netif, dest)
+//#define LWIP_HOOK_ETHARP_GET_GW(netif, dest)
 
-#define LWIP_HOOK_IP6_INPUT(pbuf, input_netif)
+//#define LWIP_HOOK_IP6_INPUT(pbuf, input_netif)
 
-#define LWIP_HOOK_IP6_ROUTE(src, dest)
+//#define LWIP_HOOK_IP6_ROUTE(src, dest)
 
-#define LWIP_HOOK_ND6_GET_GW(netif, dest)
+///#define LWIP_HOOK_ND6_GET_GW(netif, dest)
 
-#define LWIP_HOOK_VLAN_CHECK(netif, eth_hdr, vlan_hdr)
+//#define LWIP_HOOK_VLAN_CHECK(netif, eth_hdr, vlan_hdr)
 
-#define LWIP_HOOK_VLAN_SET(netif, p, src, dst, eth_type)
+//#define LWIP_HOOK_VLAN_SET(netif, p, src, dst, eth_type)
 
-#define LWIP_HOOK_MEMP_AVAILABLE(memp_t_type)
+//#define LWIP_HOOK_MEMP_AVAILABLE(memp_t_type)
 
-#define LWIP_HOOK_UNKNOWN_ETH_PROTOCOL(pbuf, netif)
+//#define LWIP_HOOK_UNKNOWN_ETH_PROTOCOL(pbuf, netif)
 
 #define LWIP_DBG_MIN_LEVEL LWIP_DBG_LEVEL_ALL
 #define LWIP_DBG_TYPES_ON LWIP_DBG_ON
@@ -509,6 +508,11 @@
 #define IP6_DEBUG   LWIP_DBG_OFF
 #define LWIP_PERF   0
 
-//#define LWIP_SOCKET                     1
 //#define TCP_RCV_SCALE                   0
 //#define PBUF_POOL_SIZE                  400 /* pbuf tests need ~200KByte */
+#define LWIP_COMPAT_MUTEX 1
+#define LWIP_COMPAT_MUTEX_ALLOWED 1
+#define LWIP_TIMEVAL_PRIVATE 0
+#define LWIP_CALLBACK_API 1
+#define LWIP_PROVIDE_ERRNO 1
+#endif

@@ -119,6 +119,7 @@ clean:
 	(cd lib;make clean)
 	(cd isa;make clean)
 	(cd pci;make clean)
+	(cd net;make clean)
 	(cd compile;make clean)
 	#(cd vfs;make clean)
 	#(cd sde;make clean)

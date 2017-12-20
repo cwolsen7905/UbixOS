@@ -328,7 +328,7 @@ PACK_STRUCT_END
  * Use this in NO_SYS mode. Use tcpip_init() otherwise.
  */
 void
-net_init(void)
+lwip_init(void)
 {
 #ifndef LWIP_SKIP_CONST_CHECK
   int a = 0;

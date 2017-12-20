@@ -1367,10 +1367,7 @@ lwip_selscan(int maxfdp1, fd_set *readset_in, fd_set *writeset_in, fd_set *excep
   return nready;
 }
 
-int
-lwip_select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset,
-            struct timeval *timeout)
-{
+int lwip_select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset, struct timeval *timeout) {
   u32_t waitres = 0;
   int nready;
   fd_set lreadset, lwriteset, lexceptset;

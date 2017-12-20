@@ -44,11 +44,8 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 
-void netMainThread();
-
-static void tcpip_init_done(void *arg);
-
-
+//void netMainThread();
+//static void tcpip_init_done(void *arg);
 
 int net_init() {
   ip_addr_t ipaddr, netmask, gw;
@@ -60,20 +57,21 @@ int net_init() {
   IP4_ADDR(&ipaddr, 10, 50, 0, 7);
   IP4_ADDR(&netmask, 255, 255, 0, 0);
 
-  netif_add(&netif, &ipaddr, &netmask, &gw, ethernetif_init, tcpip_input);
+  netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
 
   //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
 
   return(0x0);
 }
 
+#ifdef _BALLS
 int net_init_dead() {
   sys_init();
   mem_init();
   memp_init();
   pbuf_init();
 
-  sys_thread_new((void *) (netMainThread), 0x0);
+  sys_thread_new("mainThread", (void *) (netMainThread), 0x0, 0x1000, 0x0);
 
   return (0x0);
 }
@@ -116,6 +114,7 @@ static void tcpip_init_done(void *arg) {
   sem = arg;
   sys_sem_signal(*sem);
 }
+#endif
 
 /***
  END
