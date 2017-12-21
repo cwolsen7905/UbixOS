@@ -98,7 +98,7 @@ static struct timeval starttime;
 static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
-struct sys_mbox *sys_mbox_new() {
+struct sys_mbox *sys_mbox_new_dead() {
   struct sys_mbox *mbox;
 
   mbox = kmalloc(sizeof(struct sys_mbox));
@@ -108,6 +108,15 @@ struct sys_mbox *sys_mbox_new() {
   mbox->mutex = sys_sem_new_(1);
 
   return (mbox);
+}
+
+err_t sys_mbox_new(sys_mbox_t *mbox, int size) {
+  mbox->first = 0;
+  mbox->last = 0;
+  mbox->mail = sys_sem_new_(0);
+  mbox->mutex = sys_sem_new_(1);
+  ubthread_mutex_init(mbox->lock, NULL);
+  return (ERR_OK);
 }
 
 
