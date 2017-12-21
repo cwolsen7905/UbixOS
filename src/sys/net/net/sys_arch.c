@@ -29,54 +29,6 @@
  * This file is part of the lwIP TCP/IP stack.
  *
  * Author:     Adam Dunkels      <adam@sics.se>
- * Sub Author: Christopher Olsen <colsen@domaintlantic.com>
- *
- * Notes:
- *  Modified to work with the ubix operating system
- *
- * $Log: sys_arch.c,v $
- * Revision 1.1.1.1  2006/06/01 12:46:16  reddawg
- * ubix2
- *
- * Revision 1.2  2005/10/12 00:13:37  reddawg
- * Removed
- *
- * Revision 1.1.1.1  2005/09/26 17:24:31  reddawg
- * no message
- *
- * Revision 1.6  2004/09/11 21:30:37  apwillia
- * Fix race conditions in net thread and scheduler
- *
- * Revision 1.5  2004/09/07 20:58:35  reddawg
- * time to roll back i can't think straight by friday
- *
- * Revision 1.4  2004/05/25 22:49:29  reddawg
- * Stupid Old CODE!!!
- *
- * Revision 1.3  2004/05/19 04:07:43  reddawg
- * kmalloc(size,pid) no more it is no kmalloc(size); the way it should of been
- *
- * Revision 1.2  2004/05/19 03:35:02  reddawg
- * Fixed A Few Ordering Issues In The Service Startup Routine
- *
- * Revision 1.1.1.1  2004/04/15 12:07:14  reddawg
- * UbixOS v1.0
- *
- * Revision 1.13  2004/04/13 21:29:53  reddawg
- * We now have sockets working. Lots of functionality to be added to continually
- * improve on the existing layers now its clean up time to get things in a better
- * working order.
- *
- * Revision 1.12  2004/04/13 16:08:07  reddawg
- * Removed all of the old debug code the problem seems to be in ubthreads with
- * ubthread_mutex_init
- *
- * Revision 1.11  2004/04/13 16:05:40  reddawg
- * Function Renaming
- *
- *
- *
- * $Id: sys_arch.c 54 2016-01-11 01:29:55Z reddawg $
  */
 
 #include <sys/types.h>
@@ -93,6 +45,9 @@
 #include <net/arch/sys_arch.h>
 
 #include <ubixos/spinlock.h>
+
+#define ERR_NOT_READY 0
+#define ERR_TIMED_OUT 1
 
 static struct timeval starttime;
 static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
@@ -111,6 +66,7 @@ struct sys_mbox *sys_mbox_new_dead() {
 }
 
 err_t sys_mbox_new(sys_mbox_t *mbox, int size) {
+  LWIP_ASSERT("mbox null", mbox);
   mbox->first = 0;
   mbox->last = 0;
   mbox->mail = sys_sem_new_(0);
@@ -155,97 +111,58 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
     kpanic("sys_thread_new: ubthread_create");
   }
   kprintf("thread->ubthread: [0x%X]\n", new_thread->ubthread);
-
+  return (new_thread);
 }
 
-#ifdef _BALLS
+err_t sys_sem_new(sys_sem_t *sem, uint8_t count) {
+  //struct sys_sem *sem;
 
-#define UMAX(a, b)      ((a) > (b) ? (a) : (b))
+  sem = kmalloc(sizeof(struct sys_sem));
+  memset(sem, 0x0, sizeof(struct sys_sem));
+  sem->c = count;
 
+  ubthread_cond_init(&(sem->cond), NULL);
+  ubthread_mutex_init(&(sem->mutex), NULL);
 
-struct sys_mbox_msg {
-  struct sys_mbox_msg *next;
-  void *msg;
-};
+  return (ERR_OK);
+}
 
-#define SYS_MBOX_SIZE 100
-
-struct sys_mbox {
-  uint16_t first, last;
-  void *msgs[SYS_MBOX_SIZE];
-  struct sys_sem *mail;
-  struct sys_sem *mutex;
-};
-
-struct sys_sem {
-  unsigned int c;
-  ubthread_cond_t cond;
-  ubthread_mutex_t mutex;
-};
-
-
-
-static struct sys_sem *sys_sem_new_(uInt8 count);
-static void sys_sem_free_(struct sys_sem *sem);
-
-static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
-
-
-struct thread_start_param {
-  struct sys_thread *thread;
-  void (*function)(void *);
-  void *arg;
-};
-
-/*
- static void *thread_start(void *arg) {
- struct thread_start_param *tp = arg;
- tp->thread->ubthread = ubthread_self();
- tp->function(tp->arg);
- kfree(tp);
- return(NULL);
- }
- */
-
-
-
-void sys_mbox_free(struct sys_mbox *mbox) {
-  if (mbox != SYS_MBOX_NULL) {
-    sys_sem_wait(mbox->mutex);
-    sys_sem_free_(mbox->mail);
-    sys_sem_free_(mbox->mutex);
-    mbox->mail = mbox->mutex = NULL;
-    kfree(mbox);
+void sys_sem_free(struct sys_sem *sem) {
+  if (sem != SYS_SEM_NULL) {
+  ubthread_cond_destroy(&(sem->cond));
+  ubthread_mutex_destroy(&(sem->mutex));
+  kfree(sem);
   }
 }
 
-void sys_mbox_post(struct sys_mbox *mbox, void *msg) {
-  uInt8 first;
+uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
+  //LTRACE_ENTRY;
+  status_t res;
 
-  sys_sem_wait(mbox->mutex);
+  //lk_time_t start = current_time();
 
-  //kprintf("sys_mbox_post: mbox %p msg %p\n", mbox, msg);
+  uint32_t start = sys_now();
 
-  mbox->msgs[mbox->last] = msg;
+  res = sem_timedwait(&mbox->full, timeout ? timeout : INFINITE_TIME);
+  if (res == ERR_TIMED_OUT) {
+    //LTRACE_EXIT;
+   return SYS_ARCH_TIMEOUT; //timeout ? SYS_ARCH_TIMEOUT : 0;
+  }
+	
+  mutex_acquire(&mbox->lock);
 
-  if (mbox->last == mbox->first)
-    first = 1;
-  else
-    first = 0;
+  *msg = mbox->queue[mbox->tail];
+  mbox->tail = (mbox->tail + 1) % mbox->size;
 
-  mbox->last++;
+  mutex_release(&mbox->lock);
+  sem_post(&mbox->empty);
 
-  if (mbox->last == SYS_MBOX_SIZE)
-    mbox->last = 0;
-
-
-  if (first)
-    sys_sem_signal(mbox->mail);
-
-  sys_sem_signal(mbox->mutex);
+  //LTRACE_EXIT;
+  return sys_now() - start;
 }
 
-uint16_t sys_arch_mbox_fetch(struct sys_mbox *mbox, void **msg, uint16_t timeout) {
+#ifdef _BALLS
+uint32_t sys_arch_mbox_fetch_dead(struct sys_mbox *mbox, void **msg, uint32_t timeout) {
   uint16_t time = 1;
 
   /* The mutex lock is quick so we don't bother with the timeout
@@ -297,23 +214,112 @@ uint16_t sys_arch_mbox_fetch(struct sys_mbox *mbox, void **msg, uint16_t timeout
 
   return (time);
 }
+#endif
 
-struct sys_sem *sys_sem_new(uInt8 count) {
-  return sys_sem_new_(count);
+//#define UMAX(a, b)      ((a) > (b) ? (a) : (b))
+
+
+struct sys_mbox_msg {
+  struct sys_mbox_msg *next;
+  void *msg;
+};
+
+#define SYS_MBOX_SIZE 100
+
+/*
+struct sys_mbox {
+  uint16_t first, last;
+  void *msgs[SYS_MBOX_SIZE];
+  struct sys_sem *mail;
+  struct sys_sem *mutex;
+};
+*/
+
+/*
+struct sys_sem {
+  unsigned int c;
+  ubthread_cond_t cond;
+  ubthread_mutex_t mutex;
+};
+*/
+
+static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
+
+
+struct thread_start_param {
+  struct sys_thread *thread;
+  void (*function)(void *);
+  void *arg;
+};
+
+/*
+ static void *thread_start(void *arg) {
+ struct thread_start_param *tp = arg;
+ tp->thread->ubthread = ubthread_self();
+ tp->function(tp->arg);
+ kfree(tp);
+ return(NULL);
+ }
+*/
+
+void sys_mbox_free(sys_mbox_t *mbox) {
+	free(mbox->queue);
+	mbox->queue = NULL;
 }
 
-static struct sys_sem *sys_sem_new_(uint8_t count) {
-  struct sys_sem *sem;
-
-  sem = kmalloc(sizeof(struct sys_sem));
-  memset(sem, 0x0, sizeof(struct sys_sem));
-  sem->c = count;
-
-  ubthread_cond_init(&(sem->cond), NULL);
-  ubthread_mutex_init(&(sem->mutex), NULL);
-
-  return sem;
+#ifdef _BALLS
+void sys_mbox_free(struct sys_mbox *mbox) {
+  if (mbox != SYS_MBOX_NULL) {
+    sys_sem_wait(mbox->mutex);
+    sys_sem_free_(mbox->mail);
+    sys_sem_free_(mbox->mutex);
+    mbox->mail = mbox->mutex = NULL;
+    kfree(mbox);
+  }
 }
+#endif
+
+
+void sys_mbox_post(sys_mbox_t * mbox, void *msg)
+{
+	sem_wait(&mbox->empty);
+	mutex_acquire(&mbox->lock);
+
+	mbox->queue[mbox->head] = msg;
+	mbox->head = (mbox->head + 1) % mbox->size;
+
+	mutex_release(&mbox->lock);
+	sem_post(&mbox->full);
+}
+
+#ifdef _BALLS
+void sys_mbox_post(struct sys_mbox *mbox, void *msg) {
+  uInt8 first;
+
+  sys_sem_wait(mbox->mutex);
+
+  //kprintf("sys_mbox_post: mbox %p msg %p\n", mbox, msg);
+
+  mbox->msgs[mbox->last] = msg;
+
+  if (mbox->last == mbox->first)
+    first = 1;
+  else
+    first = 0;
+
+  mbox->last++;
+
+  if (mbox->last == SYS_MBOX_SIZE)
+    mbox->last = 0;
+
+
+  if (first)
+    sys_sem_signal(mbox->mail);
+
+  sys_sem_signal(mbox->mutex);
+}
+#endif
+
 
 static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout) {
   unsigned int tdiff;
@@ -354,7 +360,7 @@ static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16
   }
 }
 
-uint16_t sys_arch_sem_wait(struct sys_sem *sem, uint16_t timeout) {
+uint32_t sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
   uint16_t time = 1;
   ubthread_mutex_lock(&(sem->mutex));
   while (sem->c <= 0) {
@@ -387,23 +393,11 @@ void sys_sem_signal(struct sys_sem *sem) {
   ubthread_mutex_unlock(&(sem->mutex));
 }
 
-void sys_sem_free(struct sys_sem *sem) {
-  if (sem != SYS_SEM_NULL) {
-    sys_sem_free_(sem);
-  }
-}
-
-static void sys_sem_free_(struct sys_sem *sem) {
-  ubthread_cond_destroy(&(sem->cond));
-  ubthread_mutex_destroy(&(sem->mutex));
-  kfree(sem);
-}
 
 void sys_init() {
   struct timezone tz;
   gettimeofday(&starttime, &tz);
 }
-#endif
 
 static struct sys_thread *current_thread(void) {
   struct sys_thread *st;
@@ -452,6 +446,25 @@ uint32_t sys_now() {
   return(sys_unix_now());
 }
 
-/***
- END
- ***/
+int sys_mbox_valid(sys_mbox_t *mbox)
+{
+	return mbox->msgs != NULL;
+}
+
+err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
+	status_t res;
+
+	res = sem_trywait(&mbox->empty);
+	if (res == ERR_NOT_READY)
+		return ERR_TIMEOUT;
+	
+	mutex_acquire(&mbox->lock);
+
+	mbox->queue[mbox->head] = msg;
+	mbox->head = (mbox->head + 1) % mbox->size;
+
+	mutex_release(&mbox->lock);
+	sem_post(&mbox->full);
+
+	return ERR_OK;
+}

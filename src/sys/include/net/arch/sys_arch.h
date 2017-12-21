@@ -17,15 +17,22 @@ struct sys_sem {
   ubthread_mutex_t mutex;
 };
 
-typedef struct sys_sem * sys_sem_t;
+typedef struct sys_sem sys_sem_t;
 
 struct sys_mbox {
-  uInt16 first, last;
-  void *msgs[SYS_MBOX_SIZE];
-  struct sys_sem *mail;
-  struct sys_sem *mutex;
+  uint32_t head;
+  uint32_t tail;
+  ubthread_mutex_t lock;
+
+  uint32_t size;
+
+  struct sys_sem *empty;
+  struct sys_sem *full;
+
+  void **queue;
 };
-typedef struct sys_mbox *sys_mbox_t;
+
+typedef struct sys_mbox sys_mbox_t;
 
 struct sys_thread {
   struct sys_thread *next;
