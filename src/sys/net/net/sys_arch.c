@@ -98,6 +98,19 @@ static struct timeval starttime;
 static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
+struct sys_mbox *sys_mbox_new() {
+  struct sys_mbox *mbox;
+
+  mbox = kmalloc(sizeof(struct sys_mbox));
+  memset(mbox, 0x0, sizeof(struct sys_mbox));
+  mbox->first = mbox->last = 0;
+  mbox->mail = sys_sem_new_(0);
+  mbox->mutex = sys_sem_new_(1);
+
+  return (mbox);
+}
+
+
 sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *arg, int stacksize, int prio) {
   //void sys_thread_new(void (*function)(void), void *arg) {
   struct sys_thread *new_thread = 0x0;
@@ -186,18 +199,6 @@ struct thread_start_param {
  */
 
 
-
-struct sys_mbox *sys_mbox_new() {
-  struct sys_mbox *mbox;
-
-  mbox = kmalloc(sizeof(struct sys_mbox));
-  memset(mbox, 0x0, sizeof(struct sys_mbox));
-  mbox->first = mbox->last = 0;
-  mbox->mail = sys_sem_new_(0);
-  mbox->mutex = sys_sem_new_(1);
-
-  return (mbox);
-}
 
 void sys_mbox_free(struct sys_mbox *mbox) {
   if (mbox != SYS_MBOX_NULL) {
