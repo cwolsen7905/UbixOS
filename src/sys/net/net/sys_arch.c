@@ -48,12 +48,14 @@
 
 #define ERR_NOT_READY 0
 #define ERR_TIMED_OUT 1
+#define INFINITE_TIME 0
 
 static struct timeval starttime;
 static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
-struct sys_mbox *sys_mbox_new_dead() {
+#ifdef _BALLS
+struct sys_mbox *sys_mbox_new() {
   struct sys_mbox *mbox;
 
   mbox = kmalloc(sizeof(struct sys_mbox));
@@ -64,26 +66,34 @@ struct sys_mbox *sys_mbox_new_dead() {
 
   return (mbox);
 }
+#endif
 
 err_t sys_mbox_new(sys_mbox_t *mbox, int size) {
   LWIP_ASSERT("mbox null", mbox);
-  mbox->first = 0;
-  mbox->last = 0;
-  mbox->mail = sys_sem_new_(0);
-  mbox->mutex = sys_sem_new_(1);
   ubthread_mutex_init(mbox->lock, NULL);
+
+  mbox->head = 0;
+  mbox->tail = 0;
+  mbox->size = size;
+
+  sys_sem_new(mbox->empty, size);
+  sys_sem_new(mbox->full, 0);
+
+  mbox->queue = calloc(size, sizeof(void *));
+
+  if (!mbox->queue)
+    return ERR_MEM;
+
   return (ERR_OK);
 }
-
 
 sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *arg, int stacksize, int prio) {
   //void sys_thread_new(void (*function)(void), void *arg) {
   struct sys_thread *new_thread = 0x0;
   //struct thread_start_param *thread_param;
 
-
-	LWIP_ASSERT("Non-positive prio", prio > 0);
-	LWIP_ASSERT("Prio is too big", prio < 20);
+  LWIP_ASSERT("Non-positive prio", prio > 0);
+  LWIP_ASSERT("Prio is too big", prio < 20);
 
   kprintf("sys_thread: [0x%X]\n", sizeof(struct sys_thread));
 
@@ -129,15 +139,16 @@ err_t sys_sem_new(sys_sem_t *sem, uint8_t count) {
 
 void sys_sem_free(struct sys_sem *sem) {
   if (sem != SYS_SEM_NULL) {
-  ubthread_cond_destroy(&(sem->cond));
-  ubthread_mutex_destroy(&(sem->mutex));
-  kfree(sem);
+    ubthread_cond_destroy(&(sem->cond));
+    ubthread_mutex_destroy(&(sem->mutex));
+    kfree(sem);
   }
 }
 
 uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
-  //LTRACE_ENTRY;
-  status_t res;
+
+  //status_t res;
+  uint32_t res;
 
   //lk_time_t start = current_time();
 
@@ -146,9 +157,9 @@ uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
   res = sem_timedwait(&mbox->full, timeout ? timeout : INFINITE_TIME);
   if (res == ERR_TIMED_OUT) {
     //LTRACE_EXIT;
-   return SYS_ARCH_TIMEOUT; //timeout ? SYS_ARCH_TIMEOUT : 0;
+    return SYS_ARCH_TIMEOUT; //timeout ? SYS_ARCH_TIMEOUT : 0;
   }
-	
+
   mutex_acquire(&mbox->lock);
 
   *msg = mbox->queue[mbox->tail];
@@ -156,8 +167,7 @@ uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
 
   mutex_release(&mbox->lock);
   sem_post(&mbox->empty);
-
-  //LTRACE_EXIT;
+;
   return sys_now() - start;
 }
 
@@ -179,7 +189,7 @@ uint32_t sys_arch_mbox_fetch_dead(struct sys_mbox *mbox, void **msg, uint32_t ti
     /* We block while waiting for a mail to arrive in the mailbox. We
      must be prepared to timeout. */
     if (timeout != 0) {
-     // kprintf("sem wait4");
+      // kprintf("sem wait4");
       time = sys_arch_sem_wait(mbox->mail, timeout);
       //kprintf("sem wait5");
 
@@ -196,7 +206,7 @@ uint32_t sys_arch_mbox_fetch_dead(struct sys_mbox *mbox, void **msg, uint32_t ti
 
     //kprintf("sem wait8");
     sys_arch_sem_wait(mbox->mutex, 0);
-   // kprintf("sem wait9");
+    // kprintf("sem wait9");
   }
   //kprintf("sem wait10");
 
@@ -218,7 +228,6 @@ uint32_t sys_arch_mbox_fetch_dead(struct sys_mbox *mbox, void **msg, uint32_t ti
 
 //#define UMAX(a, b)      ((a) > (b) ? (a) : (b))
 
-
 struct sys_mbox_msg {
   struct sys_mbox_msg *next;
   void *msg;
@@ -227,24 +236,23 @@ struct sys_mbox_msg {
 #define SYS_MBOX_SIZE 100
 
 /*
-struct sys_mbox {
-  uint16_t first, last;
-  void *msgs[SYS_MBOX_SIZE];
-  struct sys_sem *mail;
-  struct sys_sem *mutex;
-};
-*/
+ struct sys_mbox {
+ uint16_t first, last;
+ void *msgs[SYS_MBOX_SIZE];
+ struct sys_sem *mail;
+ struct sys_sem *mutex;
+ };
+ */
 
 /*
-struct sys_sem {
-  unsigned int c;
-  ubthread_cond_t cond;
-  ubthread_mutex_t mutex;
-};
-*/
+ struct sys_sem {
+ unsigned int c;
+ ubthread_cond_t cond;
+ ubthread_mutex_t mutex;
+ };
+ */
 
 static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
-
 
 struct thread_start_param {
   struct sys_thread *thread;
@@ -260,11 +268,11 @@ struct thread_start_param {
  kfree(tp);
  return(NULL);
  }
-*/
+ */
 
 void sys_mbox_free(sys_mbox_t *mbox) {
-	free(mbox->queue);
-	mbox->queue = NULL;
+  free(mbox->queue);
+  mbox->queue = NULL;
 }
 
 #ifdef _BALLS
@@ -279,17 +287,15 @@ void sys_mbox_free(struct sys_mbox *mbox) {
 }
 #endif
 
+void sys_mbox_post(sys_mbox_t * mbox, void *msg) {
+  sem_wait(&mbox->empty);
+  mutex_acquire(&mbox->lock);
 
-void sys_mbox_post(sys_mbox_t * mbox, void *msg)
-{
-	sem_wait(&mbox->empty);
-	mutex_acquire(&mbox->lock);
+  mbox->queue[mbox->head] = msg;
+  mbox->head = (mbox->head + 1) % mbox->size;
 
-	mbox->queue[mbox->head] = msg;
-	mbox->head = (mbox->head + 1) % mbox->size;
-
-	mutex_release(&mbox->lock);
-	sem_post(&mbox->full);
+  mutex_release(&mbox->lock);
+  sem_post(&mbox->full);
 }
 
 #ifdef _BALLS
@@ -303,23 +309,21 @@ void sys_mbox_post(struct sys_mbox *mbox, void *msg) {
   mbox->msgs[mbox->last] = msg;
 
   if (mbox->last == mbox->first)
-    first = 1;
+  first = 1;
   else
-    first = 0;
+  first = 0;
 
   mbox->last++;
 
   if (mbox->last == SYS_MBOX_SIZE)
-    mbox->last = 0;
-
+  mbox->last = 0;
 
   if (first)
-    sys_sem_signal(mbox->mail);
+  sys_sem_signal(mbox->mail);
 
   sys_sem_signal(mbox->mutex);
 }
 #endif
-
 
 static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout) {
   unsigned int tdiff;
@@ -393,7 +397,6 @@ void sys_sem_signal(struct sys_sem *sem) {
   ubthread_mutex_unlock(&(sem->mutex));
 }
 
-
 void sys_init() {
   struct timezone tz;
   gettimeofday(&starttime, &tz);
@@ -443,28 +446,27 @@ unsigned long sys_unix_now() {
 }
 
 uint32_t sys_now() {
-  return(sys_unix_now());
+  return (sys_unix_now());
 }
 
-int sys_mbox_valid(sys_mbox_t *mbox)
-{
-	return mbox->msgs != NULL;
+int sys_mbox_valid(sys_mbox_t *mbox) {
+  return mbox->msgs != NULL;
 }
 
 err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
-	status_t res;
+  status_t res;
 
-	res = sem_trywait(&mbox->empty);
-	if (res == ERR_NOT_READY)
-		return ERR_TIMEOUT;
-	
-	mutex_acquire(&mbox->lock);
+  res = sem_trywait(&mbox->empty);
+  if (res == ERR_NOT_READY)
+    return ERR_TIMEOUT;
 
-	mbox->queue[mbox->head] = msg;
-	mbox->head = (mbox->head + 1) % mbox->size;
+  mutex_acquire(&mbox->lock);
 
-	mutex_release(&mbox->lock);
-	sem_post(&mbox->full);
+  mbox->queue[mbox->head] = msg;
+  mbox->head = (mbox->head + 1) % mbox->size;
 
-	return ERR_OK;
+  mutex_release(&mbox->lock);
+  sem_post(&mbox->full);
+
+  return ERR_OK;
 }
