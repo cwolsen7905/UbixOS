@@ -33,79 +33,58 @@
 #ifndef LWIP_HDR_LWIPOPTS_H
 #define LWIP_HDR_LWIPOPTS_H
 
+/* NEVER Set To 1, 1 Will Remove OS Abstraction */
 #define NO_SYS                          0
-#define LWIP_TIMERS 1
+
+/* Timer Settings */
+#define LWIP_TIMERS        1
 #define LWIP_TIMERS_CUSTOM 0
+
 #define MEMCPY(dst, src, len)   memcpy(dst,src,len)
 #define SMEMCPY(dst, src, len)   memcpy(dst,src,len)
-#define LWIP_MPU_COMPATIBLE   0
-#define LWIP_TCPIP_CORE_LOCKING   1
-#define LWIP_TCPIP_CORE_LOCKING_INPUT   0
 
-#define SYS_LIGHTWEIGHT_PROT   0
-#define MEM_LIBC_MALLOC   0
+/* Core locking and MPU */
+#define LWIP_MPU_COMPATIBLE           0
+#define LWIP_TCPIP_CORE_LOCKING       1
+#define LWIP_TCPIP_CORE_LOCKING_INPUT 0
+#define SYS_LIGHTWEIGHT_PROT          1
+
+
+#define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT 0
+#define MEM_ALIGNMENT                          1
+#define MEM_LIBC_MALLOC                        0
+#define MEM_SIZE                               1600
+#define MEM_USE_POOLS                          0
+#define MEM_USE_POOLS_TRY_BIGGER_POOL          0
 
 #define MEMP_MEM_MALLOC   0
-
-#define MEM_ALIGNMENT   1
-
-#define MEM_SIZE   1600
-
+#define MEMP_SANITY_CHECK   0
+#define MEMP_USE_CUSTOM_POOLS   0
 #define MEMP_OVERFLOW_CHECK   0
 
-#define MEMP_SANITY_CHECK   0
-
-#define MEM_USE_POOLS   0
-
-#define MEM_USE_POOLS_TRY_BIGGER_POOL   0
-
-#define MEMP_USE_CUSTOM_POOLS   0
-
-#define LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT   0
-
-#define MEMP_NUM_PBUF   16
-
-#define MEMP_NUM_RAW_PCB   4
-
-#define MEMP_NUM_UDP_PCB   4
-
-#define MEMP_NUM_TCP_PCB   5
-
-#define MEMP_NUM_TCP_PCB_LISTEN   8
-
-#define MEMP_NUM_TCP_SEG   16
-
-#define MEMP_NUM_REASSDATA   5
-
-#define MEMP_NUM_FRAG_PBUF   15
-
+#define MEMP_NUM_API_MSG   MEMP_NUM_TCPIP_MSG_API
 #define MEMP_NUM_ARP_QUEUE   30
-
+#define MEMP_NUM_DNS_API_MSG   MEMP_NUM_TCPIP_MSG_API
+#define MEMP_NUM_FRAG_PBUF   15
 #define MEMP_NUM_IGMP_GROUP   8
-
-#define MEMP_NUM_SYS_TIMEOUT   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_AUTOIP + LWIP_IGMP + LWIP_DNS + (PPP_SUPPORT*6*MEMP_NUM_PPP_PCB) + (LWIP_IPV6 ? (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD) : 0))
-
-#define MEMP_NUM_NETBUF   2
-
-#define MEMP_NUM_NETCONN   4
-
-#define MEMP_NUM_TCPIP_MSG_API   8
-
-#define MEMP_NUM_TCPIP_MSG_INPKT   8
-
-#define MEMP_NUM_NETDB   1
-
 #define MEMP_NUM_LOCALHOSTLIST   1
-
+#define MEMP_NUM_NETBUF   2
+#define MEMP_NUM_NETCONN   4
+#define MEMP_NUM_NETDB   1
+#define MEMP_NUM_NETIFAPI_MSG   MEMP_NUM_TCPIP_MSG_API
+#define MEMP_NUM_PBUF   16
+#define MEMP_NUM_RAW_PCB   4
+#define MEMP_NUM_REASSDATA   5
+#define MEMP_NUM_SOCKET_SETGETSOCKOPT_DATA   MEMP_NUM_TCPIP_MSG_API
+#define MEMP_NUM_TCP_PCB   5
+#define MEMP_NUM_TCP_PCB_LISTEN   8
+#define MEMP_NUM_TCP_SEG   16
+#define MEMP_NUM_TCPIP_MSG_API   8
+#define MEMP_NUM_TCPIP_MSG_INPKT   8
+#define MEMP_NUM_UDP_PCB   4
 #define PBUF_POOL_SIZE   16
 
-#define MEMP_NUM_API_MSG   MEMP_NUM_TCPIP_MSG_API
-
-#define MEMP_NUM_DNS_API_MSG   MEMP_NUM_TCPIP_MSG_API
-
-#define MEMP_NUM_SOCKET_SETGETSOCKOPT_DATA   MEMP_NUM_TCPIP_MSG_API
-
-#define MEMP_NUM_NETIFAPI_MSG   MEMP_NUM_TCPIP_MSG_API
+#define MEMP_NUM_SYS_TIMEOUT   (LWIP_TCP + IP_REASSEMBLY + LWIP_ARP + (2*LWIP_DHCP) + LWIP_AUTOIP + LWIP_IGMP + LWIP_DNS + (PPP_SUPPORT*6*MEMP_NUM_PPP_PCB) + (LWIP_IPV6 ? (1 + LWIP_IPV6_REASS + LWIP_IPV6_MLD) : 0))
 
 #define LWIP_ARP   1
 

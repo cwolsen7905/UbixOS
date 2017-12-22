@@ -7,17 +7,24 @@
 #define SYS_SEM_NULL  NULL
 #define SYS_MBOX_SIZE 100
 
+/* Structs */
 struct sys_timeouts {
   struct sys_timeout *next;
 };
 
 struct sys_sem {
-  unsigned int c;
+  int   signaled;
   ubthread_cond_t cond;
   ubthread_mutex_t mutex;
 };
 
 typedef struct sys_sem sys_sem_t;
+
+struct sys_mutex {
+  ubthread_mutex_t mutex;
+};
+
+typedef struct sys_mutex sys_mutex_t;
 
 struct sys_mbox {
   uint32_t head;
@@ -43,7 +50,5 @@ struct sys_thread {
 
 typedef struct sys_thread * sys_thread_t;
 
-
-//void sys_thread_new(void (*)(void), void *);
 
 #endif

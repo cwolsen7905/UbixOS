@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
  * All rights reserved.
@@ -63,11 +62,6 @@
  * @ingroup lwip_opts
  */
 
- /*
-   ------------------------------------
-   -------------- NO SYS --------------
-   ------------------------------------
-*/
 /**
  * NO_SYS==1: Use lwIP without OS-awareness (no thread, semaphores, mutexes or
  * mboxes). This means threaded APIs cannot be used (socket, netconn,
@@ -78,7 +72,6 @@
 #if !defined NO_SYS
 #define NO_SYS                          0
 #endif
-
 
 /**
  * LWIP_TIMERS==0: Drop support for sys_timeout and lwip-internal cyclic timers.
@@ -121,10 +114,10 @@
 #endif
 
 /*
-   ------------------------------------
-   ----------- Core locking -----------
-   ------------------------------------
-*/
+ ------------------------------------
+ ----------- Core locking -----------
+ ------------------------------------
+ */
 /**
  * LWIP_MPU_COMPATIBLE: enables special memory management mechanism
  * which makes lwip able to work on MPU (Memory Protection Unit) system
@@ -175,10 +168,10 @@
  */
 
 /*
-   ------------------------------------
-   ---------- Memory options ----------
-   ------------------------------------
-*/
+ ------------------------------------
+ ---------- Memory options ----------
+ ------------------------------------
+ */
 /**
  * @defgroup lwip_opts_mem Heap and memory pools
  * @ingroup lwip_opts_infrastructure
@@ -298,10 +291,10 @@
  */
 
 /*
-   ------------------------------------------------
-   ---------- Internal Memory Pool Sizes ----------
-   ------------------------------------------------
-*/
+ ------------------------------------------------
+ ---------- Internal Memory Pool Sizes ----------
+ ------------------------------------------------
+ */
 /**
  * @defgroup lwip_opts_memp Internal memory pools
  * @ingroup lwip_opts_infrastructure
@@ -493,10 +486,10 @@
  */
 
 /*
-   ---------------------------------
-   ---------- ARP options ----------
-   ---------------------------------
-*/
+ ---------------------------------
+ ---------- ARP options ----------
+ ---------------------------------
+ */
 /**
  * @defgroup lwip_opts_arp ARP
  * @ingroup lwip_opts_ipv4
@@ -591,10 +584,10 @@
  */
 
 /*
-   --------------------------------
-   ---------- IP options ----------
-   --------------------------------
-*/
+ --------------------------------
+ ---------- IP options ----------
+ --------------------------------
+ */
 /**
  * @defgroup lwip_opts_ipv4 IPv4
  * @ingroup lwip_opts
@@ -720,10 +713,10 @@
  */
 
 /*
-   ----------------------------------
-   ---------- ICMP options ----------
-   ----------------------------------
-*/
+ ----------------------------------
+ ---------- ICMP options ----------
+ ----------------------------------
+ */
 /**
  * @defgroup lwip_opts_icmp ICMP
  * @ingroup lwip_opts_ipv4
@@ -762,10 +755,10 @@
  */
 
 /*
-   ---------------------------------
-   ---------- RAW options ----------
-   ---------------------------------
-*/
+ ---------------------------------
+ ---------- RAW options ----------
+ ---------------------------------
+ */
 /**
  * @defgroup lwip_opts_raw RAW
  * @ingroup lwip_opts_callback
@@ -789,10 +782,10 @@
  */
 
 /*
-   ----------------------------------
-   ---------- DHCP options ----------
-   ----------------------------------
-*/
+ ----------------------------------
+ ---------- DHCP options ----------
+ ----------------------------------
+ */
 /**
  * @defgroup lwip_opts_dhcp DHCP
  * @ingroup lwip_opts_ipv4
@@ -838,7 +831,7 @@
  * LWIP_DHCP_GETS_NTP==1: Request NTP servers with discover/select. For each
  * response packet, an callback is called, which has to be provided by the port:
  * void dhcp_set_ntp_servers(u8_t num_ntp_servers, ip_addr_t* ntp_server_addrs);
-*/
+ */
 #if !defined LWIP_DHCP_GET_NTP_SRV || defined __DOXYGEN__
 #define LWIP_DHCP_GET_NTP_SRV           0
 #endif
@@ -863,10 +856,10 @@
  */
 
 /*
-   ------------------------------------
-   ---------- AUTOIP options ----------
-   ------------------------------------
-*/
+ ------------------------------------
+ ---------- AUTOIP options ----------
+ ------------------------------------
+ */
 /**
  * @defgroup lwip_opts_autoip AUTOIP
  * @ingroup lwip_opts_ipv4
@@ -907,10 +900,10 @@
  */
 
 /*
-   ----------------------------------
-   ----- SNMP MIB2 support      -----
-   ----------------------------------
-*/
+ ----------------------------------
+ ----- SNMP MIB2 support      -----
+ ----------------------------------
+ */
 /**
  * @defgroup lwip_opts_mib2 SNMP MIB2 callbacks
  * @ingroup lwip_opts_infrastructure
@@ -929,10 +922,10 @@
  */
 
 /*
-   ----------------------------------
-   ----- Multicast/IGMP options -----
-   ----------------------------------
-*/
+ ----------------------------------
+ ----- Multicast/IGMP options -----
+ ----------------------------------
+ */
 /**
  * @defgroup lwip_opts_igmp IGMP
  * @ingroup lwip_opts_ipv4
@@ -961,10 +954,10 @@
  */
 
 /*
-   ----------------------------------
-   ---------- DNS options -----------
-   ----------------------------------
-*/
+ ----------------------------------
+ ---------- DNS options -----------
+ ----------------------------------
+ */
 /**
  * @defgroup lwip_opts_dns DNS
  * @ingroup lwip_opts_callback
@@ -1042,10 +1035,10 @@
  */
 
 /*
-   ---------------------------------
-   ---------- UDP options ----------
-   ---------------------------------
-*/
+ ---------------------------------
+ ---------- UDP options ----------
+ ---------------------------------
+ */
 /**
  * @defgroup lwip_opts_udp UDP
  * @ingroup lwip_opts_callback
@@ -1083,10 +1076,10 @@
  */
 
 /*
-   ---------------------------------
-   ---------- TCP options ----------
-   ---------------------------------
-*/
+ ---------------------------------
+ ---------- TCP options ----------
+ ---------------------------------
+ */
 /**
  * @defgroup lwip_opts_tcp TCP
  * @ingroup lwip_opts_callback
@@ -1162,7 +1155,6 @@
 #define TCP_CALCULATE_EFF_SEND_MSS      1
 #endif
 
-
 /**
  * TCP_SND_BUF: TCP sender buffer space (bytes).
  * To achieve good performance, this should be at least 2 * TCP_MSS.
@@ -1236,7 +1228,7 @@
  * suggested values are:
  *
  * 0:         Disable oversized allocation. Each tcp_write() allocates a new
-              pbuf (old behaviour).
+ pbuf (old behaviour).
  * 1:         Allocate size-aligned pbufs with minimal excess. Use this if your
  *            scatter-gather DMA requires aligned fragments.
  * 128:       Limit the pbuf/memory overhead to 20%.
@@ -1301,10 +1293,10 @@
  */
 
 /*
-   ----------------------------------
-   ---------- Pbuf options ----------
-   ----------------------------------
-*/
+ ----------------------------------
+ ---------- Pbuf options ----------
+ ----------------------------------
+ */
 /**
  * @defgroup lwip_opts_pbuf PBUF
  * @ingroup lwip_opts
@@ -1344,10 +1336,10 @@
  */
 
 /*
-   ------------------------------------------------
-   ---------- Network Interfaces options ----------
-   ------------------------------------------------
-*/
+ ------------------------------------------------
+ ---------- Network Interfaces options ----------
+ ------------------------------------------------
+ */
 /**
  * @defgroup lwip_opts_netif NETIF
  * @ingroup lwip_opts
@@ -1428,10 +1420,10 @@
  */
 
 /*
-   ------------------------------------
-   ---------- LOOPIF options ----------
-   ------------------------------------
-*/
+ ------------------------------------
+ ---------- LOOPIF options ----------
+ ------------------------------------
+ */
 /**
  * @defgroup lwip_opts_loop Loopback interface
  * @ingroup lwip_opts_netif
@@ -1490,10 +1482,10 @@
  */
 
 /*
-   ------------------------------------
-   ---------- Thread options ----------
-   ------------------------------------
-*/
+ ------------------------------------
+ ---------- Thread options ----------
+ ------------------------------------
+ */
 /**
  * @defgroup lwip_opts_thread Threading
  * @ingroup lwip_opts_infrastructure
@@ -1631,10 +1623,10 @@
  */
 
 /*
-   ----------------------------------------------
-   ---------- Sequential layer options ----------
-   ----------------------------------------------
-*/
+ ----------------------------------------------
+ ---------- Sequential layer options ----------
+ ----------------------------------------------
+ */
 /**
  * @defgroup lwip_opts_netconn Netconn
  * @ingroup lwip_opts_threadsafe_apis
@@ -1684,10 +1676,10 @@
  */
 
 /*
-   ------------------------------------
-   ---------- Socket options ----------
-   ------------------------------------
-*/
+ ------------------------------------
+ ---------- Socket options ----------
+ ------------------------------------
+ */
 /**
  * @defgroup lwip_opts_socket Sockets
  * @ingroup lwip_opts_threadsafe_apis
@@ -1830,10 +1822,10 @@
  */
 
 /*
-   ----------------------------------------
-   ---------- Statistics options ----------
-   ----------------------------------------
-*/
+ ----------------------------------------
+ ---------- Statistics options ----------
+ ----------------------------------------
+ */
 /**
  * @defgroup lwip_opts_stats Statistics
  * @ingroup lwip_opts_debug
@@ -2004,10 +1996,10 @@
  */
 
 /*
-   --------------------------------------
-   ---------- Checksum options ----------
-   --------------------------------------
-*/
+ --------------------------------------
+ ---------- Checksum options ----------
+ --------------------------------------
+ */
 /**
  * @defgroup lwip_opts_checksum Checksum
  * @ingroup lwip_opts_infrastructure
@@ -2104,10 +2096,10 @@
  */
 
 /*
-   ---------------------------------------
-   ---------- IPv6 options ---------------
-   ---------------------------------------
-*/
+ ---------------------------------------
+ ---------- IPv6 options ---------------
+ ---------------------------------------
+ */
 /**
  * @defgroup lwip_opts_ipv6 IPv6
  * @ingroup lwip_opts
@@ -2368,10 +2360,10 @@
 #endif
 
 /*
-   ---------------------------------------
-   ---------- Hook options ---------------
-   ---------------------------------------
-*/
+ ---------------------------------------
+ ---------- Hook options ---------------
+ ---------------------------------------
+ */
 
 /**
  * @defgroup lwip_opts_hooks Hooks
@@ -2457,7 +2449,7 @@
  * This function is meant to implement advanced IPv4 routing together with
  * LWIP_HOOK_IP4_ROUTE(). The actual routing/gateway table implementation is
  * not part of lwIP but can e.g. be hidden in the netif's state argument.
-*/
+ */
 #ifdef __DOXYGEN__
 #define LWIP_HOOK_ETHARP_GET_GW(netif, dest)
 #endif
@@ -2500,7 +2492,7 @@
  * This function is meant to implement advanced IPv6 routing together with
  * LWIP_HOOK_IP6_ROUTE(). The actual routing/gateway table implementation is
  * not part of lwIP but can e.g. be hidden in the netif's state argument.
-*/
+ */
 #ifdef __DOXYGEN__
 #define LWIP_HOOK_ND6_GET_GW(netif, dest)
 #endif
@@ -2563,10 +2555,10 @@
  */
 
 /*
-   ---------------------------------------
-   ---------- Debugging options ----------
-   ---------------------------------------
-*/
+ ---------------------------------------
+ ---------- Debugging options ----------
+ ---------------------------------------
+ */
 /**
  * @defgroup lwip_opts_debugmsg Debug messages
  * @ingroup lwip_opts_debug
@@ -2820,10 +2812,10 @@
  */
 
 /*
-   --------------------------------------------------
-   ---------- Performance tracking options ----------
-   --------------------------------------------------
-*/
+ --------------------------------------------------
+ ---------- Performance tracking options ----------
+ --------------------------------------------------
+ */
 /**
  * @defgroup lwip_opts_perf Performance
  * @ingroup lwip_opts_debug
