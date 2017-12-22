@@ -7,7 +7,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #  Objects
-OBJS = api_lib.o api_msg.o err.o sockets.o tcpip.o 
+OBJS = api_lib.o api_msg.o err.o sockets.o tcpip.o netbuf.o 
 
 all: $(OBJS)
 

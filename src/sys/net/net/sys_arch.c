@@ -79,7 +79,7 @@ err_t sys_mbox_new(sys_mbox_t *mbox, int size) {
   sys_sem_new(mbox->empty, size);
   sys_sem_new(mbox->full, 0);
 
-  mbox->queue = calloc(size, sizeof(void *));
+  mbox->queue = kmalloc(sizeof(void *) * size);//calloc(size, sizeof(void *));
 
   if (!mbox->queue)
     return ERR_MEM;
@@ -271,7 +271,7 @@ struct thread_start_param {
  */
 
 void sys_mbox_free(sys_mbox_t *mbox) {
-  free(mbox->queue);
+  kfree(mbox->queue);
   mbox->queue = NULL;
 }
 
@@ -450,11 +450,12 @@ uint32_t sys_now() {
 }
 
 int sys_mbox_valid(sys_mbox_t *mbox) {
-  return mbox->msgs != NULL;
+  return mbox->queue != NULL;
 }
 
 err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
-  status_t res;
+  //status_t res;
+  uint32_t res;
 
   res = sem_trywait(&mbox->empty);
   if (res == ERR_NOT_READY)
@@ -469,4 +470,43 @@ err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
   sem_post(&mbox->full);
 
   return ERR_OK;
+}
+
+
+int sys_sem_valid(sys_sem_t *sem)
+{
+	return 1;
+}
+
+void sys_sem_set_invalid(sys_sem_t *sem)
+{
+}
+
+void sys_mbox_set_invalid(sys_mbox_t *mbox)
+{
+}
+
+uint32_t sys_arch_mbox_tryfetch(sys_mbox_t * mbox, void **msg)
+{
+	//LTRACE_ENTRY;
+
+	//status_t res;
+  uint32_t res;
+
+	res = sem_trywait(&mbox->full);
+	if (res == ERR_NOT_READY) {
+		//LTRACE_EXIT;
+		return SYS_MBOX_EMPTY;
+	}
+	
+	mutex_acquire(&mbox->lock);
+
+	*msg = mbox->queue[mbox->tail];
+	mbox->tail = (mbox->tail + 1) % mbox->size;
+
+	mutex_release(&mbox->lock);
+	sem_post(&mbox->empty);
+
+	//LTRACE_EXIT;
+	return 0;
 }
