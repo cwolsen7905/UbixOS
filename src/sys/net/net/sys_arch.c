@@ -22,6 +22,8 @@ static struct timeval starttime;
 static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
+static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
+
 /* sys_arch layer initializer */
 void sys_init() {
   struct timezone tz;
@@ -91,7 +93,7 @@ void sys_sem_set_invalid(sys_sem_t *sem) {
   kprintf("NEED TO DO THIS");
 }
 
-err_t sys_mutex_new(sys_mutex_t *mutex) {
+err_r sys_mutex_new(sys_mutex_t *mutex) {
   ubthread_mutex_init(&(mutex->mutex), NULL);
   return ERR_OK;
 }
@@ -257,7 +259,6 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
 }
 
 /* OLD */
-static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
 
 struct thread_start_param {
   struct sys_thread *thread;

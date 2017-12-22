@@ -41,7 +41,7 @@ extern "C" {
 
 #if NO_SYS
 
-#else /* NO_SYS */ - Mr O
+#else /* NO_SYS */
 
 /** Return code for timeouts from sys_arch_mbox_fetch and sys_arch_sem_wait */
 #define SYS_ARCH_TIMEOUT 0xffffffffUL
