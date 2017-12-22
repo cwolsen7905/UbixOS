@@ -72,6 +72,7 @@ pushal
 push %ds
 push %es
 push %fs
+push %gs
 mov $0x10,%eax
 mov %eax,%ds
 mov %eax,%es
@@ -106,6 +107,7 @@ _isVM:
 hlt
 
 _popFS:
+pop %gs
 pop %fs
 pop %es
 pop %ds

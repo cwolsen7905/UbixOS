@@ -32,6 +32,59 @@
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
 
+#define FIRST_TSS_ENTRY 6
+#define VM_MASK 0x00020000
+
+#define store_TR(n) \
+__asm__("str %%ax\n\t" \
+        "subl %2,%%eax\n\t" \
+        "shrl $4,%%eax" \
+        :"=a" (n) \
+        :"0" (0),"i" (FIRST_TSS_ENTRY<<3))
+
+#define get_seg_long(seg,addr) ({ \
+register unsigned long __res; \
+__asm__("push %%fs;mov %%ax,%%fs;movl %%fs:%2,%%eax;pop %%fs" \
+	:"=a" (__res):"0" (seg),"m" (*(addr))); \
+__res;})
+
+#define get_seg_byte(seg,addr) ({ \
+register char __res; \
+__asm__("push %%fs;mov %%ax,%%fs;movb %%fs:%2,%%al;pop %%fs" \
+	:"=a" (__res):"0" (seg),"m" (*(addr))); \
+__res;})
+
+void die_if_kernel(char *str, struct trapframe *regs, long err) {
+	int i;
+	unsigned long esp;
+	unsigned short ss;
+
+	esp = (unsigned long) &regs->tf_esp;
+	//ss = KERNEL_DS;
+        ss = 0x10;
+	if ((regs->tf_eflags & VM_MASK) || (3 & regs->tf_cs) == 3)
+		return;
+	if (regs->tf_cs & 3) {
+		esp = regs->tf_esp;
+		ss = regs->tf_ss;
+	}
+
+	kprintf("%s: %04lx\n", str, err & 0xffff);
+	kprintf("EIP:    %04x:%08lx\nEFLAGS: %08lx\n", 0xffff & regs->tf_cs,regs->tf_eip,regs->tf_eflags);
+	kprintf("eax: %08lx   ebx: %08lx   ecx: %08lx   edx: %08lx\n", regs->tf_eax, regs->tf_ebx, regs->tf_ecx, regs->tf_edx);
+	kprintf("esi: %08lx   edi: %08lx   ebp: %08lx   esp: %08lx\n", regs->tf_esi, regs->tf_edi, regs->tf_ebp, esp);
+	kprintf("ds: %04x   es: %04x   fs: %04x   gs: %04x   ss: %04x\n", regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
+	store_TR(i);
+	//kprintf("Pid: %d, process nr: %d (%s)\nStack: ", _current->id, 0xffff & i, _current->comm);
+	kprintf("Pid: %d, process nr: %d ()\nStack: ", _current->id, 0xffff & i);
+	for(i=0;i<5;i++)
+		kprintf("%08lx ", get_seg_long(ss,(i+(unsigned long *)esp)));
+	kprintf("\nCode: ");
+	for(i=0;i<20;i++)
+		kprintf("%02x ",0xff & get_seg_byte(regs->tf_cs,(i+(char *)regs->tf_eip)));
+	kprintf("\n");
+}
+
 void trap( struct trapframe *frame ) {
   u_int trap_code;
   u_int cr2 = 0;
@@ -41,10 +94,14 @@ void trap( struct trapframe *frame ) {
   trap_code = frame->tf_trapno;
 
   if ( (frame->tf_eflags & PSL_I) == 0 ) {
-    if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM))
+    if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
+  die_if_kernel("TEST", frame, 0x100);
       kpanic( "INT OFF! USER" );
-    else
+}
+    else {
+  die_if_kernel("TEST", frame, 0x100);
       kpanic( "INT OFF! KERN[0x%X]", trap_code );
+}
   }
 
   kprintf("trap_code: %i(0x%X), EIP: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip);

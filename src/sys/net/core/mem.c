@@ -627,6 +627,7 @@ mem_malloc(mem_size_t size)
   }
 
   /* protect the heap from concurrent access */
+kprintf("SML: [0x%i]");
   sys_mutex_lock(&mem_mutex);
   LWIP_MEM_ALLOC_PROTECT();
 #if LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
