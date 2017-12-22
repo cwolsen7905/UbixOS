@@ -60,6 +60,7 @@ int net_init() {
   netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
 
   //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
+  irqEnable(0x9);
 
   return(0x0);
 }
@@ -115,8 +116,3 @@ static void tcpip_init_done(void *arg) {
   sys_sem_signal(*sem);
 }
 #endif
-
-/***
- END
- ***/
-

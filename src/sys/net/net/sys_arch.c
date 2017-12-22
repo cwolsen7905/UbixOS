@@ -93,7 +93,7 @@ void sys_sem_set_invalid(sys_sem_t *sem) {
   kprintf("NEED TO DO THIS");
 }
 
-err_r sys_mutex_new(sys_mutex_t *mutex) {
+err_t sys_mutex_new(sys_mutex_t *mutex) {
   ubthread_mutex_init(&(mutex->mutex), NULL);
   return ERR_OK;
 }
@@ -123,8 +123,10 @@ err_t sys_mbox_new(sys_mbox_t *mbox, int size) {
 
   mbox->queue = kmalloc(sizeof(void *) * size);//calloc(size, sizeof(void *));
 
-  if (!mbox->queue)
+  if (!mbox->queue) {
+    kprintf("WTF: [%i]", size);
     return ERR_MEM;
+  }
 
   return (ERR_OK);
 }
@@ -135,30 +137,33 @@ void sys_mbox_free(sys_mbox_t *mbox) {
 }
 
 void sys_mbox_post(sys_mbox_t * mbox, void *msg) {
-  sem_wait(&mbox->empty);
-  mutex_acquire(&mbox->lock);
+  sys_arch_sem_wait(&(mbox->empty), 0);
+  ubthread_mutex_lock(&mbox->lock);
 
   mbox->queue[mbox->head] = msg;
   mbox->head = (mbox->head + 1) % mbox->size;
 
-  mutex_release(&mbox->lock);
-  sem_post(&mbox->full);
+  ubthread_mutex_unlock(&mbox->lock);
+  //sem_post(&mbox->full);
+  sys_sem_signal(&(mbox->full));
 }
 
 err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
 uint32_t res;
 
-res = sem_trywait(&mbox->empty);
+/* SHOULD BE TRY WAIT */
+res = sys_arch_sem_wait(&mbox->empty, 0x0);
 if (res == ERR_NOT_READY)
 return ERR_TIMEOUT;
 
-mutex_acquire(&mbox->lock);
+ubthread_mutex_lock(&mbox->lock);
 
 mbox->queue[mbox->head] = msg;
 mbox->head = (mbox->head + 1) % mbox->size;
 
-mutex_release(&mbox->lock);
-sem_post(&mbox->full);
+ubthread_mutex_unlock(&mbox->lock);
+sys_sem_signal(&(mbox->full));
+//sem_post(&mbox->full);
 
 return ERR_OK;
 }
@@ -172,19 +177,21 @@ uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
 
   uint32_t start = sys_now();
 
-  res = sem_timedwait(&mbox->full, timeout ? timeout : INFINITE_TIME);
+  res = sys_arch_sem_wait(&(mbox->full), timeout ? timeout : INFINITE_TIME);
+  //res = sem_timedwait(&mbox->full, timeout ? timeout : INFINITE_TIME);
   if (res == ERR_TIMED_OUT) {
     //LTRACE_EXIT;
     return SYS_ARCH_TIMEOUT; //timeout ? SYS_ARCH_TIMEOUT : 0;
   }
 
-  mutex_acquire(&mbox->lock);
+  ubthread_mutex_lock(&mbox->lock);
 
   *msg = mbox->queue[mbox->tail];
   mbox->tail = (mbox->tail + 1) % mbox->size;
 
-  mutex_release(&mbox->lock);
-  sem_post(&mbox->empty);
+  ubthread_mutex_unlock(&mbox->lock);
+  sys_sem_signal(&(mbox->empty));
+  //sem_post(&mbox->empty);
 
   return sys_now() - start;
 }
@@ -195,19 +202,21 @@ uint32_t sys_arch_mbox_tryfetch(sys_mbox_t * mbox, void **msg) {
 //status_t res;
   uint32_t res;
 
-res = sem_trywait(&mbox->full);
+res = sys_arch_sem_wait(&(mbox->full), 0x0);
+//res = sem_trywait(&mbox->full);
 if (res == ERR_NOT_READY) {
 //LTRACE_EXIT;
 return SYS_MBOX_EMPTY;
 }
 
-mutex_acquire(&mbox->lock);
+ubthread_mutex_lock(&mbox->lock);
 
 *msg = mbox->queue[mbox->tail];
 mbox->tail = (mbox->tail + 1) % mbox->size;
 
-mutex_release(&mbox->lock);
-sem_post(&mbox->empty);
+ubthread_mutex_unlock(&mbox->lock);
+sys_sem_signal(&(mbox->empty));
+//sem_post(&mbox->empty);
 
 //LTRACE_EXIT;
 return 0;

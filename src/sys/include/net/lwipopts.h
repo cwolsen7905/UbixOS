@@ -244,7 +244,7 @@
 
 #define TCPIP_THREAD_PRIO 1
 
-#define TCPIP_MBOX_SIZE 0
+#define TCPIP_MBOX_SIZE 6
 
 #define LWIP_TCPIP_THREAD_ALIVE()
 
@@ -489,7 +489,7 @@
 
 //#define TCP_RCV_SCALE                   0
 //#define PBUF_POOL_SIZE                  400 /* pbuf tests need ~200KByte */
-#define LWIP_COMPAT_MUTEX 1
+#define LWIP_COMPAT_MUTEX 0
 #define LWIP_COMPAT_MUTEX_ALLOWED 1
 #define LWIP_TIMEVAL_PRIVATE 0
 #define LWIP_CALLBACK_API 1
