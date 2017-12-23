@@ -96,20 +96,20 @@ void trap( struct trapframe *frame ) {
   if ( (frame->tf_eflags & PSL_I) == 0 ) {
     if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
   die_if_kernel("TEST", frame, 0x100);
-      kpanic( "INT OFF! USER" );
+ //     kpanic( "INT OFF! USER" );
 }
     else {
   die_if_kernel("TEST", frame, 0x100);
-      kpanic( "INT OFF! KERN[0x%X]", trap_code );
+//      kpanic( "INT OFF! KERN[0x%X]", trap_code );
 }
   }
 
   kprintf("trap_code: %i(0x%X), EIP: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip);
-
+/*
   switch (trap_code) {
     case 0xC:
        cr2 = rcr2();
-       asm("sti"); /* Turn Back On Ints! */
+       asm("sti"); // Turn Back On Ints!
        vmm_pageFault(frame, cr2);
        kprintf("Called page Fault\n");
     default:
@@ -118,6 +118,7 @@ void trap( struct trapframe *frame ) {
 
   kprintf("GOTTA RETURN!\n");
   while(1);
+*/
 }
 
 /***
