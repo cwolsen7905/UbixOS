@@ -170,27 +170,27 @@ struct wi_fwdownload {
 };
 
 struct wi_counters {
-	u_int32_t		wi_tx_unicast_frames;
-	u_int32_t		wi_tx_multicast_frames;
-	u_int32_t		wi_tx_fragments;
-	u_int32_t		wi_tx_unicast_octets;
-	u_int32_t		wi_tx_multicast_octets;
-	u_int32_t		wi_tx_deferred_xmits;
-	u_int32_t		wi_tx_single_retries;
-	u_int32_t		wi_tx_multi_retries;
-	u_int32_t		wi_tx_retry_limit;
-	u_int32_t		wi_tx_discards;
-	u_int32_t		wi_rx_unicast_frames;
-	u_int32_t		wi_rx_multicast_frames;
-	u_int32_t		wi_rx_fragments;
-	u_int32_t		wi_rx_unicast_octets;
-	u_int32_t		wi_rx_multicast_octets;
-	u_int32_t		wi_rx_fcs_errors;
-	u_int32_t		wi_rx_discards_nobuf;
-	u_int32_t		wi_tx_discards_wrong_sa;
-	u_int32_t		wi_rx_WEP_cant_decrypt;
-	u_int32_t		wi_rx_msg_in_msg_frags;
-	u_int32_t		wi_rx_msg_in_bad_msg_frags;
+	uint32_t		wi_tx_unicast_frames;
+	uint32_t		wi_tx_multicast_frames;
+	uint32_t		wi_tx_fragments;
+	uint32_t		wi_tx_unicast_octets;
+	uint32_t		wi_tx_multicast_octets;
+	uint32_t		wi_tx_deferred_xmits;
+	uint32_t		wi_tx_single_retries;
+	uint32_t		wi_tx_multi_retries;
+	uint32_t		wi_tx_retry_limit;
+	uint32_t		wi_tx_discards;
+	uint32_t		wi_rx_unicast_frames;
+	uint32_t		wi_rx_multicast_frames;
+	uint32_t		wi_rx_fragments;
+	uint32_t		wi_rx_unicast_octets;
+	uint32_t		wi_rx_multicast_octets;
+	uint32_t		wi_rx_fcs_errors;
+	uint32_t		wi_rx_discards_nobuf;
+	uint32_t		wi_tx_discards_wrong_sa;
+	uint32_t		wi_rx_WEP_cant_decrypt;
+	uint32_t		wi_rx_msg_in_msg_frags;
+	uint32_t		wi_rx_msg_in_bad_msg_frags;
 };
 
 /*
@@ -506,8 +506,8 @@ struct wi_mgmt_var_hdr {
  * management beacon frame prefix
  */
 struct wi_mgmt_beacon_hdr {
-	u_int32_t	wi_ts0;
-	u_int32_t	wi_ts1;
+	uint32_t	wi_ts0;
+	uint32_t	wi_ts1;
 	u_int16_t	wi_interval;
 	u_int16_t	wi_capinfo;
 };
@@ -568,8 +568,8 @@ struct wi_mgmt_reasresp_hdr {
  * management probe response frame prefix
  */
 struct wi_mgmt_proberesp_hdr {
-	u_int32_t	wi_ts0;
-	u_int32_t	wi_ts1;
+	uint32_t	wi_ts0;
+	uint32_t	wi_ts1;
 	u_int16_t	wi_interval;
 	u_int16_t	wi_capinfo;
 };

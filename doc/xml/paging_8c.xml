@@ -258,10 +258,10 @@
       <memberdef kind="function" id="paging_8c_10444c8635648fabdbd6e702137aa1723" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int vmm_cleanVirtualSpace</definition>
-        <argsstring>(u_int32_t addr)</argsstring>
+        <argsstring>(uint32_t addr)</argsstring>
         <name>vmm_cleanVirtualSpace</name>
         <param>
-          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
+          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
           <declname>addr</declname>
         </param>
         <briefdescription>
@@ -1020,7 +1020,7 @@
 <codeline lineno="476"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline lineno="477"><highlight class="normal"></highlight></codeline>
 <codeline lineno="478" refid="paging_8c_16cdf3466734f2da5e258c9844d536295" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="syscalls__new_8h_17f9e3f42e3fe0ba5e2dd3a4140ef14de" kindref="member">obreak</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structthread" kindref="compound">thread</ref><sp/>*td,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structobreak__args" kindref="compound">obreak_args</ref><sp/>*uap)<sp/>{</highlight></codeline>
-<codeline lineno="479"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/>i<sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="479"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/>i<sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="480"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1d6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref><sp/>old<sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="481"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1d6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref><sp/>base<sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="482"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1d6f327965d9e330cd225ca2153ac0453" kindref="member">vm_offset_t</ref><sp/></highlight><highlight class="keyword">new</highlight><highlight class="normal"><sp/><sp/>=<sp/>0x0;</highlight></codeline>
@@ -1063,11 +1063,11 @@
 <codeline lineno="519"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
 <codeline lineno="520"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline lineno="521"><highlight class="normal"></highlight></codeline>
-<codeline lineno="522" refid="paging_8c_10444c8635648fabdbd6e702137aa1723" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8c_10444c8635648fabdbd6e702137aa1723" kindref="member">vmm_cleanVirtualSpace</ref>(<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/>addr)<sp/>{</highlight></codeline>
+<codeline lineno="522" refid="paging_8c_10444c8635648fabdbd6e702137aa1723" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="paging_8c_10444c8635648fabdbd6e702137aa1723" kindref="member">vmm_cleanVirtualSpace</ref>(<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/>addr)<sp/>{</highlight></codeline>
 <codeline lineno="523"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>x<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="524"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>y<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="525"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/>*pageTableSrc<sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="526"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/>*pageDir<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="525"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/>*pageTableSrc<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="526"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/>*pageDir<sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="527"><highlight class="normal"></highlight></codeline>
 <codeline lineno="528"><highlight class="normal"><sp/><sp/>pageDir<sp/>=<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*)<sp/><ref refid="paging_8h_1aab3609eb02bd28ded8d1ea0512da979" kindref="member">parentPageDirAddr</ref>;</highlight></codeline>
 <codeline lineno="529"><highlight class="normal"></highlight></codeline>

@@ -561,11 +561,11 @@ __BEGIN_DECLS
  * be moved so they are included both in the kernel and userland.
  */
 #ifndef _KERNEL
-void scsi_format_unit(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_format_unit(struct ccb_scsiio *csio, uint32_t retries,
 		      void (*cbfcnp)(struct cam_periph *, union ccb *),
 		      u_int8_t tag_action, u_int8_t byte2, u_int16_t ileave,
-		      u_int8_t *data_ptr, u_int32_t dxfer_len,
-		      u_int8_t sense_len, u_int32_t timeout);
+		      u_int8_t *data_ptr, uint32_t dxfer_len,
+		      u_int8_t sense_len, uint32_t timeout);
 
 void scsi_read_defects(struct ccb_scsiio *csio, uint32_t retries,
 		       void (*cbfcnp)(struct cam_periph *, union ccb *),
@@ -574,11 +574,11 @@ void scsi_read_defects(struct ccb_scsiio *csio, uint32_t retries,
 		       uint32_t dxfer_len, int minimum_cmd_size, 
 		       uint8_t sense_len, uint32_t timeout);
 
-void scsi_sanitize(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_sanitize(struct ccb_scsiio *csio, uint32_t retries,
 		   void (*cbfcnp)(struct cam_periph *, union ccb *),
 		   u_int8_t tag_action, u_int8_t byte2, u_int16_t control,
-		   u_int8_t *data_ptr, u_int32_t dxfer_len, u_int8_t sense_len,
-		   u_int32_t timeout);
+		   u_int8_t *data_ptr, uint32_t dxfer_len, u_int8_t sense_len,
+		   uint32_t timeout);
 
 #endif /* !_KERNEL */
 __END_DECLS

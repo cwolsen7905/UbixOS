@@ -98,7 +98,7 @@ struct cf_rendezvous { /* kept in xprt->xp_p1 for rendezvouser */
 
 struct cf_conn {  /* kept in xprt->xp_p1 for actual connection */
 	enum xprt_stat strm_stat;
-	u_int32_t x_id;
+	uint32_t x_id;
 	XDR xdrs;
 	char verf_body[MAX_AUTH_BYTES];
 	u_int sendsize;

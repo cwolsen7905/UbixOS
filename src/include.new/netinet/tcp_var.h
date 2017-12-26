@@ -169,9 +169,9 @@ struct tcpcb {
 	u_char	snd_scale;		/* window scaling for send window */
 	u_char	rcv_scale;		/* window scaling for recv window */
 	u_char	request_r_scale;	/* pending window scaling */
-	u_int32_t  ts_recent;		/* timestamp echo data */
+	uint32_t  ts_recent;		/* timestamp echo data */
 	u_int	ts_recent_age;		/* when last updated */
-	u_int32_t  ts_offset;		/* our timestamp offset */
+	uint32_t  ts_offset;		/* our timestamp offset */
 
 	tcp_seq	last_ack_sent;
 /* experimental */
@@ -192,7 +192,7 @@ struct tcpcb {
 					   episode starts at this seq number */
 	struct sackhint	sackhint;	/* SACK scoreboard hint */
 	int	t_rttlow;		/* smallest observerved RTT */
-	u_int32_t	rfbuf_ts;	/* recv buffer autoscaling timestamp */
+	uint32_t	rfbuf_ts;	/* recv buffer autoscaling timestamp */
 	int	rfbuf_cnt;		/* recv buffer autoscaling byte count */
 	struct toedev	*tod;		/* toedev handling this connection */
 	int	t_sndrexmitpack;	/* retransmit packets sent */
@@ -311,14 +311,14 @@ struct tcpopt {
 #define	TOF_SIGNATURE	0x0040		/* TCP-MD5 signature option (RFC2385) */
 #define	TOF_SACK	0x0080		/* Peer sent SACK option */
 #define	TOF_MAXOPT	0x0100
-	u_int32_t	to_tsval;	/* new timestamp */
-	u_int32_t	to_tsecr;	/* reflected timestamp */
+	uint32_t	to_tsval;	/* new timestamp */
+	uint32_t	to_tsecr;	/* reflected timestamp */
 	u_char		*to_sacks;	/* pointer to the first SACK blocks */
 	u_char		*to_signature;	/* pointer to the TCP-MD5 signature */
 	u_int16_t	to_mss;		/* maximum segment size */
 	u_int8_t	to_wscale;	/* window scaling */
 	u_int8_t	to_nsacks;	/* number of SACK blocks */
-	u_int32_t	to_spare;	/* UTO */
+	uint32_t	to_spare;	/* UTO */
 };
 
 /*
@@ -361,8 +361,8 @@ struct tcptw {
 	u_short		last_win;	/* cached window value */
 	u_short		tw_so_options;	/* copy of so_options */
 	struct ucred	*tw_cred;	/* user credentials */
-	u_int32_t	t_recent;
-	u_int32_t	ts_offset;	/* our timestamp offset */
+	uint32_t	t_recent;
+	uint32_t	ts_offset;	/* our timestamp offset */
 	u_int		t_starttime;
 	int		tw_time;
 	TAILQ_ENTRY(tcptw) tw_2msl;

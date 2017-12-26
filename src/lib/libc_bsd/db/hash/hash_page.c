@@ -73,13 +73,13 @@ __FBSDID("$FreeBSD: releng/10.2/lib/libc/db/hash/hash_page.c 287872 2015-09-16 2
 #include "page.h"
 #include "extern.h"
 
-static u_int32_t *fetch_bitmap(HTAB *, int);
-static u_int32_t  first_free(u_int32_t);
+static uint32_t *fetch_bitmap(HTAB *, int);
+static uint32_t  first_free(uint32_t);
 static int	  open_temp(HTAB *);
 static u_int16_t  overflow_page(HTAB *);
 static void	  putpair(char *, const DBT *, const DBT *);
 static void	  squeeze_key(u_int16_t *, const DBT *, const DBT *);
-static int	  ugly_split(HTAB *, u_int32_t, BUFHEAD *, BUFHEAD *, int, int);
+static int	  ugly_split(HTAB *, uint32_t, BUFHEAD *, BUFHEAD *, int, int);
 
 #define	PAGE_INIT(P) { \
 	((u_int16_t *)(P))[0] = 0; \
@@ -180,7 +180,7 @@ __delpair(HTAB *hashp, BUFHEAD *bufp, int ndx)
  *	-1 ==> Error
  */
 int
-__split_page(HTAB *hashp, u_int32_t obucket, u_int32_t nbucket)
+__split_page(HTAB *hashp, uint32_t obucket, uint32_t nbucket)
 {
 	BUFHEAD *new_bufp, *old_bufp;
 	u_int16_t *ino;
@@ -275,7 +275,7 @@ __split_page(HTAB *hashp, u_int32_t obucket, u_int32_t nbucket)
  */
 static int
 ugly_split(HTAB *hashp,
-    u_int32_t obucket,	/* Same as __split_page. */
+    uint32_t obucket,	/* Same as __split_page. */
     BUFHEAD *old_bufp,
     BUFHEAD *new_bufp,
     int copyto,		/* First byte on page which contains key/data values. */
@@ -515,7 +515,7 @@ __add_ovflpage(HTAB *hashp, BUFHEAD *bufp)
  *	-1 indicates FAILURE
  */
 int
-__get_page(HTAB *hashp, char *p, u_int32_t bucket, int is_bucket, int is_disk,
+__get_page(HTAB *hashp, char *p, uint32_t bucket, int is_bucket, int is_disk,
     int is_bitmap)
 {
 	int fd, page, size, rsize;
@@ -570,7 +570,7 @@ __get_page(HTAB *hashp, char *p, u_int32_t bucket, int is_bucket, int is_disk,
  *	-1 ==>failure
  */
 int
-__put_page(HTAB *hashp, char *p, u_int32_t bucket, int is_bucket, int is_bitmap)
+__put_page(HTAB *hashp, char *p, uint32_t bucket, int is_bucket, int is_bitmap)
 {
 	int fd, page, size, wsize;
 
@@ -614,10 +614,10 @@ __put_page(HTAB *hashp, char *p, u_int32_t bucket, int is_bucket, int is_bitmap)
 int
 __ibitmap(HTAB *hashp, int pnum, int nbits, int ndx)
 {
-	u_int32_t *ip;
+	uint32_t *ip;
 	int clearbytes, clearints;
 
-	if ((ip = (u_int32_t *)malloc(hashp->BSIZE)) == NULL)
+	if ((ip = (uint32_t *)malloc(hashp->BSIZE)) == NULL)
 		return (1);
 	hashp->nmaps++;
 	clearints = ((nbits - 1) >> INT_BYTE_SHIFT) + 1;
@@ -632,10 +632,10 @@ __ibitmap(HTAB *hashp, int pnum, int nbits, int ndx)
 	return (0);
 }
 
-static u_int32_t
-first_free(u_int32_t map)
+static uint32_t
+first_free(uint32_t map)
 {
-	u_int32_t i, mask;
+	uint32_t i, mask;
 
 	mask = 0x1;
 	for (i = 0; i < BITS_PER_MAP; i++) {
@@ -649,7 +649,7 @@ first_free(u_int32_t map)
 static u_int16_t
 overflow_page(HTAB *hashp)
 {
-	u_int32_t *freep;
+	uint32_t *freep;
 	int max_free, offset, splitnum;
 	u_int16_t addr;
 	int bit, first_page, free_bit, free_page, i, in_use_bits, j;
@@ -665,7 +665,7 @@ overflow_page(HTAB *hashp)
 	/* Look through all the free maps to find the first free block */
 	first_page = hashp->LAST_FREED >>(hashp->BSHIFT + BYTE_SHIFT);
 	for ( i = first_page; i <= free_page; i++ ) {
-		if (!(freep = (u_int32_t *)hashp->mapp[i]) &&
+		if (!(freep = (uint32_t *)hashp->mapp[i]) &&
 		    !(freep = fetch_bitmap(hashp, i)))
 			return (0);
 		if (i == free_page)
@@ -803,7 +803,7 @@ void
 __free_ovflpage(HTAB *hashp, BUFHEAD *obufp)
 {
 	u_int16_t addr;
-	u_int32_t *freep;
+	uint32_t *freep;
 	int bit_address, free_page, free_bit;
 	u_int16_t ndx;
 
@@ -898,12 +898,12 @@ squeeze_key(u_int16_t *sp, const DBT *key, const DBT *val)
 	OFFSET(sp) = off;
 }
 
-static u_int32_t *
+static uint32_t *
 fetch_bitmap(HTAB *hashp, int ndx)
 {
 	if (ndx >= hashp->nmaps)
 		return (NULL);
-	if ((hashp->mapp[ndx] = (u_int32_t *)malloc(hashp->BSIZE)) == NULL)
+	if ((hashp->mapp[ndx] = (uint32_t *)malloc(hashp->BSIZE)) == NULL)
 		return (NULL);
 	if (__get_page(hashp,
 	    (char *)hashp->mapp[ndx], hashp->BITMAPS[ndx], 0, 1, 1)) {

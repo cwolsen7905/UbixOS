@@ -48,9 +48,9 @@ static spinLock_t fvpSpinLock = SPIN_LOCK_INITIALIZER;
  ************************************************************************/
 void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
   int y = 0, counter = 0, pdI = 0x0, ptI = 0x0;
-  u_int32_t *pageTableSrc = 0x0;
-  u_int32_t *pageDir = 0x0;
-  u_int32_t start_page = 0x0;
+  uint32_t *pageTableSrc = 0x0;
+  uint32_t *pageDir = 0x0;
+  uint32_t start_page = 0x0;
 
   spinLock( &fvpSpinLock );
 
@@ -62,7 +62,7 @@ void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
 
   /* Get Our Starting Address */
   if ( type == VM_THRD ) {
-    start_page = (u_int32_t)( _current->td.vm_daddr + ctob( _current->td.vm_dsize ) );
+    start_page = (uint32_t)( _current->td.vm_daddr + ctob( _current->td.vm_dsize ) );
   }
   else if ( type == VM_TASK ) {
     //kprintf("vmStart");

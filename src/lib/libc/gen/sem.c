@@ -125,7 +125,7 @@ sem_alloc(unsigned int value, semid_t semid, int system_sem)
 		return (NULL);
 	}
 
-	sem->count = (u_int32_t)value;
+	sem->count = (uint32_t)value;
 	sem->nwaiters = 0;
 	sem->magic = SEM_MAGIC;
 	sem->semid = semid;

@@ -49,8 +49,8 @@ struct camq {
 	cam_pinfo **queue_array;
 	int	   array_size;
 	int	   entries;
-	u_int32_t  generation;
-	u_int32_t  qfrozen_cnt;
+	uint32_t  generation;
+	uint32_t  qfrozen_cnt;
 };
 
 TAILQ_HEAD(ccb_hdr_tailq, ccb_hdr);
@@ -84,14 +84,14 @@ int		 cam_devq_init(struct cam_devq *devq, int devices,
 
 void		 cam_devq_free(struct cam_devq *devq);
 
-u_int32_t	 cam_devq_resize(struct cam_devq *camq, int openings);
+uint32_t	 cam_devq_resize(struct cam_devq *camq, int openings);
 	
 /*
  * Allocate a cam_ccb_queue structure and initialize it.
  */
 struct cam_ccbq	*cam_ccbq_alloc(int openings);
 
-u_int32_t	cam_ccbq_resize(struct cam_ccbq *ccbq, int devices);
+uint32_t	cam_ccbq_resize(struct cam_ccbq *ccbq, int devices);
 
 int		cam_ccbq_init(struct cam_ccbq *ccbq, int openings);
 
@@ -107,7 +107,7 @@ struct camq	*camq_alloc(int size);
 /*
  * Resize a cam queue
  */
-u_int32_t	camq_resize(struct camq *queue, int new_size);
+uint32_t	camq_resize(struct camq *queue, int new_size);
 
 /* 
  * Initialize a camq structure.  Return 0 on success, 1 on failure.
@@ -151,7 +151,7 @@ cam_pinfo	*camq_remove(struct camq *queue, int index);
  * maintaining queue order.
  */
 void		camq_change_priority(struct camq *queue, int index,
-				     u_int32_t new_priority);
+				     uint32_t new_priority);
 
 static __inline int
 cam_ccbq_pending_ccb_count(struct cam_ccbq *ccbq);

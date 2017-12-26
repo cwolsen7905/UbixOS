@@ -42,7 +42,7 @@ struct ksiginfo;
 typedef	int	sy_call_t(struct thread *, void *);
 
 /* Used by the machine dependent syscall() code. */
-typedef	void (*systrace_probe_func_t)(u_int32_t, int, struct sysent *, void *,
+typedef	void (*systrace_probe_func_t)(uint32_t, int, struct sysent *, void *,
     int);
 
 /*
@@ -59,10 +59,10 @@ struct sysent {			/* system call table */
 	au_event_t sy_auevent;	/* audit event associated with syscall */
 	systrace_args_func_t sy_systrace_args_func;
 				/* optional argument conversion function. */
-	u_int32_t sy_entry;	/* DTrace entry ID for systrace. */
-	u_int32_t sy_return;	/* DTrace return ID for systrace. */
-	u_int32_t sy_flags;	/* General flags for system calls. */
-	u_int32_t sy_thrcnt;
+	uint32_t sy_entry;	/* DTrace entry ID for systrace. */
+	uint32_t sy_return;	/* DTrace return ID for systrace. */
+	uint32_t sy_flags;	/* General flags for system calls. */
+	uint32_t sy_thrcnt;
 };
 
 /*

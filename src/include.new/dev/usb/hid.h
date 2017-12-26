@@ -43,9 +43,9 @@ enum hid_kind {
 };
 
 struct hid_location {
-	u_int32_t size;
-	u_int32_t count;
-	u_int32_t pos;
+	uint32_t size;
+	uint32_t count;
+	uint32_t pos;
 };
 
 struct hid_item {
@@ -73,7 +73,7 @@ struct hid_item {
 	int32_t collection;
 	int collevel;
 	enum hid_kind kind;
-	u_int32_t flags;
+	uint32_t flags;
 	/* Location */
 	struct hid_location loc;
 	/* */
@@ -84,8 +84,8 @@ struct hid_data *hid_start_parse(void *d, int len, int kindset);
 void hid_end_parse(struct hid_data *s);
 int hid_get_item(struct hid_data *s, struct hid_item *h);
 int hid_report_size(void *buf, int len, enum hid_kind k, u_int8_t *id);
-int hid_locate(void *desc, int size, u_int32_t usage,
+int hid_locate(void *desc, int size, uint32_t usage,
 		    enum hid_kind kind, struct hid_location *loc,
-		    u_int32_t *flags);
+		    uint32_t *flags);
 u_long hid_get_data(u_char *buf, struct hid_location *loc);
-int hid_is_collection(void *desc, int size, u_int32_t usage);
+int hid_is_collection(void *desc, int size, uint32_t usage);

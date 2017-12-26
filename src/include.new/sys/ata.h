@@ -204,7 +204,7 @@ struct ata_params {
 /*095*/ u_int16_t       stream_min_req_size;
 /*096*/ u_int16_t       stream_transfer_time;
 /*097*/ u_int16_t       stream_access_latency;
-/*098*/ u_int32_t       stream_granularity;
+/*098*/ uint32_t       stream_granularity;
 /*100*/ u_int16_t       lba_size48_1;
 	u_int16_t       lba_size48_2;
 	u_int16_t       lba_size48_3;
@@ -528,9 +528,9 @@ struct atapi_sense {
 #define	ATA_SENSE_EOM			0x40;
 #define	ATA_SENSE_FILEMARK		0x80;
 
-    u_int32_t   cmd_info;		/* cmd information */
+    uint32_t   cmd_info;		/* cmd information */
     u_int8_t	sense_length;		/* additional sense len (n-7) */
-    u_int32_t   cmd_specific_info;	/* additional cmd spec info */
+    uint32_t   cmd_specific_info;	/* additional cmd spec info */
     u_int8_t    asc;			/* additional sense code */
     u_int8_t    ascq;			/* additional sense code qual */
     u_int8_t    replaceable_unit_code;	/* replaceable unit code */

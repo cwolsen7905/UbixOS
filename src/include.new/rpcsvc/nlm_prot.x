@@ -163,7 +163,7 @@ struct nlm4_stat {
 
 struct nlm4_holder {
 	bool exclusive;
-	u_int32_t svid;
+	uint32_t svid;
 	netobj oh;
 	u_int64_t l_offset;
 	u_int64_t l_len;
@@ -173,7 +173,7 @@ struct nlm4_lock {
 	string caller_name<MAXNAMELEN>;
 	netobj fh;
 	netobj oh;
-	u_int32_t svid;
+	uint32_t svid;
 	u_int64_t l_offset;
 	u_int64_t l_len;
 };

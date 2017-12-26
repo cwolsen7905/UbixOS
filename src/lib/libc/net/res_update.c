@@ -82,7 +82,7 @@ res_nupdate(res_state statp, ns_updrec *rrecp_in, ns_tsig_key *key) {
 	int i, j, k = 0, n, ancount, nscount, arcount, rcode, rdatasize,
 	    newgroup, done, myzone, seen_before, numzones = 0;
 	u_int16_t dlen, class, qclass, type, qtype;
-	u_int32_t ttl;
+	uint32_t ttl;
 
 	if (key != NULL) {
 		/* TSIG is not supported. */

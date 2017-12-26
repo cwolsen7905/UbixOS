@@ -41,18 +41,18 @@
 #define getbw(buf,ofs)		((u_int16_t)(getb(buf,ofs)))
 
 #define	getwle(buf,ofs) (le16toh(*((u_int16_t*)(&((u_int8_t*)(buf))[ofs]))))
-#define	getdle(buf,ofs) (le32toh(*((u_int32_t*)(&((u_int8_t*)(buf))[ofs]))))
+#define	getdle(buf,ofs) (le32toh(*((uint32_t*)(&((u_int8_t*)(buf))[ofs]))))
 #define	getwbe(buf,ofs) (be16toh(*((u_int16_t*)(&((u_int8_t*)(buf))[ofs]))))
-#define	getdbe(buf,ofs) (be32toh(*((u_int32_t*)(&((u_int8_t*)(buf))[ofs]))))
+#define	getdbe(buf,ofs) (be32toh(*((uint32_t*)(&((u_int8_t*)(buf))[ofs]))))
 
 #define	setwle(buf,ofs,val) \
 	(*((u_int16_t*)(&((u_int8_t*)(buf))[ofs])))=htole16(val)
 #define	setdle(buf,ofs,val) \
-	(*((u_int32_t*)(&((u_int8_t*)(buf))[ofs])))=htole32(val)
+	(*((uint32_t*)(&((u_int8_t*)(buf))[ofs])))=htole32(val)
 #define	setwbe(buf,ofs,val) \
 	(*((u_int16_t*)(&((u_int8_t*)(buf))[ofs])))=htobe16(val)
 #define	setdbe(buf,ofs,val) \
-	(*((u_int32_t*)(&((u_int8_t*)(buf))[ofs])))=htobe32(val)
+	(*((uint32_t*)(&((u_int8_t*)(buf))[ofs])))=htobe32(val)
 
 #ifdef _KERNEL
 
@@ -80,11 +80,11 @@ struct ncp_rq {
 
 int  ncp_rq_alloc(u_int8_t fn, struct ncp_conn *ncp, struct thread *td,
 	struct ucred *cred, struct ncp_rq **rqpp);
-int  ncp_rq_alloc_any(u_int32_t ptype, u_int8_t fn, struct ncp_conn *ncp,
+int  ncp_rq_alloc_any(uint32_t ptype, u_int8_t fn, struct ncp_conn *ncp,
 	struct thread *td,	struct ucred *cred, struct ncp_rq **rqpp);
 int  ncp_rq_alloc_subfn(u_int8_t fn, u_int8_t subfn, struct ncp_conn *ncp,
 	struct thread *td,	struct ucred *cred, struct ncp_rq **rqpp);
-int  ncp_rq_init_any(struct ncp_rq *rqp, u_int32_t ptype, u_int8_t fn,
+int  ncp_rq_init_any(struct ncp_rq *rqp, uint32_t ptype, u_int8_t fn,
 	struct ncp_conn *ncp, 
 	struct thread *td, struct ucred *cred);
 void ncp_rq_done(struct ncp_rq *rqp);
@@ -95,7 +95,7 @@ struct ncp_nlstables;
 
 int  ncp_rq_pathstring(struct ncp_rq *rqp, int size, const char *name, struct ncp_nlstables*);
 int  ncp_rq_dbase_path(struct ncp_rq *, u_int8_t vol_num,
-		    u_int32_t dir_base, int namelen, u_char *name, struct ncp_nlstables *nt);
+		    uint32_t dir_base, int namelen, u_char *name, struct ncp_nlstables *nt);
 int  ncp_rq_pstring(struct ncp_rq *rqp, const char *s);
 
 void ncp_sign_init(const char *logindata, char *sign_root);
@@ -113,9 +113,9 @@ __BEGIN_DECLS
 void ncp_init_request(struct ncp_buf *);
 void ncp_init_request_s(struct ncp_buf *, int);
 void ncp_add_word_lh(struct ncp_buf *, u_int16_t);
-void ncp_add_dword_lh(struct ncp_buf *, u_int32_t);
+void ncp_add_dword_lh(struct ncp_buf *, uint32_t);
 void ncp_add_word_hl(struct ncp_buf *, u_int16_t);
-void ncp_add_dword_hl(struct ncp_buf *, u_int32_t);
+void ncp_add_dword_hl(struct ncp_buf *, uint32_t);
 void ncp_add_mem(struct ncp_buf *, const void *, int);
 void ncp_add_mem_nls(struct ncp_buf *, const void *, int);
 void ncp_add_pstring(struct ncp_buf *, const char *);
@@ -126,11 +126,11 @@ void ncp_add_handle_path(struct ncp_buf *, nuint32, nuint32, int, const char *);
 
 u_int16_t ncp_reply_word_hl(struct ncp_buf *, int);
 u_int16_t ncp_reply_word_lh(struct ncp_buf *, int);
-u_int32_t ncp_reply_dword_hl(struct ncp_buf *, int);
-u_int32_t ncp_reply_dword_lh(struct ncp_buf *, int);
+uint32_t ncp_reply_dword_hl(struct ncp_buf *, int);
+uint32_t ncp_reply_dword_lh(struct ncp_buf *, int);
 
 static __inline void
-ConvertToNWfromDWORD(u_int32_t sfd, ncp_fh *fh) {
+ConvertToNWfromDWORD(uint32_t sfd, ncp_fh *fh) {
 	fh->val1 = (fh->val.val32 = sfd);
 	return;
 }

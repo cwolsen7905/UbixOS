@@ -207,7 +207,7 @@ int			 rad_create_request(struct rad_handle *, int);
 int			 rad_create_response(struct rad_handle *, int);
 struct in_addr		 rad_cvt_addr(const void *);
 struct in6_addr		 rad_cvt_addr6(const void *);
-u_int32_t		 rad_cvt_int(const void *);
+uint32_t		 rad_cvt_int(const void *);
 char			*rad_cvt_string(const void *, size_t);
 int			 rad_get_attr(struct rad_handle *, const void **,
 			    size_t *);
@@ -218,7 +218,7 @@ int			 rad_put_addr(struct rad_handle *, int, struct in_addr);
 int			 rad_put_addr6(struct rad_handle *, int, struct in6_addr);
 int			 rad_put_attr(struct rad_handle *, int,
 			    const void *, size_t);
-int			 rad_put_int(struct rad_handle *, int, u_int32_t);
+int			 rad_put_int(struct rad_handle *, int, uint32_t);
 int			 rad_put_string(struct rad_handle *, int,
 			    const char *);
 int			 rad_put_message_authentic(struct rad_handle *);

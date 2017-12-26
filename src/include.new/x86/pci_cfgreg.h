@@ -49,8 +49,8 @@
 u_long		hostb_alloc_start(int type, u_long start, u_long end, u_long count);
 int		pcie_cfgregopen(uint64_t base, uint8_t minbus, uint8_t maxbus);
 int		pci_cfgregopen(void);
-u_int32_t	pci_cfgregread(int bus, int slot, int func, int reg, int bytes);
-void		pci_cfgregwrite(int bus, int slot, int func, int reg, u_int32_t data, int bytes);
+uint32_t	pci_cfgregread(int bus, int slot, int func, int reg, int bytes);
+void		pci_cfgregwrite(int bus, int slot, int func, int reg, uint32_t data, int bytes);
 #ifdef __HAVE_PIR
 void		pci_pir_open(void);
 int		pci_pir_probe(int bus, int require_parse);

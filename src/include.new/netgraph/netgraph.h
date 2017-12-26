@@ -1049,7 +1049,7 @@ _ngi_hook(item_p item, char *file, int line)
  */
 
 struct ng_cmdlist {
-	u_int32_t			cookie;		/* command typecookie */
+	uint32_t			cookie;		/* command typecookie */
 	int				cmd;		/* command number */
 	const char			*name;		/* command name */
 	const struct ng_parse_type	*mesgType;	/* args if !NGF_RESP */
@@ -1071,7 +1071,7 @@ struct ng_cmdlist {
  */
 struct ng_type {
 
-	u_int32_t	version; 	/* must equal NG_API_VERSION */
+	uint32_t	version; 	/* must equal NG_API_VERSION */
 	const char	*name;		/* Unique type name */
 	modeventhand_t	mod_event;	/* Module event handler (optional) */
 	ng_constructor_t *constructor;	/* Node constructor */

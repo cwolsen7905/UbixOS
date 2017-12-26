@@ -199,7 +199,7 @@ struct ai_order {
 		struct sockaddr aiou_sa;
 	} aio_src_un;
 #define aio_srcsa aio_src_un.aiou_sa
-	u_int32_t aio_srcflag;
+	uint32_t aio_srcflag;
 	int aio_srcscope;
 	int aio_dstscope;
 	struct policyqueue *aio_srcpolicy;
@@ -254,7 +254,7 @@ static int is_ifdisabled(char *);
 static void set_source(struct ai_order *, struct policyhead *);
 static int comp_dst(const void *, const void *);
 #ifdef INET6
-static int ip6_str2scopeid(char *, struct sockaddr_in6 *, u_int32_t *);
+static int ip6_str2scopeid(char *, struct sockaddr_in6 *, uint32_t *);
 #endif
 static int gai_addr2scopetype(struct sockaddr *);
 
@@ -855,7 +855,7 @@ set_source(struct ai_order *aio, struct policyhead *ph)
 #ifdef INET6
 	if (ai.ai_family == AF_INET6) {
 		struct in6_ifreq ifr6;
-		u_int32_t flags6;
+		uint32_t flags6;
 
 		memset(&ifr6, 0, sizeof(ifr6));
 		memcpy(&ifr6.ifr_addr, ai.ai_addr, ai.ai_addrlen);
@@ -1274,7 +1274,7 @@ explore_numeric_scope(const struct addrinfo *pai, const char *hostname,
 
 	error = explore_numeric(pai, addr, servname, res, hostname);
 	if (error == 0) {
-		u_int32_t scopeid;
+		uint32_t scopeid;
 
 		for (cur = *res; cur; cur = cur->ai_next) {
 			if (cur->ai_family != AF_INET6)
@@ -1343,7 +1343,7 @@ get_ai(const struct addrinfo *pai, const struct afd *afd, const char *addr)
 	fp_str = getenv("GAI");
 	if (fp_str && inet_pton(AF_INET6, fp_str, &faith_prefix) == 1 &&
 	    afd->a_af == AF_INET && pai->ai_socktype == SOCK_STREAM) {
-		u_int32_t v4a;
+		uint32_t v4a;
 		u_int8_t v4a_top;
 
 		memcpy(&v4a, addr, sizeof v4a);
@@ -1620,7 +1620,7 @@ is_ifdisabled(char *name)
 
 /* convert a string to a scope identifier. XXX: IPv6 specific */
 static int
-ip6_str2scopeid(char *scope, struct sockaddr_in6 *sin6, u_int32_t *scopeid)
+ip6_str2scopeid(char *scope, struct sockaddr_in6 *sin6, uint32_t *scopeid)
 {
 	u_long lscopeid;
 	struct in6_addr *a6;
@@ -1657,7 +1657,7 @@ ip6_str2scopeid(char *scope, struct sockaddr_in6 *sin6, u_int32_t *scopeid)
   trynumeric:
 	errno = 0;
 	lscopeid = strtoul(scope, &ep, 10);
-	*scopeid = (u_int32_t)(lscopeid & 0xffffffffUL);
+	*scopeid = (uint32_t)(lscopeid & 0xffffffffUL);
 	if (errno == 0 && ep && *ep == '\0' && *scopeid == lscopeid)
 		return 0;
 	else

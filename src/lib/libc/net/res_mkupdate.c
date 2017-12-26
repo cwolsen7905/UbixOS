@@ -69,7 +69,7 @@ res_nmkupdate(res_state statp, ns_updrec *rrecp_in, u_char *buf, int buflen) {
         char buf2[MAXDNAME];
 	int section, numrrs = 0, counts[ns_s_max];
 	u_int16_t rtype, rclass;
-	u_int32_t n1, rttl;
+	uint32_t n1, rttl;
 	u_char *dnptrs[20], **dpp, **lastdnptr;
 
 	/*

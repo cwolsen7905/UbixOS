@@ -64,13 +64,13 @@ static int   alloc_segs(HTAB *, int);
 static int   flush_meta(HTAB *);
 static int   hash_access(HTAB *, ACTION, DBT *, DBT *);
 static int   hash_close(DB *);
-static int   hash_delete(const DB *, const DBT *, u_int32_t);
+static int   hash_delete(const DB *, const DBT *, uint32_t);
 static int   hash_fd(const DB *);
-static int   hash_get(const DB *, const DBT *, DBT *, u_int32_t);
-static int   hash_put(const DB *, DBT *, const DBT *, u_int32_t);
+static int   hash_get(const DB *, const DBT *, DBT *, uint32_t);
+static int   hash_put(const DB *, DBT *, const DBT *, uint32_t);
 static void *hash_realloc(SEGMENT **, int, int);
-static int   hash_seq(const DB *, DBT *, DBT *, u_int32_t);
-static int   hash_sync(const DB *, u_int32_t);
+static int   hash_seq(const DB *, DBT *, DBT *, uint32_t);
+static int   hash_sync(const DB *, uint32_t);
 static int   hdestroy(HTAB *);
 static HTAB *init_hash(HTAB *, const char *, HASHINFO *);
 static int   init_htab(HTAB *, int);
@@ -190,7 +190,7 @@ __hash_open(file, flags, mode, info, dflags)
 		    (hashp->BSHIFT + BYTE_SHIFT);
 
 		hashp->nmaps = bpages;
-		(void)memset(&hashp->mapp[0], 0, bpages * sizeof(u_int32_t *));
+		(void)memset(&hashp->mapp[0], 0, bpages * sizeof(uint32_t *));
 	}
 
 	/* Initialize Buffer Manager */
@@ -462,7 +462,7 @@ hdestroy(hashp)
 static int
 hash_sync(dbp, flags)
 	const DB *dbp;
-	u_int32_t flags;
+	uint32_t flags;
 {
 	HTAB *hashp;
 
@@ -541,7 +541,7 @@ hash_get(dbp, key, data, flag)
 	const DB *dbp;
 	const DBT *key;
 	DBT *data;
-	u_int32_t flag;
+	uint32_t flag;
 {
 	HTAB *hashp;
 
@@ -558,7 +558,7 @@ hash_put(dbp, key, data, flag)
 	const DB *dbp;
 	DBT *key;
 	const DBT *data;
-	u_int32_t flag;
+	uint32_t flag;
 {
 	HTAB *hashp;
 
@@ -580,7 +580,7 @@ static int
 hash_delete(dbp, key, flag)
 	const DB *dbp;
 	const DBT *key;
-	u_int32_t flag;		/* Ignored */
+	uint32_t flag;		/* Ignored */
 {
 	HTAB *hashp;
 
@@ -732,9 +732,9 @@ static int
 hash_seq(dbp, key, data, flag)
 	const DB *dbp;
 	DBT *key, *data;
-	u_int32_t flag;
+	uint32_t flag;
 {
-	u_int32_t bucket;
+	uint32_t bucket;
 	BUFHEAD *bufp;
 	HTAB *hashp;
 	u_int16_t *bp, ndx;
@@ -822,7 +822,7 @@ extern int
 __expand_table(hashp)
 	HTAB *hashp;
 {
-	u_int32_t old_bucket, new_bucket;
+	uint32_t old_bucket, new_bucket;
 	int dirsize, new_segnum, spare_ndx;
 
 #ifdef HASH_STATISTICS
@@ -889,7 +889,7 @@ hash_realloc(p_ptr, oldsize, newsize)
 	return (p);
 }
 
-extern u_int32_t
+extern uint32_t
 __call_hash(hashp, k, len)
 	HTAB *hashp;
 	char *k;

@@ -87,7 +87,7 @@ struct ncp_conn_args {
 	char 		server[NCP_BINDERY_NAME_LEN+1];
 	char		*user;
 	char		*password;
-	u_int32_t	objtype;
+	uint32_t	objtype;
 	union {
 		struct sockaddr	addr;
 		struct sockaddr_ipx ipxaddr;
@@ -180,8 +180,8 @@ struct ncp_conn {
 	u_int8_t	seq;
 	int		buffer_size;		/* Negotiated bufsize */
 	/* Fields used to make packet signatures */
-	u_int32_t	sign_root[2];
-	u_int32_t	sign_state[4];		/* md4 state */
+	uint32_t	sign_root[2];
+	uint32_t	sign_state[4];		/* md4 state */
 #ifdef NCPBURST
 	/* Fields used for packet bursting */
 	u_long		bc_pktseq;		/* raw packet sequence */

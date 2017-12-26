@@ -68,11 +68,11 @@ in_cksum_hdr(const struct ip *ip)
 		"adcl %5, %0\n"
 		"adcl $0, %0"
 		: "+r" (sum)
-		: "g" (((const u_int32_t *)ip)[0]),
-		  "g" (((const u_int32_t *)ip)[1]),
-		  "g" (((const u_int32_t *)ip)[2]),
-		  "g" (((const u_int32_t *)ip)[3]),
-		  "g" (((const u_int32_t *)ip)[4])
+		: "g" (((const uint32_t *)ip)[0]),
+		  "g" (((const uint32_t *)ip)[1]),
+		  "g" (((const uint32_t *)ip)[2]),
+		  "g" (((const uint32_t *)ip)[3]),
+		  "g" (((const uint32_t *)ip)[4])
 		: "cc"
 	);
 	sum = (sum & 0xffff) + (sum >> 16);

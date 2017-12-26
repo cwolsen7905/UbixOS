@@ -126,7 +126,7 @@ getnameinfo_inet(const struct sockaddr *sa, socklen_t salen,
 	u_short port;
 	int family, i;
 	const char *addr;
-	u_int32_t v4a;
+	uint32_t v4a;
 	int h_error;
 	char numserv[512];
 	char numaddr[512];
@@ -178,7 +178,7 @@ getnameinfo_inet(const struct sockaddr *sa, socklen_t salen,
 
 	switch (sa->sa_family) {
 	case AF_INET:
-		v4a = (u_int32_t)
+		v4a = (uint32_t)
 		    ntohl(((const struct sockaddr_in *)sa)->sin_addr.s_addr);
 		if (IN_MULTICAST(v4a) || IN_EXPERIMENTAL(v4a))
 			flags |= NI_NUMERICHOST;

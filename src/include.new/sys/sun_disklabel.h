@@ -66,8 +66,8 @@
 
 /* partition info */
 struct sun_dkpart {
-	u_int32_t	sdkp_cyloffset;		/* starting cylinder */
-	u_int32_t	sdkp_nsectors;		/* number of sectors */
+	uint32_t	sdkp_cyloffset;		/* starting cylinder */
+	uint32_t	sdkp_nsectors;		/* number of sectors */
 };
 
 struct sun_vtoc_info {
@@ -98,11 +98,11 @@ struct sun_disklabel {
 	char		sl_text[128];
 
 	/* SVR4 VTOC information */
-	u_int32_t	sl_vtoc_vers;		/* == SUN_VTOC_VERSION */
+	uint32_t	sl_vtoc_vers;		/* == SUN_VTOC_VERSION */
 	char		sl_vtoc_volname[SUN_VOLNAME_LEN];
 	u_int16_t	sl_vtoc_nparts;		/* == SUN_NPART */
 	struct sun_vtoc_info sl_vtoc_map[SUN_NPART]; /* partition tag/flag */
-	u_int32_t	sl_vtoc_sane;		/* == SUN_VTOC_SANE */
+	uint32_t	sl_vtoc_sane;		/* == SUN_VTOC_SANE */
 
 	/* Sun label information */
 	u_int16_t	sl_rpm;			/* rotational speed */

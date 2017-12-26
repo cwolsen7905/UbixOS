@@ -44,7 +44,7 @@ static spinLock_t vmmGFPlock = SPIN_LOCK_INITIALIZER;
  07/30/02 - This Returns A Free Page In The Top 1GB For The Kernel
 
  ************************************************************************/
-void *vmmGetFreePage( pidType pid ) {
+void *vmm_getFreePage( pidType pid ) {
   uInt16 x = 0x0, y = 0x0;
   uInt32 *pageTableSrc = 0x0;
 

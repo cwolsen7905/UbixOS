@@ -169,7 +169,7 @@ struct __res_state {
 	char	unused[3];
 	struct {
 		struct in_addr	addr;
-		u_int32_t	mask;
+		uint32_t	mask;
 	} sort_list[MAXRESOLVSORT];
 	res_send_qhook qhook;		/*%< query hook */
 	res_send_rhook rhook;		/*%< response hook */
@@ -423,14 +423,14 @@ int		b64_pton(char const *, u_char *, size_t);
 int		loc_aton(const char *, u_char *);
 const char *	loc_ntoa(const u_char *, char *);
 int		dn_skipname(const u_char *, const u_char *);
-void		putlong(u_int32_t, u_char *);
+void		putlong(uint32_t, u_char *);
 void		putshort(u_int16_t, u_char *);
 #ifndef __ultrix__
 u_int16_t	_getshort(const u_char *);
-u_int32_t	_getlong(const u_char *);
+uint32_t	_getlong(const u_char *);
 #endif
 const char *	p_class(int);
-const char *	p_time(u_int32_t);
+const char *	p_time(uint32_t);
 const char *	p_type(int);
 const char *	p_rcode(int);
 const char *	p_sockun(union res_sockaddr_union, char *, size_t);

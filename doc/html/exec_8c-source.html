@@ -175,7 +175,7 @@
 <a name="l00144"></a>00144 
 <a name="l00145"></a>00145   <span class="keywordtype">int</span>        i         = 0x0;
 <a name="l00146"></a>00146   <span class="keywordtype">int</span>        x         = 0x0;
-<a name="l00147"></a>00147   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a> *tmp       = 0x0;
+<a name="l00147"></a>00147   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a> *tmp       = 0x0;
 <a name="l00148"></a>00148 
 <a name="l00149"></a>00149   <a class="code" href="structfileDescriptorStruct.html">fileDescriptor</a>   *tmpFd         = 0x0;
 <a name="l00150"></a>00150   <a class="code" href="structelfHeader.html">elfHeader</a>        *binaryHeader  = 0x0;
@@ -338,8 +338,8 @@
 <a name="l00307"></a>00307   <span class="keywordflow">if</span> (<a class="code" href="sched_8h.html#54397bfe18d5da4d50ff03b15f540858">_current</a>-&gt;<a class="code" href="structtaskStruct.html#30966587a60db6b40c8be6c387e11d81">id</a> &gt; 4)
 <a name="l00308"></a>00308   <a class="code" href="kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8">kprintf</a>(<span class="stringliteral">"argv[0]: [%s]\n"</span>,argv[0]);
 <a name="l00309"></a>00309   <a class="code" href="kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8">kprintf</a>(<span class="stringliteral">"argv: [0x%X]\n"</span>,argv);
-<a name="l00310"></a>00310   tmp[0] = (<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>)argv;
-<a name="l00311"></a>00311   tmp[1] = (<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>)argv;
+<a name="l00310"></a>00310   tmp[0] = (<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>)argv;
+<a name="l00311"></a>00311   tmp[1] = (<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>)argv;
 <a name="l00312"></a>00312 
 <a name="l00313"></a>00313 
 <a name="l00314"></a>00314   <span class="comment">/* Switch Back To The Kernels VM Space */</span>
@@ -549,7 +549,7 @@
 <a name="l00520"></a>00520 
 <a name="l00521"></a>00521   <span class="comment">//if (_current-&gt;id &gt; 3) {</span>
 <a name="l00522"></a>00522 
-<a name="l00523"></a>00523     iFrame-&gt;<a class="code" href="structi386__frame.html#bbfc7b0ada36bd69608adfa39f5fc133">user_esp</a> = ((<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>)<a class="code" href="exec_8c.html#d93dccba62fb5241c0b7cebcd097794a">STACK_ADDR</a>) - (<span class="keyword">sizeof</span>(<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>) * (argc + 3));
+<a name="l00523"></a>00523     iFrame-&gt;<a class="code" href="structi386__frame.html#bbfc7b0ada36bd69608adfa39f5fc133">user_esp</a> = ((<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>)<a class="code" href="exec_8c.html#d93dccba62fb5241c0b7cebcd097794a">STACK_ADDR</a>) - (<span class="keyword">sizeof</span>(<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>) * (argc + 3));
 <a name="l00524"></a>00524     tmp = iFrame-&gt;<a class="code" href="structi386__frame.html#bbfc7b0ada36bd69608adfa39f5fc133">user_esp</a>;
 <a name="l00525"></a>00525 
 <a name="l00527"></a>00527     tmp[0] = argc;
@@ -560,10 +560,10 @@
 <a name="l00532"></a>00532     tmp[argc + 2] = 0x1;
 <a name="l00533"></a>00533     <span class="comment">//}</span>
 <a name="l00534"></a>00534   <span class="comment">//else {</span>
-<a name="l00535"></a>00535     <span class="comment">//tmp = (u_int32_t *)STACK_ADDR - 2;</span>
+<a name="l00535"></a>00535     <span class="comment">//tmp = (uint32_t *)STACK_ADDR - 2;</span>
 <a name="l00536"></a>00536     <span class="comment">//tmp[0] = 0x1;</span>
 <a name="l00537"></a>00537     <span class="comment">//tmp[1] = 0x0;</span>
-<a name="l00538"></a>00538     <span class="comment">//tmp[1] = (u_int32_t)argv;</span>
+<a name="l00538"></a>00538     <span class="comment">//tmp[1] = (uint32_t)argv;</span>
 <a name="l00539"></a>00539     <span class="comment">//}</span>
 <a name="l00540"></a>00540   <a class="code" href="kmalloc_8h.html#aa9ed6886459604cf73ccdbf6410e487">kfree</a>(argvNew);
 <a name="l00541"></a>00541  <span class="comment">/* Now That We Relocated The Binary We Can Unmap And Free Header Info */</span>
@@ -578,11 +578,11 @@
 <a name="l00554"></a>00554   <span class="keywordtype">int</span>                 i             = 0x0;
 <a name="l00555"></a>00555   <span class="keywordtype">int</span>                 x             = 0x0;
 <a name="l00556"></a>00556   <span class="keywordtype">int</span>                 argc          = 0x0;
-<a name="l00557"></a>00557   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>           seg_size      = 0x0;
-<a name="l00558"></a>00558   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>           seg_addr      = 0x0;
-<a name="l00559"></a>00559   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>           addr          = 0x0;
-<a name="l00560"></a>00560   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>           <a class="code" href="structi386__frame.html#ef87f1d1d6f1ad030c95773e7eedfa16">eip</a>           = 0x0;
-<a name="l00561"></a>00561   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>           proghdr       = 0x0;
+<a name="l00557"></a>00557   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>           seg_size      = 0x0;
+<a name="l00558"></a>00558   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>           seg_addr      = 0x0;
+<a name="l00559"></a>00559   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>           addr          = 0x0;
+<a name="l00560"></a>00560   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>           <a class="code" href="structi386__frame.html#ef87f1d1d6f1ad030c95773e7eedfa16">eip</a>           = 0x0;
+<a name="l00561"></a>00561   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>           proghdr       = 0x0;
 <a name="l00562"></a>00562   <span class="keywordtype">char</span>               *args          = 0x0;
 <a name="l00563"></a>00563   <span class="keywordtype">char</span>               *interp        = 0x0;
 <a name="l00564"></a>00564   <span class="keywordtype">char</span>              **argv          = 0x0;
@@ -706,7 +706,7 @@
 <a name="l00684"></a>00684 
 <a name="l00685"></a>00685   <span class="comment">//if (_current-&gt;id &gt; 3) {</span>
 <a name="l00686"></a>00686 
-<a name="l00687"></a>00687   iFrame-&gt;user_esp = ((<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>)<a class="code" href="exec_8c.html#d93dccba62fb5241c0b7cebcd097794a">STACK_ADDR</a>) - (<span class="keyword">sizeof</span>(<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>) * (argc + 3 + <span class="keyword">sizeof</span>(<a class="code" href="structElf__Auxargs.html">Elf_Auxargs</a>)));
+<a name="l00687"></a>00687   iFrame-&gt;user_esp = ((<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>)<a class="code" href="exec_8c.html#d93dccba62fb5241c0b7cebcd097794a">STACK_ADDR</a>) - (<span class="keyword">sizeof</span>(<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>) * (argc + 3 + <span class="keyword">sizeof</span>(<a class="code" href="structElf__Auxargs.html">Elf_Auxargs</a>)));
 <a name="l00688"></a>00688   args = iFrame-&gt;user_esp;
 <a name="l00689"></a>00689 
 <a name="l00691"></a>00691   args[0] = argc;

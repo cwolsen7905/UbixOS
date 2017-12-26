@@ -69,8 +69,8 @@ enum {
 
 /* This structure is returned by the NGM_XXX_GET_STATUS command */
 struct ngxxxstat {
-	u_int32_t   packets_in;		/* packets in from downstream */
-	u_int32_t   packets_out;	/* packets out towards downstream */
+	uint32_t   packets_in;		/* packets in from downstream */
+	uint32_t   packets_out;	/* packets out towards downstream */
 };
 
 /*

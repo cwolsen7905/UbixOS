@@ -523,7 +523,7 @@ struct vfsidctl {
 	fsctlop_t	vc_op;		/* operation VFS_CTL_* (below) */
 	void		*vc_ptr;	/* pointer to data structure */
 	size_t		vc_len;		/* sizeof said structure */
-	u_int32_t	vc_spare[12];	/* spare (must be zero) */
+	uint32_t	vc_spare[12];	/* spare (must be zero) */
 };
 
 /* vfsidctl API version. */
@@ -541,8 +541,8 @@ struct vfsidctl {
 #define VFS_CTL_NOLOCKS	0x00010003	/* disable file locking */
 
 struct vfsquery {
-	u_int32_t	vq_flags;
-	u_int32_t	vq_spare[31];
+	uint32_t	vq_flags;
+	uint32_t	vq_spare[31];
 };
 
 /* vfsquery flags */
@@ -843,7 +843,7 @@ void	statfs_scale_blocks(struct statfs *sf, long max_size);
 struct vfsconf *vfs_byname(const char *);
 struct vfsconf *vfs_byname_kld(const char *, struct thread *td, int *);
 void	vfs_mount_destroy(struct mount *);
-void	vfs_event_signal(fsid_t *, u_int32_t, intptr_t);
+void	vfs_event_signal(fsid_t *, uint32_t, intptr_t);
 void	vfs_freeopts(struct vfsoptlist *opts);
 void	vfs_deleteopt(struct vfsoptlist *opts, const char *name);
 int	vfs_buildopts(struct uio *auio, struct vfsoptlist **options);

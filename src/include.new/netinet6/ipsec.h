@@ -77,7 +77,7 @@ struct secpolicy {
 	int persist;			/* will never be removed */
 	int refcnt;			/* reference count */
 	struct secpolicyindex *spidx;	/* selector - NULL if not valid */
-	u_int32_t id;			/* it identifies a policy in the SPD. */
+	uint32_t id;			/* it identifies a policy in the SPD. */
 #define IPSEC_MANUAL_POLICYID_MAX	0x3fff
 				/*
 				 * 1 - 0x3fff are reserved for user operation.
@@ -308,7 +308,7 @@ struct ipsec_output_state {
 
 struct ipsec_history {
 	int ih_proto;
-	u_int32_t ih_spi;
+	uint32_t ih_spi;
 };
 
 extern int ipsec_debug;
@@ -353,14 +353,14 @@ extern int ipsec4_in_reject __P((struct mbuf *, struct inpcb *));
 struct secas;
 struct tcpcb;
 struct tcp6cb;
-extern int ipsec_chkreplay __P((u_int32_t, struct secasvar *));
-extern int ipsec_updatereplay __P((u_int32_t, struct secasvar *));
+extern int ipsec_chkreplay __P((uint32_t, struct secasvar *));
+extern int ipsec_updatereplay __P((uint32_t, struct secasvar *));
 
 extern size_t ipsec4_hdrsiz __P((struct mbuf *, u_int, struct inpcb *));
 extern size_t ipsec_hdrsiz_tcp __P((struct tcpcb *));
 
 struct ip;
-extern const char *ipsec4_logpacketstr __P((struct ip *, u_int32_t));
+extern const char *ipsec4_logpacketstr __P((struct ip *, uint32_t));
 extern const char *ipsec_logsastr __P((struct secasvar *));
 
 extern void ipsec_dumpmbuf __P((struct mbuf *));
@@ -371,7 +371,7 @@ extern int ipsec4_tunnel_validate __P((struct mbuf *, int, u_int,
 	struct secasvar *));
 extern struct mbuf *ipsec_copypkt __P((struct mbuf *));
 extern void ipsec_delaux __P((struct mbuf *));
-extern int ipsec_addhist __P((struct mbuf *, int, u_int32_t));
+extern int ipsec_addhist __P((struct mbuf *, int, uint32_t));
 extern int ipsec_getnhist __P((struct mbuf *));
 extern void ipsec_clearhist __P((struct mbuf *));
 

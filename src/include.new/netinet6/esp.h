@@ -42,7 +42,7 @@
 #endif
 
 struct esp {
-	u_int32_t	esp_spi;	/* ESP */
+	uint32_t	esp_spi;	/* ESP */
 	/* variable size, 32bit bound */	/* Initialization Vector */
 	/* variable size */		/* Payload data */
 	/* variable size */		/* padding */
@@ -53,8 +53,8 @@ struct esp {
 };
 
 struct newesp {
-	u_int32_t	esp_spi;	/* ESP */
-	u_int32_t	esp_seq;	/* Sequence number */
+	uint32_t	esp_spi;	/* ESP */
+	uint32_t	esp_seq;	/* Sequence number */
 	/* variable size */		/* (IV and) Payload data */
 	/* variable size */		/* padding */
 	/* 8bit */			/* pad size */

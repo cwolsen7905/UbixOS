@@ -371,7 +371,7 @@ __bt_pdelete(BTREE *t, PAGE *h)
 	PAGE *pg;
 	EPGNO *parent;
 	indx_t cnt, idx, *ip, offset;
-	u_int32_t nksize;
+	uint32_t nksize;
 	char *from;
 
 	/*
@@ -463,7 +463,7 @@ __bt_dleaf(BTREE *t, const DBT *key, PAGE *h, u_int idx)
 {
 	BLEAF *bl;
 	indx_t cnt, *ip, offset;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	void *to;
 	char *from;
 

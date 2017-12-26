@@ -145,7 +145,7 @@ struct devstat {
 						      * for since this time
 						      */
 	STAILQ_ENTRY(devstat) 	dev_links;
-	u_int32_t		device_number;	     /*
+	uint32_t		device_number;	     /*
 						      * Devstat device
 						      * number.
 						      */
@@ -159,7 +159,7 @@ struct devstat {
 						      * Time the device was
 						      * created.
 						      */
-	u_int32_t		block_size;	     /* Block size, bytes */
+	uint32_t		block_size;	     /* Block size, bytes */
 	u_int64_t		tag_types[3];	     /*
 						      * The number of
 						      * simple, ordered, 
@@ -186,7 +186,7 @@ STAILQ_HEAD(devstatlist, devstat);
 struct bio;
 
 struct devstat *devstat_new_entry(const void *dev_name, int unit_number,
-				  u_int32_t block_size,
+				  uint32_t block_size,
 				  devstat_support_flags flags,
 				  devstat_type_flags device_type,
 				  devstat_priority priority);
@@ -194,7 +194,7 @@ struct devstat *devstat_new_entry(const void *dev_name, int unit_number,
 void devstat_remove_entry(struct devstat *ds);
 void devstat_start_transaction(struct devstat *ds, struct bintime *now);
 void devstat_start_transaction_bio(struct devstat *ds, struct bio *bp);
-void devstat_end_transaction(struct devstat *ds, u_int32_t bytes, 
+void devstat_end_transaction(struct devstat *ds, uint32_t bytes, 
 			     devstat_tag_type tag_type,
 			     devstat_trans_flags flags,
 			     struct bintime *now, struct bintime *then);

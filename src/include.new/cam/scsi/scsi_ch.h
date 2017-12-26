@@ -468,43 +468,43 @@ struct page_transport_geometry_parameters {
 };
 
 __BEGIN_DECLS
-void scsi_move_medium(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_move_medium(struct ccb_scsiio *csio, uint32_t retries,
 		      void (*cbfcnp)(struct cam_periph *, union ccb *),
-		      u_int8_t tag_action, u_int32_t tea, u_int32_t src,
-		      u_int32_t dst, int invert, u_int8_t sense_len,
-		      u_int32_t timeout);
+		      u_int8_t tag_action, uint32_t tea, uint32_t src,
+		      uint32_t dst, int invert, u_int8_t sense_len,
+		      uint32_t timeout);
 
-void scsi_exchange_medium(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_exchange_medium(struct ccb_scsiio *csio, uint32_t retries,
 			  void (*cbfcnp)(struct cam_periph *, union ccb *),
-			  u_int8_t tag_action, u_int32_t tea, u_int32_t src,
-			  u_int32_t dst1, u_int32_t dst2, int invert1,
-			  int invert2, u_int8_t sense_len, u_int32_t timeout);
+			  u_int8_t tag_action, uint32_t tea, uint32_t src,
+			  uint32_t dst1, uint32_t dst2, int invert1,
+			  int invert2, u_int8_t sense_len, uint32_t timeout);
 
-void scsi_position_to_element(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_position_to_element(struct ccb_scsiio *csio, uint32_t retries,
 			      void (*cbfcnp)(struct cam_periph *, union ccb *),
-			      u_int8_t tag_action, u_int32_t tea, u_int32_t dst,
+			      u_int8_t tag_action, uint32_t tea, uint32_t dst,
 			      int invert, u_int8_t sense_len,
-			      u_int32_t timeout);
+			      uint32_t timeout);
 
-void scsi_read_element_status(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_read_element_status(struct ccb_scsiio *csio, uint32_t retries,
 			      void (*cbfcnp)(struct cam_periph *, union ccb *),
-			      u_int8_t tag_action, int voltag, u_int32_t sea,
+			      u_int8_t tag_action, int voltag, uint32_t sea,
 			      int curdata, int dvcid,
-			      u_int32_t count, u_int8_t *data_ptr,
-			      u_int32_t dxfer_len, u_int8_t sense_len,
-			      u_int32_t timeout);
+			      uint32_t count, u_int8_t *data_ptr,
+			      uint32_t dxfer_len, u_int8_t sense_len,
+			      uint32_t timeout);
 
-void scsi_initialize_element_status(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_initialize_element_status(struct ccb_scsiio *csio, uint32_t retries,
 			       void (*cbfcnp)(struct cam_periph *, union ccb *),
 			       u_int8_t tag_action, u_int8_t sense_len,
-			       u_int32_t timeout);
-void scsi_send_volume_tag(struct ccb_scsiio *csio, u_int32_t retries,
+			       uint32_t timeout);
+void scsi_send_volume_tag(struct ccb_scsiio *csio, uint32_t retries,
 			  void (*cbfcnp)(struct cam_periph *, union ccb *),
 			  u_int8_t tag_action, 
 			  u_int16_t element_address,
 			  u_int8_t send_action_code,
 			  struct scsi_send_volume_tag_parameters *parameters,
-			  u_int8_t sense_len, u_int32_t timeout);
+			  u_int8_t sense_len, uint32_t timeout);
 __END_DECLS
 
 #endif /* _SCSI_SCSI_CH_H */

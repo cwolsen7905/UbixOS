@@ -72,7 +72,7 @@ struct ng_ksocket_sockopt {
 
 /* For NGM_KSOCKET_ACCEPT control message responses */
 struct ng_ksocket_accept {
-	u_int32_t	nodeid;		/* node ID of connected ksocket */
+	uint32_t	nodeid;		/* node ID of connected ksocket */
 	struct sockaddr	addr;		/* peer's address (variable length) */
 };
 

@@ -72,7 +72,7 @@ typedef	u_quad_t	inp_gen_t;
  * the following structure.
  */
 struct in_addr_4in6 {
-	u_int32_t	ia46_pad32[3];
+	uint32_t	ia46_pad32[3];
 	struct	in_addr	ia46_addr4;
 };
 
@@ -170,7 +170,7 @@ struct inpcb {
 	LIST_ENTRY(inpcb) inp_pcbgroup_wild; /* (g/i/p) group wildcard entry */
 	struct	socket *inp_socket;	/* (i) back pointer to socket */
 	struct	ucred	*inp_cred;	/* (c) cache of socket cred */
-	u_int32_t inp_flow;		/* (i) IPv6 flow information */
+	uint32_t inp_flow;		/* (i) IPv6 flow information */
 	int	inp_flags;		/* (i) generic IP/datagram flags */
 	int	inp_flags2;		/* (i) generic IP/datagram flags #2*/
 	u_char	inp_vflag;		/* (i) IP version flag (v4/v6) */

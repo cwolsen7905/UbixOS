@@ -396,8 +396,8 @@
         <references refid="vmm_8h_10926a4c7f70e387891f6124a48258b64" compoundref="vmm__memory_8c" startline="57" endline="93">vmmMemMapInit</references>
       </memberdef>
       <memberdef kind="function" id="vmm_8h_1976cf3919bf7c77c868021ec9374593b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t vmmFindFreePage</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t vmmFindFreePage</definition>
         <argsstring>(pidType pid)</argsstring>
         <name>vmmFindFreePage</name>
         <param>
@@ -603,7 +603,7 @@
 <codeline lineno="52"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1ac183f585641487a954ca46c0d7bde31" kindref="member">vmm_init</ref>();</highlight></codeline>
 <codeline lineno="53"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_10926a4c7f70e387891f6124a48258b64" kindref="member">vmmMemMapInit</ref>();</highlight></codeline>
 <codeline lineno="54"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_11a89fbc2f80ca828332c5ef31801faa3" kindref="member">countMemory</ref>();</highlight></codeline>
-<codeline lineno="55"><highlight class="normal"><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" kindref="member">vmmFindFreePage</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><ref refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" kindref="member">vmmFindFreePage</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid);</highlight></codeline>
 <codeline lineno="56"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1e90be267d851fed04d4d9b1c6c10454a" kindref="member">freePage</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>pageAddr);</highlight></codeline>
 <codeline lineno="57"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1362d462b3a1e19b5e0ef95e1839dbf11" kindref="member">adjustCowCounter</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>baseAddr,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>adjustment);</highlight></codeline>
 <codeline lineno="58"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="vmm_8h_1a24b696e386ef97dfe88b9b434c671c6" kindref="member">vmmFreeProcessPages</ref>(<ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref><sp/>pid);</highlight></codeline>

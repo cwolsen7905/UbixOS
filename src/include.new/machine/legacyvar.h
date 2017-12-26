@@ -46,7 +46,7 @@ uint32_t legacy_pcib_read_config(device_t dev, int bus, int slot, int func,
 int	legacy_pcib_read_ivar(device_t dev, device_t child, int which,
     uintptr_t *result);
 void	legacy_pcib_write_config(device_t dev, int bus, int slot, int func,
-    int reg, u_int32_t data, int bytes);
+    int reg, uint32_t data, int bytes);
 int	legacy_pcib_write_ivar(device_t dev, device_t child, int which,
     uintptr_t value);
 struct resource *legacy_pcib_alloc_resource(device_t dev, device_t child,

@@ -97,8 +97,8 @@ struct lacp_opreq {
 struct lagg_reqport {
 	char			rp_ifname[IFNAMSIZ];	/* name of the lagg */
 	char			rp_portname[IFNAMSIZ];	/* name of the port */
-	u_int32_t		rp_prio;		/* port priority */
-	u_int32_t		rp_flags;		/* port flags */
+	uint32_t		rp_prio;		/* port priority */
+	uint32_t		rp_flags;		/* port flags */
 	union {
 		struct lacp_opreq rpsc_lacp;
 	} rp_psc;
@@ -169,7 +169,7 @@ struct lagg_ifreq {
 
 /* Private data used by the loadbalancing protocol */
 struct lagg_lb {
-	u_int32_t		lb_key;
+	uint32_t		lb_key;
 	struct lagg_port	*lb_ports[LAGG_MAX_PORTS];
 };
 

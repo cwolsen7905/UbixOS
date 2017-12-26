@@ -42,7 +42,7 @@ extern nfstype nfsv3_type[];
 #define	vtonfsv2_mode(t, m) \
     txdr_unsigned(((t) == VFIFO) ? MAKEIMODE(VCHR, (m)) : MAKEIMODE((t), (m)))
 
-#define	nfsv3tov_type(a)	nv3tov_type[fxdr_unsigned(u_int32_t,(a))&0x7]
+#define	nfsv3tov_type(a)	nv3tov_type[fxdr_unsigned(uint32_t,(a))&0x7]
 #define	vtonfsv3_type(a)	txdr_unsigned(nfsv3_type[((int32_t)(a))])
 
 int	nfs_adv(struct mbuf **, caddr_t *, int, int);

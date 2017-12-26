@@ -83,28 +83,28 @@ struct i387Struct {
   };
 
 struct i386_frame {
-  u_int32_t gs;
-  u_int32_t fs;
-  u_int32_t es;
-  u_int32_t ds;
-  u_int32_t ss;
-  u_int32_t edi;
-  u_int32_t esi;
-  u_int32_t ebp;
-  u_int32_t esp;
-  u_int32_t ebx;
-  u_int32_t edx;
-  u_int32_t ecx;
-  u_int32_t eax;
+  uint32_t gs;
+  uint32_t fs;
+  uint32_t es;
+  uint32_t ds;
+  uint32_t ss;
+  uint32_t edi;
+  uint32_t esi;
+  uint32_t ebp;
+  uint32_t esp;
+  uint32_t ebx;
+  uint32_t edx;
+  uint32_t ecx;
+  uint32_t eax;
   /*
-  u_int32_t vector;
-  u_int32_t error_code;
+  uint32_t vector;
+  uint32_t error_code;
   */
-  u_int32_t eip;
-  u_int32_t cs;
-  u_int32_t flags;
-  u_int32_t user_esp;
-  u_int32_t user_ss;
+  uint32_t eip;
+  uint32_t cs;
+  uint32_t flags;
+  uint32_t user_esp;
+  uint32_t user_ss;
   };
 
 #endif

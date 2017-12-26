@@ -107,7 +107,7 @@ struct altq_pktattr {
  * mbuf tag to carry a queue id (and hints for ECN).
  */
 struct altq_tag {
-	u_int32_t	qid;		/* queue id */
+	uint32_t	qid;		/* queue id */
 	/* hints for ecn */
 	int		af;		/* address family */
 	void		*hdr;		/* saved header position in mbuf */

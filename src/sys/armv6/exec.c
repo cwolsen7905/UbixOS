@@ -160,7 +160,7 @@ void execFile(char *file,int argc,char **argv,int console) {
 
   int        i         = 0x0;
   int        x         = 0x0;
-  u_int32_t *tmp       = 0x0;
+  uint32_t *tmp       = 0x0;
 
   fileDescriptor   *tmpFd         = 0x0;
   elfHeader        *binaryHeader  = 0x0;
@@ -323,8 +323,8 @@ void execFile(char *file,int argc,char **argv,int console) {
   if (_current->id > 4)
   kprintf("argv[0]: [%s]\n",argv[0]);
   kprintf("argv: [0x%X]\n",argv);
-  tmp[0] = (u_int32_t)argv;
-  tmp[1] = (u_int32_t)argv;
+  tmp[0] = (uint32_t)argv;
+  tmp[1] = (uint32_t)argv;
 
 
   /* Switch Back To The Kernels VM Space */
@@ -529,7 +529,7 @@ memset(args,0x0,0x1000);
 
   //if (_current->id > 3) {
 
-    iFrame->user_esp = ((u_int32_t)STACK_ADDR) - (sizeof(u_int32_t) * (argc + 3));
+    iFrame->user_esp = ((uint32_t)STACK_ADDR) - (sizeof(uint32_t) * (argc + 3));
     tmp = (void *)iFrame->user_esp;
 
     //! build argc and argv[]
@@ -541,10 +541,10 @@ memset(args,0x0,0x1000);
     tmp[argc + 2] = 0x1;
     //}
   //else {
-    //tmp = (u_int32_t *)STACK_ADDR - 2;
+    //tmp = (uint32_t *)STACK_ADDR - 2;
     //tmp[0] = 0x1;
     //tmp[1] = 0x0;
-    //tmp[1] = (u_int32_t)argv;
+    //tmp[1] = (uint32_t)argv;
     //}
   kfree(argvNew);
  /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
@@ -563,12 +563,12 @@ void sys_exec(char *file,char *ap) {
   int                 i             = 0x0;
   int                 x             = 0x0;
   int                 argc          = 0x0;
-  u_int32_t          *tmp           = 0x0;
-  u_int32_t           seg_size      = 0x0;
-  u_int32_t           seg_addr      = 0x0;
-  u_int32_t           addr          = 0x0;
-  u_int32_t           eip           = 0x0;
-  u_int32_t           proghdr       = 0x0;
+  uint32_t          *tmp           = 0x0;
+  uint32_t           seg_size      = 0x0;
+  uint32_t           seg_addr      = 0x0;
+  uint32_t           addr          = 0x0;
+  uint32_t           eip           = 0x0;
+  uint32_t           proghdr       = 0x0;
   char               *args          = 0x0;
   char               *interp        = 0x0;
   char              **argv          = 0x0;
@@ -695,7 +695,7 @@ void sys_exec(char *file,char *ap) {
 
   //if (_current->id > 3) {
 
-  iFrame->user_esp = ((u_int32_t)STACK_ADDR) - (sizeof(u_int32_t) * (argc + 4 + (sizeof(Elf_Auxargs) * 2)));
+  iFrame->user_esp = ((uint32_t)STACK_ADDR) - (sizeof(uint32_t) * (argc + 4 + (sizeof(Elf_Auxargs) * 2)));
   kprintf("\n\n\nuser_esp: [0x%X]\n",iFrame->user_esp);
   tmp = iFrame->user_esp;
 

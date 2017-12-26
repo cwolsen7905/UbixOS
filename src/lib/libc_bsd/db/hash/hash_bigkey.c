@@ -554,12 +554,12 @@ __big_split(HTAB *hashp,
     BUFHEAD *np,	/* Pointer to new bucket page */
     BUFHEAD *big_keyp,	/* Pointer to first page containing the big key/data */
     int addr,		/* Address of big_keyp */
-    u_int32_t obucket,	/* Old Bucket */
+    uint32_t obucket,	/* Old Bucket */
     SPLIT_RETURN *ret)
 {
 	BUFHEAD *bp, *tmpp;
 	DBT key, val;
-	u_int32_t change;
+	uint32_t change;
 	u_int16_t free_space, n, off, *tp;
 
 	bp = big_keyp;

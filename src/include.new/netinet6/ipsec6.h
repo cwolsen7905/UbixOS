@@ -67,7 +67,7 @@ struct tcp6cb;
 extern size_t ipsec6_hdrsiz __P((struct mbuf *, u_int, struct inpcb *));
 
 struct ip6_hdr;
-extern const char *ipsec6_logpacketstr __P((struct ip6_hdr *, u_int32_t));
+extern const char *ipsec6_logpacketstr __P((struct ip6_hdr *, uint32_t));
 
 extern int ipsec6_output_trans __P((struct ipsec_output_state *, u_char *,
 	struct mbuf *, struct secpolicy *, int, int *));

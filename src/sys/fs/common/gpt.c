@@ -184,7 +184,7 @@ int gptfind( const uuid_t *uuid, struct device_interface *devInfo, int part ) {
 }
 
 static int gptread_hdr( const char *which, struct device_interface *devInfo, struct gpt_hdr *hdr, u_int64_t hdrlba ) {
-  u_int32_t crc;
+  uint32_t crc;
 
   if ( devInfo->read( devInfo->info, secbuf, hdrlba, 1 ) ) {
     kprintf( "%s: unable to read %s GPT header\n", BOOTPROG, which );

@@ -72,7 +72,7 @@ struct icmp6_hdr {
 	u_int8_t	icmp6_code;	/* code field */
 	u_int16_t	icmp6_cksum;	/* checksum field */
 	union {
-		u_int32_t	icmp6_un_data32[1]; /* type-specific field */
+		uint32_t	icmp6_un_data32[1]; /* type-specific field */
 		u_int16_t	icmp6_un_data16[2]; /* type-specific field */
 		u_int8_t	icmp6_un_data8[4];  /* type-specific field */
 	} icmp6_dataun;
@@ -214,8 +214,8 @@ struct nd_router_solicit {	/* router solicitation */
 
 struct nd_router_advert {	/* router advertisement */
 	struct icmp6_hdr	nd_ra_hdr;
-	u_int32_t		nd_ra_reachable;	/* reachable time */
-	u_int32_t		nd_ra_retransmit;	/* retransmit timer */
+	uint32_t		nd_ra_reachable;	/* reachable time */
+	uint32_t		nd_ra_retransmit;	/* retransmit timer */
 	/* could be followed by options */
 } __packed;
 
@@ -308,9 +308,9 @@ struct nd_opt_prefix_info {	/* prefix information */
 	u_int8_t	nd_opt_pi_len;
 	u_int8_t	nd_opt_pi_prefix_len;
 	u_int8_t	nd_opt_pi_flags_reserved;
-	u_int32_t	nd_opt_pi_valid_time;
-	u_int32_t	nd_opt_pi_preferred_time;
-	u_int32_t	nd_opt_pi_reserved2;
+	uint32_t	nd_opt_pi_valid_time;
+	uint32_t	nd_opt_pi_preferred_time;
+	uint32_t	nd_opt_pi_reserved2;
 	struct in6_addr	nd_opt_pi_prefix;
 } __packed;
 
@@ -321,7 +321,7 @@ struct nd_opt_rd_hdr {		/* redirected header */
 	u_int8_t	nd_opt_rh_type;
 	u_int8_t	nd_opt_rh_len;
 	u_int16_t	nd_opt_rh_reserved1;
-	u_int32_t	nd_opt_rh_reserved2;
+	uint32_t	nd_opt_rh_reserved2;
 	/* followed by IP header and data */
 } __packed;
 
@@ -329,7 +329,7 @@ struct nd_opt_mtu {		/* MTU option */
 	u_int8_t	nd_opt_mtu_type;
 	u_int8_t	nd_opt_mtu_len;
 	u_int16_t	nd_opt_mtu_reserved;
-	u_int32_t	nd_opt_mtu_mtu;
+	uint32_t	nd_opt_mtu_mtu;
 } __packed;
 
 #define	ND_OPT_NONCE_LEN	((1 * 8) - 2)
@@ -347,7 +347,7 @@ struct nd_opt_route_info {	/* route info */
 	u_int8_t	nd_opt_rti_len;
 	u_int8_t	nd_opt_rti_prefixlen;
 	u_int8_t	nd_opt_rti_flags;
-	u_int32_t	nd_opt_rti_lifetime;
+	uint32_t	nd_opt_rti_lifetime;
 	/* prefix follows */
 } __packed;
 
@@ -355,7 +355,7 @@ struct nd_opt_rdnss {		/* RDNSS option (RFC 6106) */
 	u_int8_t	nd_opt_rdnss_type;
 	u_int8_t	nd_opt_rdnss_len;
 	u_int16_t	nd_opt_rdnss_reserved;
-	u_int32_t	nd_opt_rdnss_lifetime;
+	uint32_t	nd_opt_rdnss_lifetime;
 	/* followed by list of recursive DNS servers */
 } __packed;
 
@@ -363,7 +363,7 @@ struct nd_opt_dnssl {		/* DNSSL option (RFC 6106) */
 	u_int8_t	nd_opt_dnssl_type;
 	u_int8_t	nd_opt_dnssl_len;
 	u_int16_t	nd_opt_dnssl_reserved;
-	u_int32_t	nd_opt_dnssl_lifetime;
+	uint32_t	nd_opt_dnssl_lifetime;
 	/* followed by list of DNS search domains */
 } __packed;
 
@@ -449,7 +449,7 @@ struct icmp6_nodeinfo {
 #endif
 
 struct ni_reply_fqdn {
-	u_int32_t ni_fqdn_ttl;	/* TTL */
+	uint32_t ni_fqdn_ttl;	/* TTL */
 	u_int8_t ni_fqdn_namelen; /* length in octets of the FQDN */
 	u_int8_t ni_fqdn_name[3]; /* XXX: alignment */
 } __packed;
@@ -462,7 +462,7 @@ struct icmp6_router_renum {	/* router renumbering header */
 	u_int8_t	rr_segnum;
 	u_int8_t	rr_flags;
 	u_int16_t	rr_maxdelay;
-	u_int32_t	rr_reserved;
+	uint32_t	rr_reserved;
 } __packed;
 
 #define ICMP6_RR_FLAGS_TEST		0x80
@@ -497,9 +497,9 @@ struct rr_pco_use {		/* use prefix part */
 	u_int8_t	rpu_keeplen;
 	u_int8_t	rpu_ramask;
 	u_int8_t	rpu_raflags;
-	u_int32_t	rpu_vltime;
-	u_int32_t	rpu_pltime;
-	u_int32_t	rpu_flags;
+	uint32_t	rpu_vltime;
+	uint32_t	rpu_pltime;
+	uint32_t	rpu_flags;
 	struct	in6_addr rpu_prefix;
 } __packed;
 #define ICMP6_RR_PCOUSE_RAFLAGS_ONLINK	0x80
@@ -517,7 +517,7 @@ struct rr_result {		/* router renumbering result message */
 	u_int16_t	rrr_flags;
 	u_int8_t	rrr_ordinal;
 	u_int8_t	rrr_matchedlen;
-	u_int32_t	rrr_ifid;
+	uint32_t	rrr_ifid;
 	struct	in6_addr rrr_prefix;
 } __packed;
 #if BYTE_ORDER == BIG_ENDIAN
@@ -533,7 +533,7 @@ struct rr_result {		/* router renumbering result message */
  */
 
 struct icmp6_filter {
-	u_int32_t icmp6_filt[8];
+	uint32_t icmp6_filt[8];
 };
 
 #ifdef _KERNEL

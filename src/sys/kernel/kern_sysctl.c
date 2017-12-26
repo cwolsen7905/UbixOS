@@ -72,13 +72,13 @@ static void def_ctls() {
   name[0] = 1;
   name[1] = 37;
   page_val = 0x1;
-  sysctl_add( name, name_len, "kern_arnd", &page_val, sizeof(u_int32_t) );
+  sysctl_add( name, name_len, "kern_arnd", &page_val, sizeof(uint32_t) );
 
   /* HW: NCPU */
   name[0] = 6;
   name[1] = 3;
   page_val = 0x1;
-  sysctl_add( name, name_len, "hw.ncpu", &page_val, sizeof(u_int32_t) );
+  sysctl_add( name, name_len, "hw.ncpu", &page_val, sizeof(uint32_t) );
 }
 
 int sysctl_init() {
@@ -191,7 +191,7 @@ int __sysctl( struct thread *td, struct sysctl_args *uap ) {
     endTask( _current->id );
   }
 
-  if ( (u_int32_t) uap->oldlenp < tmpCtl->val_len )
+  if ( (uint32_t) uap->oldlenp < tmpCtl->val_len )
     memcpy( uap->old, tmpCtl->value, (uInt32) uap->oldlenp );
   else
     memcpy( uap->old, tmpCtl->value, tmpCtl->val_len );
@@ -224,7 +224,7 @@ int sys_sysctl( struct thread *td, struct sys_sysctl_args *args ) {
     return (-1);
   }
 
-  if ( (u_int32_t) args->oldlenp < tmpCtl->val_len )
+  if ( (uint32_t) args->oldlenp < tmpCtl->val_len )
     memcpy( args->oldp, tmpCtl->value, (uInt32) args->oldlenp );
   else
     memcpy( args->oldp, tmpCtl->value, tmpCtl->val_len );

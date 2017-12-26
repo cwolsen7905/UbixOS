@@ -269,7 +269,7 @@ struct fs {
 	int32_t  fs_old_time;		/* last time written */
 	int32_t	 fs_old_size;		/* number of blocks in fs */
 	int32_t	 fs_old_dsize;		/* number of data blocks in fs */
-	u_int32_t fs_ncg;		/* number of cylinder groups */
+	uint32_t fs_ncg;		/* number of cylinder groups */
 	int32_t	 fs_bsize;		/* size of basic blocks in fs */
 	int32_t	 fs_fsize;		/* size of frag blocks in fs */
 	int32_t	 fs_frag;		/* number of frags in a block in fs */
@@ -292,7 +292,7 @@ struct fs {
 	int32_t	 fs_spare1[2];		/* old fs_csmask */
 					/* old fs_csshift */
 	int32_t	 fs_nindir;		/* value of NINDIR */
-	u_int32_t fs_inopb;		/* value of INOPB */
+	uint32_t fs_inopb;		/* value of INOPB */
 	int32_t	 fs_old_nspf;		/* value of NSPF */
 /* yet another configuration parameter */
 	int32_t	 fs_optim;		/* optimization preference, see below */
@@ -309,7 +309,7 @@ struct fs {
 	int32_t  fs_old_spc;		/* sectors per cylinder */
 	int32_t	 fs_old_ncyl;		/* cylinders in filesystem */
 	int32_t	 fs_old_cpg;		/* cylinders per group */
-	u_int32_t fs_ipg;		/* inodes per group */
+	uint32_t fs_ipg;		/* inodes per group */
 	int32_t	 fs_fpg;		/* blocks per group * fs_frag */
 /* this data must be re-computed after crashes */
 	struct	csum fs_old_cstotal;	/* cylinder summary information */
@@ -342,10 +342,10 @@ struct fs {
 	int64_t	 fs_dsize;		/* number of data blocks in fs */
 	ufs2_daddr_t fs_csaddr;		/* blk addr of cyl grp summary area */
 	int64_t	 fs_pendingblocks;	/* (u) blocks being freed */
-	u_int32_t fs_pendinginodes;	/* (u) inodes being freed */
+	uint32_t fs_pendinginodes;	/* (u) inodes being freed */
 	uint32_t fs_snapinum[FSMAXSNAP];/* list of snapshot inode numbers */
-	u_int32_t fs_avgfilesize;	/* expected average file size */
-	u_int32_t fs_avgfpdir;		/* expected # of files per directory */
+	uint32_t fs_avgfilesize;	/* expected average file size */
+	uint32_t fs_avgfpdir;		/* expected # of files per directory */
 	int32_t	 fs_save_cgsize;	/* save real cg size to use fs_bsize */
 	ufs_time_t fs_mtime;		/* Last mount or fsck time. */
 	int32_t  fs_sujfree;		/* SUJ free list */
@@ -474,26 +474,26 @@ struct cg {
 	int32_t	 cg_firstfield;		/* historic cyl groups linked list */
 	int32_t	 cg_magic;		/* magic number */
 	int32_t  cg_old_time;		/* time last written */
-	u_int32_t cg_cgx;		/* we are the cgx'th cylinder group */
+	uint32_t cg_cgx;		/* we are the cgx'th cylinder group */
 	int16_t	 cg_old_ncyl;		/* number of cyl's this cg */
 	int16_t  cg_old_niblk;		/* number of inode blocks this cg */
-	u_int32_t cg_ndblk;		/* number of data blocks this cg */
+	uint32_t cg_ndblk;		/* number of data blocks this cg */
 	struct	 csum cg_cs;		/* cylinder summary information */
-	u_int32_t cg_rotor;		/* position of last used block */
-	u_int32_t cg_frotor;		/* position of last used frag */
-	u_int32_t cg_irotor;		/* position of last used inode */
-	u_int32_t cg_frsum[MAXFRAG];	/* counts of available frags */
+	uint32_t cg_rotor;		/* position of last used block */
+	uint32_t cg_frotor;		/* position of last used frag */
+	uint32_t cg_irotor;		/* position of last used inode */
+	uint32_t cg_frsum[MAXFRAG];	/* counts of available frags */
 	int32_t	 cg_old_btotoff;	/* (int32) block totals per cylinder */
 	int32_t	 cg_old_boff;		/* (u_int16) free block positions */
-	u_int32_t cg_iusedoff;		/* (u_int8) used inode map */
-	u_int32_t cg_freeoff;		/* (u_int8) free block map */
-	u_int32_t cg_nextfreeoff;	/* (u_int8) next available space */
-	u_int32_t cg_clustersumoff;	/* (u_int32) counts of avail clusters */
-	u_int32_t cg_clusteroff;		/* (u_int8) free cluster map */
-	u_int32_t cg_nclusterblks;	/* number of clusters this cg */
-	u_int32_t cg_niblk;		/* number of inode blocks this cg */
-	u_int32_t cg_initediblk;		/* last initialized inode */
-	u_int32_t cg_unrefs;		/* number of unreferenced inodes */
+	uint32_t cg_iusedoff;		/* (u_int8) used inode map */
+	uint32_t cg_freeoff;		/* (u_int8) free block map */
+	uint32_t cg_nextfreeoff;	/* (u_int8) next available space */
+	uint32_t cg_clustersumoff;	/* (u_int32) counts of avail clusters */
+	uint32_t cg_clusteroff;		/* (u_int8) free cluster map */
+	uint32_t cg_nclusterblks;	/* number of clusters this cg */
+	uint32_t cg_niblk;		/* number of inode blocks this cg */
+	uint32_t cg_initediblk;		/* last initialized inode */
+	uint32_t cg_unrefs;		/* number of unreferenced inodes */
 	int32_t	 cg_sparecon32[2];	/* reserved for future use */
 	ufs_time_t cg_time;		/* time last written */
 	int64_t	 cg_sparecon64[3];	/* reserved for future use */

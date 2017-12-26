@@ -103,7 +103,7 @@ static const struct  xdr_ops xdrrec_ops = {
  * meet the needs of xdr and rpc based on tcp.
  */
 
-#define LAST_FRAG ((u_int32_t)(1 << 31))
+#define LAST_FRAG ((uint32_t)(1 << 31))
 
 typedef struct rec_strm {
 	char *tcp_handle;
@@ -114,7 +114,7 @@ typedef struct rec_strm {
 	char *out_base;	/* output buffer (points to frag header) */
 	char *out_finger;	/* next output position */
 	char *out_boundry;	/* data cannot up to this address */
-	u_int32_t *frag_header;	/* beginning of curren fragment */
+	uint32_t *frag_header;	/* beginning of curren fragment */
 	bool_t frag_sent;	/* true if buffer sent in middle of record */
 	/*
 	 * in-coming bits
@@ -131,7 +131,7 @@ typedef struct rec_strm {
 
 	bool_t nonblock;
 	bool_t in_haveheader;
-	u_int32_t in_header;
+	uint32_t in_header;
 	char *in_hdrp;
 	int in_hdrlen;
 	int in_reclen;
@@ -202,8 +202,8 @@ xdrrec_create(xdrs, sendsize, recvsize, tcp_handle, readit, writeit)
 	rstrm->readit = readit;
 	rstrm->writeit = writeit;
 	rstrm->out_finger = rstrm->out_boundry = rstrm->out_base;
-	rstrm->frag_header = (u_int32_t *)(void *)rstrm->out_base;
-	rstrm->out_finger += sizeof(u_int32_t);
+	rstrm->frag_header = (uint32_t *)(void *)rstrm->out_base;
+	rstrm->out_finger += sizeof(uint32_t);
 	rstrm->out_boundry += sendsize;
 	rstrm->frag_sent = FALSE;
 	rstrm->in_size = recvsize;
@@ -237,14 +237,14 @@ xdrrec_getlong(xdrs, lp)
 	/* first try the inline, fast case */
 	if ((rstrm->fbtbc >= sizeof(int32_t)) &&
 		(((long)rstrm->in_boundry - (long)buflp) >= sizeof(int32_t))) {
-		*lp = (long)ntohl((u_int32_t)(*buflp));
+		*lp = (long)ntohl((uint32_t)(*buflp));
 		rstrm->fbtbc -= sizeof(int32_t);
 		rstrm->in_finger += sizeof(int32_t);
 	} else {
 		if (! xdrrec_getbytes(xdrs, (char *)(void *)&mylong,
 		    sizeof(int32_t)))
 			return (FALSE);
-		*lp = (long)ntohl((u_int32_t)mylong);
+		*lp = (long)ntohl((uint32_t)mylong);
 	}
 	return (TRUE);
 }
@@ -269,7 +269,7 @@ xdrrec_putlong(xdrs, lp)
 		dest_lp = ((int32_t *)(void *)(rstrm->out_finger));
 		rstrm->out_finger += sizeof(int32_t);
 	}
-	*dest_lp = (int32_t)htonl((u_int32_t)(*lp));
+	*dest_lp = (int32_t)htonl((uint32_t)(*lp));
 	return (TRUE);
 }
 
@@ -513,16 +513,16 @@ xdrrec_endofrecord(xdrs, sendnow)
 	u_long len;  /* fragment length */
 
 	if (sendnow || rstrm->frag_sent ||
-		((u_long)rstrm->out_finger + sizeof(u_int32_t) >=
+		((u_long)rstrm->out_finger + sizeof(uint32_t) >=
 		(u_long)rstrm->out_boundry)) {
 		rstrm->frag_sent = FALSE;
 		return (flush_out(rstrm, TRUE));
 	}
 	len = (u_long)(rstrm->out_finger) - (u_long)(rstrm->frag_header) -
-	   sizeof(u_int32_t);
-	*(rstrm->frag_header) = htonl((u_int32_t)len | LAST_FRAG);
-	rstrm->frag_header = (u_int32_t *)(void *)rstrm->out_finger;
-	rstrm->out_finger += sizeof(u_int32_t);
+	   sizeof(uint32_t);
+	*(rstrm->frag_header) = htonl((uint32_t)len | LAST_FRAG);
+	rstrm->frag_header = (uint32_t *)(void *)rstrm->out_finger;
+	rstrm->out_finger += sizeof(uint32_t);
 	return (TRUE);
 }
 
@@ -629,18 +629,18 @@ flush_out(rstrm, eor)
 	RECSTREAM *rstrm;
 	bool_t eor;
 {
-	u_int32_t eormask = (eor == TRUE) ? LAST_FRAG : 0;
-	u_int32_t len = (u_int32_t)((u_long)(rstrm->out_finger) - 
-		(u_long)(rstrm->frag_header) - sizeof(u_int32_t));
+	uint32_t eormask = (eor == TRUE) ? LAST_FRAG : 0;
+	uint32_t len = (uint32_t)((u_long)(rstrm->out_finger) - 
+		(u_long)(rstrm->frag_header) - sizeof(uint32_t));
 
 	*(rstrm->frag_header) = htonl(len | eormask);
-	len = (u_int32_t)((u_long)(rstrm->out_finger) - 
+	len = (uint32_t)((u_long)(rstrm->out_finger) - 
 	    (u_long)(rstrm->out_base));
 	if ((*(rstrm->writeit))(rstrm->tcp_handle, rstrm->out_base, (int)len)
 		!= (int)len)
 		return (FALSE);
-	rstrm->frag_header = (u_int32_t *)(void *)rstrm->out_base;
-	rstrm->out_finger = (char *)rstrm->out_base + sizeof(u_int32_t);
+	rstrm->frag_header = (uint32_t *)(void *)rstrm->out_base;
+	rstrm->out_finger = (char *)rstrm->out_base + sizeof(uint32_t);
 	return (TRUE);
 }
 
@@ -649,16 +649,16 @@ fill_input_buf(rstrm)
 	RECSTREAM *rstrm;
 {
 	char *where;
-	u_int32_t i;
+	uint32_t i;
 	int len;
 
 	if (rstrm->nonblock)
 		return FALSE;
 
 	where = rstrm->in_base;
-	i = (u_int32_t)((u_long)rstrm->in_boundry % BYTES_PER_XDR_UNIT);
+	i = (uint32_t)((u_long)rstrm->in_boundry % BYTES_PER_XDR_UNIT);
 	where += i;
-	len = (u_int32_t)(rstrm->in_size - i);
+	len = (uint32_t)(rstrm->in_size - i);
 	if ((len = (*(rstrm->readit))(rstrm->tcp_handle, where, len)) == -1)
 		return (FALSE);
 	rstrm->in_finger = where;
@@ -704,7 +704,7 @@ static bool_t  /* next two bytes of the input stream are treated as a header */
 set_input_fragment(rstrm)
 	RECSTREAM *rstrm;
 {
-	u_int32_t header;
+	uint32_t header;
 
 	if (rstrm->nonblock)
 		return FALSE;
@@ -731,7 +731,7 @@ skip_input_bytes(rstrm, cnt)
 	RECSTREAM *rstrm;
 	long cnt;
 {
-	u_int32_t current;
+	uint32_t current;
 
 	while (cnt > 0) {
 		current = (size_t)((long)rstrm->in_boundry - 
@@ -741,7 +741,7 @@ skip_input_bytes(rstrm, cnt)
 				return (FALSE);
 			continue;
 		}
-		current = (u_int32_t)((cnt < current) ? cnt : current);
+		current = (uint32_t)((cnt < current) ? cnt : current);
 		rstrm->in_finger += current;
 		cnt -= current;
 	}

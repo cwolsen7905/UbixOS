@@ -90,18 +90,18 @@ struct nfsclient {
 	time_t		lc_delegtime;		/* Old deleg expiry (sec) */
 	nfsquad_t	lc_clientid;		/* 64 bit clientid */
 	nfsquad_t	lc_confirm;		/* 64 bit confirm value */
-	u_int32_t	lc_program;		/* RPC Program # */
-	u_int32_t	lc_callback;		/* Callback id */
-	u_int32_t	lc_stateindex;		/* Current state index# */
-	u_int32_t	lc_statemaxindex;	/* Max state index# */
-	u_int32_t	lc_cbref;		/* Cnt of callbacks */
+	uint32_t	lc_program;		/* RPC Program # */
+	uint32_t	lc_callback;		/* Callback id */
+	uint32_t	lc_stateindex;		/* Current state index# */
+	uint32_t	lc_statemaxindex;	/* Max state index# */
+	uint32_t	lc_cbref;		/* Cnt of callbacks */
 	uid_t		lc_uid;			/* User credential */
 	gid_t		lc_gid;
 	u_int16_t	lc_idlen;		/* Client ID and len */
 	u_int16_t	lc_namelen;		/* plus GSS principal and len */
 	u_char		*lc_name;
 	struct nfssockreq lc_req;		/* Callback info */
-	u_int32_t	lc_flags;		/* LCL_ flag bits */
+	uint32_t	lc_flags;		/* LCL_ flag bits */
 	u_char		lc_verf[NFSX_VERF];	 /* client verifier */
 	u_char		lc_id[1];		/* Malloc'd correct size */
 };
@@ -170,13 +170,13 @@ struct nfsstate {
 		struct nfslockhead	lock; /* Locks list */
 	} ls_head;
 	nfsv4stateid_t		ls_stateid;	/* The state id */
-	u_int32_t		ls_seq;		/* seq id */
+	uint32_t		ls_seq;		/* seq id */
 	uid_t			ls_uid;		/* uid of locker */
-	u_int32_t		ls_flags;	/* Type of lock, etc. */
+	uint32_t		ls_flags;	/* Type of lock, etc. */
 	union {
 		struct nfsstate	*openowner;	/* Open only */
-		u_int32_t	opentolockseq;	/* Lock call only */
-		u_int32_t	noopens;	/* Openowner only */
+		uint32_t	opentolockseq;	/* Lock call only */
+		uint32_t	noopens;	/* Openowner only */
 		struct {
 			u_quad_t	filerev; /* Delegations only */
 			time_t		expiry;
@@ -215,7 +215,7 @@ struct nfslock {
 	struct nfslockfile	*lo_lfp;
 	u_int64_t		lo_first;
 	u_int64_t		lo_end;
-	u_int32_t		lo_flags;
+	uint32_t		lo_flags;
 };
 
 /*
@@ -226,7 +226,7 @@ struct nfslockconflict {
 	nfsquad_t		cl_clientid;
 	u_int64_t		cl_first;
 	u_int64_t		cl_end;
-	u_int32_t		cl_flags;
+	uint32_t		cl_flags;
 	u_short			cl_ownerlen;
 	u_char			cl_owner[NFSV4_OPAQUELIMIT];
 };
@@ -285,8 +285,8 @@ struct nfsusrgrp {
  * Record at beginning of file.
  */
 struct nfsf_rec {
-	u_int32_t	lease;			/* Lease duration */
-	u_int32_t	numboots;		/* Number of boottimes */
+	uint32_t	lease;			/* Lease duration */
+	uint32_t	numboots;		/* Number of boottimes */
 };
 
 #if defined(_KERNEL) || defined(KERNEL)

@@ -147,11 +147,11 @@
 typedef struct {
 	u_int8_t	flags;             /* reserved for future use */
 	u_int8_t	service_type;      /* service type */
-	u_int32_t	token_rate;        /* bytes per second */
-	u_int32_t	token_bucket_size; /* bytes */
-	u_int32_t	peak_bandwidth;    /* bytes per second */
-	u_int32_t	latency;           /* microseconds */
-	u_int32_t	delay_variation;   /* microseconds */
+	uint32_t	token_rate;        /* bytes per second */
+	uint32_t	token_bucket_size; /* bytes */
+	uint32_t	peak_bandwidth;    /* bytes per second */
+	uint32_t	latency;           /* microseconds */
+	uint32_t	delay_variation;   /* microseconds */
 } __attribute__ ((packed)) ng_l2cap_flow_t;
 typedef ng_l2cap_flow_t *	ng_l2cap_flow_p;
 
@@ -329,7 +329,7 @@ typedef ng_l2cap_info_rsp_data_t *	ng_l2cap_info_rsp_data_p;
 
 /* L2CA data packet header */
 typedef struct {
-	u_int32_t	token;	/* token to use in L2CAP_L2CA_WRITE */
+	uint32_t	token;	/* token to use in L2CAP_L2CA_WRITE */
 	u_int16_t	length;	/* length of the data */
 	u_int16_t	lcid;	/* local channel ID */
 } __attribute__ ((packed)) ng_l2cap_l2ca_hdr_t;
@@ -614,7 +614,7 @@ typedef u_int16_t	ng_l2cap_node_debug_ep;
 
 #define NGM_L2CAP_NODE_GET_CON_LIST	0x40a	/* L2CAP -> User */
 typedef struct {
-	u_int32_t	num_connections; /* number of connections */
+	uint32_t	num_connections; /* number of connections */
 } ng_l2cap_node_con_list_ep;
 
 /* Connection flags */
@@ -638,11 +638,11 @@ typedef struct {
 
 #define NGM_L2CAP_NODE_GET_CHAN_LIST	0x40b	/* L2CAP -> User */
 typedef struct {
-	u_int32_t	num_channels;	/* number of channels */
+	uint32_t	num_channels;	/* number of channels */
 } ng_l2cap_node_chan_list_ep;
 
 typedef struct {
-	u_int32_t	state;		/* channel state */
+	uint32_t	state;		/* channel state */
 
 	u_int16_t	scid;		/* source (local) channel ID */
 	u_int16_t	dcid;		/* destination (remote) channel ID */

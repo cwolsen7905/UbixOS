@@ -25,36 +25,34 @@
 
  $Id: unmappage.c 188 2016-01-23 03:09:10Z reddawg $
 
-*****************************************************************************************/
+ *****************************************************************************************/
 
 #include <vmm/vmm.h>
 
 /************************************************************************
 
-Function: void vmmUnmapPage(uInt32 pageAddr,int flags);
-Description: This Function Will Unmap A Page From The Kernel VM Space
-             The Flags Variable Decides If Its To Free The Page Or Not
-             A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
-Notes:
+ Function: void vmmUnmapPage(uInt32 pageAddr,int flags);
+ Description: This Function Will Unmap A Page From The Kernel VM Space
+ The Flags Variable Decides If Its To Free The Page Or Not
+ A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
+ Notes:
 
-07/30/02 - I Have Decided That This Should Free The Physical Page There
-           Is No Reason To Keep It Marked As Not Available
+ 07/30/02 - I Have Decided That This Should Free The Physical Page There
+ Is No Reason To Keep It Marked As Not Available
 
-07/30/02 - Ok A Found A Reason To Keep It Marked As Available I Admit
-           Even I Am Not Perfect Ok The Case Where You Wouldn't Want To
-           Free It Would Be On Something Like Where I Allocated A Page
-           To Create A New Virtual Space So Now It Has A Flag
+ 07/30/02 - Ok A Found A Reason To Keep It Marked As Available I Admit
+ Even I Am Not Perfect Ok The Case Where You Wouldn't Want To
+ Free It Would Be On Something Like Where I Allocated A Page
+ To Create A New Virtual Space So Now It Has A Flag
 
-************************************************************************/
-void 
-vmmUnmapPage(uInt32 pageAddr, int flags)
-{
-  int             pageDirectoryIndex = 0, pageTableIndex = 0;
-  uInt32         *pageTable = 0x0;
+ ************************************************************************/
+void vmm_unmapPage(uInt32 pageAddr, int flags) {
+  int pageDirectoryIndex = 0, pageTableIndex = 0;
+  uInt32 *pageTable = 0x0;
 
   /* Get The Index To The Page Directory */
   pageDirectoryIndex = (pageAddr >> 22);
-  
+
   //Calculate The Page Table Index
   pageTableIndex = ((pageAddr >> 12) & 0x3FF);
 
@@ -72,46 +70,44 @@ vmmUnmapPage(uInt32 pageAddr, int flags)
   pageTable[pageTableIndex] = 0x0;
   /* Rehash The Page Directory */
   asm volatile(
-      "movl %cr3,%eax\n"
-      "movl %eax,%cr3\n"
-    );
+    "movl %cr3,%eax\n"
+    "movl %eax,%cr3\n"
+  );
   /* Return */
   return;
 }
 
-
-
 /************************************************************************
 
-Function: void vmmUnmapPages(uInt32 pageAddr,int flags);
-Description: This Function Will Unmap A Page From The Kernel VM Space
-             The Flags Variable Decides If Its To Free The Page Or Not
-             A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
-Notes:
+ Function: void vmmUnmapPages(uInt32 pageAddr,int flags);
+ Description: This Function Will Unmap A Page From The Kernel VM Space
+ The Flags Variable Decides If Its To Free The Page Or Not
+ A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
+ Notes:
 
-07/30/02 - I Have Decided That This Should Free The Physical Page There
-           Is No Reason To Keep It Marked As Not Available
+ 07/30/02 - I Have Decided That This Should Free The Physical Page There
+ Is No Reason To Keep It Marked As Not Available
 
-07/30/02 - Ok A Found A Reason To Keep It Marked As Available I Admit
-           Even I Am Not Perfect Ok The Case Where You Wouldn't Want To
-           Free It Would Be On Something Like Where I Allocated A Page
-           To Create A New Virtual Space So Now It Has A Flag
+ 07/30/02 - Ok A Found A Reason To Keep It Marked As Available I Admit
+ Even I Am Not Perfect Ok The Case Where You Wouldn't Want To
+ Free It Would Be On Something Like Where I Allocated A Page
+ To Create A New Virtual Space So Now It Has A Flag
 
-************************************************************************/
-void vmmUnmapPages(void *ptr,uInt32 size) {
-  uInt32 baseAddr = (uInt32)ptr & 0xFFFFF000;
-  uInt32 dI = 0x0,tI = 0x0;
+ ************************************************************************/
+void vmm_unmapPages(void *ptr, uint32_t size) {
+  uInt32 baseAddr = (uInt32) ptr & 0xFFFFF000;
+  uInt32 dI = 0x0, tI = 0x0;
   uInt32 y = 0x0;
   uInt32 *pageTable = 0x0;
 
-  dI = (baseAddr/(1024*4096));
-  tI = ((baseAddr-(dI*(1024*4096)))/4096);
-  pageTable = (uInt32 *)(PT_BASE_ADDR + (4096*dI));
-  for (y=tI;y<(tI+((size+4095)/4096));y++) {
+  dI = (baseAddr / (1024 * 4096));
+  tI = ((baseAddr - (dI * (1024 * 4096))) / 4096);
+  pageTable = (uInt32 *) (PT_BASE_ADDR + (4096 * dI));
+  for (y = tI; y < (tI + ((size + 4095) / 4096)); y++) {
     pageTable[y] = 0x0;
-    }
-  return;
   }
+  return;
+}
 
 /***
  $Log: unmappage.c,v $

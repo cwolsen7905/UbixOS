@@ -40,7 +40,7 @@
 spinLock_t Master = SPIN_LOCK_INITIALIZER;
 
 void syscall( struct trapframe *frame ) {
-  u_int32_t code = 0x0;
+  uint32_t code = 0x0;
   caddr_t params;
 
   struct thread *td = &_current->td;
@@ -62,8 +62,8 @@ void syscall( struct trapframe *frame ) {
   if ( code > totalCalls ) {
     kprintf( "Invalid Call: [%i]\n", frame->tf_eax );
   }
-  else if ( (u_int32_t) systemCalls[code].sc_status == SYSCALL_INVALID ) {
-    kprintf( "Invalid Call: [%i][0x%X]\n", code, (u_int32_t) systemCalls[code].sc_name );
+  else if ( (uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID ) {
+    kprintf( "Invalid Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name );
     frame->tf_eax = -1;
     frame->tf_edx = 0x0;
   }

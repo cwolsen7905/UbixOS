@@ -41,7 +41,7 @@ struct swcr_data {
 			struct enc_xform *SW_exf;
 		} SWCR_ENC;
 		struct {
-			u_int32_t	 SW_size;
+			uint32_t	 SW_size;
 			struct comp_algo *SW_cxf;
 		} SWCR_COMP;
 	} SWCR_UN;

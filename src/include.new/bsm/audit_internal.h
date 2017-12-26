@@ -72,9 +72,9 @@ typedef	struct au_record	au_record_t;
  * token structures may contain pointers of whose contents we do not know the
  * size (e.g text tokens).
  */
-#define	AUDIT_HEADER_EX_SIZE(a)	((a)->ai_termid.at_type+18+sizeof(u_int32_t))
+#define	AUDIT_HEADER_EX_SIZE(a)	((a)->ai_termid.at_type+18+sizeof(uint32_t))
 #define	AUDIT_HEADER_SIZE	18
-#define	MAX_AUDIT_HEADER_SIZE	(5*sizeof(u_int32_t)+18)
+#define	MAX_AUDIT_HEADER_SIZE	(5*sizeof(uint32_t)+18)
 #define	AUDIT_TRAILER_SIZE	7
 
 /*
@@ -98,7 +98,7 @@ typedef	struct au_record	au_record_t;
 #define	ADD_U_INT32(loc, val)						\
 	do {								\
 		be32enc((loc), (val));					\
-		(loc) += sizeof(u_int32_t);				\
+		(loc) += sizeof(uint32_t);				\
 	} while(0)
 
 #define	ADD_U_INT64(loc, val)						\

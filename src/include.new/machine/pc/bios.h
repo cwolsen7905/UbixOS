@@ -36,7 +36,7 @@
 struct bios32_SDheader 
 {
     u_int8_t	sig[4];
-    u_int32_t	entry;
+    uint32_t	entry;
     u_int8_t	revision;
     u_int8_t	len;
     u_int8_t	cksum;
@@ -53,14 +53,14 @@ struct PnPBIOS_table
     u_int8_t	len;    		/* total structure length */
     u_int16_t	control;		/* BIOS feature flags */
     u_int8_t	cksum;			/* checksum */
-    u_int32_t	evflagaddr;		/* address of event notificaton flag */
+    uint32_t	evflagaddr;		/* address of event notificaton flag */
     u_int16_t	rmentryoffset;		/* real-mode entry offset */
     u_int16_t	rmentryseg;		/*                 segment */
     u_int16_t	pmentryoffset;		/* protected-mode entry offset */
-    u_int32_t	pmentrybase;		/*                segment base */
-    u_int32_t	oemdevid;		/* motherboard EISA ID */
+    uint32_t	pmentrybase;		/*                segment base */
+    uint32_t	oemdevid;		/* motherboard EISA ID */
     u_int16_t	rmbiosseg;		/* real-mode BIOS segment */
-    u_int32_t	pmdataseg;		/* protected-mode data segment */
+    uint32_t	pmdataseg;		/* protected-mode data segment */
 } __packed;
 
 /*
@@ -173,7 +173,7 @@ struct PIR_header
     u_int16_t	ph_pci_irqs;
     u_int16_t	ph_router_vendor;
     u_int16_t	ph_router_device;
-    u_int32_t	ph_miniport;
+    uint32_t	ph_miniport;
     u_int8_t	ph_res[11];
     u_int8_t	ph_checksum;
 } __packed;
@@ -218,15 +218,15 @@ struct PIR_table
 struct bios_smap {
     u_int64_t	base;
     u_int64_t	length;
-    u_int32_t	type;
+    uint32_t	type;
 } __packed;
 
 /* Structure extended to include extended attribute field in ACPI 3.0. */
 struct bios_smap_xattr {
     u_int64_t	base;
     u_int64_t	length;
-    u_int32_t	type;
-    u_int32_t	xattr;
+    uint32_t	type;
+    uint32_t	xattr;
 } __packed;
 
 /*
@@ -323,11 +323,11 @@ struct bios32_SDentry
     union 
     {
 	u_int8_t	name[4];	/* service identifier */
-	u_int32_t	id;		/* as a 32-bit value */
+	uint32_t	id;		/* as a 32-bit value */
     } ident;
-    u_int32_t	base;			/* base of service */
-    u_int32_t	len;			/* service length */
-    u_int32_t	entry;			/* entrypoint offset from base */
+    uint32_t	base;			/* base of service */
+    uint32_t	len;			/* service length */
+    uint32_t	entry;			/* entrypoint offset from base */
     vm_offset_t	ventry;			/* entrypoint in kernel virtual segment */
 };
 

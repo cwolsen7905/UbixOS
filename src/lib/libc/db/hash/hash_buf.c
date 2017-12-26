@@ -71,7 +71,7 @@ __FBSDID("$FreeBSD: src/lib/libc/db/hash/hash_buf.c,v 1.7 2002/03/21 22:46:26 ob
 #include "page.h"
 #include "extern.h"
 
-static BUFHEAD *newbuf(HTAB *, u_int32_t, BUFHEAD *);
+static BUFHEAD *newbuf(HTAB *, uint32_t, BUFHEAD *);
 
 /* Unlink B from its place in the lru */
 #define BUF_REMOVE(B) { \
@@ -105,12 +105,12 @@ static BUFHEAD *newbuf(HTAB *, u_int32_t, BUFHEAD *);
 extern BUFHEAD *
 __get_buf(hashp, addr, prev_bp, newpage)
 	HTAB *hashp;
-	u_int32_t addr;
+	uint32_t addr;
 	BUFHEAD *prev_bp;
 	int newpage;	/* If prev_bp set, indicates a new overflow page. */
 {
 	BUFHEAD *bp;
-	u_int32_t is_disk_mask;
+	uint32_t is_disk_mask;
 	int is_disk, segment_ndx;
 	SEGMENT segp;
 
@@ -160,7 +160,7 @@ __get_buf(hashp, addr, prev_bp, newpage)
 static BUFHEAD *
 newbuf(hashp, addr, prev_bp)
 	HTAB *hashp;
-	u_int32_t addr;
+	uint32_t addr;
 	BUFHEAD *prev_bp;
 {
 	BUFHEAD *bp;		/* The buffer we're going to use */

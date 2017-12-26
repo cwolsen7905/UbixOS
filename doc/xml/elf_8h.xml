@@ -692,7 +692,7 @@
       <memberdef kind="function" id="elf_8h_1f11ec9e50bcff723428b0c911a177fd0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int elf_loadfile</definition>
-        <argsstring>(kTask_t *p, const char *file, u_int32_t *addr, u_int32_t *entry)</argsstring>
+        <argsstring>(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)</argsstring>
         <name>elf_loadfile</name>
         <param>
           <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
@@ -703,11 +703,11 @@
           <declname>file</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref> *</type>
+          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref> *</type>
           <declname>addr</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref> *</type>
+          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref> *</type>
           <declname>entry</declname>
         </param>
         <briefdescription>
@@ -964,20 +964,20 @@
 <codeline lineno="154"><highlight class="normal"></highlight></codeline>
 <codeline lineno="155" refid="structElf__Auxargs" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="156" refid="structElf__Auxargs_13a14df95494a03a2c51f21759b8e5b26" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>execfd;</highlight></codeline>
-<codeline lineno="157" refid="structElf__Auxargs_115dd42590b2807011c079e1e499b1030" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>phdr;</highlight></codeline>
-<codeline lineno="158" refid="structElf__Auxargs_10775837104814be2c22ebf306c52d34f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>phent;</highlight></codeline>
-<codeline lineno="159" refid="structElf__Auxargs_1be98a612999706e049999027bb5404e9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>phnum;</highlight></codeline>
-<codeline lineno="160" refid="structElf__Auxargs_1e05c934140ddd5707467e9911d51c7ea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pagesz;</highlight></codeline>
-<codeline lineno="161" refid="structElf__Auxargs_1f66e5b831167efd5b05090a68acd63c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>base;</highlight></codeline>
-<codeline lineno="162" refid="structElf__Auxargs_1854857ce9ea1c1bfc5744586c12893c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>flags;</highlight></codeline>
-<codeline lineno="163" refid="structElf__Auxargs_162da88643e4ee0dc50f091f28b9becb9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>entry;</highlight></codeline>
-<codeline lineno="164" refid="structElf__Auxargs_13dbace009fbbd068d1a894479ad0fa7b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>trace;</highlight></codeline>
+<codeline lineno="157" refid="structElf__Auxargs_115dd42590b2807011c079e1e499b1030" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>phdr;</highlight></codeline>
+<codeline lineno="158" refid="structElf__Auxargs_10775837104814be2c22ebf306c52d34f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>phent;</highlight></codeline>
+<codeline lineno="159" refid="structElf__Auxargs_1be98a612999706e049999027bb5404e9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>phnum;</highlight></codeline>
+<codeline lineno="160" refid="structElf__Auxargs_1e05c934140ddd5707467e9911d51c7ea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pagesz;</highlight></codeline>
+<codeline lineno="161" refid="structElf__Auxargs_1f66e5b831167efd5b05090a68acd63c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>base;</highlight></codeline>
+<codeline lineno="162" refid="structElf__Auxargs_1854857ce9ea1c1bfc5744586c12893c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>flags;</highlight></codeline>
+<codeline lineno="163" refid="structElf__Auxargs_162da88643e4ee0dc50f091f28b9becb9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>entry;</highlight></codeline>
+<codeline lineno="164" refid="structElf__Auxargs_13dbace009fbbd068d1a894479ad0fa7b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>trace;</highlight></codeline>
 <codeline lineno="165"><highlight class="normal">}<sp/><ref refid="structElf__Auxargs" kindref="compound">Elf_Auxargs</ref>;</highlight></codeline>
 <codeline lineno="166"><highlight class="normal"></highlight></codeline>
 <codeline lineno="167"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="elf_8h_1311110a36ffc1b10813ae5c4a357bbf4" kindref="member">elfGetShType</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="168"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="elf_8h_1cc8cfb0f90cf2fea91e0713719c49506" kindref="member">elfGetPhType</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="169"><highlight class="normal"></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="elf_8h_118371af6e681af62767a92ac64af1ebb" kindref="member">elfGetRelType</ref>(</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">);</highlight></codeline>
-<codeline lineno="170"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1f11ec9e50bcff723428b0c911a177fd0" kindref="member">elf_loadfile</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*p,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/>*addr,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/>*entry);</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1f11ec9e50bcff723428b0c911a177fd0" kindref="member">elf_loadfile</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*p,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/>*addr,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/>*entry);</highlight></codeline>
 <codeline lineno="171"><highlight class="normal"></highlight></codeline>
 <codeline lineno="172" refid="elf_8h_18d1ac0f35a8999a4a8a3350ca95ab54b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ELF32_R_SYM(i)<sp/><sp/><sp/><sp/><sp/><sp/>((i)&gt;&gt;8)</highlight></codeline>
 <codeline lineno="173" refid="elf_8h_1a4ffd69f2c1c03229686bfa3a898db00" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ELF32_R_TYPE(i)<sp/><sp/><sp/><sp/><sp/>((unsigned<sp/>char)(i))</highlight></codeline>

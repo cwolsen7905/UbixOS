@@ -277,29 +277,29 @@ catgets(nl_catd catd, int set_id, int msg_id, const char *s)
 
 	/* binary search, see knuth algorithm b */
 	l = 0;
-	u = ntohl((u_int32_t)cat_hdr->__nsets) - 1;
+	u = ntohl((uint32_t)cat_hdr->__nsets) - 1;
 	while (l <= u) {
 		i = (l + u) / 2;
-		r = set_id - ntohl((u_int32_t)set_hdr[i].__setno);
+		r = set_id - ntohl((uint32_t)set_hdr[i].__setno);
 
 		if (r == 0) {
 			msg_hdr = (struct _nls_msg_hdr *)
 			    (void *)((char *)catd->__data +
 			    sizeof(struct _nls_cat_hdr) +
-			    ntohl((u_int32_t)cat_hdr->__msg_hdr_offset));
+			    ntohl((uint32_t)cat_hdr->__msg_hdr_offset));
 
-			l = ntohl((u_int32_t)set_hdr[i].__index);
-			u = l + ntohl((u_int32_t)set_hdr[i].__nmsgs) - 1;
+			l = ntohl((uint32_t)set_hdr[i].__index);
+			u = l + ntohl((uint32_t)set_hdr[i].__nmsgs) - 1;
 			while (l <= u) {
 				i = (l + u) / 2;
 				r = msg_id -
-				    ntohl((u_int32_t)msg_hdr[i].__msgno);
+				    ntohl((uint32_t)msg_hdr[i].__msgno);
 				if (r == 0) {
 					return ((char *) catd->__data +
 					    sizeof(struct _nls_cat_hdr) +
-					    ntohl((u_int32_t)
+					    ntohl((uint32_t)
 					    cat_hdr->__msg_txt_offset) +
-					    ntohl((u_int32_t)
+					    ntohl((uint32_t)
 					    msg_hdr[i].__offset));
 				} else if (r < 0) {
 					u = i - 1;
@@ -417,7 +417,7 @@ load_msgcat(const char *path, const char *name, const char *lang)
 	}
 	_close(fd);
 
-	if (ntohl((u_int32_t)((struct _nls_cat_hdr *)data)->__magic) !=
+	if (ntohl((uint32_t)((struct _nls_cat_hdr *)data)->__magic) !=
 	    _NLS_MAGIC) {
 		munmap(data, (size_t)st.st_size);
 		SAVEFAIL(name, lang, EFTYPE);

@@ -54,8 +54,8 @@ struct elan_mmcr {
 	u_int8_t	ECCSTA;
 	u_int8_t	ECCCKBPOS;
 	u_int8_t	ECCCKTEST;
-	u_int32_t	ECCSBADD;
-	u_int32_t	ECCMBADD;
+	uint32_t	ECCSBADD;
+	uint32_t	ECCMBADD;
 	u_int8_t	pad_0x02c[0x14];
 
 	/* SDRAM Buffer */
@@ -76,34 +76,34 @@ struct elan_mmcr {
 	u_int16_t	HBMSTIRQCTL;
 	u_int16_t	HBMSTIRQSTA;
 	u_int8_t	pad_0x06a[0x2];
-	u_int32_t	MSTINTADD;
+	uint32_t	MSTINTADD;
 
 	/* System Arbitration */
 	u_int8_t	SYSARBCTL;
 	u_int8_t	PCIARBSTA;
 	u_int16_t	SYSARBMENB;
-	u_int32_t	ARBPRICTL;
+	uint32_t	ARBPRICTL;
 	u_int8_t	pad_0x078[0x8];
 
 	/* System Address Mapping */
-	u_int32_t	ADDDECCTL;
-	u_int32_t	WPVSTA;
-	u_int32_t	PAR0;
-	u_int32_t	PAR1;
-	u_int32_t	PAR2;
-	u_int32_t	PAR3;
-	u_int32_t	PAR4;
-	u_int32_t	PAR5;
-	u_int32_t	PAR6;
-	u_int32_t	PAR7;
-	u_int32_t	PAR8;
-	u_int32_t	PAR9;
-	u_int32_t	PAR10;
-	u_int32_t	PAR11;
-	u_int32_t	PAR12;
-	u_int32_t	PAR13;
-	u_int32_t	PAR14;
-	u_int32_t	PAR15;
+	uint32_t	ADDDECCTL;
+	uint32_t	WPVSTA;
+	uint32_t	PAR0;
+	uint32_t	PAR1;
+	uint32_t	PAR2;
+	uint32_t	PAR3;
+	uint32_t	PAR4;
+	uint32_t	PAR5;
+	uint32_t	PAR6;
+	uint32_t	PAR7;
+	uint32_t	PAR8;
+	uint32_t	PAR9;
+	uint32_t	PAR10;
+	uint32_t	PAR11;
+	uint32_t	PAR12;
+	uint32_t	PAR13;
+	uint32_t	PAR14;
+	uint32_t	PAR15;
 	u_int8_t	pad_0x0c8[0xb38];
 
 	/* GP Bus Controller */

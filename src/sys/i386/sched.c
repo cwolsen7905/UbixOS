@@ -48,7 +48,7 @@
 
 static kTask_t *taskList = 0x0;
 static kTask_t *delList = 0x0;
-static u_int32_t nextID = -1;
+static uint32_t nextID = -1;
 
 kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;
@@ -82,7 +82,7 @@ int sched_init() {
 }
 
 void sched() {
-  u_int32_t memAddr = 0x0;
+  uint32_t memAddr = 0x0;
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
 
@@ -123,13 +123,13 @@ void sched() {
 
     asm("cli");
 
-    memAddr = (u_int32_t) & (_current->tss);
+    memAddr = (uint32_t) & (_current->tss);
     ubixGDT[4].descriptor.baseLow = (memAddr & 0xFFFF);
     ubixGDT[4].descriptor.baseMed = ((memAddr >> 16) & 0xFF);
     ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
     ubixGDT[4].descriptor.access = '\x89';
 
-   // memAddr = STACK_ADDR; //(u_int32_t) & (_current->tss);
+   // memAddr = STACK_ADDR; //(uint32_t) & (_current->tss);
     ubixGDT[10].descriptor.baseLow = (STACK_ADDR & 0xFFFF);
     ubixGDT[10].descriptor.baseMed = ((STACK_ADDR >> 16) & 0xFF);
     ubixGDT[10].descriptor.baseHigh = (STACK_ADDR >> 24);
@@ -169,7 +169,7 @@ kTask_t *schedNewTask() {
 
   for ( i = 0; i < 3; i++ ) {
     fp = (void *) kmalloc( sizeof(struct file) );
-    //kprintf("DB: [0x%X]\n", (u_int32_t) fp);
+    //kprintf("DB: [0x%X]\n", (uint32_t) fp);
     tmpTask->td.o_files[i] = (void *) fp;
     fp->f_flag = 0x4;
   }
@@ -225,7 +225,7 @@ kTask_t *sched_getDelTask() {
   return (tmpTask);
 }
 
-kTask_t *schedFindTask( u_int32_t id ) {
+kTask_t *schedFindTask( uint32_t id ) {
   kTask_t *tmpTask = 0x0;
 
   for ( tmpTask = taskList; tmpTask; tmpTask = tmpTask->next ) {

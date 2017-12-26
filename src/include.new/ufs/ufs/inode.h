@@ -67,7 +67,7 @@ struct inode {
 	TAILQ_ENTRY(inode) i_nextsnap; /* snapshot file list. */
 	struct	vnode  *i_vnode;/* Vnode associated with this inode. */
 	struct	ufsmount *i_ump;/* Ufsmount point associated with this inode. */
-	u_int32_t i_flag;	/* flags, see below */
+	uint32_t i_flag;	/* flags, see below */
 	struct cdev *i_dev;	/* Device associated with the inode. */
 	ino_t	  i_number;	/* The identity of the inode. */
 	int	  i_effnlink;	/* i_nlink when I/O completes */
@@ -103,10 +103,10 @@ struct inode {
 	u_int16_t i_mode;	/* IFMT, permissions; see below. */
 	int16_t	  i_nlink;	/* File link count. */
 	u_int64_t i_size;	/* File byte count. */
-	u_int32_t i_flags;	/* Status flags (chflags). */
+	uint32_t i_flags;	/* Status flags (chflags). */
 	u_int64_t i_gen;	/* Generation number. */
-	u_int32_t i_uid;	/* File owner. */
-	u_int32_t i_gid;	/* File group. */
+	uint32_t i_uid;	/* File owner. */
+	uint32_t i_gid;	/* File group. */
 	/*
 	 * The real copy of the on-disk inode.
 	 */

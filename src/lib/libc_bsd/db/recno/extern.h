@@ -34,7 +34,7 @@
 
 int	 __rec_close(DB *);
 int	 __rec_delete(const DB *, const DBT *, u_int);
-int	 __rec_dleaf(BTREE *, PAGE *, u_int32_t);
+int	 __rec_dleaf(BTREE *, PAGE *, uint32_t);
 int	 __rec_fd(const DB *);
 int	 __rec_fmap(BTREE *, recno_t);
 int	 __rec_fout(BTREE *);

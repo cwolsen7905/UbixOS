@@ -263,7 +263,7 @@ __fpu_explode(fe, fp, type, reg)
 	int type, reg;
 {
 	u_int64_t l0, l1;
-	u_int32_t s;
+	uint32_t s;
 
 	if (type == FTYPE_LNG || type == FTYPE_DBL || type == FTYPE_EXT) {
 		l0 = __fpu_getreg64(reg & ~1);

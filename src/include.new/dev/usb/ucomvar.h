@@ -100,8 +100,8 @@ struct ucom_callback {
 	int (*ucom_ioctl)(void *, int, u_long, caddr_t, int, usb_proc_ptr);
 	int (*ucom_open)(void *, int);
 	void (*ucom_close)(void *, int);
-	void (*ucom_read)(void *, int, u_char **, u_int32_t *);
-	void (*ucom_write)(void *, int, u_char *, u_char *, u_int32_t *);
+	void (*ucom_read)(void *, int, u_char **, uint32_t *);
+	void (*ucom_write)(void *, int, u_char *, u_char *, uint32_t *);
 };
 
 /* line status register */

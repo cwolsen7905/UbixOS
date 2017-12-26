@@ -161,25 +161,25 @@ __END_DECLS
 __BEGIN_DECLS
 
 typedef struct au_tid32 {
-	u_int32_t	port;
-	u_int32_t	addr;
+	uint32_t	port;
+	uint32_t	addr;
 } au_tid32_t;
 
 typedef struct au_tid64 {
 	u_int64_t	port;
-	u_int32_t	addr;
+	uint32_t	addr;
 } au_tid64_t;
 
 typedef struct au_tidaddr32 {
-	u_int32_t	port;
-	u_int32_t	type;
-	u_int32_t	addr[4];
+	uint32_t	port;
+	uint32_t	type;
+	uint32_t	addr[4];
 } au_tidaddr32_t;
 
 typedef struct au_tidaddr64 {
 	u_int64_t	port;
-	u_int32_t	type;
-	u_int32_t	addr[4];
+	uint32_t	type;
+	uint32_t	addr[4];
 } au_tidaddr64_t;
 
 /*
@@ -190,7 +190,7 @@ typedef struct au_tidaddr64 {
  */
 typedef struct {
 	u_char		 no;
-	u_int32_t	 val;
+	uint32_t	 val;
 	u_int16_t	 len;
 	char		*text;
 } au_arg32_t;
@@ -224,19 +224,19 @@ typedef struct {
  * device                  4 bytes/8 bytes (32-bit/64-bit)
  */
 typedef struct {
-	u_int32_t	mode;
-	u_int32_t	uid;
-	u_int32_t	gid;
-	u_int32_t	fsid;
+	uint32_t	mode;
+	uint32_t	uid;
+	uint32_t	gid;
+	uint32_t	fsid;
 	u_int64_t	nid;
-	u_int32_t	dev;
+	uint32_t	dev;
 } au_attr32_t;
 
 typedef struct {
-	u_int32_t	mode;
-	u_int32_t	uid;
-	u_int32_t	gid;
-	u_int32_t	fsid;
+	uint32_t	mode;
+	uint32_t	uid;
+	uint32_t	gid;
+	uint32_t	fsid;
 	u_int64_t	nid;
 	u_int64_t	dev;
 } au_attr64_t;
@@ -246,7 +246,7 @@ typedef struct {
  * text                    count null-terminated string(s)
  */
 typedef struct {
-	u_int32_t	 count;
+	uint32_t	 count;
 	char		*text[AUDIT_MAX_ARGS];
 } au_execarg_t;
 
@@ -255,7 +255,7 @@ typedef struct {
  * text                    count null-terminated string(s)
  */
 typedef struct {
-	u_int32_t	 count;
+	uint32_t	 count;
 	char		*text[AUDIT_MAX_ENV];
 } au_execenv_t;
 
@@ -264,8 +264,8 @@ typedef struct {
  * return value            4 bytes
  */
 typedef struct {
-	u_int32_t	status;
-	u_int32_t	ret;
+	uint32_t	status;
+	uint32_t	ret;
 } au_exit_t;
 
 /*
@@ -275,8 +275,8 @@ typedef struct {
  * file pathname           N bytes + 1 terminating NULL byte
  */
 typedef struct {
-	u_int32_t	 s;
-	u_int32_t	 ms;
+	uint32_t	 s;
+	uint32_t	 ms;
 	u_int16_t	 len;
 	char		*name;
 } au_file_t;
@@ -288,7 +288,7 @@ typedef struct {
  */
 typedef struct {
 	u_int16_t	no;
-	u_int32_t	list[AUDIT_MAX_GROUPS];
+	uint32_t	list[AUDIT_MAX_GROUPS];
 } au_groups_t;
 
 /*
@@ -300,12 +300,12 @@ typedef struct {
  * milliseconds of time    4 bytes/8 bytes (32-bit/64-bit value)
  */
 typedef struct {
-	u_int32_t	size;
+	uint32_t	size;
 	u_char		version;
 	u_int16_t	e_type;
 	u_int16_t	e_mod;
-	u_int32_t	s;
-	u_int32_t	ms;
+	uint32_t	s;
+	uint32_t	ms;
 } au_header32_t;
 
 /*
@@ -319,18 +319,18 @@ typedef struct {
  * nanoseconds of time     4 bytes/8 bytes  (32/64-bits)
  */
 typedef struct {
-	u_int32_t	size;
+	uint32_t	size;
 	u_char		version;
 	u_int16_t	e_type;
 	u_int16_t	e_mod;
-	u_int32_t	ad_type;
-	u_int32_t	addr[4];
-	u_int32_t	s;
-	u_int32_t	ms;
+	uint32_t	ad_type;
+	uint32_t	addr[4];
+	uint32_t	s;
+	uint32_t	ms;
 } au_header32_ex_t;
 
 typedef struct {
-	u_int32_t	size;
+	uint32_t	size;
 	u_char		version;
 	u_int16_t	e_type;
 	u_int16_t	e_mod;
@@ -339,12 +339,12 @@ typedef struct {
 } au_header64_t;
 
 typedef struct {
-	u_int32_t	size;
+	uint32_t	size;
 	u_char		version;
 	u_int16_t	e_type;
 	u_int16_t	e_mod;
-	u_int32_t	ad_type;
-	u_int32_t	addr[4];
+	uint32_t	ad_type;
+	uint32_t	addr[4];
 	u_int64_t	s;
 	u_int64_t	ms;
 } au_header64_ex_t;
@@ -353,7 +353,7 @@ typedef struct {
  * internet address        4 bytes
  */
 typedef struct {
-	u_int32_t	addr;
+	uint32_t	addr;
 } au_inaddr_t;
 
 /*
@@ -361,8 +361,8 @@ typedef struct {
  * internet address     16 bytes
  */
 typedef struct {
-	u_int32_t	type;
-	u_int32_t	addr[4];
+	uint32_t	type;
+	uint32_t	addr[4];
 } au_inaddr_ex_t;
 
 /*
@@ -386,8 +386,8 @@ typedef struct {
 	u_char		ttl;
 	u_char		prot;
 	u_int16_t	chksm;
-	u_int32_t	src;
-	u_int32_t	dest;
+	uint32_t	src;
+	uint32_t	dest;
 } au_ip_t;
 
 /*
@@ -396,7 +396,7 @@ typedef struct {
  */
 typedef struct {
 	u_char		type;
-	u_int32_t	id;
+	uint32_t	id;
 } au_ipc_t;
 
 /*
@@ -409,13 +409,13 @@ typedef struct {
  * key                     4 bytes
  */
 typedef struct {
-	u_int32_t	uid;
-	u_int32_t	gid;
-	u_int32_t	puid;
-	u_int32_t	pgid;
-	u_int32_t	mode;
-	u_int32_t	seq;
-	u_int32_t	key;
+	uint32_t	uid;
+	uint32_t	gid;
+	uint32_t	puid;
+	uint32_t	pgid;
+	uint32_t	mode;
+	uint32_t	seq;
+	uint32_t	key;
 } au_ipcperm_t;
 
 /*
@@ -456,24 +456,24 @@ typedef struct {
  * machine address       4 bytes
  */
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tid32_t	tid;
 } au_proc32_t;
 
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tid64_t	tid;
 } au_proc64_t;
 
@@ -491,24 +491,24 @@ typedef struct {
  * machine address       16 bytes
  */
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tidaddr32_t	tid;
 } au_proc32ex_t;
 
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tidaddr64_t	tid;
 } au_proc64ex_t;
 
@@ -518,7 +518,7 @@ typedef struct {
  */
 typedef struct {
 	u_char		status;
-	u_int32_t	ret;
+	uint32_t	ret;
 } au_ret32_t;
 
 typedef struct {
@@ -530,7 +530,7 @@ typedef struct {
  * sequence number         4 bytes
  */
 typedef struct {
-	u_int32_t	seqno;
+	uint32_t	seqno;
 } au_seq_t;
 
 /*
@@ -543,9 +543,9 @@ typedef struct {
 typedef struct {
 	u_int16_t	type;
 	u_int16_t	l_port;
-	u_int32_t	l_addr;
+	uint32_t	l_addr;
 	u_int16_t	r_port;
-	u_int32_t	r_addr;
+	uint32_t	r_addr;
 } au_socket_t;
 
 /*
@@ -562,9 +562,9 @@ typedef struct {
 	u_int16_t	type;
 	u_int16_t	atype;
 	u_int16_t	l_port;
-	u_int32_t	l_addr[4];
-	u_int32_t	r_port;
-	u_int32_t	r_addr[4];
+	uint32_t	l_addr[4];
+	uint32_t	r_port;
+	uint32_t	r_addr[4];
 } au_socket_ex32_t;
 
 /*
@@ -575,13 +575,13 @@ typedef struct {
 typedef struct {
 	u_int16_t	family;
 	u_int16_t	port;
-	u_int32_t	addr[4];
+	uint32_t	addr[4];
 } au_socketinet_ex32_t;
 
 typedef struct {
 	u_int16_t	family;
 	u_int16_t	port;
-	u_int32_t	addr;
+	uint32_t	addr;
 } au_socketinet32_t;
 
 /*
@@ -606,24 +606,24 @@ typedef struct {
  * 	machine address       4 bytes
  */
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tid32_t	tid;
 } au_subject32_t;
 
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tid64_t	tid;
 } au_subject64_t;
 
@@ -641,24 +641,24 @@ typedef struct {
  * machine address       16 bytes
  */
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tidaddr32_t	tid;
 } au_subject32ex_t;
 
 typedef struct {
-	u_int32_t	auid;
-	u_int32_t	euid;
-	u_int32_t	egid;
-	u_int32_t	ruid;
-	u_int32_t	rgid;
-	u_int32_t	pid;
-	u_int32_t	sid;
+	uint32_t	auid;
+	uint32_t	euid;
+	uint32_t	egid;
+	uint32_t	ruid;
+	uint32_t	rgid;
+	uint32_t	pid;
+	uint32_t	sid;
 	au_tidaddr64_t	tid;
 } au_subject64ex_t;
 
@@ -706,11 +706,11 @@ typedef struct {
 } au_zonename_t;
 
 typedef struct {
-	u_int32_t	ident;
+	uint32_t	ident;
 	u_int16_t	filter;
 	u_int16_t	flags;
-	u_int32_t	fflags;
-	u_int32_t	data;
+	uint32_t	fflags;
+	uint32_t	data;
 } au_kevent_t;
 
 typedef struct {
@@ -724,7 +724,7 @@ typedef struct {
  */
 typedef struct {
 	u_int16_t	magic;
-	u_int32_t	count;
+	uint32_t	count;
 } au_trailer_t;
 
 struct tokenstr {

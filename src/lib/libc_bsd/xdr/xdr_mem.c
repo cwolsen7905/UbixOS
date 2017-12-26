@@ -129,7 +129,7 @@ xdrmem_getlong_aligned(xdrs, lp)
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
 	xdrs->x_handy -= sizeof(int32_t);
-	*lp = ntohl(*(u_int32_t *)xdrs->x_private);
+	*lp = ntohl(*(uint32_t *)xdrs->x_private);
 	xdrs->x_private = (char *)xdrs->x_private + sizeof(int32_t);
 	return (TRUE);
 }
@@ -143,7 +143,7 @@ xdrmem_putlong_aligned(xdrs, lp)
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
 	xdrs->x_handy -= sizeof(int32_t);
-	*(u_int32_t *)xdrs->x_private = htonl((u_int32_t)*lp);
+	*(uint32_t *)xdrs->x_private = htonl((uint32_t)*lp);
 	xdrs->x_private = (char *)xdrs->x_private + sizeof(int32_t);
 	return (TRUE);
 }
@@ -153,7 +153,7 @@ xdrmem_getlong_unaligned(xdrs, lp)
 	XDR *xdrs;
 	long *lp;
 {
-	u_int32_t l;
+	uint32_t l;
 
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
@@ -169,12 +169,12 @@ xdrmem_putlong_unaligned(xdrs, lp)
 	XDR *xdrs;
 	const long *lp;
 {
-	u_int32_t l;
+	uint32_t l;
 
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
 	xdrs->x_handy -= sizeof(int32_t);
-	l = htonl((u_int32_t)*lp);
+	l = htonl((uint32_t)*lp);
 	memmove(xdrs->x_private, &l, sizeof(int32_t));
 	xdrs->x_private = (char *)xdrs->x_private + sizeof(int32_t);
 	return (TRUE);

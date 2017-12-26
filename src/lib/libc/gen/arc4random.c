@@ -146,11 +146,11 @@ arc4_getbyte(as)
 	return (as->s[(si + sj) & 0xff]);
 }
 
-static inline u_int32_t
+static inline uint32_t
 arc4_getword(as)
 	struct arc4_stream *as;
 {
-	u_int32_t val;
+	uint32_t val;
 
 	val = arc4_getbyte(as) << 24;
 	val |= arc4_getbyte(as) << 16;
@@ -199,10 +199,10 @@ arc4random_addrandom(dat, datlen)
 	THREAD_UNLOCK();
 }
 
-u_int32_t
+uint32_t
 arc4random()
 {
-	u_int32_t rnd;
+	uint32_t rnd;
 
 	THREAD_LOCK();
 	arc4_check_init();

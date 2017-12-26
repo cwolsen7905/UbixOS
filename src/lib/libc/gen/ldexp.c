@@ -27,8 +27,8 @@ typedef union
   double value;
   struct
   {
-    u_int32_t msw;
-    u_int32_t lsw;
+    uint32_t msw;
+    uint32_t lsw;
   } parts;
 } ieee_double_shape_type;
 
@@ -41,8 +41,8 @@ typedef union
   double value;
   struct
   {
-    u_int32_t lsw;
-    u_int32_t msw;
+    uint32_t lsw;
+    uint32_t msw;
   } parts;
 } ieee_double_shape_type;
 
@@ -87,7 +87,7 @@ tiny   = 1.0e-300;
 static double
 _copysign(double x, double y)
 {
-	u_int32_t hx,hy;
+	uint32_t hx,hy;
 	GET_HIGH_WORD(hx,x);
 	GET_HIGH_WORD(hy,y);
 	SET_HIGH_WORD(x,(hx&0x7fffffff)|(hy&0x80000000));

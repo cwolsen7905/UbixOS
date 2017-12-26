@@ -43,26 +43,26 @@ typedef struct
 {
     u_int8_t	bus;
     u_int8_t	dev_fn;
-    u_int32_t	board_id;
+    uint32_t	board_id;
 } cciss_pci_info_struct; 
 
 typedef struct
 {
-    u_int32_t	delay;
-    u_int32_t	count;
+    uint32_t	delay;
+    uint32_t	count;
 } cciss_coalint_struct;
 
 typedef char		NodeName_type[16];
-typedef u_int32_t	Heartbeat_type;
+typedef uint32_t	Heartbeat_type;
 
 #define CISS_PARSCSIU2	0x0001
 #define CISS_PARCSCIU3	0x0002
 #define CISS_FIBRE1G	0x0100
 #define CISS_FIBRE2G	0x0200
-typedef u_int32_t	BusTypes_type;
+typedef uint32_t	BusTypes_type;
 
 typedef char		FirmwareVer_type[4];
-typedef u_int32_t	DriverVer_type;
+typedef uint32_t	DriverVer_type;
 
 /* passthrough command definitions */
 #define SENSEINFOBYTES          32
@@ -123,15 +123,15 @@ typedef union {
 } SCSI3Addr_struct;
 
 typedef struct {
-    u_int32_t		TargetId:24;
-    u_int32_t		Bus:6;
-    u_int32_t		Mode:2;
+    uint32_t		TargetId:24;
+    uint32_t		Bus:6;
+    uint32_t		Mode:2;
     SCSI3Addr_struct	Target[2];
 } __packed PhysDevAddr_struct;
   
 typedef struct {
-    u_int32_t		VolId:30;
-    u_int32_t		Mode:2;
+    uint32_t		VolId:30;
+    uint32_t		Mode:2;
     u_int8_t		reserved[4];
 } __packed LogDevAddr_struct;
 
@@ -157,13 +157,13 @@ typedef union {
     struct {
 	u_int8_t	Reserved[3];
 	u_int8_t	Type;
-	u_int32_t	ErrorInfo;
+	uint32_t	ErrorInfo;
     } __packed Common_Info;
     struct {
 	u_int8_t	Reserved[2];
 	u_int8_t	offense_size;
 	u_int8_t	offense_num;
-	u_int32_t	offense_value;
+	uint32_t	offense_value;
     } __packed Invalid_Cmd;
 } __packed MoreErrInfo_struct;
 
@@ -171,7 +171,7 @@ typedef struct {
     u_int8_t		ScsiStatus;
     u_int8_t		SenseLen;
     u_int16_t		CommandStatus;
-    u_int32_t		ResidualCnt;
+    uint32_t		ResidualCnt;
     MoreErrInfo_struct	MoreErrInfo;
     u_int8_t		SenseInfo[SENSEINFOBYTES];
 } __packed ErrorInfo_struct;
@@ -190,7 +190,7 @@ typedef struct {
     RequestBlock_struct	Request;	/* 20 */
     ErrorInfo_struct	error_info;	/* 48 */
     u_int16_t		buf_size;	/* 2 */
-    u_int32_t		buf;		/* 4 */
+    uint32_t		buf;		/* 4 */
 } __packed IOCTL_Command_struct32;
 #endif
 

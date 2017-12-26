@@ -191,7 +191,7 @@ again:
 	    (struct sockaddr *)(void *)&ss, &alen);
 	if (rlen == -1 && errno == EINTR)
 		goto again;
-	if (rlen == -1 || (rlen < (ssize_t)(4 * sizeof (u_int32_t))))
+	if (rlen == -1 || (rlen < (ssize_t)(4 * sizeof (uint32_t))))
 		return (FALSE);
 	if (xprt->xp_rtaddr.len < alen) {
 		if (xprt->xp_rtaddr.len != 0)
@@ -355,7 +355,7 @@ struct cache_node {
 	/*
 	 * Index into cache is xid, proc, vers, prog and address
 	 */
-	u_int32_t cache_xid;
+	uint32_t cache_xid;
 	rpcproc_t cache_proc;
 	rpcvers_t cache_vers;
 	rpcprog_t cache_prog;

@@ -52,7 +52,7 @@ struct pf_addr {
 		struct in6_addr		v6;
 		u_int8_t		addr8[16];
 		u_int16_t		addr16[8];
-		u_int32_t		addr32[4];
+		uint32_t		addr32[4];
 	} pfa;		    /* 128-bit address */
 #define v4	pfa.v4
 #define v6	pfa.v6
@@ -346,7 +346,7 @@ struct pf_poolhashkey {
 	union {
 		u_int8_t		key8[16];
 		u_int16_t		key16[8];
-		u_int32_t		key32[4];
+		uint32_t		key32[4];
 	} pfk;		    /* 128-bit hash key */
 #define key8	pfk.key8
 #define key16	pfk.key16
@@ -365,7 +365,7 @@ struct pf_pool {
 
 
 /* A packed Operating System description for fingerprinting */
-typedef u_int32_t pf_osfp_t;
+typedef uint32_t pf_osfp_t;
 #define PF_OSFP_ANY	((pf_osfp_t)0)
 #define PF_OSFP_UNKNOWN	((pf_osfp_t)-1)
 #define PF_OSFP_NOMATCH	((pf_osfp_t)-2)
@@ -468,7 +468,7 @@ struct pf_osfp_ioctl {
 
 union pf_rule_ptr {
 	struct pf_rule		*ptr;
-	u_int32_t		 nr;
+	uint32_t		 nr;
 };
 
 #define	PF_ANCHOR_NAME_SIZE	 64
@@ -511,20 +511,20 @@ struct pf_rule {
 	pf_osfp_t		 os_fingerprint;
 
 	int			 rtableid;
-	u_int32_t		 timeout[PFTM_MAX];
-	u_int32_t		 max_states;
-	u_int32_t		 max_src_nodes;
-	u_int32_t		 max_src_states;
-	u_int32_t		 max_src_conn;
+	uint32_t		 timeout[PFTM_MAX];
+	uint32_t		 max_states;
+	uint32_t		 max_src_nodes;
+	uint32_t		 max_src_states;
+	uint32_t		 max_src_conn;
 	struct {
-		u_int32_t		limit;
-		u_int32_t		seconds;
+		uint32_t		limit;
+		uint32_t		seconds;
 	}			 max_src_conn_rate;
-	u_int32_t		 qid;
-	u_int32_t		 pqid;
-	u_int32_t		 rt_listid;
-	u_int32_t		 nr;
-	u_int32_t		 prob;
+	uint32_t		 qid;
+	uint32_t		 pqid;
+	uint32_t		 rt_listid;
+	uint32_t		 nr;
+	uint32_t		 prob;
 	uid_t			 cuid;
 	pid_t			 cpid;
 
@@ -542,7 +542,7 @@ struct pf_rule {
 	struct pf_rule_uid	 uid;
 	struct pf_rule_gid	 gid;
 
-	u_int32_t		 rule_flag;
+	uint32_t		 rule_flag;
 	u_int8_t		 action;
 	u_int8_t		 direction;
 	u_int8_t		 log;
@@ -614,12 +614,12 @@ struct pf_rule {
 
 
 struct pf_threshold {
-	u_int32_t	limit;
+	uint32_t	limit;
 #define	PF_THRESHOLD_MULT	1000
 #define PF_THRESHOLD_MAX	0xffffffff / PF_THRESHOLD_MULT
-	u_int32_t	seconds;
-	u_int32_t	count;
-	u_int32_t	last;
+	uint32_t	seconds;
+	uint32_t	count;
+	uint32_t	last;
 };
 
 struct pf_src_node {
@@ -630,11 +630,11 @@ struct pf_src_node {
 	struct pfi_kif	*kif;
 	u_int64_t	 bytes[2];
 	u_int64_t	 packets[2];
-	u_int32_t	 states;
-	u_int32_t	 conn;
+	uint32_t	 states;
+	uint32_t	 conn;
 	struct pf_threshold	conn_rate;
-	u_int32_t	 creation;
-	u_int32_t	 expire;
+	uint32_t	 creation;
+	uint32_t	 expire;
 	sa_family_t	 af;
 	u_int8_t	 ruletype;
 };
@@ -643,9 +643,9 @@ struct pf_src_node {
 
 struct pf_state_scrub {
 	struct timeval	pfss_last;	/* time received last packet	*/
-	u_int32_t	pfss_tsecr;	/* last echoed timestamp	*/
-	u_int32_t	pfss_tsval;	/* largest timestamp		*/
-	u_int32_t	pfss_tsval0;	/* original timestamp		*/
+	uint32_t	pfss_tsecr;	/* last echoed timestamp	*/
+	uint32_t	pfss_tsval;	/* largest timestamp		*/
+	uint32_t	pfss_tsval0;	/* original timestamp		*/
 	u_int16_t	pfss_flags;
 #define PFSS_TIMESTAMP	0x0001		/* modulate timestamp		*/
 #define PFSS_PAWS	0x0010		/* stricter PAWS checks		*/
@@ -654,7 +654,7 @@ struct pf_state_scrub {
 #define PFSS_DATA_NOTS	0x0080		/* no timestamp on data packets	*/
 	u_int8_t	pfss_ttl;	/* stashed TTL			*/
 	u_int8_t	pad;
-	u_int32_t	pfss_ts_mod;	/* timestamp modulation		*/
+	uint32_t	pfss_ts_mod;	/* timestamp modulation		*/
 };
 
 struct pf_state_host {
@@ -665,9 +665,9 @@ struct pf_state_host {
 
 struct pf_state_peer {
 	struct pf_state_scrub	*scrub;	/* state is scrubbed		*/
-	u_int32_t	seqlo;		/* Max sequence number sent	*/
-	u_int32_t	seqhi;		/* Max the other end ACKd + win	*/
-	u_int32_t	seqdiff;	/* Sequence number modulator	*/
+	uint32_t	seqlo;		/* Max sequence number sent	*/
+	uint32_t	seqhi;		/* Max the other end ACKd + win	*/
+	uint32_t	seqdiff;	/* Sequence number modulator	*/
 	u_int16_t	max_win;	/* largest window (pre scaling)	*/
 	u_int16_t	mss;		/* Maximum segment size option	*/
 	u_int8_t	state;		/* active state level		*/
@@ -699,14 +699,14 @@ struct pf_state_key {
 /* Keep synced with struct pf_state. */
 struct pf_state_cmp {
 	u_int64_t		 id;
-	u_int32_t		 creatorid;
+	uint32_t		 creatorid;
 	u_int8_t		 direction;
 	u_int8_t		 pad[3];
 };
 
 struct pf_state {
 	u_int64_t		 id;
-	u_int32_t		 creatorid;
+	uint32_t		 creatorid;
 	u_int8_t		 direction;
 	u_int8_t		 pad[3];
 
@@ -727,9 +727,9 @@ struct pf_state {
 	struct pf_src_node	*nat_src_node;
 	u_int64_t		 packets[2];
 	u_int64_t		 bytes[2];
-	u_int32_t		 creation;
-	u_int32_t	 	 expire;
-	u_int32_t		 pfsync_time;
+	uint32_t		 creation;
+	uint32_t	 	 expire;
+	uint32_t		 pfsync_time;
 	u_int16_t		 tag;
 	u_int8_t		 log;
 	u_int8_t		 state_flags;
@@ -755,14 +755,14 @@ struct pfsync_state_scrub {
 	u_int8_t	pfss_ttl;	/* stashed TTL		*/
 #define PFSYNC_SCRUB_FLAG_VALID		0x01
 	u_int8_t	scrub_flag;
-	u_int32_t	pfss_ts_mod;	/* timestamp modulation	*/
+	uint32_t	pfss_ts_mod;	/* timestamp modulation	*/
 } __packed;
 
 struct pfsync_state_peer {
 	struct pfsync_state_scrub scrub;	/* state is scrubbed	*/
-	u_int32_t	seqlo;		/* Max sequence number sent	*/
-	u_int32_t	seqhi;		/* Max the other end ACKd + win	*/
-	u_int32_t	seqdiff;	/* Sequence number modulator	*/
+	uint32_t	seqlo;		/* Max sequence number sent	*/
+	uint32_t	seqhi;		/* Max the other end ACKd + win	*/
+	uint32_t	seqdiff;	/* Sequence number modulator	*/
 	u_int16_t	max_win;	/* largest window (pre scaling)	*/
 	u_int16_t	mss;		/* Maximum segment size option	*/
 	u_int8_t	state;		/* active state level		*/
@@ -782,14 +782,14 @@ struct pfsync_state {
 	struct pfsync_state_peer src;
 	struct pfsync_state_peer dst;
 	struct pf_addr	 rt_addr;
-	u_int32_t	 rule;
-	u_int32_t	 anchor;
-	u_int32_t	 nat_rule;
-	u_int32_t	 creation;
-	u_int32_t	 expire;
-	u_int32_t	 packets[2][2];
-	u_int32_t	 bytes[2][2];
-	u_int32_t	 creatorid;
+	uint32_t	 rule;
+	uint32_t	 anchor;
+	uint32_t	 nat_rule;
+	uint32_t	 creation;
+	uint32_t	 expire;
+	uint32_t	 packets[2][2];
+	uint32_t	 bytes[2][2];
+	uint32_t	 creatorid;
 	sa_family_t	 af;
 	u_int8_t	 proto;
 	u_int8_t	 direction;
@@ -807,7 +807,7 @@ typedef int		pfsync_state_import_t(struct pfsync_state *, u_int8_t);
 typedef	void		pfsync_insert_state_t(struct pf_state *);
 typedef	void		pfsync_update_state_t(struct pf_state *);
 typedef	void		pfsync_delete_state_t(struct pf_state *);
-typedef void		pfsync_clear_states_t(u_int32_t, const char *);
+typedef void		pfsync_clear_states_t(uint32_t, const char *);
 typedef int		pfsync_defer_t(struct pf_state *, struct mbuf *);
 
 extern pfsync_state_import_t	*pfsync_state_import_ptr;
@@ -894,13 +894,13 @@ struct pf_ruleset {
 		struct {
 			struct pf_rulequeue	*ptr;
 			struct pf_rule		**ptr_array;
-			u_int32_t		 rcount;
-			u_int32_t		 ticket;
+			uint32_t		 rcount;
+			uint32_t		 ticket;
 			int			 open;
 		}			 active, inactive;
 	}			 rules[PF_RULESET_MAX];
 	struct pf_anchor	*anchor;
-	u_int32_t		 tticket;
+	uint32_t		 tticket;
 	int			 tables;
 	int			 topen;
 };
@@ -951,7 +951,7 @@ struct pf_anchor_stackframe;
 struct pfr_table {
 	char			 pfrt_anchor[MAXPATHLEN];
 	char			 pfrt_name[PF_TABLE_NAME_SIZE];
-	u_int32_t		 pfrt_flags;
+	uint32_t		 pfrt_flags;
 	u_int8_t		 pfrt_fback;
 };
 
@@ -1067,7 +1067,7 @@ struct pfi_kif {
 #define	pfik_list	_pfik_glue._pfik_list
 	u_int64_t			 pfik_packets[2][2][2];
 	u_int64_t			 pfik_bytes[2][2][2];
-	u_int32_t			 pfik_tzero;
+	uint32_t			 pfik_tzero;
 	u_int				 pfik_flags;
 	struct ifnet			*pfik_ifp;
 	struct ifg_group		*pfik_group;
@@ -1102,7 +1102,7 @@ struct pf_pdesc {
 	u_int16_t *dport;
 	struct pf_mtag	*pf_mtag;
 
-	u_int32_t	 p_len;		/* total length of payload */
+	uint32_t	 p_len;		/* total length of payload */
 
 	u_int16_t	*ip_sum;
 	u_int16_t	*proto_sum;
@@ -1195,10 +1195,10 @@ struct pf_divert {
  */
 
 struct pfioc_pooladdr {
-	u_int32_t		 action;
-	u_int32_t		 ticket;
-	u_int32_t		 nr;
-	u_int32_t		 r_num;
+	uint32_t		 action;
+	uint32_t		 ticket;
+	uint32_t		 nr;
+	uint32_t		 r_num;
 	u_int8_t		 r_action;
 	u_int8_t		 r_last;
 	u_int8_t		 af;
@@ -1207,10 +1207,10 @@ struct pfioc_pooladdr {
 };
 
 struct pfioc_rule {
-	u_int32_t	 action;
-	u_int32_t	 ticket;
-	u_int32_t	 pool_ticket;
-	u_int32_t	 nr;
+	uint32_t	 action;
+	uint32_t	 ticket;
+	uint32_t	 pool_ticket;
+	uint32_t	 nr;
 	char		 anchor[MAXPATHLEN];
 	char		 anchor_call[MAXPATHLEN];
 	struct pf_rule	 rule;
@@ -1287,22 +1287,22 @@ struct pfioc_limit {
 };
 
 struct pfioc_altq {
-	u_int32_t	 action;
-	u_int32_t	 ticket;
-	u_int32_t	 nr;
+	uint32_t	 action;
+	uint32_t	 ticket;
+	uint32_t	 nr;
 	struct pf_altq	 altq;
 };
 
 struct pfioc_qstats {
-	u_int32_t	 ticket;
-	u_int32_t	 nr;
+	uint32_t	 ticket;
+	uint32_t	 nr;
 	void		*buf;
 	int		 nbytes;
 	u_int8_t	 scheduler;
 };
 
 struct pfioc_ruleset {
-	u_int32_t	 nr;
+	uint32_t	 nr;
 	char		 path[MAXPATHLEN];
 	char		 name[PF_ANCHOR_NAME_SIZE];
 };
@@ -1315,7 +1315,7 @@ struct pfioc_trans {
 	struct pfioc_trans_e {
 		int		rs_num;
 		char		anchor[MAXPATHLEN];
-		u_int32_t	ticket;
+		uint32_t	ticket;
 	}		*array;
 };
 
@@ -1341,7 +1341,7 @@ struct pfioc_table {
 	int			 pfrio_ndel;
 	int			 pfrio_nchange;
 	int			 pfrio_flags;
-	u_int32_t		 pfrio_ticket;
+	uint32_t		 pfrio_ticket;
 };
 #define	pfrio_exists	pfrio_nadd
 #define	pfrio_nzero	pfrio_nadd
@@ -1376,7 +1376,7 @@ struct pfioc_iface {
 #define DIOCGETSTATUS	_IOWR('D', 21, struct pf_status)
 #define DIOCCLRSTATUS	_IO  ('D', 22)
 #define DIOCNATLOOK	_IOWR('D', 23, struct pfioc_natlook)
-#define DIOCSETDEBUG	_IOWR('D', 24, u_int32_t)
+#define DIOCSETDEBUG	_IOWR('D', 24, uint32_t)
 #define DIOCGETSTATES	_IOWR('D', 25, struct pfioc_states)
 #define DIOCCHANGERULE	_IOWR('D', 26, struct pfioc_rule)
 /* XXX cut 26 - 28 */
@@ -1426,14 +1426,14 @@ struct pfioc_iface {
 #define	DIOCXROLLBACK	_IOWR('D', 83, struct pfioc_trans)
 #define	DIOCGETSRCNODES	_IOWR('D', 84, struct pfioc_src_nodes)
 #define	DIOCCLRSRCNODES	_IO('D', 85)
-#define	DIOCSETHOSTID	_IOWR('D', 86, u_int32_t)
+#define	DIOCSETHOSTID	_IOWR('D', 86, uint32_t)
 #define	DIOCIGETIFACES	_IOWR('D', 87, struct pfioc_iface)
 #define	DIOCSETIFFLAG	_IOWR('D', 89, struct pfioc_iface)
 #define	DIOCCLRIFFLAG	_IOWR('D', 90, struct pfioc_iface)
 #define	DIOCKILLSRCNODES	_IOWR('D', 91, struct pfioc_src_node_kill)
 struct pf_ifspeed {
 	char			ifname[IFNAMSIZ];
-	u_int32_t		baudrate;
+	uint32_t		baudrate;
 };
 #define	DIOCGIFSPEED	_IOWR('D', 92, struct pf_ifspeed)
 
@@ -1478,13 +1478,13 @@ VNET_DECLARE(struct pf_altqqueue,	 pf_altqs[2]);
 VNET_DECLARE(struct pf_palist,		 pf_pabuf);
 #define	V_pf_pabuf			 VNET(pf_pabuf)
 
-VNET_DECLARE(u_int32_t,			 ticket_altqs_active);
+VNET_DECLARE(uint32_t,			 ticket_altqs_active);
 #define	V_ticket_altqs_active		 VNET(ticket_altqs_active)
-VNET_DECLARE(u_int32_t,			 ticket_altqs_inactive);
+VNET_DECLARE(uint32_t,			 ticket_altqs_inactive);
 #define	V_ticket_altqs_inactive		 VNET(ticket_altqs_inactive)
 VNET_DECLARE(int,			 altqs_inactive_open);
 #define	V_altqs_inactive_open		 VNET(altqs_inactive_open)
-VNET_DECLARE(u_int32_t,			 ticket_pabuf);
+VNET_DECLARE(uint32_t,			 ticket_pabuf);
 #define	V_ticket_pabuf			 VNET(ticket_pabuf)
 VNET_DECLARE(struct pf_altqqueue *,	 pf_altqs_active);
 #define	V_pf_altqs_active		 VNET(pf_altqs_active)
@@ -1579,10 +1579,10 @@ void	pf_addr_inc(struct pf_addr *, sa_family_t);
 int	pf_refragment6(struct ifnet *, struct mbuf **, struct m_tag *);
 #endif /* INET6 */
 
-u_int32_t	pf_new_isn(struct pf_state *);
+uint32_t	pf_new_isn(struct pf_state *);
 void   *pf_pull_hdr(struct mbuf *, int, void *, int, u_short *, u_short *,
 	    sa_family_t);
-void	pf_change_a(void *, u_int16_t *, u_int32_t, u_int8_t);
+void	pf_change_a(void *, u_int16_t *, uint32_t, u_int8_t);
 void	pf_send_deferred_syn(struct pf_state *);
 int	pf_match_addr(u_int8_t, struct pf_addr *, struct pf_addr *,
 	    struct pf_addr *, sa_family_t);
@@ -1600,7 +1600,7 @@ int	pf_normalize_tcp_init(struct mbuf *, int, struct pf_pdesc *,
 int	pf_normalize_tcp_stateful(struct mbuf *, int, struct pf_pdesc *,
 	    u_short *, struct tcphdr *, struct pf_state *,
 	    struct pf_state_peer *, struct pf_state_peer *, int *);
-u_int32_t
+uint32_t
 	pf_state_expires(const struct pf_state *);
 void	pf_purge_expired_fragments(void);
 int	pf_routable(struct pf_addr *addr, sa_family_t af, struct pfi_kif *,
@@ -1631,18 +1631,18 @@ int	pfr_add_addrs(struct pfr_table *, struct pfr_addr *, int, int *,
 int	pfr_del_addrs(struct pfr_table *, struct pfr_addr *, int, int *,
 	    int);
 int	pfr_set_addrs(struct pfr_table *, struct pfr_addr *, int, int *,
-	    int *, int *, int *, int, u_int32_t);
+	    int *, int *, int *, int, uint32_t);
 int	pfr_get_addrs(struct pfr_table *, struct pfr_addr *, int *, int);
 int	pfr_get_astats(struct pfr_table *, struct pfr_astats *, int *, int);
 int	pfr_clr_astats(struct pfr_table *, struct pfr_addr *, int, int *,
 	    int);
 int	pfr_tst_addrs(struct pfr_table *, struct pfr_addr *, int, int *,
 	    int);
-int	pfr_ina_begin(struct pfr_table *, u_int32_t *, int *, int);
-int	pfr_ina_rollback(struct pfr_table *, u_int32_t, int *, int);
-int	pfr_ina_commit(struct pfr_table *, u_int32_t, int *, int *, int);
+int	pfr_ina_begin(struct pfr_table *, uint32_t *, int *, int);
+int	pfr_ina_rollback(struct pfr_table *, uint32_t, int *, int);
+int	pfr_ina_commit(struct pfr_table *, uint32_t, int *, int *, int);
 int	pfr_ina_define(struct pfr_table *, struct pfr_addr *, int, int *,
-	    int *, u_int32_t, int);
+	    int *, uint32_t, int);
 
 MALLOC_DECLARE(PFI_MTYPE);
 VNET_DECLARE(struct pfi_kif *,		 pfi_all);
@@ -1670,7 +1670,7 @@ int		 pf_match_tag(struct mbuf *, struct pf_rule *, int *, int);
 int		 pf_tag_packet(struct mbuf *, struct pf_pdesc *, int);
 int		 pf_addr_cmp(struct pf_addr *, struct pf_addr *,
 		    sa_family_t);
-void		 pf_qid2qname(u_int32_t, char *);
+void		 pf_qid2qname(uint32_t, char *);
 
 VNET_DECLARE(struct pf_kstatus, pf_status);
 #define	V_pf_status	VNET(pf_status)

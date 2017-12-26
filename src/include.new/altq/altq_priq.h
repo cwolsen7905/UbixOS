@@ -51,7 +51,7 @@ struct priq_add_class {
 	int			qlimit;	/* queue size limit */
 	int			flags;	/* misc flags (see below) */
 
-	u_int32_t		class_handle;  /* return value */
+	uint32_t		class_handle;  /* return value */
 };
 #endif /* ALTQ3_COMPAT */
 
@@ -68,12 +68,12 @@ struct priq_add_class {
 #ifdef ALTQ3_COMPAT
 struct priq_delete_class {
 	struct priq_interface	iface;
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 };
 
 struct priq_modify_class {
 	struct priq_interface	iface;
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 	int			pri;
 	int			qlimit;
 	int			flags;
@@ -81,7 +81,7 @@ struct priq_modify_class {
 
 struct priq_add_filter {
 	struct priq_interface	iface;
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 	struct flow_filter	filter;
 
 	u_long			filter_handle;  /* return value */
@@ -94,7 +94,7 @@ struct priq_delete_filter {
 #endif /* ALTQ3_COMPAT */
 
 struct priq_classstats {
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 
 	u_int			qlength;
 	u_int			qlimit;
@@ -132,7 +132,7 @@ struct priq_class_stats {
 #ifdef _KERNEL
 
 struct priq_class {
-	u_int32_t	cl_handle;	/* class handle */
+	uint32_t	cl_handle;	/* class handle */
 	class_queue_t	*cl_q;		/* class queue structure */
 	struct red	*cl_red;	/* RED state */
 	int		cl_pri;		/* priority */

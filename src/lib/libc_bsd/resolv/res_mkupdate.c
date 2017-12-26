@@ -102,7 +102,7 @@ res_nmkupdate(res_state statp, ns_updrec *rrecp_in, u_char *buf, int buflen) {
 	u_char buf3[MAXDNAME];
 	int section, numrrs = 0, counts[ns_s_max];
 	u_int16_t rtype, rclass;
-	u_int32_t n1, rttl;
+	uint32_t n1, rttl;
 	u_char *dnptrs[20], **dpp, **lastdnptr;
 #ifndef _LIBC
 	int siglen;
@@ -469,7 +469,7 @@ res_nmkupdate(res_state statp, ns_updrec *rrecp_in, u_char *buf, int buflen) {
 #else
 		    {
 			int sig_type, success, dateerror;
-			u_int32_t exptime, timesigned;
+			uint32_t exptime, timesigned;
 
 			/* type */
 			if ((n = getword_str(buf2, sizeof buf2,
@@ -502,7 +502,7 @@ res_nmkupdate(res_state statp, ns_updrec *rrecp_in, u_char *buf, int buflen) {
 			}
 			else {
 				char *ulendp;
-				u_int32_t ottl;
+				uint32_t ottl;
 
 				errno = 0;
 				ottl = strtoul(buf2, &ulendp, 10);

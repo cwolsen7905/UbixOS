@@ -75,45 +75,45 @@ struct ti_stats {
 	/*
 	 * MAC stats, taken from RFC 1643, ethernet-like MIB
 	 */
-	volatile u_int32_t dot3StatsAlignmentErrors;		/* 0 */
-	volatile u_int32_t dot3StatsFCSErrors;			/* 1 */
-	volatile u_int32_t dot3StatsSingleCollisionFrames;	/* 2 */
-	volatile u_int32_t dot3StatsMultipleCollisionFrames;	/* 3 */
-	volatile u_int32_t dot3StatsSQETestErrors;		/* 4 */
-	volatile u_int32_t dot3StatsDeferredTransmissions;	/* 5 */
-	volatile u_int32_t dot3StatsLateCollisions;		/* 6 */
-	volatile u_int32_t dot3StatsExcessiveCollisions;	/* 7 */
-	volatile u_int32_t dot3StatsInternalMacTransmitErrors;	/* 8 */
-	volatile u_int32_t dot3StatsCarrierSenseErrors;		/* 9 */
-	volatile u_int32_t dot3StatsFrameTooLongs;		/* 10 */
-	volatile u_int32_t dot3StatsInternalMacReceiveErrors;	/* 11 */
+	volatile uint32_t dot3StatsAlignmentErrors;		/* 0 */
+	volatile uint32_t dot3StatsFCSErrors;			/* 1 */
+	volatile uint32_t dot3StatsSingleCollisionFrames;	/* 2 */
+	volatile uint32_t dot3StatsMultipleCollisionFrames;	/* 3 */
+	volatile uint32_t dot3StatsSQETestErrors;		/* 4 */
+	volatile uint32_t dot3StatsDeferredTransmissions;	/* 5 */
+	volatile uint32_t dot3StatsLateCollisions;		/* 6 */
+	volatile uint32_t dot3StatsExcessiveCollisions;	/* 7 */
+	volatile uint32_t dot3StatsInternalMacTransmitErrors;	/* 8 */
+	volatile uint32_t dot3StatsCarrierSenseErrors;		/* 9 */
+	volatile uint32_t dot3StatsFrameTooLongs;		/* 10 */
+	volatile uint32_t dot3StatsInternalMacReceiveErrors;	/* 11 */
 	/*
 	 * interface stats, taken from RFC 1213, MIB-II, interfaces group
 	 */
-	volatile u_int32_t ifIndex;				/* 12 */
-	volatile u_int32_t ifType;				/* 13 */
-	volatile u_int32_t ifMtu;				/* 14 */
-	volatile u_int32_t ifSpeed;				/* 15 */
-	volatile u_int32_t ifAdminStatus;			/* 16 */
+	volatile uint32_t ifIndex;				/* 12 */
+	volatile uint32_t ifType;				/* 13 */
+	volatile uint32_t ifMtu;				/* 14 */
+	volatile uint32_t ifSpeed;				/* 15 */
+	volatile uint32_t ifAdminStatus;			/* 16 */
 #define IF_ADMIN_STATUS_UP      1
 #define IF_ADMIN_STATUS_DOWN    2
 #define IF_ADMIN_STATUS_TESTING 3
-	volatile u_int32_t ifOperStatus;			/* 17 */
+	volatile uint32_t ifOperStatus;			/* 17 */
 #define IF_OPER_STATUS_UP       1
 #define IF_OPER_STATUS_DOWN     2
 #define IF_OPER_STATUS_TESTING  3
 #define IF_OPER_STATUS_UNKNOWN  4
 #define IF_OPER_STATUS_DORMANT  5
-	volatile u_int32_t ifLastChange;			/* 18 */
-	volatile u_int32_t ifInDiscards;			/* 19 */
-	volatile u_int32_t ifInErrors;				/* 20 */
-	volatile u_int32_t ifInUnknownProtos;			/* 21 */
-	volatile u_int32_t ifOutDiscards;			/* 22 */
-	volatile u_int32_t ifOutErrors;				/* 23 */
-	volatile u_int32_t ifOutQLen;     /* deprecated */	/* 24 */
+	volatile uint32_t ifLastChange;			/* 18 */
+	volatile uint32_t ifInDiscards;			/* 19 */
+	volatile uint32_t ifInErrors;				/* 20 */
+	volatile uint32_t ifInUnknownProtos;			/* 21 */
+	volatile uint32_t ifOutDiscards;			/* 22 */
+	volatile uint32_t ifOutErrors;				/* 23 */
+	volatile uint32_t ifOutQLen;     /* deprecated */	/* 24 */
 	volatile u_int8_t  ifPhysAddress[8]; /* 8 bytes */	/* 25 - 26 */
 	volatile u_int8_t  ifDescr[32];				/* 27 - 34 */
-	u_int32_t alignIt;      /* align to 64 bit for u_int64_ts following */
+	uint32_t alignIt;      /* align to 64 bit for u_int64_ts following */
 	/*
 	 * more interface stats, taken from RFC 1573, MIB-IIupdate,
 	 * interfaces group
@@ -126,142 +126,142 @@ struct ti_stats {
 	volatile u_int64_t ifHCOutUcastPkts;			/* 46 - 47 */
 	volatile u_int64_t ifHCOutMulticastPkts;		/* 48 - 49 */
 	volatile u_int64_t ifHCOutBroadcastPkts;		/* 50 - 51 */
-	volatile u_int32_t ifLinkUpDownTrapEnable;		/* 52 */
-	volatile u_int32_t ifHighSpeed;				/* 53 */
-	volatile u_int32_t ifPromiscuousMode; 			/* 54 */
-	volatile u_int32_t ifConnectorPresent; /* follow link state 55 */
+	volatile uint32_t ifLinkUpDownTrapEnable;		/* 52 */
+	volatile uint32_t ifHighSpeed;				/* 53 */
+	volatile uint32_t ifPromiscuousMode; 			/* 54 */
+	volatile uint32_t ifConnectorPresent; /* follow link state 55 */
 	/*
 	 * Host Commands
 	 */
-	volatile u_int32_t nicCmdsHostState;			/* 56 */
-	volatile u_int32_t nicCmdsFDRFiltering;			/* 57 */
-	volatile u_int32_t nicCmdsSetRecvProdIndex;		/* 58 */
-	volatile u_int32_t nicCmdsUpdateGencommStats;		/* 59 */
-	volatile u_int32_t nicCmdsResetJumboRing;		/* 60 */
-	volatile u_int32_t nicCmdsAddMCastAddr;			/* 61 */
-	volatile u_int32_t nicCmdsDelMCastAddr;			/* 62 */
-	volatile u_int32_t nicCmdsSetPromiscMode;		/* 63 */
-	volatile u_int32_t nicCmdsLinkNegotiate;		/* 64 */
-	volatile u_int32_t nicCmdsSetMACAddr;			/* 65 */
-	volatile u_int32_t nicCmdsClearProfile;			/* 66 */
-	volatile u_int32_t nicCmdsSetMulticastMode;		/* 67 */
-	volatile u_int32_t nicCmdsClearStats;			/* 68 */
-	volatile u_int32_t nicCmdsSetRecvJumboProdIndex;	/* 69 */
-	volatile u_int32_t nicCmdsSetRecvMiniProdIndex;		/* 70 */
-	volatile u_int32_t nicCmdsRefreshStats;			/* 71 */
-	volatile u_int32_t nicCmdsUnknown;			/* 72 */
+	volatile uint32_t nicCmdsHostState;			/* 56 */
+	volatile uint32_t nicCmdsFDRFiltering;			/* 57 */
+	volatile uint32_t nicCmdsSetRecvProdIndex;		/* 58 */
+	volatile uint32_t nicCmdsUpdateGencommStats;		/* 59 */
+	volatile uint32_t nicCmdsResetJumboRing;		/* 60 */
+	volatile uint32_t nicCmdsAddMCastAddr;			/* 61 */
+	volatile uint32_t nicCmdsDelMCastAddr;			/* 62 */
+	volatile uint32_t nicCmdsSetPromiscMode;		/* 63 */
+	volatile uint32_t nicCmdsLinkNegotiate;		/* 64 */
+	volatile uint32_t nicCmdsSetMACAddr;			/* 65 */
+	volatile uint32_t nicCmdsClearProfile;			/* 66 */
+	volatile uint32_t nicCmdsSetMulticastMode;		/* 67 */
+	volatile uint32_t nicCmdsClearStats;			/* 68 */
+	volatile uint32_t nicCmdsSetRecvJumboProdIndex;	/* 69 */
+	volatile uint32_t nicCmdsSetRecvMiniProdIndex;		/* 70 */
+	volatile uint32_t nicCmdsRefreshStats;			/* 71 */
+	volatile uint32_t nicCmdsUnknown;			/* 72 */
 	/*
 	 * NIC Events
 	 */
-	volatile u_int32_t nicEventsNICFirmwareOperational;	/* 73 */
-	volatile u_int32_t nicEventsStatsUpdated;		/* 74 */
-	volatile u_int32_t nicEventsLinkStateChanged;		/* 75 */
-	volatile u_int32_t nicEventsError;			/* 76 */
-	volatile u_int32_t nicEventsMCastListUpdated;		/* 77 */
-	volatile u_int32_t nicEventsResetJumboRing;		/* 78 */
+	volatile uint32_t nicEventsNICFirmwareOperational;	/* 73 */
+	volatile uint32_t nicEventsStatsUpdated;		/* 74 */
+	volatile uint32_t nicEventsLinkStateChanged;		/* 75 */
+	volatile uint32_t nicEventsError;			/* 76 */
+	volatile uint32_t nicEventsMCastListUpdated;		/* 77 */
+	volatile uint32_t nicEventsResetJumboRing;		/* 78 */
 	/*
 	 * Ring manipulation
 	 */
-	volatile u_int32_t nicRingSetSendProdIndex;		/* 79 */
-	volatile u_int32_t nicRingSetSendConsIndex;		/* 80 */
-	volatile u_int32_t nicRingSetRecvReturnProdIndex;	/* 81 */
+	volatile uint32_t nicRingSetSendProdIndex;		/* 79 */
+	volatile uint32_t nicRingSetSendConsIndex;		/* 80 */
+	volatile uint32_t nicRingSetRecvReturnProdIndex;	/* 81 */
 	/*
 	 * Interrupts
 	 */
-	volatile u_int32_t nicInterrupts;			/* 82 */
-	volatile u_int32_t nicAvoidedInterrupts;		/* 83 */
+	volatile uint32_t nicInterrupts;			/* 82 */
+	volatile uint32_t nicAvoidedInterrupts;		/* 83 */
 	/*
 	 * BD Coalessing Thresholds
 	 */
-	volatile u_int32_t nicEventThresholdHit;		/* 84 */
-	volatile u_int32_t nicSendThresholdHit;			/* 85 */
-	volatile u_int32_t nicRecvThresholdHit;			/* 86 */
+	volatile uint32_t nicEventThresholdHit;		/* 84 */
+	volatile uint32_t nicSendThresholdHit;			/* 85 */
+	volatile uint32_t nicRecvThresholdHit;			/* 86 */
 	/*
 	 * DMA Attentions
 	 */
-	volatile u_int32_t nicDmaRdOverrun;			/* 87 */
-	volatile u_int32_t nicDmaRdUnderrun;			/* 88 */
-	volatile u_int32_t nicDmaWrOverrun;			/* 89 */
-	volatile u_int32_t nicDmaWrUnderrun;			/* 90 */
-	volatile u_int32_t nicDmaWrMasterAborts;		/* 91 */
-	volatile u_int32_t nicDmaRdMasterAborts;		/* 92 */
+	volatile uint32_t nicDmaRdOverrun;			/* 87 */
+	volatile uint32_t nicDmaRdUnderrun;			/* 88 */
+	volatile uint32_t nicDmaWrOverrun;			/* 89 */
+	volatile uint32_t nicDmaWrUnderrun;			/* 90 */
+	volatile uint32_t nicDmaWrMasterAborts;		/* 91 */
+	volatile uint32_t nicDmaRdMasterAborts;		/* 92 */
 	/*
 	 * NIC Resources
 	 */
-	volatile u_int32_t nicDmaWriteRingFull;			/* 93 */
-	volatile u_int32_t nicDmaReadRingFull;			/* 94 */
-	volatile u_int32_t nicEventRingFull;			/* 95 */
-	volatile u_int32_t nicEventProducerRingFull;		/* 96 */
-	volatile u_int32_t nicTxMacDescrRingFull;		/* 97 */
-	volatile u_int32_t nicOutOfTxBufSpaceFrameRetry;	/* 98 */
-	volatile u_int32_t nicNoMoreWrDMADescriptors;		/* 99 */
-	volatile u_int32_t nicNoMoreRxBDs;			/* 100 */
-	volatile u_int32_t nicNoSpaceInReturnRing;		/* 101 */
-	volatile u_int32_t nicSendBDs;            /* current count 102 */
-	volatile u_int32_t nicRecvBDs;            /* current count 103 */
-	volatile u_int32_t nicJumboRecvBDs;       /* current count 104 */
-	volatile u_int32_t nicMiniRecvBDs;        /* current count 105 */
-	volatile u_int32_t nicTotalRecvBDs;       /* current count 106 */
-	volatile u_int32_t nicTotalSendBDs;       /* current count 107 */
-	volatile u_int32_t nicJumboSpillOver;			/* 108 */
-	volatile u_int32_t nicSbusHangCleared;			/* 109 */
-	volatile u_int32_t nicEnqEventDelayed;			/* 110 */
+	volatile uint32_t nicDmaWriteRingFull;			/* 93 */
+	volatile uint32_t nicDmaReadRingFull;			/* 94 */
+	volatile uint32_t nicEventRingFull;			/* 95 */
+	volatile uint32_t nicEventProducerRingFull;		/* 96 */
+	volatile uint32_t nicTxMacDescrRingFull;		/* 97 */
+	volatile uint32_t nicOutOfTxBufSpaceFrameRetry;	/* 98 */
+	volatile uint32_t nicNoMoreWrDMADescriptors;		/* 99 */
+	volatile uint32_t nicNoMoreRxBDs;			/* 100 */
+	volatile uint32_t nicNoSpaceInReturnRing;		/* 101 */
+	volatile uint32_t nicSendBDs;            /* current count 102 */
+	volatile uint32_t nicRecvBDs;            /* current count 103 */
+	volatile uint32_t nicJumboRecvBDs;       /* current count 104 */
+	volatile uint32_t nicMiniRecvBDs;        /* current count 105 */
+	volatile uint32_t nicTotalRecvBDs;       /* current count 106 */
+	volatile uint32_t nicTotalSendBDs;       /* current count 107 */
+	volatile uint32_t nicJumboSpillOver;			/* 108 */
+	volatile uint32_t nicSbusHangCleared;			/* 109 */
+	volatile uint32_t nicEnqEventDelayed;			/* 110 */
 	/*
 	 * Stats from MAC rx completion
 	 */
-	volatile u_int32_t nicMacRxLateColls;			/* 111 */
-	volatile u_int32_t nicMacRxLinkLostDuringPkt;		/* 112 */
-	volatile u_int32_t nicMacRxPhyDecodeErr;		/* 113 */
-	volatile u_int32_t nicMacRxMacAbort;			/* 114 */
-	volatile u_int32_t nicMacRxTruncNoResources;		/* 115 */
+	volatile uint32_t nicMacRxLateColls;			/* 111 */
+	volatile uint32_t nicMacRxLinkLostDuringPkt;		/* 112 */
+	volatile uint32_t nicMacRxPhyDecodeErr;		/* 113 */
+	volatile uint32_t nicMacRxMacAbort;			/* 114 */
+	volatile uint32_t nicMacRxTruncNoResources;		/* 115 */
 	/*
 	 * Stats from the mac_stats area
 	 */
-	volatile u_int32_t nicMacRxDropUla;			/* 116 */
-	volatile u_int32_t nicMacRxDropMcast;			/* 117 */
-	volatile u_int32_t nicMacRxFlowControl;			/* 118 */
-	volatile u_int32_t nicMacRxDropSpace;			/* 119 */
-	volatile u_int32_t nicMacRxColls;			/* 120 */
+	volatile uint32_t nicMacRxDropUla;			/* 116 */
+	volatile uint32_t nicMacRxDropMcast;			/* 117 */
+	volatile uint32_t nicMacRxFlowControl;			/* 118 */
+	volatile uint32_t nicMacRxDropSpace;			/* 119 */
+	volatile uint32_t nicMacRxColls;			/* 120 */
 	/*
  	 * MAC RX Attentions
 	 */
-	volatile u_int32_t nicMacRxTotalAttns;			/* 121 */
-	volatile u_int32_t nicMacRxLinkAttns;			/* 122 */
-	volatile u_int32_t nicMacRxSyncAttns;			/* 123 */
-	volatile u_int32_t nicMacRxConfigAttns;			/* 124 */
-	volatile u_int32_t nicMacReset;				/* 125 */
-	volatile u_int32_t nicMacRxBufDescrAttns;		/* 126 */
-	volatile u_int32_t nicMacRxBufAttns;			/* 127 */
-	volatile u_int32_t nicMacRxZeroFrameCleanup;		/* 128 */
-	volatile u_int32_t nicMacRxOneFrameCleanup;		/* 129 */
-	volatile u_int32_t nicMacRxMultipleFrameCleanup;	/* 130 */
-	volatile u_int32_t nicMacRxTimerCleanup;		/* 131 */
-	volatile u_int32_t nicMacRxDmaCleanup;			/* 132 */
+	volatile uint32_t nicMacRxTotalAttns;			/* 121 */
+	volatile uint32_t nicMacRxLinkAttns;			/* 122 */
+	volatile uint32_t nicMacRxSyncAttns;			/* 123 */
+	volatile uint32_t nicMacRxConfigAttns;			/* 124 */
+	volatile uint32_t nicMacReset;				/* 125 */
+	volatile uint32_t nicMacRxBufDescrAttns;		/* 126 */
+	volatile uint32_t nicMacRxBufAttns;			/* 127 */
+	volatile uint32_t nicMacRxZeroFrameCleanup;		/* 128 */
+	volatile uint32_t nicMacRxOneFrameCleanup;		/* 129 */
+	volatile uint32_t nicMacRxMultipleFrameCleanup;	/* 130 */
+	volatile uint32_t nicMacRxTimerCleanup;		/* 131 */
+	volatile uint32_t nicMacRxDmaCleanup;			/* 132 */
 	/*
 	 * Stats from the mac_stats area
 	 */
-	volatile u_int32_t nicMacTxCollisionHistogram[15];	/* 133 */
+	volatile uint32_t nicMacTxCollisionHistogram[15];	/* 133 */
 	/*
 	 * MAC TX Attentions
 	 */
-	volatile u_int32_t nicMacTxTotalAttns;			/* 134 */
+	volatile uint32_t nicMacTxTotalAttns;			/* 134 */
 	/*
 	 * NIC Profile
 	 */
-	volatile u_int32_t nicProfile[32];			/* 135 */
+	volatile uint32_t nicProfile[32];			/* 135 */
 	/*
 	 * Pat to 1024 bytes.
 	 */
-	u_int32_t		pad[75];
+	uint32_t		pad[75];
 };
 
 struct tg_reg {
-	u_int32_t	data;
-	u_int32_t	addr;
+	uint32_t	data;
+	uint32_t	addr;
 };      
 
 struct tg_mem {
-	u_int32_t	tgAddr;
+	uint32_t	tgAddr;
 	caddr_t		userAddr;
 	int		len;
 }; 
@@ -279,12 +279,12 @@ typedef enum {
 } ti_param_mask;
 
 struct ti_params {
-	u_int32_t	ti_stat_ticks;
-	u_int32_t	ti_rx_coal_ticks;
-	u_int32_t	ti_tx_coal_ticks;
-	u_int32_t	ti_rx_max_coal_bds;
-	u_int32_t	ti_tx_max_coal_bds;
-	u_int32_t	ti_tx_buf_ratio;
+	uint32_t	ti_stat_ticks;
+	uint32_t	ti_rx_coal_ticks;
+	uint32_t	ti_tx_coal_ticks;
+	uint32_t	ti_rx_max_coal_bds;
+	uint32_t	ti_tx_max_coal_bds;
+	uint32_t	ti_tx_buf_ratio;
 	ti_param_mask	param_mask;
 };
 

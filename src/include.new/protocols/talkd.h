@@ -60,7 +60,7 @@ typedef struct {
 	u_char	type;		/* request type, see below */
 	u_char	answer;		/* not used */
 	u_char	pad;
-	u_int32_t	id_num;		/* message id */
+	uint32_t	id_num;		/* message id */
 	struct	osockaddr addr;		/* old (4.3) style */
 	struct	osockaddr ctl_addr;	/* old (4.3) style */
 	int32_t	pid;		/* caller's process id */
@@ -79,7 +79,7 @@ typedef struct {
 	u_char	type;		/* type of request message, see below */
 	u_char	answer;		/* respose to request message, see below */
 	u_char	pad;
-	u_int32_t	id_num;		/* message id */
+	uint32_t	id_num;		/* message id */
 	struct	osockaddr addr;	/* address for establishing conversation */
 } CTL_RESPONSE;
 

@@ -125,8 +125,8 @@ struct ng_ppp_link_conf {
 	u_char		enableProtoComp;/* enable protocol field compression */
 	u_char		enableACFComp;	/* enable addr/ctrl field compression */
 	u_int16_t	mru;		/* peer MRU */
-	u_int32_t	latency;	/* link latency (in milliseconds) */
-	u_int32_t	bandwidth;	/* link bandwidth (in bytes/sec/10) */
+	uint32_t	latency;	/* link latency (in milliseconds) */
+	uint32_t	bandwidth;	/* link bandwidth (in bytes/sec/10) */
 };
 
 /* Keep this in sync with the above structure definition */
@@ -194,14 +194,14 @@ struct ng_ppp_node_conf {
 
 /* Statistics struct for a link (or the bundle if NG_PPP_BUNDLE_LINKNUM) */
 struct ng_ppp_link_stat {
-	u_int32_t xmitFrames;		/* xmit frames on link */
-	u_int32_t xmitOctets;		/* xmit octets on link */
-	u_int32_t recvFrames;		/* recv frames on link */
-	u_int32_t recvOctets;		/* recv octets on link */
-	u_int32_t badProtos;		/* frames rec'd with bogus protocol */
-	u_int32_t runts;		/* Too short MP fragments */
-	u_int32_t dupFragments;		/* MP frames with duplicate seq # */
-	u_int32_t dropFragments;	/* MP fragments we had to drop */
+	uint32_t xmitFrames;		/* xmit frames on link */
+	uint32_t xmitOctets;		/* xmit octets on link */
+	uint32_t recvFrames;		/* recv frames on link */
+	uint32_t recvOctets;		/* recv octets on link */
+	uint32_t badProtos;		/* frames rec'd with bogus protocol */
+	uint32_t runts;		/* Too short MP fragments */
+	uint32_t dupFragments;		/* MP frames with duplicate seq # */
+	uint32_t dropFragments;	/* MP fragments we had to drop */
 };
 
 /* Keep this in sync with the above structure definition */

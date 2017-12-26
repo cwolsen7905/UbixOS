@@ -205,7 +205,7 @@ __rec_iput(t, nrec, data, flags)
 	PAGE *h;
 	indx_t index, nxtindex;
 	pgno_t pg;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	int dflags, status;
 	char *dest, db[NOVFLSIZE];
 
@@ -221,7 +221,7 @@ __rec_iput(t, nrec, data, flags)
 		tdata.data = db;
 		tdata.size = NOVFLSIZE;
 		*(pgno_t *)db = pg;
-		*(u_int32_t *)(db + sizeof(pgno_t)) = data->size;
+		*(uint32_t *)(db + sizeof(pgno_t)) = data->size;
 		dflags = P_BIGDATA;
 		data = &tdata;
 	} else

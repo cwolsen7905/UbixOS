@@ -985,11 +985,11 @@ struct bpf_program {
  *     u_int8_t   dli_version;
  *     u_int8_t   dli_family;
  *     u_int16_t  dli_htype;
- *     u_int32_t  dli_pktlen;
- *     u_int32_t  dli_ifindex;
- *     u_int32_t  dli_grifindex;
- *     u_int32_t  dli_zsrc;
- *     u_int32_t  dli_zdst;
+ *     uint32_t  dli_pktlen;
+ *     uint32_t  dli_ifindex;
+ *     uint32_t  dli_grifindex;
+ *     uint32_t  dli_zsrc;
+ *     uint32_t  dli_zdst;
  * };
  *
  * dli_version is 2 for the current version of the pseudo-header.

@@ -148,7 +148,7 @@ typedef struct _ns_dtab {
  */
 typedef struct _ns_src {
 	const char	*name;
-	u_int32_t	 flags;
+	uint32_t	 flags;
 } ns_src;
 
 

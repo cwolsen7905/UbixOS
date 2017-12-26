@@ -55,7 +55,7 @@ mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
  02/20/2004 - Made It Report Real And Available Memory
 
  ************************************************************************/
-int vmmMemMapInit() {
+int vmm_memMapInit() {
   int i = 0x0;
   int memStart = 0x0;
 
@@ -66,7 +66,7 @@ int vmmMemMapInit() {
   vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
 
   /* Initialize Map Make All Pages Not Available */
-  for ( i = 0x0; i < numPages; i++ ) {
+  for (i = 0x0; i < numPages; i++) {
     vmmMemoryMap[i].cowCounter = 0x0;
     vmmMemoryMap[i].status = memNotavail;
     vmmMemoryMap[i].pid = vmmID;
@@ -83,17 +83,17 @@ int vmmMemMapInit() {
 
   freePages++;
 
-  for ( i = memStart; i < numPages; i++ ) {
+  for (i = memStart; i < numPages; i++) {
     vmmMemoryMap[i].status = memAvail;
     freePages++;
   }
 
-  if ( systemVitals )
+  if (systemVitals)
     systemVitals->freePages = freePages;
 
   /* Print Out Amount Of Memory */
-  kprintf( "Real Memory:      %iKB\n", numPages * 4 );
-  kprintf( "Available Memory: %iKB\n", freePages * 4 );
+  kprintf("Real Memory:      %iKB\n", numPages * 4);
+  kprintf("Available Memory: %iKB\n", freePages * 4);
 
   /* Return */
   return (0);
@@ -119,12 +119,12 @@ int countMemory() {
    * Save The States Of Both IRQ 1 And 2 So We Can Turn Them Off And Restore
    * Them Later
    */
-  irq1State = inportByte( 0x21 );
-  irq2State = inportByte( 0xA1 );
+  irq1State = inportByte(0x21);
+  irq2State = inportByte(0xA1);
 
   /* Turn Off IRQ 1 And 2 To Prevent Chances Of Faults While Examining Memory */
-  outportByte( 0x21, 0xFF );
-  outportByte( 0xA1, 0xFF );
+  outportByte(0x21, 0xFF);
+  outportByte(0xA1, 0xFF);
 
   /* Save The State Of Register CR0 */
   cr0 = rcr0();
@@ -139,7 +139,7 @@ int countMemory() {
 
   asm volatile ("wbinvd");
 
-  load_cr0( cr0 | 0x00000001 | 0x40000000 | 0x20000000 );
+  load_cr0(cr0 | 0x00000001 | 0x40000000 | 0x20000000);
 
   /*
    asm volatile (
@@ -150,10 +150,10 @@ int countMemory() {
    );
    */
 
-  while ( memKb < 4096 && memCount != 0 ) {
+  while (memKb < 4096 && memCount != 0) {
     memKb++;
 
-    if ( memCount == -1 )
+    if (memCount == -1)
       memCount = 8388608;
     else
       memCount += 1024 * 1024;
@@ -166,13 +166,13 @@ int countMemory() {
 
     asm("": : :"memory");
 
-    if ( *mem != 0x55AA55AA ) {
+    if (*mem != 0x55AA55AA) {
       memCount = 0;
     }
     else {
       *mem = 0xAA55AA55;
       asm("": : :"memory");
-      if ( *mem != 0xAA55AA55 ) {
+      if (*mem != 0xAA55AA55) {
         memCount = 0;
       }
     }
@@ -187,7 +187,7 @@ int countMemory() {
 
   asm("nop");
 
-  load_cr0( cr0 );
+  load_cr0(cr0);
 
   /*
    asm volatile (
@@ -201,8 +201,8 @@ int countMemory() {
   asm("nop");
 
   /* Restore States For Both IRQ 1 And 2 */
-  outportByte( 0x21, irq1State );
-  outportByte( 0xA1, irq2State );
+  outportByte(0x21, irq1State);
+  outportByte(0xA1, irq2State);
 
   asm("nop");
 
@@ -220,37 +220,36 @@ int countMemory() {
  Notes:
 
  ************************************************************************/
-uInt32 vmmFindFreePage( pidType pid ) {
+uInt32 vmm_findFreePage(pidType pid) {
   int i = 0x0;
 
   /* Lets Look For A Free Page */
-  if ( pid < sysID )
-    kpanic( "Error: invalid PID %i\n", pid );
+  if (pid < sysID)
+    kpanic("Error: invalid PID %i\n", pid);
 
-  spinLock( &vmmSpinLock );
+  spinLock(&vmmSpinLock);
 
-  for ( i = 0; i <= numPages; i++ ) {
+  for (i = 0; i <= numPages; i++) {
 
     /*
      * If We Found A Free Page Set It To Not Available After That Set Its Own
      * And Return The Address
      */
-    if ( (vmmMemoryMap[i].status == memAvail)
-        && (vmmMemoryMap[i].cowCounter == 0) ) {
+    if ((vmmMemoryMap[i].status == memAvail) && (vmmMemoryMap[i].cowCounter == 0)) {
       vmmMemoryMap[i].status = memNotavail;
       vmmMemoryMap[i].pid = pid;
       freePages--;
-      if ( systemVitals )
+      if (systemVitals)
         systemVitals->freePages = freePages;
 //kprintf("vFFP: 0x%X\n", vmmMemoryMap[i].pageAddr);
 
-      spinUnlock( &vmmSpinLock );
+      spinUnlock(&vmmSpinLock);
       return (vmmMemoryMap[i].pageAddr);
     }
   }
 
   /* If No Free Memory Is Found Return NULL */
-  kpanic( "Out Of Memory!!!!" );
+  kpanic("Out Of Memory!!!!");
   return (0x0);
 }
 
@@ -263,16 +262,16 @@ uInt32 vmmFindFreePage( pidType pid ) {
  Notes:
 
  ************************************************************************/
-int freePage( uInt32 pageAddr ) {
+int freePage(uInt32 pageAddr) {
   int pageIndex = 0x0;
-  assert( (pageAddr & 0xFFF) == 0x0 );
-  spinLock( &vmmSpinLock );
+  assert((pageAddr & 0xFFF) == 0x0);
+  spinLock(&vmmSpinLock);
 
   /* Find The Page Index To The Memory Map */
   pageIndex = (pageAddr / 4096);
 
   /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
-  if ( vmmMemoryMap[pageIndex].cowCounter == 0 ) {
+  if (vmmMemoryMap[pageIndex].cowCounter == 0) {
     /* Set Page As Avail So It Can Be Used Again */
     vmmMemoryMap[pageIndex].status = memAvail;
     vmmMemoryMap[pageIndex].cowCounter = 0x0;
@@ -282,9 +281,9 @@ int freePage( uInt32 pageAddr ) {
   }
   else {
     /* Adjust The COW Counter */
-    adjustCowCounter( ((uInt32) vmmMemoryMap[pageIndex].pageAddr), -1 );
+    adjustCowCounter(((uInt32) vmmMemoryMap[pageIndex].pageAddr), -1);
   }
-  spinUnlock( &vmmSpinLock );
+  spinUnlock(&vmmSpinLock);
   /* Return */
   return (0);
 }
@@ -301,21 +300,21 @@ int freePage( uInt32 pageAddr ) {
  08/01/02 - I Think If Counter Gets To 0 I Should Free The Page
 
  ************************************************************************/
-int adjustCowCounter( uInt32 baseAddr, int adjustment ) {
+int adjustCowCounter(uInt32 baseAddr, int adjustment) {
   int vmmMemoryMapIndex = (baseAddr / 4096);
-  assert( (baseAddr & 0xFFF) == 0x0 );
-  spinLock( &vmmCowSpinLock );
+  assert((baseAddr & 0xFFF) == 0x0);
+  spinLock(&vmmCowSpinLock);
   /* Adjust COW Counter */
   vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
 
-  if ( vmmMemoryMap[vmmMemoryMapIndex].cowCounter == 0 ) {
+  if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter == 0) {
     vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
     vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
     vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
     freePages++;
     systemVitals->freePages = freePages;
   }
-  spinUnlock( &vmmCowSpinLock );
+  spinUnlock(&vmmCowSpinLock);
   /* Return */
   return (0);
 }
@@ -331,31 +330,31 @@ int adjustCowCounter( uInt32 baseAddr, int adjustment ) {
  08/04/02 - Added Checking For COW Pages First
 
  ************************************************************************/
-void vmmFreeProcessPages( pidType pid ) {
+void vmm_freeProcessPages(pidType pid) {
   int i = 0, x = 0;
   uInt32 *tmpPageTable = 0x0;
   uInt32 *tmpPageDir = (uInt32 *) PD_BASE_ADDR;
-  spinLock( &vmmSpinLock );
+  spinLock(&vmmSpinLock);
   /* Check Page Directory For An Avail Page Table */
-  for ( i = 0; i <= 0x300; i++ ) {
-    if ( tmpPageDir[i] != 0 ) {
+  for (i = 0; i <= 0x300; i++) {
+    if (tmpPageDir[i] != 0) {
       /* Set Up Page Table Pointer */
       tmpPageTable = (uInt32 *) (PT_BASE_ADDR + (i * 0x1000));
       /* Check The Page Table For COW Pages */
-      for ( x = 0; x < PD_ENTRIES; x++ ) {
+      for (x = 0; x < PD_ENTRIES; x++) {
         /* If The Page Is COW Adjust COW Counter */
-        if ( ((uInt32) tmpPageTable[x] & PAGE_COW) == PAGE_COW ) {
-          adjustCowCounter( ((uInt32) tmpPageTable[x] & 0xFFFFF000), -1 );
+        if (((uInt32) tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
+          adjustCowCounter(((uInt32) tmpPageTable[x] & 0xFFFFF000), -1);
         }
       }
     }
   }
 
   /* Loop Through Pages To Find Pages Owned By Process */
-  for ( i = 0; i < numPages; i++ ) {
-    if ( vmmMemoryMap[i].pid == pid ) {
+  for (i = 0; i < numPages; i++) {
+    if (vmmMemoryMap[i].pid == pid) {
       /* Check To See If The cowCounter Is Zero If So We Can Ree It */
-      if ( vmmMemoryMap[i].cowCounter == 0 ) {
+      if (vmmMemoryMap[i].cowCounter == 0) {
         vmmMemoryMap[i].status = memAvail;
         vmmMemoryMap[i].cowCounter = 0x0;
         vmmMemoryMap[i].pid = vmmID;
@@ -365,7 +364,7 @@ void vmmFreeProcessPages( pidType pid ) {
     }
   }
   /* Return */
-  spinUnlock( &vmmSpinLock );
+  spinUnlock(&vmmSpinLock);
   return;
 }
 

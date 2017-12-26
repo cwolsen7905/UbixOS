@@ -64,7 +64,7 @@ typedef	unsigned int	uint;		/* Sys V compatibility */
 
 typedef __uint8_t	u_int8_t;	/* unsigned integrals (deprecated) */
 typedef __uint16_t	u_int16_t;
-typedef __uint32_t	u_int32_t;
+typedef __uint32_t	uint32_t;
 typedef __uint64_t	u_int64_t;
 
 typedef	__uint64_t	u_quad_t;	/* quads (deprecated) */

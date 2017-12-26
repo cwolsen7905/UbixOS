@@ -42,7 +42,7 @@ extern u_char *snmp_nodename;
 typedef void ng_cookie_f(const struct ng_mesg *, const char *, ng_ID_t, void *);
 typedef void ng_hook_f(const char *, const u_char *, size_t, void *);
 
-void *ng_register_cookie(const struct lmodule *, u_int32_t cookie,
+void *ng_register_cookie(const struct lmodule *, uint32_t cookie,
     ng_ID_t, ng_cookie_f *, void *);
 void ng_unregister_cookie(void *reg);
 

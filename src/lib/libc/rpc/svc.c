@@ -552,8 +552,8 @@ svcerr_progvers(xprt, low_vers, high_vers)
 	rply.rm_reply.rp_stat = MSG_ACCEPTED;
 	rply.acpted_rply.ar_verf = xprt->xp_verf;
 	rply.acpted_rply.ar_stat = PROG_MISMATCH;
-	rply.acpted_rply.ar_vers.low = (u_int32_t)low_vers;
-	rply.acpted_rply.ar_vers.high = (u_int32_t)high_vers;
+	rply.acpted_rply.ar_vers.low = (uint32_t)low_vers;
+	rply.acpted_rply.ar_vers.high = (uint32_t)high_vers;
 	SVC_REPLY(xprt, &rply);
 }
 

@@ -142,7 +142,7 @@ nfsm_dissect_nonblock(struct nfsrv_descript *nd, int siz)
 
 #define	NFSM_STRSIZ(s, m)  						\
 	do {								\
-		tl = (u_int32_t *)nfsm_dissect(nd, NFSX_UNSIGNED);	\
+		tl = (uint32_t *)nfsm_dissect(nd, NFSX_UNSIGNED);	\
 		if (!tl || ((s) = fxdr_unsigned(int32_t, *tl)) > (m)) { \
 			error = EBADRPC; 				\
 			goto nfsmout; 					\

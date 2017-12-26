@@ -57,8 +57,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="135" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="135" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structufs2__dinode_12d42d866db3eb9d62bfdcf6b0ec3656e" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs2_dinode::di_blksize</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs2_dinode::di_blksize</definition>
         <argsstring></argsstring>
         <name>di_blksize</name>
         <briefdescription>
@@ -149,8 +149,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="143" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structufs2__dinode_1679f34fcac6376db0f8307194a31de00" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs2_dinode::di_flags</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs2_dinode::di_flags</definition>
         <argsstring></argsstring>
         <name>di_flags</name>
         <briefdescription>
@@ -175,8 +175,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="140" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="140" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structufs2__dinode_1472290444109405d763fbe118772b04a" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs2_dinode::di_gid</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs2_dinode::di_gid</definition>
         <argsstring></argsstring>
         <name>di_gid</name>
         <briefdescription>
@@ -202,8 +202,8 @@
         <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
       </memberdef>
       <memberdef kind="variable" id="structufs2__dinode_1999f1d6844c5076d417dcd7eefd0c853" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs2_dinode::di_kernflags</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs2_dinode::di_kernflags</definition>
         <argsstring></argsstring>
         <name>di_kernflags</name>
         <briefdescription>
@@ -294,8 +294,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="147" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="147" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structufs2__dinode_11e7d5f15243f2c5cd9417275015133dc" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs2_dinode::di_uid</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs2_dinode::di_uid</definition>
         <argsstring></argsstring>
         <name>di_uid</name>
         <briefdescription>

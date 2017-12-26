@@ -39,7 +39,7 @@
  */
 
 struct usbd_quirks {
-	u_int32_t uq_flags;	/* Device problems: */
+	uint32_t uq_flags;	/* Device problems: */
 #define UQ_NO_SET_PROTO	0x0001	/* cannot handle SET PROTOCOL. */
 #define UQ_SWAP_UNICODE	0x0002	/* has some Unicode strings swapped. */
 #define UQ_MS_REVZ	0x0004	/* mouse has Z-axis reversed */

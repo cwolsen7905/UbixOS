@@ -144,33 +144,33 @@
 
 /* NB: deprecated */
 struct session_op {
-	u_int32_t	cipher;		/* ie. CRYPTO_DES_CBC */
-	u_int32_t	mac;		/* ie. CRYPTO_MD5_HMAC */
+	uint32_t	cipher;		/* ie. CRYPTO_DES_CBC */
+	uint32_t	mac;		/* ie. CRYPTO_MD5_HMAC */
 
-	u_int32_t	keylen;		/* cipher key */
+	uint32_t	keylen;		/* cipher key */
 	caddr_t		key;
 	int		mackeylen;	/* mac key */
 	caddr_t		mackey;
 
-  	u_int32_t	ses;		/* returns: session # */ 
+  	uint32_t	ses;		/* returns: session # */ 
 };
 
 struct session2_op {
-	u_int32_t	cipher;		/* ie. CRYPTO_DES_CBC */
-	u_int32_t	mac;		/* ie. CRYPTO_MD5_HMAC */
+	uint32_t	cipher;		/* ie. CRYPTO_DES_CBC */
+	uint32_t	mac;		/* ie. CRYPTO_MD5_HMAC */
 
-	u_int32_t	keylen;		/* cipher key */
+	uint32_t	keylen;		/* cipher key */
 	caddr_t		key;
 	int		mackeylen;	/* mac key */
 	caddr_t		mackey;
 
-  	u_int32_t	ses;		/* returns: session # */ 
+  	uint32_t	ses;		/* returns: session # */ 
 	int		crid;		/* driver id + flags (rw) */
 	int		pad[4];		/* for future expansion */
 };
 
 struct crypt_op {
-	u_int32_t	ses;
+	uint32_t	ses;
 	u_int16_t	op;		/* i.e. COP_ENCRYPT */
 #define COP_ENCRYPT	1
 #define COP_DECRYPT	2
@@ -226,16 +226,16 @@ struct crypt_kop {
  * done against open of /dev/crypto, to get a cloned descriptor.
  * Please use F_SETFD against the cloned descriptor.
  */
-#define	CRIOGET		_IOWR('c', 100, u_int32_t)
+#define	CRIOGET		_IOWR('c', 100, uint32_t)
 #define	CRIOASYMFEAT	CIOCASYMFEAT
 #define	CRIOFINDDEV	CIOCFINDDEV
 
 /* the following are done against the cloned descriptor */
 #define	CIOCGSESSION	_IOWR('c', 101, struct session_op)
-#define	CIOCFSESSION	_IOW('c', 102, u_int32_t)
+#define	CIOCFSESSION	_IOW('c', 102, uint32_t)
 #define CIOCCRYPT	_IOWR('c', 103, struct crypt_op)
 #define CIOCKEY		_IOWR('c', 104, struct crypt_kop)
-#define CIOCASYMFEAT	_IOR('c', 105, u_int32_t)
+#define CIOCASYMFEAT	_IOR('c', 105, uint32_t)
 #define	CIOCGSESSION2	_IOWR('c', 106, struct session2_op)
 #define	CIOCKEY2	_IOWR('c', 107, struct crypt_kop)
 #define	CIOCFINDDEV	_IOWR('c', 108, struct crypt_find_op)
@@ -244,18 +244,18 @@ struct cryptotstat {
 	struct timespec	acc;		/* total accumulated time */
 	struct timespec	min;		/* min time */
 	struct timespec	max;		/* max time */
-	u_int32_t	count;		/* number of observations */
+	uint32_t	count;		/* number of observations */
 };
 
 struct cryptostats {
-	u_int32_t	cs_ops;		/* symmetric crypto ops submitted */
-	u_int32_t	cs_errs;	/* symmetric crypto ops that failed */
-	u_int32_t	cs_kops;	/* asymetric/key ops submitted */
-	u_int32_t	cs_kerrs;	/* asymetric/key ops that failed */
-	u_int32_t	cs_intrs;	/* crypto swi thread activations */
-	u_int32_t	cs_rets;	/* crypto return thread activations */
-	u_int32_t	cs_blocks;	/* symmetric op driver block */
-	u_int32_t	cs_kblocks;	/* symmetric op driver block */
+	uint32_t	cs_ops;		/* symmetric crypto ops submitted */
+	uint32_t	cs_errs;	/* symmetric crypto ops that failed */
+	uint32_t	cs_kops;	/* asymetric/key ops submitted */
+	uint32_t	cs_kerrs;	/* asymetric/key ops that failed */
+	uint32_t	cs_intrs;	/* crypto swi thread activations */
+	uint32_t	cs_rets;	/* crypto return thread activations */
+	uint32_t	cs_blocks;	/* symmetric op driver block */
+	uint32_t	cs_kblocks;	/* symmetric op driver block */
 	/*
 	 * When CRYPTO_TIMING is defined at compile time and the
 	 * sysctl debug.crypto is set to 1, the crypto system will
@@ -361,7 +361,7 @@ struct cryptkop {
 	u_short		krp_iparams;	/* # of input parameters */
 	u_short		krp_oparams;	/* # of output parameters */
 	u_int		krp_crid;	/* desired device, etc. */
-	u_int32_t	krp_hid;
+	uint32_t	krp_hid;
 	struct crparam	krp_param[CRK_MAXPARAM];	/* kvm */
 	int		(*krp_callback)(struct cryptkop *);
 };
@@ -375,7 +375,7 @@ struct cryptkop {
  */
 #define	CRYPTO_SESID2HID(_sid)	(((_sid) >> 32) & 0x00ffffff)
 #define	CRYPTO_SESID2CAPS(_sid)	(((_sid) >> 32) & 0xff000000)
-#define	CRYPTO_SESID2LID(_sid)	(((u_int32_t) (_sid)) & 0xffffffff)
+#define	CRYPTO_SESID2LID(_sid)	(((uint32_t) (_sid)) & 0xffffffff)
 
 MALLOC_DECLARE(M_CRYPTO_DATA);
 
@@ -388,16 +388,16 @@ extern	int32_t crypto_get_driverid(device_t dev, int flags);
 extern	int crypto_find_driver(const char *);
 extern	device_t crypto_find_device_byhid(int hid);
 extern	int crypto_getcaps(int hid);
-extern	int crypto_register(u_int32_t driverid, int alg, u_int16_t maxoplen,
-	    u_int32_t flags);
-extern	int crypto_kregister(u_int32_t, int, u_int32_t);
-extern	int crypto_unregister(u_int32_t driverid, int alg);
-extern	int crypto_unregister_all(u_int32_t driverid);
+extern	int crypto_register(uint32_t driverid, int alg, u_int16_t maxoplen,
+	    uint32_t flags);
+extern	int crypto_kregister(uint32_t, int, uint32_t);
+extern	int crypto_unregister(uint32_t driverid, int alg);
+extern	int crypto_unregister_all(uint32_t driverid);
 extern	int crypto_dispatch(struct cryptop *crp);
 extern	int crypto_kdispatch(struct cryptkop *);
 #define	CRYPTO_SYMQ	0x1
 #define	CRYPTO_ASYMQ	0x2
-extern	int crypto_unblock(u_int32_t, int);
+extern	int crypto_unblock(uint32_t, int);
 extern	void crypto_done(struct cryptop *crp);
 extern	void crypto_kdone(struct cryptkop *);
 extern	int crypto_getfeat(int *);

@@ -32,10 +32,10 @@
 
 #ifdef _KERNEL
 struct jail_v0 {
-	u_int32_t	version;
+	uint32_t	version;
 	char		*path;
 	char		*hostname;
-	u_int32_t	ip_number;
+	uint32_t	ip_number;
 };
 #endif
 
@@ -61,7 +61,7 @@ struct xprison_v1 {
 	int		 pr_id;
 	char		 pr_path[MAXPATHLEN];
 	char		 pr_host[MAXHOSTNAMELEN];
-	u_int32_t	 pr_ip;
+	uint32_t	 pr_ip;
 };
 #endif
 

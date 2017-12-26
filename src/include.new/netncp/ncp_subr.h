@@ -98,7 +98,7 @@ struct uio;
 struct ncp_nlstables;
 
 struct ncp_open_info {
-	u_int32_t 		origfh;
+	uint32_t 		origfh;
 	ncp_fh			fh;
 	u_int8_t 		action;
 	struct nw_entry_info	fattr;
@@ -117,6 +117,6 @@ char*ncp_str_dup(char *s);
 /* ncp_crypt.c */
 void nw_keyhash(const u_char *key, const u_char *buf, int buflen, u_char *target);
 void nw_encrypt(const u_char *fra, const u_char *buf, u_char *target);
-void ncp_sign(const u_int32_t *state, const char *x, u_int32_t *ostate);
+void ncp_sign(const uint32_t *state, const char *x, uint32_t *ostate);
 
 #endif /* _NCP_SUBR_H_ */

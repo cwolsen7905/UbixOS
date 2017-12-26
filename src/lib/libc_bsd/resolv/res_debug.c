@@ -188,7 +188,7 @@ do_section(const res_state statp,
 				p_class(ns_rr_class(rr)));
 		else if (section == ns_s_ar && ns_rr_type(rr) == ns_t_opt) {
 			u_int16_t optcode, optlen, rdatalen = ns_rr_rdlen(rr);
-			u_int32_t ttl = ns_rr_ttl(rr);
+			uint32_t ttl = ns_rr_ttl(rr);
 
 			fprintf(file,
 				"; EDNS: version: %u, udp=%u, flags=%04x\n",
@@ -704,7 +704,7 @@ p_option(u_long option) {
  * Return a mnemonic for a time to live.
  */
 const char *
-p_time(u_int32_t value) {
+p_time(uint32_t value) {
 	char *nbuf = p_time_nbuf;
 
 	if (ns_format_ttl(value, nbuf, sizeof nbuf) < 0)
@@ -815,10 +815,10 @@ precsize_aton(const char **strptr) {
 }
 
 /*% converts ascii lat/lon to unsigned encoded 32-bit number.  moves pointer. */
-static u_int32_t
+static uint32_t
 latlon2ul(const char **latlonstrptr, int *which) {
 	const char *cp;
-	u_int32_t retval;
+	uint32_t retval;
 	int deg = 0, min = 0, secs = 0, secsfrac = 0;
 
 	cp = *latlonstrptr;
@@ -919,8 +919,8 @@ loc_aton(ascii, binary)
 	const char *cp, *maxcp;
 	u_char *bcp;
 
-	u_int32_t latit = 0, longit = 0, alt = 0;
-	u_int32_t lltemp1 = 0, lltemp2 = 0;
+	uint32_t latit = 0, longit = 0, alt = 0;
+	uint32_t lltemp1 = 0, lltemp2 = 0;
 	int altmeters = 0, altfrac = 0, altsign = 1;
 	u_int8_t hp = 0x16;	/*%< default = 1e6 cm = 10000.00m = 10km */
 	u_int8_t vp = 0x13;	/*%< default = 1e3 cm = 10.00m */
@@ -1038,10 +1038,10 @@ loc_ntoa(binary, ascii)
 	const char *altsign;
 	int altmeters, altfrac;
 
-	const u_int32_t referencealt = 100000 * 100;
+	const uint32_t referencealt = 100000 * 100;
 
 	int32_t latval, longval, altval;
-	u_int32_t templ;
+	uint32_t templ;
 	u_int8_t sizeval, hpval, vpval, versionval;
 
 	char *sizestr, *hpstr, *vpstr;

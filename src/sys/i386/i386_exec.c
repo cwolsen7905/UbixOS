@@ -169,7 +169,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
 
   int i = 0x0;
   int x = 0x0;
-  u_int32_t *tmp = 0x0;
+  uint32_t *tmp = 0x0;
 
   fileDescriptor *tmpFd = 0x0;
   elfHeader *binaryHeader = 0x0;
@@ -333,7 +333,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
   tmp[3] = STACK_ADDR - 12;
 
   //tmp = (uInt32 *) STACK_ADDR - 2;
-  tmp = (u_int32_t *) _current->tss.esp;
+  tmp = (uint32_t *) _current->tss.esp;
 
   /*
    if ( _current->id > 4 )
@@ -347,8 +347,8 @@ void execFile( char *file, int argc, char **argv, int console ) {
   *tmp-- = 0x0;
 
   /*
-   tmp[0] = (u_int32_t) argv;
-   tmp[1] = (u_int32_t) argv;
+   tmp[0] = (uint32_t) argv;
+   tmp[1] = (uint32_t) argv;
    */
 
   /* Switch Back To The Kernels VM Space */
@@ -380,10 +380,10 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   int i = 0x0;
   int x = 0x0;
   int argc = 0x0;
-  u_int32_t cr3 = 0x0;
+  uint32_t cr3 = 0x0;
 
   unsigned int *tmp = 0x0;
-  //u_int32_t memAddr = 0x0;
+  //uint32_t memAddr = 0x0;
 
   uInt32 ldAddr = 0x0;
   uInt32 seg_size = 0x0;
@@ -428,9 +428,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   _current->imageFd = fd;
 
   //! Clean the virtual of COW pages left over from the fork
-  //vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
+  //vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
   //MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
-  vmm_cleanVirtualSpace( (u_int32_t) 0x8048000 );
+  vmm_cleanVirtualSpace( (uint32_t) 0x8048000 );
 
   /* Load ELF Header */
   if ( (binaryHeader = (elfHeader *) kmalloc( sizeof(elfHeader) )) == 0x0 )
@@ -633,7 +633,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   iFrame->ebp = STACK_ADDR;
   iFrame->eip = binaryHeader->eEntry;
-  iFrame->user_esp = ((u_int32_t) STACK_ADDR) - (sizeof(u_int32_t) * (argc + 3));
+  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 3));
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
 
@@ -673,10 +673,10 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   //}
   //else {
-  //tmp = (u_int32_t *)STACK_ADDR - 2;
+  //tmp = (uint32_t *)STACK_ADDR - 2;
   //tmp[0] = 0x1;
   //tmp[1] = 0x0;
-  //tmp[1] = (u_int32_t)argv;
+  //tmp[1] = (uint32_t)argv;
   //}
   kfree( argvNew );
   /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
@@ -711,7 +711,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   /*
    kfree (iFrameNew);
 
-   memAddr = (u_int32_t) & (_current->tss);
+   memAddr = (uint32_t) & (_current->tss);
    ubixGDT[4].descriptor.baseLow = (memAddr & 0xFFFF);
    ubixGDT[4].descriptor.baseMed = ((memAddr >> 16) & 0xFF);
    ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
@@ -744,12 +744,12 @@ int sys_exec_dead( char *file, char *ap ) {
   int i = 0x0;
   int x = 0x0;
   int argc = 0x0;
-  u_int32_t *tmp = 0x0;
-  u_int32_t seg_size = 0x0;
-  u_int32_t seg_addr = 0x0;
-  u_int32_t addr = 0x0;
-  u_int32_t eip = 0x0;
-  u_int32_t proghdr = 0x0;
+  uint32_t *tmp = 0x0;
+  uint32_t seg_size = 0x0;
+  uint32_t seg_addr = 0x0;
+  uint32_t addr = 0x0;
+  uint32_t eip = 0x0;
+  uint32_t proghdr = 0x0;
   char *args = 0x0;
   char *interp = 0x0;
   char **argv = 0x0;
@@ -875,7 +875,7 @@ int sys_exec_dead( char *file, char *ap ) {
   }
 
   //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace( (u_int32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
+  vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
 
   //! Adjust iframe
   iFrame = (struct i386_frame *) _current->tss.esp0 - sizeof(struct i386_frame);
@@ -884,25 +884,25 @@ int sys_exec_dead( char *file, char *ap ) {
 
   //if (_current->id > 3) {
 
-  iFrame->user_esp = ((u_int32_t) STACK_ADDR) - (sizeof(u_int32_t) * (argc + 4 + (sizeof(Elf_Auxargs) * 2)));
+  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 4 + (sizeof(Elf_Auxargs) * 2)));
   kprintf( "\n\n\nuser_esp: [0x%X]\n", iFrame->user_esp );
-  tmp = (u_int32_t *) iFrame->user_esp;
+  tmp = (uint32_t *) iFrame->user_esp;
 
   //! build argc and argv[]
   tmp[0] = argc;
   for ( i = 0; i < argc; i++ ) {
-    tmp[i + 1] = (u_int32_t) argv[i];
+    tmp[i + 1] = (uint32_t) argv[i];
   }
   //! Build ENV
   args = (char *) vmmGetFreeVirtualPage( _current->id, 1, VM_TASK );
   memset( args, 0x0, 0x1000 );
   strcpy( args, "LIBRARY_PATH=/lib" );
-  tmp[argc + 2] = (u_int32_t) args;
+  tmp[argc + 2] = (uint32_t) args;
   kprintf( "env: [0x%X][0x%X]\n", (uInt32) tmp + argc + 2, tmp[argc + 2] );
   tmp[argc + 3] = 0x0;
   kprintf( "env: [0x%X][0x%X]\n", (uInt32) tmp + argc + 2, tmp[argc + 2] );
   //auxargs = iFrame->user_esp + argc +  3;
-  tmp = (u_int32_t *) iFrame->user_esp;
+  tmp = (uint32_t *) iFrame->user_esp;
   tmp += argc + 4;
 
   auxargs->execfd = -1;

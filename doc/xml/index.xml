@@ -2134,7 +2134,7 @@
     <member refid="types_8h_1e2b02ed168fc99cff3851603910b1fb6" kind="typedef"><name>u_char</name></member>
     <member refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kind="typedef"><name>u_int</name></member>
     <member refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kind="typedef"><name>u_int16_t</name></member>
-    <member refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kind="typedef"><name>u_int32_t</name></member>
+    <member refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kind="typedef"><name>uint32_t</name></member>
     <member refid="types_8h_1250ac047bf3984b5dae755276a305d64" kind="typedef"><name>u_int64_t</name></member>
     <member refid="types_8h_1c7c42f52639b9aca7da966a0783996d7" kind="typedef"><name>u_int8_t</name></member>
     <member refid="types_8h_18f25a50daf29ce2cee1ec038a4d744ea" kind="typedef"><name>u_long</name></member>

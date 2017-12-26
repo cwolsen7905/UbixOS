@@ -56,7 +56,7 @@ struct secasindex {
 	struct sockaddr_storage dst;	/* destination address for SA */
 	u_int16_t proto;		/* IPPROTO_ESP or IPPROTO_AH */
 	u_int8_t mode;			/* mode of protocol, see ipsec.h */
-	u_int32_t reqid;		/* reqid id who owned this SA */
+	uint32_t reqid;		/* reqid id who owned this SA */
 					/* see IPSEC_MANUAL_REQID_MAX. */
 };
 
@@ -93,8 +93,8 @@ struct secasvar {
 
 	u_int8_t alg_auth;		/* Authentication Algorithm Identifier*/
 	u_int8_t alg_enc;		/* Cipher Algorithm Identifier */
-	u_int32_t spi;			/* SPI Value, network byte order */
-	u_int32_t flags;		/* holder for SADB_KEY_FLAGS */
+	uint32_t spi;			/* SPI Value, network byte order */
+	uint32_t flags;		/* holder for SADB_KEY_FLAGS */
 
 	struct sadb_key *key_auth;	/* Key for Authentication */
 	struct sadb_key *key_enc;	/* Key for Encryption */
@@ -115,7 +115,7 @@ struct secasvar {
 
 	struct secashead *sah;		/* back pointer to the secashead */
 
-	u_int32_t id;			/* SA id */
+	uint32_t id;			/* SA id */
 };
 
 /* replay prevention */
@@ -142,7 +142,7 @@ struct secacq {
 
 	struct secasindex saidx;
 
-	u_int32_t seq;		/* sequence number */
+	uint32_t seq;		/* sequence number */
 	long created;		/* for lifetime */
 	int count;		/* for lifetime */
 };
@@ -162,7 +162,7 @@ struct key_cb {
 struct secpolicy;
 struct secpolicyindex;
 extern struct secpolicy *keydb_newsecpolicy(void);
-extern u_int32_t keydb_newspid(void);
+extern uint32_t keydb_newspid(void);
 extern void keydb_delsecpolicy(struct secpolicy *);
 extern int keydb_setsecpolicyindex
 	(struct secpolicy *, struct secpolicyindex *);

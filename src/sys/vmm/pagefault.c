@@ -52,14 +52,14 @@ static spinLock_t pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
 
  *****************************************************************************************/
 /* void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) { */
-void vmm_pageFault(struct trapframe *frame, u_int32_t cr2) {
+void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   uInt32 i = 0x0, pageTableIndex = 0x0, pageDirectoryIndex = 0x0;
   uInt32 *pageDir = 0x0, *pageTable = 0x0;
   uInt32 *src = 0x0, *dst = 0x0;
 
-  u_int32_t esp = frame->tf_esp;
-  u_int32_t eip = frame->tf_eip;
-  u_int32_t memAddr = cr2;
+  uint32_t esp = frame->tf_esp;
+  uint32_t eip = frame->tf_eip;
+  uint32_t memAddr = cr2;
 
 //MrOlsen 2017-12-15 - 
 kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);

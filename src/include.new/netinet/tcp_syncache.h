@@ -54,10 +54,10 @@ struct syncache {
 	struct		in_conninfo sc_inc;	/* addresses */
 	int		sc_rxttime;		/* retransmit time */
 	u_int16_t	sc_rxmits;		/* retransmit counter */
-	u_int32_t	sc_tsreflect;		/* timestamp to reflect */
-	u_int32_t	sc_ts;			/* our timestamp to send */
-	u_int32_t	sc_tsoff;		/* ts offset w/ syncookies */
-	u_int32_t	sc_flowlabel;		/* IPv6 flowlabel */
+	uint32_t	sc_tsreflect;		/* timestamp to reflect */
+	uint32_t	sc_ts;			/* our timestamp to send */
+	uint32_t	sc_tsoff;		/* ts offset w/ syncookies */
+	uint32_t	sc_flowlabel;		/* IPv6 flowlabel */
 	tcp_seq		sc_irs;			/* seq from peer */
 	tcp_seq		sc_iss;			/* our ISS */
 	struct		mbuf *sc_ipopts;	/* source route */
@@ -76,7 +76,7 @@ struct syncache {
 	struct ucred	*sc_cred;		/* cred cache for jail checks */
 
 	void		*sc_pspare;		/* TCP_SIGNATURE */
-	u_int32_t	sc_spare[2];		/* UTO */
+	uint32_t	sc_spare[2];		/* UTO */
 };
 
 /*

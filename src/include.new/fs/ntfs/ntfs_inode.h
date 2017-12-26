@@ -50,7 +50,7 @@ struct ntnode {
 	struct ntnode **i_prev;
 	struct ntfsmount       *i_mp;
 	ino_t           i_number;
-	u_int32_t       i_flag;
+	uint32_t       i_flag;
 
 	/* locking */
 	struct lock	i_lock;
@@ -62,7 +62,7 @@ struct ntnode {
 
 	long		i_nlink;	/* MFR */
 	ino_t		i_mainrec;	/* MFR */
-	u_int32_t	i_frflag;	/* MFR */
+	uint32_t	i_frflag;	/* MFR */
 };
 
 #define	FN_PRELOADED	0x0001
@@ -76,20 +76,20 @@ struct fnode {
 
 	ntfs_times_t	f_times;	/* $NAME/dirinfo */
 	ino_t		f_pnumber;	/* $NAME/dirinfo */
-	u_int32_t       f_fflag;	/* $NAME/dirinfo */
+	uint32_t       f_fflag;	/* $NAME/dirinfo */
 	u_int64_t	f_size;		/* defattr/dirinfo: */
 	u_int64_t	f_allocated;	/* defattr/dirinfo */
 
-	u_int32_t	f_attrtype;
+	uint32_t	f_attrtype;
 	char	       *f_attrname;
 
 	/* for ntreaddir */
-	u_int32_t       f_lastdattr;
-	u_int32_t       f_lastdblnum;
-	u_int32_t       f_lastdoff;
-	u_int32_t       f_lastdnum;
+	uint32_t       f_lastdattr;
+	uint32_t       f_lastdblnum;
+	uint32_t       f_lastdoff;
+	uint32_t       f_lastdnum;
 	caddr_t         f_dirblbuf;
-	u_int32_t       f_dirblsz;
+	uint32_t       f_dirblsz;
 };
 
 /* This overlays the fid structure (see <sys/mount.h>) */

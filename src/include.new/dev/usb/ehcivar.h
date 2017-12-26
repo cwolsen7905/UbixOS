@@ -65,7 +65,7 @@ struct ehci_xfer {
 	LIST_ENTRY(ehci_xfer) inext; /* list of active xfers */
 	ehci_soft_qtd_t *sqtdstart;
 	ehci_soft_qtd_t *sqtdend;
-	u_int32_t ehci_xfer_flags;
+	uint32_t ehci_xfer_flags;
 #ifdef DIAGNOSTIC
 	int isdone;
 #endif
@@ -113,7 +113,7 @@ typedef struct ehci_softc {
 	char sc_vendor[32];		/* vendor string for root hub */
 	int sc_id_vendor;		/* vendor ID for root hub */
 
-	u_int32_t sc_cmd;		/* shadow of cmd reg during suspend */
+	uint32_t sc_cmd;		/* shadow of cmd reg during suspend */
 #if defined(__NetBSD__) || defined(__OpenBSD__)
 	void *sc_powerhook;		/* cookie from power hook */
 	void *sc_shutdownhook;		/* cookie from shutdown hook */
@@ -146,7 +146,7 @@ typedef struct ehci_softc {
 	char sc_softwake;
 #endif /* USB_USE_SOFTINTR */
 
-	u_int32_t sc_eintrs;
+	uint32_t sc_eintrs;
 	ehci_soft_qh_t *sc_async_head;
 
 	SIMPLEQ_HEAD(, usbd_xfer) sc_free_xfers; /* free xfers */

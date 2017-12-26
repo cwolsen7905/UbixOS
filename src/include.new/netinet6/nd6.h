@@ -62,12 +62,12 @@ struct llentry;
 #define ND6_LLINFO_PERMANENT(n) (((n)->la_expire == 0) && ((n)->ln_state > ND6_LLINFO_INCOMPLETE))
 
 struct nd_ifinfo {
-	u_int32_t linkmtu;		/* LinkMTU */
-	u_int32_t maxmtu;		/* Upper bound of LinkMTU */
-	u_int32_t basereachable;	/* BaseReachableTime */
-	u_int32_t reachable;		/* Reachable Time */
-	u_int32_t retrans;		/* Retrans Timer */
-	u_int32_t flags;		/* Flags */
+	uint32_t linkmtu;		/* LinkMTU */
+	uint32_t maxmtu;		/* Upper bound of LinkMTU */
+	uint32_t basereachable;	/* BaseReachableTime */
+	uint32_t reachable;		/* Reachable Time */
+	uint32_t retrans;		/* Retrans Timer */
+	uint32_t flags;		/* Flags */
 	int recalctm;			/* BaseReacable re-calculation timer */
 	u_int8_t chlim;			/* CurHopLimit */
 	u_int8_t initialized; /* Flag to see the entry is initialized */
@@ -157,8 +157,8 @@ struct	in6_prlist {
 		struct prf_ra raflags;
 		u_char	prefixlen;
 		u_char	origin;
-		u_int32_t vltime;
-		u_int32_t pltime;
+		uint32_t vltime;
+		uint32_t pltime;
 		time_t expire;
 		u_short if_index;
 		u_short advrtrs; /* number of advertisement routers */
@@ -171,10 +171,10 @@ struct in6_prefix {
 	struct prf_ra raflags;
 	u_char	prefixlen;
 	u_char	origin;
-	u_int32_t vltime;
-	u_int32_t pltime;
+	uint32_t vltime;
+	uint32_t pltime;
 	time_t expire;
-	u_int32_t flags;
+	uint32_t flags;
 	int refcnt;
 	u_short if_index;
 	u_short advrtrs; /* number of advertisement routers */
@@ -185,12 +185,12 @@ struct in6_prefix {
 struct	in6_ondireq {
 	char ifname[IFNAMSIZ];
 	struct {
-		u_int32_t linkmtu;	/* LinkMTU */
-		u_int32_t maxmtu;	/* Upper bound of LinkMTU */
-		u_int32_t basereachable; /* BaseReachableTime */
-		u_int32_t reachable;	/* Reachable Time */
-		u_int32_t retrans;	/* Retrans Timer */
-		u_int32_t flags;	/* Flags */
+		uint32_t linkmtu;	/* LinkMTU */
+		uint32_t maxmtu;	/* Upper bound of LinkMTU */
+		uint32_t basereachable; /* BaseReachableTime */
+		uint32_t reachable;	/* Reachable Time */
+		uint32_t retrans;	/* Retrans Timer */
+		uint32_t flags;	/* Flags */
 		int recalctm;		/* BaseReacable re-calculation timer */
 		u_int8_t chlim;		/* CurHopLimit */
 		u_int8_t receivedra;
@@ -252,8 +252,8 @@ struct nd_prefixctl {
 	struct sockaddr_in6 ndpr_prefix;
 	u_char	ndpr_plen;
 
-	u_int32_t ndpr_vltime;	/* advertised valid lifetime */
-	u_int32_t ndpr_pltime;	/* advertised preferred lifetime */
+	uint32_t ndpr_vltime;	/* advertised valid lifetime */
+	uint32_t ndpr_pltime;	/* advertised preferred lifetime */
 
 	struct prf_ra ndpr_flags;
 };
@@ -265,15 +265,15 @@ struct nd_prefix {
 	struct sockaddr_in6 ndpr_prefix;	/* prefix */
 	struct in6_addr ndpr_mask; /* netmask derived from the prefix */
 
-	u_int32_t ndpr_vltime;	/* advertised valid lifetime */
-	u_int32_t ndpr_pltime;	/* advertised preferred lifetime */
+	uint32_t ndpr_vltime;	/* advertised valid lifetime */
+	uint32_t ndpr_pltime;	/* advertised preferred lifetime */
 
 	time_t ndpr_expire;	/* expiration time of the prefix */
 	time_t ndpr_preferred;	/* preferred time of the prefix */
 	time_t ndpr_lastupdate; /* reception time of last advertisement */
 
 	struct prf_ra ndpr_flags;
-	u_int32_t ndpr_stateflags; /* actual state flags */
+	uint32_t ndpr_stateflags; /* actual state flags */
 	/* list of routers that advertise the prefix: */
 	LIST_HEAD(pr_rtrhead, nd_pfxrouter) ndpr_advrtrs;
 	u_char	ndpr_plen;
@@ -350,8 +350,8 @@ VNET_DECLARE(struct callout, nd6_timer_ch);
 /* nd6_rtr.c */
 VNET_DECLARE(int, nd6_defifindex);
 VNET_DECLARE(int, ip6_desync_factor);	/* seconds */
-VNET_DECLARE(u_int32_t, ip6_temp_preferred_lifetime); /* seconds */
-VNET_DECLARE(u_int32_t, ip6_temp_valid_lifetime); /* seconds */
+VNET_DECLARE(uint32_t, ip6_temp_preferred_lifetime); /* seconds */
+VNET_DECLARE(uint32_t, ip6_temp_valid_lifetime); /* seconds */
 VNET_DECLARE(int, ip6_temp_regen_advance); /* seconds */
 #define	V_nd6_defifindex		VNET(nd6_defifindex)
 #define	V_ip6_desync_factor		VNET(ip6_desync_factor)

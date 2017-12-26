@@ -43,7 +43,7 @@ struct acc_filter {
 	LIST_ENTRY(acc_filter)	f_chain;
 	void			*f_class;	/* pointer to the class */
 	u_long			f_handle;	/* filter id */
-	u_int32_t		f_fbmask;	/* filter bitmask */
+	uint32_t		f_fbmask;	/* filter bitmask */
 	struct flow_filter	f_filter;	/* filter value */
 };
 
@@ -77,7 +77,7 @@ struct acc_filter {
 #endif
 
 struct acc_classifier {
-	u_int32_t			acc_fbmask;
+	uint32_t			acc_fbmask;
 	LIST_HEAD(filt, acc_filter)	acc_filters[ACC_FILTER_TABLESIZE];
 
 #if (__FreeBSD_version > 500000)
@@ -119,8 +119,8 @@ struct acc_classifier {
  * a 64bit high resolution time counter.
  */
 extern int machclk_usepcc;
-extern u_int32_t machclk_freq;
-extern u_int32_t machclk_per_tick;
+extern uint32_t machclk_freq;
+extern uint32_t machclk_per_tick;
 extern void init_machclk(void);
 extern u_int64_t read_machclk(void);
 
@@ -215,7 +215,7 @@ struct flowinfo;
 
 void	*altq_lookup(char *, int);
 #ifdef ALTQ3_CLFIER_COMPAT
-int	altq_extractflow(struct mbuf *, int, struct flowinfo *, u_int32_t);
+int	altq_extractflow(struct mbuf *, int, struct flowinfo *, uint32_t);
 int	acc_add_filter(struct acc_classifier *, struct flow_filter *,
 	    void *, u_long *);
 int	acc_delete_filter(struct acc_classifier *, u_long);

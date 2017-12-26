@@ -89,8 +89,8 @@
 struct in6_addrlifetime {
 	time_t ia6t_expire;	/* valid lifetime expiration time */
 	time_t ia6t_preferred;	/* preferred lifetime expiration time */
-	u_int32_t ia6t_vltime;	/* valid lifetime */
-	u_int32_t ia6t_pltime;	/* prefix lifetime */
+	uint32_t ia6t_vltime;	/* valid lifetime */
+	uint32_t ia6t_pltime;	/* prefix lifetime */
 };
 
 struct nd_ifinfo;
@@ -131,7 +131,7 @@ struct	in6_ifaddr {
 	struct	sockaddr_in6 ia_net;	/* network number of interface */
 	struct	sockaddr_in6 ia_dstaddr; /* space for destination addr */
 	struct	sockaddr_in6 ia_prefixmask; /* prefix mask */
-	u_int32_t ia_plen;		/* prefix length */
+	uint32_t ia_plen;		/* prefix length */
 	TAILQ_ENTRY(in6_ifaddr)	ia_link;	/* list of IPv6 addresses */
 	int	ia6_flags;
 
@@ -294,7 +294,7 @@ struct	in6_ifreq {
 		struct in6_addrlifetime ifru_lifetime;
 		struct in6_ifstat ifru_stat;
 		struct icmp6_ifstat ifru_icmp6stat;
-		u_int32_t ifru_scope_id[16];
+		uint32_t ifru_scope_id[16];
 	} ifr_ifru;
 };
 
@@ -348,8 +348,8 @@ struct  in6_prefixreq {
 	char	ipr_name[IFNAMSIZ];
 	u_char	ipr_origin;
 	u_char	ipr_plen;
-	u_int32_t ipr_vltime;
-	u_int32_t ipr_pltime;
+	uint32_t ipr_vltime;
+	uint32_t ipr_pltime;
 	struct in6_prflags ipr_flags;
 	struct	sockaddr_in6 ipr_prefix;
 };
@@ -380,8 +380,8 @@ struct	in6_rrenumreq {
 		u_char autonomous : 1;
 		u_char reserved : 6;
 	} irr_raflagmask;
-	u_int32_t irr_vltime;
-	u_int32_t irr_pltime;
+	uint32_t irr_vltime;
+	uint32_t irr_pltime;
 	struct in6_prflags irr_flags;
 	struct	sockaddr_in6 irr_matchprefix;
 	struct	sockaddr_in6 irr_useprefix;
@@ -817,7 +817,7 @@ struct in6_ifaddr *in6ifa_ifpforlinklocal(struct ifnet *, int);
 struct in6_ifaddr *in6ifa_ifpwithaddr(struct ifnet *, struct in6_addr *);
 struct in6_ifaddr *in6ifa_llaonifp(struct ifnet *);
 char	*ip6_sprintf(char *, const struct in6_addr *);
-int	in6_addr2zoneid(struct ifnet *, struct in6_addr *, u_int32_t *);
+int	in6_addr2zoneid(struct ifnet *, struct in6_addr *, uint32_t *);
 int	in6_matchlen(struct in6_addr *, struct in6_addr *);
 int	in6_are_prefix_equal(struct in6_addr *, struct in6_addr *, int);
 void	in6_prefixlen2mask(struct in6_addr *, int);

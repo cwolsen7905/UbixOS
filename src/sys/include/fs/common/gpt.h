@@ -44,20 +44,20 @@
 struct gpt_hdr {
   char hdr_sig[8];
 #define GPT_HDR_SIG             "EFI PART"
-  u_int32_t hdr_revision;
+  uint32_t hdr_revision;
 #define GPT_HDR_REVISION        0x00010000
-  u_int32_t hdr_size;
-  u_int32_t hdr_crc_self;
-  u_int32_t __reserved;
+  uint32_t hdr_size;
+  uint32_t hdr_crc_self;
+  uint32_t __reserved;
   u_int64_t hdr_lba_self;
   u_int64_t hdr_lba_alt;
   u_int64_t hdr_lba_start;
   u_int64_t hdr_lba_end;
   struct uuid hdr_uuid;
   u_int64_t hdr_lba_table;
-  u_int32_t hdr_entries;
-  u_int32_t hdr_entsz;
-  u_int32_t hdr_crc_table;
+  uint32_t hdr_entries;
+  uint32_t hdr_entsz;
+  uint32_t hdr_crc_table;
   /*
    * The header as defined in the EFI spec is not a multiple of 8 bytes
    * and given that the alignment requirement is on an 8 byte boundary,
@@ -65,7 +65,7 @@ struct gpt_hdr {
    * correct the value returned by sizeof() when we put the size of the
    * header in field hdr_size, or otherwise use offsetof().
    */
-  u_int32_t padding;
+  uint32_t padding;
 };
 
 struct gpt_ent {

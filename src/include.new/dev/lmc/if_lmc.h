@@ -632,11 +632,11 @@
 struct iohdr				/* all LMCIOCs begin with this     */
   {
   char ifname[IFNAMSIZ];		/* interface name, e.g. "lmc0"     */
-  u_int32_t cookie;			/* interface version number        */
+  uint32_t cookie;			/* interface version number        */
   u_int16_t direction;			/* missing in Linux IOCTL          */
   u_int16_t length;			/* missing in Linux IOCTL          */
   struct iohdr *iohdr;			/* missing in Linux IOCTL          */
-  u_int32_t spare;			/* pad this struct to **32 bytes** */
+  uint32_t spare;			/* pad this struct to **32 bytes** */
   };
 
 #define DIR_IO   0
@@ -732,27 +732,27 @@ struct event_cntrs
   u_int64_t obytes;			/* Tx bytes                        */
   u_int64_t ipackets;			/* Rx packets with good status     */
   u_int64_t opackets;			/* Tx packets                      */
-  u_int32_t ierrors;			/* Rx packets with bad status      */
-  u_int32_t oerrors;			/* Tx packets with bad status      */
-  u_int32_t idiscards;			/* Rx packets discarded            */
-  u_int32_t odiscards;			/* Tx packets discarded            */
-  u_int32_t fifo_over;			/* Rx fifo overruns                */
-  u_int32_t fifo_under;			/* Tx fifo underruns               */
-  u_int32_t missed;			/* Rx pkts missed: no DMA descs    */
-  u_int32_t overruns;			/* Rx pkts missed: fifo overrun    */
-  u_int32_t fdl_pkts;			/* Rx T1 Facility Data Link pkts   */
-  u_int32_t crc_errs;			/* Rx T1 frame CRC errors          */
-  u_int32_t lcv_errs;			/* Rx T1 T3 Line Coding Violation  */
-  u_int32_t frm_errs;			/* Rx T1 T3 Frame bit errors       */
-  u_int32_t febe_errs;			/* Rx T1 T3 Far End Bit Errors     */
-  u_int32_t par_errs;			/* Rx T3 P-bit parity errors       */
-  u_int32_t cpar_errs;			/* Rx T3 C-bit parity errors       */
-  u_int32_t mfrm_errs;			/* Rx T3 Multi-frame bit errors    */
-  u_int32_t rxdma;			/* Rx out of kernel buffers        */
-  u_int32_t txdma;			/* Tx out of DMA desciptors        */
-  u_int32_t lck_watch;			/* try_lock conflict in watchdog   */
-  u_int32_t lck_ioctl;			/* try_lock conflict in ioctl      */
-  u_int32_t lck_intr;			/* try_lock conflict in interrupt  */
+  uint32_t ierrors;			/* Rx packets with bad status      */
+  uint32_t oerrors;			/* Tx packets with bad status      */
+  uint32_t idiscards;			/* Rx packets discarded            */
+  uint32_t odiscards;			/* Tx packets discarded            */
+  uint32_t fifo_over;			/* Rx fifo overruns                */
+  uint32_t fifo_under;			/* Tx fifo underruns               */
+  uint32_t missed;			/* Rx pkts missed: no DMA descs    */
+  uint32_t overruns;			/* Rx pkts missed: fifo overrun    */
+  uint32_t fdl_pkts;			/* Rx T1 Facility Data Link pkts   */
+  uint32_t crc_errs;			/* Rx T1 frame CRC errors          */
+  uint32_t lcv_errs;			/* Rx T1 T3 Line Coding Violation  */
+  uint32_t frm_errs;			/* Rx T1 T3 Frame bit errors       */
+  uint32_t febe_errs;			/* Rx T1 T3 Far End Bit Errors     */
+  uint32_t par_errs;			/* Rx T3 P-bit parity errors       */
+  uint32_t cpar_errs;			/* Rx T3 C-bit parity errors       */
+  uint32_t mfrm_errs;			/* Rx T3 Multi-frame bit errors    */
+  uint32_t rxdma;			/* Rx out of kernel buffers        */
+  uint32_t txdma;			/* Tx out of DMA desciptors        */
+  uint32_t lck_watch;			/* try_lock conflict in watchdog   */
+  uint32_t lck_ioctl;			/* try_lock conflict in ioctl      */
+  uint32_t lck_intr;			/* try_lock conflict in interrupt  */
   };
 
 /* sc->status is the READ ONLY status of the card.                         */
@@ -760,14 +760,14 @@ struct event_cntrs
 struct status
   {
   struct iohdr iohdr;			/* common ioctl header             */
-  u_int32_t card_type;			/* PCI device number               */
+  uint32_t card_type;			/* PCI device number               */
   u_int16_t ieee[3];			/* IEEE MAC-addr from Tulip SROM   */
   u_int16_t oper_status;		/* actual state:  up, down, test   */
-  u_int32_t tx_speed;			/* measured TX bits/sec            */
-  u_int32_t cable_type;			/* SSI only: cable type            */
-  u_int32_t line_pkg;			/* actual line pkg in use          */
-  u_int32_t line_prot;			/* actual line proto in use        */
-  u_int32_t ticks;			/* incremented by watchdog @ 1 Hz  */
+  uint32_t tx_speed;			/* measured TX bits/sec            */
+  uint32_t cable_type;			/* SSI only: cable type            */
+  uint32_t line_pkg;			/* actual line pkg in use          */
+  uint32_t line_prot;			/* actual line proto in use        */
+  uint32_t ticks;			/* incremented by watchdog @ 1 Hz  */
   struct event_cntrs cntrs;		/* event counters                  */
   union
     {
@@ -817,22 +817,22 @@ struct synth				/* programmable oscillator params  */
 struct config
   {
   struct iohdr iohdr;			/* common ioctl header             */
-  u_int32_t crc_len;			/* ALL: CRC-16 or CRC-32 or none   */
-  u_int32_t loop_back;			/* ALL: many kinds of loopbacks    */
-  u_int32_t tx_clk_src;			/* T1, HSSI: ST, RT, int, ext      */
-  u_int32_t format;			/* T3, T1: ckt framing format      */
-  u_int32_t time_slots;			/* T1: 64Kb time slot config       */
-  u_int32_t cable_len;			/* T3, T1: cable length in meters  */
-  u_int32_t scrambler;			/* T3: payload scrambler config    */
-  u_int32_t dte_dce;			/* SSI, HSSIc: drive TXCLK         */
+  uint32_t crc_len;			/* ALL: CRC-16 or CRC-32 or none   */
+  uint32_t loop_back;			/* ALL: many kinds of loopbacks    */
+  uint32_t tx_clk_src;			/* T1, HSSI: ST, RT, int, ext      */
+  uint32_t format;			/* T3, T1: ckt framing format      */
+  uint32_t time_slots;			/* T1: 64Kb time slot config       */
+  uint32_t cable_len;			/* T3, T1: cable length in meters  */
+  uint32_t scrambler;			/* T3: payload scrambler config    */
+  uint32_t dte_dce;			/* SSI, HSSIc: drive TXCLK         */
   struct synth synth;			/* SSI, HSSIc: synth oscil params  */
-  u_int32_t rx_gain;			/* T1: receiver gain limit 0-50 dB */
-  u_int32_t tx_pulse;			/* T1: transmitter pulse shape     */
-  u_int32_t tx_lbo;			/* T1: transmitter atten 0-22.5 dB */
-  u_int32_t debug;			/* ALL: extra printout             */
-  u_int32_t line_pkg;			/* ALL:  use this line pkg         */
-  u_int32_t line_prot;			/* SPPP: use this line proto       */
-  u_int32_t keep_alive;			/* SPPP: use keep-alive packets    */
+  uint32_t rx_gain;			/* T1: receiver gain limit 0-50 dB */
+  uint32_t tx_pulse;			/* T1: transmitter pulse shape     */
+  uint32_t tx_lbo;			/* T1: transmitter atten 0-22.5 dB */
+  uint32_t debug;			/* ALL: extra printout             */
+  uint32_t line_pkg;			/* ALL:  use this line pkg         */
+  uint32_t line_prot;			/* SPPP: use this line proto       */
+  uint32_t keep_alive;			/* SPPP: use keep-alive packets    */
   };
 
 #define CFG_CRC_0		   0	/* no CRC                          */
@@ -910,9 +910,9 @@ struct config
 struct ioctl
   {
   struct iohdr iohdr;			/* common ioctl header             */
-  u_int32_t cmd;			/* command			   */
-  u_int32_t address;			/* command address                 */
-  u_int32_t data;			/* command data                    */
+  uint32_t cmd;			/* command			   */
+  uint32_t address;			/* command address                 */
+  uint32_t data;			/* command data                    */
   char *ucode;				/* user-land address of ucode      */
   };
 
@@ -972,7 +972,7 @@ const char *ssi_cables[] =
 /* Tulip DMA descriptor; THIS STRUCT MUST MATCH THE HARDWARE */
 struct dma_desc
   {
-  u_int32_t status;		/* hardware->to->software */
+  uint32_t status;		/* hardware->to->software */
 #if (BYTE_ORDER == LITTLE_ENDIAN) /* left-to-right packing by compiler */
   unsigned  length1:11;		/* buffer1 length */
   unsigned  length2:11;		/* buffer2 length */
@@ -982,8 +982,8 @@ struct dma_desc
   unsigned  length2:11;		/* buffer2 length */
   unsigned  length1:11;		/* buffer1 length */
 #endif
-  u_int32_t address1;		/* buffer1 bus address */
-  u_int32_t address2;		/* buffer2 bus address */
+  uint32_t address1;		/* buffer1 bus address */
+  uint32_t address2;		/* buffer2 bus address */
 #if (defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__))
   bus_dmamap_t map;		/* bus dmamap for this descriptor */
 # define TLP_BUS_DSL_VAL	(sizeof(bus_dmamap_t) & TLP_BUS_DSL)
@@ -1026,7 +1026,7 @@ struct desc_ring
   struct dma_desc *first;	/* first descriptor in ring */
   struct dma_desc *last;	/* last  descriptor in ring */
   struct dma_desc *temp;	/* temporary write pointer for tx */
-  u_int32_t dma_addr;		/* bus address for desc array */
+  uint32_t dma_addr;		/* bus address for desc array */
   int size_descs;		/* bus_dmamap_sync needs this */
   int num_descs;		/* used to set rx quota */
 #ifdef __linux__
@@ -1107,7 +1107,7 @@ struct softc
   struct atshutdown ats;	/* shutdown hook                           */
   pci_devaddr_t	cfgbase;	/* base address of PCI config regs         */
   u_int16_t	 csr_iobase;	/*     io base address of Tulip CSRs       */
-  u_int32_t	*csr_membase;	/* kv mem base address of Tulip CSRs       */
+  uint32_t	*csr_membase;	/* kv mem base address of Tulip CSRs       */
   struct simplelock top_lock;	/* lock card->watchdog vs core_ioctl       */
   struct simplelock bottom_lock;/* lock for buf queues & descriptor rings  */
   struct mbuf	*tx_mbuf;	/* hang mbuf here while building dma descs */
@@ -1179,7 +1179,7 @@ struct softc
   struct pci_dev    *pci_dev;	/* READ/WRITE_PCI_CFG macros need this     */
   struct net_device *net_dev;	/* NAME_UNIT macro needs this              */
   struct timer_list wd_timer;	/* timer calls watchdog() once a second    */
-  u_int32_t	 csr_iobase;	/*     io base address of Tulip CSRs       */
+  uint32_t	 csr_iobase;	/*     io base address of Tulip CSRs       */
   void		*csr_membase;	/* kv mem base address of Tulip CSRs       */
   struct sk_buff *tx_skb;	/* hang skb here while building dma descs  */
   int		quota;		/* used for incoming packet flow control   */
@@ -1192,16 +1192,16 @@ struct softc
   struct status status;		/* driver status lmcconfig can read        */
   struct config	config;		/* driver config lmcconfig can read/write  */
   struct card	*card;		/* card methods: config, ioctl, watchdog   */
-  u_int32_t	gpio_dir;	/* s/w copy of GPIO direction register     */
+  uint32_t	gpio_dir;	/* s/w copy of GPIO direction register     */
   u_int16_t	led_state;	/* last value written to mii16             */
-  u_int32_t	flags;		/* driver-global flags                     */
+  uint32_t	flags;		/* driver-global flags                     */
 
   /* Top-half state used by card-specific watchdogs; lock with top_lock.   */
-  u_int32_t	last_mii16;	/* SSI, HSSI: MII reg 16 one second ago    */
-  u_int32_t	last_stat16;	/* T3:     framer reg 16 one second ago    */
-  u_int32_t	last_alm1;	/* T1E1:   framer reg 47 one second ago    */
-  u_int32_t	last_FEAC;	/* last FEAC msg code received             */
-  u_int32_t	loop_timer;	/* seconds until loopback expires          */
+  uint32_t	last_mii16;	/* SSI, HSSI: MII reg 16 one second ago    */
+  uint32_t	last_stat16;	/* T3:     framer reg 16 one second ago    */
+  uint32_t	last_alm1;	/* T1E1:   framer reg 47 one second ago    */
+  uint32_t	last_FEAC;	/* last FEAC msg code received             */
+  uint32_t	loop_timer;	/* seconds until loopback expires          */
 
   /* Bottom-half state used by the interrupt code; lock with bottom_lock.  */
   struct desc_ring txring;	/* tx descriptor ring state                */
@@ -1373,10 +1373,10 @@ struct softc
 #endif /* __bsdi__ */
 
 #ifdef __linux__
-static u_int32_t /* inline? so rare it doesn't matter */
-READ_PCI_CFG(softc_t *sc, u_int32_t addr)
+static uint32_t /* inline? so rare it doesn't matter */
+READ_PCI_CFG(softc_t *sc, uint32_t addr)
   {
-  u_int32_t data;
+  uint32_t data;
   pci_read_config_dword(sc->pci_dev, addr, &data);
   return data;
   }
@@ -1468,16 +1468,16 @@ do {					\
 
 /* procedure prototypes */
 
-static void shift_srom_bits(softc_t *, u_int32_t, u_int32_t);
+static void shift_srom_bits(softc_t *, uint32_t, uint32_t);
 static u_int16_t read_srom(softc_t *, u_int8_t);
 static void write_srom(softc_t *, u_int8_t, u_int16_t);
 
-static u_int8_t read_bios(softc_t *, u_int32_t);
-static void write_bios_phys(softc_t *, u_int32_t, u_int8_t);
-static void write_bios(softc_t *, u_int32_t, u_int8_t);
+static u_int8_t read_bios(softc_t *, uint32_t);
+static void write_bios_phys(softc_t *, uint32_t, u_int8_t);
+static void write_bios(softc_t *, uint32_t, u_int8_t);
 static void erase_bios(softc_t *);
 
-static void shift_mii_bits(softc_t *, u_int32_t, u_int32_t);
+static void shift_mii_bits(softc_t *, uint32_t, uint32_t);
 static u_int16_t read_mii(softc_t *, u_int8_t);
 static void write_mii(softc_t *, u_int8_t, u_int16_t);
 
@@ -1493,17 +1493,17 @@ static void led_inv(softc_t *, u_int16_t);
 static void write_framer(softc_t *, u_int16_t, u_int8_t);
 static u_int8_t read_framer(softc_t *, u_int16_t);
 
-static void make_gpio_input(softc_t *, u_int32_t);
-static void make_gpio_output(softc_t *, u_int32_t);
-static u_int32_t read_gpio(softc_t *);
-static void set_gpio_bits(softc_t *, u_int32_t);
-static void clr_gpio_bits(softc_t *, u_int32_t);
+static void make_gpio_input(softc_t *, uint32_t);
+static void make_gpio_output(softc_t *, uint32_t);
+static uint32_t read_gpio(softc_t *);
+static void set_gpio_bits(softc_t *, uint32_t);
+static void clr_gpio_bits(softc_t *, uint32_t);
 
 static void reset_xilinx(softc_t *);
 static void  load_xilinx_from_rom(softc_t *);
-static int   load_xilinx_from_file(softc_t *, char *, u_int32_t);
+static int   load_xilinx_from_file(softc_t *, char *, uint32_t);
 
-static void shift_synth_bits(softc_t *, u_int32_t, u_int32_t);
+static void shift_synth_bits(softc_t *, uint32_t, uint32_t);
 static void write_synth(softc_t *, struct synth *);
 
 static void write_dac(softc_t *, u_int16_t);

@@ -138,7 +138,7 @@
       <memberdef kind="function" id="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>int</type>
         <definition>int elf_loadfile</definition>
-        <argsstring>(kTask_t *p, const char *file, u_int32_t *addr, u_int32_t *entry)</argsstring>
+        <argsstring>(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)</argsstring>
         <name>elf_loadfile</name>
         <param>
           <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
@@ -149,11 +149,11 @@
           <declname>file</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref> *</type>
+          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref> *</type>
           <declname>addr</declname>
         </param>
         <param>
-          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref> *</type>
+          <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref> *</type>
           <declname>entry</declname>
         </param>
         <briefdescription>
@@ -531,12 +531,12 @@
 <codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">((</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<ref refid="elf_8c_13a1455c85e66d74fa89da7fb82e54c2c" kindref="member">elfRelType</ref>[relType].<ref refid="elf_8c_13cfab9172cb06ddb64edd058e38f14ec" kindref="member">relTypeName</ref>);</highlight></codeline>
 <codeline lineno="109"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline lineno="110"><highlight class="normal"></highlight></codeline>
-<codeline lineno="111" refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1f11ec9e50bcff723428b0c911a177fd0" kindref="member">elf_loadfile</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*p,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/>*addr,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/>*entry)<sp/>{</highlight></codeline>
+<codeline lineno="111" refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="elf_8h_1f11ec9e50bcff723428b0c911a177fd0" kindref="member">elf_loadfile</ref>(<ref refid="structtaskStruct" kindref="compound">kTask_t</ref><sp/>*p,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="structfile" kindref="compound">file</ref>,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/>*addr,<ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/>*entry)<sp/>{</highlight></codeline>
 <codeline lineno="112"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>i<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>x<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>numsegs<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>base<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
-<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>base_addr<sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>base<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>base_addr<sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="117"><highlight class="normal"><sp/><sp/><ref refid="structelfHeader" kindref="compound">elfHeader</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*binaryHeader<sp/><sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="118"><highlight class="normal"><sp/><sp/><ref refid="structelfProgramHeader" kindref="compound">elfProgramHeader</ref><sp/><sp/>*programHeader<sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="119"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptor</ref><sp/><sp/><sp/><sp/>*exec_fd<sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>0x0;</highlight></codeline>

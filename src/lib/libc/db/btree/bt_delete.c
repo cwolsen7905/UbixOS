@@ -385,7 +385,7 @@ __bt_pdelete(t, h)
 	PAGE *pg;
 	EPGNO *parent;
 	indx_t cnt, index, *ip, offset;
-	u_int32_t nksize;
+	uint32_t nksize;
 	char *from;
 
 	/*
@@ -481,7 +481,7 @@ __bt_dleaf(t, key, h, index)
 {
 	BLEAF *bl;
 	indx_t cnt, *ip, offset;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	void *to;
 	char *from;
 

@@ -55,7 +55,7 @@
  * processing.
  */
 struct tdb_ident {
-	u_int32_t spi;
+	uint32_t spi;
 	union sockaddr_union dst;
 	u_int8_t proto;
 	/* Cache those two for enc(4) in xform_ipip. */
@@ -68,7 +68,7 @@ struct tdb_ident {
  */
 struct tdb_crypto {
 	struct ipsecrequest	*tc_isr;	/* ipsec request state */
-	u_int32_t		tc_spi;		/* associated SPI */
+	uint32_t		tc_spi;		/* associated SPI */
 	union sockaddr_union	tc_dst;		/* dst addr of packet */
 	u_int8_t		tc_proto;	/* current protocol, e.g. AH */
 	u_int8_t		tc_nxt;		/* next protocol, e.g. IPV4 */

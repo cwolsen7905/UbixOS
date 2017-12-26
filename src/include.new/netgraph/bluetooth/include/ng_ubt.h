@@ -74,12 +74,12 @@ typedef struct {
 
 #define NGM_UBT_NODE_GET_STAT	5		/* get statistic */
 typedef struct {
-	u_int32_t	pckts_recv;		/* # of packets received */
-	u_int32_t	bytes_recv;		/* # of bytes received */
-	u_int32_t	pckts_sent;		/* # of packets sent */
-	u_int32_t	bytes_sent;		/* # of bytes sent */
-	u_int32_t	oerrors;		/* # of output errors */
-	u_int32_t	ierrors;		/* # of input errors */
+	uint32_t	pckts_recv;		/* # of packets received */
+	uint32_t	bytes_recv;		/* # of bytes received */
+	uint32_t	pckts_sent;		/* # of packets sent */
+	uint32_t	bytes_sent;		/* # of bytes sent */
+	uint32_t	oerrors;		/* # of output errors */
+	uint32_t	ierrors;		/* # of input errors */
 } ng_ubt_node_stat_ep;
 
 #define NGM_UBT_NODE_RESET_STAT	6		/* reset statistic */

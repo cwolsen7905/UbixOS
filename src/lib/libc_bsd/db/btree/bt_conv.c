@@ -84,7 +84,7 @@ __bt_pgin(void *t, pgno_t pg, void *pp)
 			M_16_SWAP(h->linp[i]);
 			p = (char *)GETBINTERNAL(h, i);
 			P_32_SWAP(p);
-			p += sizeof(u_int32_t);
+			p += sizeof(uint32_t);
 			P_32_SWAP(p);
 			p += sizeof(pgno_t);
 			if (*(u_char *)p & P_BIGKEY) {
@@ -99,9 +99,9 @@ __bt_pgin(void *t, pgno_t pg, void *pp)
 			M_16_SWAP(h->linp[i]);
 			p = (char *)GETBLEAF(h, i);
 			P_32_SWAP(p);
-			p += sizeof(u_int32_t);
+			p += sizeof(uint32_t);
 			P_32_SWAP(p);
-			p += sizeof(u_int32_t);
+			p += sizeof(uint32_t);
 			flags = *(u_char *)p;
 			if (flags & (P_BIGKEY | P_BIGDATA)) {
 				p += sizeof(u_char);
@@ -111,7 +111,7 @@ __bt_pgin(void *t, pgno_t pg, void *pp)
 					P_32_SWAP(p);
 				}
 				if (flags & P_BIGDATA) {
-					p += sizeof(u_int32_t);
+					p += sizeof(uint32_t);
 					P_32_SWAP(p);
 					p += sizeof(pgno_t);
 					P_32_SWAP(p);
@@ -141,7 +141,7 @@ __bt_pgout(void *t, pgno_t pg, void *pp)
 		for (i = 0; i < top; i++) {
 			p = (char *)GETBINTERNAL(h, i);
 			P_32_SWAP(p);
-			p += sizeof(u_int32_t);
+			p += sizeof(uint32_t);
 			P_32_SWAP(p);
 			p += sizeof(pgno_t);
 			if (*(u_char *)p & P_BIGKEY) {
@@ -156,9 +156,9 @@ __bt_pgout(void *t, pgno_t pg, void *pp)
 		for (i = 0; i < top; i++) {
 			p = (char *)GETBLEAF(h, i);
 			P_32_SWAP(p);
-			p += sizeof(u_int32_t);
+			p += sizeof(uint32_t);
 			P_32_SWAP(p);
-			p += sizeof(u_int32_t);
+			p += sizeof(uint32_t);
 			flags = *(u_char *)p;
 			if (flags & (P_BIGKEY | P_BIGDATA)) {
 				p += sizeof(u_char);
@@ -168,7 +168,7 @@ __bt_pgout(void *t, pgno_t pg, void *pp)
 					P_32_SWAP(p);
 				}
 				if (flags & P_BIGDATA) {
-					p += sizeof(u_int32_t);
+					p += sizeof(uint32_t);
 					P_32_SWAP(p);
 					p += sizeof(pgno_t);
 					P_32_SWAP(p);
@@ -198,15 +198,15 @@ mswap(PAGE *pg)
 
 	p = (char *)pg;
 	P_32_SWAP(p);		/* magic */
-	p += sizeof(u_int32_t);
+	p += sizeof(uint32_t);
 	P_32_SWAP(p);		/* version */
-	p += sizeof(u_int32_t);
+	p += sizeof(uint32_t);
 	P_32_SWAP(p);		/* psize */
-	p += sizeof(u_int32_t);
+	p += sizeof(uint32_t);
 	P_32_SWAP(p);		/* free */
-	p += sizeof(u_int32_t);
+	p += sizeof(uint32_t);
 	P_32_SWAP(p);		/* nrecs */
-	p += sizeof(u_int32_t);
+	p += sizeof(uint32_t);
 	P_32_SWAP(p);		/* flags */
-	p += sizeof(u_int32_t);
+	p += sizeof(uint32_t);
 }

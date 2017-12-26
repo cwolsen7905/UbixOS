@@ -5,8 +5,8 @@
     <includes refid="thread_8h" local="no">thread.h</includes>
       <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="structthread_1b95afb0c8c9a817ce1638be443cb5b12" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t thread::o_files[64]</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t thread::o_files[64]</definition>
         <argsstring>[64]</argsstring>
         <name>o_files</name>
         <briefdescription>

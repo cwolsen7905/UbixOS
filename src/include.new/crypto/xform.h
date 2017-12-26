@@ -62,8 +62,8 @@ struct comp_algo {
 	int type;
 	char *name;
 	size_t minlen;
-	u_int32_t (*compress) (u_int8_t *, u_int32_t, u_int8_t **);
-	u_int32_t (*decompress) (u_int8_t *, u_int32_t, u_int8_t **);
+	uint32_t (*compress) (u_int8_t *, uint32_t, u_int8_t **);
+	uint32_t (*decompress) (u_int8_t *, uint32_t, u_int8_t **);
 };
 
 union authctx {

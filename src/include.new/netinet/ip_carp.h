@@ -72,7 +72,7 @@ struct carp_header {
 	u_int8_t	carp_pad1;	/* reserved */
 	u_int8_t	carp_advbase;	/* advertisement interval */
 	u_int16_t	carp_cksum;
-	u_int32_t	carp_counter[2];
+	uint32_t	carp_counter[2];
 	unsigned char	carp_md[20];	/* SHA1 HMAC */
 } __packed;
 

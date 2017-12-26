@@ -38,8 +38,8 @@ struct pfloghdr {
 	u_int8_t	reason;
 	char		ifname[IFNAMSIZ];
 	char		ruleset[PFLOG_RULESET_NAME_SIZE];
-	u_int32_t	rulenr;
-	u_int32_t	subrulenr;
+	uint32_t	rulenr;
+	uint32_t	subrulenr;
 	uid_t		uid;
 	pid_t		pid;
 	uid_t		rule_uid;

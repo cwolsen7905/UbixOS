@@ -111,7 +111,7 @@ struct ct_data {
 	struct rpc_err	ct_error;
 	union {
 		char	ct_mcallc[MCALL_MSG_SIZE];	/* marshalled callmsg */
-		u_int32_t ct_mcalli;
+		uint32_t ct_mcalli;
 	} ct_u;
 	u_int		ct_mpos;	/* pos after marshal */
 	XDR		ct_xdrs;	/* XDR stream */
@@ -168,7 +168,7 @@ clnt_vc_create(fd, raddr, prog, vers, sendsz, recvsz)
 	struct ct_data *ct = NULL;	/* client handle */
 	struct timeval now;
 	struct rpc_msg call_msg;
-	static u_int32_t disrupt;
+	static uint32_t disrupt;
 	sigset_t mask;
 	sigset_t newmask;
 	struct sockaddr_storage ss;
@@ -176,7 +176,7 @@ clnt_vc_create(fd, raddr, prog, vers, sendsz, recvsz)
 	struct __rpc_sockinfo si;
 
 	if (disrupt == 0)
-		disrupt = (u_int32_t)(long)raddr;
+		disrupt = (uint32_t)(long)raddr;
 
 	cl = (CLIENT *)mem_alloc(sizeof (*cl));
 	ct = (struct ct_data *)mem_alloc(sizeof (*ct));
@@ -266,11 +266,11 @@ clnt_vc_create(fd, raddr, prog, vers, sendsz, recvsz)
 	 * Initialize call message
 	 */
 	(void)gettimeofday(&now, NULL);
-	call_msg.rm_xid = ((u_int32_t)++disrupt) ^ __RPC_GETXID(&now);
+	call_msg.rm_xid = ((uint32_t)++disrupt) ^ __RPC_GETXID(&now);
 	call_msg.rm_direction = CALL;
 	call_msg.rm_call.cb_rpcvers = RPC_MSG_VERSION;
-	call_msg.rm_call.cb_prog = (u_int32_t)prog;
-	call_msg.rm_call.cb_vers = (u_int32_t)vers;
+	call_msg.rm_call.cb_prog = (uint32_t)prog;
+	call_msg.rm_call.cb_vers = (uint32_t)vers;
 
 	/*
 	 * pre-serialize the static part of the call msg and stash it away
@@ -324,8 +324,8 @@ clnt_vc_call(cl, proc, xdr_args, args_ptr, xdr_results, results_ptr, timeout)
 	struct ct_data *ct = (struct ct_data *) cl->cl_private;
 	XDR *xdrs = &(ct->ct_xdrs);
 	struct rpc_msg reply_msg;
-	u_int32_t x_id;
-	u_int32_t *msg_x_id = &ct->ct_u.ct_mcalli;    /* yuk */
+	uint32_t x_id;
+	uint32_t *msg_x_id = &ct->ct_u.ct_mcalli;    /* yuk */
 	bool_t shipnow;
 	int refreshes = 2;
 	sigset_t mask, newmask;
@@ -590,13 +590,13 @@ clnt_vc_control(cl, request, info)
 		 * first element in the call structure
 		 * This will get the xid of the PREVIOUS call
 		 */
-		*(u_int32_t *)info =
-		    ntohl(*(u_int32_t *)(void *)&ct->ct_u.ct_mcalli);
+		*(uint32_t *)info =
+		    ntohl(*(uint32_t *)(void *)&ct->ct_u.ct_mcalli);
 		break;
 	case CLSET_XID:
 		/* This will set the xid of the NEXT call */
-		*(u_int32_t *)(void *)&ct->ct_u.ct_mcalli =
-		    htonl(*((u_int32_t *)info) + 1);
+		*(uint32_t *)(void *)&ct->ct_u.ct_mcalli =
+		    htonl(*((uint32_t *)info) + 1);
 		/* increment by 1 as clnt_vc_call() decrements once */
 		break;
 	case CLGET_VERS:
@@ -606,15 +606,15 @@ clnt_vc_control(cl, request, info)
 		 * begining of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
-		*(u_int32_t *)info =
-		    ntohl(*(u_int32_t *)(void *)(ct->ct_u.ct_mcallc +
+		*(uint32_t *)info =
+		    ntohl(*(uint32_t *)(void *)(ct->ct_u.ct_mcallc +
 		    4 * BYTES_PER_XDR_UNIT));
 		break;
 
 	case CLSET_VERS:
-		*(u_int32_t *)(void *)(ct->ct_u.ct_mcallc +
+		*(uint32_t *)(void *)(ct->ct_u.ct_mcallc +
 		    4 * BYTES_PER_XDR_UNIT) =
-		    htonl(*(u_int32_t *)info);
+		    htonl(*(uint32_t *)info);
 		break;
 
 	case CLGET_PROG:
@@ -624,15 +624,15 @@ clnt_vc_control(cl, request, info)
 		 * begining of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
-		*(u_int32_t *)info =
-		    ntohl(*(u_int32_t *)(void *)(ct->ct_u.ct_mcallc +
+		*(uint32_t *)info =
+		    ntohl(*(uint32_t *)(void *)(ct->ct_u.ct_mcallc +
 		    3 * BYTES_PER_XDR_UNIT));
 		break;
 
 	case CLSET_PROG:
-		*(u_int32_t *)(void *)(ct->ct_u.ct_mcallc +
+		*(uint32_t *)(void *)(ct->ct_u.ct_mcallc +
 		    3 * BYTES_PER_XDR_UNIT) =
-		    htonl(*(u_int32_t *)info);
+		    htonl(*(uint32_t *)info);
 		break;
 
 	default:

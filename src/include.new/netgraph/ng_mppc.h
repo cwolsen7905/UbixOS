@@ -70,7 +70,7 @@
 /* Config struct (per-direction) */
 struct ng_mppc_config {
 	u_char		enable;			/* enable */
-	u_int32_t	bits;			/* config bits */
+	uint32_t	bits;			/* config bits */
 	u_char		startkey[MPPE_KEY_LEN];	/* start key */
 };
 

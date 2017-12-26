@@ -174,7 +174,7 @@ struct hp_order {
 		struct sockaddr aiou_sa;
 	} aio_src_un;
 #define aio_srcsa aio_src_un.aiou_sa
-	u_int32_t aio_srcflag;
+	uint32_t aio_srcflag;
 	int aio_srcscope;
 	int aio_dstscope;
 	struct policyqueue *aio_srcpolicy;
@@ -884,7 +884,7 @@ set_source(struct hp_order *aio, struct policyhead *ph)
 #ifdef INET6
 	if (ss.ss_family == AF_INET6) {
 		struct in6_ifreq ifr6;
-		u_int32_t flags6;
+		uint32_t flags6;
 
 		memset(&ifr6, 0, sizeof(ifr6));
 		memcpy(&ifr6.ifr_addr, &ss, ss.ss_len);

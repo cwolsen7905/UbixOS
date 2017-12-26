@@ -68,7 +68,7 @@ extern "C" {
 #define	CBQ_MAXPRI		RM_MAXPRIO
 
 typedef struct _cbq_class_stats_ {
-	u_int32_t	handle;
+	uint32_t	handle;
 	u_int		depth;
 
 	struct pktcntr	xmit_cnt;	/* packets sent in this class */
@@ -116,8 +116,8 @@ typedef struct cbq_class_spec {
 	u_int		maxidle;
 	int		minidle;
 	u_int		offtime;
-	u_int32_t	parent_class_handle;
-	u_int32_t	borrow_class_handle;
+	uint32_t	parent_class_handle;
+	uint32_t	borrow_class_handle;
 
 	u_int		pktsize;
 	int		flags;
@@ -127,24 +127,24 @@ struct cbq_add_class {
 	struct cbq_interface	cbq_iface;
 
 	cbq_class_spec_t	cbq_class;
-	u_int32_t		cbq_class_handle;
+	uint32_t		cbq_class_handle;
 };
 
 struct cbq_delete_class {
 	struct cbq_interface	cbq_iface;
-	u_int32_t		cbq_class_handle;
+	uint32_t		cbq_class_handle;
 };
 
 struct cbq_modify_class {
 	struct cbq_interface	cbq_iface;
 
 	cbq_class_spec_t	cbq_class;
-	u_int32_t		cbq_class_handle;
+	uint32_t		cbq_class_handle;
 };
 
 struct cbq_add_filter {
 	struct cbq_interface		cbq_iface;
-	u_int32_t		cbq_class_handle;
+	uint32_t		cbq_class_handle;
 	struct flow_filter	cbq_filter;
 
 	u_long			cbq_filter_handle;

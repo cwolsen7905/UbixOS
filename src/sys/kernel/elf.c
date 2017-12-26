@@ -110,12 +110,12 @@ char *elfGetRelType(int relType) {
   return((char *)elfRelType[relType].relTypeName);
   }
 
-int elf_loadfile(kTask_t *p,const char *file,u_int32_t *addr,u_int32_t *entry) {
+int elf_loadfile(kTask_t *p,const char *file,uint32_t *addr,uint32_t *entry) {
   int                i             = 0x0;
   int                x             = 0x0;
   int                numsegs       = 0x0;
-  u_int32_t          base          = 0x0;
-  u_int32_t          base_addr     = 0x0;
+  uint32_t          base          = 0x0;
+  uint32_t          base_addr     = 0x0;
   elfHeader         *binaryHeader  = 0x0;
   elfProgramHeader  *programHeader = 0x0;
   fileDescriptor    *exec_fd       = 0x0;

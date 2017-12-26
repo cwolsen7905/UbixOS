@@ -38,7 +38,7 @@
 
 #include <nfs/nfs_common.h>
 
-#define	nfstov_mode(a)	(fxdr_unsigned(u_int32_t, (a)) & ALLPERMS)
+#define	nfstov_mode(a)	(fxdr_unsigned(uint32_t, (a)) & ALLPERMS)
 
 /*
  * These macros do strange and peculiar things to mbuf chains for
@@ -159,7 +159,7 @@ do { \
 void	nfsm_srvfhtom_xx(fhandle_t *f, int v3, struct mbuf **mb,
 	    caddr_t *bpos);
 void	nfsm_srvpostop_fh_xx(fhandle_t *f, struct mbuf **mb, caddr_t *bpos);
-void	nfsm_clget_xx(u_int32_t **tl, struct mbuf *mb, struct mbuf **mp,
+void	nfsm_clget_xx(uint32_t **tl, struct mbuf *mb, struct mbuf **mp,
 	    char **bp, char **be, caddr_t bpos);
 
 #define nfsm_srvfhtom(f, v3) \

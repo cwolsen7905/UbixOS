@@ -56,7 +56,7 @@
 #define KEYDEBUG(lev,arg) \
 	do { if ((key_debug_level & (lev)) == (lev)) { arg; } } while (/*CONSTCOND*/ 0)
 
-extern u_int32_t key_debug_level;
+extern uint32_t key_debug_level;
 #endif /*_KERNEL*/
 
 struct sadb_msg;

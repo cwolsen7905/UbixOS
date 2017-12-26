@@ -43,7 +43,7 @@
  * SO THAT wmask BELOW IS ALL ONES
  */
 typedef	int word;		/* "word" used for optimal copy speed */
-typedef u_int32_t uintptr_t;
+typedef uint32_t uintptr_t;
 
 #define	wsize	sizeof(word)
 #define	wmask	(wsize - 1)

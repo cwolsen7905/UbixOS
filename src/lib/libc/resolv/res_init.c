@@ -117,7 +117,7 @@ static void res_setoptions(res_state, const char *, const char *);
 #ifdef RESOLVSORT
 static const char sort_mask[] = "/&";
 #define ISSORTMASK(ch) (strchr(sort_mask, ch) != NULL)
-static u_int32_t net_mask(struct in_addr);
+static uint32_t net_mask(struct in_addr);
 #endif
 
 #if !defined(isascii)	/* XXX - could be a function */
@@ -482,9 +482,9 @@ __res_vinit(res_state statp, int preinit) {
 				}
 			    }
 			    statp->sort_list[nsort].addr.s_addr =
-				(u_int32_t)0xffffffff;
+				(uint32_t)0xffffffff;
 			    statp->sort_list[nsort].mask =
-				(u_int32_t)0xffffffff;
+				(uint32_t)0xffffffff;
 			    nsort++;
 			}
 			*cp = n;
@@ -705,11 +705,11 @@ res_setoptions(res_state statp, const char *options, const char *source)
 
 #ifdef RESOLVSORT
 /* XXX - should really support CIDR which means explicit masks always. */
-static u_int32_t
+static uint32_t
 net_mask(in)		/* XXX - should really use system's version of this */
 	struct in_addr in;
 {
-	u_int32_t i = ntohl(in.s_addr);
+	uint32_t i = ntohl(in.s_addr);
 
 	if (IN_CLASSA(i))
 		return (htonl(IN_CLASSA_NET));

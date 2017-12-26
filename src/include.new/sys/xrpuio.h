@@ -22,7 +22,7 @@ struct xrpu_timecounting {
 	u_int		xt_addr_trigger;
 	u_int		xt_addr_latch;
 	unsigned	xt_mask;
-	u_int32_t	xt_frequency;
+	uint32_t	xt_frequency;
 	char		xt_name[16];
 
 	/* The PPS latches */

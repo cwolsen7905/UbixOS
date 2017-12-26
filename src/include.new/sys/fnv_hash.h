@@ -10,7 +10,7 @@
 #ifndef _SYS_FNV_HASH_H_
 #define	_SYS_FNV_HASH_H_
 
-typedef u_int32_t Fnv32_t;
+typedef uint32_t Fnv32_t;
 typedef u_int64_t Fnv64_t;
 
 #define FNV1_32_INIT ((Fnv32_t) 33554467UL)

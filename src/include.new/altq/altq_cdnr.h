@@ -144,9 +144,9 @@ struct cdnr_tcm_stats {
 /* time sliding window three-color marker operations */
 struct cdnr_add_tswtcm {
 	struct cdnr_interface	iface;
-	u_int32_t		cmtd_rate;	/* committed rate (bits/sec) */
-	u_int32_t		peak_rate;	/* peak rate (bits/sec) */
-	u_int32_t		avg_interval;	/* averaging interval (msec) */
+	uint32_t		cmtd_rate;	/* committed rate (bits/sec) */
+	uint32_t		peak_rate;	/* peak rate (bits/sec) */
+	uint32_t		avg_interval;	/* averaging interval (msec) */
 	struct tc_action	green_action;	/* action for green packets */
 	struct tc_action	yellow_action;	/* action for yellow packets */
 	struct tc_action	red_action;	/* action for red packets */
@@ -157,9 +157,9 @@ struct cdnr_add_tswtcm {
 struct cdnr_modify_tswtcm {
 	struct cdnr_interface	iface;
 	u_long			cdnr_handle;
-	u_int32_t		cmtd_rate;	/* committed rate (bits/sec) */
-	u_int32_t		peak_rate;	/* peak rate (bits/sec) */
-	u_int32_t		avg_interval;	/* averaging interval (msec) */
+	uint32_t		cmtd_rate;	/* committed rate (bits/sec) */
+	uint32_t		peak_rate;	/* peak rate (bits/sec) */
+	uint32_t		avg_interval;	/* averaging interval (msec) */
 };
 
 struct cdnr_add_filter {
@@ -313,12 +313,12 @@ struct trtcm {
 struct tswtcm {
 	struct cdnr_block	cdnrblk;	/* conditioner block */
 
-	u_int32_t		avg_rate;	/* average rate (bytes/sec) */
+	uint32_t		avg_rate;	/* average rate (bytes/sec) */
 	u_int64_t		t_front;	/* timestamp of last update */
 
 	u_int64_t		timewin;	/* average interval */
-	u_int32_t		cmtd_rate;	/* committed target rate */
-	u_int32_t		peak_rate;	/* peak target rate */
+	uint32_t		cmtd_rate;	/* committed target rate */
+	uint32_t		peak_rate;	/* peak target rate */
 	struct tc_action	green_action;
 	struct tc_action	yellow_action;
 	struct tc_action	red_action;

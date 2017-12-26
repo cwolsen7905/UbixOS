@@ -270,7 +270,7 @@ struct changer_set_voltag_request {
 #define	CHIOGPICKER	_IOR('c', 0x04, int)
 #define	CHIOSPICKER	_IOW('c', 0x05, int)
 #define	CHIOGPARAMS	_IOR('c', 0x06, struct changer_params)
-#define	CHIOIELEM	_IOW('c', 0x07, u_int32_t)
+#define	CHIOIELEM	_IOW('c', 0x07, uint32_t)
 #define	OCHIOGSTATUS	_IOW('c', 0x08, struct changer_element_status_request)
 #define	CHIOSETVOLTAG	_IOW('c', 0x09, struct changer_set_voltag_request)
 #define	CHIOGSTATUS	_IOW('c', 0x0A, struct changer_element_status_request)

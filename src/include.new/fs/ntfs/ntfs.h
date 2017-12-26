@@ -48,15 +48,15 @@ typedef u_int16_t wchar;
 #define NTFS_MAXFILENAME	255
 
 struct fixuphdr {
-	u_int32_t       fh_magic;
+	uint32_t       fh_magic;
 	u_int16_t       fh_foff;
 	u_int16_t       fh_fnum;
 };
 
 #define NTFS_AF_INRUN	0x00000001
 struct attrhdr {
-	u_int32_t       a_type;
-	u_int32_t       reclen;
+	uint32_t       a_type;
+	uint32_t       reclen;
 	u_int8_t        a_flag;
 	u_int8_t        a_namelen;
 	u_int8_t        a_nameoff;
@@ -89,7 +89,7 @@ struct attr {
 			cn_t            a_vcnend;
 			u_int16_t       a_dataoff;
 			u_int16_t       a_compressalg;
-			u_int32_t       reserved1;
+			uint32_t       reserved1;
 			u_int64_t       a_allocated;
 			u_int64_t       a_datalen;
 			u_int64_t       a_initialized;
@@ -114,8 +114,8 @@ typedef struct {
 #define NTFS_FFLAG_DIR		0x10000000LL
 
 struct attr_name {
-	u_int32_t       n_pnumber;	/* Parent ntnode */
-	u_int32_t       reserved;
+	uint32_t       n_pnumber;	/* Parent ntnode */
+	uint32_t       reserved;
 	ntfs_times_t    n_times;
 	u_int64_t       n_size;
 	u_int64_t       n_attrsz;
@@ -127,51 +127,51 @@ struct attr_name {
 
 #define NTFS_IRFLAG_INDXALLOC	0x00000001
 struct attr_indexroot {
-	u_int32_t       ir_unkn1;	/* always 0x30 */
-	u_int32_t       ir_unkn2;	/* always 0x1 */
-	u_int32_t       ir_size;/* ??? */
-	u_int32_t       ir_unkn3;	/* number of cluster */
-	u_int32_t       ir_unkn4;	/* always 0x10 */
-	u_int32_t       ir_datalen;	/* sizeof simething */
-	u_int32_t       ir_allocated;	/* same as above */
+	uint32_t       ir_unkn1;	/* always 0x30 */
+	uint32_t       ir_unkn2;	/* always 0x1 */
+	uint32_t       ir_size;/* ??? */
+	uint32_t       ir_unkn3;	/* number of cluster */
+	uint32_t       ir_unkn4;	/* always 0x10 */
+	uint32_t       ir_datalen;	/* sizeof simething */
+	uint32_t       ir_allocated;	/* same as above */
 	u_int16_t       ir_flag;/* ?? always 1 */
 	u_int16_t       ir_unkn7;
 };
 
 struct attr_attrlist {
-	u_int32_t       al_type;	/* Attribute type */
+	uint32_t       al_type;	/* Attribute type */
 	u_int16_t       reclen;		/* length of this entry */
 	u_int8_t        al_namelen;	/* Attribute name len */
 	u_int8_t        al_nameoff;	/* Name offset from entry start */
 	u_int64_t       al_vcnstart;	/* VCN number */
-	u_int32_t       al_inumber;	/* Parent ntnode */
-	u_int32_t       reserved;
+	uint32_t       al_inumber;	/* Parent ntnode */
+	uint32_t       reserved;
 	u_int16_t       al_index;	/* Attribute index in MFT record */
 	u_int16_t       al_name[1];	/* Name */
 };
 
-#define	NTFS_INDXMAGIC	(u_int32_t)(0x58444E49)
+#define	NTFS_INDXMAGIC	(uint32_t)(0x58444E49)
 struct attr_indexalloc {
 	struct fixuphdr ia_fixup;
 	u_int64_t       unknown1;
 	cn_t            ia_bufcn;
 	u_int16_t       ia_hdrsize;
 	u_int16_t       unknown2;
-	u_int32_t       ia_inuse;
-	u_int32_t       ia_allocated;
+	uint32_t       ia_inuse;
+	uint32_t       ia_allocated;
 };
 
 #define	NTFS_IEFLAG_SUBNODE	0x00000001
 #define	NTFS_IEFLAG_LAST	0x00000002
 
 struct attr_indexentry {
-	u_int32_t       ie_number;
-	u_int32_t       unknown1;
+	uint32_t       ie_number;
+	uint32_t       unknown1;
 	u_int16_t       reclen;
 	u_int16_t       ie_size;
-	u_int32_t       ie_flag;/* 1 - has subnodes, 2 - last */
-	u_int32_t       ie_fpnumber;
-	u_int32_t       unknown2;
+	uint32_t       ie_flag;/* 1 - has subnodes, 2 - last */
+	uint32_t       ie_fpnumber;
+	uint32_t       unknown2;
 	ntfs_times_t    ie_ftimes;
 	u_int64_t       ie_fallocated;
 	u_int64_t       ie_fsize;
@@ -182,7 +182,7 @@ struct attr_indexentry {
 	/* cn_t		ie_bufcn;	 buffer with subnodes */
 };
 
-#define	NTFS_FILEMAGIC	(u_int32_t)(0x454C4946)
+#define	NTFS_FILEMAGIC	(uint32_t)(0x454C4946)
 #define	NTFS_FRFLAG_DIR	0x0002
 struct filerec {
 	struct fixuphdr fr_fixup;
@@ -191,8 +191,8 @@ struct filerec {
 	u_int16_t       fr_nlink;
 	u_int16_t       fr_attroff;	/* offset to attributes */
 	u_int16_t       fr_flags;	/* 1-nonresident attr, 2-directory */
-	u_int32_t       fr_size;/* hdr + attributes */
-	u_int32_t       fr_allocated;	/* allocated length of record */
+	uint32_t       fr_size;/* hdr + attributes */
+	uint32_t       fr_allocated;	/* allocated length of record */
 	u_int64_t       fr_mainrec;	/* main record */
 	u_int16_t       fr_attrnum;	/* maximum attr number + 1 ??? */
 };
@@ -202,9 +202,9 @@ struct filerec {
 #define	NTFS_ADFLAG_INDEX	0x0002	/* Attrib can be indexed */
 struct attrdef {
 	wchar		ad_name[NTFS_ATTRNAME_MAXLEN];
-	u_int32_t	ad_type;
-	u_int32_t	reserved1[2];
-	u_int32_t	ad_flag;
+	uint32_t	ad_type;
+	uint32_t	reserved1[2];
+	uint32_t	ad_flag;
 	u_int64_t	ad_minlen;
 	u_int64_t	ad_maxlen;	/* -1 for nonlimited */
 };
@@ -212,7 +212,7 @@ struct attrdef {
 struct ntvattrdef {
 	char		ad_name[0x40];
 	int		ad_namelen;
-	u_int32_t	ad_type;
+	uint32_t	ad_type;
 };
 
 #define	NTFS_BBID	"NTFS    "
@@ -233,8 +233,8 @@ struct bootfile {
 	cn_t            bf_mftmirrcn;	/* $MFTMirr cn */
 	u_int8_t        bf_mftrecsz;	/* MFT record size (clust) */
 					/* 0xF6 inducates 1/4 */
-	u_int32_t       bf_ibsz;	/* index buffer size */
-	u_int32_t       bf_volsn;	/* volume ser. num. */
+	uint32_t       bf_ibsz;	/* index buffer size */
+	uint32_t       bf_volsn;	/* volume ser. num. */
 };
 
 #define	NTFS_SYSNODESNUM	0x0B
@@ -245,7 +245,7 @@ struct ntfsmount {
 	struct bufobj  *ntm_bo;
 	struct vnode   *ntm_devvp;	/* block device mounted vnode */
 	struct vnode   *ntm_sysvn[NTFS_SYSNODESNUM];
-	u_int32_t       ntm_bpmftrec;
+	uint32_t       ntm_bpmftrec;
 	uid_t           ntm_uid;
 	gid_t           ntm_gid;
 	mode_t          ntm_mode;
