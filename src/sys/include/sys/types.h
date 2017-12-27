@@ -75,6 +75,8 @@ typedef int size_t; /* standart */
 
 #ifndef NOBOOL
 #ifndef __cplusplus
+#define FALSE 0
+#define TRUE  1
 typedef enum {FALSE=0,TRUE=1}bool;
 #endif
 #endif
