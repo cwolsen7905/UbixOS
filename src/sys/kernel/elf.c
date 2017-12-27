@@ -158,7 +158,7 @@ kprintf("MEW: [0x%X]",base);
         */
         for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* Make readonly and read/write */
-          if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x + base),PAGE_DEFAULT) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x + base),PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x + base),0x0,0x1000);
           }

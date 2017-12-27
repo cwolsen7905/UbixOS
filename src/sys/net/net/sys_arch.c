@@ -64,23 +64,32 @@ void sys_sem_signal(sys_sem_t *sem) {
 uint32_t sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
   uint32_t time = sys_now();
 
-  kprintf("L2");
+  //kprintf("L2");
   ubthread_mutex_lock(&(sem->mutex));
+ // kprintf("L2.1");
 
   while (sem->signaled <= 0) {
     if (timeout > 0) {
+//kprintf("%s:%i\n", __FILE__, __LINE__);
       time = cond_wait(&(sem->cond), &(sem->mutex), timeout);
+      time = 0;
+//kprintf("%s:%i\n", __FILE__, __LINE__);
       if (time == 0) {
+//kprintf("%s:%i\n", __FILE__, __LINE__);
         ubthread_mutex_unlock(&(sem->mutex));
+//kprintf("%s:%i\n", __FILE__, __LINE__);
         return(0);
       }
     }
     else {
-      cond_wait(&(sem->cond), &(sem->mutex), 0);
+//kprintf("%s:%i\n", __FILE__, __LINE__);
+      time = cond_wait(&(sem->cond), &(sem->mutex), 0);
+     timeout = 1;
+//kprintf("%s:%i\n", __FILE__, __LINE__);
     }
   }
   sem->signaled--;
-  kprintf("L3");
+  //kprintf("L3");
   ubthread_mutex_lock(&(sem->mutex));
   kprintf("L3.1");
   return (sys_now() - time);
@@ -157,10 +166,13 @@ void sys_mbox_post(sys_mbox_t * mbox, void *msg) {
 err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
 uint32_t res;
 
+kprintf("%s:%i\n", __FILE__, __LINE__);
 /* SHOULD BE TRY WAIT */
 res = sys_arch_sem_wait(&mbox->empty, 0x0);
+kprintf("%s:%i\n", __FILE__, __LINE__);
 if (res == ERR_NOT_READY)
 return ERR_TIMEOUT;
+kprintf("%s:%i\n", __FILE__, __LINE__);
 
   kprintf("L6");
 ubthread_mutex_lock(&mbox->lock);
@@ -480,4 +492,5 @@ void sys_mbox_post_BALLS(struct sys_mbox *mbox, void *msg) {
 
   sys_sem_signal(mbox->mutex);
 }
+
 #endif

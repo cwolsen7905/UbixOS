@@ -45,6 +45,8 @@
 #include <pci/lnc.h>
 #include "net/opt.h"
 
+#include <net/tcpip.h> //TMP
+
 #include "net/def.h"
 #include "net/mem.h"
 #include "net/pbuf.h"
@@ -273,16 +275,23 @@ void ethernetif_input(struct netif *netif) {
   ethernetif = netif->state;
 
   /* move received packet into a new pbuf */
+kprintf("ethernetif_input0\n");
   p = low_level_input(netif);
+kprintf("ethernetif_input1\n");
   /* if no packet could be read, silently ignore this */
   if (p != NULL) {
+kprintf("ethernetif_input2\n");
+kprintf("netif->input: [0x%X][0x%X]\n", netif->input, tcpip_input);
     /* pass all packets to ethernet_input, which decides what packets it supports */
     if (netif->input(p, netif) != ERR_OK) {
+kprintf("ethernetif_input3\n");
       LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
       pbuf_free(p);
+kprintf("ethernetif_input4\n");
       p = NULL;
     }
   }
+kprintf("ethernetif_input5\n");
 }
 
 /**

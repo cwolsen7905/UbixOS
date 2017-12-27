@@ -76,7 +76,7 @@ int sys_execve( struct thread *td, struct sys_execve_args *args ) {
  so do not use out side of kernel space
 
  *****************************************************************************************/
-uInt32 execThread( void (*tproc)( void ), uInt32 stack, char *arg ) {
+uInt32 execThread( void (*tproc)( void ), uint32_t stack, char *arg ) {
   kTask_t * newProcess = 0x0;
   /* Find A New Thread */
   newProcess = schedNewTask();
@@ -190,7 +190,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
   _current->term->owner = _current->id;
 
   /* Now We Must Create A Virtual Space For This Proccess To Run In */
-  _current->tss.cr3 = (uInt32) vmmCreateVirtualSpace( _current->id );
+  _current->tss.cr3 = (uInt32) vmm_createVirtualSpace( _current->id );
   kprintf( "_current->tss.cr3: 0x%X", _current->tss.cr3 );
 
   /* To Better Load This Application We Will Switch Over To Its VM Space */
@@ -260,7 +260,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
        */
       for ( x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000 ) {
         /* Make readonly and read/write !!! */
-        if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 )
+        if ( vmm_remapPage( vmm_findFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 )
           K_PANIC( "Remap Page Failed" );
 
         memset( (void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000 );
@@ -288,12 +288,12 @@ void execFile( char *file, int argc, char **argv, int console ) {
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
   for ( x = 0; x < 100; x++ ) {
-    vmm_remapPage( vmmFindFreePage( _current->id ), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK );
+    vmm_remapPage( vmm_findFreePage( _current->id ), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK );
   }
 
   /* Kernel Stack 0x2000 bytes long */
-  vmm_remapPage( vmmFindFreePage( _current->id ), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK );
-  vmm_remapPage( vmmFindFreePage( _current->id ), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK );
+  vmm_remapPage( vmm_findFreePage( _current->id ), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK );
+  vmm_remapPage( vmm_findFreePage( _current->id ), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK );
 
   /* Set All The Proper Information For The Task */
   _current->tss.back_link = 0x0;
@@ -497,7 +497,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
          */
         for ( x = 0x0; x < (round_page( programHeader[i].phMemsz )); x += 0x1000 ) {
           /* Make readonly and read/write !!! */
-          if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 ) {
+          if ( vmm_remapPage( vmm_findFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 ) {
             K_PANIC( "Error: Remap Page Failed" );
           } /*
           else {
@@ -804,7 +804,7 @@ int sys_exec_dead( char *file, char *ap ) {
          */
         for ( x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000 ) {
           /* Make readonly and read/write !!! */
-          if ( vmm_remapPage( vmmFindFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 )
+          if ( vmm_remapPage( vmm_findFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 )
             K_PANIC( "Error: Remap Page Failed" );
           memset( (void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000 );
         }

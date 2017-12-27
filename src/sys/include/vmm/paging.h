@@ -76,14 +76,14 @@
 
 int vmmClearVirtualPage(uInt32 pageAddr);
 
-void vmmUnmapPage(uInt32, int);
-void vmmUnmapPages(void *, uInt32);
-void *vmmMapFromTask(pidType, void *, uInt32);
-void *vmmCopyVirtualSpace(pidType);
-void *vmmGetFreePage(pidType);
+void vmm_unmapPage(uInt32, int);
+void vmm_unmapPages(void *, uInt32);
+void *vmm_mapFromTask(pidType, void *, uInt32);
+void *vmm_copyVirtualSpace(pidType);
+void *vmm_getFreePage(pidType);
 void *vmmGetFreeKernelPage(pidType pid, uInt16 count);
-void *vmmCreateVirtualSpace(pidType);
-void *vmmGetFreeVirtualPage(pidType, int, int);
+void *vmm_createVirtualSpace(pidType);
+void *vmm_getFreeVirtualPage(pidType, int, int);
 
 uint32_t vmm_getPhysicalAddr(uint32_t);
 uint32_t vmm_getRealAddr(uint32_t);

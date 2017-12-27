@@ -63,7 +63,7 @@ void *vmm_createVirtualSpace(pid_t pid) {
 
   /* Allocate A New Page For The New Page Directory */
 
-  newPageDirectory = (uInt32 *) vmmGetFreePage(pid);
+  newPageDirectory = (uInt32 *) vmm_getFreePage(pid);
 
   /* Set newPageDirectoryAddress To The Newly Created Page Directories Page */
 
@@ -84,7 +84,7 @@ void *vmm_createVirtualSpace(pid_t pid) {
    * Lower Region
    */
 
-  newPageTable = (uInt32 *) vmmGetFreePage(pid);
+  newPageTable = (uInt32 *) vmm_getFreePage(pid);
 
   /* Flush The Page From Garbage In Memory */
   for (x = 0; x < PD_ENTRIES; x++) {
@@ -103,7 +103,7 @@ void *vmm_createVirtualSpace(pid_t pid) {
   }
 
   /* Unmap Page From Virtual Space */
-  vmmUnmapPage((uInt32) newPageTable, 1);
+  vmm_unmapPage((uInt32) newPageTable, 1);
 
   /*
    *
@@ -111,14 +111,14 @@ void *vmm_createVirtualSpace(pid_t pid) {
    * First Page After Page Tables
    * This must be mapped into the page directory before we map all 1024 page directories into the memory space
    */
-  newPageTable = (uInt32 *) vmmGetFreePage(pid);
+  newPageTable = (uInt32 *) vmm_getFreePage(pid);
 
   newPageDirectory[PD_INDEX(PD_BASE_ADDR)] = (uint32_t) (vmm_getPhysicalAddr((uInt32) newPageTable) | PAGE_DEFAULT);
 
   newPageTable[0] = (uint32_t) ((uint32_t) (newPageDirectoryAddress) | PAGE_DEFAULT);
   //MrOlsen 2017-12-15 kprintf( "PD3: %i - 0x%X - 0x%X\n", PD_INDEX( PD_BASE_ADDR ), newPageDirectoryAddress, newPageTable[0] );
 
-  vmmUnmapPage((uInt32) newPageTable, 1);
+  vmm_unmapPage((uInt32) newPageTable, 1);
 
   /*
    *
@@ -127,7 +127,7 @@ void *vmm_createVirtualSpace(pid_t pid) {
    *
    */
 
-  newPageTable = (uInt32 *) vmmGetFreePage(pid);
+  newPageTable = (uInt32 *) vmm_getFreePage(pid);
 
   newPageDirectory[PD_INDEX(PT_BASE_ADDR)] = (uint32_t) (vmm_getPhysicalAddr((uInt32) newPageTable) | PAGE_DEFAULT);
 
@@ -139,11 +139,11 @@ void *vmm_createVirtualSpace(pid_t pid) {
     newPageTable[x] = newPageDirectory[x];
 
   /* Unmap Page From Virtual Space */
-  vmmUnmapPage((uInt32) newPageTable, 1);
+  vmm_unmapPage((uInt32) newPageTable, 1);
 
   /* Now We Are Done With The Page Directory So Lets Unmap That Too */
 
-  vmmUnmapPage((uInt32) newPageDirectory, 1);
+  vmm_unmapPage((uInt32) newPageDirectory, 1);
   /* Return Physical Address Of Page Directory */
   return (newPageDirectoryAddress);
 }
