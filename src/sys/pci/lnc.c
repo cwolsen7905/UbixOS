@@ -245,8 +245,8 @@ int lanceProbe(struct lncInfo *lnc) {
 void lnc_INT() {
   uint16_t csr0 = 0x0;
 
-  irqDisable(9);
-  asm("sti");
+  //irqDisable(9);
+  //asm("sti");
 
   //kprintf("\nINTR\n");
   while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
@@ -285,7 +285,7 @@ asm(
     lnc_writeCSR32(lnc, CSR0, 0x7940);//csr0);
     //kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
   }
-  irqEnable(9);
+  //irqEnable(9);
   kprintf("INT DONE");
 }
 
@@ -321,6 +321,7 @@ void lnc_rxINT() {
     lnc_nextRxPtr(lnc);
   }
   kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+while(1);
   
 }
 
