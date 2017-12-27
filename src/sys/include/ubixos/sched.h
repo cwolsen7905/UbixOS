@@ -61,8 +61,8 @@ typedef struct taskStruct {
   struct osInfo oInfo;
   fileDescriptor *imageFd;
   tState state;
-  u_int32_t gid;
-  u_int32_t uid;
+  uint32_t gid;
+  uint32_t uid;
   uInt16 usedMath;
   tty_term *term;
   struct thread td;

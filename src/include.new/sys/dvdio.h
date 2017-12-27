@@ -42,9 +42,9 @@ struct dvd_layer {
 	u_int8_t linear_density	:4;
 	u_int8_t track_density	:4;
 	u_int8_t bca		:1;
-	u_int32_t start_sector;
-	u_int32_t end_sector;
-	u_int32_t end_sector_l0;
+	uint32_t start_sector;
+	uint32_t end_sector;
+	uint32_t end_sector_l0;
 };
 
 struct dvd_struct {
@@ -53,7 +53,7 @@ struct dvd_struct {
 	u_char cpst;
 	u_char rmi;
 	u_int8_t agid		:2;
-	u_int32_t length;
+	uint32_t length;
 	u_char data[2048];
 };
 
@@ -69,7 +69,7 @@ struct dvd_authinfo {
 	u_int8_t user_rsts	:3;
 	u_int8_t region;
 	u_int8_t rpc_scheme;
-	u_int32_t lba;
+	uint32_t lba;
 	u_char keychal[10];
 };
 

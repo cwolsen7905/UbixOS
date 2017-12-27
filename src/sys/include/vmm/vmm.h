@@ -27,11 +27,15 @@
 
  *****************************************************************************************/
 
-#ifndef _VMM_H_
-#define _VMM_H_
+#ifndef _VMM_VMM_H_
+#define _VMM_VMM_H_
 
 #include <sys/types.h>
 #include <vmm/paging.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define memAvail     1
 #define memNotavail  2
@@ -78,7 +82,7 @@ struct freebsd6_mmap_args {
 };
 
 typedef struct {
-    u_int32_t pageAddr;
+    uint32_t pageAddr;
     u_int16_t status;
     u_int16_t reserved;
     pid_t pid;
@@ -89,14 +93,16 @@ extern int numPages;
 extern mMap *vmmMemoryMap;
 
 int vmm_init();
-int vmmMemMapInit();
+int vmm_memMapInit();
 int countMemory();
-u_int32_t vmmFindFreePage( pidType pid );
+uint32_t vmm_findFreePage( pidType pid );
 int freePage( uInt32 pageAddr );
 int adjustCowCounter( uInt32 baseAddr, int adjustment );
-void vmmFreeProcessPages( pidType pid );
+void vmm_freeProcessPages( pidType pid );
 
-//MrOlsen (2016-01-14) NOTE: Doing BSD Compat
-//int freebsd6_mmap(struct thread *td, struct freebsd6_mmap_args *uap);
 
+#ifdef __cplusplus
+}
 #endif
+
+#endif // _VMM_VMM_H

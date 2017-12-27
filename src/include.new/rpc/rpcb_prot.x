@@ -227,7 +227,7 @@ struct rpcb_rmtcallres {
 %struct r_rpcb_rmtcallres {
 %	char *addr;
 %	struct {
-%		u_int32_t results_len;
+%		uint32_t results_len;
 %		char *results_val;
 %	} results;
 %	xdrproc_t	xdr_res;	/* decodes results */
@@ -446,7 +446,7 @@ program RPCBPROG {
 %	rpcprog_t prog;			/* program number */
 %	rpcvers_t vers;			/* version number */
 %	rpcproc_t proc;			/* procedure number */
-%	u_int32_t arglen;			/* arg len */
+%	uint32_t arglen;			/* arg len */
 %	caddr_t args_ptr;		/* argument */
 %	xdrproc_t xdr_args;		/* XDR routine for argument */
 %};
@@ -457,7 +457,7 @@ program RPCBPROG {
 % */
 %struct rpcb_rmtcallres {
 %	char *addr_ptr;			/* remote universal address */
-%	u_int32_t resultslen;		/* results length */
+%	uint32_t resultslen;		/* results length */
 %	caddr_t results_ptr;		/* results */
 %	xdrproc_t xdr_results;		/* XDR routine for result */
 %};

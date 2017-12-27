@@ -192,20 +192,20 @@ typedef struct {
 
 typedef struct {
     int32_t execfd;
-    u_int32_t phdr;
-    u_int32_t phent;
-    u_int32_t phnum;
-    u_int32_t pagesz;
-    u_int32_t base;
-    u_int32_t flags;
-    u_int32_t entry;
-    u_int32_t trace;
+    uint32_t phdr;
+    uint32_t phent;
+    uint32_t phnum;
+    uint32_t pagesz;
+    uint32_t base;
+    uint32_t flags;
+    uint32_t entry;
+    uint32_t trace;
 } Elf_Auxargs;
 
 char *elfGetShType( int );
 char *elfGetPhType( int );
 char *elfGetRelType( int );
-int elf_loadfile( kTask_t *p, const char *file, u_int32_t *addr, u_int32_t *entry );
+int elf_loadfile( kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry );
 
 #define ELF32_R_SYM(i)      ((i)>>8)
 #define ELF32_R_TYPE(i)     ((unsigned char)(i))

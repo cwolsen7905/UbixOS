@@ -182,7 +182,7 @@ struct hp_order {
 		struct sockaddr aiou_sa;
 	} aio_src_un;
 #define aio_srcsa aio_src_un.aiou_sa
-	u_int32_t aio_srcflag;
+	uint32_t aio_srcflag;
 	int aio_srcscope;
 	int aio_dstscope;
 	struct policyqueue *aio_srcpolicy;
@@ -986,7 +986,7 @@ set_source(struct hp_order *aio, struct policyhead *ph)
 #ifdef INET6
 	if (ss.ss_family == AF_INET6) {
 		struct in6_ifreq ifr6;
-		u_int32_t flags6;
+		uint32_t flags6;
 
 		/* XXX: interface name should not be hardcoded */
 		strncpy(ifr6.ifr_name, "lo0", sizeof(ifr6.ifr_name));
@@ -2001,7 +2001,7 @@ _icmp_nodeinfo_query(const struct in6_addr *addr, int ifindex, char *dnsname)
 	struct timeval tout;
 	int len;
 	static int pid;
-	u_int32_t r1, r2;
+	uint32_t r1, r2;
 
 	if (pid == 0)
 		pid = getpid();

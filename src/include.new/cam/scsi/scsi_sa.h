@@ -958,110 +958,110 @@ struct tde_lb_enc_key_wrap_desc {
 #define	SCSI_DENSITY_QIC_3080		0x29
 
 __BEGIN_DECLS
-void	scsi_read_block_limits(struct ccb_scsiio *, u_int32_t,
+void	scsi_read_block_limits(struct ccb_scsiio *, uint32_t,
 			       void (*cbfcnp)(struct cam_periph *, union ccb *),
 			       u_int8_t, struct scsi_read_block_limits_data *,
-			       u_int8_t , u_int32_t);
+			       u_int8_t , uint32_t);
 
-void	scsi_sa_read_write(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_sa_read_write(struct ccb_scsiio *csio, uint32_t retries,
 			   void (*cbfcnp)(struct cam_periph *, union ccb *),
 			   u_int8_t tag_action, int readop, int sli,
-			   int fixed, u_int32_t length, u_int8_t *data_ptr,
-			   u_int32_t dxfer_len, u_int8_t sense_len,
-			   u_int32_t timeout);
+			   int fixed, uint32_t length, u_int8_t *data_ptr,
+			   uint32_t dxfer_len, u_int8_t sense_len,
+			   uint32_t timeout);
 
-void	scsi_rewind(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_rewind(struct ccb_scsiio *csio, uint32_t retries,
 		    void (*cbfcnp)(struct cam_periph *, union ccb *),
 		    u_int8_t tag_action, int immediate, u_int8_t sense_len,
-		    u_int32_t timeout);
+		    uint32_t timeout);
 
-void	scsi_space(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_space(struct ccb_scsiio *csio, uint32_t retries,
 		   void (*cbfcnp)(struct cam_periph *, union ccb *),
 		   u_int8_t tag_action, scsi_space_code code,
-		   u_int32_t count, u_int8_t sense_len, u_int32_t timeout);
+		   uint32_t count, u_int8_t sense_len, uint32_t timeout);
 
-void	scsi_load_unload(struct ccb_scsiio *csio, u_int32_t retries,         
+void	scsi_load_unload(struct ccb_scsiio *csio, uint32_t retries,         
 			 void (*cbfcnp)(struct cam_periph *, union ccb *),   
 			 u_int8_t tag_action, int immediate,   int eot,
 			 int reten, int load, u_int8_t sense_len,
-			 u_int32_t timeout);
+			 uint32_t timeout);
 	
-void	scsi_write_filemarks(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_write_filemarks(struct ccb_scsiio *csio, uint32_t retries,
 			     void (*cbfcnp)(struct cam_periph *, union ccb *),
 			     u_int8_t tag_action, int immediate, int setmark,
-			     u_int32_t num_marks, u_int8_t sense_len,
-			     u_int32_t timeout);
+			     uint32_t num_marks, u_int8_t sense_len,
+			     uint32_t timeout);
 
-void	scsi_reserve_release_unit(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_reserve_release_unit(struct ccb_scsiio *csio, uint32_t retries,
 				  void (*cbfcnp)(struct cam_periph *,
 				  union ccb *), u_int8_t tag_action,	
 				  int third_party, int third_party_id,
-				  u_int8_t sense_len, u_int32_t timeout,
+				  u_int8_t sense_len, uint32_t timeout,
 				  int reserve);
 
-void	scsi_erase(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_erase(struct ccb_scsiio *csio, uint32_t retries,
 		   void (*cbfcnp)(struct cam_periph *, union ccb *),
 		   u_int8_t tag_action, int immediate, int long_erase,
-		   u_int8_t sense_len, u_int32_t timeout);
+		   u_int8_t sense_len, uint32_t timeout);
 
 void	scsi_data_comp_page(struct scsi_data_compression_page *page,
 			    u_int8_t dce, u_int8_t dde, u_int8_t red,
-			    u_int32_t comp_algorithm,
-			    u_int32_t decomp_algorithm);
+			    uint32_t comp_algorithm,
+			    uint32_t decomp_algorithm);
 
-void	scsi_read_position(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_read_position(struct ccb_scsiio *csio, uint32_t retries,
                            void (*cbfcnp)(struct cam_periph *, union ccb *),
                            u_int8_t tag_action, int hardsoft,
                            struct scsi_tape_position_data *sbp,
-                           u_int8_t sense_len, u_int32_t timeout);
-void	scsi_read_position_10(struct ccb_scsiio *csio, u_int32_t retries,
+                           u_int8_t sense_len, uint32_t timeout);
+void	scsi_read_position_10(struct ccb_scsiio *csio, uint32_t retries,
 			      void (*cbfcnp)(struct cam_periph *, union ccb *),
 			      u_int8_t tag_action, int service_action,
-			      u_int8_t *data_ptr, u_int32_t length,
-			      u_int32_t sense_len, u_int32_t timeout);
+			      u_int8_t *data_ptr, uint32_t length,
+			      uint32_t sense_len, uint32_t timeout);
 
-void	scsi_set_position(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_set_position(struct ccb_scsiio *csio, uint32_t retries,
                          void (*cbfcnp)(struct cam_periph *, union ccb *),
-                         u_int8_t tag_action, int hardsoft, u_int32_t blkno,
-                         u_int8_t sense_len, u_int32_t timeout);
+                         u_int8_t tag_action, int hardsoft, uint32_t blkno,
+                         u_int8_t sense_len, uint32_t timeout);
 
-void	scsi_locate_10(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_locate_10(struct ccb_scsiio *csio, uint32_t retries,
 		       void (*cbfcnp)(struct cam_periph *, union ccb *),
 		       u_int8_t tag_action, int immed, int cp, int hard,
-		       int64_t partition, u_int32_t block_address,
-		       int sense_len, u_int32_t timeout);
+		       int64_t partition, uint32_t block_address,
+		       int sense_len, uint32_t timeout);
 
-void	scsi_locate_16(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_locate_16(struct ccb_scsiio *csio, uint32_t retries,
 		       void (*cbfcnp)(struct cam_periph *, union ccb *),
 		       u_int8_t tag_action, int immed, int cp,
 		       u_int8_t dest_type, int bam, int64_t partition,
 		       u_int64_t logical_id, int sense_len,
-		       u_int32_t timeout);
+		       uint32_t timeout);
 
-void	scsi_report_density_support(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_report_density_support(struct ccb_scsiio *csio, uint32_t retries,
 				    void (*cbfcnp)(struct cam_periph *,
 						   union ccb *),
 				    u_int8_t tag_action, int media,
 				    int medium_type, u_int8_t *data_ptr,
-				    u_int32_t length, u_int32_t sense_len,
-				    u_int32_t timeout);
+				    uint32_t length, uint32_t sense_len,
+				    uint32_t timeout);
 
-void	scsi_set_capacity(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_set_capacity(struct ccb_scsiio *csio, uint32_t retries,
 			  void (*cbfcnp)(struct cam_periph *, union ccb *),
-			  u_int8_t tag_action, int byte1, u_int32_t proportion,
-			  u_int32_t sense_len, u_int32_t timeout);
+			  u_int8_t tag_action, int byte1, uint32_t proportion,
+			  uint32_t sense_len, uint32_t timeout);
 
-void	scsi_format_medium(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_format_medium(struct ccb_scsiio *csio, uint32_t retries,
 			   void (*cbfcnp)(struct cam_periph *, union ccb *),
 			   u_int8_t tag_action, int byte1, int byte2, 
-			   u_int8_t *data_ptr, u_int32_t length,
-			   u_int32_t sense_len, u_int32_t timeout);
+			   u_int8_t *data_ptr, uint32_t length,
+			   uint32_t sense_len, uint32_t timeout);
 
-void	scsi_allow_overwrite(struct ccb_scsiio *csio, u_int32_t retries,
+void	scsi_allow_overwrite(struct ccb_scsiio *csio, uint32_t retries,
 			     void (*cbfcnp)(struct cam_periph *, union ccb *),
 			     u_int8_t tag_action, int allow_overwrite,
 			     int partition, u_int64_t logical_id,
-			     u_int32_t sense_len, u_int32_t timeout);
+			     uint32_t sense_len, uint32_t timeout);
 
 __END_DECLS
 

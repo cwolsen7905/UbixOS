@@ -507,7 +507,7 @@
 <a name="l00476"></a>00476   }
 <a name="l00477"></a>00477 
 <a name="l00478"></a><a class="code" href="paging_8c.html#6cdf3466734f2da5e258c9844d536295">00478</a> <span class="keywordtype">int</span> <a class="code" href="syscalls__new_8h.html#7f9e3f42e3fe0ba5e2dd3a4140ef14de">obreak</a>(<span class="keyword">struct</span> <a class="code" href="structthread.html">thread</a> *td,<span class="keyword">struct</span> <a class="code" href="structobreak__args.html">obreak_args</a> *uap) {
-<a name="l00479"></a>00479   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>   i    = 0x0;
+<a name="l00479"></a>00479   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>   i    = 0x0;
 <a name="l00480"></a>00480   <a class="code" href="types_8h.html#d6f327965d9e330cd225ca2153ac0453">vm_offset_t</a> old  = 0x0;
 <a name="l00481"></a>00481   <a class="code" href="types_8h.html#d6f327965d9e330cd225ca2153ac0453">vm_offset_t</a> base = 0x0;
 <a name="l00482"></a>00482   <a class="code" href="types_8h.html#d6f327965d9e330cd225ca2153ac0453">vm_offset_t</a> <span class="keyword">new</span>  = 0x0;
@@ -550,11 +550,11 @@
 <a name="l00519"></a>00519   <span class="keywordflow">return</span>(0x0);
 <a name="l00520"></a>00520   }
 <a name="l00521"></a>00521 
-<a name="l00522"></a><a class="code" href="paging_8c.html#0444c8635648fabdbd6e702137aa1723">00522</a> <span class="keywordtype">int</span> <a class="code" href="paging_8c.html#0444c8635648fabdbd6e702137aa1723">vmm_cleanVirtualSpace</a>(<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a> addr) {
+<a name="l00522"></a><a class="code" href="paging_8c.html#0444c8635648fabdbd6e702137aa1723">00522</a> <span class="keywordtype">int</span> <a class="code" href="paging_8c.html#0444c8635648fabdbd6e702137aa1723">vmm_cleanVirtualSpace</a>(<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a> addr) {
 <a name="l00523"></a>00523   <span class="keywordtype">int</span>         x            = 0x0;
 <a name="l00524"></a>00524   <span class="keywordtype">int</span>         y            = 0x0;
-<a name="l00525"></a>00525   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>  *pageTableSrc = 0x0;
-<a name="l00526"></a>00526   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>  *pageDir      = 0x0;
+<a name="l00525"></a>00525   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>  *pageTableSrc = 0x0;
+<a name="l00526"></a>00526   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>  *pageDir      = 0x0;
 <a name="l00527"></a>00527 
 <a name="l00528"></a>00528   pageDir = (<a class="code" href="types_8h.html#5847ea0262a5aa61eee48cbe95544a78">uInt32</a> *) <a class="code" href="paging_8h.html#aab3609eb02bd28ded8d1ea0512da979">parentPageDirAddr</a>;
 <a name="l00529"></a>00529 

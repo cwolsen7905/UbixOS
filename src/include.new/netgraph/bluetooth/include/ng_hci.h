@@ -448,10 +448,10 @@ typedef struct {
 	u_int16_t	con_handle;      /* connection handle */
 	u_int8_t	flags;           /* reserved */
 	u_int8_t	service_type;    /* service type */
-	u_int32_t	token_rate;      /* bytes/sec */
-	u_int32_t	peak_bandwidth;  /* bytes/sec */
-	u_int32_t	latency;         /* msec */
-	u_int32_t	delay_variation; /* msec */
+	uint32_t	token_rate;      /* bytes/sec */
+	uint32_t	peak_bandwidth;  /* bytes/sec */
+	uint32_t	latency;         /* msec */
+	uint32_t	delay_variation; /* msec */
 } ng_hci_lp_qos_req_ep;
 
 /* QoS Conformition Event */
@@ -526,14 +526,14 @@ typedef struct {
 
 #define NGM_HCI_NODE_GET_STAT			107 /* HCI -> User */
 typedef struct {
-	u_int32_t	cmd_sent;   /* number of HCI commands sent */
-	u_int32_t	evnt_recv;  /* number of HCI events received */
-	u_int32_t	acl_recv;   /* number of ACL packets received */
-	u_int32_t	acl_sent;   /* number of ACL packets sent */
-	u_int32_t	sco_recv;   /* number of SCO packets received */
-	u_int32_t	sco_sent;   /* number of SCO packets sent */
-	u_int32_t	bytes_recv; /* total number of bytes received */
-	u_int32_t	bytes_sent; /* total number of bytes sent */
+	uint32_t	cmd_sent;   /* number of HCI commands sent */
+	uint32_t	evnt_recv;  /* number of HCI events received */
+	uint32_t	acl_recv;   /* number of ACL packets received */
+	uint32_t	acl_sent;   /* number of ACL packets sent */
+	uint32_t	sco_recv;   /* number of SCO packets received */
+	uint32_t	sco_sent;   /* number of SCO packets sent */
+	uint32_t	bytes_recv; /* total number of bytes received */
+	uint32_t	bytes_sent; /* total number of bytes sent */
 } ng_hci_node_stat_ep;
 
 #define NGM_HCI_NODE_RESET_STAT			108 /* User -> HCI */
@@ -543,7 +543,7 @@ typedef struct {
 
 #define NGM_HCI_NODE_GET_NEIGHBOR_CACHE		110 /* HCI -> User */
 typedef struct {
-	u_int32_t	num_entries;	/* number of entries */
+	uint32_t	num_entries;	/* number of entries */
 } ng_hci_node_get_neighbor_cache_ep;
 
 typedef struct {
@@ -559,7 +559,7 @@ typedef struct {
 
 #define NGM_HCI_NODE_GET_CON_LIST		111 /* HCI -> User */
 typedef struct {
-	u_int32_t	num_connections; /* number of connections */
+	uint32_t	num_connections; /* number of connections */
 } ng_hci_node_con_list_ep;
 
 typedef struct {
@@ -833,10 +833,10 @@ typedef struct {
 	u_int16_t	con_handle;      /* connection handle */
 	u_int8_t	flags;           /* reserved for future use */
 	u_int8_t	service_type;    /* service type */
-	u_int32_t	token_rate;      /* bytes per second */
-	u_int32_t	peak_bandwidth;  /* bytes per second */
-	u_int32_t	latency;         /* microseconds */
-	u_int32_t	delay_variation; /* microseconds */
+	uint32_t	token_rate;      /* bytes per second */
+	uint32_t	peak_bandwidth;  /* bytes per second */
+	uint32_t	latency;         /* microseconds */
+	uint32_t	delay_variation; /* microseconds */
 } __attribute__ ((packed)) ng_hci_qos_setup_cp;
 /* No return parameter(s) */
 
@@ -1530,10 +1530,10 @@ typedef struct {
 	u_int16_t	con_handle;      /* connection handle */
 	u_int8_t	flags;           /* reserved for future use */
 	u_int8_t	service_type;    /* service type */
-	u_int32_t	token_rate;      /* bytes per second */
-	u_int32_t	peak_bandwidth;  /* bytes per second */
-	u_int32_t	latency;         /* microseconds */
-	u_int32_t	delay_variation; /* microseconds */
+	uint32_t	token_rate;      /* bytes per second */
+	uint32_t	peak_bandwidth;  /* bytes per second */
+	uint32_t	latency;         /* microseconds */
+	uint32_t	delay_variation; /* microseconds */
 } __attribute__ ((packed)) ng_hci_qos_setup_compl_ep;
 
 #define NG_HCI_EVENT_COMMAND_COMPL		0x0e

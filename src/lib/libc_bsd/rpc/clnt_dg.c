@@ -330,7 +330,7 @@ clnt_dg_call(cl, proc, xargs, argsp, xresults, resultsp, utimeout)
 	socklen_t inlen, salen;
 	ssize_t recvlen = 0;
 	int kin_len, n, rpc_lock_value;
-	u_int32_t xid;
+	uint32_t xid;
 
 	outlen = 0;
 	sigfillset(&newmask);
@@ -389,9 +389,9 @@ call_again:
 	 * XXX Yes, and it's in network byte order, so we should to
 	 * be careful when we increment it, shouldn't we.
 	 */
-	xid = ntohl(*(u_int32_t *)(void *)(cu->cu_outhdr));
+	xid = ntohl(*(uint32_t *)(void *)(cu->cu_outhdr));
 	xid++;
-	*(u_int32_t *)(void *)(cu->cu_outhdr) = htonl(xid);
+	*(uint32_t *)(void *)(cu->cu_outhdr) = htonl(xid);
 call_again_same_xid:
 	xdrs = &(cu->cu_outxdrs);
 	xdrs->x_op = XDR_ENCODE;
@@ -477,10 +477,10 @@ get_reply:
 				cu->cu_error.re_status = RPC_CANTRECV;
 				goto out;
 			}
-			if (recvlen >= sizeof(u_int32_t) &&
+			if (recvlen >= sizeof(uint32_t) &&
 			    (cu->cu_async == TRUE ||
-			    *((u_int32_t *)(void *)(cu->cu_inbuf)) ==
-			    *((u_int32_t *)(void *)(cu->cu_outbuf)))) {
+			    *((uint32_t *)(void *)(cu->cu_inbuf)) ==
+			    *((uint32_t *)(void *)(cu->cu_outbuf)))) {
 				/* We now assume we have the proper reply. */
 				break;
 			}
@@ -732,14 +732,14 @@ clnt_dg_control(cl, request, info)
 		 * first element in the call structure *.
 		 * This will get the xid of the PREVIOUS call
 		 */
-		*(u_int32_t *)info =
-		    ntohl(*(u_int32_t *)(void *)cu->cu_outhdr);
+		*(uint32_t *)info =
+		    ntohl(*(uint32_t *)(void *)cu->cu_outhdr);
 		break;
 
 	case CLSET_XID:
 		/* This will set the xid of the NEXT call */
-		*(u_int32_t *)(void *)cu->cu_outhdr =
-		    htonl(*(u_int32_t *)info - 1);
+		*(uint32_t *)(void *)cu->cu_outhdr =
+		    htonl(*(uint32_t *)info - 1);
 		/* decrement by 1 as clnt_dg_call() increments once */
 		break;
 
@@ -750,14 +750,14 @@ clnt_dg_control(cl, request, info)
 		 * begining of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
-		*(u_int32_t *)info =
-		    ntohl(*(u_int32_t *)(void *)(cu->cu_outhdr +
+		*(uint32_t *)info =
+		    ntohl(*(uint32_t *)(void *)(cu->cu_outhdr +
 		    4 * BYTES_PER_XDR_UNIT));
 		break;
 
 	case CLSET_VERS:
-		*(u_int32_t *)(void *)(cu->cu_outhdr + 4 * BYTES_PER_XDR_UNIT)
-			= htonl(*(u_int32_t *)info);
+		*(uint32_t *)(void *)(cu->cu_outhdr + 4 * BYTES_PER_XDR_UNIT)
+			= htonl(*(uint32_t *)info);
 		break;
 
 	case CLGET_PROG:
@@ -767,14 +767,14 @@ clnt_dg_control(cl, request, info)
 		 * begining of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
-		*(u_int32_t *)info =
-		    ntohl(*(u_int32_t *)(void *)(cu->cu_outhdr +
+		*(uint32_t *)info =
+		    ntohl(*(uint32_t *)(void *)(cu->cu_outhdr +
 		    3 * BYTES_PER_XDR_UNIT));
 		break;
 
 	case CLSET_PROG:
-		*(u_int32_t *)(void *)(cu->cu_outhdr + 3 * BYTES_PER_XDR_UNIT)
-			= htonl(*(u_int32_t *)info);
+		*(uint32_t *)(void *)(cu->cu_outhdr + 3 * BYTES_PER_XDR_UNIT)
+			= htonl(*(uint32_t *)info);
 		break;
 	case CLSET_ASYNC:
 		cu->cu_async = *(int *)info;

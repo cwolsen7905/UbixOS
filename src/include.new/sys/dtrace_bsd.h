@@ -88,7 +88,7 @@ extern dtrace_execexit_func_t	dtrace_fasttrap_exec;
 extern dtrace_execexit_func_t	dtrace_fasttrap_exit;
 
 /* The dtmalloc provider hooks into malloc. */
-typedef	void (*dtrace_malloc_probe_func_t)(u_int32_t, uintptr_t arg0,
+typedef	void (*dtrace_malloc_probe_func_t)(uint32_t, uintptr_t arg0,
     uintptr_t arg1, uintptr_t arg2, uintptr_t arg3, uintptr_t arg4);
 
 extern dtrace_malloc_probe_func_t   dtrace_malloc_probe;

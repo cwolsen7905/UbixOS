@@ -81,7 +81,7 @@ int main() {
   union descriptorTableUnion *LDT;
 
   printf("sizeof(long) - %i\n", sizeof(long));
-  printf("sizeof(u_int32_t) - %i\n", sizeof(u_int32_t));
+  printf("sizeof(uint32_t) - %i\n", sizeof(uint32_t));
   printf("end: 0x%X, etext: 0x%X, edata: 0x%X\n", &end, &etext, &edata);
 
   asm(
@@ -232,7 +232,7 @@ int main() {
 
   //td = malloc(sizeof(struct thread));
   printf("Base: 0x%X, Size: 0x%X, Shift: 0x%X\n", base, size, (base + (size << PAGE_SHIFT)));
-  printf("Base: 0x%X, Size: 0x%X, Shift: 0x%X\n", (u_int32_t)td.vm_daddr, td.vm_dsize, (u_int32_t)td.vm_daddr + (td.vm_dsize << PAGE_SHIFT));
+  printf("Base: 0x%X, Size: 0x%X, Shift: 0x%X\n", (uint32_t)td.vm_daddr, td.vm_dsize, (uint32_t)td.vm_daddr + (td.vm_dsize << PAGE_SHIFT));
 
   printf("sizeof(int *) = %i\n", sizeof(int *));
 

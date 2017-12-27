@@ -33,6 +33,7 @@
 #include <i386/cpu.h>
 
 struct trapframe {
+    int tf_gs;
     int tf_fs;
     int tf_es;
     int tf_ds;

@@ -94,7 +94,7 @@ struct cam_device {
 						     * Device name given by
 						     * the user.
 						     */
-	u_int32_t	given_unit_number;	    /*
+	uint32_t	given_unit_number;	    /*
 						     * Unit number given by
 						     * the user.
 						     */
@@ -102,14 +102,14 @@ struct cam_device {
 						  * Name of the device, 
 						  * e.g. 'pass' 
 						  */
-	u_int32_t	dev_unit_num;	/* Unit number of the passthrough
+	uint32_t	dev_unit_num;	/* Unit number of the passthrough
 					 * device associated with this
 					 * particular device.
 					 */
 	
 	char		sim_name[SIM_IDLEN+1]; /* Controller name, e.g. 'ahc' */
-	u_int32_t	sim_unit_number; /* Controller unit number */
-	u_int32_t	bus_id;		 /* Controller bus number */
+	uint32_t	sim_unit_number; /* Controller unit number */
+	uint32_t	bus_id;		 /* Controller bus number */
 	lun_id_t	target_lun;	 /* Logical Unit Number */
 	target_id_t	target_id;	 /* Target ID */
 	path_id_t	path_id;	 /* System SCSI bus number */
@@ -161,10 +161,10 @@ int buff_decode_visit(u_int8_t *buff, size_t len, const char *fmt,
 		      void (*arg_put)(void *, int, void *, int, char *),
 		      void *puthook);
 int csio_build(struct ccb_scsiio *csio, u_int8_t *data_ptr,
-	       u_int32_t dxfer_len, u_int32_t flags, int retry_count,
+	       uint32_t dxfer_len, uint32_t flags, int retry_count,
 	       int timeout, const char *cmd_spec, ...);
 int csio_build_visit(struct ccb_scsiio *csio, u_int8_t *data_ptr,
-		     u_int32_t dxfer_len, u_int32_t flags, int retry_count,
+		     uint32_t dxfer_len, uint32_t flags, int retry_count,
 		     int timeout, const char *cmd_spec,
 		     int (*arg_get)(void *hook, char *field_name),
 		     void *gethook);

@@ -42,8 +42,8 @@
  * Internal of an ICMP Router Advertisement
  */
 struct icmp_ra_addr {
-	u_int32_t ira_addr;
-	u_int32_t ira_preference;
+	uint32_t ira_addr;
+	uint32_t ira_preference;
 };
 
 /*
@@ -110,7 +110,7 @@ struct icmp {
 			/* options and then 64 bits of data */
 		} id_ip;
 		struct icmp_ra_addr id_radv;
-		u_int32_t id_mask;
+		uint32_t id_mask;
 		char	id_data[1];
 	} icmp_dun;
 #define	icmp_otime	icmp_dun.id_ts.its_otime

@@ -125,9 +125,9 @@ typedef int64_t ufs_time_t;
 struct ufs2_dinode {
 	u_int16_t	di_mode;	/*   0: IFMT, permissions; see below. */
 	int16_t		di_nlink;	/*   2: File link count. */
-	u_int32_t	di_uid;		/*   4: File owner. */
-	u_int32_t	di_gid;		/*   8: File group. */
-	u_int32_t	di_blksize;	/*  12: Inode blocksize. */
+	uint32_t	di_uid;		/*   4: File owner. */
+	uint32_t	di_gid;		/*   8: File group. */
+	uint32_t	di_blksize;	/*  12: Inode blocksize. */
 	u_int64_t	di_size;	/*  16: File byte count. */
 	u_int64_t	di_blocks;	/*  24: Blocks actually held. */
 	ufs_time_t	di_atime;	/*  32: Last access time. */
@@ -138,10 +138,10 @@ struct ufs2_dinode {
 	int32_t		di_atimensec;	/*  68: Last access time. */
 	int32_t		di_ctimensec;	/*  72: Last inode change time. */
 	int32_t		di_birthnsec;	/*  76: Inode creation time. */
-	u_int32_t	di_gen;		/*  80: Generation number. */
-	u_int32_t	di_kernflags;	/*  84: Kernel flags. */
-	u_int32_t	di_flags;	/*  88: Status flags (chflags). */
-	u_int32_t	di_extsize;	/*  92: External attributes size. */
+	uint32_t	di_gen;		/*  80: Generation number. */
+	uint32_t	di_kernflags;	/*  84: Kernel flags. */
+	uint32_t	di_flags;	/*  88: Status flags (chflags). */
+	uint32_t	di_extsize;	/*  92: External attributes size. */
 	ufs2_daddr_t	di_extb[NXADDR];/*  96: External attributes block. */
 	ufs2_daddr_t	di_db[NDADDR];	/* 112: Direct disk blocks. */
 	ufs2_daddr_t	di_ib[NIADDR];	/* 208: Indirect disk blocks. */
@@ -178,11 +178,11 @@ struct ufs1_dinode {
 	int32_t		di_ctimensec;	/*  36: Last inode change time. */
 	ufs1_daddr_t	di_db[NDADDR];	/*  40: Direct disk blocks. */
 	ufs1_daddr_t	di_ib[NIADDR];	/*  88: Indirect disk blocks. */
-	u_int32_t	di_flags;	/* 100: Status flags (chflags). */
-	u_int32_t	di_blocks;	/* 104: Blocks actually held. */
-	u_int32_t	di_gen;		/* 108: Generation number. */
-	u_int32_t	di_uid;		/* 112: File owner. */
-	u_int32_t	di_gid;		/* 116: File group. */
+	uint32_t	di_flags;	/* 100: Status flags (chflags). */
+	uint32_t	di_blocks;	/* 104: Blocks actually held. */
+	uint32_t	di_gen;		/* 108: Generation number. */
+	uint32_t	di_uid;		/* 112: File owner. */
+	uint32_t	di_gid;		/* 116: File group. */
 	u_int64_t	di_modrev;	/* 120: i_modrev for NFSv4 */
 };
 

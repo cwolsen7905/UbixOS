@@ -221,7 +221,7 @@ typedef struct mbuf mb_t;
 typedef	u_long		ioctlcmd_t;
 typedef	struct uio	uio_t;
 typedef	int		minor_t;
-typedef	u_int32_t	u_32_t;
+typedef	uint32_t	u_32_t;
 # define	U_32_T	1
 
 

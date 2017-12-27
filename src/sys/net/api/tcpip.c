@@ -178,21 +178,29 @@ tcpip_inpkt(struct pbuf *p, struct netif *inp, netif_input_fn input_fn)
 #else /* LWIP_TCPIP_CORE_LOCKING_INPUT */
   struct tcpip_msg *msg;
 
+//kprintf("INPKT?\n");
+
   LWIP_ASSERT("Invalid mbox", sys_mbox_valid_val(mbox));
 
   msg = (struct tcpip_msg *)memp_malloc(MEMP_TCPIP_MSG_INPKT);
+//kprintf("INPKT %i\n", __LINE__);
   if (msg == NULL) {
     return ERR_MEM;
   }
+//kprintf("INPKT %i\n", __LINE__);
 
   msg->type = TCPIP_MSG_INPKT;
   msg->msg.inp.p = p;
   msg->msg.inp.netif = inp;
   msg->msg.inp.input_fn = input_fn;
+//kprintf("%s:%i\n", __FILE__, __LINE__);
   if (sys_mbox_trypost(&mbox, msg) != ERR_OK) {
+//kprintf("INPKT %i\n", __LINE__);
     memp_free(MEMP_TCPIP_MSG_INPKT, msg);
+//kprintf("INPKT %i\n", __LINE__);
     return ERR_MEM;
   }
+//kprintf("INPKT %i\n", __LINE__);
   return ERR_OK;
 #endif /* LWIP_TCPIP_CORE_LOCKING_INPUT */
 }
@@ -212,11 +220,15 @@ err_t
 tcpip_input(struct pbuf *p, struct netif *inp)
 {
 #if LWIP_ETHERNET
+kprintf("tcpip_input0\n");
   if (inp->flags & (NETIF_FLAG_ETHARP | NETIF_FLAG_ETHERNET)) {
+kprintf("tcpip_input1\n");
     return tcpip_inpkt(p, inp, ethernet_input);
   } else
 #endif /* LWIP_ETHERNET */
+kprintf("tcpip_input2\n");
   return tcpip_inpkt(p, inp, ip_input);
+kprintf("tcpip_input3\n");
 }
 
 /**

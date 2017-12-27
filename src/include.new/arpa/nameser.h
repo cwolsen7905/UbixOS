@@ -83,7 +83,7 @@
 #define NS_HFIXEDSZ	12	/*%< #/bytes of fixed data in header */
 #define NS_QFIXEDSZ	4	/*%< #/bytes of fixed data in query */
 #define NS_RRFIXEDSZ	10	/*%< #/bytes of fixed data in r record */
-#define NS_INT32SZ	4	/*%< #/bytes of data in a u_int32_t */
+#define NS_INT32SZ	4	/*%< #/bytes of data in a uint32_t */
 #define NS_INT16SZ	2	/*%< #/bytes of data in a u_int16_t */
 #define NS_INT8SZ	1	/*%< #/bytes of data in a u_int8_t */
 #define NS_INADDRSZ	4	/*%< IPv4 T_A */
@@ -161,7 +161,7 @@ typedef	struct __ns_rr {
 	char		name[NS_MAXDNAME];
 	u_int16_t	type;
 	u_int16_t	rr_class;
-	u_int32_t	ttl;
+	uint32_t	ttl;
 	u_int16_t	rdlength;
 	const u_char *	rdata;
 } ns_rr;
@@ -491,10 +491,10 @@ typedef enum __ns_cert_types {
 
 #define NS_GET32(l, cp) do { \
 	register const u_char *t_cp = (const u_char *)(cp); \
-	(l) = ((u_int32_t)t_cp[0] << 24) \
-	    | ((u_int32_t)t_cp[1] << 16) \
-	    | ((u_int32_t)t_cp[2] << 8) \
-	    | ((u_int32_t)t_cp[3]) \
+	(l) = ((uint32_t)t_cp[0] << 24) \
+	    | ((uint32_t)t_cp[1] << 16) \
+	    | ((uint32_t)t_cp[2] << 8) \
+	    | ((uint32_t)t_cp[3]) \
 	    ; \
 	(cp) += NS_INT32SZ; \
 } while (0)
@@ -508,7 +508,7 @@ typedef enum __ns_cert_types {
 } while (0)
 
 #define NS_PUT32(l, cp) do { \
-	register u_int32_t t_l = (u_int32_t)(l); \
+	register uint32_t t_l = (uint32_t)(l); \
 	register u_char *t_cp = (u_char *)(cp); \
 	*t_cp++ = t_l >> 24; \
 	*t_cp++ = t_l >> 16; \
@@ -599,7 +599,7 @@ int		ns_sprintrrf(const u_char *, size_t, const char *,
 int		ns_format_ttl(u_long, char *, size_t);
 int		ns_parse_ttl(const char *, u_long *);
 #if 0
-u_int32_t	ns_datetosecs(const char *cp, int *errp);
+uint32_t	ns_datetosecs(const char *cp, int *errp);
 #endif
 int		ns_name_ntol(const u_char *, u_char *, size_t);
 int		ns_name_ntop(const u_char *, char *, size_t);
@@ -659,7 +659,7 @@ int		ns_newmsg_q(ns_newmsg *handle, ns_nname_ct qname,
 			    ns_type qtype, ns_class qclass);
 int		ns_newmsg_rr(ns_newmsg *handle, ns_sect sect,
 			     ns_nname_ct name, ns_type type,
-			     ns_class rr_class, u_int32_t ttl,
+			     ns_class rr_class, uint32_t ttl,
 			     u_int16_t rdlen, const u_char *rdata);
 size_t		ns_newmsg_done(ns_newmsg *handle);
 ssize_t		ns_rdata_unpack(const u_char *, const u_char *, ns_type,

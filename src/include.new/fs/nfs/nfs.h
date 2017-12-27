@@ -217,13 +217,13 @@ struct nfsd_dumplist {
 };
 
 struct nfsd_dumpclients {
-	u_int32_t	ndcl_flags;		/* LCL_xxx flags */
-	u_int32_t	ndcl_nopenowners;	/* Number of openowners */
-	u_int32_t	ndcl_nopens;		/* and opens */
-	u_int32_t	ndcl_nlockowners;	/* and of lockowners */
-	u_int32_t	ndcl_nlocks;		/* and of locks */
-	u_int32_t	ndcl_ndelegs;		/* and of delegations */
-	u_int32_t	ndcl_nolddelegs;	/* and old delegations */
+	uint32_t	ndcl_flags;		/* LCL_xxx flags */
+	uint32_t	ndcl_nopenowners;	/* Number of openowners */
+	uint32_t	ndcl_nopens;		/* and opens */
+	uint32_t	ndcl_nlockowners;	/* and of lockowners */
+	uint32_t	ndcl_nlocks;		/* and of locks */
+	uint32_t	ndcl_ndelegs;		/* and of delegations */
+	uint32_t	ndcl_nolddelegs;	/* and old delegations */
 	sa_family_t	ndcl_addrfam;		/* Callback address */
 	union {
 		struct in_addr sin_addr;
@@ -239,7 +239,7 @@ struct nfsd_dumplocklist {
 };
 
 struct nfsd_dumplocks {
-	u_int32_t	ndlck_flags;		/* state flags NFSLCK_xxx */
+	uint32_t	ndlck_flags;		/* state flags NFSLCK_xxx */
 	nfsv4stateid_t	ndlck_stateid;		/* stateid */
 	u_int64_t	ndlck_first;		/* lock byte range */
 	u_int64_t	ndlck_end;
@@ -259,7 +259,7 @@ struct nfsreferral {
 	u_char		*nfr_srvlist;	/* List of servers */
 	int		nfr_srvcnt;	/* number of servers */
 	vnode_t		nfr_vp;	/* vnode for referral */
-	u_int32_t	nfr_dfileno;	/* assigned dir inode# */
+	uint32_t	nfr_dfileno;	/* assigned dir inode# */
 };
 
 /*
@@ -355,7 +355,7 @@ struct nfsreferral {
 #define	NFSATTRBIT_MAXWORDS	3
 
 typedef struct {
-	u_int32_t bits[NFSATTRBIT_MAXWORDS];
+	uint32_t bits[NFSATTRBIT_MAXWORDS];
 } nfsattrbit_t;
 
 #define	NFSZERO_ATTRBIT(b) do {						\
@@ -521,8 +521,8 @@ struct nfssockreq {
 	struct ucred	*nr_cred;
 	int		nr_lock;
 	NFSMUTEX_T	nr_mtx;
-	u_int32_t	nr_prog;
-	u_int32_t	nr_vers;
+	uint32_t	nr_prog;
+	uint32_t	nr_vers;
 	struct __rpc_client *nr_client;
 	AUTH		*nr_auth;
 };
@@ -577,10 +577,10 @@ struct nfsrv_descript {
 	caddr_t			nd_dpos;	/* Current dissect pos */
 	caddr_t			nd_bpos;	/* Current build pos */
 	u_int16_t		nd_procnum;	/* RPC # */
-	u_int32_t		nd_flag;	/* nd_flag */
-	u_int32_t		nd_repstat;	/* Reply status */
+	uint32_t		nd_flag;	/* nd_flag */
+	uint32_t		nd_repstat;	/* Reply status */
 	int			*nd_errp;	/* Pointer to ret status */
-	u_int32_t		nd_retxid;	/* Reply xid */
+	uint32_t		nd_retxid;	/* Reply xid */
 	struct nfsrvcache	*nd_rp;		/* Assoc. cache entry */
 	fhandle_t		nd_fh;		/* File handle */
 	struct ucred		*nd_cred;	/* Credentials */
@@ -687,7 +687,7 @@ struct nfsfh {
  * preserved.
  */
 struct nfsrvfh {
-	u_int32_t	nfsrvfh_len;
+	uint32_t	nfsrvfh_len;
 	u_int8_t	nfsrvfh_data[NFSRV_MAXFH];
 };
 
@@ -696,7 +696,7 @@ struct nfsrvfh {
  * NFSv4 client data structures.
  */
 struct nfsv4lock {
-	u_int32_t	nfslock_usecnt;
+	uint32_t	nfslock_usecnt;
 	u_int8_t	nfslock_lock;
 };
 #define	NFSV4LOCK_LOCK		0x01

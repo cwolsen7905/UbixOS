@@ -451,7 +451,7 @@ struct nfs_vattr {
 struct nfsvattr {
 	struct vattr	na_vattr;
 	nfsattrbit_t	na_suppattr;
-	u_int32_t	na_mntonfileno;
+	uint32_t	na_mntonfileno;
 	u_int64_t	na_filesid[2];
 };
 
@@ -961,7 +961,7 @@ int newnfs_vncmpf(struct vnode *, void *);
  */
 struct nfsreq {
 	TAILQ_ENTRY(nfsreq) r_chain;
-	u_int32_t	r_flags;	/* flags on request, see below */
+	uint32_t	r_flags;	/* flags on request, see below */
 	struct nfsmount *r_nmp;		/* Client mnt ptr */
 	struct mtx	r_mtx;		/* Mutex lock for this structure */
 };

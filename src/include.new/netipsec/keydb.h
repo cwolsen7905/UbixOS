@@ -56,7 +56,7 @@ struct secasindex {
 	union sockaddr_union dst;	/* destination address for SA */
 	u_int16_t proto;		/* IPPROTO_ESP or IPPROTO_AH */
 	u_int8_t mode;			/* mode of protocol, see ipsec.h */
-	u_int32_t reqid;		/* reqid id who owned this SA */
+	uint32_t reqid;		/* reqid id who owned this SA */
 					/* see IPSEC_MANUAL_REQID_MAX. */
 };
 
@@ -79,7 +79,7 @@ struct seckey {
 };
 
 struct seclifetime {
-	u_int32_t allocations;
+	uint32_t allocations;
 	u_int64_t bytes;
 	u_int64_t addtime;
 	u_int64_t usetime;
@@ -117,8 +117,8 @@ struct secasvar {
 	u_int8_t alg_auth;		/* Authentication Algorithm Identifier*/
 	u_int8_t alg_enc;		/* Cipher Algorithm Identifier */
 	u_int8_t alg_comp;		/* Compression Algorithm Identifier */
-	u_int32_t spi;			/* SPI Value, network byte order */
-	u_int32_t flags;		/* holder for SADB_KEY_FLAGS */
+	uint32_t spi;			/* SPI Value, network byte order */
+	uint32_t flags;		/* holder for SADB_KEY_FLAGS */
 
 	struct seckey *key_auth;	/* Key for Authentication */
 	struct seckey *key_enc;	        /* Key for Encryption */
@@ -134,7 +134,7 @@ struct secasvar {
 	struct seclifetime *lft_h;	/* HARD lifetime */
 	struct seclifetime *lft_s;	/* SOFT lifetime */
 
-	u_int32_t seq;			/* sequence number */
+	uint32_t seq;			/* sequence number */
 	pid_t pid;			/* message's pid */
 
 	struct secashead *sah;		/* back pointer to the secashead */
@@ -166,10 +166,10 @@ struct secasvar {
 
 /* replay prevention */
 struct secreplay {
-	u_int32_t count;
+	uint32_t count;
 	u_int wsize;		/* window size, i.g. 4 bytes */
-	u_int32_t seq;		/* used by sender */
-	u_int32_t lastseq;	/* used by receiver */
+	uint32_t seq;		/* used by sender */
+	uint32_t lastseq;	/* used by receiver */
 	caddr_t bitmap;		/* used by receiver */
 	int overflow;		/* overflow flag */
 };
@@ -187,7 +187,7 @@ struct secacq {
 
 	struct secasindex saidx;
 
-	u_int32_t seq;		/* sequence number */
+	uint32_t seq;		/* sequence number */
 	time_t created;		/* for lifetime */
 	int count;		/* for lifetime */
 };

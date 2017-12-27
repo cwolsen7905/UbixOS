@@ -84,25 +84,25 @@ struct ifmibdata {
 
 /* For IFT_ETHER, IFT_ISO88023, and IFT_STARLAN, as used by RFC 1650 */
 struct ifmib_iso_8802_3 {
-	u_int32_t	dot3StatsAlignmentErrors;
-	u_int32_t	dot3StatsFCSErrors;
-	u_int32_t	dot3StatsSingleCollisionFrames;
-	u_int32_t	dot3StatsMultipleCollisionFrames;
-	u_int32_t	dot3StatsSQETestErrors;
-	u_int32_t	dot3StatsDeferredTransmissions;
-	u_int32_t	dot3StatsLateCollisions;
-	u_int32_t	dot3StatsExcessiveCollisions;
-	u_int32_t	dot3StatsInternalMacTransmitErrors;
-	u_int32_t	dot3StatsCarrierSenseErrors;
-	u_int32_t	dot3StatsFrameTooLongs;
-	u_int32_t	dot3StatsInternalMacReceiveErrors;
-	u_int32_t	dot3StatsEtherChipSet;
+	uint32_t	dot3StatsAlignmentErrors;
+	uint32_t	dot3StatsFCSErrors;
+	uint32_t	dot3StatsSingleCollisionFrames;
+	uint32_t	dot3StatsMultipleCollisionFrames;
+	uint32_t	dot3StatsSQETestErrors;
+	uint32_t	dot3StatsDeferredTransmissions;
+	uint32_t	dot3StatsLateCollisions;
+	uint32_t	dot3StatsExcessiveCollisions;
+	uint32_t	dot3StatsInternalMacTransmitErrors;
+	uint32_t	dot3StatsCarrierSenseErrors;
+	uint32_t	dot3StatsFrameTooLongs;
+	uint32_t	dot3StatsInternalMacReceiveErrors;
+	uint32_t	dot3StatsEtherChipSet;
 	/* Matt Thomas wants this one, not included in RFC 1650: */
-	u_int32_t	dot3StatsMissedFrames;
+	uint32_t	dot3StatsMissedFrames;
 
-	u_int32_t	dot3StatsCollFrequencies[16]; /* NB: index origin */
+	uint32_t	dot3StatsCollFrequencies[16]; /* NB: index origin */
 
-	u_int32_t	dot3Compliance;
+	uint32_t	dot3Compliance;
 #define	DOT3COMPLIANCE_STATS	1
 #define	DOT3COMPLIANCE_COLLS	2
 };

@@ -34,18 +34,18 @@ struct vesa_info
     /* mandatory fields */
     u_int8_t		v_sig[4] __packed;	/* VESA */
     u_int16_t		v_version __packed;	/* ver in BCD */
-    u_int32_t		v_oemstr __packed;	/* OEM string */
-    u_int32_t		v_flags __packed;	/* flags */
+    uint32_t		v_oemstr __packed;	/* OEM string */
+    uint32_t		v_flags __packed;	/* flags */
 #define V_DAC8		(1<<0)
 #define V_NONVGA	(1<<1)
 #define V_SNOW		(1<<2)
-    u_int32_t		v_modetable __packed;	/* modes */
+    uint32_t		v_modetable __packed;	/* modes */
     u_int16_t		v_memsize __packed;	/* in 64K */
     /* 2.0 */
     u_int16_t		v_revision __packed;	/* software rev */
-    u_int32_t		v_venderstr __packed;	/* vender */
-    u_int32_t		v_prodstr __packed;	/* product name */
-    u_int32_t		v_revstr __packed;	/* product rev */
+    uint32_t		v_venderstr __packed;	/* vender */
+    uint32_t		v_prodstr __packed;	/* product name */
+    uint32_t		v_revstr __packed;	/* product rev */
 };
 
 struct vesa_mode 
@@ -70,7 +70,7 @@ struct vesa_mode
     u_int16_t		v_wsize;
     u_int16_t		v_waseg;
     u_int16_t		v_wbseg;
-    u_int32_t		v_posfunc;
+    uint32_t		v_posfunc;
     u_int16_t		v_bpscanline;
     /* fields optional for 1.0/1.1 implementations */
     u_int16_t		v_width;
@@ -103,8 +103,8 @@ struct vesa_mode
     u_int8_t		v_resfieldpos;
     u_int8_t		v_dircolormode;
     /* 2.0 implementations */
-    u_int32_t		v_lfb;
-    u_int32_t		v_offscreen;
+    uint32_t		v_lfb;
+    uint32_t		v_offscreen;
     u_int16_t		v_offscreensize;
 };
 

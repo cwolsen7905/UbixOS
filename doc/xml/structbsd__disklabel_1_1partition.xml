@@ -31,8 +31,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="156" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1_1partition_128f6899ed90435dd6e7a0b737718d703" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::partition::p_fsize</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::partition::p_fsize</definition>
         <argsstring></argsstring>
         <name>p_fsize</name>
         <briefdescription>
@@ -58,8 +58,8 @@
         <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1_1partition_18bc8426239533bd9dfdce0f25190da06" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::partition::p_offset</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::partition::p_offset</definition>
         <argsstring></argsstring>
         <name>p_offset</name>
         <briefdescription>
@@ -72,8 +72,8 @@
         <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1_1partition_15663ff994f70fcc34ce0587012a2339b" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::partition::p_size</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::partition::p_size</definition>
         <argsstring></argsstring>
         <name>p_size</name>
         <briefdescription>

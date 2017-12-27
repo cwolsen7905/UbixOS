@@ -87,7 +87,7 @@ struct kerneldumpheader {
 /*
  * Parity calculation is endian insensitive.
  */
-static __inline u_int32_t
+static __inline uint32_t
 kerneldump_parity(struct kerneldumpheader *kdhp)
 {
 	uint32_t *up, parity;

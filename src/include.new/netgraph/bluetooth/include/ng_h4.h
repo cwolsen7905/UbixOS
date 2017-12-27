@@ -98,12 +98,12 @@ typedef int32_t		ng_h4_node_qlen_ep;
 /* Get node statistic */
 #define NGM_H4_NODE_GET_STAT	7
 typedef struct {
-	u_int32_t	pckts_recv; /* # of packets received */
-	u_int32_t	bytes_recv; /* # of bytes received */
-	u_int32_t	pckts_sent; /* # of packets sent */
-	u_int32_t	bytes_sent; /* # of bytes sent */
-	u_int32_t	oerrors;    /* # of output errors */
-	u_int32_t	ierrors;    /* # of input errors */
+	uint32_t	pckts_recv; /* # of packets received */
+	uint32_t	bytes_recv; /* # of bytes received */
+	uint32_t	pckts_sent; /* # of packets sent */
+	uint32_t	bytes_sent; /* # of bytes sent */
+	uint32_t	oerrors;    /* # of output errors */
+	uint32_t	ierrors;    /* # of input errors */
 } ng_h4_node_stat_ep;
 
 /* Reset node statistic */

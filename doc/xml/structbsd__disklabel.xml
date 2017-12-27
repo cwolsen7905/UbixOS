@@ -6,8 +6,8 @@
     <innerclass refid="structbsd__disklabel_1_1partition" prot="public">bsd_disklabel::partition</innerclass>
       <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="structbsd__disklabel_11a2e5096cbd1ebe4fe430f882c52c57d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_acylinders</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_acylinders</definition>
         <argsstring></argsstring>
         <name>d_acylinders</name>
         <briefdescription>
@@ -19,8 +19,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="114" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1e6fd038ae8f29755866e1c6fcfbfd11f" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_bbsize</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_bbsize</definition>
         <argsstring></argsstring>
         <name>d_bbsize</name>
         <briefdescription>
@@ -58,8 +58,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="136" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="136" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1ee88bede04d4e92e3e35ce8b3fa96c53" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_drivedata[5]</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_drivedata[5]</definition>
         <argsstring>[5]</argsstring>
         <name>d_drivedata</name>
         <briefdescription>
@@ -71,8 +71,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="141" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="141" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_18c414f88561a87791b7275c85093a497" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_flags</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_flags</definition>
         <argsstring></argsstring>
         <name>d_flags</name>
         <briefdescription>
@@ -84,8 +84,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="139" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="139" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1f4d4f387f5a586b7b7207b627ad97fe8" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_headswitch</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_headswitch</definition>
         <argsstring></argsstring>
         <name>d_headswitch</name>
         <briefdescription>
@@ -110,8 +110,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="134" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_14cd5d09a3a36da18477d178762fdfd97" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_magic</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_magic</definition>
         <argsstring></argsstring>
         <name>d_magic</name>
         <briefdescription>
@@ -123,8 +123,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="87" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_11791efc5907c820e31113c0c9a645602" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_magic2</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_magic2</definition>
         <argsstring></argsstring>
         <name>d_magic2</name>
         <briefdescription>
@@ -136,8 +136,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="144" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1b714391225d73f1d54cfed83bb856b33" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_ncylinders</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_ncylinders</definition>
         <argsstring></argsstring>
         <name>d_ncylinders</name>
         <briefdescription>
@@ -163,8 +163,8 @@
         <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1941fd2872c4114f45aa6351d274146de" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_nsectors</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_nsectors</definition>
         <argsstring></argsstring>
         <name>d_nsectors</name>
         <briefdescription>
@@ -176,8 +176,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="96" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1d4d554a81a0a40ea3798534bbcaea9cb" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_ntracks</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_ntracks</definition>
         <argsstring></argsstring>
         <name>d_ntracks</name>
         <briefdescription>
@@ -229,8 +229,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="133" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="133" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1bbdfb5c93b11731acef587db4f9492ff" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_sbsize</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_sbsize</definition>
         <argsstring></argsstring>
         <name>d_sbsize</name>
         <briefdescription>
@@ -242,8 +242,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="150" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="150" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1b5b34b633875649ac99cec0d15e0499d" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_secpercyl</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_secpercyl</definition>
         <argsstring></argsstring>
         <name>d_secpercyl</name>
         <briefdescription>
@@ -255,8 +255,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="99" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="99" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_1a29883ea8626c0690b18d62a7c6592d9" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_secperunit</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_secperunit</definition>
         <argsstring></argsstring>
         <name>d_secperunit</name>
         <briefdescription>
@@ -268,8 +268,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="100" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="100" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_179153fe068fdf0406a058bde26cc878a" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_secsize</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_secsize</definition>
         <argsstring></argsstring>
         <name>d_secsize</name>
         <briefdescription>
@@ -281,8 +281,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="95" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_117cd3e21e9fe8f67745c28330f31db11" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_spare[5]</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_spare[5]</definition>
         <argsstring>[5]</argsstring>
         <name>d_spare</name>
         <briefdescription>
@@ -346,8 +346,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="135" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="135" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structbsd__disklabel_122be9443e1f538e456eb0ecdee8a3b56" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t bsd_disklabel::d_trkseek</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t bsd_disklabel::d_trkseek</definition>
         <argsstring></argsstring>
         <name>d_trkseek</name>
         <briefdescription>

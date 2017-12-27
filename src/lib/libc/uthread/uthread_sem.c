@@ -105,7 +105,7 @@ _sem_init(sem_t *sem, int pshared, unsigned int value)
 		goto RETURN;
 	}
 	
-	(*sem)->count = (u_int32_t)value;
+	(*sem)->count = (uint32_t)value;
 	(*sem)->nwaiters = 0;
 	(*sem)->magic = SEM_MAGIC;
 

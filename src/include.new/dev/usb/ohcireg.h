@@ -132,12 +132,12 @@
 #define OHCI_FSMPS(i) (((i-210)*6/7) << 16)
 #define OHCI_PERIODIC(i) ((i)*9/10)
 
-typedef u_int32_t ohci_physaddr_t;
+typedef uint32_t ohci_physaddr_t;
 
 #define OHCI_NO_INTRS 32
 struct ohci_hcca {
 	ohci_physaddr_t	hcca_interrupt_table[OHCI_NO_INTRS];
-	u_int32_t	hcca_frame_number;
+	uint32_t	hcca_frame_number;
 	ohci_physaddr_t	hcca_done_head;
 #define OHCI_DONE_INTRS 1
 };
@@ -150,7 +150,7 @@ struct ohci_hcca {
 #define OHCI_PAGE_MASK(x) ((x) & 0xfff)
 
 typedef struct {
-	u_int32_t	ed_flags;
+	uint32_t	ed_flags;
 #define OHCI_ED_GET_FA(s)	((s) & 0x7f)
 #define OHCI_ED_ADDRMASK	0x0000007f
 #define OHCI_ED_SET_FA(s)	(s)
@@ -178,7 +178,7 @@ typedef struct {
 #define OHCI_ED_ALIGN 16
 
 typedef struct {
-	u_int32_t	td_flags;
+	uint32_t	td_flags;
 #define OHCI_TD_R		0x00040000		/* Buffer Rounding  */
 #define OHCI_TD_DP_MASK		0x00180000		/* Direction / PID */
 #define  OHCI_TD_SETUP		0x00000000
@@ -204,7 +204,7 @@ typedef struct {
 
 #define OHCI_ITD_NOFFSET 8
 typedef struct {
-	u_int32_t	itd_flags;
+	uint32_t	itd_flags;
 #define OHCI_ITD_GET_SF(x)	((x) & 0x0000ffff)
 #define OHCI_ITD_SET_SF(x)	((x) & 0xffff)
 #define OHCI_ITD_GET_DI(x)	(((x) >> 21) & 7)	/* Delay Interrupt */

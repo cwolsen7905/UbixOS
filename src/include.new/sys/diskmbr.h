@@ -72,8 +72,8 @@ struct dos_partition {
 	unsigned char	dp_ehd;		/* end head */
 	unsigned char	dp_esect;	/* end sector */
 	unsigned char	dp_ecyl;	/* end cylinder */
-	u_int32_t	dp_start;	/* absolute starting sector number */
-	u_int32_t	dp_size;	/* partition size in sectors */
+	uint32_t	dp_start;	/* absolute starting sector number */
+	uint32_t	dp_size;	/* partition size in sectors */
 };
 #ifdef CTASSERT
 CTASSERT(sizeof (struct dos_partition) == DOSPARTSIZE);

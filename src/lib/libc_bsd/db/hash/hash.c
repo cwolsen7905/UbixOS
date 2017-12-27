@@ -60,13 +60,13 @@ static int   alloc_segs(HTAB *, int);
 static int   flush_meta(HTAB *);
 static int   hash_access(HTAB *, ACTION, DBT *, DBT *);
 static int   hash_close(DB *);
-static int   hash_delete(const DB *, const DBT *, u_int32_t);
+static int   hash_delete(const DB *, const DBT *, uint32_t);
 static int   hash_fd(const DB *);
-static int   hash_get(const DB *, const DBT *, DBT *, u_int32_t);
-static int   hash_put(const DB *, DBT *, const DBT *, u_int32_t);
+static int   hash_get(const DB *, const DBT *, DBT *, uint32_t);
+static int   hash_put(const DB *, DBT *, const DBT *, uint32_t);
 static void *hash_realloc(SEGMENT **, int, int);
-static int   hash_seq(const DB *, DBT *, DBT *, u_int32_t);
-static int   hash_sync(const DB *, u_int32_t);
+static int   hash_seq(const DB *, DBT *, DBT *, uint32_t);
+static int   hash_sync(const DB *, uint32_t);
 static int   hdestroy(HTAB *);
 static HTAB *init_hash(HTAB *, const char *, const HASHINFO *);
 static int   init_htab(HTAB *, int);
@@ -174,7 +174,7 @@ __hash_open(const char *file, int flags, int mode,
 		    (hashp->BSHIFT + BYTE_SHIFT);
 
 		hashp->nmaps = bpages;
-		(void)memset(&hashp->mapp[0], 0, bpages * sizeof(u_int32_t *));
+		(void)memset(&hashp->mapp[0], 0, bpages * sizeof(uint32_t *));
 	}
 
 	/* Initialize Buffer Manager */
@@ -441,7 +441,7 @@ hdestroy(HTAB *hashp)
  *	-1 ERROR
  */
 static int
-hash_sync(const DB *dbp, u_int32_t flags)
+hash_sync(const DB *dbp, uint32_t flags)
 {
 	HTAB *hashp;
 
@@ -514,7 +514,7 @@ flush_meta(HTAB *hashp)
  *	-1 to indicate an internal ERROR (i.e. out of memory, etc)
  */
 static int
-hash_get(const DB *dbp, const DBT *key, DBT *data, u_int32_t flag)
+hash_get(const DB *dbp, const DBT *key, DBT *data, uint32_t flag)
 {
 	HTAB *hashp;
 
@@ -527,7 +527,7 @@ hash_get(const DB *dbp, const DBT *key, DBT *data, u_int32_t flag)
 }
 
 static int
-hash_put(const DB *dbp, DBT *key, const DBT *data, u_int32_t flag)
+hash_put(const DB *dbp, DBT *key, const DBT *data, uint32_t flag)
 {
 	HTAB *hashp;
 
@@ -546,7 +546,7 @@ hash_put(const DB *dbp, DBT *key, const DBT *data, u_int32_t flag)
 
 static int
 hash_delete(const DB *dbp, const DBT *key,
-    u_int32_t flag)		/* Ignored */
+    uint32_t flag)		/* Ignored */
 {
 	HTAB *hashp;
 
@@ -692,9 +692,9 @@ found:
 }
 
 static int
-hash_seq(const DB *dbp, DBT *key, DBT *data, u_int32_t flag)
+hash_seq(const DB *dbp, DBT *key, DBT *data, uint32_t flag)
 {
-	u_int32_t bucket;
+	uint32_t bucket;
 	BUFHEAD *bufp;
 	HTAB *hashp;
 	u_int16_t *bp, ndx;
@@ -727,7 +727,7 @@ next_bucket:
 					break;
 			}
 			hashp->cbucket = bucket;
-			if ((u_int32_t)hashp->cbucket > hashp->MAX_BUCKET) {
+			if ((uint32_t)hashp->cbucket > hashp->MAX_BUCKET) {
 				hashp->cbucket = -1;
 				return (ABNORMAL);
 			}
@@ -786,7 +786,7 @@ next_bucket:
 int
 __expand_table(HTAB *hashp)
 {
-	u_int32_t old_bucket, new_bucket;
+	uint32_t old_bucket, new_bucket;
 	int dirsize, new_segnum, spare_ndx;
 
 #ifdef HASH_STATISTICS
@@ -851,7 +851,7 @@ hash_realloc(SEGMENT **p_ptr, int oldsize, int newsize)
 	return (p);
 }
 
-u_int32_t
+uint32_t
 __call_hash(HTAB *hashp, char *k, int len)
 {
 	unsigned int n, bucket;

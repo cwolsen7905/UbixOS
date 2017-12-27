@@ -116,7 +116,7 @@ int __fpe_debug = 0;
 #endif
 #endif	/* FPU_DEBUG */
 
-static int __fpu_execute(struct utrapframe *, struct fpemu *, u_int32_t,
+static int __fpu_execute(struct utrapframe *, struct fpemu *, uint32_t,
     u_long);
 
 /*
@@ -154,7 +154,7 @@ __fpu_exception(struct utrapframe *uf)
 	}
 
 	fe.fe_fsr = fsr & ~FSR_FTT_MASK;
-	insn = *(u_int32_t *)uf->uf_pc;
+	insn = *(uint32_t *)uf->uf_pc;
 	if (IF_OP(insn) != IOP_MISC || (IF_F3_OP3(insn) != INS2_FPop1 &&
 	    IF_F3_OP3(insn) != INS2_FPop2))
 		__utrap_panic("bogus FP fault");
@@ -206,8 +206,8 @@ static const int opmask[] = {0, 0, 1, 3, 1};
  * parameters, and 0 for the other.
  */
 static void
-__fpu_mov(struct fpemu *fe, int type, int rd, int rs2, u_int32_t nand,
-    u_int32_t xor)
+__fpu_mov(struct fpemu *fe, int type, int rd, int rs2, uint32_t nand,
+    uint32_t xor)
 {
 
 	if (type == FTYPE_INT || type == FTYPE_SNG)
@@ -226,7 +226,7 @@ __fpu_mov(struct fpemu *fe, int type, int rd, int rs2, u_int32_t nand,
 
 static __inline void
 __fpu_ccmov(struct fpemu *fe, int type, int rd, int rs2,
-    u_int32_t insn, int fcc)
+    uint32_t insn, int fcc)
 {
 
 	if (IF_F4_COND(insn) == fcc)
@@ -266,7 +266,7 @@ __fpu_cmpck(struct fpemu *fe)
  * multiply two integers this way.
  */
 static int
-__fpu_execute(struct utrapframe *uf, struct fpemu *fe, u_int32_t insn,
+__fpu_execute(struct utrapframe *uf, struct fpemu *fe, uint32_t insn,
     u_long tstate)
 {
 	struct fpn *fp;

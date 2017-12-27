@@ -86,7 +86,7 @@ struct secpolicy {
 
 	u_int refcnt;			/* reference count */
 	struct secpolicyindex spidx;	/* selector */
-	u_int32_t id;			/* It's unique number on the system. */
+	uint32_t id;			/* It's unique number on the system. */
 	u_int state;			/* 0: dead, others: alive */
 #define IPSEC_SPSTATE_DEAD	0
 #define IPSEC_SPSTATE_ALIVE	1
@@ -279,7 +279,7 @@ struct ipsec_output_state {
 
 struct ipsec_history {
 	int ih_proto;
-	u_int32_t ih_spi;
+	uint32_t ih_spi;
 };
 
 VNET_DECLARE(int, ipsec_debug);
@@ -348,8 +348,8 @@ extern int ipsec4_in_reject(struct mbuf *, struct inpcb *);
 
 struct secas;
 struct tcpcb;
-extern int ipsec_chkreplay(u_int32_t, struct secasvar *);
-extern int ipsec_updatereplay(u_int32_t, struct secasvar *);
+extern int ipsec_chkreplay(uint32_t, struct secasvar *);
+extern int ipsec_updatereplay(uint32_t, struct secasvar *);
 
 extern size_t ipsec_hdrsiz(struct mbuf *, u_int, struct inpcb *);
 extern size_t ipsec_hdrsiz_tcp(struct tcpcb *);

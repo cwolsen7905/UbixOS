@@ -192,14 +192,14 @@ xdr_callmsg(xdrs, cmsg)
 	}
 	prm_direction = &cmsg->rm_direction;
 	if (
-	    xdr_u_int32_t(xdrs, &(cmsg->rm_xid)) &&
+	    xdr_uint32_t(xdrs, &(cmsg->rm_xid)) &&
 	    xdr_enum(xdrs, (enum_t *) prm_direction) &&
 	    (cmsg->rm_direction == CALL) &&
-	    xdr_u_int32_t(xdrs, &(cmsg->rm_call.cb_rpcvers)) &&
+	    xdr_uint32_t(xdrs, &(cmsg->rm_call.cb_rpcvers)) &&
 	    (cmsg->rm_call.cb_rpcvers == RPC_MSG_VERSION) &&
-	    xdr_u_int32_t(xdrs, &(cmsg->rm_call.cb_prog)) &&
-	    xdr_u_int32_t(xdrs, &(cmsg->rm_call.cb_vers)) &&
-	    xdr_u_int32_t(xdrs, &(cmsg->rm_call.cb_proc)) &&
+	    xdr_uint32_t(xdrs, &(cmsg->rm_call.cb_prog)) &&
+	    xdr_uint32_t(xdrs, &(cmsg->rm_call.cb_vers)) &&
+	    xdr_uint32_t(xdrs, &(cmsg->rm_call.cb_proc)) &&
 	    xdr_opaque_auth(xdrs, &(cmsg->rm_call.cb_cred)) )
 		return (xdr_opaque_auth(xdrs, &(cmsg->rm_call.cb_verf)));
 	return (FALSE);

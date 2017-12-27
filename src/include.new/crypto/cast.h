@@ -12,7 +12,7 @@
 #define _CAST_H_
 
 typedef struct {
-	u_int32_t	xkey[32];	/* Key, after expansion */
+	uint32_t	xkey[32];	/* Key, after expansion */
 	int		rounds;		/* Number of rounds to use, 12 or 16 */
 } cast_key;
 

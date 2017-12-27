@@ -47,13 +47,13 @@ __FBSDID("$FreeBSD: src/lib/libc/db/hash/hash_func.c,v 1.5 2003/02/16 17:29:09 n
 #include "page.h"
 #include "extern.h"
 
-static u_int32_t hash1(const void *, size_t) __unused;
-static u_int32_t hash2(const void *, size_t) __unused;
-static u_int32_t hash3(const void *, size_t) __unused;
-static u_int32_t hash4(const void *, size_t);
+static uint32_t hash1(const void *, size_t) __unused;
+static uint32_t hash2(const void *, size_t) __unused;
+static uint32_t hash3(const void *, size_t) __unused;
+static uint32_t hash4(const void *, size_t);
 
 /* Global default hash function */
-u_int32_t (*__default_hash)(const void *, size_t) = hash4;
+uint32_t (*__default_hash)(const void *, size_t) = hash4;
 
 /*
  * HASH FUNCTIONS
@@ -67,13 +67,13 @@ u_int32_t (*__default_hash)(const void *, size_t) = hash4;
 #define PRIME1		37
 #define PRIME2		1048583
 
-static u_int32_t
+static uint32_t
 hash1(keyarg, len)
 	const void *keyarg;
 	size_t len;
 {
 	const u_char *key;
-	u_int32_t h;
+	uint32_t h;
 
 	/* Convert string to integer */
 	for (key = keyarg, h = 0; len--;)
@@ -87,13 +87,13 @@ hash1(keyarg, len)
  */
 #define dcharhash(h, c)	((h) = 0x63c63cd9*(h) + 0x9c39c33d + (c))
 
-static u_int32_t
+static uint32_t
 hash2(keyarg, len)
 	const void *keyarg;
 	size_t len;
 {
 	const u_char *e, *key;
-	u_int32_t h;
+	uint32_t h;
 	u_char c;
 
 	key = keyarg;
@@ -116,14 +116,14 @@ hash2(keyarg, len)
  *
  * OZ's original sdbm hash
  */
-static u_int32_t
+static uint32_t
 hash3(keyarg, len)
 	const void *keyarg;
 	size_t len;
 {
 	const u_char *key;
 	size_t loop;
-	u_int32_t h;
+	uint32_t h;
 
 #define HASHC   h = *key++ + 65599 * h
 
@@ -164,14 +164,14 @@ hash3(keyarg, len)
 }
 
 /* Hash function from Chris Torek. */
-static u_int32_t
+static uint32_t
 hash4(keyarg, len)
 	const void *keyarg;
 	size_t len;
 {
 	const u_char *key;
 	size_t loop;
-	u_int32_t h;
+	uint32_t h;
 
 #define HASH4a   h = (h << 5) - h + *key++;
 #define HASH4b   h = (h << 5) + h + *key++;

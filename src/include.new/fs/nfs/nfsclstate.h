@@ -103,10 +103,10 @@ struct nfsclclient {
 	struct proc		*nfsc_renewthread;
 	struct nfsmount		*nfsc_nmp;
 	time_t			nfsc_expire;
-	u_int32_t		nfsc_clientidrev;
-	u_int32_t		nfsc_rev;
-	u_int32_t		nfsc_renew;
-	u_int32_t		nfsc_cbident;
+	uint32_t		nfsc_clientidrev;
+	uint32_t		nfsc_rev;
+	uint32_t		nfsc_renew;
+	uint32_t		nfsc_cbident;
 	u_int16_t		nfsc_flags;
 	u_int16_t		nfsc_idlen;
 	u_int8_t		nfsc_id[1];	/* Malloc'd to correct length */
@@ -130,8 +130,8 @@ struct nfsclowner {
 	LIST_ENTRY(nfsclowner)	nfsow_list;
 	struct nfsclopenhead	nfsow_open;
 	struct nfsclclient	*nfsow_clp;
-	u_int32_t		nfsow_seqid;
-	u_int32_t		nfsow_defunct;
+	uint32_t		nfsow_seqid;
+	uint32_t		nfsow_defunct;
 	struct nfsv4lock	nfsow_rwlock;
 	u_int8_t		nfsow_owner[NFSV4CL_LOCKNAMELEN];
 };
@@ -179,8 +179,8 @@ struct nfsclopen {
 	nfsv4stateid_t		nfso_stateid;
 	struct nfsclowner	*nfso_own;
 	struct nfscred		nfso_cred;	/* Cred. used for Open */
-	u_int32_t		nfso_mode;
-	u_int32_t		nfso_opencnt;
+	uint32_t		nfso_mode;
+	uint32_t		nfso_opencnt;
 	u_int16_t		nfso_fhlen;
 	u_int8_t		nfso_posixlock;	/* 1 for POSIX type locking */
 	u_int8_t		nfso_fh[1];	/* must be last */
@@ -201,7 +201,7 @@ struct nfscllockowner {
 	NFSPROC_T		*nfsl_inprog;
 	nfsv4stateid_t		nfsl_stateid;
 	int			nfsl_lockflags;
-	u_int32_t		nfsl_seqid;
+	uint32_t		nfsl_seqid;
 	struct nfsv4lock	nfsl_rwlock;
 	u_int8_t		nfsl_owner[NFSV4CL_LOCKNAMELEN];
 	u_int8_t		nfsl_openowner[NFSV4CL_LOCKNAMELEN];

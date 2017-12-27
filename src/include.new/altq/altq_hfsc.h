@@ -66,7 +66,7 @@ struct service_curve {
 
 struct hfsc_classstats {
 	u_int			class_id;
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 	struct service_curve	rsc;
 	struct service_curve	fsc;
 	struct service_curve	usc;	/* upper limit service curve */
@@ -89,7 +89,7 @@ struct hfsc_classstats {
 	u_int64_t		myfadj;		/* cl_myfadj */
 	u_int64_t		vtadj;		/* cl_vtadj */
 	u_int64_t		cur_time;
-	u_int32_t		machclk_freq;
+	uint32_t		machclk_freq;
 
 	u_int			qlength;
 	u_int			qlimit;
@@ -118,29 +118,29 @@ struct hfsc_attach {
 
 struct hfsc_add_class {
 	struct hfsc_interface	iface;
-	u_int32_t		parent_handle;
+	uint32_t		parent_handle;
 	struct service_curve	service_curve;
 	int			qlimit;
 	int			flags;
 
-	u_int32_t		class_handle;  /* return value */
+	uint32_t		class_handle;  /* return value */
 };
 
 struct hfsc_delete_class {
 	struct hfsc_interface	iface;
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 };
 
 struct hfsc_modify_class {
 	struct hfsc_interface	iface;
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 	struct service_curve	service_curve;
 	int			sctype;
 };
 
 struct hfsc_add_filter {
 	struct hfsc_interface	iface;
-	u_int32_t		class_handle;
+	uint32_t		class_handle;
 	struct flow_filter	filter;
 
 	u_long			filter_handle;  /* return value */
@@ -156,7 +156,7 @@ struct hfsc_class_stats {
 	int			nskip;		/* skip # of classes */
 	int			nclasses;	/* # of class stats (WR) */
 	u_int64_t		cur_time;	/* current time */
-	u_int32_t		machclk_freq;	/* machine clock frequency */
+	uint32_t		machclk_freq;	/* machine clock frequency */
 	u_int			hif_classes;	/* # of classes in the tree */
 	u_int			hif_packets;	/* # of packets in the tree */
 	struct hfsc_classstats	*stats;		/* pointer to stats array */
@@ -220,7 +220,7 @@ struct runtime_sc {
 
 struct hfsc_class {
 	u_int		cl_id;		/* class id (just for debug) */
-	u_int32_t	cl_handle;	/* class handle */
+	uint32_t	cl_handle;	/* class handle */
 	struct hfsc_if	*cl_hif;	/* back pointer to struct hfsc_if */
 	int		cl_flags;	/* misc flags */
 

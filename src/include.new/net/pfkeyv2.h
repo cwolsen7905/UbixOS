@@ -84,8 +84,8 @@ struct sadb_msg {
   u_int8_t sadb_msg_satype;
   u_int16_t sadb_msg_len;
   u_int16_t sadb_msg_reserved;
-  u_int32_t sadb_msg_seq;
-  u_int32_t sadb_msg_pid;
+  uint32_t sadb_msg_seq;
+  uint32_t sadb_msg_pid;
 };
 
 struct sadb_ext {
@@ -96,18 +96,18 @@ struct sadb_ext {
 struct sadb_sa {
   u_int16_t sadb_sa_len;
   u_int16_t sadb_sa_exttype;
-  u_int32_t sadb_sa_spi;
+  uint32_t sadb_sa_spi;
   u_int8_t sadb_sa_replay;
   u_int8_t sadb_sa_state;
   u_int8_t sadb_sa_auth;
   u_int8_t sadb_sa_encrypt;
-  u_int32_t sadb_sa_flags;
+  uint32_t sadb_sa_flags;
 };
 
 struct sadb_lifetime {
   u_int16_t sadb_lifetime_len;
   u_int16_t sadb_lifetime_exttype;
-  u_int32_t sadb_lifetime_allocations;
+  uint32_t sadb_lifetime_allocations;
   u_int64_t sadb_lifetime_bytes;
   u_int64_t sadb_lifetime_addtime;
   u_int64_t sadb_lifetime_usetime;
@@ -139,12 +139,12 @@ struct sadb_ident {
 struct sadb_sens {
   u_int16_t sadb_sens_len;
   u_int16_t sadb_sens_exttype;
-  u_int32_t sadb_sens_dpd;
+  uint32_t sadb_sens_dpd;
   u_int8_t sadb_sens_sens_level;
   u_int8_t sadb_sens_sens_len;
   u_int8_t sadb_sens_integ_level;
   u_int8_t sadb_sens_integ_len;
-  u_int32_t sadb_sens_reserved;
+  uint32_t sadb_sens_reserved;
 };
 
 struct sadb_prop {
@@ -162,9 +162,9 @@ struct sadb_comb {
   u_int16_t sadb_comb_auth_maxbits;
   u_int16_t sadb_comb_encrypt_minbits;
   u_int16_t sadb_comb_encrypt_maxbits;
-  u_int32_t sadb_comb_reserved;
-  u_int32_t sadb_comb_soft_allocations;
-  u_int32_t sadb_comb_hard_allocations;
+  uint32_t sadb_comb_reserved;
+  uint32_t sadb_comb_soft_allocations;
+  uint32_t sadb_comb_hard_allocations;
   u_int64_t sadb_comb_soft_bytes;
   u_int64_t sadb_comb_hard_bytes;
   u_int64_t sadb_comb_soft_addtime;
@@ -176,7 +176,7 @@ struct sadb_comb {
 struct sadb_supported {
   u_int16_t sadb_supported_len;
   u_int16_t sadb_supported_exttype;
-  u_int32_t sadb_supported_reserved;
+  uint32_t sadb_supported_reserved;
 };
 
 struct sadb_alg {
@@ -190,15 +190,15 @@ struct sadb_alg {
 struct sadb_spirange {
   u_int16_t sadb_spirange_len;
   u_int16_t sadb_spirange_exttype;
-  u_int32_t sadb_spirange_min;
-  u_int32_t sadb_spirange_max;
-  u_int32_t sadb_spirange_reserved;
+  uint32_t sadb_spirange_min;
+  uint32_t sadb_spirange_max;
+  uint32_t sadb_spirange_reserved;
 };
 
 struct sadb_x_kmprivate {
   u_int16_t sadb_x_kmprivate_len;
   u_int16_t sadb_x_kmprivate_exttype;
-  u_int32_t sadb_x_kmprivate_reserved;
+  uint32_t sadb_x_kmprivate_reserved;
 };
 
 /*
@@ -213,8 +213,8 @@ struct sadb_x_sa2 {
   u_int8_t sadb_x_sa2_mode;
   u_int8_t sadb_x_sa2_reserved1;
   u_int16_t sadb_x_sa2_reserved2;
-  u_int32_t sadb_x_sa2_sequence;	/* lowermost 32bit of sequence number */
-  u_int32_t sadb_x_sa2_reqid;
+  uint32_t sadb_x_sa2_sequence;	/* lowermost 32bit of sequence number */
+  uint32_t sadb_x_sa2_reqid;
 };
 
 /* XXX Policy Extension */
@@ -225,8 +225,8 @@ struct sadb_x_policy {
   u_int16_t sadb_x_policy_type;		/* See policy type of ipsec.h */
   u_int8_t sadb_x_policy_dir;		/* direction, see ipsec.h */
   u_int8_t sadb_x_policy_reserved;
-  u_int32_t sadb_x_policy_id;
-  u_int32_t sadb_x_policy_reserved2;
+  uint32_t sadb_x_policy_id;
+  uint32_t sadb_x_policy_reserved2;
 };
 /*
  * When policy_type == IPSEC, it is followed by some of
@@ -401,7 +401,7 @@ struct sadb_x_nat_t_frag {
 #define SADB_KEY_FLAGS_MAX	0x0fff
 
 /* SPI size for PF_KEYv2 */
-#define PFKEY_SPI_SIZE	sizeof(u_int32_t)
+#define PFKEY_SPI_SIZE	sizeof(uint32_t)
 
 /* Identifier for menber of lifetime structure */
 #define SADB_X_LIFETIME_ALLOCATIONS	0

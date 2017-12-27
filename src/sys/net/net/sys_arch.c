@@ -50,6 +50,7 @@ void sys_sem_free(sys_sem_t *sem) {
 
 /* Signal semaphore */
 void sys_sem_signal(sys_sem_t *sem) {
+  kprintf("L1");
   ubthread_mutex_lock(&(sem->mutex));
 
     sem->signaled++;
@@ -63,22 +64,34 @@ void sys_sem_signal(sys_sem_t *sem) {
 uint32_t sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
   uint32_t time = sys_now();
 
+  //kprintf("L2");
   ubthread_mutex_lock(&(sem->mutex));
+ // kprintf("L2.1");
 
   while (sem->signaled <= 0) {
     if (timeout > 0) {
+//kprintf("%s:%i\n", __FILE__, __LINE__);
       time = cond_wait(&(sem->cond), &(sem->mutex), timeout);
+      time = 0;
+//kprintf("%s:%i\n", __FILE__, __LINE__);
       if (time == 0) {
+//kprintf("%s:%i\n", __FILE__, __LINE__);
         ubthread_mutex_unlock(&(sem->mutex));
+//kprintf("%s:%i\n", __FILE__, __LINE__);
         return(0);
       }
     }
     else {
-      cond_wait(&(sem->cond), &(sem->mutex), 0);
+//kprintf("%s:%i\n", __FILE__, __LINE__);
+      time = cond_wait(&(sem->cond), &(sem->mutex), 0);
+     timeout = 1;
+//kprintf("%s:%i\n", __FILE__, __LINE__);
     }
   }
   sem->signaled--;
+  //kprintf("L3");
   ubthread_mutex_lock(&(sem->mutex));
+  kprintf("L3.1");
   return (sys_now() - time);
 }
 
@@ -103,6 +116,7 @@ void sys_mutex_free(sys_mutex_t *mutex) {
 }
 
 void sys_mutex_lock(sys_mutex_t *mutex) {
+  kprintf("L4");
    ubthread_mutex_lock(&(mutex->mutex)) ;
 }
 
@@ -138,6 +152,7 @@ void sys_mbox_free(sys_mbox_t *mbox) {
 
 void sys_mbox_post(sys_mbox_t * mbox, void *msg) {
   sys_arch_sem_wait(&(mbox->empty), 0);
+  kprintf("L5");
   ubthread_mutex_lock(&mbox->lock);
 
   mbox->queue[mbox->head] = msg;
@@ -151,11 +166,15 @@ void sys_mbox_post(sys_mbox_t * mbox, void *msg) {
 err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
 uint32_t res;
 
+kprintf("%s:%i\n", __FILE__, __LINE__);
 /* SHOULD BE TRY WAIT */
 res = sys_arch_sem_wait(&mbox->empty, 0x0);
+kprintf("%s:%i\n", __FILE__, __LINE__);
 if (res == ERR_NOT_READY)
 return ERR_TIMEOUT;
+kprintf("%s:%i\n", __FILE__, __LINE__);
 
+  kprintf("L6");
 ubthread_mutex_lock(&mbox->lock);
 
 mbox->queue[mbox->head] = msg;
@@ -184,6 +203,7 @@ uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
     return SYS_ARCH_TIMEOUT; //timeout ? SYS_ARCH_TIMEOUT : 0;
   }
 
+  kprintf("L7");
   ubthread_mutex_lock(&mbox->lock);
 
   *msg = mbox->queue[mbox->tail];
@@ -209,6 +229,7 @@ if (res == ERR_NOT_READY) {
 return SYS_MBOX_EMPTY;
 }
 
+  kprintf("L8");
 ubthread_mutex_lock(&mbox->lock);
 
 *msg = mbox->queue[mbox->tail];
@@ -471,4 +492,5 @@ void sys_mbox_post_BALLS(struct sys_mbox *mbox, void *msg) {
 
   sys_sem_signal(mbox->mutex);
 }
+
 #endif

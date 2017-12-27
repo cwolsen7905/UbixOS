@@ -45,7 +45,7 @@ extern char __fpu_st64[];
 #define	FPU_ST64_SZ	8
 
 /* Typedefs for convenient casts in the functions below. */
-typedef void (fp_ldst32_fn)(u_int32_t *);
+typedef void (fp_ldst32_fn)(uint32_t *);
 typedef void (fp_ldst64_fn)(u_int64_t *);
 
 /*
@@ -53,10 +53,10 @@ typedef void (fp_ldst64_fn)(u_int64_t *);
  * access the fp registers. They are usually not used more than once, so
  * cacheing needs not be done here.
  */
-static __inline u_int32_t
+static __inline uint32_t
 __fpu_getreg(int r)
 {
-	u_int32_t rv;
+	uint32_t rv;
 
 	((fp_ldst32_fn *)&__fpu_st32[r * FPU_ST32_SZ])(&rv);
 	return (rv);
@@ -72,7 +72,7 @@ __fpu_getreg64(int r)
 }
 
 static __inline void
-__fpu_setreg(int r, u_int32_t v)
+__fpu_setreg(int r, uint32_t v)
 {
 
 	((fp_ldst32_fn *)&__fpu_ld32[r * FPU_LD32_SZ])(&v);

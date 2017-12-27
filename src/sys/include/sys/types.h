@@ -57,7 +57,7 @@ typedef long Int32;
 
 typedef __uint8_t u_int8_t; /* unsigned integrals (deprecated) */
 typedef __uint16_t u_int16_t;
-typedef __uint32_t u_int32_t;
+typedef __uint32_t uint32_t;
 typedef __uint64_t u_int64_t;
 //typedef long long int quad_t;
 typedef __uint64_t quad_t;
@@ -121,11 +121,11 @@ typedef __time_t time_t;
 #endif
 
 /* MrOlsen (2016-01-11) NOTE: Note sure if i need this in here but will for now */
-typedef u_int32_t uintmax_t;
+typedef uint32_t uintmax_t;
 typedef int32_t intmax_t;
 typedef int32_t ptrdiff_t;
-typedef u_int32_t uintptr_t;
-typedef u_int32_t u_quad_t;
+typedef uint32_t uintptr_t;
+typedef uint32_t u_quad_t;
 
 #define __ULONG_MAX     0xffffffffUL
 #define __USHRT_MAX     0xffff          /* max value for an unsigned short */

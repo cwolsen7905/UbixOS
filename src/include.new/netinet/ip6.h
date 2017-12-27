@@ -72,7 +72,7 @@
 struct ip6_hdr {
 	union {
 		struct ip6_hdrctl {
-			u_int32_t ip6_un1_flow;	/* 20 bits of flow-ID */
+			uint32_t ip6_un1_flow;	/* 20 bits of flow-ID */
 			u_int16_t ip6_un1_plen;	/* payload length */
 			u_int8_t  ip6_un1_nxt;	/* next header */
 			u_int8_t  ip6_un1_hlim;	/* hop limit */
@@ -225,7 +225,7 @@ struct ip6_rthdr0 {
 	u_int8_t  ip6r0_len;		/* length in units of 8 octets */
 	u_int8_t  ip6r0_type;		/* always zero */
 	u_int8_t  ip6r0_segleft;	/* segments left */
-	u_int32_t  ip6r0_reserved;	/* reserved field */
+	uint32_t  ip6r0_reserved;	/* reserved field */
 	/* followed by up to 127 struct in6_addr */
 } __packed;
 
@@ -234,7 +234,7 @@ struct ip6_frag {
 	u_int8_t  ip6f_nxt;		/* next header */
 	u_int8_t  ip6f_reserved;	/* reserved field */
 	u_int16_t ip6f_offlg;		/* offset, reserved, and flag */
-	u_int32_t ip6f_ident;		/* identification */
+	uint32_t ip6f_ident;		/* identification */
 } __packed;
 
 #if BYTE_ORDER == BIG_ENDIAN

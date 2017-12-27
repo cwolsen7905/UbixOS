@@ -576,14 +576,14 @@ __big_split(hashp, op, np, big_keyp, addr, obucket, ret)
 			/* Pointer to first page containing the big key/data */
 	BUFHEAD *big_keyp;
 	int addr;	/* Address of big_keyp */
-	u_int32_t   obucket;/* Old Bucket */
+	uint32_t   obucket;/* Old Bucket */
 	SPLIT_RETURN *ret;
 {
 	BUFHEAD *tmpp;
 	u_int16_t *tp;
 	BUFHEAD *bp;
 	DBT key, val;
-	u_int32_t change;
+	uint32_t change;
 	u_int16_t free_space, n, off;
 
 	bp = big_keyp;

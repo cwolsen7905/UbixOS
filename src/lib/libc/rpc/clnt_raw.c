@@ -117,8 +117,8 @@ clnt_raw_create(prog, vers)
 	call_msg.rm_direction = CALL;
 	call_msg.rm_call.cb_rpcvers = RPC_MSG_VERSION;
 	/* XXX: prog and vers have been long historically :-( */
-	call_msg.rm_call.cb_prog = (u_int32_t)prog;
-	call_msg.rm_call.cb_vers = (u_int32_t)vers;
+	call_msg.rm_call.cb_prog = (uint32_t)prog;
+	call_msg.rm_call.cb_vers = (uint32_t)vers;
 	xdrmem_create(xdrs, clp->u.mashl_callmsg, MCALL_MSG_SIZE, XDR_ENCODE); 
 	if (! xdr_callhdr(xdrs, &call_msg))
 		warnx("clntraw_create - Fatal header serialization error.");

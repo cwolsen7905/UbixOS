@@ -147,22 +147,22 @@ void	semb_print_ident(struct sep_identify_data *ident_data);
 void	semb_print_ident_short(struct sep_identify_data *ident_data);
 
 void semb_receive_diagnostic_results(struct ccb_ataio *ataio,
-	u_int32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb*),
+	uint32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb*),
 	uint8_t tag_action, int pcv, uint8_t page_code,
 	uint8_t *data_ptr, uint16_t allocation_length, uint32_t timeout);
 
 void semb_send_diagnostic(struct ccb_ataio *ataio,
-	u_int32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb *),
+	uint32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb *),
 	uint8_t tag_action, uint8_t *data_ptr, uint16_t param_list_length,
 	uint32_t timeout);
 
 void semb_read_buffer(struct ccb_ataio *ataio,
-	u_int32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb*),
+	uint32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb*),
 	uint8_t tag_action, uint8_t page_code,
 	uint8_t *data_ptr, uint16_t allocation_length, uint32_t timeout);
 
 void semb_write_buffer(struct ccb_ataio *ataio,
-	u_int32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb *),
+	uint32_t retries, void (*cbfcnp)(struct cam_periph *, union ccb *),
 	uint8_t tag_action, uint8_t *data_ptr, uint16_t param_list_length,
 	uint32_t timeout);
 

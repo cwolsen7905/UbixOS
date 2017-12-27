@@ -67,7 +67,7 @@
 /* user side structures to issue fragmented ncp calls */
 typedef struct {
 	char	*fragAddress;
-	u_int32_t fragSize;
+	uint32_t fragSize;
 } NW_FRAGMENT;
 
 

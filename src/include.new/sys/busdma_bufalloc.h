@@ -81,7 +81,7 @@ typedef struct busdma_bufalloc *busdma_bufalloc_t;
 busdma_bufalloc_t busdma_bufalloc_create(const char *name,
     bus_size_t minimum_alignment,
     uma_alloc uma_alloc_func, uma_free uma_free_func,
-    u_int32_t uma_zcreate_flags);
+    uint32_t uma_zcreate_flags);
 
 /*
  * Destroy an allocator created by busdma_bufalloc_create().

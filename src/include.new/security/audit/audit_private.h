@@ -161,7 +161,7 @@ struct posix_ipc_perm {
 
 struct audit_record {
 	/* Audit record header. */
-	u_int32_t		ar_magic;
+	uint32_t		ar_magic;
 	int			ar_event;
 	int			ar_retval; /* value returned to the process */
 	int			ar_errno;  /* return status of system call */
@@ -312,7 +312,7 @@ struct audit_record {
  */
 struct kaudit_record {
 	struct audit_record		 k_ar;
-	u_int32_t			 k_ar_commit;
+	uint32_t			 k_ar_commit;
 	void				*k_udata;	/* User data. */
 	u_int				 k_ulen;	/* User data length. */
 	struct uthread			*k_uthread;	/* Audited thread. */

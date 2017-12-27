@@ -52,14 +52,14 @@ static spinLock_t pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
 
  *****************************************************************************************/
 /* void vmm_pageFault(uInt32 memAddr,uInt32 eip,uInt32 esp) { */
-void vmm_pageFault(struct trapframe *frame, u_int32_t cr2) {
+void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   uInt32 i = 0x0, pageTableIndex = 0x0, pageDirectoryIndex = 0x0;
   uInt32 *pageDir = 0x0, *pageTable = 0x0;
   uInt32 *src = 0x0, *dst = 0x0;
 
-  u_int32_t esp = frame->tf_esp;
-  u_int32_t eip = frame->tf_eip;
-  u_int32_t memAddr = cr2;
+  uint32_t esp = frame->tf_esp;
+  uint32_t eip = frame->tf_eip;
+  uint32_t memAddr = cr2;
 
 //MrOlsen 2017-12-15 - 
 kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
@@ -107,7 +107,7 @@ kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err
       /* Remap In New Page */
       pageTable[pageTableIndex] = (uInt32) (vmm_getPhysicalAddr((uInt32) dst) | (memAddr & 0xFFF));
       /* Unlink From Memory Map Allocated Page */
-      vmmUnmapPage((uInt32) dst, 1);
+      vmm_unmapPage((uInt32) dst, 1);
     } else if (pageTable[pageTableIndex] != 0x0) {
       kprintf("Security failed pagetable not user permission\n");
       kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
@@ -117,7 +117,7 @@ kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err
       endTask(_current->id);
     } else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
 kprintf("THIS IS BAD");
-      pageTable[pageTableIndex] = (uInt32) vmmFindFreePage(_current->id) | PAGE_DEFAULT;
+      pageTable[pageTableIndex] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
     } else {
       spinUnlock(&pageFaultSpinLock);
       /* Need To Create A Routine For Attempting To Access Non Mapped Memory */

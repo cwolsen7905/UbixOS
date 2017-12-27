@@ -94,7 +94,7 @@ struct ng_vlan_filter {
 
 /* Structure returned by NGM_VLAN_GET_TABLE. */
 struct ng_vlan_table {
-	u_int32_t	n;
+	uint32_t	n;
 	struct ng_vlan_filter filter[];
 };
 

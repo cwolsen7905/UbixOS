@@ -15,7 +15,7 @@
 #define NCP_VERMIN	3500
 #define NCP_VERSION	(NCP_VERMAJ*100000 + NCP_VERMIN)
 
-typedef u_int32_t	nwdirent;
+typedef uint32_t	nwdirent;
 
 typedef char		nstr8;
 typedef	nstr8*		pnstr8;
@@ -23,7 +23,7 @@ typedef u_int8_t	nuint8;
 typedef u_int8_t*	pnuint8;
 typedef u_int16_t	nuint16;
 typedef	nuint16*	pnuint16;
-typedef u_int32_t	nuint32;
+typedef uint32_t	nuint32;
 typedef	nuint32*	pnuint32;
 
 
@@ -64,7 +64,7 @@ typedef	nuint32*	pnuint32;
 struct ncp_fh_s {
 	u_int16_t val1; 
 	union {
-		u_int32_t val32;
+		uint32_t val32;
 		u_int16_t val16;
 	} val;
 } __packed;
@@ -78,7 +78,7 @@ typedef struct ncpfid_s {
 
 /* -- Bindery properties -- */
 struct ncp_bindery_object {
-	u_int32_t	object_id;
+	uint32_t	object_id;
 	u_int16_t	object_type;
 	u_int8_t	object_name[NCP_BINDERY_NAME_LEN];
 	u_int8_t	object_flags;
@@ -105,7 +105,7 @@ struct ncp_file_info {
 	char		file_name[NCP_MAX_FILENAME + 1];
 	u_int8_t	file_attributes;
 	u_int8_t	file_mode;
-	u_int32_t	file_length;
+	uint32_t	file_length;
 	u_int16_t	creation_date;
 	u_int16_t	access_date;
 	u_int16_t	update_date;
@@ -114,24 +114,24 @@ struct ncp_file_info {
 
 struct nw_queue_job_entry {
 	u_int16_t	InUse;
-	u_int32_t	prev;
-	u_int32_t	next;
-	u_int32_t	ClientStation;
-	u_int32_t	ClientTask;
-	u_int32_t	ClientObjectID;
-	u_int32_t	TargetServerID;
+	uint32_t	prev;
+	uint32_t	next;
+	uint32_t	ClientStation;
+	uint32_t	ClientTask;
+	uint32_t	ClientObjectID;
+	uint32_t	TargetServerID;
 	u_int8_t	TargetExecTime[6];
 	u_int8_t	JobEntryTime[6];
-	u_int32_t	JobNumber;
+	uint32_t	JobNumber;
 	u_int16_t	JobType;
 	u_int16_t	JobPosition;
 	u_int16_t	JobControlFlags;
 	u_int8_t	FileNameLen;
 	char		JobFileName[13];
-	u_int32_t	JobFileHandle;
-	u_int32_t	ServerStation;
-	u_int32_t	ServerTaskNumber;
-	u_int32_t	ServerObjectID;
+	uint32_t	JobFileHandle;
+	uint32_t	ServerStation;
+	uint32_t	ServerTaskNumber;
+	uint32_t	ServerObjectID;
 	char		JobTextDescription[50];
 	char		ClientRecordArea[152];
 } __packed;
@@ -172,7 +172,7 @@ struct print_job_record {
 } __packed;
 
 struct ncp_station_addr {
-	u_int32_t	NetWork;
+	uint32_t	NetWork;
 	u_int8_t	Node[6];
 	u_int16_t	Socket;
 } __packed;
@@ -190,21 +190,21 @@ struct ncp_prop_login_control {
 	u_int8_t	LastLogin[6];
 	u_int8_t	RestrictionMask;
 	u_int8_t	reserved;
-	u_int32_t	MaxDiskUsage;
+	uint32_t	MaxDiskUsage;
 	u_int16_t	BadLoginCount;
-	u_int32_t	BadLoginCountDown;
+	uint32_t	BadLoginCountDown;
 	struct ncp_station_addr LastIntruder;
 } __packed;
 
 #define NCP_VOLNAME_LEN (16)
 #define NCP_NUMBER_OF_VOLUMES (64)
 struct ncp_volume_info {
-	u_int32_t total_blocks;
-	u_int32_t free_blocks;
-	u_int32_t purgeable_blocks;
-	u_int32_t not_yet_purgeable_blocks;
-	u_int32_t total_dir_entries;
-	u_int32_t available_dir_entries;
+	uint32_t total_blocks;
+	uint32_t free_blocks;
+	uint32_t purgeable_blocks;
+	uint32_t not_yet_purgeable_blocks;
+	uint32_t total_dir_entries;
+	uint32_t available_dir_entries;
 	u_int8_t sectors_per_block;
 	char volume_name[NCP_VOLNAME_LEN + 1];
 };
@@ -288,30 +288,30 @@ struct ncp_volume_info {
 #endif
 
 struct nw_entry_info {
-	u_int32_t	spaceAlloc;
-	u_int32_t	attributes;	/* LH */
+	uint32_t	spaceAlloc;
+	uint32_t	attributes;	/* LH */
 	u_int16_t	flags;		/* internal */
-	u_int32_t	dataStreamSize;
-	u_int32_t	totalStreamSize;
+	uint32_t	dataStreamSize;
+	uint32_t	totalStreamSize;
 	u_int16_t	numberOfStreams;
 	u_int16_t	creationTime;	/* LH */
 	u_int16_t	creationDate;	/* LH */
-	u_int32_t	creatorID;	/* HL */
+	uint32_t	creatorID;	/* HL */
 	u_int16_t	modifyTime;	/* LH */
 	u_int16_t	modifyDate;	/* LH */
-	u_int32_t	modifierID;	/* HL */
+	uint32_t	modifierID;	/* HL */
 	u_int16_t	lastAccessDate;	/* LH */
 	u_int16_t	archiveTime;	/* LH */
 	u_int16_t	archiveDate;	/* LH */
-	u_int32_t	archiverID;	/* HL */
+	uint32_t	archiverID;	/* HL */
 	u_int16_t	inheritedRightsMask;	/* LH */
-	u_int32_t	dirEntNum;
-	u_int32_t	DosDirNum;
-	u_int32_t	volNumber;
-	u_int32_t	EADataSize;
-	u_int32_t	EAKeyCount;
-	u_int32_t	EAKeySize;
-	u_int32_t	NSCreator;
+	uint32_t	dirEntNum;
+	uint32_t	DosDirNum;
+	uint32_t	volNumber;
+	uint32_t	EADataSize;
+	uint32_t	EAKeyCount;
+	uint32_t	EAKeySize;
+	uint32_t	NSCreator;
 	u_int8_t	nameLen;
 	u_int8_t	entryName[256];
 } __packed;
@@ -334,26 +334,26 @@ typedef struct nw_entry_info NW_ENTRY_INFO;
 #define DM_MAXIMUM_SPACE	0x2000L
 
 struct nw_modify_dos_info {
-	u_int32_t attributes;
+	uint32_t attributes;
 	u_int16_t creationDate;
 	u_int16_t creationTime;
-	u_int32_t creatorID;
+	uint32_t creatorID;
 	u_int16_t modifyDate;
 	u_int16_t modifyTime;
-	u_int32_t modifierID;
+	uint32_t modifierID;
 	u_int16_t archiveDate;
 	u_int16_t archiveTime;
-	u_int32_t archiverID;
+	uint32_t archiverID;
 	u_int16_t lastAccessDate;
 	u_int16_t inheritanceGrantMask;
 	u_int16_t inheritanceRevokeMask;
-	u_int32_t maximumSpace;
+	uint32_t maximumSpace;
 }  __packed;
 
 struct nw_search_seq {
 	u_int8_t	volNumber;
-	u_int32_t	dirNumber;
-	u_int32_t	searchDirNumber;
+	uint32_t	dirNumber;
+	uint32_t	searchDirNumber;
 }  __packed;
 
 typedef struct nw_search_seq SEARCH_SEQUENCE;

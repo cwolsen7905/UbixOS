@@ -43,12 +43,12 @@
 
 struct ng_btsocket_hci_raw_pcb {
 	struct socket				*so;     /* socket */
-	u_int32_t				 flags;  /* flags */
+	uint32_t				 flags;  /* flags */
 #define NG_BTSOCKET_HCI_RAW_DIRECTION	(1 << 0)
 #define NG_BTSOCKET_HCI_RAW_PRIVILEGED	(1 << 1)
 	struct sockaddr_hci			 addr;   /* local address */
 	struct ng_btsocket_hci_raw_filter	 filter; /* filter */
-	u_int32_t				 token;  /* message token */
+	uint32_t				 token;  /* message token */
 	struct ng_mesg				*msg;    /* message */
 	LIST_ENTRY(ng_btsocket_hci_raw_pcb)	 next;   /* link to next */
 	struct mtx				 pcb_mtx; /* pcb mutex */

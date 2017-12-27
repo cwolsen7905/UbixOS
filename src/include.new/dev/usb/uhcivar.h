@@ -85,7 +85,7 @@ struct uhci_xfer {
 	uhci_intr_info_t iinfo;
 	struct usb_task	abort_task;
 	int curframe;
-	u_int32_t uhci_xfer_flags;
+	uint32_t uhci_xfer_flags;
 };
 
 #define UHCI_XFER_ABORTING	0x0001	/* xfer is aborting. */
@@ -161,7 +161,7 @@ typedef struct uhci_softc {
 	uhci_soft_qh_t *sc_bulk_start;	/* dummy QH for bulk */
 	uhci_soft_qh_t *sc_bulk_end;	/* last bulk transfer */
 	uhci_soft_qh_t *sc_last_qh;	/* dummy QH at the end */
-	u_int32_t sc_loops;		/* number of QHs that wants looping */
+	uint32_t sc_loops;		/* number of QHs that wants looping */
 
 	uhci_soft_td_t *sc_freetds;	/* TD free list */
 	uhci_soft_qh_t *sc_freeqhs;	/* QH free list */

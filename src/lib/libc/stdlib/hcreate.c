@@ -82,7 +82,7 @@ SLIST_HEAD(internal_head, internal_entry);
 #define	MAX_BUCKETS	((size_t)1 << MAX_BUCKETS_LG2)
 
 /* Default hash function, from db/hash/hash_func.c */
-extern u_int32_t (*__default_hash)(const void *, size_t);
+extern uint32_t (*__default_hash)(const void *, size_t);
 
 static struct internal_head *htable;
 static size_t htablesize;

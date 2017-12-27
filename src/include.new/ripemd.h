@@ -74,9 +74,9 @@
 #define RIPEMD160_DIGEST_LENGTH	20
 
 typedef struct RIPEMD160state_st {
-	u_int32_t A,B,C,D,E;
-	u_int32_t Nl,Nh;
-	u_int32_t data[RIPEMD160_LBLOCK];
+	uint32_t A,B,C,D,E;
+	uint32_t Nl,Nh;
+	uint32_t data[RIPEMD160_LBLOCK];
 	int num;
 } RIPEMD160_CTX;
 

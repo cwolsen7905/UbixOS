@@ -56,7 +56,7 @@
 #ifndef _SYS_BLIST_H_
 #define _SYS_BLIST_H_
 
-typedef	u_int32_t	u_daddr_t;	/* unsigned disk address */
+typedef	uint32_t	u_daddr_t;	/* unsigned disk address */
 
 /*
  * note: currently use SWAPBLK_NONE as an absolute value rather then 

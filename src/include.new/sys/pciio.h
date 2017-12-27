@@ -56,7 +56,7 @@ typedef enum {
 } pci_getconf_flags;
 
 struct pcisel {
-	u_int32_t	pc_domain;	/* domain number */
+	uint32_t	pc_domain;	/* domain number */
 	u_int8_t	pc_bus;		/* bus number */
 	u_int8_t	pc_dev;		/* device on this bus */
 	u_int8_t	pc_func;	/* function on this device */
@@ -90,14 +90,14 @@ struct pci_match_conf {
 };
 
 struct pci_conf_io {
-	u_int32_t		pat_buf_len;	/* pattern buffer length */
-	u_int32_t		num_patterns;	/* number of patterns */
+	uint32_t		pat_buf_len;	/* pattern buffer length */
+	uint32_t		num_patterns;	/* number of patterns */
 	struct pci_match_conf	*patterns;	/* pattern buffer */
-	u_int32_t		match_buf_len;	/* match buffer length */
-	u_int32_t		num_matches;	/* number of matches returned */
+	uint32_t		match_buf_len;	/* match buffer length */
+	uint32_t		num_matches;	/* number of matches returned */
 	struct pci_conf		*matches;	/* match buffer */
-	u_int32_t		offset;		/* offset into device list */
-	u_int32_t		generation;	/* device list generation */
+	uint32_t		offset;		/* offset into device list */
+	uint32_t		generation;	/* device list generation */
 	pci_getconf_status	status;		/* request status */
 };
 
@@ -105,7 +105,7 @@ struct pci_io {
 	struct pcisel	pi_sel;		/* device to operate on */
 	int		pi_reg;		/* configuration register to examine */
 	int		pi_width;	/* width (in bytes) of read or write */
-	u_int32_t	pi_data;	/* data to write or result of read */
+	uint32_t	pi_data;	/* data to write or result of read */
 };
 
 struct pci_bar_io {

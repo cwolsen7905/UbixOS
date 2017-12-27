@@ -84,7 +84,7 @@ __bt_split(t, sp, key, data, flags, ilen, argskip)
 	const DBT *key, *data;
 	int flags;
 	size_t ilen;
-	u_int32_t argskip;
+	uint32_t argskip;
 {
 	BINTERNAL *bi;
 	BLEAF *bl, *tbl;
@@ -93,7 +93,7 @@ __bt_split(t, sp, key, data, flags, ilen, argskip)
 	PAGE *h, *l, *r, *lchild, *rchild;
 	indx_t nxtindex;
 	u_int16_t skip;
-	u_int32_t n, nbytes, nksize;
+	uint32_t n, nbytes, nksize;
 	int parentsplit;
 	char *dest;
 
@@ -538,7 +538,7 @@ bt_broot(t, h, l, r)
 {
 	BINTERNAL *bi;
 	BLEAF *bl;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	char *dest;
 
 	/*
@@ -622,7 +622,7 @@ bt_psplit(t, h, l, r, pskip, ilen)
 	PAGE *rval;
 	void *src;
 	indx_t full, half, nxt, off, skip, top, used;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	int bigkeycnt, isbigkey;
 
 	/*

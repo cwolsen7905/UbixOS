@@ -261,7 +261,7 @@ enum ipfw_opcodes {		/* arguments (4 byte each)	*/
  *		to skip past the last instruction of the block.
  *
  * NOTA BENE: in a couple of places we assume that
- *	sizeof(ipfw_insn) == sizeof(u_int32_t)
+ *	sizeof(ipfw_insn) == sizeof(uint32_t)
  * this needs to be fixed.
  *
  */
@@ -280,7 +280,7 @@ typedef struct	_ipfw_insn {	/* template for instructions */
  * The F_INSN_SIZE(type) computes the size, in 4-byte words, of
  * a given type.
  */
-#define	F_INSN_SIZE(t)	((sizeof (t))/sizeof(u_int32_t))
+#define	F_INSN_SIZE(t)	((sizeof (t))/sizeof(uint32_t))
 
 /*
  * This is used to store an array of 16-bit entries (ports etc.)
@@ -296,7 +296,7 @@ typedef struct	_ipfw_insn_u16 {
  */
 typedef struct	_ipfw_insn_u32 {
 	ipfw_insn o;
-	u_int32_t d[1];	/* one or more */
+	uint32_t d[1];	/* one or more */
 } ipfw_insn_u32;
 
 /*
@@ -350,7 +350,7 @@ typedef struct	_ipfw_insn_if {
  */
 typedef struct _ipfw_insn_altq {
 	ipfw_insn	o;
-	u_int32_t	qid;
+	uint32_t	qid;
 } ipfw_insn_altq;
 
 /*
@@ -373,8 +373,8 @@ typedef struct	_ipfw_insn_limit {
  */
 typedef struct  _ipfw_insn_log {
         ipfw_insn o;
-	u_int32_t max_log;	/* how many do we log -- 0 = all */
-	u_int32_t log_left;	/* how many left to log 	*/
+	uint32_t max_log;	/* how many do we log -- 0 = all */
+	uint32_t log_left;	/* how many left to log 	*/
 } ipfw_insn_log;
 
 /*
@@ -517,7 +517,7 @@ struct ip_fw {
 };
 
 #define ACTION_PTR(rule)				\
-	(ipfw_insn *)( (u_int32_t *)((rule)->cmd) + ((rule)->act_ofs) )
+	(ipfw_insn *)( (uint32_t *)((rule)->cmd) + ((rule)->act_ofs) )
 
 #define RULESIZE(rule)  (sizeof(struct ip_fw) + \
 	((struct ip_fw *)(rule))->cmd_len * 4 - 4)
@@ -562,13 +562,13 @@ struct _ipfw_dyn_rule {
 	u_int64_t	pcnt;		/* packet match counter		*/
 	u_int64_t	bcnt;		/* byte match counter		*/
 	struct ipfw_flow_id id;		/* (masked) flow id		*/
-	u_int32_t	expire;		/* expire time			*/
-	u_int32_t	bucket;		/* which bucket in hash table	*/
-	u_int32_t	state;		/* state of this rule (typically a
+	uint32_t	expire;		/* expire time			*/
+	uint32_t	bucket;		/* which bucket in hash table	*/
+	uint32_t	state;		/* state of this rule (typically a
 					 * combination of TCP flags)
 					 */
-	u_int32_t	ack_fwd;	/* most recent ACKs in forward	*/
-	u_int32_t	ack_rev;	/* and reverse directions (used	*/
+	uint32_t	ack_fwd;	/* most recent ACKs in forward	*/
+	uint32_t	ack_rev;	/* and reverse directions (used	*/
 					/* to generate keepalives)	*/
 	u_int16_t	dyn_type;	/* rule type			*/
 	u_int16_t	count;		/* refcount			*/
@@ -604,7 +604,7 @@ struct _ipfw_dyn_rule {
 
 typedef struct	_ipfw_table_entry {
 	in_addr_t	addr;		/* network address		*/
-	u_int32_t	value;		/* value			*/
+	uint32_t	value;		/* value			*/
 	u_int16_t	tbl;		/* table number			*/
 	u_int8_t	masklen;	/* mask length			*/
 } ipfw_table_entry;
@@ -623,8 +623,8 @@ typedef struct	_ipfw_table_xentry {
 } ipfw_table_xentry;
 
 typedef struct	_ipfw_table {
-	u_int32_t	size;		/* size of entries in bytes	*/
-	u_int32_t	cnt;		/* # of entries			*/
+	uint32_t	size;		/* size of entries in bytes	*/
+	uint32_t	cnt;		/* # of entries			*/
 	u_int16_t	tbl;		/* table number			*/
 	ipfw_table_entry ent[0];	/* entries			*/
 } ipfw_table;

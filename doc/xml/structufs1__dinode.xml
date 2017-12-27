@@ -83,8 +83,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="163" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="163" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structufs1__dinode_1de495b4b40c68ac16fa32c58befcd8c0" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs1_dinode::di_flags</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs1_dinode::di_flags</definition>
         <argsstring></argsstring>
         <name>di_flags</name>
         <briefdescription>
@@ -109,8 +109,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="167" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="167" bodyend="-1"/>
       </memberdef>
       <memberdef kind="variable" id="structufs1__dinode_13bead46ad3a23368d9986df416d5c7e2" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs1_dinode::di_gid</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs1_dinode::di_gid</definition>
         <argsstring></argsstring>
         <name>di_gid</name>
         <briefdescription>
@@ -226,8 +226,8 @@
         <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="155"/>
       </memberdef>
       <memberdef kind="variable" id="structufs1__dinode_1f748891980bbd2bd0d3eb22abca89688" prot="public" static="no" mutable="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t ufs1_dinode::di_uid</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t ufs1_dinode::di_uid</definition>
         <argsstring></argsstring>
         <name>di_uid</name>
         <briefdescription>

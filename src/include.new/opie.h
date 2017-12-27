@@ -91,7 +91,7 @@ struct opie {
 #define OPIE_SEQUENCE_RESTRICT 9
 #endif /* OPIE_SEQUENCE_RESTRICT */
 
-#define UINT4 u_int32_t
+#define UINT4 uint32_t
 
 struct opie_otpkey {
 	UINT4 words[2];

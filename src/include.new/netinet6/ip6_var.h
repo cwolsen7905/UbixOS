@@ -71,7 +71,7 @@
 struct	ip6q {
 	struct ip6asfrag *ip6q_down;
 	struct ip6asfrag *ip6q_up;
-	u_int32_t	ip6q_ident;
+	uint32_t	ip6q_ident;
 	u_int8_t	ip6q_nxt;
 	u_int8_t	ip6q_ecn;
 	u_int8_t	ip6q_ttl;
@@ -263,7 +263,7 @@ VNET_PCPUSTAT_DECLARE(struct ip6stat, ip6stat);
  * XXX do not make it a kitchen sink!
  */
 struct ip6aux {
-	u_int32_t ip6a_flags;
+	uint32_t ip6a_flags;
 #define IP6A_SWAP	0x01		/* swapped home/care-of on packet */
 #define IP6A_HASEEN	0x02		/* HA was present */
 #define IP6A_BRUID	0x04		/* BR Unique Identifier was present */
@@ -401,12 +401,12 @@ struct ip6aux *ip6_findaux(struct mbuf *);
 extern int	(*ip6_mforward)(struct ip6_hdr *, struct ifnet *,
     struct mbuf *);
 
-int	ip6_process_hopopts(struct mbuf *, u_int8_t *, int, u_int32_t *,
-				 u_int32_t *);
+int	ip6_process_hopopts(struct mbuf *, u_int8_t *, int, uint32_t *,
+				 uint32_t *);
 struct mbuf	**ip6_savecontrol_v4(struct inpcb *, struct mbuf *,
 	    struct mbuf **, int *);
 void	ip6_savecontrol(struct inpcb *, struct mbuf *, struct mbuf **);
-void	ip6_notify_pmtu(struct inpcb *, struct sockaddr_in6 *, u_int32_t);
+void	ip6_notify_pmtu(struct inpcb *, struct sockaddr_in6 *, uint32_t);
 int	ip6_sysctl(int *, u_int, void *, size_t *, void *, size_t);
 
 void	ip6_forward(struct mbuf *, int);
@@ -456,8 +456,8 @@ int in6_selectroute(struct sockaddr_in6 *, struct ip6_pktopts *,
 int	in6_selectroute_fib(struct sockaddr_in6 *, struct ip6_pktopts *,
 	    struct ip6_moptions *, struct route_in6 *, struct ifnet **,
 	    struct rtentry **, u_int);
-u_int32_t ip6_randomid(void);
-u_int32_t ip6_randomflowlabel(void);
+uint32_t ip6_randomid(void);
+uint32_t ip6_randomflowlabel(void);
 void in6_delayed_cksum(struct mbuf *m, uint32_t plen, u_short offset);
 #endif /* _KERNEL */
 

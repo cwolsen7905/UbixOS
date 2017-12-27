@@ -61,8 +61,8 @@
     </incdepgraph>
       <sectiondef kind="func">
       <memberdef kind="function" id="getphysicaladdr_8c_195ad0d803875fb80bd19bd5ef963bfc2" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>u_int32_t vmm_getPhysicalAddr</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>uint32_t vmm_getPhysicalAddr</definition>
         <argsstring>(uInt32 pageAddr)</argsstring>
         <name>vmm_getPhysicalAddr</name>
         <param>
@@ -119,7 +119,7 @@
 <codeline lineno="29"><highlight class="normal"></highlight></codeline>
 <codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vmm_8h" kindref="compound">vmm/vmm.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="31"><highlight class="normal"></highlight></codeline>
-<codeline lineno="40" refid="getphysicaladdr_8c_195ad0d803875fb80bd19bd5ef963bfc2" refkind="member"><highlight class="normal"><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>pageAddr)<sp/>{</highlight></codeline>
+<codeline lineno="40" refid="getphysicaladdr_8c_195ad0d803875fb80bd19bd5ef963bfc2" refkind="member"><highlight class="normal"><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><ref refid="paging_8h_1e88bcfc69132a46a1982237913101a5b" kindref="member">vmm_getPhysicalAddr</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>pageAddr)<sp/>{</highlight></codeline>
 <codeline lineno="41"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>pageDirectoryIndex<sp/>=<sp/>0x0,<sp/>pageTableIndex<sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="42"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*pageTable<sp/>=<sp/>0x0;</highlight></codeline>
 <codeline lineno="43"><highlight class="normal"></highlight></codeline>

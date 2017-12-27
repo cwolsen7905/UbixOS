@@ -453,7 +453,7 @@ extern void mfi_tbolt_sync_map_info(struct mfi_softc *sc);
 extern void mfi_handle_map_sync(void *context, int pending);
 extern int mfi_dcmd_command(struct mfi_softc *, struct mfi_command **,
      uint32_t, void **, size_t);
-extern int mfi_build_cdb(int, uint8_t, u_int64_t, u_int32_t, uint8_t *);
+extern int mfi_build_cdb(int, uint8_t, u_int64_t, uint32_t, uint8_t *);
 
 #define MFIQ_ADD(sc, qname)					\
 	do {							\

@@ -59,7 +59,7 @@ struct usbd_bus_methods {
 	void		      (*soft_intr)(void *);
 	void		      (*do_poll)(struct usbd_bus *);
 	usbd_status	      (*allocm)(struct usbd_bus *, usb_dma_t *,
-					u_int32_t bufsize);
+					uint32_t bufsize);
 	void		      (*freem)(struct usbd_bus *, usb_dma_t *);
 	struct usbd_xfer *    (*allocx)(struct usbd_bus *);
 	void		      (*freex)(struct usbd_bus *, struct usbd_xfer *);
@@ -104,7 +104,7 @@ struct usbd_bus {
 	/* Filled by HC driver */
 	USBBASEDEVICE		bdev; /* base device, host adapter */
 	struct usbd_bus_methods	*methods;
-	u_int32_t		pipe_size; /* size of a pipe struct */
+	uint32_t		pipe_size; /* size of a pipe struct */
 	/* Filled by usb driver */
 	struct usbd_device     *root_hub;
 	usbd_device_handle	devices[USB_MAX_DEVICES];
@@ -191,15 +191,15 @@ struct usbd_xfer {
 	struct usbd_pipe       *pipe;
 	void		       *priv;
 	void		       *buffer;
-	u_int32_t		length;
-	u_int32_t		actlen;
+	uint32_t		length;
+	uint32_t		actlen;
 	u_int16_t		flags;
-	u_int32_t		timeout;
+	uint32_t		timeout;
 	usbd_status		status;
 	usbd_callback		callback;
 	__volatile char		done;
 #ifdef DIAGNOSTIC
-	u_int32_t		busy_free;
+	uint32_t		busy_free;
 #define XFER_FREE 0x46524545
 #define XFER_BUSY 0x42555359
 #define XFER_ONQU 0x4f4e5155

@@ -245,6 +245,9 @@ int lanceProbe(struct lncInfo *lnc) {
 void lnc_INT() {
   uint16_t csr0 = 0x0;
 
+  //irqDisable(9);
+  //asm("sti");
+
   //kprintf("\nINTR\n");
   while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
     //kprintf("CSR0: [0x%X]\n", csr0);
@@ -282,14 +285,14 @@ asm(
     lnc_writeCSR32(lnc, CSR0, 0x7940);//csr0);
     //kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
   }
-
+  //irqEnable(9);
   kprintf("INT DONE");
 }
 
 void lnc_rxINT() {
   int i = 0;
 
-  //kprintf("RINT\n");
+  kprintf("RINT0\n");
 
   if (tmpBuf == 0x0) {
     tmpBuf = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
@@ -298,6 +301,7 @@ void lnc_rxINT() {
   else {
     memset(tmpBuf,0x0,sizeof(struct nicBuffer));
   }
+  kprintf("RINT1\n");
 
   while (lnc_driverOwnsRX(lnc)) {
     //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
@@ -310,11 +314,14 @@ void lnc_rxINT() {
     tmpBuf->length = plen;
     tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
 
+  kprintf("RINT2\n");
     ethernetif_input(netif_default);
+  kprintf("RINT3\n");
     lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
     lnc_nextRxPtr(lnc);
   }
-  //kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+  kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+while(1);
   
 }
 

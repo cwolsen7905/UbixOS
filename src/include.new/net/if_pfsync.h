@@ -120,7 +120,7 @@ struct pfsync_subheader {
 
 struct pfsync_clr {
 	char				ifname[IFNAMSIZ];
-	u_int32_t			creatorid;
+	uint32_t			creatorid;
 } __packed;
 
 /*
@@ -135,7 +135,7 @@ struct pfsync_clr {
 
 struct pfsync_ins_ack {
 	u_int64_t			id;
-	u_int32_t			creatorid;
+	uint32_t			creatorid;
 } __packed;
 
 /*
@@ -146,8 +146,8 @@ struct pfsync_upd_c {
 	u_int64_t			id;
 	struct pfsync_state_peer	src;
 	struct pfsync_state_peer	dst;
-	u_int32_t			creatorid;
-	u_int32_t			expire;
+	uint32_t			creatorid;
+	uint32_t			expire;
 	u_int8_t			timeout;
 	u_int8_t			_pad[3];
 } __packed;
@@ -158,7 +158,7 @@ struct pfsync_upd_c {
 
 struct pfsync_upd_req {
 	u_int64_t			id;
-	u_int32_t			creatorid;
+	uint32_t			creatorid;
 } __packed;
 
 /*
@@ -167,7 +167,7 @@ struct pfsync_upd_req {
 
 struct pfsync_del_c {
 	u_int64_t			id;
-	u_int32_t			creatorid;
+	uint32_t			creatorid;
 } __packed;
 
 /*
@@ -181,8 +181,8 @@ struct pfsync_del_c {
  */
 
 struct pfsync_bus {
-	u_int32_t			creatorid;
-	u_int32_t			endtime;
+	uint32_t			creatorid;
+	uint32_t			endtime;
 	u_int8_t			status;
 #define	PFSYNC_BUS_START			1
 #define	PFSYNC_BUS_END				2
@@ -194,9 +194,9 @@ struct pfsync_bus {
  */
 
 struct pfsync_tdb {
-	u_int32_t			spi;
+	uint32_t			spi;
 	union sockaddr_union		dst;
-	u_int32_t			rpl;
+	uint32_t			rpl;
 	u_int64_t			cur_bytes;
 	u_int8_t			sproto;
 	u_int8_t			updates;

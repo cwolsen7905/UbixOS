@@ -434,12 +434,12 @@ struct pthread_cond_attr {
  * Semaphore definitions.
  */
 struct sem {
-#define	SEM_MAGIC	((u_int32_t) 0x09fa4012)
-	u_int32_t	magic;
+#define	SEM_MAGIC	((uint32_t) 0x09fa4012)
+	uint32_t	magic;
 	pthread_mutex_t	lock;
 	pthread_cond_t	gtzero;
-	u_int32_t	count;
-	u_int32_t	nwaiters;
+	uint32_t	count;
+	uint32_t	nwaiters;
 };
 
 /*
@@ -711,8 +711,8 @@ struct pthread {
 	 * Magic value to help recognize a valid thread structure
 	 * from an invalid one:
 	 */
-#define	PTHREAD_MAGIC		((u_int32_t) 0xd09ba115)
-	u_int32_t		magic;
+#define	PTHREAD_MAGIC		((uint32_t) 0xd09ba115)
+	uint32_t		magic;
 	char			*name;
 	u_int64_t		uniqueid; /* for gdb */
 

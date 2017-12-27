@@ -108,7 +108,7 @@ void systemTask() {
     if ( tmpTask != 0x0 ) {
       if ( tmpTask->imageFd != 0x0 )
         fclose( tmpTask->imageFd );
-      vmmFreeProcessPages( tmpTask->id );
+      vmm_freeProcessPages( tmpTask->id );
       kfree( tmpTask );
     }
     videoBuffer[0] = systemVitals->sysTicks;

@@ -42,7 +42,7 @@
 #ifndef _RPC_RPC_MSG_H
 #define _RPC_RPC_MSG_H
 
-#define RPC_MSG_VERSION		((u_int32_t) 2)
+#define RPC_MSG_VERSION		((uint32_t) 2)
 #define RPC_SERVICE_PORT	((u_short) 2048)
 
 /*
@@ -147,7 +147,7 @@ struct call_body {
  * The rpc message
  */
 struct rpc_msg {
-	u_int32_t		rm_xid;
+	uint32_t		rm_xid;
 	enum msg_type		rm_direction;
 	union {
 		struct call_body RM_cmb;

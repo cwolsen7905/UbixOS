@@ -551,15 +551,15 @@ rpc_broadcast_exp(prog, vers, proc, xargs, argsp, xresults, resultsp,
 				stat = RPC_CANTRECV;
 				continue;
 			}
-			if (inlen < sizeof (u_int32_t))
+			if (inlen < sizeof (uint32_t))
 				continue; /* Drop that and go ahead */
 			/*
 			 * see if reply transaction id matches sent id.
 			 * If so, decode the results. If return id is xid + 1
 			 * it was a PORTMAP reply
 			 */
-			if (*((u_int32_t *)(void *)(inbuf)) ==
-			    *((u_int32_t *)(void *)(outbuf))) {
+			if (*((uint32_t *)(void *)(inbuf)) ==
+			    *((uint32_t *)(void *)(outbuf))) {
 				pmap_reply_flag = 0;
 				msg.acpted_rply.ar_verf = _null_auth;
 				msg.acpted_rply.ar_results.where =
@@ -568,8 +568,8 @@ rpc_broadcast_exp(prog, vers, proc, xargs, argsp, xresults, resultsp,
 					(xdrproc_t)xdr_rpcb_rmtcallres;
 #ifdef PORTMAP
 			} else if (pmap_flag &&
-				*((u_int32_t *)(void *)(inbuf)) ==
-				*((u_int32_t *)(void *)(outbuf_pmap))) {
+				*((uint32_t *)(void *)(inbuf)) ==
+				*((uint32_t *)(void *)(outbuf_pmap))) {
 				pmap_reply_flag = 1;
 				msg.acpted_rply.ar_verf = _null_auth;
 				msg.acpted_rply.ar_results.where =

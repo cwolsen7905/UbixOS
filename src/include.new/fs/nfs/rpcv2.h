@@ -200,8 +200,8 @@
  
 /* Structs for common parts of the rpc's */
 struct rpcv2_time {
-	u_int32_t rpc_sec;
-	u_int32_t rpc_usec;
+	uint32_t rpc_sec;
+	uint32_t rpc_usec;
 };
 
 #endif	/* _NFS_RPCV2_H_ */

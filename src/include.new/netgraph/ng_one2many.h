@@ -69,8 +69,8 @@
 
 /* Node configuration structure */
 struct ng_one2many_config {
-	u_int32_t	xmitAlg;		/* how to distribute packets */
-	u_int32_t	failAlg;		/* how to detect link failure */
+	uint32_t	xmitAlg;		/* how to distribute packets */
+	uint32_t	failAlg;		/* how to detect link failure */
 	u_char		enabledLinks[NG_ONE2MANY_MAX_LINKS];
 };
 

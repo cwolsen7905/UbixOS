@@ -58,9 +58,9 @@
 struct ng_bridge_config {
 	u_char		ipfw[NG_BRIDGE_MAX_LINKS]; 	/* enable ipfw */
 	u_char		debugLevel;		/* debug level */
-	u_int32_t	loopTimeout;		/* link loopback mute time */
-	u_int32_t	maxStaleness;		/* max host age before nuking */
-	u_int32_t	minStableAge;		/* min time for a stable host */
+	uint32_t	loopTimeout;		/* link loopback mute time */
+	uint32_t	maxStaleness;		/* max host age before nuking */
+	uint32_t	minStableAge;		/* min time for a stable host */
 };
 
 /* Keep this in sync with the above structure definition */
@@ -129,7 +129,7 @@ struct ng_bridge_host {
 
 /* Structure returned by NGM_BRIDGE_GET_TABLE */
 struct ng_bridge_host_ary {
-	u_int32_t		numHosts;
+	uint32_t		numHosts;
 	struct ng_bridge_host	hosts[];
 };
 

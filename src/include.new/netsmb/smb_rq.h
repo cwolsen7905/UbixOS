@@ -70,8 +70,8 @@ struct smb_rq {
 	struct smb_vc * 	sr_vc;
 	struct smb_share*	sr_share;
 	u_short			sr_mid;
-	u_int32_t		sr_seqno;
-	u_int32_t		sr_rseqno;
+	uint32_t		sr_seqno;
+	uint32_t		sr_rseqno;
 	struct mbchain		sr_rq;
 	u_int8_t		sr_rqflags;
 	u_int16_t		sr_rqflags2;
@@ -93,7 +93,7 @@ struct smb_rq {
 	void *			sr_rquid;	/* Points to 2-byte buffer. */
 	u_int8_t		sr_errclass;
 	u_int16_t		sr_serror;
-	u_int32_t		sr_error;
+	uint32_t		sr_error;
 	u_int8_t		sr_rpflags;
 	u_int16_t		sr_rpflags2;
 	u_int16_t		sr_rptid;

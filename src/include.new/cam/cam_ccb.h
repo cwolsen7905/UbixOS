@@ -317,22 +317,22 @@ struct ccb_hdr {
 	camq_entry	xpt_links;	/* For chaining in the XPT layer */	
 	camq_entry	sim_links;	/* For chaining in the SIM layer */	
 	camq_entry	periph_links;	/* For chaining in the type driver */
-	u_int32_t	retry_count;
+	uint32_t	retry_count;
 	void		(*cbfcnp)(struct cam_periph *, union ccb *);
 					/* Callback on completion function */
 	xpt_opcode	func_code;	/* XPT function code */
-	u_int32_t	status;		/* Status returned by CAM subsystem */
+	uint32_t	status;		/* Status returned by CAM subsystem */
 	struct		cam_path *path;	/* Compiled path for this ccb */
 	path_id_t	path_id;	/* Path ID for the request */
 	target_id_t	target_id;	/* Target device ID */
 	lun_id_t	target_lun;	/* Target LUN number */
 	lun64_id_t	ext_lun;	/* 64bit extended/multi-level LUNs */
-	u_int32_t	flags;		/* ccb_flags */
-	u_int32_t	xflags;		/* Extended flags */
+	uint32_t	flags;		/* ccb_flags */
+	uint32_t	xflags;		/* Extended flags */
 	ccb_ppriv_area	periph_priv;
 	ccb_spriv_area	sim_priv;
 	ccb_qos_area	qos;
-	u_int32_t	timeout;	/* Hard timeout value in mseconds */
+	uint32_t	timeout;	/* Hard timeout value in mseconds */
 	struct timeval	softtimeout;	/* Soft timeout value in sec + usec */
 };
 
@@ -376,9 +376,9 @@ typedef enum {
 struct ccb_getdevlist {
 	struct ccb_hdr		ccb_h;
 	char 			periph_name[DEV_IDLEN];
-	u_int32_t		unit_number;
+	uint32_t		unit_number;
 	unsigned int		generation;
-	u_int32_t		index;
+	uint32_t		index;
 	ccb_getdevlist_status_e	status;
 };
 
@@ -394,7 +394,7 @@ typedef enum {
 
 struct periph_match_pattern {
 	char			periph_name[DEV_IDLEN];
-	u_int32_t		unit_number;
+	uint32_t		unit_number;
 	path_id_t		path_id;
 	target_id_t		target_id;
 	lun_id_t		target_lun;
@@ -439,8 +439,8 @@ typedef enum {
 struct bus_match_pattern {
 	path_id_t		path_id;
 	char			dev_name[DEV_IDLEN];
-	u_int32_t		unit_number;
-	u_int32_t		bus_id;
+	uint32_t		unit_number;
+	uint32_t		bus_id;
 	bus_pattern_flags	flags;
 };
 
@@ -463,7 +463,7 @@ struct dev_match_pattern {
 
 struct periph_match_result {
 	char			periph_name[DEV_IDLEN];
-	u_int32_t		unit_number;
+	uint32_t		unit_number;
 	path_id_t		path_id;
 	target_id_t		target_id;
 	lun_id_t		target_lun;
@@ -487,8 +487,8 @@ struct device_match_result {
 struct bus_match_result {
 	path_id_t	path_id;
 	char		dev_name[DEV_IDLEN];
-	u_int32_t	unit_number;
-	u_int32_t	bus_id;
+	uint32_t	unit_number;
+	uint32_t	bus_id;
 };
 
 union match_result {
@@ -543,11 +543,11 @@ struct ccb_dev_position {
 struct ccb_dev_match {
 	struct ccb_hdr			ccb_h;
 	ccb_dev_match_status		status;
-	u_int32_t			num_patterns;
-	u_int32_t			pattern_buf_len;
+	uint32_t			num_patterns;
+	uint32_t			pattern_buf_len;
 	struct dev_match_pattern	*patterns;
-	u_int32_t			num_matches;
-	u_int32_t			match_buf_len;
+	uint32_t			num_matches;
+	uint32_t			match_buf_len;
 	struct dev_match_result		*matches;
 	struct ccb_dev_position		pos;
 };
@@ -597,12 +597,12 @@ struct ccb_pathinq_settings_spi {
 struct ccb_pathinq_settings_fc {
 	u_int64_t wwnn;		/* world wide node name */
 	u_int64_t wwpn;		/* world wide port name */
-	u_int32_t port;		/* 24 bit port id, if known */
-	u_int32_t bitrate;	/* Mbps */
+	uint32_t port;		/* 24 bit port id, if known */
+	uint32_t bitrate;	/* Mbps */
 };
 
 struct ccb_pathinq_settings_sas {
-	u_int32_t bitrate;	/* Mbps */
+	uint32_t bitrate;	/* Mbps */
 };
 #define	PATHINQ_SETTINGS_SIZE	128
 
@@ -611,21 +611,21 @@ struct ccb_pathinq {
 	u_int8_t    version_num;	/* Version number for the SIM/HBA */
 	u_int8_t    hba_inquiry;	/* Mimic of INQ byte 7 for the HBA */
 	u_int16_t   target_sprt;	/* Flags for target mode support */
-	u_int32_t   hba_misc;		/* Misc HBA features */
+	uint32_t   hba_misc;		/* Misc HBA features */
 	u_int16_t   hba_eng_cnt;	/* HBA engine count */
 					/* Vendor Unique capabilities */
 	u_int8_t    vuhba_flags[VUHBALEN];
-	u_int32_t   max_target;		/* Maximum supported Target */
-	u_int32_t   max_lun;		/* Maximum supported Lun */
-	u_int32_t   async_flags;	/* Installed Async handlers */
+	uint32_t   max_target;		/* Maximum supported Target */
+	uint32_t   max_lun;		/* Maximum supported Lun */
+	uint32_t   async_flags;	/* Installed Async handlers */
 	path_id_t   hpath_id;		/* Highest Path ID in the subsystem */
 	target_id_t initiator_id;	/* ID of the HBA on the SCSI bus */
 	char	    sim_vid[SIM_IDLEN];	/* Vendor ID of the SIM */
 	char	    hba_vid[HBA_IDLEN];	/* Vendor ID of the HBA */
 	char 	    dev_name[DEV_IDLEN];/* Device name for SIM */
-	u_int32_t   unit_number;	/* Unit number for SIM */
-	u_int32_t   bus_id;		/* Bus ID for SIM */
-	u_int32_t   base_transfer_speed;/* Base bus speed in KB/sec */
+	uint32_t   unit_number;	/* Unit number for SIM */
+	uint32_t   bus_id;		/* Bus ID for SIM */
+	uint32_t   base_transfer_speed;/* Base bus speed in KB/sec */
 	cam_proto   protocol;
 	u_int	    protocol_version;
 	cam_xport   transport;
@@ -699,7 +699,7 @@ struct ccb_scsiio {
 	union	   ccb *next_ccb;	/* Ptr for next CCB for action */
 	u_int8_t   *req_map;		/* Ptr to mapping info */
 	u_int8_t   *data_ptr;		/* Ptr to the data buf/SG list */
-	u_int32_t  dxfer_len;		/* Data transfer length */
+	uint32_t  dxfer_len;		/* Data transfer length */
 					/* Autosense storage */	
 	struct     scsi_sense_data sense_data;
 	u_int8_t   sense_len;		/* Number of bytes to autosense */
@@ -707,7 +707,7 @@ struct ccb_scsiio {
 	u_int16_t  sglist_cnt;		/* Number of SG list entries */
 	u_int8_t   scsi_status;		/* Returned SCSI status */
 	u_int8_t   sense_resid;		/* Autosense resid length: 2's comp */
-	u_int32_t  resid;		/* Transfer residual length: 2's comp */
+	uint32_t  resid;		/* Transfer residual length: 2's comp */
 	cdb_t	   cdb_io;		/* Union for CDB bytes/pointer */
 	u_int8_t   *msg_ptr;		/* Pointer to the message buffer */
 	u_int16_t  msg_len;		/* Number of bytes for the Message */
@@ -731,8 +731,8 @@ struct ccb_ataio {
 	struct ata_cmd	cmd;		/* ATA command register set */
 	struct ata_res	res;		/* ATA result register set */
 	u_int8_t   *data_ptr;		/* Ptr to the data buf/SG list */
-	u_int32_t  dxfer_len;		/* Data transfer length */
-	u_int32_t  resid;		/* Transfer residual length: 2's comp */
+	uint32_t  dxfer_len;		/* Data transfer length */
+	uint32_t  resid;		/* Transfer residual length: 2's comp */
 	u_int8_t   tag_action;		/* What to do for tag queueing */
 	/*
 	 * The tag action should be either the define below (to send a
@@ -758,14 +758,14 @@ struct ccb_accept_tio {
 /* Release SIM Queue */
 struct ccb_relsim {
 	struct ccb_hdr ccb_h;
-	u_int32_t      release_flags;
+	uint32_t      release_flags;
 #define RELSIM_ADJUST_OPENINGS		0x01
 #define RELSIM_RELEASE_AFTER_TIMEOUT	0x02
 #define RELSIM_RELEASE_AFTER_CMDCMPLT	0x04
 #define RELSIM_RELEASE_AFTER_QEMPTY	0x08
-	u_int32_t      openings;
-	u_int32_t      release_timeout;	/* Abstract argument. */
-	u_int32_t      qfrozen_cnt;
+	uint32_t      openings;
+	uint32_t      release_timeout;	/* Abstract argument. */
+	uint32_t      qfrozen_cnt;
 };
 
 /*
@@ -788,7 +788,7 @@ typedef enum {
 	AC_BUS_RESET		= 0x001	/* A SCSI bus reset occurred */
 } ac_code;
 
-typedef void ac_callback_t (void *softc, u_int32_t code,
+typedef void ac_callback_t (void *softc, uint32_t code,
 			    struct cam_path *path, void *args);
 
 /*
@@ -806,7 +806,7 @@ struct ac_contract {
 #define	AC_CONTRACT_DEV_CHG	1
 struct ac_device_changed {
 	u_int64_t	wwpn;
-	u_int32_t	port;
+	uint32_t	port;
 	target_id_t	target;
 	u_int8_t	arrived;
 };
@@ -814,7 +814,7 @@ struct ac_device_changed {
 /* Set Asynchronous Callback CCB */
 struct ccb_setasync {
 	struct ccb_hdr	 ccb_h;
-	u_int32_t	 event_enable;	/* Async Event enables */	
+	uint32_t	 event_enable;	/* Async Event enables */	
 	ac_callback_t	*callback;
 	void		*callback_arg;
 };
@@ -894,14 +894,14 @@ struct ccb_trans_settings_fc {
 #define	CTS_FC_VALID_SPEED		0x1000
 	u_int64_t	wwnn;		/* world wide node name */
 	u_int64_t 	wwpn;		/* world wide port name */
-	u_int32_t 	port;		/* 24 bit port id, if known */
-	u_int32_t 	bitrate;	/* Mbps */
+	uint32_t 	port;		/* 24 bit port id, if known */
+	uint32_t 	bitrate;	/* Mbps */
 };
 
 struct ccb_trans_settings_sas {
 	u_int     	valid;		/* Which fields to honor */
 #define	CTS_SAS_VALID_SPEED		0x1000
-	u_int32_t 	bitrate;	/* Mbps */
+	uint32_t 	bitrate;	/* Mbps */
 };
 
 struct ccb_trans_settings_pata {
@@ -975,9 +975,9 @@ struct ccb_trans_settings {
  */
 struct ccb_calc_geometry {
 	struct	  ccb_hdr ccb_h;
-	u_int32_t block_size;
+	uint32_t block_size;
 	u_int64_t volume_size;
-	u_int32_t cylinders;		
+	uint32_t cylinders;		
 	u_int8_t  heads;
 	u_int8_t  secs_per_track;
 };
@@ -1103,7 +1103,7 @@ struct ccb_eng_inq {
 	u_int16_t eng_num;	/* The engine number for this inquiry */
 	ei_type   eng_type;	/* Returned engine type */
 	ei_algo   eng_algo;	/* Returned engine algorithm type */
-	u_int32_t eng_memeory;	/* Returned engine memory size */
+	uint32_t eng_memeory;	/* Returned engine memory size */
 };
 
 struct ccb_eng_exec {	/* This structure must match SCSIIO size */
@@ -1111,13 +1111,13 @@ struct ccb_eng_exec {	/* This structure must match SCSIIO size */
 	u_int8_t  *pdrv_ptr;	/* Ptr used by the peripheral driver */
 	u_int8_t  *req_map;	/* Ptr for mapping info on the req. */
 	u_int8_t  *data_ptr;	/* Pointer to the data buf/SG list */
-	u_int32_t dxfer_len;	/* Data transfer length */
+	uint32_t dxfer_len;	/* Data transfer length */
 	u_int8_t  *engdata_ptr;	/* Pointer to the engine buffer data */
 	u_int16_t sglist_cnt;	/* Num of scatter gather list entries */
-	u_int32_t dmax_len;	/* Destination data maximum length */
-	u_int32_t dest_len;	/* Destination data length */
+	uint32_t dmax_len;	/* Destination data maximum length */
+	uint32_t dest_len;	/* Destination data length */
 	int32_t	  src_resid;	/* Source residual length: 2's comp */
-	u_int32_t timeout;	/* Timeout value */
+	uint32_t timeout;	/* Timeout value */
 	u_int16_t eng_num;	/* Engine number for this request */
 	u_int16_t vu_flags;	/* Vendor Unique flags */
 };
@@ -1214,26 +1214,26 @@ union ccb {
 
 __BEGIN_DECLS
 static __inline void
-cam_fill_csio(struct ccb_scsiio *csio, u_int32_t retries,
+cam_fill_csio(struct ccb_scsiio *csio, uint32_t retries,
 	      void (*cbfcnp)(struct cam_periph *, union ccb *),
-	      u_int32_t flags, u_int8_t tag_action,
-	      u_int8_t *data_ptr, u_int32_t dxfer_len,
+	      uint32_t flags, u_int8_t tag_action,
+	      u_int8_t *data_ptr, uint32_t dxfer_len,
 	      u_int8_t sense_len, u_int8_t cdb_len,
-	      u_int32_t timeout);
+	      uint32_t timeout);
 
 static __inline void
-cam_fill_ctio(struct ccb_scsiio *csio, u_int32_t retries,
+cam_fill_ctio(struct ccb_scsiio *csio, uint32_t retries,
 	      void (*cbfcnp)(struct cam_periph *, union ccb *),
-	      u_int32_t flags, u_int tag_action, u_int tag_id,
+	      uint32_t flags, u_int tag_action, u_int tag_id,
 	      u_int init_id, u_int scsi_status, u_int8_t *data_ptr,
-	      u_int32_t dxfer_len, u_int32_t timeout);
+	      uint32_t dxfer_len, uint32_t timeout);
 
 static __inline void
-cam_fill_ataio(struct ccb_ataio *ataio, u_int32_t retries,
+cam_fill_ataio(struct ccb_ataio *ataio, uint32_t retries,
 	      void (*cbfcnp)(struct cam_periph *, union ccb *),
-	      u_int32_t flags, u_int tag_action,
-	      u_int8_t *data_ptr, u_int32_t dxfer_len,
-	      u_int32_t timeout);
+	      uint32_t flags, u_int tag_action,
+	      u_int8_t *data_ptr, uint32_t dxfer_len,
+	      uint32_t timeout);
 
 static __inline void
 cam_fill_smpio(struct ccb_smpio *smpio, uint32_t retries, 
@@ -1243,12 +1243,12 @@ cam_fill_smpio(struct ccb_smpio *smpio, uint32_t retries,
 	       uint32_t timeout);
 
 static __inline void
-cam_fill_csio(struct ccb_scsiio *csio, u_int32_t retries,
+cam_fill_csio(struct ccb_scsiio *csio, uint32_t retries,
 	      void (*cbfcnp)(struct cam_periph *, union ccb *),
-	      u_int32_t flags, u_int8_t tag_action,
-	      u_int8_t *data_ptr, u_int32_t dxfer_len,
+	      uint32_t flags, u_int8_t tag_action,
+	      u_int8_t *data_ptr, uint32_t dxfer_len,
 	      u_int8_t sense_len, u_int8_t cdb_len,
-	      u_int32_t timeout)
+	      uint32_t timeout)
 {
 	csio->ccb_h.func_code = XPT_SCSI_IO;
 	csio->ccb_h.flags = flags;
@@ -1264,11 +1264,11 @@ cam_fill_csio(struct ccb_scsiio *csio, u_int32_t retries,
 }
 
 static __inline void
-cam_fill_ctio(struct ccb_scsiio *csio, u_int32_t retries,
+cam_fill_ctio(struct ccb_scsiio *csio, uint32_t retries,
 	      void (*cbfcnp)(struct cam_periph *, union ccb *),
-	      u_int32_t flags, u_int tag_action, u_int tag_id,
+	      uint32_t flags, u_int tag_action, u_int tag_id,
 	      u_int init_id, u_int scsi_status, u_int8_t *data_ptr,
-	      u_int32_t dxfer_len, u_int32_t timeout)
+	      uint32_t dxfer_len, uint32_t timeout)
 {
 	csio->ccb_h.func_code = XPT_CONT_TARGET_IO;
 	csio->ccb_h.flags = flags;
@@ -1285,11 +1285,11 @@ cam_fill_ctio(struct ccb_scsiio *csio, u_int32_t retries,
 }
 
 static __inline void
-cam_fill_ataio(struct ccb_ataio *ataio, u_int32_t retries,
+cam_fill_ataio(struct ccb_ataio *ataio, uint32_t retries,
 	      void (*cbfcnp)(struct cam_periph *, union ccb *),
-	      u_int32_t flags, u_int tag_action,
-	      u_int8_t *data_ptr, u_int32_t dxfer_len,
-	      u_int32_t timeout)
+	      uint32_t flags, u_int tag_action,
+	      u_int8_t *data_ptr, uint32_t dxfer_len,
+	      uint32_t timeout)
 {
 	ataio->ccb_h.func_code = XPT_ATA_IO;
 	ataio->ccb_h.flags = flags;

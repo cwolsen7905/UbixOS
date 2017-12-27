@@ -244,12 +244,12 @@ struct lacp_softc {
 	LIST_HEAD(, lacp_port)	lsc_ports;
 	struct lacp_portmap	lsc_pmap[2];
 	volatile u_int		lsc_activemap;
-	u_int32_t		lsc_hashkey;
+	uint32_t		lsc_hashkey;
 	struct {
-		u_int32_t	lsc_rx_test;
-		u_int32_t	lsc_tx_test;
+		uint32_t	lsc_rx_test;
+		uint32_t	lsc_tx_test;
 	} lsc_debug;
-	u_int32_t		lsc_strict_mode;
+	uint32_t		lsc_strict_mode;
 };
 
 #define	LACP_TYPE_ACTORINFO	1

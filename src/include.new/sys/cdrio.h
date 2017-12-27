@@ -86,19 +86,19 @@ struct cdr_cuesheet {
 };
 
 struct cdr_format_capacity {
-	u_int32_t blocks;
-	u_int32_t reserved:2;
-	u_int32_t type:6;
-	u_int32_t param:24;
+	uint32_t blocks;
+	uint32_t reserved:2;
+	uint32_t type:6;
+	uint32_t param:24;
 };
 
 struct cdr_format_capacities {
 	u_int8_t reserved1[3];
 	u_int8_t length;
-	u_int32_t blocks;
-	u_int32_t type:2;
-	u_int32_t reserved2:6;
-	u_int32_t block_size:24;
+	uint32_t blocks;
+	uint32_t type:2;
+	uint32_t reserved2:6;
+	uint32_t block_size:24;
 	struct cdr_format_capacity format[32];
 };
 

@@ -37,7 +37,7 @@ Notes:
 
 */
 
-u_int32_t vmm_getPhysicalAddr(uInt32 pageAddr) {
+uint32_t vmm_getPhysicalAddr(uInt32 pageAddr) {
   int             pageDirectoryIndex = 0x0, pageTableIndex = 0x0;
   uInt32         *pageTable = 0x0;
 
@@ -54,7 +54,7 @@ u_int32_t vmm_getPhysicalAddr(uInt32 pageAddr) {
   }
 
 
-u_int32_t vmm_getRealAddr(uint32_t addr) {
+uint32_t vmm_getRealAddr(uint32_t addr) {
   int       pageDirectoryIndex = 0x0, pageTableIndex = 0x0;
   uint32_t *pageTable = 0x0;
 

@@ -381,14 +381,14 @@ union nfsfh {
 typedef union nfsfh nfsfh_t;
 
 struct nfsv2_time {
-	u_int32_t	nfsv2_sec;
-	u_int32_t	nfsv2_usec;
+	uint32_t	nfsv2_sec;
+	uint32_t	nfsv2_usec;
 };
 typedef struct nfsv2_time	nfstime2;
 
 struct nfsv3_time {
-	u_int32_t	nfsv3_sec;
-	u_int32_t	nfsv3_nsec;
+	uint32_t	nfsv3_sec;
+	uint32_t	nfsv3_nsec;
 };
 typedef struct nfsv3_time	nfstime3;
 
@@ -397,7 +397,7 @@ typedef struct nfsv3_time	nfstime3;
  * protocol and to facilitate xdr conversion.
  */
 struct nfs_uquad {
-	u_int32_t	nfsuquad[2];
+	uint32_t	nfsuquad[2];
 };
 typedef	struct nfs_uquad	nfsuint64;
 
@@ -405,7 +405,7 @@ typedef	struct nfs_uquad	nfsuint64;
  * Used to convert between two u_longs and a u_quad_t.
  */
 union nfs_quadconvert {
-	u_int32_t	lval[2];
+	uint32_t	lval[2];
 	u_quad_t	qval;
 };
 typedef union nfs_quadconvert	nfsquad_t;
@@ -414,8 +414,8 @@ typedef union nfs_quadconvert	nfsquad_t;
  * NFS Version 3 special file number.
  */
 struct nfsv3_spec {
-	u_int32_t	specdata1;
-	u_int32_t	specdata2;
+	uint32_t	specdata1;
+	uint32_t	specdata2;
 };
 typedef	struct nfsv3_spec	nfsv3spec;
 
@@ -445,19 +445,19 @@ typedef struct nfsv4_changeinfo nfsv4changeinfo;
  *     NFSX_FATTR(v3) macro.
  */
 struct nfs_fattr {
-	u_int32_t	fa_type;
-	u_int32_t	fa_mode;
-	u_int32_t	fa_nlink;
-	u_int32_t	fa_uid;
-	u_int32_t	fa_gid;
+	uint32_t	fa_type;
+	uint32_t	fa_mode;
+	uint32_t	fa_nlink;
+	uint32_t	fa_uid;
+	uint32_t	fa_gid;
 	union {
 		struct {
-			u_int32_t	nfsv2fa_size;
-			u_int32_t	nfsv2fa_blocksize;
-			u_int32_t	nfsv2fa_rdev;
-			u_int32_t	nfsv2fa_blocks;
-			u_int32_t	nfsv2fa_fsid;
-			u_int32_t	nfsv2fa_fileid;
+			uint32_t	nfsv2fa_size;
+			uint32_t	nfsv2fa_blocksize;
+			uint32_t	nfsv2fa_rdev;
+			uint32_t	nfsv2fa_blocks;
+			uint32_t	nfsv2fa_fsid;
+			uint32_t	nfsv2fa_fileid;
 			nfstime2	nfsv2fa_atime;
 			nfstime2	nfsv2fa_mtime;
 			nfstime2	nfsv2fa_ctime;
@@ -617,10 +617,10 @@ struct nfsv4_fattr {
 #define FA4_SKIP(p)	((p) += 2)
 
 struct nfsv2_sattr {
-	u_int32_t	sa_mode;
-	u_int32_t	sa_uid;
-	u_int32_t	sa_gid;
-	u_int32_t	sa_size;
+	uint32_t	sa_mode;
+	uint32_t	sa_uid;
+	uint32_t	sa_gid;
+	uint32_t	sa_size;
 	nfstime2	sa_atime;
 	nfstime2	sa_mtime;
 };
@@ -629,25 +629,25 @@ struct nfsv2_sattr {
  * NFS Version 3 sattr structure for the new node creation case.
  */
 struct nfsv3_sattr {
-	u_int32_t	sa_modetrue;
-	u_int32_t	sa_mode;
-	u_int32_t	sa_uidfalse;
-	u_int32_t	sa_gidfalse;
-	u_int32_t	sa_sizefalse;
-	u_int32_t	sa_atimetype;
+	uint32_t	sa_modetrue;
+	uint32_t	sa_mode;
+	uint32_t	sa_uidfalse;
+	uint32_t	sa_gidfalse;
+	uint32_t	sa_sizefalse;
+	uint32_t	sa_atimetype;
 	nfstime3	sa_atime;
-	u_int32_t	sa_mtimetype;
+	uint32_t	sa_mtimetype;
 	nfstime3	sa_mtime;
 };
 
 struct nfs_statfs {
 	union {
 		struct {
-			u_int32_t	nfsv2sf_tsize;
-			u_int32_t	nfsv2sf_bsize;
-			u_int32_t	nfsv2sf_blocks;
-			u_int32_t	nfsv2sf_bfree;
-			u_int32_t	nfsv2sf_bavail;
+			uint32_t	nfsv2sf_tsize;
+			uint32_t	nfsv2sf_bsize;
+			uint32_t	nfsv2sf_blocks;
+			uint32_t	nfsv2sf_bfree;
+			uint32_t	nfsv2sf_bavail;
 		} sf_nfsv2;
 		struct {
 			nfsuint64	nfsv3sf_tbytes;
@@ -656,7 +656,7 @@ struct nfs_statfs {
 			nfsuint64	nfsv3sf_tfiles;
 			nfsuint64	nfsv3sf_ffiles;
 			nfsuint64	nfsv3sf_afiles;
-			u_int32_t	nfsv3sf_invarsec;
+			uint32_t	nfsv3sf_invarsec;
 		} sf_nfsv3;
 	} sf_un;
 };
@@ -675,25 +675,25 @@ struct nfs_statfs {
 #define sf_invarsec	sf_un.sf_nfsv3.nfsv3sf_invarsec
 
 struct nfsv3_fsinfo {
-	u_int32_t	fs_rtmax;
-	u_int32_t	fs_rtpref;
-	u_int32_t	fs_rtmult;
-	u_int32_t	fs_wtmax;
-	u_int32_t	fs_wtpref;
-	u_int32_t	fs_wtmult;
-	u_int32_t	fs_dtpref;
+	uint32_t	fs_rtmax;
+	uint32_t	fs_rtpref;
+	uint32_t	fs_rtmult;
+	uint32_t	fs_wtmax;
+	uint32_t	fs_wtpref;
+	uint32_t	fs_wtmult;
+	uint32_t	fs_dtpref;
 	nfsuint64	fs_maxfilesize;
 	nfstime3	fs_timedelta;
-	u_int32_t	fs_properties;
+	uint32_t	fs_properties;
 };
 
 struct nfsv3_pathconf {
-	u_int32_t	pc_linkmax;
-	u_int32_t	pc_namemax;
-	u_int32_t	pc_notrunc;
-	u_int32_t	pc_chownrestricted;
-	u_int32_t	pc_caseinsensitive;
-	u_int32_t	pc_casepreserving;
+	uint32_t	pc_linkmax;
+	uint32_t	pc_namemax;
+	uint32_t	pc_notrunc;
+	uint32_t	pc_chownrestricted;
+	uint32_t	pc_caseinsensitive;
+	uint32_t	pc_casepreserving;
 };
 
 #endif

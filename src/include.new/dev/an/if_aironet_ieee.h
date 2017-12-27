@@ -165,103 +165,103 @@ struct an_ltv_stats {
 	u_int16_t		an_len;			/* 0x00 */
 	u_int16_t		an_type;		/* 0xXX */
 	u_int16_t		an_spacer;		/* 0x02 */
-	u_int32_t		an_rx_overruns;		/* 0x04 */
-	u_int32_t		an_rx_plcp_csum_errs;	/* 0x08 */
-	u_int32_t		an_rx_plcp_format_errs;	/* 0x0C */
-	u_int32_t		an_rx_plcp_len_errs;	/* 0x10 */
-	u_int32_t		an_rx_mac_crc_errs;	/* 0x14 */
-	u_int32_t		an_rx_mac_crc_ok;	/* 0x18 */
-	u_int32_t		an_rx_wep_errs;		/* 0x1C */
-	u_int32_t		an_rx_wep_ok;		/* 0x20 */
-	u_int32_t		an_retry_long;		/* 0x24 */
-	u_int32_t		an_retry_short;		/* 0x28 */
-	u_int32_t		an_retry_max;		/* 0x2C */
-	u_int32_t		an_no_ack;		/* 0x30 */
-	u_int32_t		an_no_cts;		/* 0x34 */
-	u_int32_t		an_rx_ack_ok;		/* 0x38 */
-	u_int32_t		an_rx_cts_ok;		/* 0x3C */
-	u_int32_t		an_tx_ack_ok;		/* 0x40 */
-	u_int32_t		an_tx_rts_ok;		/* 0x44 */
-	u_int32_t		an_tx_cts_ok;		/* 0x48 */
-	u_int32_t		an_tx_lmac_mcasts;	/* 0x4C */
-	u_int32_t		an_tx_lmac_bcasts;	/* 0x50 */
-	u_int32_t		an_tx_lmac_ucast_frags;	/* 0x54 */
-	u_int32_t		an_tx_lmac_ucasts;	/* 0x58 */
-	u_int32_t		an_tx_beacons;		/* 0x5C */
-	u_int32_t		an_rx_beacons;		/* 0x60 */
-	u_int32_t		an_tx_single_cols;	/* 0x64 */
-	u_int32_t		an_tx_multi_cols;	/* 0x68 */
-	u_int32_t		an_tx_defers_no;	/* 0x6C */
-	u_int32_t		an_tx_defers_prot;	/* 0x70 */
-	u_int32_t		an_tx_defers_energy;	/* 0x74 */
-	u_int32_t		an_rx_dups;		/* 0x78 */
-	u_int32_t		an_rx_partial;		/* 0x7C */
-	u_int32_t		an_tx_too_old;		/* 0x80 */
-	u_int32_t		an_rx_too_old;		/* 0x84 */
-	u_int32_t		an_lostsync_max_retries;/* 0x88 */
-	u_int32_t		an_lostsync_missed_beacons;/* 0x8C */
-	u_int32_t		an_lostsync_arl_exceeded;/*0x90 */
-	u_int32_t		an_lostsync_deauthed;	/* 0x94 */
-	u_int32_t		an_lostsync_disassociated;/*0x98 */
-	u_int32_t		an_lostsync_tsf_timing;	/* 0x9C */
-	u_int32_t		an_tx_host_mcasts;	/* 0xA0 */
-	u_int32_t		an_tx_host_bcasts;	/* 0xA4 */
-	u_int32_t		an_tx_host_ucasts;	/* 0xA8 */
-	u_int32_t		an_tx_host_failed;	/* 0xAC */
-	u_int32_t		an_rx_host_mcasts;	/* 0xB0 */
-	u_int32_t		an_rx_host_bcasts;	/* 0xB4 */
-	u_int32_t		an_rx_host_ucasts;	/* 0xB8 */
-	u_int32_t		an_rx_host_discarded;	/* 0xBC */
-	u_int32_t		an_tx_hmac_mcasts;	/* 0xC0 */
-	u_int32_t		an_tx_hmac_bcasts;	/* 0xC4 */
-	u_int32_t		an_tx_hmac_ucasts;	/* 0xC8 */
-	u_int32_t		an_tx_hmac_failed;	/* 0xCC */
-	u_int32_t		an_rx_hmac_mcasts;	/* 0xD0 */
-	u_int32_t		an_rx_hmac_bcasts;	/* 0xD4 */
-	u_int32_t		an_rx_hmac_ucasts;	/* 0xD8 */
-	u_int32_t		an_rx_hmac_discarded;	/* 0xDC */
-	u_int32_t		an_tx_hmac_accepted;	/* 0xE0 */
-	u_int32_t		an_ssid_mismatches;	/* 0xE4 */
-	u_int32_t		an_ap_mismatches;	/* 0xE8 */
-	u_int32_t		an_rates_mismatches;	/* 0xEC */
-	u_int32_t		an_auth_rejects;	/* 0xF0 */
-	u_int32_t		an_auth_timeouts;	/* 0xF4 */
-	u_int32_t		an_assoc_rejects;	/* 0xF8 */
-	u_int32_t		an_assoc_timeouts;	/* 0xFC */
-	u_int32_t		an_reason_outside_table;/* 0x100 */
-	u_int32_t		an_reason1;		/* 0x104 */
-	u_int32_t		an_reason2;		/* 0x108 */
-	u_int32_t		an_reason3;		/* 0x10C */
-	u_int32_t		an_reason4;		/* 0x110 */
-	u_int32_t		an_reason5;		/* 0x114 */
-	u_int32_t		an_reason6;		/* 0x118 */
-	u_int32_t		an_reason7;		/* 0x11C */
-	u_int32_t		an_reason8;		/* 0x120 */
-	u_int32_t		an_reason9;		/* 0x124 */
-	u_int32_t		an_reason10;		/* 0x128 */
-	u_int32_t		an_reason11;		/* 0x12C */
-	u_int32_t		an_reason12;		/* 0x130 */
-	u_int32_t		an_reason13;		/* 0x134 */
-	u_int32_t		an_reason14;		/* 0x138 */
-	u_int32_t		an_reason15;		/* 0x13C */
-	u_int32_t		an_reason16;		/* 0x140 */
-	u_int32_t		an_reason17;		/* 0x144 */
-	u_int32_t		an_reason18;		/* 0x148 */
-	u_int32_t		an_reason19;		/* 0x14C */
-	u_int32_t		an_rx_mgmt_pkts;	/* 0x150 */
-	u_int32_t		an_tx_mgmt_pkts;	/* 0x154 */
-	u_int32_t		an_rx_refresh_pkts;	/* 0x158 */
-	u_int32_t		an_tx_refresh_pkts;	/* 0x15C */
-	u_int32_t		an_rx_poll_pkts;	/* 0x160 */
-	u_int32_t		an_tx_poll_pkts;	/* 0x164 */
-	u_int32_t		an_host_retries;	/* 0x168 */
-	u_int32_t		an_lostsync_hostreq;	/* 0x16C */
-	u_int32_t		an_host_tx_bytes;	/* 0x170 */
-	u_int32_t		an_host_rx_bytes;	/* 0x174 */
-	u_int32_t		an_uptime_usecs;	/* 0x178 */
-	u_int32_t		an_uptime_secs;		/* 0x17C */
-	u_int32_t		an_lostsync_better_ap;	/* 0x180 */
-	u_int32_t		an_rsvd[15];
+	uint32_t		an_rx_overruns;		/* 0x04 */
+	uint32_t		an_rx_plcp_csum_errs;	/* 0x08 */
+	uint32_t		an_rx_plcp_format_errs;	/* 0x0C */
+	uint32_t		an_rx_plcp_len_errs;	/* 0x10 */
+	uint32_t		an_rx_mac_crc_errs;	/* 0x14 */
+	uint32_t		an_rx_mac_crc_ok;	/* 0x18 */
+	uint32_t		an_rx_wep_errs;		/* 0x1C */
+	uint32_t		an_rx_wep_ok;		/* 0x20 */
+	uint32_t		an_retry_long;		/* 0x24 */
+	uint32_t		an_retry_short;		/* 0x28 */
+	uint32_t		an_retry_max;		/* 0x2C */
+	uint32_t		an_no_ack;		/* 0x30 */
+	uint32_t		an_no_cts;		/* 0x34 */
+	uint32_t		an_rx_ack_ok;		/* 0x38 */
+	uint32_t		an_rx_cts_ok;		/* 0x3C */
+	uint32_t		an_tx_ack_ok;		/* 0x40 */
+	uint32_t		an_tx_rts_ok;		/* 0x44 */
+	uint32_t		an_tx_cts_ok;		/* 0x48 */
+	uint32_t		an_tx_lmac_mcasts;	/* 0x4C */
+	uint32_t		an_tx_lmac_bcasts;	/* 0x50 */
+	uint32_t		an_tx_lmac_ucast_frags;	/* 0x54 */
+	uint32_t		an_tx_lmac_ucasts;	/* 0x58 */
+	uint32_t		an_tx_beacons;		/* 0x5C */
+	uint32_t		an_rx_beacons;		/* 0x60 */
+	uint32_t		an_tx_single_cols;	/* 0x64 */
+	uint32_t		an_tx_multi_cols;	/* 0x68 */
+	uint32_t		an_tx_defers_no;	/* 0x6C */
+	uint32_t		an_tx_defers_prot;	/* 0x70 */
+	uint32_t		an_tx_defers_energy;	/* 0x74 */
+	uint32_t		an_rx_dups;		/* 0x78 */
+	uint32_t		an_rx_partial;		/* 0x7C */
+	uint32_t		an_tx_too_old;		/* 0x80 */
+	uint32_t		an_rx_too_old;		/* 0x84 */
+	uint32_t		an_lostsync_max_retries;/* 0x88 */
+	uint32_t		an_lostsync_missed_beacons;/* 0x8C */
+	uint32_t		an_lostsync_arl_exceeded;/*0x90 */
+	uint32_t		an_lostsync_deauthed;	/* 0x94 */
+	uint32_t		an_lostsync_disassociated;/*0x98 */
+	uint32_t		an_lostsync_tsf_timing;	/* 0x9C */
+	uint32_t		an_tx_host_mcasts;	/* 0xA0 */
+	uint32_t		an_tx_host_bcasts;	/* 0xA4 */
+	uint32_t		an_tx_host_ucasts;	/* 0xA8 */
+	uint32_t		an_tx_host_failed;	/* 0xAC */
+	uint32_t		an_rx_host_mcasts;	/* 0xB0 */
+	uint32_t		an_rx_host_bcasts;	/* 0xB4 */
+	uint32_t		an_rx_host_ucasts;	/* 0xB8 */
+	uint32_t		an_rx_host_discarded;	/* 0xBC */
+	uint32_t		an_tx_hmac_mcasts;	/* 0xC0 */
+	uint32_t		an_tx_hmac_bcasts;	/* 0xC4 */
+	uint32_t		an_tx_hmac_ucasts;	/* 0xC8 */
+	uint32_t		an_tx_hmac_failed;	/* 0xCC */
+	uint32_t		an_rx_hmac_mcasts;	/* 0xD0 */
+	uint32_t		an_rx_hmac_bcasts;	/* 0xD4 */
+	uint32_t		an_rx_hmac_ucasts;	/* 0xD8 */
+	uint32_t		an_rx_hmac_discarded;	/* 0xDC */
+	uint32_t		an_tx_hmac_accepted;	/* 0xE0 */
+	uint32_t		an_ssid_mismatches;	/* 0xE4 */
+	uint32_t		an_ap_mismatches;	/* 0xE8 */
+	uint32_t		an_rates_mismatches;	/* 0xEC */
+	uint32_t		an_auth_rejects;	/* 0xF0 */
+	uint32_t		an_auth_timeouts;	/* 0xF4 */
+	uint32_t		an_assoc_rejects;	/* 0xF8 */
+	uint32_t		an_assoc_timeouts;	/* 0xFC */
+	uint32_t		an_reason_outside_table;/* 0x100 */
+	uint32_t		an_reason1;		/* 0x104 */
+	uint32_t		an_reason2;		/* 0x108 */
+	uint32_t		an_reason3;		/* 0x10C */
+	uint32_t		an_reason4;		/* 0x110 */
+	uint32_t		an_reason5;		/* 0x114 */
+	uint32_t		an_reason6;		/* 0x118 */
+	uint32_t		an_reason7;		/* 0x11C */
+	uint32_t		an_reason8;		/* 0x120 */
+	uint32_t		an_reason9;		/* 0x124 */
+	uint32_t		an_reason10;		/* 0x128 */
+	uint32_t		an_reason11;		/* 0x12C */
+	uint32_t		an_reason12;		/* 0x130 */
+	uint32_t		an_reason13;		/* 0x134 */
+	uint32_t		an_reason14;		/* 0x138 */
+	uint32_t		an_reason15;		/* 0x13C */
+	uint32_t		an_reason16;		/* 0x140 */
+	uint32_t		an_reason17;		/* 0x144 */
+	uint32_t		an_reason18;		/* 0x148 */
+	uint32_t		an_reason19;		/* 0x14C */
+	uint32_t		an_rx_mgmt_pkts;	/* 0x150 */
+	uint32_t		an_tx_mgmt_pkts;	/* 0x154 */
+	uint32_t		an_rx_refresh_pkts;	/* 0x158 */
+	uint32_t		an_tx_refresh_pkts;	/* 0x15C */
+	uint32_t		an_rx_poll_pkts;	/* 0x160 */
+	uint32_t		an_tx_poll_pkts;	/* 0x164 */
+	uint32_t		an_host_retries;	/* 0x168 */
+	uint32_t		an_lostsync_hostreq;	/* 0x16C */
+	uint32_t		an_host_tx_bytes;	/* 0x170 */
+	uint32_t		an_host_rx_bytes;	/* 0x174 */
+	uint32_t		an_uptime_usecs;	/* 0x178 */
+	uint32_t		an_uptime_secs;		/* 0x17C */
+	uint32_t		an_lostsync_better_ap;	/* 0x180 */
+	uint32_t		an_rsvd[15];
 };
 
 /*
@@ -620,7 +620,7 @@ struct an_ltv_wepkey {
  * Receive frame structure.
  */
 struct an_rxframe {
-	u_int32_t		an_rx_time;		/* 0x00 */
+	uint32_t		an_rx_time;		/* 0x00 */
 	u_int16_t		an_rx_status;		/* 0x04 */
 	u_int16_t		an_rx_payload_len;	/* 0x06 */
 	u_int8_t		an_rsvd0;		/* 0x08 */

@@ -108,7 +108,7 @@ struct flowinfo_in {
 	struct in_addr	fi_src;		/* src address */
 	u_int16_t	fi_dport;	/* dest port */
 	u_int16_t	fi_sport;	/* src port */
-	u_int32_t	fi_gpi;		/* generalized port id for ipsec */
+	uint32_t	fi_gpi;		/* generalized port id for ipsec */
 	u_int8_t	_pad[28];	/* make the size equal to
 					   flowinfo_in6 */
 };
@@ -119,10 +119,10 @@ struct flowinfo_in6 {
 	u_char		fi6_family;	/* AF_INET6 */
 	u_int8_t	fi6_proto;	/* IPPROTO_XXX */
 	u_int8_t	fi6_tclass;	/* traffic class */
-	u_int32_t	fi6_flowlabel;	/* ipv6 flowlabel */
+	uint32_t	fi6_flowlabel;	/* ipv6 flowlabel */
 	u_int16_t	fi6_dport;	/* dest port */
 	u_int16_t	fi6_sport;	/* src port */
-	u_int32_t	fi6_gpi;	/* generalized port id */
+	uint32_t	fi6_gpi;	/* generalized port id */
 	struct in6_addr fi6_dst;	/* dest address */
 	struct in6_addr fi6_src;	/* src address */
 };

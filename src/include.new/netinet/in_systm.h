@@ -47,9 +47,9 @@
  * represent the types with the bytes in ``high-ender'' order.
  */
 typedef u_int16_t n_short;		/* short as received from the net */
-typedef u_int32_t n_long;		/* long as received from the net */
+typedef uint32_t n_long;		/* long as received from the net */
 
-typedef	u_int32_t n_time;		/* ms since 00:00 GMT, byte rev */
+typedef	uint32_t n_time;		/* ms since 00:00 GMT, byte rev */
 
 #ifdef _KERNEL
 uint32_t	 iptime(void);

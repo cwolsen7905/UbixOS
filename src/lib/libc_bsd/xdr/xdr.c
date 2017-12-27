@@ -203,7 +203,7 @@ xdr_u_long(xdrs, ulp)
 
 /*
  * XDR 32-bit integers
- * same as xdr_u_int32_t - open coded to save a proc call!
+ * same as xdr_uint32_t - open coded to save a proc call!
  */
 bool_t
 xdr_int32_t(xdrs, int32_p)
@@ -237,9 +237,9 @@ xdr_int32_t(xdrs, int32_p)
  * same as xdr_int32_t - open coded to save a proc call!
  */
 bool_t
-xdr_u_int32_t(xdrs, u_int32_p)
+xdr_uint32_t(xdrs, u_int32_p)
 	XDR *xdrs;
-	u_int32_t *u_int32_p;
+	uint32_t *u_int32_p;
 {
 	u_long l;
 
@@ -253,7 +253,7 @@ xdr_u_int32_t(xdrs, u_int32_p)
 		if (!XDR_GETLONG(xdrs, (long *)&l)) {
 			return (FALSE);
 		}
-		*u_int32_p = (u_int32_t) l;
+		*u_int32_p = (uint32_t) l;
 		return (TRUE);
 
 	case XDR_FREE:
@@ -284,7 +284,7 @@ xdr_uint32_t(xdrs, u_int32_p)
 		if (!XDR_GETLONG(xdrs, (long *)&l)) {
 			return (FALSE);
 		}
-		*u_int32_p = (u_int32_t) l;
+		*u_int32_p = (uint32_t) l;
 		return (TRUE);
 
 	case XDR_FREE:

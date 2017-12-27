@@ -89,12 +89,12 @@ typedef struct {
 
 #define NGM_BT3C_NODE_GET_STAT	6		/* get statistic */
 typedef struct {
-	u_int32_t	pckts_recv;		/* # of packets received */
-	u_int32_t	bytes_recv;		/* # of bytes received */
-	u_int32_t	pckts_sent;		/* # of packets sent */
-	u_int32_t	bytes_sent;		/* # of bytes sent */
-	u_int32_t	oerrors;		/* # of output errors */
-	u_int32_t	ierrors;		/* # of input errors */
+	uint32_t	pckts_recv;		/* # of packets received */
+	uint32_t	bytes_recv;		/* # of bytes received */
+	uint32_t	pckts_sent;		/* # of packets sent */
+	uint32_t	bytes_sent;		/* # of bytes sent */
+	uint32_t	oerrors;		/* # of output errors */
+	uint32_t	ierrors;		/* # of input errors */
 } ng_bt3c_node_stat_ep;
 
 #define NGM_BT3C_NODE_RESET_STAT 7		/* reset statistic */
@@ -102,7 +102,7 @@ typedef struct {
 #define NGM_BT3C_NODE_DOWNLOAD_FIRMWARE	8	/* download firmware */
 
 typedef struct {
-	u_int32_t	block_address;
+	uint32_t	block_address;
 	u_int16_t	block_size;		/* in words */
 	u_int16_t	block_alignment;	/* in bytes */
 } ng_bt3c_firmware_block_ep;

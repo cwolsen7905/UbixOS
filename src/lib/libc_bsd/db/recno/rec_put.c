@@ -193,7 +193,7 @@ __rec_iput(BTREE *t, recno_t nrec, const DBT *data, u_int flags)
 	PAGE *h;
 	indx_t idx, nxtindex;
 	pgno_t pg;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	int dflags, status;
 	char *dest, db[NOVFLSIZE];
 
@@ -209,7 +209,7 @@ __rec_iput(BTREE *t, recno_t nrec, const DBT *data, u_int flags)
 		tdata.data = db;
 		tdata.size = NOVFLSIZE;
 		*(pgno_t *)db = pg;
-		*(u_int32_t *)(db + sizeof(pgno_t)) = data->size;
+		*(uint32_t *)(db + sizeof(pgno_t)) = data->size;
 		dflags = P_BIGDATA;
 		data = &tdata;
 	} else
@@ -251,7 +251,7 @@ __rec_iput(BTREE *t, recno_t nrec, const DBT *data, u_int flags)
 	 * the offset array, shift the pointers up.
 	 */
 	nbytes = NRLEAFDBT(data->size);
-	if ((u_int32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t)) {
+	if ((uint32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t)) {
 		status = __bt_split(t, h, NULL, data, dflags, nbytes, idx);
 		if (status == RET_SUCCESS)
 			++t->bt_nrecs;

@@ -39,12 +39,12 @@ struct timespec;
  * Semaphore definitions.
  */
 struct sem {
-#define SEM_MAGIC       ((u_int32_t) 0x09fa4012)
-        u_int32_t       magic;
+#define SEM_MAGIC       ((uint32_t) 0x09fa4012)
+        uint32_t       magic;
         pthread_mutex_t lock;
         pthread_cond_t  gtzero;
-        u_int32_t       count;
-        u_int32_t       nwaiters;
+        uint32_t       count;
+        uint32_t       nwaiters;
 #define SEM_USER        (NULL)
         semid_t         semid;  /* semaphore id if kernel (shared) semaphore */
         int             syssem; /* 1 if kernel (shared) semaphore */

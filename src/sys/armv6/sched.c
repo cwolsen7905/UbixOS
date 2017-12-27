@@ -155,7 +155,7 @@ kTask_t *schedNewTask() {
   /* HACK */
   for (i=0;i<3;i++) {
     fp = (void *)kmalloc(sizeof(struct file));
-    tmpTask->td.o_files[i] = (u_int32_t)fp;
+    tmpTask->td.o_files[i] = (uint32_t)fp;
     fp->f_flag = 0x4;
     }
 

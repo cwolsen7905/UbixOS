@@ -186,7 +186,7 @@
 #define EHCI_PAGE_MASK(x) ((x) & 0xfff)
 #endif
 
-typedef u_int32_t ehci_link_t;
+typedef uint32_t ehci_link_t;
 #define EHCI_LINK_TERMINATE	0x00000001
 #define EHCI_LINK_TYPE(x)	((x) & 0x00000006)
 #define  EHCI_LINK_ITD		0x0
@@ -195,7 +195,7 @@ typedef u_int32_t ehci_link_t;
 #define  EHCI_LINK_FSTN		0x6
 #define EHCI_LINK_ADDR(x)	((x) &~ 0x1f)
 
-typedef u_int32_t ehci_physaddr_t;
+typedef uint32_t ehci_physaddr_t;
 
 /* Isochronous Transfer Descriptor */
 typedef struct {
@@ -216,7 +216,7 @@ typedef struct {
 typedef struct {
 	ehci_link_t	qtd_next;
 	ehci_link_t	qtd_altnext;
-	u_int32_t	qtd_status;
+	uint32_t	qtd_status;
 #define EHCI_QTD_GET_STATUS(x)	(((x) >>  0) & 0xff)
 #define EHCI_QTD_SET_STATUS(x) ((x) <<  0)
 #define  EHCI_QTD_ACTIVE	0x80
@@ -252,7 +252,7 @@ typedef struct {
 /* Queue Head */
 typedef struct {
 	ehci_link_t	qh_link;
-	u_int32_t	qh_endp;
+	uint32_t	qh_endp;
 #define EHCI_QH_GET_ADDR(x)	(((x) >>  0) & 0x7f) /* endpoint addr */
 #define EHCI_QH_SET_ADDR(x)	(x)
 #define EHCI_QH_ADDRMASK	0x0000007f
@@ -276,7 +276,7 @@ typedef struct {
 #define EHCI_QH_CTL		0x08000000
 #define EHCI_QH_GET_NRL(x)	(((x) >> 28) & 0x0f) /* NAK reload */
 #define EHCI_QH_SET_NRL(x)	((x) << 28)
-	u_int32_t	qh_endphub;
+	uint32_t	qh_endphub;
 #define EHCI_QH_GET_SMASK(x)	(((x) >>  0) & 0xff) /* intr sched mask */
 #define EHCI_QH_SET_SMASK(x)	((x) <<  0)
 #define EHCI_QH_GET_CMASK(x)	(((x) >>  8) & 0xff) /* split completion mask */

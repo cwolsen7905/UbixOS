@@ -135,10 +135,9 @@ struct sys_getcwd_args {
     char buf_l_[PADL_( char * )];
     char *buf;
     char buf_r_[PADR_( char * )];
-
-    char size_l_[PADL_( u_int32_t )];
-    u_int32_t size;
-    char size_r_[PADR_( u_int32_t )];
+    char size_l_[PADL_( uint32_t )];
+    uint32_t size;
+    char size_r_[PADR_( uint32_t )];
 };
 
 struct sys_setUID_args {
@@ -292,12 +291,13 @@ struct sysctl_args {
     u_int namelen;
     char namelen_r_[PADR_( u_int )];
     char old_l_[PADL_( void * )];
-    void * old;
+    void *old;
     char old_r_[PADR_( void * )];
     char oldlenp_l_[PADL_( size_t * )];
     size_t * oldlenp;
     char oldlenp_r_[PADR_( size_t * )];
-    char new_l_[PADL_( void * )];void * new;
+    char new_l_[PADL_( void * )];
+    void * new;
     char new_r_[PADR_( void * )];
     char newlen_l_[PADL_( size_t )];
     size_t newlen;

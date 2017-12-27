@@ -50,7 +50,7 @@ extern void key_addref(struct secpolicy *sp);
 extern	int key_havesp(u_int dir);
 extern struct secpolicy *key_allocsp(struct secpolicyindex *, u_int,
 	const char*, int);
-extern struct secpolicy *key_allocsp2(u_int32_t spi, union sockaddr_union *dst,
+extern struct secpolicy *key_allocsp2(uint32_t spi, union sockaddr_union *dst,
 	u_int8_t proto, u_int dir, const char*, int);
 extern struct secpolicy *key_newsp(const char*, int);
 #if 0
@@ -74,7 +74,7 @@ extern void _key_freesp(struct secpolicy **, const char*, int);
 #define	KEY_FREESP(spp)						\
 	_key_freesp(spp, __FILE__, __LINE__)
 
-extern struct secasvar *key_allocsa(union sockaddr_union *, u_int, u_int32_t,
+extern struct secasvar *key_allocsa(union sockaddr_union *, u_int, uint32_t,
 	const char*, int);
 extern void key_addrefsa(struct secasvar *, const char*, int);
 extern void key_freesav(struct secasvar **, const char*, int);

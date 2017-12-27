@@ -144,11 +144,11 @@ rec_rdelete(BTREE *t, recno_t nrec)
  *	RET_SUCCESS, RET_ERROR.
  */
 int
-__rec_dleaf(BTREE *t, PAGE *h, u_int32_t idx)
+__rec_dleaf(BTREE *t, PAGE *h, uint32_t idx)
 {
 	RLEAF *rl;
 	indx_t *ip, cnt, offset;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	char *from;
 	void *to;
 

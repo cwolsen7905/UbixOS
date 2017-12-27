@@ -336,7 +336,7 @@ static __inline u_long ulmin(u_long a, u_long b) { return (a < b ? a : b); }
 
 /* swaps (undocumented, useful?) */
 #ifdef __i386__
-extern u_int32_t	bswap32(u_int32_t x);
+extern uint32_t	bswap32(uint32_t x);
 extern u_int64_t	bswap64(u_int64_t x);
 #endif
 

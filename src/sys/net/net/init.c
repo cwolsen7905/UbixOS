@@ -58,6 +58,7 @@ int net_init() {
   IP4_ADDR(&netmask, 255, 255, 0, 0);
 
   netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+  netif_set_default(&netif);
 
   //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
   irqEnable(0x9);

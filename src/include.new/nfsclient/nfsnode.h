@@ -77,7 +77,7 @@ struct nfsdmap {
 #define ndm4_cookies	ndm_un1.ndmu4_cookies
 
 struct nfs_accesscache {
-	u_int32_t		mode;		/* ACCESS mode cache */
+	uint32_t		mode;		/* ACCESS mode cache */
 	uid_t			uid;		/* credentials having mode */
 	time_t			stamp;		/* mode cache timestamp */
 };

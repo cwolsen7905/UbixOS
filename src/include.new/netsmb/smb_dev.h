@@ -99,7 +99,7 @@ struct smbioc_rq {
 	u_short		ioc_rbc;
 	u_int8_t	ioc_errclass;
 	u_int16_t	ioc_serror;
-	u_int32_t	ioc_error;
+	uint32_t	ioc_error;
 };
 
 struct smbioc_t2rq {

@@ -91,7 +91,7 @@ int sys_fork( struct thread *td, struct sys_fork_args *args ) {
 
   kprintf( "Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id );
 
-  newProcess->tss.cr3 = (uInt32) vmmCopyVirtualSpace( newProcess->id );
+  newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace( newProcess->id );
   //kprintf( "Copied Mem Space!\n" );
 
   newProcess->state = FORK;
@@ -166,7 +166,7 @@ int fork_copyProcess( struct taskStruct *newProcess, long ebp, long edi, long es
 
   /* Create A Copy Of The VM Space For New Task */
   kprintf( "Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr );
-  newProcess->tss.cr3 = (uInt32) vmmCopyVirtualSpace( newProcess->id );
+  newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace( newProcess->id );
   //kprintf( "Copied Mem Space!\n" );
 
   newProcess->state = FORK;

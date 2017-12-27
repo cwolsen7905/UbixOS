@@ -152,11 +152,11 @@ extern int	nfsrvw_procrastinate_v3;
 extern int 	nfsrv_numnfsd;
 
 /* Various values converted to XDR form. */
-extern u_int32_t nfsrv_nfs_false, nfsrv_nfs_true, nfsrv_nfs_xdrneg1,
+extern uint32_t nfsrv_nfs_false, nfsrv_nfs_true, nfsrv_nfs_xdrneg1,
 	nfsrv_nfs_prog;
-extern u_int32_t nfsrv_rpc_reply, nfsrv_rpc_msgdenied, nfsrv_rpc_mismatch,
+extern uint32_t nfsrv_rpc_reply, nfsrv_rpc_msgdenied, nfsrv_rpc_mismatch,
 	nfsrv_rpc_vers;
-extern u_int32_t nfsrv_rpc_auth_unix, nfsrv_rpc_msgaccepted, nfsrv_rpc_call,
+extern uint32_t nfsrv_rpc_auth_unix, nfsrv_rpc_msgaccepted, nfsrv_rpc_call,
 	nfsrv_rpc_autherr;
 
 /* Procedure table data */
@@ -173,7 +173,7 @@ extern int32_t (*nfsrv3_procs[NFS_NPROCS])(struct nfsrv_descript *nd,
 #define	NFS_WDELAYHASHSIZ 16	/* and with this */
 #endif
 #define	NWDELAYHASH(sock, f) \
-	(&(sock)->ns_wdelayhashtbl[(*((u_int32_t *)(f))) % NFS_WDELAYHASHSIZ])
+	(&(sock)->ns_wdelayhashtbl[(*((uint32_t *)(f))) % NFS_WDELAYHASHSIZ])
 
 /*
  * This structure is used by the server for describing each request.
@@ -185,7 +185,7 @@ struct nfsrv_descript {
 	struct sockaddr		*nd_nam;	/* and socket addr */
 	struct sockaddr		*nd_nam2;	/* return socket addr */
 	caddr_t			nd_dpos;	/* Current dissect pos */
-	u_int32_t		nd_procnum;	/* RPC # */
+	uint32_t		nd_procnum;	/* RPC # */
 	int			nd_stable;	/* storage type */
 	int			nd_flag;	/* nd_flag */
 	int			nd_repstat;	/* Reply status */

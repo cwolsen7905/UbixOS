@@ -89,7 +89,7 @@ int  smbfs_inactive(struct vop_inactive_args *);
 int  smbfs_reclaim(struct vop_reclaim_args *);
 int smbfs_nget(struct mount *mp, struct vnode *dvp, const char *name, int nmlen,
 	struct smbfattr *fap, struct vnode **vpp);
-u_int32_t smbfs_hash(const u_char *name, int nmlen);
+uint32_t smbfs_hash(const u_char *name, int nmlen);
 
 int  smbfs_getpages(struct vop_getpages_args *);
 int  smbfs_putpages(struct vop_putpages_args *);

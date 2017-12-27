@@ -103,7 +103,7 @@ typedef struct ohci_softc {
 	ohci_soft_ed_t *sc_eds[OHCI_NO_EDS];
 	u_int sc_bws[OHCI_NO_INTRS];
 
-	u_int32_t sc_eintrs;		/* enabled interrupts */
+	uint32_t sc_eintrs;		/* enabled interrupts */
 
 	ohci_soft_ed_t *sc_isoc_head;
 	ohci_soft_ed_t *sc_ctrl_head;
@@ -138,8 +138,8 @@ typedef struct ohci_softc {
 	void *sc_powerhook;		/* cookie from power hook */
 	void *sc_shutdownhook;		/* cookie from shutdown hook */
 #endif
-	u_int32_t sc_control;		/* Preserved during suspend/standby */
-	u_int32_t sc_intre;
+	uint32_t sc_control;		/* Preserved during suspend/standby */
+	uint32_t sc_intre;
 
 	u_int sc_overrun_cnt;
 	struct timeval sc_overrun_ntc;
@@ -155,7 +155,7 @@ typedef struct ohci_softc {
 struct ohci_xfer {
 	struct usbd_xfer xfer;
 	struct usb_task	abort_task;
-	u_int32_t ohci_xfer_flags;
+	uint32_t ohci_xfer_flags;
 };
 #define OHCI_ISOC_DIRTY  0x01
 #define OHCI_XFER_ABORTING	0x02	/* xfer is aborting. */

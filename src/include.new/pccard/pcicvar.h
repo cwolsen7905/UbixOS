@@ -43,8 +43,8 @@ enum pcic_intr_way { pcic_iw_isa = 1, pcic_iw_pci = 2 };
 
 struct pcic_softc 
 {
-	u_int32_t		slotmask;/* Mask of valid slots */
-	u_int32_t		flags;	/* Interesting flags */
+	uint32_t		slotmask;/* Mask of valid slots */
+	uint32_t		flags;	/* Interesting flags */
 #define PCIC_AB_POWER	   0x00000001	/* Use old A/B step power */
 #define PCIC_DF_POWER	   0x00000002	/* Uses DF step regs  */
 #define PCIC_PD_POWER	   0x00000004	/* Uses CL-PD regs  */
@@ -102,7 +102,7 @@ int pcic_deactivate_resource(device_t dev, device_t child, int type, int rid,
 void pcic_dealloc(device_t dev);
 void pcic_do_stat_delta(struct pcic_slot *sp);
 int pcic_get_memory_offset(device_t bus, device_t child, int rid,
-    u_int32_t *offset);
+    uint32_t *offset);
 int pcic_get_res_flags(device_t bus, device_t child, int restype, int rid,
     u_long *value);
 unsigned char pcic_getb_io(struct pcic_slot *sp, int reg);
@@ -111,9 +111,9 @@ int		pcic_isa_intr1(void *);
 pcic_intr_mapirq_t pcic_isa_mapirq;
 void pcic_putb_io(struct pcic_slot *sp, int reg, unsigned char val);
 int pcic_set_memory_offset(device_t bus, device_t child, int rid,
-    u_int32_t offset
+    uint32_t offset
 #if __FreeBSD_version >= 500000
-    , u_int32_t *deltap
+    , uint32_t *deltap
 #endif
     );
 int pcic_set_res_flags(device_t bus, device_t child, int restype, int rid,

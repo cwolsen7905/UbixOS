@@ -38,7 +38,7 @@
 
 #include <nfs/nfs_common.h>
 
-#define	nfsv2tov_type(a)	nv2tov_type[fxdr_unsigned(u_int32_t,(a))&0x7]
+#define	nfsv2tov_type(a)	nv2tov_type[fxdr_unsigned(uint32_t,(a))&0x7]
 
 struct ucred;
 struct vnode;
@@ -52,7 +52,7 @@ struct vnode;
 /*
  * First define what the actual subs. return
  */
-u_int32_t nfs_xid_gen(void);
+uint32_t nfs_xid_gen(void);
 
 /* *********************************** */
 /* Request generation phase macros */

@@ -65,14 +65,14 @@ typedef struct ng_btsocket_l2cap_rtentry *	ng_btsocket_l2cap_rtentry_p;
 struct ng_btsocket_l2cap_raw_pcb {
 	struct socket				*so;	/* socket */
 
-	u_int32_t				 flags; /* flags */
+	uint32_t				 flags; /* flags */
 #define NG_BTSOCKET_L2CAP_RAW_PRIVILEGED	(1 << 0)
 
 	bdaddr_t				 src;	/* source address */
 	bdaddr_t				 dst;	/* dest address */
 	ng_btsocket_l2cap_rtentry_p		 rt;    /* routing info */
 
-	u_int32_t				 token;	/* message token */
+	uint32_t				 token;	/* message token */
 	struct ng_mesg				*msg;   /* message */
 
 	struct mtx				 pcb_mtx; /* pcb mutex */
@@ -164,7 +164,7 @@ struct ng_btsocket_l2cap_pcb {
 
 	struct callout_handle		 timo;       /* timeout */
 
-	u_int32_t			 token;	     /* message token */
+	uint32_t			 token;	     /* message token */
 	ng_btsocket_l2cap_rtentry_p	 rt;         /* routing info */
 
 	struct mtx			 pcb_mtx;    /* pcb mutex */

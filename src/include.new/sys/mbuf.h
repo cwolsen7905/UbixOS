@@ -110,7 +110,7 @@ struct m_tag {
 	SLIST_ENTRY(m_tag)	m_tag_link;	/* List of packet tags */
 	u_int16_t		m_tag_id;	/* Tag ID */
 	u_int16_t		m_tag_len;	/* Length of data */
-	u_int32_t		m_tag_cookie;	/* ABI/Module ID */
+	uint32_t		m_tag_cookie;	/* ABI/Module ID */
 	void			(*m_tag_free)(struct m_tag *);
 };
 
@@ -1053,11 +1053,11 @@ struct mbuf	*m_unshare(struct mbuf *, int);
 /* Specific cookies and tags. */
 
 /* Packet tag routines. */
-struct m_tag	*m_tag_alloc(u_int32_t, int, int, int);
+struct m_tag	*m_tag_alloc(uint32_t, int, int, int);
 void		 m_tag_delete(struct mbuf *, struct m_tag *);
 void		 m_tag_delete_chain(struct mbuf *, struct m_tag *);
 void		 m_tag_free_default(struct m_tag *);
-struct m_tag	*m_tag_locate(struct mbuf *, u_int32_t, int, struct m_tag *);
+struct m_tag	*m_tag_locate(struct mbuf *, uint32_t, int, struct m_tag *);
 struct m_tag	*m_tag_copy(struct m_tag *, int);
 int		 m_tag_copy_chain(struct mbuf *, struct mbuf *, int);
 void		 m_tag_delete_nonpersistent(struct mbuf *);
@@ -1079,7 +1079,7 @@ m_tag_init(struct mbuf *m)
  * XXX probably should be called m_tag_init, but that was already taken.
  */
 static __inline void
-m_tag_setup(struct m_tag *t, u_int32_t cookie, int type, int len)
+m_tag_setup(struct m_tag *t, uint32_t cookie, int type, int len)
 {
 
 	t->m_tag_id = type;

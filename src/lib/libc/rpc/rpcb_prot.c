@@ -59,10 +59,10 @@ xdr_rpcb(xdrs, objp)
 	XDR *xdrs;
 	RPCB *objp;
 {
-	if (!xdr_u_int32_t(xdrs, &objp->r_prog)) {
+	if (!xdr_uint32_t(xdrs, &objp->r_prog)) {
 		return (FALSE);
 	}
-	if (!xdr_u_int32_t(xdrs, &objp->r_vers)) {
+	if (!xdr_uint32_t(xdrs, &objp->r_vers)) {
 		return (FALSE);
 	}
 	if (!xdr_string(xdrs, &objp->r_netid, (u_int)~0)) {
@@ -177,7 +177,7 @@ xdr_rpcb_entry(xdrs, objp)
 	if (!xdr_string(xdrs, &objp->r_nc_netid, (u_int)~0)) {
 		return (FALSE);
 	}
-	if (!xdr_u_int32_t(xdrs, &objp->r_nc_semantics)) {
+	if (!xdr_uint32_t(xdrs, &objp->r_nc_semantics)) {
 		return (FALSE);
 	}
 	if (!xdr_string(xdrs, &objp->r_nc_protofmly, (u_int)~0)) {
@@ -256,13 +256,13 @@ xdr_rpcb_rmtcallargs(xdrs, p)
 
 	buf = XDR_INLINE(xdrs, 3 * BYTES_PER_XDR_UNIT);
 	if (buf == NULL) {
-		if (!xdr_u_int32_t(xdrs, &objp->prog)) {
+		if (!xdr_uint32_t(xdrs, &objp->prog)) {
 			return (FALSE);
 		}
-		if (!xdr_u_int32_t(xdrs, &objp->vers)) {
+		if (!xdr_uint32_t(xdrs, &objp->vers)) {
 			return (FALSE);
 		}
-		if (!xdr_u_int32_t(xdrs, &objp->proc)) {
+		if (!xdr_uint32_t(xdrs, &objp->proc)) {
 			return (FALSE);
 		}
 	} else {
@@ -321,7 +321,7 @@ xdr_netbuf(xdrs, objp)
 {
 	bool_t dummy;
 
-	if (!xdr_u_int32_t(xdrs, (u_int32_t *) &objp->maxlen)) {
+	if (!xdr_uint32_t(xdrs, (uint32_t *) &objp->maxlen)) {
 		return (FALSE);
 	}
 	dummy = xdr_bytes(xdrs, (char **)&(objp->buf),

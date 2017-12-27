@@ -105,8 +105,8 @@
       </sectiondef>
       <sectiondef kind="typedef">
       <memberdef kind="typedef" id="bcopy_8c_1e8e8d04e2eddef3a5f57fe2f28c655fa" prot="public" static="no">
-        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref></type>
-        <definition>typedef u_int32_t uintptr_t</definition>
+        <type><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref></type>
+        <definition>typedef uint32_t uintptr_t</definition>
         <argsstring></argsstring>
         <name>uintptr_t</name>
         <briefdescription>
@@ -213,7 +213,7 @@
 <codeline lineno="43"><highlight class="comment"><sp/>*<sp/>SO<sp/>THAT<sp/>wmask<sp/>BELOW<sp/>IS<sp/>ALL<sp/>ONES</highlight></codeline>
 <codeline lineno="44"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="45" refid="bcopy_8c_1afc9a69535613ac225df2d6195518116" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="bcopy_8c_1afc9a69535613ac225df2d6195518116" kindref="member">word</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>&quot;word&quot;<sp/>used<sp/>for<sp/>optimal<sp/>copy<sp/>speed<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="46" refid="bcopy_8c_1e8e8d04e2eddef3a5f57fe2f28c655fa" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref><sp/><ref refid="bcopy_8c_1e8e8d04e2eddef3a5f57fe2f28c655fa" kindref="member">uintptr_t</ref>;</highlight></codeline>
+<codeline lineno="46" refid="bcopy_8c_1e8e8d04e2eddef3a5f57fe2f28c655fa" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><ref refid="bcopy_8c_1e8e8d04e2eddef3a5f57fe2f28c655fa" kindref="member">uintptr_t</ref>;</highlight></codeline>
 <codeline lineno="47"><highlight class="normal"></highlight></codeline>
 <codeline lineno="48" refid="bcopy_8c_101c6b59ca21f041b23efbb9845cc4e32" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>wsize<sp/><sp/><sp/>sizeof(word)</highlight></codeline>
 <codeline lineno="49" refid="bcopy_8c_1b5deaef115ff5ca6ef1457d923d8331a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>wmask<sp/><sp/><sp/>(wsize<sp/>-<sp/>1)</highlight></codeline>

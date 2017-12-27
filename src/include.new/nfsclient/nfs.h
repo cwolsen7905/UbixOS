@@ -133,9 +133,9 @@ extern int nfs_pbuf_freecnt;
 extern int nfs_ticks;
 
 /* Data constants in XDR form */
-extern u_int32_t nfs_true, nfs_false, nfs_xdrneg1;
-extern u_int32_t rpc_reply, rpc_msgdenied, rpc_mismatch, rpc_vers;
-extern u_int32_t rpc_auth_unix, rpc_msgaccepted, rpc_call, rpc_autherr;
+extern uint32_t nfs_true, nfs_false, nfs_xdrneg1;
+extern uint32_t rpc_reply, rpc_msgdenied, rpc_mismatch, rpc_vers;
+extern uint32_t rpc_auth_unix, rpc_msgaccepted, rpc_call, rpc_autherr;
 
 extern int nfsv3_procid[NFS_NPROCS];
 

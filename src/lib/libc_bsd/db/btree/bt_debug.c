@@ -202,7 +202,7 @@ __bt_dpage(PAGE *h)
 				(void)fprintf(stderr,
 				    "big key page %u size %u/",
 				    *(pgno_t *)bl->bytes,
-				    *(u_int32_t *)(bl->bytes + sizeof(pgno_t)));
+				    *(uint32_t *)(bl->bytes + sizeof(pgno_t)));
 			else if (bl->ksize)
 				(void)fprintf(stderr, "%.*s/",
 				    bl->ksize, bl->bytes);
@@ -210,7 +210,7 @@ __bt_dpage(PAGE *h)
 				(void)fprintf(stderr,
 				    "big data page %u size %u",
 				    *(pgno_t *)(bl->bytes + bl->ksize),
-				    *(u_int32_t *)(bl->bytes + bl->ksize +
+				    *(uint32_t *)(bl->bytes + bl->ksize +
 				    sizeof(pgno_t)));
 			else if (bl->dsize)
 				(void)fprintf(stderr, "%.*s",
@@ -222,7 +222,7 @@ __bt_dpage(PAGE *h)
 				(void)fprintf(stderr,
 				    "big data page %u size %u",
 				    *(pgno_t *)rl->bytes,
-				    *(u_int32_t *)(rl->bytes + sizeof(pgno_t)));
+				    *(uint32_t *)(rl->bytes + sizeof(pgno_t)));
 			else if (rl->dsize)
 				(void)fprintf(stderr,
 				    "%.*s", (int)rl->dsize, rl->bytes);

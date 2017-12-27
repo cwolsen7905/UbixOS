@@ -139,12 +139,12 @@
 <a name="l00108"></a>00108   <span class="keywordflow">return</span>((<span class="keywordtype">char</span> *)<a class="code" href="elf_8c.html#3a1455c85e66d74fa89da7fb82e54c2c">elfRelType</a>[relType].<a class="code" href="elf_8c.html#3cfab9172cb06ddb64edd058e38f14ec">relTypeName</a>);
 <a name="l00109"></a>00109   }
 <a name="l00110"></a>00110 
-<a name="l00111"></a><a class="code" href="elf_8c.html#f11ec9e50bcff723428b0c911a177fd0">00111</a> <span class="keywordtype">int</span> <a class="code" href="elf_8h.html#f11ec9e50bcff723428b0c911a177fd0">elf_loadfile</a>(<a class="code" href="structtaskStruct.html">kTask_t</a> *p,<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="structfile.html">file</a>,<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a> *addr,<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a> *entry) {
+<a name="l00111"></a><a class="code" href="elf_8c.html#f11ec9e50bcff723428b0c911a177fd0">00111</a> <span class="keywordtype">int</span> <a class="code" href="elf_8h.html#f11ec9e50bcff723428b0c911a177fd0">elf_loadfile</a>(<a class="code" href="structtaskStruct.html">kTask_t</a> *p,<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="structfile.html">file</a>,<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a> *addr,<a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a> *entry) {
 <a name="l00112"></a>00112   <span class="keywordtype">int</span>                i             = 0x0;
 <a name="l00113"></a>00113   <span class="keywordtype">int</span>                x             = 0x0;
 <a name="l00114"></a>00114   <span class="keywordtype">int</span>                numsegs       = 0x0;
-<a name="l00115"></a>00115   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>          base          = 0x0;
-<a name="l00116"></a>00116   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">u_int32_t</a>          base_addr     = 0x0;
+<a name="l00115"></a>00115   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>          base          = 0x0;
+<a name="l00116"></a>00116   <a class="code" href="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da">uint32_t</a>          base_addr     = 0x0;
 <a name="l00117"></a>00117   <a class="code" href="structelfHeader.html">elfHeader</a>         *binaryHeader  = 0x0;
 <a name="l00118"></a>00118   <a class="code" href="structelfProgramHeader.html">elfProgramHeader</a>  *programHeader = 0x0;
 <a name="l00119"></a>00119   <a class="code" href="structfileDescriptorStruct.html">fileDescriptor</a>    *exec_fd       = 0x0;

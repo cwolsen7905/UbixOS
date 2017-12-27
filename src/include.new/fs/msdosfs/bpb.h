@@ -52,8 +52,8 @@ struct bpb50 {
 	u_int16_t	bpbFATsecs;	/* number of sectors per FAT */
 	u_int16_t	bpbSecPerTrack;	/* sectors per track */
 	u_int16_t	bpbHeads;	/* number of heads */
-	u_int32_t	bpbHiddenSecs;	/* # of hidden sectors */
-	u_int32_t	bpbHugeSectors;	/* # of sectors if bpbSectors == 0 */
+	uint32_t	bpbHiddenSecs;	/* # of hidden sectors */
+	uint32_t	bpbHugeSectors;	/* # of sectors if bpbSectors == 0 */
 };
 
 /*
@@ -70,15 +70,15 @@ struct bpb710 {
 	u_int16_t	bpbFATsecs;	/* number of sectors per FAT */
 	u_int16_t	bpbSecPerTrack;	/* sectors per track */
 	u_int16_t	bpbHeads;	/* number of heads */
-	u_int32_t	bpbHiddenSecs;	/* # of hidden sectors */
-	u_int32_t	bpbHugeSectors;	/* # of sectors if bpbSectors == 0 */
-	u_int32_t	bpbBigFATsecs;	/* like bpbFATsecs for FAT32 */
+	uint32_t	bpbHiddenSecs;	/* # of hidden sectors */
+	uint32_t	bpbHugeSectors;	/* # of sectors if bpbSectors == 0 */
+	uint32_t	bpbBigFATsecs;	/* like bpbFATsecs for FAT32 */
 	u_int16_t	bpbExtFlags;	/* extended flags: */
 #define	FATNUM		0xf		/* mask for numbering active FAT */
 #define	FATMIRROR	0x80		/* FAT is mirrored (like it always was) */
 	u_int16_t	bpbFSVers;	/* filesystem version */
 #define	FSVERS		0		/* currently only 0 is understood */
-	u_int32_t	bpbRootClust;	/* start cluster for root directory */
+	uint32_t	bpbRootClust;	/* start cluster for root directory */
 	u_int16_t	bpbFSInfo;	/* filesystem info structure sector */
 	u_int16_t	bpbBackup;	/* backup boot sector */
 	u_int8_t	bpbReserved[12]; /* reserved for future expansion */

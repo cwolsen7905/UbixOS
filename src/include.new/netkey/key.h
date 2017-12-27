@@ -58,10 +58,10 @@ extern struct secpolicy *key_gettunnel(struct sockaddr *,
 	struct sockaddr *, struct sockaddr *, struct sockaddr *);
 extern int key_checkrequest
 	(struct ipsecrequest *isr, struct secasindex *);
-extern struct secasvar *key_allocsa(u_int, caddr_t, caddr_t, u_int, u_int32_t);
+extern struct secasvar *key_allocsa(u_int, caddr_t, caddr_t, u_int, uint32_t);
 extern void key_freesp(struct secpolicy *);
 extern void key_freesav(struct secasvar *);
-extern struct secpolicy *key_newsp(u_int32_t);
+extern struct secpolicy *key_newsp(uint32_t);
 extern struct secpolicy *key_msg2sp(struct sadb_x_policy *, size_t, int *);
 extern struct mbuf *key_sp2msg(struct secpolicy *);
 extern int key_cmpspidx_exactly

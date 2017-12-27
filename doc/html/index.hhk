@@ -6116,7 +6116,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#e2b02ed168fc99cff3851603910b1fb6"><param name="Name" value="u_char"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#c319c165d52643e43249fe003e18bdf3"><param name="Name" value="u_int"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#f7b042408b9b104606f8a9b5035329f3"><param name="Name" value="u_int16_t"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da"><param name="Name" value="u_int32_t"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da"><param name="Name" value="uint32_t"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#250ac047bf3984b5dae755276a305d64"><param name="Name" value="u_int64_t"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#c7c42f52639b9aca7da966a0783996d7"><param name="Name" value="u_int8_t"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#8f25a50daf29ce2cee1ec038a4d744ea"><param name="Name" value="u_long"></OBJECT>
@@ -6135,7 +6135,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structgettimeofday__args.html#e3b668286098d30d5eda58c71b04443c"><param name="Name" value="tzp_r_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#e2b02ed168fc99cff3851603910b1fb6"><param name="Name" value="u_char"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#f7b042408b9b104606f8a9b5035329f3"><param name="Name" value="u_int16_t"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da"><param name="Name" value="u_int32_t"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#ba29fd78d95cce0ecb249c24b58d07da"><param name="Name" value="uint32_t"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#250ac047bf3984b5dae755276a305d64"><param name="Name" value="u_int64_t"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#c7c42f52639b9aca7da966a0783996d7"><param name="Name" value="u_int8_t"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="types_8h.html#c319c165d52643e43249fe003e18bdf3"><param name="Name" value="u_int"></OBJECT>

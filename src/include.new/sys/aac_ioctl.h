@@ -38,15 +38,15 @@
 #define AACQ_COUNT	4	/* total number of queues */
 
 struct aac_qstat {
-	u_int32_t	q_length;
-	u_int32_t	q_max;
+	uint32_t	q_length;
+	uint32_t	q_max;
 };
 
 /*
  * Statistics request
  */
 union aac_statrequest {
-	u_int32_t		as_item;
+	uint32_t		as_item;
 	struct aac_qstat	as_qstat;
 };
 
@@ -168,7 +168,7 @@ struct aac_rev_check_resp {
  * Context passed in by a consumer looking to collect an AIF.
  */
 struct get_adapter_fib_ioctl {
-	u_int32_t	AdapterFibContext;
+	uint32_t	AdapterFibContext;
 	int	  	Wait;
 	caddr_t		AifFib;
 };
@@ -178,12 +178,12 @@ struct aac_query_disk {
 	int32_t		Bus;
 	int32_t		Target;
 	int32_t		Lun;
-	u_int32_t	Valid;
-	u_int32_t	Locked;
-	u_int32_t	Deleted;
+	uint32_t	Valid;
+	uint32_t	Locked;
+	uint32_t	Deleted;
 	int32_t		Instance;
 	char		diskDeviceName[10];
-	u_int32_t	UnMapped;
+	uint32_t	UnMapped;
 };
 
 /* Features, asked from the tools to know if the driver
@@ -191,18 +191,18 @@ struct aac_query_disk {
  */
 typedef union {
 	struct {
-		u_int32_t largeLBA  : 1;	/* disk support greater 2TB */
-		u_int32_t IoctlBuf  : 1;	/* ARCIOCTL call support */
-		u_int32_t AIFSupport: 1;	/* AIF support */
-		u_int32_t JBODSupport:1;	/* fw + driver support JBOD */
-		u_int32_t fReserved : 28;
+		uint32_t largeLBA  : 1;	/* disk support greater 2TB */
+		uint32_t IoctlBuf  : 1;	/* ARCIOCTL call support */
+		uint32_t AIFSupport: 1;	/* AIF support */
+		uint32_t JBODSupport:1;	/* fw + driver support JBOD */
+		uint32_t fReserved : 28;
 	} fBits;
-	u_int32_t fValue;
+	uint32_t fValue;
 } featuresState;
 
 struct aac_features {
 	featuresState feat;
-	u_int32_t data[31];
-	u_int32_t reserved[32];
+	uint32_t data[31];
+	uint32_t reserved[32];
 } __packed;
 #endif

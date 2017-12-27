@@ -2340,9 +2340,9 @@
       </memberdef>
       <memberdef kind="typedef" id="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" prot="public" static="no">
         <type><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref></type>
-        <definition>typedef __uint32_t u_int32_t</definition>
+        <definition>typedef __uint32_t uint32_t</definition>
         <argsstring></argsstring>
-        <name>u_int32_t</name>
+        <name>uint32_t</name>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -2563,7 +2563,7 @@
 <codeline lineno="46"><highlight class="normal"></highlight></codeline>
 <codeline lineno="47" refid="include_2ubixos_2types_8h_1c7c42f52639b9aca7da966a0783996d7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_125875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>unsigned<sp/>integrals<sp/>(deprecated)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="48" refid="include_2ubixos_2types_8h_1f7b042408b9b104606f8a9b5035329f3" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_128989c8f3e511d5c6a9fd46b1adc1ee0" kindref="member">__uint16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref>;</highlight></codeline>
-<codeline lineno="49" refid="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">u_int32_t</ref>;</highlight></codeline>
+<codeline lineno="49" refid="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref>;</highlight></codeline>
 <codeline lineno="50" refid="include_2ubixos_2types_8h_1250ac047bf3984b5dae755276a305d64" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_19f490fc8927ff1923bbc8d63eb4e6960" kindref="member">__uint64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref>;</highlight></codeline>
 <codeline lineno="51"><highlight class="normal"></highlight><highlight class="comment">//typedef<sp/>long<sp/>long<sp/>int<sp/>quad_t;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="52" refid="include_2ubixos_2types_8h_1b0580e7dfaba1bf72c220284778fd479" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="__types_8h_19f490fc8927ff1923bbc8d63eb4e6960" kindref="member">__uint64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixos_2types_8h_1b0580e7dfaba1bf72c220284778fd479" kindref="member">quad_t</ref>;</highlight></codeline>

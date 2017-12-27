@@ -62,7 +62,7 @@ struct nwmount {
 	struct ncp_handle *connh;
 	int 		name_space;
 	struct nwnode	*n_root;
-	u_int32_t	n_volume;
+	uint32_t	n_volume;
 	ncpfid		n_rootent;
 	int		n_id;
 };

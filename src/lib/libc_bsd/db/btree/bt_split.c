@@ -76,7 +76,7 @@ u_long	bt_rootsplit, bt_split, bt_sortsplit, bt_pfxsaved;
  */
 int
 __bt_split(BTREE *t, PAGE *sp, const DBT *key, const DBT *data, int flags,
-    size_t ilen, u_int32_t argskip)
+    size_t ilen, uint32_t argskip)
 {
 	BINTERNAL *bi;
 	BLEAF *bl, *tbl;
@@ -85,7 +85,7 @@ __bt_split(BTREE *t, PAGE *sp, const DBT *key, const DBT *data, int flags,
 	PAGE *h, *l, *r, *lchild, *rchild;
 	indx_t nxtindex;
 	u_int16_t skip;
-	u_int32_t n, nbytes, nksize;
+	uint32_t n, nbytes, nksize;
 	int parentsplit;
 	char *dest;
 
@@ -206,7 +206,7 @@ __bt_split(BTREE *t, PAGE *sp, const DBT *key, const DBT *data, int flags,
 		}
 
 		/* Split the parent page if necessary or shift the indices. */
-		if ((u_int32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t)) {
+		if ((uint32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t)) {
 			sp = h;
 			h = h->pgno == P_ROOT ?
 			    bt_root(t, h, &l, &r, &skip, nbytes) :
@@ -515,7 +515,7 @@ bt_broot(BTREE *t, PAGE *h, PAGE *l, PAGE *r)
 {
 	BINTERNAL *bi;
 	BLEAF *bl;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	char *dest;
 
 	/*
@@ -595,7 +595,7 @@ bt_psplit(BTREE *t, PAGE *h, PAGE *l, PAGE *r, indx_t *pskip, size_t ilen)
 	PAGE *rval;
 	void *src;
 	indx_t full, half, nxt, off, skip, top, used;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	int bigkeycnt, isbigkey;
 
 	/*

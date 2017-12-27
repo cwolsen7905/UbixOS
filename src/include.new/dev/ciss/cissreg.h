@@ -37,22 +37,22 @@ union ciss_device_address
 {
     struct 				/* MODE_PERIPHERAL and MODE_MASK_PERIPHERAL */
     {
-	u_int32_t	target:24;	/* SCSI target */
-	u_int32_t	bus:6;		/* SCSI bus */
-	u_int32_t	mode:2;		/* CISS_HDR_ADDRESS_MODE_* */
-	u_int32_t	extra_address;	/* SCSI-3 level-2 and level-3 address bytes */
+	uint32_t	target:24;	/* SCSI target */
+	uint32_t	bus:6;		/* SCSI bus */
+	uint32_t	mode:2;		/* CISS_HDR_ADDRESS_MODE_* */
+	uint32_t	extra_address;	/* SCSI-3 level-2 and level-3 address bytes */
     } physical;
     struct 				/* MODE_LOGICAL */
     {
-	u_int32_t	lun:30;		/* logical device ID */
-	u_int32_t	mode:2;		/* CISS_HDR_ADDRESS_MODE_LOGICAL */
-	u_int32_t	:32;		/* reserved */
+	uint32_t	lun:30;		/* logical device ID */
+	uint32_t	mode:2;		/* CISS_HDR_ADDRESS_MODE_LOGICAL */
+	uint32_t	:32;		/* reserved */
     } logical;
     struct
     {
-	u_int32_t	:30;
-	u_int32_t	mode:2;
-	u_int32_t	:32;
+	uint32_t	:30;
+	uint32_t	mode:2;
+	uint32_t	:32;
     } mode;
 };
 #define CISS_HDR_ADDRESS_MODE_PERIPHERAL	0x0
@@ -71,9 +71,9 @@ struct ciss_header
     u_int8_t	:8;			/* reserved */
     u_int8_t	sg_in_list;		/* SG's in the command structure */
     u_int16_t	sg_total;		/* total count of SGs for this command */
-    u_int32_t	host_tag;		/* host identifier, bits 0&1 must be clear */
+    uint32_t	host_tag;		/* host identifier, bits 0&1 must be clear */
 #define CISS_HDR_HOST_TAG_ERROR	(1<<1)
-    u_int32_t	host_tag_zeroes;	/* tag is 64 bits, but interface only supports 32 */
+    uint32_t	host_tag_zeroes;	/* tag is 64 bits, but interface only supports 32 */
     union ciss_device_address address;
 } __packed;
 
@@ -101,7 +101,7 @@ struct ciss_cdb
 struct ciss_error_info_pointer
 {
     u_int64_t	error_info_address;	/* points to ciss_error_info structure */
-    u_int32_t	error_info_length;
+    uint32_t	error_info_length;
 } __packed;
 
 struct ciss_error_info
@@ -132,18 +132,18 @@ struct ciss_error_info
 #define CISS_CMD_STATUS_UNSOLICITED_ABORT	10
 #define CISS_CMD_STATUS_TIMEOUT			11
 #define CISS_CMD_STATUS_UNABORTABLE		12
-    u_int32_t	residual_count;
+    uint32_t	residual_count;
     union {
 	struct {
 	    u_int8_t	res1[3];
 	    u_int8_t	type;
-	    u_int32_t	error_info;
+	    uint32_t	error_info;
 	} __packed common_info;
 	struct {
 	    u_int8_t	res1[2];
 	    u_int8_t	offense_size;
 	    u_int8_t	offense_offset;
-	    u_int32_t	offense_value;
+	    uint32_t	offense_value;
 	} __packed invalid_command;
     } additional_error_info;
     u_int8_t	sense_info[0];
@@ -153,9 +153,9 @@ struct ciss_sg_entry
 {
     u_int64_t	address;
 #define CISS_SG_ADDRESS_BITBUCKET	(~(u_int64_t)0)
-    u_int32_t	length;
-    u_int32_t	:31;
-    u_int32_t	extension:1;		/* address points to another s/g chain */
+    uint32_t	length;
+    uint32_t	:31;
+    uint32_t	extension:1;		/* address points to another s/g chain */
 } __packed;
 
 struct ciss_command
@@ -171,8 +171,8 @@ struct ciss_command
 
 struct ciss_lun_report
 {
-    u_int32_t	list_size;		/* big-endian */
-    u_int32_t	:32;
+    uint32_t	list_size;		/* big-endian */
+    uint32_t	:32;
     union ciss_device_address lun[0];
 } __packed;
 
@@ -195,7 +195,7 @@ struct ciss_report_cdb
 {
     u_int8_t	opcode;
     u_int8_t	reserved[5];
-    u_int32_t	length;			/* big-endian */
+    uint32_t	length;			/* big-endian */
     u_int8_t	:8;
     u_int8_t	control;
 } __packed;
@@ -230,7 +230,7 @@ struct ciss_message_cdb
     u_int8_t	opcode;
     u_int8_t	type;
     u_int16_t	:16;
-    u_int32_t	abort_tag;					/* XXX endianness? */
+    uint32_t	abort_tag;					/* XXX endianness? */
     u_int8_t	reserved[8];
 } __packed;
 
@@ -259,7 +259,7 @@ struct ciss_notify_cdb
     u_int8_t	seek_to_oldest:1;	/* reset read counter to oldest event */
     u_int8_t	new_only:1;		/* ignore any queued events */
     u_int8_t	:4;
-    u_int32_t	length;			/* must be 512, little-endian */
+    uint32_t	length;			/* must be 512, little-endian */
 #define CISS_NOTIFY_DATA_SIZE	512
     u_int8_t	control;
 } __packed;
@@ -346,7 +346,7 @@ struct ciss_notify_rebuild_aborted
 struct ciss_notify_io_error
 {
     u_int16_t	logical_drive;
-    u_int32_t	lba;
+    uint32_t	lba;
     u_int16_t	block_count;
     u_int8_t	command;
     u_int8_t	failure_bus;
@@ -361,7 +361,7 @@ struct ciss_notify_consistency_completed
 
 struct ciss_notify
 {
-    u_int32_t	timestamp;		/* seconds since controller power-on */
+    uint32_t	timestamp;		/* seconds since controller power-on */
     u_int16_t	class;
     u_int16_t	subclass;
     u_int16_t	detail;
@@ -377,10 +377,10 @@ struct ciss_notify
 	u_int8_t	data[64];
     } data;
     char	message[80];
-    u_int32_t	tag;
+    uint32_t	tag;
     u_int16_t	date;
     u_int16_t	year;
-    u_int32_t	time;
+    uint32_t	time;
     u_int16_t	pre_power_up_time;
     union ciss_device_address	device;
     /* XXX pads to 512 bytes */
@@ -395,26 +395,26 @@ struct ciss_notify
 struct ciss_config_table
 {
     char	signature[4];		/* "CISS" */
-    u_int32_t	valence;
-    u_int32_t	supported_methods;
+    uint32_t	valence;
+    uint32_t	supported_methods;
 #define CISS_TRANSPORT_METHOD_READY	(1<<0)
 #define CISS_TRANSPORT_METHOD_SIMPLE	(1<<1)
 #define CISS_TRANSPORT_METHOD_PERF	(1<<2)
-    u_int32_t	active_method;
-    u_int32_t	requested_method;
-    u_int32_t	command_physlimit;
-    u_int32_t	interrupt_coalesce_delay;
-    u_int32_t	interrupt_coalesce_count;
-    u_int32_t	max_outstanding_commands;
-    u_int32_t	bus_types;
+    uint32_t	active_method;
+    uint32_t	requested_method;
+    uint32_t	command_physlimit;
+    uint32_t	interrupt_coalesce_delay;
+    uint32_t	interrupt_coalesce_count;
+    uint32_t	max_outstanding_commands;
+    uint32_t	bus_types;
 #define CISS_TRANSPORT_BUS_TYPE_ULTRA2	(1<<0)
 #define CISS_TRANSPORT_BUS_TYPE_ULTRA3	(1<<1)
 #define CISS_TRANSPORT_BUS_TYPE_FIBRE1	(1<<8)
 #define CISS_TRANSPORT_BUS_TYPE_FIBRE2	(1<<9)
-    u_int32_t	transport_offset;
+    uint32_t	transport_offset;
     char	server_name[16];
-    u_int32_t	heartbeat;
-    u_int32_t	host_driver;
+    uint32_t	heartbeat;
+    uint32_t	host_driver;
 #define CISS_DRIVER_SUPPORT_UNIT_ATTENTION	(1<<0)
 #define CISS_DRIVER_QUICK_INIT			(1<<1)
 #define CISS_DRIVER_INTERRUPT_ON_LOCKUP		(1<<2)
@@ -424,16 +424,16 @@ struct ciss_config_table
 #define CISS_DRIVER_MESSAGE_REQUESTS_SUPPORTED	(1<<7)
 #define CISS_DRIVER_DAUGHTER_ATTACHED		(1<<8)
 #define CISS_DRIVER_SCSI_PREFETCH		(1<<9)
-    u_int32_t	max_sg_length;		/* 31 in older firmware */
+    uint32_t	max_sg_length;		/* 31 in older firmware */
 /*
  * these fields appear in OpenCISS Spec 1.06
  * http://cciss.sourceforge.net/#docs
  */
-    u_int32_t	max_logical_supported;
-    u_int32_t	max_physical_supported;
-    u_int32_t	max_physical_per_logical;
-    u_int32_t	max_perfomant_mode_cmds;
-    u_int32_t	max_block_fetch_count;
+    uint32_t	max_logical_supported;
+    uint32_t	max_physical_supported;
+    uint32_t	max_physical_per_logical;
+    uint32_t	max_perfomant_mode_cmds;
+    uint32_t	max_block_fetch_count;
 } __packed;
 
 /*
@@ -543,7 +543,7 @@ struct ciss_bmic_cdb {
 /* CISS_BMIC_ID_LDRIVE */
 struct ciss_bmic_id_ldrive {
     u_int16_t	block_size;
-    u_int32_t	blocks_available;
+    uint32_t	blocks_available;
     u_int8_t	drive_parameter_table[16];	/* XXX define */
     u_int8_t	fault_tolerance;
 #define CISS_LDRIVE_RAID0	0
@@ -555,7 +555,7 @@ struct ciss_bmic_id_ldrive {
     u_int8_t	res1;
     u_int8_t	bios_disable_flag;
     u_int8_t	res2;
-    u_int32_t	logical_drive_identifier;
+    uint32_t	logical_drive_identifier;
     char	logical_drive_label[64];
     u_int64_t	big_blocks_available;
     u_int8_t	res3[410];
@@ -575,13 +575,13 @@ struct ciss_bmic_id_lstatus {
 #define CISS_LSTATUS_EXPANDING			10
 #define CISS_LSTATUS_BECOMING_READY		11
 #define CISS_LSTATUS_QUEUED_FOR_EXPANSION	12
-    u_int32_t	deprecated_drive_failure_map;
+    uint32_t	deprecated_drive_failure_map;
     u_int8_t	res1[416];
-    u_int32_t	blocks_to_recover;
+    uint32_t	blocks_to_recover;
     u_int8_t	deprecated_drive_rebuilding;
     u_int16_t	deprecated_remap_count[32];
-    u_int32_t	deprecated_replacement_map;
-    u_int32_t	deprecated_active_spare_map;
+    uint32_t	deprecated_replacement_map;
+    uint32_t	deprecated_active_spare_map;
     u_int8_t	spare_configured:1;
     u_int8_t	spare_rebuilding:1;
     u_int8_t	spare_rebuilt:1;
@@ -590,7 +590,7 @@ struct ciss_bmic_id_lstatus {
     u_int8_t	spare_available:1;
     u_int8_t	res2:2;
     u_int8_t	deprecated_spare_to_replace_map[32];
-    u_int32_t	deprecated_replaced_marked_ok_map;
+    uint32_t	deprecated_replaced_marked_ok_map;
     u_int8_t	media_exchanged;
     u_int8_t	cache_failure;
     u_int8_t	expand_failure;
@@ -611,16 +611,16 @@ struct ciss_bmic_id_lstatus {
 /* CISS_BMIC_ID_CTLR */
 struct ciss_bmic_id_table {
     u_int8_t	configured_logical_drives;
-    u_int32_t	config_signature;
+    uint32_t	config_signature;
     char	running_firmware_revision[4];
     char	stored_firmware_revision[4];
     u_int8_t	hardware_revision;
     u_int8_t	boot_block_revision[4];
-    u_int32_t	deprecated_drive_present_map;
-    u_int32_t	deprecated_external_drive_present_map;
-    u_int32_t	board_id;
+    uint32_t	deprecated_drive_present_map;
+    uint32_t	deprecated_external_drive_present_map;
+    uint32_t	board_id;
     u_int8_t	swapped_error_cable;
-    u_int32_t	deprecated_non_disk_map;
+    uint32_t	deprecated_non_disk_map;
     u_int8_t	bad_host_ram_addr;
     u_int8_t	cpu_revision;
     u_int8_t	res3[3];
@@ -653,8 +653,8 @@ struct ciss_bmic_id_table {
 #define EXPAND_DISABLE_RES7			0x40
 #define EXPAND_DISABLE_REBUILD_RUNNING		0x80
     u_int8_t	scsi_chip_count;
-    u_int32_t	maximum_blocks;
-    u_int32_t	controller_clock;
+    uint32_t	maximum_blocks;
+    uint32_t	controller_clock;
     u_int8_t	drives_per_scsi_bus;
     u_int8_t	big_drive_present_map[CISS_BIG_MAP_ENTRIES / 8];
     u_int8_t	big_external_drive_present_map[CISS_BIG_MAP_ENTRIES / 8];
@@ -680,7 +680,7 @@ struct ciss_bmic_id_table {
     u_int8_t	rec_rom_inact_rev[4];    /* Recovery ROM inactive f/w revision  */
     u_int8_t	rec_rom_act_status;      /* Recovery ROM flags                  */
     u_int8_t	pci_to_pci_status;       /* PCI to PCI bridge status            */
-    u_int32_t	redundant_server_info;   /* Reserved for future use             */
+    uint32_t	redundant_server_info;   /* Reserved for future use             */
     u_int8_t	percent_write_cache;     /* Percent of memory allocated to write cache */
     u_int16_t	daughterboard_size_mb;   /* Total size (MB) of cache board      */
     u_int8_t	cache_batter_count;      /* Number of cache batteries           */
@@ -705,21 +705,21 @@ struct ciss_bmic_id_table {
     u_int16_t	usOffsetToENDbitmap;     /* Offset to extended non-disk map */
     u_int8_t	bInternalPortStatus[8];  /* Internal port status bytes */
     u_int8_t	bExternalPortStatus[8];  /* External port status bytes */
-    u_int32_t	uiYetMoreControllerFlags;/* Yet More Controller flags  */
+    uint32_t	uiYetMoreControllerFlags;/* Yet More Controller flags  */
 #define YMORE_CONTROLLER_FLAGS_JBOD_SUPPORTED \
 	( 1 << 25 )			 /* Controller has JBOD support */
 
     u_int8_t	bLastLockup;              /* Last lockup code */
     u_int8_t	bSlot;                    /* PCI slot according to option ROM*/
     u_int16_t	usBuildNum;               /* Build number */
-    u_int32_t	uiMaxSafeFullStripeSize;  /* Maximum safe full stripe size */
-    u_int32_t	uiTotalLength;            /* Total structure length */
+    uint32_t	uiMaxSafeFullStripeSize;  /* Maximum safe full stripe size */
+    uint32_t	uiTotalLength;            /* Total structure length */
     u_int8_t	bVendorID[8];             /* Vendor ID */
     u_int8_t	bProductID[16];           /* Product ID */
 /*
  * These are even more obscure as they seem to only be available in cciss_vol_status
  */
-    u_int32_t	ExtendedLastLockupCode;
+    uint32_t	ExtendedLastLockupCode;
     u_int16_t	MaxRaid;
     u_int16_t	MaxParity;
     u_int16_t	MaxADGStripSize;
@@ -729,9 +729,9 @@ struct ciss_bmic_id_table {
 #define PWR_UP_FLAG_JBOD_ENABLED	0x08	/*JBOD mode is enabled, all RAID features off */
 
     u_int16_t	ZonedOffset;
-    u_int32_t   FixedFieldsLength;
+    uint32_t   FixedFieldsLength;
     u_int8_t	FWCompileTimeStamp[24];
-    u_int32_t	EvenMoreControllerFlags;
+    uint32_t	EvenMoreControllerFlags;
     u_int8_t	padding[240];
 } __packed;
 
@@ -740,8 +740,8 @@ struct ciss_bmic_id_pdrive {
     u_int8_t	scsi_bus;
     u_int8_t	scsi_id;
     u_int16_t	block_size;
-    u_int32_t	total_blocks;
-    u_int32_t	reserved_blocks;
+    uint32_t	total_blocks;
+    uint32_t	reserved_blocks;
     char	model[40];
     char	serial[40];
     char	revision[8];
@@ -779,8 +779,8 @@ struct ciss_bmic_id_pdrive {
 /* CISS_BMIC_BLINK_PDRIVE */
 /* CISS_BMIC_SENSE_BLINK_PDRIVE */
 struct ciss_bmic_blink_pdrive {
-    u_int32_t	blink_duration;		/* 10ths of a second */
-    u_int32_t	duration_elapsed;	/* only for sense command  */
+    uint32_t	blink_duration;		/* 10ths of a second */
+    uint32_t	duration_elapsed;	/* only for sense command  */
     u_int8_t	blinktab[256];
 #define CISS_BMIC_BLINK_ALL	1
 #define CISS_BMIC_BLINK_TIMED	2
@@ -815,7 +815,7 @@ struct ciss_bmic_flush_cache {
 
 #define CISS_TL_SIMPLE_IPQ	0x40	/* inbound post queue */
 #define CISS_TL_SIMPLE_OPQ	0x44	/* outbound post queue */
-#define CISS_TL_SIMPLE_OPQ_EMPTY	(~(u_int32_t)0)
+#define CISS_TL_SIMPLE_OPQ_EMPTY	(~(uint32_t)0)
 
 #define CISS_TL_SIMPLE_OSR	0x9c	/* outbound status register */
 #define CISS_TL_SIMPLE_ODC	0xa0	/* outbound doorbell clear register */

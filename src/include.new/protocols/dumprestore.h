@@ -104,10 +104,10 @@ union u_spcl {
 		int64_t	c_mtime;	    /* last modified time, seconds */
 		int32_t	c_extsize;	    /* external attribute size */
 		int32_t	c_spare4[6];	    /* old block pointers */
-		u_int32_t c_file_flags;	    /* status flags (chflags) */
+		uint32_t c_file_flags;	    /* status flags (chflags) */
 		int32_t	c_spare5[2];	    /* old blocks, generation number */
-		u_int32_t c_uid;	    /* file owner */
-		u_int32_t c_gid;	    /* file group */
+		uint32_t c_uid;	    /* file owner */
+		uint32_t c_gid;	    /* file group */
 		int32_t	c_spare6[2];	    /* previously unused spares */
 		/*
 		 * End old dinode structure.

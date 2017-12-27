@@ -65,7 +65,7 @@ struct kue_ether_desc {
 };
 
 #define KUE_ETHERSTATS(x)	\
-	(*(u_int32_t *)&(x)->kue_desc.kue_etherstats)
+	(*(uint32_t *)&(x)->kue_desc.kue_etherstats)
 #define KUE_MAXSEG(x)		\
 	(*(u_int16_t *)&(x)->kue_desc.kue_maxseg)
 #define KUE_MCFILTCNT(x)	\

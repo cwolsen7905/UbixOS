@@ -30,7 +30,7 @@ __FBSDID("$FreeBSD: releng/10.2/sys/dev/mfi/mfi_ioctl.h 233805 2012-04-02 19:13:
 #include <dev/mfi/mfireg.h>
 
 struct iovec32 {
-	u_int32_t	iov_base;
+	uint32_t	iov_base;
 	int		iov_len;
 };
 

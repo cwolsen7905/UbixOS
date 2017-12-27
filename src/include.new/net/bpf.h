@@ -44,7 +44,7 @@
 #define	BPF_RELEASE 199606
 
 typedef	int32_t	  bpf_int32;
-typedef	u_int32_t bpf_u_int32;
+typedef	uint32_t bpf_u_int32;
 typedef	int64_t	  bpf_int64;
 typedef	u_int64_t bpf_u_int64;
 
@@ -945,11 +945,11 @@ struct bpf_zbuf_header {
  *     u_int8_t   dli_version;
  *     u_int8_t   dli_family;
  *     u_int16_t  dli_htype;
- *     u_int32_t  dli_pktlen;
- *     u_int32_t  dli_ifindex;
- *     u_int32_t  dli_grifindex;
- *     u_int32_t  dli_zsrc;
- *     u_int32_t  dli_zdst;
+ *     uint32_t  dli_pktlen;
+ *     uint32_t  dli_ifindex;
+ *     uint32_t  dli_grifindex;
+ *     uint32_t  dli_zsrc;
+ *     uint32_t  dli_zdst;
  * };
  *
  * dli_version is 2 for the current version of the pseudo-header.

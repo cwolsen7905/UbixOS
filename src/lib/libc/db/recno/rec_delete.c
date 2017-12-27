@@ -156,11 +156,11 @@ int
 __rec_dleaf(t, h, index)
 	BTREE *t;
 	PAGE *h;
-	u_int32_t index;
+	uint32_t index;
 {
 	RLEAF *rl;
 	indx_t *ip, cnt, offset;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	char *from;
 	void *to;
 

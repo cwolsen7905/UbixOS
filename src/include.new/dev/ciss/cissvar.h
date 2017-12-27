@@ -104,7 +104,7 @@ struct ciss_request
 
     struct ciss_softc		*cr_sc;		/* controller softc */
     void			*cr_data;	/* data buffer */
-    u_int32_t			cr_length;	/* data length */
+    uint32_t			cr_length;	/* data length */
     bus_dmamap_t		cr_datamap;	/* DMA map for data */
     struct ciss_command		*cr_cc;
     uint32_t			cr_ccphys;
@@ -204,7 +204,7 @@ struct ciss_softc
     struct ciss_config_table	*ciss_cfg;		/* config table in adapter memory */
     struct ciss_perf_config	*ciss_perf;		/* config table for the performant */
     struct ciss_bmic_id_table	*ciss_id;		/* ID table in host memory */
-    u_int32_t			ciss_heartbeat;		/* last heartbeat value */
+    uint32_t			ciss_heartbeat;		/* last heartbeat value */
     int				ciss_heart_attack;	/* number of times we have seen this value */
 
     int				ciss_msi;
@@ -215,7 +215,7 @@ struct ciss_softc
     bus_dma_tag_t		ciss_parent_dmat;	/* parent DMA tag */
     bus_dma_tag_t		ciss_buffer_dmat;	/* data buffer/command DMA tag */
 
-    u_int32_t			ciss_interrupt_mask;	/* controller interrupt mask bits */
+    uint32_t			ciss_interrupt_mask;	/* controller interrupt mask bits */
 
     uint64_t			*ciss_reply;
     int				ciss_cycle;
@@ -229,7 +229,7 @@ struct ciss_softc
     void			*ciss_command;		/* command structures */
     bus_dma_tag_t		ciss_command_dmat;	/* command DMA tag */
     bus_dmamap_t		ciss_command_map;	/* command DMA map */
-    u_int32_t			ciss_command_phys;	/* command array base address */
+    uint32_t			ciss_command_phys;	/* command array base address */
     cr_qhead_t			ciss_free;		/* requests available for reuse */
     cr_qhead_t			ciss_notify;		/* requests which are defered for processing */
     struct proc			*ciss_notify_thread;

@@ -720,26 +720,26 @@ struct cd_mode_params
 };
 
 __BEGIN_DECLS
-void scsi_report_key(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_report_key(struct ccb_scsiio *csio, uint32_t retries,
 		     void (*cbfcnp)(struct cam_periph *, union ccb *),
-		     u_int8_t tag_action, u_int32_t lba, u_int8_t agid,
+		     u_int8_t tag_action, uint32_t lba, u_int8_t agid,
 		     u_int8_t key_format, u_int8_t *data_ptr,
-		     u_int32_t dxfer_len, u_int8_t sense_len,
-		     u_int32_t timeout);
+		     uint32_t dxfer_len, u_int8_t sense_len,
+		     uint32_t timeout);
 
-void scsi_send_key(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_send_key(struct ccb_scsiio *csio, uint32_t retries,
 		   void (*cbfcnp)(struct cam_periph *, union ccb *),
 		   u_int8_t tag_action, u_int8_t agid, u_int8_t key_format,
-		   u_int8_t *data_ptr, u_int32_t dxfer_len, u_int8_t sense_len,
-		   u_int32_t timeout);
+		   u_int8_t *data_ptr, uint32_t dxfer_len, u_int8_t sense_len,
+		   uint32_t timeout);
 
-void scsi_read_dvd_structure(struct ccb_scsiio *csio, u_int32_t retries,
+void scsi_read_dvd_structure(struct ccb_scsiio *csio, uint32_t retries,
 			     void (*cbfcnp)(struct cam_periph *, union ccb *),
-			     u_int8_t tag_action, u_int32_t address,
+			     u_int8_t tag_action, uint32_t address,
 			     u_int8_t layer_number, u_int8_t format,
 			     u_int8_t agid, u_int8_t *data_ptr,
-			     u_int32_t dxfer_len, u_int8_t sense_len,
-			     u_int32_t timeout);
+			     uint32_t dxfer_len, u_int8_t sense_len,
+			     uint32_t timeout);
 
 __END_DECLS
 

@@ -52,10 +52,10 @@ struct smapi_bios_header {
 	u_int16_t	reserved2;
 
 	u_int16_t	prot16_offset;
-	u_int32_t	prot16_segment;
+	uint32_t	prot16_segment;
 
-	u_int32_t	prot32_offset;
-	u_int32_t	prot32_segment;
+	uint32_t	prot32_offset;
+	uint32_t	prot32_segment;
 	
 } __packed;
 
@@ -75,8 +75,8 @@ struct smapi_bios_parameter {
 	u_int16_t	param2;
 	u_int16_t	param3;
 
-	u_int32_t	param4;
-	u_int32_t	param5;
+	uint32_t	param4;
+	uint32_t	param5;
 
 } __packed;
 

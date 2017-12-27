@@ -69,7 +69,7 @@ getdiskbyname(const char *name)
 	char	*cp, *cq;	/* can't be register */
 	char	p, max, psize[3], pbsize[3],
 		pfsize[3], poffset[3], ptype[3];
-	u_int32_t *dx;
+	uint32_t *dx;
 
 	if (cgetent(&buf, db_array, (char *) name) < 0)
 		return NULL;

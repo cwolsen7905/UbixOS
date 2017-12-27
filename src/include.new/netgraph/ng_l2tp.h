@@ -113,26 +113,26 @@ struct ng_l2tp_sess_config {
 
 /* Statistics struct */
 struct ng_l2tp_stats {
-	u_int32_t xmitPackets;		/* number of packets xmit */
-	u_int32_t xmitOctets;		/* number of octets xmit */
-	u_int32_t xmitZLBs;		/* ack-only packets transmitted */
-	u_int32_t xmitDrops;		/* xmits dropped due to full window */
-	u_int32_t xmitTooBig;		/* ctrl pkts dropped because too big */
-	u_int32_t xmitInvalid;		/* ctrl packets with no session ID */
-	u_int32_t xmitDataTooBig;	/* data pkts dropped because too big */
-	u_int32_t xmitRetransmits;	/* retransmitted packets */
-	u_int32_t recvPackets;		/* number of packets rec'd */
-	u_int32_t recvOctets;		/* number of octets rec'd */
-	u_int32_t recvRunts;		/* too short packets rec'd */
-	u_int32_t recvInvalid;		/* invalid packets rec'd */
-	u_int32_t recvWrongTunnel;	/* packets rec'd with wrong tunnel id */
-	u_int32_t recvUnknownSID;	/* pkts rec'd with unknown session id */
-	u_int32_t recvBadAcks;		/* ctrl pkts rec'd with invalid 'nr' */
-	u_int32_t recvOutOfOrder;	/* out of order ctrl pkts rec'd */
-	u_int32_t recvDuplicates;	/* duplicate ctrl pkts rec'd */
-	u_int32_t recvDataDrops;	/* dup/out of order data pkts rec'd */
-	u_int32_t recvZLBs;		/* ack-only packets rec'd */
-	u_int32_t memoryFailures;	/* times we couldn't allocate memory */
+	uint32_t xmitPackets;		/* number of packets xmit */
+	uint32_t xmitOctets;		/* number of octets xmit */
+	uint32_t xmitZLBs;		/* ack-only packets transmitted */
+	uint32_t xmitDrops;		/* xmits dropped due to full window */
+	uint32_t xmitTooBig;		/* ctrl pkts dropped because too big */
+	uint32_t xmitInvalid;		/* ctrl packets with no session ID */
+	uint32_t xmitDataTooBig;	/* data pkts dropped because too big */
+	uint32_t xmitRetransmits;	/* retransmitted packets */
+	uint32_t recvPackets;		/* number of packets rec'd */
+	uint32_t recvOctets;		/* number of octets rec'd */
+	uint32_t recvRunts;		/* too short packets rec'd */
+	uint32_t recvInvalid;		/* invalid packets rec'd */
+	uint32_t recvWrongTunnel;	/* packets rec'd with wrong tunnel id */
+	uint32_t recvUnknownSID;	/* pkts rec'd with unknown session id */
+	uint32_t recvBadAcks;		/* ctrl pkts rec'd with invalid 'nr' */
+	uint32_t recvOutOfOrder;	/* out of order ctrl pkts rec'd */
+	uint32_t recvDuplicates;	/* duplicate ctrl pkts rec'd */
+	uint32_t recvDataDrops;	/* dup/out of order data pkts rec'd */
+	uint32_t recvZLBs;		/* ack-only packets rec'd */
+	uint32_t memoryFailures;	/* times we couldn't allocate memory */
 };
 
 /* Keep this in sync with the above structure definition */

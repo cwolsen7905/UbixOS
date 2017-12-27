@@ -38,7 +38,7 @@
 
 #if __BSD_VISIBLE
 
-typedef	u_int32_t tcp_seq;
+typedef	uint32_t tcp_seq;
 
 #define tcp6_seq	tcp_seq	/* for KAME src sync over BSD*'s */
 #define tcp6hdr		tcphdr	/* for KAME src sync over BSD*'s */
@@ -199,48 +199,48 @@ struct tcp_info {
 	u_int8_t	tcpi_snd_wscale:4,	/* RFC1323 send shift value. */
 			tcpi_rcv_wscale:4;	/* RFC1323 recv shift value. */
 
-	u_int32_t	tcpi_rto;		/* Retransmission timeout (usec). */
-	u_int32_t	__tcpi_ato;
-	u_int32_t	tcpi_snd_mss;		/* Max segment size for send. */
-	u_int32_t	tcpi_rcv_mss;		/* Max segment size for receive. */
+	uint32_t	tcpi_rto;		/* Retransmission timeout (usec). */
+	uint32_t	__tcpi_ato;
+	uint32_t	tcpi_snd_mss;		/* Max segment size for send. */
+	uint32_t	tcpi_rcv_mss;		/* Max segment size for receive. */
 
-	u_int32_t	__tcpi_unacked;
-	u_int32_t	__tcpi_sacked;
-	u_int32_t	__tcpi_lost;
-	u_int32_t	__tcpi_retrans;
-	u_int32_t	__tcpi_fackets;
+	uint32_t	__tcpi_unacked;
+	uint32_t	__tcpi_sacked;
+	uint32_t	__tcpi_lost;
+	uint32_t	__tcpi_retrans;
+	uint32_t	__tcpi_fackets;
 
 	/* Times; measurements in usecs. */
-	u_int32_t	__tcpi_last_data_sent;
-	u_int32_t	__tcpi_last_ack_sent;	/* Also unimpl. on Linux? */
-	u_int32_t	tcpi_last_data_recv;	/* Time since last recv data. */
-	u_int32_t	__tcpi_last_ack_recv;
+	uint32_t	__tcpi_last_data_sent;
+	uint32_t	__tcpi_last_ack_sent;	/* Also unimpl. on Linux? */
+	uint32_t	tcpi_last_data_recv;	/* Time since last recv data. */
+	uint32_t	__tcpi_last_ack_recv;
 
 	/* Metrics; variable units. */
-	u_int32_t	__tcpi_pmtu;
-	u_int32_t	__tcpi_rcv_ssthresh;
-	u_int32_t	tcpi_rtt;		/* Smoothed RTT in usecs. */
-	u_int32_t	tcpi_rttvar;		/* RTT variance in usecs. */
-	u_int32_t	tcpi_snd_ssthresh;	/* Slow start threshold. */
-	u_int32_t	tcpi_snd_cwnd;		/* Send congestion window. */
-	u_int32_t	__tcpi_advmss;
-	u_int32_t	__tcpi_reordering;
+	uint32_t	__tcpi_pmtu;
+	uint32_t	__tcpi_rcv_ssthresh;
+	uint32_t	tcpi_rtt;		/* Smoothed RTT in usecs. */
+	uint32_t	tcpi_rttvar;		/* RTT variance in usecs. */
+	uint32_t	tcpi_snd_ssthresh;	/* Slow start threshold. */
+	uint32_t	tcpi_snd_cwnd;		/* Send congestion window. */
+	uint32_t	__tcpi_advmss;
+	uint32_t	__tcpi_reordering;
 
-	u_int32_t	__tcpi_rcv_rtt;
-	u_int32_t	tcpi_rcv_space;		/* Advertised recv window. */
+	uint32_t	__tcpi_rcv_rtt;
+	uint32_t	tcpi_rcv_space;		/* Advertised recv window. */
 
 	/* FreeBSD extensions to tcp_info. */
-	u_int32_t	tcpi_snd_wnd;		/* Advertised send window. */
-	u_int32_t	tcpi_snd_bwnd;		/* No longer used. */
-	u_int32_t	tcpi_snd_nxt;		/* Next egress seqno */
-	u_int32_t	tcpi_rcv_nxt;		/* Next ingress seqno */
-	u_int32_t	tcpi_toe_tid;		/* HWTID for TOE endpoints */
-	u_int32_t	tcpi_snd_rexmitpack;	/* Retransmitted packets */
-	u_int32_t	tcpi_rcv_ooopack;	/* Out-of-order packets */
-	u_int32_t	tcpi_snd_zerowin;	/* Zero-sized windows sent */
+	uint32_t	tcpi_snd_wnd;		/* Advertised send window. */
+	uint32_t	tcpi_snd_bwnd;		/* No longer used. */
+	uint32_t	tcpi_snd_nxt;		/* Next egress seqno */
+	uint32_t	tcpi_rcv_nxt;		/* Next ingress seqno */
+	uint32_t	tcpi_toe_tid;		/* HWTID for TOE endpoints */
+	uint32_t	tcpi_snd_rexmitpack;	/* Retransmitted packets */
+	uint32_t	tcpi_rcv_ooopack;	/* Out-of-order packets */
+	uint32_t	tcpi_snd_zerowin;	/* Zero-sized windows sent */
 	
 	/* Padding to grow without breaking ABI. */
-	u_int32_t	__tcpi_pad[26];		/* Padding. */
+	uint32_t	__tcpi_pad[26];		/* Padding. */
 };
 #endif
 

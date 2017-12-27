@@ -177,9 +177,9 @@ void ipx_print_addr(struct ipx_addr *);
 /* bindery calls */
 int  ncp_get_bindery_object_id(NWCONN_HANDLE, u_int16_t, const char *,
 		struct ncp_bindery_object *);
-int  ncp_get_bindery_object_name(NWCONN_HANDLE, u_int32_t,
+int  ncp_get_bindery_object_name(NWCONN_HANDLE, uint32_t,
 		struct ncp_bindery_object *);
-int  ncp_scan_bindery_object(NWCONN_HANDLE, u_int32_t, u_int16_t, 
+int  ncp_scan_bindery_object(NWCONN_HANDLE, uint32_t, u_int16_t, 
 		char *, struct ncp_bindery_object *);
 int  ncp_read_property_value(NWCONN_HANDLE, int object_type, const char *,
 		int, const char *, struct nw_property *);
@@ -191,18 +191,18 @@ int  ncp_keyed_verify_password(NWCONN_HANDLE, char *, char *,
 		struct ncp_bindery_object *);
 
 /* queue calls */
-int  ncp_create_queue_job_and_file(NWCONN_HANDLE, u_int32_t, struct queue_job *);
-int  ncp_close_file_and_start_job(NWCONN_HANDLE, u_int32_t, struct queue_job *);
-int  ncp_attach_to_queue(NWCONN_HANDLE, u_int32_t);
-int  ncp_detach_from_queue(NWCONN_HANDLE, u_int32_t);
-int  ncp_service_queue_job(NWCONN_HANDLE, u_int32_t, u_int16_t,
+int  ncp_create_queue_job_and_file(NWCONN_HANDLE, uint32_t, struct queue_job *);
+int  ncp_close_file_and_start_job(NWCONN_HANDLE, uint32_t, struct queue_job *);
+int  ncp_attach_to_queue(NWCONN_HANDLE, uint32_t);
+int  ncp_detach_from_queue(NWCONN_HANDLE, uint32_t);
+int  ncp_service_queue_job(NWCONN_HANDLE, uint32_t, u_int16_t,
 		struct queue_job *);
-int  ncp_finish_servicing_job(NWCONN_HANDLE, u_int32_t, u_int32_t, u_int32_t);
-int  ncp_abort_servicing_job(NWCONN_HANDLE, u_int32_t, u_int32_t);
-int  ncp_get_queue_length(NWCONN_HANDLE, u_int32_t, u_int32_t *);
-int  ncp_get_queue_job_ids(NWCONN_HANDLE, u_int32_t, u_int32_t,
-		u_int32_t *, u_int32_t *, u_int32_t []);
-int  ncp_get_queue_job_info(NWCONN_HANDLE, u_int32_t, u_int32_t,
+int  ncp_finish_servicing_job(NWCONN_HANDLE, uint32_t, uint32_t, uint32_t);
+int  ncp_abort_servicing_job(NWCONN_HANDLE, uint32_t, uint32_t);
+int  ncp_get_queue_length(NWCONN_HANDLE, uint32_t, uint32_t *);
+int  ncp_get_queue_job_ids(NWCONN_HANDLE, uint32_t, uint32_t,
+		uint32_t *, uint32_t *, uint32_t []);
+int  ncp_get_queue_job_info(NWCONN_HANDLE, uint32_t, uint32_t,
 		struct nw_queue_job_entry *);
 /*
  * filesystem and volume calls 
@@ -216,9 +216,9 @@ NWCCODE NWGetVolumeName(NWCONN_HANDLE, u_char, char *);
 
 /* misc ncp calls */
 int  ncp_get_file_server_information(NWCONN_HANDLE, struct ncp_file_server_info *);
-int  ncp_get_stations_logged_info(NWCONN_HANDLE, u_int32_t,
+int  ncp_get_stations_logged_info(NWCONN_HANDLE, uint32_t,
 		struct ncp_bindery_object *, time_t *);
-int  ncp_get_internet_address(NWCONN_HANDLE, u_int32_t, struct ipx_addr *,
+int  ncp_get_internet_address(NWCONN_HANDLE, uint32_t, struct ipx_addr *,
 		u_int8_t *);
 NWCCODE NWGetObjectConnectionNumbers(NWCONN_HANDLE, pnstr8, nuint16,
 		pnuint16, pnuint16, nuint16);

@@ -70,7 +70,7 @@ __bt_put(const DB *dbp, DBT *key, const DBT *data, u_int flags)
 	PAGE *h;
 	indx_t idx, nxtindex;
 	pgno_t pg;
-	u_int32_t nbytes, tmp;
+	uint32_t nbytes, tmp;
 	int dflags, exact, status;
 	char *dest, db[NOVFLSIZE], kb[NOVFLSIZE];
 
@@ -125,7 +125,7 @@ storekey:		if (__ovfl_put(t, key, &pg) == RET_ERROR)
 			memmove(kb, &pg, sizeof(pgno_t));
 			tmp = key->size;
 			memmove(kb + sizeof(pgno_t),
-			    &tmp, sizeof(u_int32_t));
+			    &tmp, sizeof(uint32_t));
 			dflags |= P_BIGKEY;
 			key = &tkey;
 		}
@@ -137,7 +137,7 @@ storekey:		if (__ovfl_put(t, key, &pg) == RET_ERROR)
 			memmove(db, &pg, sizeof(pgno_t));
 			tmp = data->size;
 			memmove(db + sizeof(pgno_t),
-			    &tmp, sizeof(u_int32_t));
+			    &tmp, sizeof(uint32_t));
 			dflags |= P_BIGDATA;
 			data = &tdata;
 		}
@@ -197,7 +197,7 @@ delete:		if (__bt_dleaf(t, key, h, idx) == RET_ERROR) {
 	 * into the offset array, shift the pointers up.
 	 */
 	nbytes = NBLEAFDBT(key->size, data->size);
-	if ((u_int32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t)) {
+	if ((uint32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t)) {
 		if ((status = __bt_split(t, h, key,
 		    data, dflags, nbytes, idx)) != RET_SUCCESS)
 			return (status);
@@ -263,7 +263,7 @@ static EPG *
 bt_fast(BTREE *t, const DBT *key, const DBT *data, int *exactp)
 {
 	PAGE *h;
-	u_int32_t nbytes;
+	uint32_t nbytes;
 	int cmp;
 
 	if ((h = mpool_get(t->bt_mp, t->bt_last.pgno, 0)) == NULL) {
@@ -278,7 +278,7 @@ bt_fast(BTREE *t, const DBT *key, const DBT *data, int *exactp)
 	 * have to search to get split stack.
 	 */
 	nbytes = NBLEAFDBT(key->size, data->size);
-	if ((u_int32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t))
+	if ((uint32_t)(h->upper - h->lower) < nbytes + sizeof(indx_t))
 		goto miss;
 
 	if (t->bt_order == FORWARD) {

@@ -323,7 +323,7 @@ struct an_ltv_gen {
  * Transmit frame structure.
  */
 struct an_txframe {
-	u_int32_t		an_tx_sw;		/* 0x00 */
+	uint32_t		an_tx_sw;		/* 0x00 */
 	u_int16_t		an_tx_status;		/* 0x04 */
 	u_int16_t		an_tx_payload_len;	/* 0x06 */
 	u_int16_t		an_tx_ctl;		/* 0x08 */
@@ -417,7 +417,7 @@ struct an_snap_hdr {
 };
 
 struct an_dma_alloc {
-	u_int32_t		an_dma_paddr;
+	uint32_t		an_dma_paddr;
 	caddr_t			an_dma_vaddr;
 	bus_dmamap_t		an_dma_map;
 	bus_dma_segment_t	an_dma_seg;

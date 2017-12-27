@@ -48,9 +48,9 @@ static spinLock_t fvpSpinLock = SPIN_LOCK_INITIALIZER;
  ************************************************************************/
 void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
   int y = 0, counter = 0, pdI = 0x0, ptI = 0x0;
-  u_int32_t *pageTableSrc = 0x0;
-  u_int32_t *pageDir = 0x0;
-  u_int32_t start_page = 0x0;
+  uint32_t *pageTableSrc = 0x0;
+  uint32_t *pageDir = 0x0;
+  uint32_t start_page = 0x0;
 
   spinLock( &fvpSpinLock );
 
@@ -62,7 +62,7 @@ void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
 
   /* Get Our Starting Address */
   if ( type == VM_THRD ) {
-    start_page = (u_int32_t)( _current->td.vm_daddr + ctob( _current->td.vm_dsize ) );
+    start_page = (uint32_t)( _current->td.vm_daddr + ctob( _current->td.vm_dsize ) );
   }
   else if ( type == VM_TASK ) {
     //kprintf("vmStart");
@@ -89,7 +89,7 @@ void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
 
     /* If Page Directory Is Not Yet Allocated Allocate It */
     if ( (pageDir[pdI] & PAGE_PRESENT) != PAGE_PRESENT ) {
-      pageDir[pdI] = (uInt32) vmmFindFreePage( _current->id ) | PAGE_DEFAULT;
+      pageDir[pdI] = (uInt32) vmm_findFreePage( _current->id ) | PAGE_DEFAULT;
 
       /* Also Add It To Virtual Space So We Can Make Changes Later */
       pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (4096 * 767));
@@ -122,9 +122,9 @@ void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
         kprintf( "COW PAGE NOT CLEANED!" );
       }
       else if ( (uInt32) pageTableSrc[y] == (uInt32) 0x0 ) {
-        if ( (vmm_remapPage( (uInt32) vmmFindFreePage( pid ), ((pdI * (1024 * 4096)) + (y * 4096)), PAGE_DEFAULT )) == 0x0 )
+        if ( (vmm_remapPage( (uInt32) vmm_findFreePage( pid ), ((pdI * (1024 * 4096)) + (y * 4096)), PAGE_DEFAULT )) == 0x0 )
           kpanic( "vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, ((pdI * (1024 * 4096)) + (y * 4096)) );
-        vmmClearVirtualPage( (uInt32)( (pdI * (1024 * 4096)) + (y * 4096) ) );
+        vmm_clearVirtualPage( (uInt32)( (pdI * (1024 * 4096)) + (y * 4096) ) );
       }
       else {
         kprintf( "-> y: %i, ptI: 0x%X, pdI: 0x%X pTS: 0x%X ??\n", y, ptI, pdI, pageTableSrc[y] );

@@ -41,7 +41,7 @@ enum busTypes {
 /* MP Floating Pointer Structure */
 typedef struct MPFPS {
 	char    signature[4];
-	u_int32_t pap;
+	uint32_t pap;
 	u_char  length;
 	u_char  spec_rev;
 	u_char  checksum;
@@ -63,10 +63,10 @@ typedef struct MPCTH {
 	u_char  checksum;
 	u_char  oem_id[8];
 	u_char  product_id[12];
-	u_int32_t oem_table_pointer;
+	uint32_t oem_table_pointer;
 	u_short oem_table_size;
 	u_short entry_count;
-	u_int32_t apic_address;
+	uint32_t apic_address;
 	u_short extended_table_length;
 	u_char  extended_table_checksum;
 	u_char  reserved;
@@ -85,10 +85,10 @@ typedef struct PROCENTRY {
 	u_char  apic_id;
 	u_char  apic_version;
 	u_char  cpu_flags;
-	u_int32_t cpu_signature;
-	u_int32_t feature_flags;
-	u_int32_t reserved1;
-	u_int32_t reserved2;
+	uint32_t cpu_signature;
+	uint32_t feature_flags;
+	uint32_t reserved1;
+	uint32_t reserved2;
 }      *proc_entry_ptr;
 
 #define PROCENTRY_FLAG_EN	0x01
@@ -105,7 +105,7 @@ typedef struct IOAPICENTRY {
 	u_char  apic_id;
 	u_char  apic_version;
 	u_char  apic_flags;
-	u_int32_t apic_address;
+	uint32_t apic_address;
 }      *io_apic_entry_ptr;
 
 #define IOAPICENTRY_FLAG_EN	0x01
