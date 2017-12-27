@@ -90,14 +90,20 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
 
   if (ubmutex->lock == true && ubmutex->pid != _current->id) {
     kprintf("Mutex Already Lock By PID %x Wiating To Be Relocked By %x\n",ubmutex->pid,_current->id);
+    while (1) {
+      if (!xchg_32(&ubmutex->lock, true))
+        break;
+
     while (ubmutex->lock == true)
       sched_yield();
     }
+    }
   else if (ubmutex->lock == true && ubmutex->pid == _current->id) {
     kprintf("Mutex Already Locked By This Thread");
+    return(0x0);
   }
 
-  atomic_exchange(&ubmutex->lock, true);
+
   ubmutex->pid = _current->id;
   return(0x0);
   }
@@ -106,7 +112,8 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
   ubthread_mutex_t ubmutex = *mutex;
 
  if (ubmutex->pid == _current->id) {
-    atomic_exchange(&ubmutex->lock, false);
+    while(xchg_32(&ubmutex->lock, false))
+      sched_yield();
     return(0x0);
     }
   else {
@@ -114,7 +121,8 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
     while (ubmutex->pid != _current->id)
       sched_yield();
     kprintf("GOT IT UNLOCKING");
-    atomic_exchange(&ubmutex->lock, false);
+    while (!xchg_32(&ubmutex->lock, false))
+      sched_yield();
     return(0x0);
     }
   }
@@ -123,7 +131,7 @@ int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, cons
   ubthread_cond_t  ubcond  = *cond;
   ubthread_mutex_t ubmutex = *mutex;
 
-  uInt32 enterTime = systemVitals->sysUptime+20;
+  uint32_t enterTime = systemVitals->sysUptime+20;
 
   ubthread_mutex_unlock(mutex);
 
@@ -148,6 +156,7 @@ int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex) {
 
 int ubthread_cond_signal(ubthread_cond_t *cond) {
   ubthread_cond_t ubcond = *cond;
-  atomic_exchange(&ubcond->lock, false);
+  while (xchg_32(&ubcond->lock, false))
+    sched_yield();
   return(0x0);
   }
