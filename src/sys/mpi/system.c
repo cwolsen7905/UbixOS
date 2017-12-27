@@ -33,7 +33,7 @@
 #include <ubixos/spinlock.h>
 
 static mpi_mbox_t  *mboxList    = 0x0;
-static spinLock_t  mpiSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock  mpiSpinLock = SPIN_LOCK_INITIALIZER;
 
 /*****************************************************************************************
 

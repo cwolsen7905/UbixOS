@@ -33,7 +33,7 @@
 #include <ubixos/spinlock.h>
 #include <lib/kprintf.h>
 
-static spinLock_t fvpSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock fvpSpinLock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 

@@ -31,7 +31,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 
-static spinLock_t vmmGFPlock = SPIN_LOCK_INITIALIZER;
+static struct spinLock vmmGFPlock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 

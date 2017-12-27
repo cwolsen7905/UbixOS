@@ -19,7 +19,7 @@
 #define INFINITE_TIME 0
 
 static struct timeval starttime;
-static spinLock_t netThreadSpinlock = SPIN_LOCK_INITIALIZER;
+static struct spinLock netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
 static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);

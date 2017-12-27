@@ -35,7 +35,7 @@
 
 /* Linked list of drivers loaded in the system accessable by the subsystem only */
 static struct device_node *devices = 0x0;
-static spinLock_t deviceSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock deviceSpinLock = SPIN_LOCK_INITIALIZER;
 
 /*****************************************************************************************
 

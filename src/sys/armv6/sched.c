@@ -51,7 +51,7 @@ static uInt32  nextID    = -1;
 kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;
 
-static spinLock_t schedulerSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 

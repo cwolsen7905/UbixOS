@@ -40,7 +40,7 @@
 #include <lib/kmalloc.h>
 #include <devfs/devfs.h>
 
-static spinLock_t fdcSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock fdcSpinLock = SPIN_LOCK_INITIALIZER;
 
 static volatile bool done = FALSE;
 static drvGeom geometry = { dg144Heads,dg144Tracks,dg144Spt };

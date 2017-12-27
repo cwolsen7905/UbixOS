@@ -33,7 +33,7 @@
 #include <ubixos/kpanic.h>
 #include <string.h>
 
-static spinLock_t cvsSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock cvsSpinLock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 

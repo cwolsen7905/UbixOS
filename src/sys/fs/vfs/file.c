@@ -39,7 +39,7 @@
 #include <lib/kprintf.h>
 #include <assert.h>
 
-static spinLock_t fdTable_lock = SPIN_LOCK_INITIALIZER;
+static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
 
 fileDescriptor *fdTable = 0x0;
 

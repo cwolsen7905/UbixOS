@@ -51,8 +51,8 @@ static struct memDescriptor *emptyKernDesc = 0x0;
 /*
  Set up our spinlocks so we do not corrupt linked lists if we have re-entrancy
 */
-static spinLock_t mallocSpinLock    = SPIN_LOCK_INITIALIZER;
-static spinLock_t emptyDescSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock mallocSpinLock    = SPIN_LOCK_INITIALIZER;
+static struct spinLock emptyDescSpinLock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 

@@ -36,8 +36,8 @@
 
 uint32_t *kernelPageDirectory = 0x0; // Pointer To Kernel Page Directory
 
-static spinLock_t fkpSpinLock = SPIN_LOCK_INITIALIZER;
-static spinLock_t rmpSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock fkpSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock rmpSpinLock = SPIN_LOCK_INITIALIZER;
 
 /*****************************************************************************************
  Function: int vmm_pagingInit();

@@ -50,7 +50,7 @@ static char stdinBuffer[512];
 static uInt16 stdinSize;
 static uInt32 controlKeys = 0x0;
 
-static spinLock_t atkbdSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
 
 static unsigned int keyboardMap[255][8] = {
 /*           Ascii,  Shift,   Ctrl,    Alt,    Num,   Caps, Shift Caps, Shift Num */

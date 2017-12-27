@@ -45,29 +45,26 @@
 #define cpu_relax() asm volatile("pause\n": : :"memory")
 
 /* Atomic exchange (of various sizes) */
-static inline void *xchg_64(void *ptr, void *x) {
-	__asm__ __volatile__("xchgq %0,%1"
-			:"=r" ((unsigned long long) x)
-			:"m" (*(volatile long long *)ptr), "0" ((unsigned long long) x)
-			:"memory");
+static inline u_long xchg_64(volatile uint32_t *ptr, u_long x) {
+	__asm__ __volatile__("xchgq %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
 
 	return x;
 }
 
-static inline unsigned xchg_32(void *ptr, unsigned x) {
-	__asm__ __volatile__("xchgl %0,%1"
-			:"=r" ((unsigned) x)
-			:"m" (*(volatile unsigned *)ptr), "0" (x)
-			:"memory");
+static inline unsigned xchg_32(volatile uint32_t *ptr, uint32_t x) {
+	__asm__ __volatile__("xchgl %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
 
 	return x;
 }
 
-static inline unsigned short xchg_16(void *ptr, unsigned short x) {
-	__asm__ __volatile__("xchgw %0,%1"
-			:"=r" ((unsigned short) x)
-			:"m" (*(volatile unsigned short *)ptr), "0" (x)
-			:"memory");
+static inline unsigned short xchg_16(volatile uint32_t *ptr, uint16_t x) {
+	__asm__ __volatile__("xchgw %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
 
 	return x;
 }
@@ -89,8 +86,8 @@ void spinLockInit(spinLock_t lock) {
 }
 
 void spinLock(spinLock_t *lock) {
-	spinLock_t me;
-	spinLock_t *tail;
+	struct spinLock me;
+	spinLock_t tail;
 
 	/* Fast path - no users  */
 	if (!cmpxchg(lock, NULL, LLOCK_FLAG))
@@ -140,7 +137,7 @@ void spinLock(spinLock_t *lock) {
 	}
 }
 
-static void listlock_unlock(spinLock_t *l)
+void spinUnlock(spinLock_t *l)
 {
 	spinLock_t tail;
 	spinLock_t tp;
@@ -203,7 +200,7 @@ static void listlock_unlock(spinLock_t *l)
 	tail->locked = 1;
 }
 
-static int spinTrylock(spinLock_t *l)
+int spinTryLock(spinLock_t *l)
 {
 	/* Simple part of a spin-lock */
 	if (!cmpxchg(l, NULL, LLOCK_FLAG)) return 0;
@@ -212,6 +209,7 @@ static int spinTrylock(spinLock_t *l)
 	return LOCKED;
 }
 
+#ifdef _BALLS
 void spinLockInit_old(spinLock_t *lock) {
 	*lock = SPIN_LOCK_INITIALIZER;
 }
@@ -243,3 +241,4 @@ void spinLock_scheduler_old(spinLock_t *lock) {
 int spinLockLocked_old(spinLock_t *lock) {
 	return (*lock != 0);
 }
+#endif

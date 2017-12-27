@@ -37,7 +37,7 @@
 
 static tty_term  *terms          = 0x0;
 tty_term         *tty_foreground = 0x0;
-static spinLock_t tty_spinLock   = SPIN_LOCK_INITIALIZER;
+static struct spinLock tty_spinLock   = SPIN_LOCK_INITIALIZER;
 
 int tty_init() {
   int i = 0x0;

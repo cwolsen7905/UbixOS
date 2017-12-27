@@ -34,7 +34,7 @@
 #include <lib/kprintf.h>
 #include <sys/trap.h>
 
-static spinLock_t pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock pageFaultSpinLock = SPIN_LOCK_INITIALIZER;
 
 /*****************************************************************************************
 

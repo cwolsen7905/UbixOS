@@ -37,7 +37,7 @@
 #include <lib/string.h>
 #include <lib/kprintf.h>
 
-spinLock_t Master = SPIN_LOCK_INITIALIZER;
+struct spinLock Master = SPIN_LOCK_INITIALIZER;
 
 void syscall( struct trapframe *frame ) {
   uint32_t code = 0x0;
@@ -131,8 +131,3 @@ int invalidCall() {
   kprintf( "Invalid System Call #[%i]\n", sys_call );
   return (0);
 }
-
-/***
- END
- ***/
-

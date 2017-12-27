@@ -40,8 +40,8 @@
 #include <i386/cpu.h>
 
 static uInt32 freePages = 0;
-static spinLock_t vmmSpinLock = SPIN_LOCK_INITIALIZER;
-static spinLock_t vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
 int numPages = 0x0;
 mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;

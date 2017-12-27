@@ -34,8 +34,11 @@
 #include <sys/video.h>
 #include <isa/8259.h>
 #include <net/netif.h>
+#include <ubixos/spinlock.h>
 
 struct lncInfo *lnc = 0x0;
+
+static struct spinLock lnc_intSpinLock = SPIN_LOCK_INITIALIZER;
 
 static char const * const nicIdent[] = { "Unknown", "BICC", "NE2100", "DEPCA", "CNET98S" };
 
