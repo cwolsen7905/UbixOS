@@ -60,13 +60,11 @@ struct ubthread {
 
 struct ubthread_cond {
   int   id;
-  //uInt8 locked;
   _Atomic bool lock;
   };
 
 struct ubthread_mutex {
   int     id;
-  //uInt8   locked;
   _Atomic bool lock;
   pidType pid;
   };

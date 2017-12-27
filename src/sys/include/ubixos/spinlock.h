@@ -32,9 +32,19 @@
 
 #include <sys/types.h>
 
+#define LOCKED   1
+#define UNLOCKED 0
 #define SPIN_LOCK_INITIALIZER   0
+#define LLOCK_FLAG (void *)1
 
-typedef volatile int spinLock_t;
+//typedef volatile int spinLock_t;
+
+struct spinLock {
+    spinLock_t next;
+    int locked;
+};
+
+typedef struct spinLock *spinLock_t;
 
 extern spinLock_t Master;
 
