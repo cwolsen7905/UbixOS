@@ -50,6 +50,7 @@ void lnc_thread();
 //static void tcpip_init_done(void *arg);
 
 int net_init() {
+return(0);
   ip_addr_t ipaddr, netmask, gw;
   struct netif netif;
 
@@ -63,8 +64,7 @@ int net_init() {
   netif_set_default(&netif);
 
   //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
-  //irqEnable(0x9);
-  sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
+//  sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
 
   return(0x0);
 }
@@ -107,7 +107,6 @@ void netMainThread() {
   //udpecho_init();
   shell_init();
   //bot_init();
-  irqEnable(0x9);
   endTask(_current->id);
   while (1)
     sched_yield();

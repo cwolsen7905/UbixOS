@@ -248,7 +248,7 @@ int lanceProbe(struct lncInfo *lnc) {
 void lnc_INT() {
   uint16_t csr0 = 0x0;
 
-//  kprintf("\nINTR\n");
+  kprintf("\nINTR\n");
 //  while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
     //kprintf("CSR0: [0x%X]\n", csr0);
     if (csr0 & ERR) {
@@ -301,7 +301,8 @@ kprintf("STARTING THREAD LNC");
     lnc_nextRxPtr(lnc);
   //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
   }
-  kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+//  kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+
   sched_yield();
   }
 }
