@@ -627,14 +627,17 @@ mem_malloc(mem_size_t size)
   }
 
   /* protect the heap from concurrent access */
-kprintf("SML: [0x%i]");
+kprintf("SML: [0x%i]", __LINE__);
   sys_mutex_lock(&mem_mutex);
+kprintf("SML: [0x%i]", __LINE__);
   LWIP_MEM_ALLOC_PROTECT();
+kprintf("SML: [0x%i]", __LINE__);
 #if LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
   /* run as long as a mem_free disturbed mem_malloc or mem_trim */
   do {
     local_mem_free_count = 0;
 #endif /* LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT */
+kprintf("SML: [0x%i]", __LINE__);
 
     /* Scan through the heap searching for a free block that is big enough,
      * beginning with the lowest free block.
@@ -653,12 +656,15 @@ kprintf("SML: [0x%i]");
         local_mem_free_count = 1;
         break;
       }
+kprintf("SML: [0x%i]", __LINE__);
 #endif /* LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT */
 
+kprintf("SML: [0x%i]", __LINE__);
       if ((!mem->used) &&
           (mem->next - (ptr + SIZEOF_STRUCT_MEM)) >= size) {
         /* mem is not used and at least perfect fit is possible:
          * mem->next - (ptr + SIZEOF_STRUCT_MEM) gives us the 'user data size' of mem */
+kprintf("SML: [0x%i]", __LINE__);
 
         if (mem->next - (ptr + SIZEOF_STRUCT_MEM) >= (size + SIZEOF_STRUCT_MEM + MIN_SIZE_ALIGNED)) {
           /* (in addition to the above, we test if another struct mem (SIZEOF_STRUCT_MEM) containing
@@ -680,6 +686,7 @@ kprintf("SML: [0x%i]");
           /* and insert it between mem and mem->next */
           mem->next = ptr2;
           mem->used = 1;
+kprintf("SML: [0x%i]", __LINE__);
 
           if (mem2->next != MEM_SIZE_ALIGNED) {
             ((struct mem *)(void *)&ram[mem2->next])->prev = ptr2;
@@ -693,6 +700,7 @@ kprintf("SML: [0x%i]");
            * also can't move mem->next directly behind mem, since mem->next
            * will always be used at this point!
            */
+kprintf("SML: [0x%i]", __LINE__);
           mem->used = 1;
           MEM_STATS_INC_USED(used, mem->next - (mem_size_t)((u8_t *)mem - ram));
         }
@@ -701,6 +709,7 @@ mem_malloc_adjust_lfree:
 #endif /* LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT */
         if (mem == lfree) {
           struct mem *cur = lfree;
+kprintf("SML: [0x%i]", __LINE__);
           /* Find next free block after mem and update lowest free pointer */
           while (cur->used && cur != ram_end) {
 #if LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
@@ -716,11 +725,14 @@ mem_malloc_adjust_lfree:
 #endif /* LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT */
             cur = (struct mem *)(void *)&ram[cur->next];
           }
+kprintf("SML: [0x%i]", __LINE__);
           lfree = cur;
           LWIP_ASSERT("mem_malloc: !lfree->used", ((lfree == ram_end) || (!lfree->used)));
+kprintf("SML: [0x%i]", __LINE__);
         }
         LWIP_MEM_ALLOC_UNPROTECT();
         sys_mutex_unlock(&mem_mutex);
+kprintf("SML: [0x%i]", __LINE__);
         LWIP_ASSERT("mem_malloc: allocated memory not above ram_end.",
          (mem_ptr_t)mem + SIZEOF_STRUCT_MEM + size <= (mem_ptr_t)ram_end);
         LWIP_ASSERT("mem_malloc: allocated memory properly aligned.",
@@ -728,9 +740,11 @@ mem_malloc_adjust_lfree:
         LWIP_ASSERT("mem_malloc: sanity check alignment",
           (((mem_ptr_t)mem) & (MEM_ALIGNMENT-1)) == 0);
 
+kprintf("SML: [0x%i]", __LINE__);
         return (u8_t *)mem + SIZEOF_STRUCT_MEM;
       }
     }
+kprintf("SML: [0x%i]", __LINE__);
 #if LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT
     /* if we got interrupted by a mem_free, try again */
   } while (local_mem_free_count != 0);
@@ -738,7 +752,9 @@ mem_malloc_adjust_lfree:
   LWIP_DEBUGF(MEM_DEBUG | LWIP_DBG_LEVEL_SERIOUS, ("mem_malloc: could not allocate %"S16_F" bytes\n", (s16_t)size));
   MEM_STATS_INC(err);
   LWIP_MEM_ALLOC_UNPROTECT();
+kprintf("SML: [0x%i]]\n", __LINE__);
   sys_mutex_unlock(&mem_mutex);
+kprintf("SML: [0x%i]]\n", __LINE__);
   return NULL;
 }
 

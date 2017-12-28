@@ -187,20 +187,21 @@ tcpip_inpkt(struct pbuf *p, struct netif *inp, netif_input_fn input_fn)
   if (msg == NULL) {
     return ERR_MEM;
   }
-//kprintf("INPKT %i\n", __LINE__);
+kprintf("INPKT %i\n", __LINE__);
 
   msg->type = TCPIP_MSG_INPKT;
   msg->msg.inp.p = p;
   msg->msg.inp.netif = inp;
   msg->msg.inp.input_fn = input_fn;
-//kprintf("%s:%i\n", __FILE__, __LINE__);
+kprintf("%s:%i\n", __FILE__, __LINE__);
   if (sys_mbox_trypost(&mbox, msg) != ERR_OK) {
-//kprintf("INPKT %i\n", __LINE__);
+kprintf("INPKT %i\n", __LINE__);
     memp_free(MEMP_TCPIP_MSG_INPKT, msg);
-//kprintf("INPKT %i\n", __LINE__);
+kprintf("INPKT %i\n", __LINE__);
     return ERR_MEM;
   }
-//kprintf("INPKT %i\n", __LINE__);
+kprintf("INPKT %i\n", __LINE__);
+
   return ERR_OK;
 #endif /* LWIP_TCPIP_CORE_LOCKING_INPUT */
 }

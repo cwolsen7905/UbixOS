@@ -44,6 +44,8 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 
+void lnc_thread();
+
 //void netMainThread();
 //static void tcpip_init_done(void *arg);
 
@@ -61,7 +63,8 @@ int net_init() {
   netif_set_default(&netif);
 
   //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
-  irqEnable(0x9);
+  //irqEnable(0x9);
+  sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
 
   return(0x0);
 }
@@ -73,7 +76,6 @@ int net_init_dead() {
   memp_init();
   pbuf_init();
 
-  sys_thread_new("mainThread", (void *) (netMainThread), 0x0, 0x1000, 0x0);
 
   return (0x0);
 }

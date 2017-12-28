@@ -116,8 +116,9 @@ void sys_mutex_free(sys_mutex_t *mutex) {
 }
 
 void sys_mutex_lock(sys_mutex_t *mutex) {
-  kprintf("L4");
+  kprintf("L4.0");
    ubthread_mutex_lock(&(mutex->mutex)) ;
+  kprintf("L4.1");
 }
 
 void sys_mutex_unlock(sys_mutex_t *mutex) {
@@ -255,7 +256,7 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
   //void sys_thread_new(void (*function)(void), void *arg) {
   struct sys_thread *new_thread = 0x0;
   //struct thread_start_param *thread_param;
-
+  prio = 1;
   LWIP_ASSERT("Non-positive prio", prio > 0);
   LWIP_ASSERT("Prio is too big", prio < 20);
 
