@@ -196,7 +196,7 @@ uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
   //lk_time_t start = current_time();
 
   uint32_t start = sys_now();
-
+  kprintf("Timeout: %i]", timeout);
   res = sys_arch_sem_wait(&(mbox->full), timeout ? timeout : INFINITE_TIME);
   //res = sem_timedwait(&mbox->full, timeout ? timeout : INFINITE_TIME);
   if (res == ERR_TIMED_OUT) {

@@ -25,12 +25,13 @@
 
  $Id: ubthread.h 79 2016-01-11 16:21:27Z reddawg $
 
-*****************************************************************************************/
+ *****************************************************************************************/
 
 #ifndef _UBTHREAD_H
 #define _UBTHREAD_H
 
 #include <sys/types.h>
+#include <stdatomic.h>
 #include <ubixos/sched.h>
 #include <ubixos/time.h>
 
@@ -41,56 +42,48 @@
 #define LOCKED     1
 #define UNLOCKED   0
 
-/*MROLSEN TEMP BOOL*/
-#define false   0
-#define true    1
-
-#define bool    _Bool
-#if __STDC_VERSION__ < 199901L && __GNUC__ < 3 && !defined(__INTEL_COMPILER)
-typedef int     _Bool;
-#endif
-
-typedef struct ubthread       *ubthread_t;
-typedef struct ubthread_cond  *ubthread_cond_t;
+typedef struct ubthread *ubthread_t;
+typedef struct ubthread_cond *ubthread_cond_t;
 typedef struct ubthread_mutex *ubthread_mutex_t;
 
 struct ubthread {
-  kTask_t *task;
-  };
+    kTask_t *task;
+};
 
 struct ubthread_cond {
-  int   id;
-  _Atomic bool lock;
-  };
+    int id;
+    //_Atomic bool lock;
+    bool lock;
+};
 
 struct ubthread_mutex {
-  int     id;
-  _Atomic bool lock;
-  pidType pid;
-  };
+    int id;
+    //_Atomic bool lock;
+    bool lock;
+    pidType pid;
+};
 
 struct ubthread_list {
-  struct ubthread_list *next;
-  ubthread_t           thread;
-  };
+    struct ubthread_list *next;
+    ubthread_t thread;
+};
 
 struct ubthread_cond_list {
-  struct ubthread_cond_list *next;
-  ubthread_cond_t           *cond;
-  };
+    struct ubthread_cond_list *next;
+    ubthread_cond_t *cond;
+};
 
 struct ubthread_mutex_list {
-  struct ubthread_mutex_list *next;
-  ubthread_mutex_t           *mutex;
-  };
-
+    struct ubthread_mutex_list *next;
+    ubthread_mutex_t *mutex;
+};
 
 kTask_t *ubthread_self();
-int ubthread_cond_init(ubthread_cond_t *cond,const uInt32 attr);
-int ubthread_mutex_init(ubthread_mutex_t *mutex,const uInt32 attr);
+int ubthread_cond_init(ubthread_cond_t *cond, const uInt32 attr);
+int ubthread_mutex_init(ubthread_mutex_t *mutex, const uInt32 attr);
 int ubthread_cond_destroy(ubthread_cond_t *cond);
 int ubthread_mutex_destroy(ubthread_mutex_t *mutex);
-int ubthread_create(kTask_t **thread,const uInt32 *attr,void (* tproc)(void), void *arg);
+int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg);
 int ubthread_mutex_lock(ubthread_mutex_t *mutex);
 int ubthread_mutex_unlock(ubthread_mutex_t *mutex);
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime);
@@ -98,24 +91,3 @@ int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex);
 int ubthread_cond_signal(ubthread_cond_t *cond);
 
 #endif
-
-/***
- $Log: ubthread.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:57  reddawg
- no message
-
- Revision 1.3  2004/09/07 20:58:35  reddawg
- time to roll back i can't think straight by friday
-
- Revision 1.2  2004/05/21 15:20:00  reddawg
- Cleaned up
-
-
- END
- ***/
