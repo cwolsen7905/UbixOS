@@ -57,20 +57,17 @@ void sys_sem_signal(sys_sem_t *sem) {
     if (sem->signaled > 1)
       sem->signaled = 1;
 
-    ubthread_cond_signal(&(sem->cond));
+    //ubthread_cond_signal(&(sem->cond));
     ubthread_mutex_unlock(&(sem->mutex));
 }
 
-uint32_t sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
+uint32_t _sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
   uint32_t time = sys_now();
 
-  //kprintf("L2");
   ubthread_mutex_lock(&(sem->mutex));
- // kprintf("L2.1");
 
   while (sem->signaled <= 0) {
     if (timeout > 0) {
-//kprintf("%s:%i\n", __FILE__, __LINE__);
       time = cond_wait(&(sem->cond), &(sem->mutex), timeout);
       time = 0;
 //kprintf("%s:%i\n", __FILE__, __LINE__);
@@ -93,6 +90,33 @@ uint32_t sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
   ubthread_mutex_lock(&(sem->mutex));
   kprintf("L3.1");
   return (sys_now() - time);
+}
+
+uint32_t sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
+  uint32_t time = sys_now();
+  uint32_t ret = 0x0;
+
+  if (sem->signaled > 0) {
+    ubthread_mutex_lock(&(sem->mutex));
+    sem->signaled--;
+    ubthread_mutex_unlock(&(sem->mutex));
+    return (ret);
+  }
+
+  while (sem->signaled <= 0) {
+    if (timeout > 0) {
+      sched_yield();
+      ret = sys_now() - time;
+    }
+    else {
+      sched_yield();
+      ret = SYS_ARCH_TIMEOUT;
+    }
+  }
+  ubthread_mutex_lock(&(sem->mutex));
+  sem->signaled--;
+  ubthread_mutex_unlock(&(sem->mutex));
+  return (ret);
 }
 
 int sys_sem_valid(sys_sem_t *sem) {
