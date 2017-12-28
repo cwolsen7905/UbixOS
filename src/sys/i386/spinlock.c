@@ -44,163 +44,157 @@
 #define cpu_relax() asm volatile("pause\n": : :"memory")
 
 void spinLockInit(spinLock_t lock) {
-	memset(lock, 0x0, sizeof(spinLock_t));
-}
-
-void spinLock(spinLock_t *lock) {
-	struct spinLock me;
-	spinLock_t tail;
-
-	/* Fast path - no users  */
-	if (!cmpxchg(lock, NULL, LLOCK_FLAG))
-		return;
-
-	me.next = LLOCK_FLAG;
-	me.locked = 0;
-
-	/* Convert into a wait list */
-	tail = xchg_32(lock, &me);
-
-	if (tail) {
-		/* Add myself to the list of waiters */
-		if (tail == LLOCK_FLAG)
-			tail = NULL;
-
-		me.next = tail;
-
-		/* Wait for being able to go */
-		while (!me.locked)
-			sched_yield();
-
-		return;
-	}
-
-	/* Try to convert to an exclusive lock */
-	if (cmpxchg(lock, &me, LLOCK_FLAG) == &me)
-		return;
-
-	/* Failed - there is now a wait list */
-	tail = *lock;
-
-	/* Scan to find who is after me */
-	while (1) {
-		/* Wait for them to enter their next link */
-		while (tail->next == LLOCK_FLAG )
-			sched_yield();
-
-		if (tail->next == &me) {
-			/* Fix their next pointer */
-			tail->next = NULL;
-
-			return;
-		}
-
-		tail = tail->next;
-	}
-}
-
-void spinUnlock(spinLock_t *l)
-{
-	spinLock_t tail;
-	spinLock_t tp;
-
-	while (1)
-	{
-		tail = *l;
-
-		barrier();
-
-		/* Fast path */
-		if (tail == LLOCK_FLAG)
-		{
-			if (cmpxchg(l, LLOCK_FLAG, NULL) == LLOCK_FLAG) return;
-
-			continue;
-		}
-
-		tp = NULL;
-
-		/* Wait for partially added waiter */
-		while (tail->next == LLOCK_FLAG) sched_yield();
-
-		/* There is a wait list */
-		if (tail->next) break;
-
-		/* Try to convert to a single-waiter lock */
-		if (cmpxchg(l, tail, LLOCK_FLAG) == tail)
-		{
-			/* Unlock */
-			tail->locked = 1;
-
-			return;
-		}
-
-		sched_yield();
-	}
-
-	/* A long list */
-	tp = tail;
-	tail = tail->next;
-
-	/* Scan wait list */
-	while (1)
-	{
-		/* Wait for partially added waiter */
-		while (tail->next == LLOCK_FLAG) sched_yield();
-
-		if (!tail->next) break;
-
-		tp = tail;
-		tail = tail->next;
-	}
-
-	tp->next = NULL;
-
-	barrier();
-
-	/* Unlock */
-	tail->locked = 1;
-}
-
-int spinTryLock(spinLock_t *l)
-{
-	/* Simple part of a spin-lock */
-	if (!cmpxchg(l, NULL, LLOCK_FLAG)) return 0;
-
-	/* Failure! */
-	return LOCKED;
+  memset(lock, 0x0, sizeof(spinLock_t));
 }
 
 #ifdef _BALLS
-void spinLockInit_old(spinLock_t *lock) {
-	*lock = SPIN_LOCK_INITIALIZER;
+void spinLock(spinLock_t lock) {
+  struct spinLock me;
+  spinLock_t tail;
+
+  /* Fast path - no users  */
+  if (!cmpxchg(lock, NULL, LLOCK_FLAG))
+    return;
+
+  me.next = LLOCK_FLAG;
+  me.locked = 0;
+
+  /* Convert into a wait list */
+  tail = xchg_32(lock, &me);
+
+  if (tail) {
+    /* Add myself to the list of waiters */
+    if (tail == LLOCK_FLAG)
+      tail = NULL;
+
+    me.next = tail;
+
+    /* Wait for being able to go */
+    while (!me.locked)
+      sched_yield();
+
+    return;
+  }
+
+  /* Try to convert to an exclusive lock */
+  if (cmpxchg(lock, &me, LLOCK_FLAG) == &me)
+    return;
+
+  /* Failed - there is now a wait list */
+  tail = *lock;
+
+  /* Scan to find who is after me */
+  while (1) {
+    /* Wait for them to enter their next link */
+    while (tail->next == LLOCK_FLAG )
+      sched_yield();
+
+    if (tail->next == &me) {
+      /* Fix their next pointer */
+      tail->next = NULL;
+
+      return;
+    }
+
+    tail = tail->next;
+  }
 }
 
-void spinUnlock_old(spinLock_t *lock) {
-	barrier();
-	*lock = 0x0;
+void spinUnlock(spinLock_t *l) {
+  spinLock_t tail;
+  spinLock_t tp;
+
+  while (1) {
+    tail = *l;
+
+    barrier();
+
+    /* Fast path */
+    if (tail == LLOCK_FLAG) {
+      if (cmpxchg(l, LLOCK_FLAG, NULL) == LLOCK_FLAG)
+        return;
+
+      continue;
+    }
+
+    tp = NULL;
+
+    /* Wait for partially added waiter */
+    while (tail->next == LLOCK_FLAG )
+      sched_yield();
+
+    /* There is a wait list */
+    if (tail->next)
+      break;
+
+    /* Try to convert to a single-waiter lock */
+    if (cmpxchg(l, tail, LLOCK_FLAG) == tail) {
+      /* Unlock */
+      tail->locked = 1;
+
+      return;
+    }
+
+    sched_yield();
+  }
+
+  /* A long list */
+  tp = tail;
+  tail = tail->next;
+
+  /* Scan wait list */
+  while (1) {
+    /* Wait for partially added waiter */
+    while (tail->next == LLOCK_FLAG )
+      sched_yield();
+
+    if (!tail->next)
+      break;
+
+    tp = tail;
+    tail = tail->next;
+  }
+
+  tp->next = NULL;
+
+  barrier();
+
+  /* Unlock */
+  tail->locked = 1;
+}
+#endif
+
+int spinTryLock(spinLock_t lock) {
+  if (!cmpxchg(&lock->locked, NULL, LLOCK_FLAG))
+    return 0;
+
+  /* Failure! */
+  return LOCKED;
 }
 
-int spinTryLock_old(spinLock_t *lock) {
-	return (xchg_32(lock, LOCKED));
+
+void spinUnlock(spinLock_t *lock) {
+  barrier();
+  lock->locked = 0x0;
 }
 
-void spinLock_old(spinLock_t *lock) {
-	while (1) {
-		if (!xchg_32(lock, LOCKED))
-			return;
-		while (*lock == 1)
-			sched_yield();
-	}
+void spinLock(spinLock_t lock) {
+  while (1) {
+    if (!xchg_32(lock->locked, LOCKED))
+      return;
+    while (lock->locked == 1)
+      sched_yield();
+  }
 }
 
+#ifdef _BALLS
 void spinLock_scheduler_old(spinLock_t *lock) {
-	while (!spinTryLock(lock))
-		while (*lock == 1)
-			;
+  while (!spinTryLock(lock))
+  while (*lock == 1)
+  ;
 }
 
 int spinLockLocked_old(spinLock_t *lock) {
-	return (*lock != 0);
+  return (*lock != 0);
 }
 #endif

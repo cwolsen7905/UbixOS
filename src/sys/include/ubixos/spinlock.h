@@ -49,8 +49,8 @@ typedef struct spinLock *spinLock_t;
 extern struct spinLock Master;
 
 void spinLockInit(spinLock_t);
-void spinUnlock(spinLock_t *);
-int spinTryLock(spinLock_t *);
+void spinUnlock(spinLock_t);
+int spinTryLock(spinLock_t);
 void spinLock(spinLock_t *);
 
 void spinLock_scheduler(spinLock_t *); /* Only use this spinlock in the sched. */
