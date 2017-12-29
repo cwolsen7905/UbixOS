@@ -214,7 +214,7 @@ static int atkbd_scan() {
 void keyboardHandler() {
   int key = 0x0;
 
-  if ( !spinTryLock( &atkbdSpinLock ) )
+  if ( spinTryLock( &atkbdSpinLock ) )
     return;
 
   key = atkbd_scan();
@@ -288,7 +288,7 @@ void keyboardHandler() {
       case 0x3:
         //if (tty_foreground != 0x0)
         //  endTask(tty_foreground->owner);
-        K_PANIC( "CTRL-C pressed\n" );
+        //K_PANIC( "CTRL-C pressed\n" );
         kprintf( "FreePages: [0x%X]\n", systemVitals->freePages );
         break;
       case 0x9:
@@ -350,7 +350,7 @@ int getchar() {
    */
 
   /*
-   if (!spinTryLock(&atkbdSpinLock))
+   if (spinTryLock(&atkbdSpinLock))
    return(0x0);
    */
 

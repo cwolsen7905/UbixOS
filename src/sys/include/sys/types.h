@@ -43,9 +43,17 @@ typedef __uint32_t uint32_t;
 typedef __uint64_t uint64_t;
 typedef __uint64_t uquad_t;
 
+/* unsigned integrals (deprecated) */
+typedef __uint8_t  u_int8_t;
+typedef __uint16_t u_int16_t;
+typedef __uint32_t u_int32_t;
+typedef __uint64_t u_int64_t;
+typedef __uint64_t u_quad_t;
+
+typedef __int64_t quad_t;
 
 typedef __int64_t       daddr_t;        /* disk address */
-typedef __uint32_t       u_daddr_t;      /* unsigned disk address */
+typedef __uint32_t      u_daddr_t;      /* unsigned disk address */
 
 typedef unsigned char uInt8;
 typedef unsigned short uInt16;
@@ -55,13 +63,6 @@ typedef char Int8;
 typedef short Int16;
 typedef long Int32;
 
-typedef __uint8_t u_int8_t; /* unsigned integrals (deprecated) */
-typedef __uint16_t u_int16_t;
-typedef __uint32_t uint32_t;
-typedef __uint64_t u_int64_t;
-//typedef long long int quad_t;
-typedef __uint64_t quad_t;
-//typedef __uint32_t quad_t;
 
 typedef unsigned char u_char;
 typedef unsigned short u_short;
@@ -126,12 +127,10 @@ typedef __time_t time_t;
 #define _TIME_T_DECLARED
 #endif
 
-/* MrOlsen (2016-01-11) NOTE: Note sure if i need this in here but will for now */
 typedef uint32_t uintmax_t;
 typedef int32_t intmax_t;
 typedef int32_t ptrdiff_t;
 typedef uint32_t uintptr_t;
-typedef uint32_t u_quad_t;
 
 #define __ULONG_MAX     0xffffffffUL
 #define __USHRT_MAX     0xffff          /* max value for an unsigned short */

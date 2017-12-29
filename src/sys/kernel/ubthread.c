@@ -159,3 +159,11 @@ int ubthread_cond_signal(ubthread_cond_t *cond) {
     sched_yield();
   return (0x0);
 }
+
+int ubthread_cond_broadcast(ubthread_cond_t *cond) {
+  ubthread_cond_t ubcond = *cond;
+  while (xchg_32(&ubcond->lock, FALSE))
+    sched_yield();
+  return (0x0);
+}
+

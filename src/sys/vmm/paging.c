@@ -206,7 +206,7 @@ int vmm_remapPage(uint32_t source, u_int dest, uInt16 perms) {
   destPageDirectoryIndex = PD_INDEX(dest);
 
   if ((pageDir[destPageDirectoryIndex] & PAGE_PRESENT) != PAGE_PRESENT) {
-    kprintf("Page Not Present: 0x%X, Source: 0x%X, Dest: 0x%X, dPDI: 0x%X\n", dest, source, dest, destPageDirectoryIndex);
+    //kprintf("Page Not Present: 0x%X, Source: 0x%X, Dest: 0x%X, dPDI: 0x%X\n", dest, source, dest, destPageDirectoryIndex);
     /* If Page Table Is Non Existant Then Set It Up */
     /* UBU Why does the page table need to be user writable? */
     pageDir[destPageDirectoryIndex] = (uint32_t) vmm_findFreePage(_current->id) | PAGE_DEFAULT;

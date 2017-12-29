@@ -173,14 +173,14 @@ int spinTryLock(spinLock_t lock) {
 }
 
 
-void spinUnlock(spinLock_t *lock) {
+void spinUnlock(spinLock_t lock) {
   barrier();
   lock->locked = 0x0;
 }
 
 void spinLock(spinLock_t lock) {
   while (1) {
-    if (!xchg_32(lock->locked, LOCKED))
+    if (!xchg_32(&lock->locked, LOCKED))
       return;
     while (lock->locked == 1)
       sched_yield();

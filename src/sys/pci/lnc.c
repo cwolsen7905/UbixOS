@@ -33,6 +33,7 @@
 #include <lib/kprintf.h>
 #include <sys/video.h>
 #include <isa/8259.h>
+#include <net/net.h>
 #include <net/netif.h>
 #include <ubixos/spinlock.h>
 
@@ -248,8 +249,8 @@ int lanceProbe(struct lncInfo *lnc) {
 void lnc_INT() {
   uint16_t csr0 = 0x0;
 
-  kprintf("\nINTR\n");
-//  while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
+  //kprintf("\nINTR\n");
+  //while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
     //kprintf("CSR0: [0x%X]\n", csr0);
     if (csr0 & ERR) {
       kprintf("Error: [0x%X]\n", csr0);
@@ -293,7 +294,7 @@ kprintf("STARTING THREAD LNC");
     tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
 
  // kprintf("RINT2\n");
-    //ethernetif_input(netif_default);
+    ethernetif_input(&lnc_netif);
   //kprintf("RINT3\n");
   //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
     lnc->rxRing[lnc->rxPtr].md[1] = 0x80;

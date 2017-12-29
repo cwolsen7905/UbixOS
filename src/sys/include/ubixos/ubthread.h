@@ -89,5 +89,6 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex);
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime);
 int ubthread_cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex);
 int ubthread_cond_signal(ubthread_cond_t *cond);
+int ubthread_cond_broadcast(ubthread_cond_t *cond);
 
 #endif

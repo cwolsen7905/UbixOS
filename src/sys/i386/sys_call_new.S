@@ -39,6 +39,7 @@ pushal
 pushl %ds
 pushl %es
 pushl %fs
+pushl %gs
 
 /* switch to kernel segments */
 movl $0x10,%eax
@@ -52,6 +53,7 @@ call syscall
 //MEXITCOUNT
 
 //jmp     doreti
+popl %gs
 popl %fs
 popl %es
 popl %ds

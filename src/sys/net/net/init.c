@@ -48,11 +48,10 @@ void lnc_thread();
 
 //void netMainThread();
 //static void tcpip_init_done(void *arg);
+struct netif lnc_netif;
 
 int net_init() {
-return(0);
   ip_addr_t ipaddr, netmask, gw;
-  struct netif netif;
 
   tcpip_init(NULL, NULL);
 
@@ -60,11 +59,11 @@ return(0);
   IP4_ADDR(&ipaddr, 10, 50, 0, 7);
   IP4_ADDR(&netmask, 255, 255, 0, 0);
 
-  netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
-  netif_set_default(&netif);
+  netif_add(&lnc_netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+  netif_set_default(&lnc_netif);
 
   //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
-//  sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
+  sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
 
   return(0x0);
 }

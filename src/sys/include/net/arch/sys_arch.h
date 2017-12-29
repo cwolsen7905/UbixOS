@@ -13,7 +13,7 @@ struct sys_timeouts {
 };
 
 struct sys_sem {
-  int   signaled;
+  uint32_t   signaled;
   ubthread_cond_t cond;
   ubthread_mutex_t mutex;
 };
@@ -29,14 +29,20 @@ typedef struct sys_mutex sys_mutex_t;
 struct sys_mbox {
   uint32_t head;
   uint32_t tail;
-  ubthread_mutex_t lock;
 
-  uint32_t size;
+  //MrOlsen (2017-12-28) - This will break because size is passable
+  void *msgs[SYS_MBOX_SIZE];
+
+  //struct ubthread_mutex *lock;
 
   struct sys_sem *empty;
   struct sys_sem *full;
+  struct sys_sem *lock;
 
-  void **queue;
+  int wait_send;
+
+  //void **queue;
+  //uint32_t size;
 };
 
 typedef struct sys_mbox sys_mbox_t;

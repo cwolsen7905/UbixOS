@@ -192,14 +192,12 @@ void execFile( char *file, int argc, char **argv, int console ) {
   /* Now We Must Create A Virtual Space For This Proccess To Run In */
   _current->tss.cr3 = (uInt32) vmm_createVirtualSpace( _current->id );
   kprintf( "_current->tss.cr3: 0x%X", _current->tss.cr3 );
-
   /* To Better Load This Application We Will Switch Over To Its VM Space */
   asm volatile(
       "movl %0,%%eax          \n"
       "movl %%eax,%%cr3       \n"
       : : "d" ((uInt32 *)(_current->tss.cr3))
   );
-
   /* Lets Find The File */
   tmpFd = fopen( file, "r" );
 

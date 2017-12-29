@@ -172,7 +172,7 @@ int mprotect( struct thread *td, struct mprotect_args *uap ) {
 /* MrOlsen 2016-01-18 */
 int sys_invalid( struct thread *td, void *args ) {
   kprintf( "Invalid System Call #[%i]\n", td->frame->tf_eax );
-kpanic("PID: %i, File: %s, Line: %i", _current->id, __FILE__, __LINE__);
+//kpanic("PID: %i, File: %s, Line: %i", _current->id, __FILE__, __LINE__);
   return (0);
 }
 

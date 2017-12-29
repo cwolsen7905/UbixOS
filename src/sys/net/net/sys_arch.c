@@ -22,7 +22,8 @@ static struct timeval starttime;
 static struct spinLock netThreadSpinlock = SPIN_LOCK_INITIALIZER;
 static struct sys_thread *threads = 0x0;
 
-static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout);
+static uint32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint32_t timeout);
+static void sys_sem_free_internal(struct sys_sem *sem);
 
 /* sys_arch layer initializer */
 void sys_init() {
@@ -30,93 +31,89 @@ void sys_init() {
   gettimeofday(&starttime, &tz);
 }
 
-/* Create a new semaphore */
-err_t sys_sem_new(sys_sem_t *sem, uint8_t count) {
-  sem->signaled = count;
+static struct sys_sem *sys_sem_new_internal(uint8_t count) {
+  struct sys_sem *sem;
 
-  ubthread_cond_init(&(sem->cond), NULL);
-  ubthread_mutex_init(&(sem->mutex), NULL);
+  sem = (struct sys_sem *)kmalloc(sizeof(struct sys_sem));
+  if (sem != NULL) {
+    sem->signaled = count;
+    ubthread_cond_init(&(sem->cond), NULL);
+    ubthread_mutex_init(&(sem->mutex), NULL);
+  }
+  return sem;
+}
+
+/* Create a new semaphore */
+err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
+  sys_sem_t *newSem = 0x0;
+
+  newSem = kmalloc(sizeof(struct sys_sem));
+  newSem->signaled = count;
+  ubthread_cond_init(&(newSem->cond), NULL);
+  ubthread_mutex_init(&(newSem->mutex), NULL);
+
+  if (*sem != 0)
+    kpanic("UH OH!");
+
+  *sem = newSem;
 
   return (ERR_OK);
 }
 
 /* Deallocate semaphore */
-void sys_sem_free(sys_sem_t *sem) {
-  ubthread_cond_destroy(&(sem->cond));
-  ubthread_mutex_destroy(&(sem->mutex));
-  //MrOlsen maybe not here
-  kfree(sem);
+void sys_sem_free(struct sys_sem **sem) {
+  if ((sem != NULL) && (*sem != SYS_SEM_NULL)) {
+    sys_sem_free_internal(*sem);
+  }
 }
 
 /* Signal semaphore */
-void sys_sem_signal(sys_sem_t *sem) {
-  kprintf("L1");
+void sys_sem_signal(struct sys_sem **s) {
+  struct sys_sem *sem;
+  LWIP_ASSERT("invalid sem", (s != NULL) && (*s != NULL));
+  sem = *s;
+
   ubthread_mutex_lock(&(sem->mutex));
+  sem->signaled++;
 
-    sem->signaled++;
-    if (sem->signaled > 1)
-      sem->signaled = 1;
+  if (sem->signaled > 1) {
+    sem->signaled = 1;
+  }
 
-    //ubthread_cond_signal(&(sem->cond));
-    ubthread_mutex_unlock(&(sem->mutex));
+  ubthread_cond_broadcast(&(sem->cond));
+  ubthread_mutex_unlock(&(sem->mutex));
 }
 
-uint32_t _sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
-  uint32_t time = sys_now();
+static void sys_sem_free_internal(struct sys_sem *sem) {
+  ubthread_cond_destroy(&(sem->cond));
+  ubthread_mutex_destroy(&(sem->mutex));
+  kfree(sem);
+}
+
+uint32_t sys_arch_sem_wait(struct sys_sem **s, uint32_t timeout) {
+  uint32_t time_needed = 0;
+  struct sys_sem *sem;
+  LWIP_ASSERT("invalid sem", (s != NULL) && (*s != NULL));
+  sem = *s;
 
   ubthread_mutex_lock(&(sem->mutex));
-
   while (sem->signaled <= 0) {
     if (timeout > 0) {
-      time = cond_wait(&(sem->cond), &(sem->mutex), timeout);
-      time = 0;
-//kprintf("%s:%i\n", __FILE__, __LINE__);
-      if (time == 0) {
-//kprintf("%s:%i\n", __FILE__, __LINE__);
+      time_needed = cond_wait(&(sem->cond), &(sem->mutex), timeout);
+
+      if (time_needed == SYS_ARCH_TIMEOUT) {
         ubthread_mutex_unlock(&(sem->mutex));
-//kprintf("%s:%i\n", __FILE__, __LINE__);
-        return(0);
+        return SYS_ARCH_TIMEOUT;
       }
-    }
-    else {
-//kprintf("%s:%i\n", __FILE__, __LINE__);
-      time = cond_wait(&(sem->cond), &(sem->mutex), 0);
-     timeout = 1;
-//kprintf("%s:%i\n", __FILE__, __LINE__);
+      /*      ubthread_mutex_unlock(&(sem->mutex));
+              return time_needed; */
+    } else {
+      cond_wait(&(sem->cond), &(sem->mutex), 0);
     }
   }
-  sem->signaled--;
-  //kprintf("L3");
-  ubthread_mutex_lock(&(sem->mutex));
-  kprintf("L3.1");
-  return (sys_now() - time);
-}
-
-uint32_t sys_arch_sem_wait(struct sys_sem *sem, uint32_t timeout) {
-  uint32_t time = sys_now();
-  uint32_t ret = 0x0;
-
-  if (sem->signaled > 0) {
-    ubthread_mutex_lock(&(sem->mutex));
-    sem->signaled--;
-    ubthread_mutex_unlock(&(sem->mutex));
-    return (ret);
-  }
-
-  while (sem->signaled <= 0) {
-    if (timeout > 0) {
-      sched_yield();
-      ret = sys_now() - time;
-    }
-    else {
-      sched_yield();
-      ret = SYS_ARCH_TIMEOUT;
-    }
-  }
-  ubthread_mutex_lock(&(sem->mutex));
   sem->signaled--;
   ubthread_mutex_unlock(&(sem->mutex));
-  return (ret);
+  return time_needed;
 }
 
 int sys_sem_valid(sys_sem_t *sem) {
@@ -149,129 +146,207 @@ void sys_mutex_unlock(sys_mutex_t *mutex) {
   ubthread_mutex_unlock(&(mutex->mutex)) ;
 }
 
-err_t sys_mbox_new(sys_mbox_t *mbox, int size) {
+err_t sys_mbox_new(struct sys_mbox **mb, int size) {
+  struct sys_mbox *mbox = 0x0;
   LWIP_ASSERT("mbox null", mbox);
-  ubthread_mutex_init(mbox->lock, NULL);
+  //MrOlsen (2017-12-28) - lock is not a pointer
+
+  mbox = (struct sys_mbox *)kmalloc(sizeof(struct sys_mbox));
+
+  if (mbox == NULL)
+    return(ERR_MEM);
+
 
   mbox->head = 0;
   mbox->tail = 0;
-  mbox->size = size;
+  mbox->wait_send = 0;
+  //mbox->size = size;
 
-  sys_sem_new(mbox->empty, size);
-  sys_sem_new(mbox->full, 0);
+  //Pass By Reference It's a Pointer
+  //ubthread_mutex_init(&mbox->lock, NULL);
 
-  mbox->queue = kmalloc(sizeof(void *) * size);//calloc(size, sizeof(void *));
+  //Pass By Reference It's a Pointer
+  sys_sem_new(&mbox->lock, 1);
+  sys_sem_new(&mbox->empty, 0);
+  sys_sem_new(&mbox->full, 0);
 
-  if (!mbox->queue) {
-    kprintf("WTF: [%i]", size);
-    return ERR_MEM;
-  }
+  //mbox->queue = kmalloc(sizeof(void *) * size);//calloc(size, sizeof(void *));
+
+  //if (!mbox->queue) {
+  //  kprintf("WTF: [%i]", size);
+  //  return ERR_MEM;
+  //}
 
   return (ERR_OK);
 }
 
-void sys_mbox_free(sys_mbox_t *mbox) {
-  kfree(mbox->queue);
-  mbox->queue = NULL;
+void sys_mbox_free(struct sys_mbox **mb) {
+  if ((mb != NULL) && (*mb != SYS_MBOX_NULL)) {
+    struct sys_mbox *mbox = *mb;
+    sys_arch_sem_wait(&mbox->lock, 0);
+    
+    sys_sem_free_internal(mbox->full);
+    sys_sem_free_internal(mbox->empty);
+    sys_sem_free_internal(mbox->lock);
+    mbox->full = mbox->empty = mbox->lock = NULL;
+    kfree(mbox);
+  }
+  //kfree(mbox->queue);
+  //mbox->queue = NULL;
 }
 
-void sys_mbox_post(sys_mbox_t * mbox, void *msg) {
-  sys_arch_sem_wait(&(mbox->empty), 0);
-  kprintf("L5");
-  ubthread_mutex_lock(&mbox->lock);
+void sys_mbox_post(struct sys_mbox **mb, void *msg) {
+  uint8_t head;
+  struct sys_mbox *mbox;
+  LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
+  mbox = *mb;
 
-  mbox->queue[mbox->head] = msg;
-  mbox->head = (mbox->head + 1) % mbox->size;
+  sys_arch_sem_wait(&mbox->lock, 0);
 
-  ubthread_mutex_unlock(&mbox->lock);
-  //sem_post(&mbox->full);
-  sys_sem_signal(&(mbox->full));
-}
+  LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_post: mbox %p msg %p\n", (void *)mbox, (void *)msg));
 
-err_t sys_mbox_trypost(sys_mbox_t * mbox, void *msg) {
-uint32_t res;
-
-kprintf("%s:%i\n", __FILE__, __LINE__);
-/* SHOULD BE TRY WAIT */
-res = sys_arch_sem_wait(&mbox->empty, 0x0);
-kprintf("%s:%i\n", __FILE__, __LINE__);
-if (res == ERR_NOT_READY)
-return ERR_TIMEOUT;
-kprintf("%s:%i\n", __FILE__, __LINE__);
-
-  kprintf("L6");
-ubthread_mutex_lock(&mbox->lock);
-
-mbox->queue[mbox->head] = msg;
-mbox->head = (mbox->head + 1) % mbox->size;
-
-ubthread_mutex_unlock(&mbox->lock);
-sys_sem_signal(&(mbox->full));
-//sem_post(&mbox->full);
-
-return ERR_OK;
-}
-
-uint32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, uint32_t timeout) {
-
-  //status_t res;
-  uint32_t res;
-
-  //lk_time_t start = current_time();
-
-  uint32_t start = sys_now();
-  kprintf("Timeout1: %i]", timeout);
-  res = sys_arch_sem_wait(&(mbox->full), timeout ? timeout : INFINITE_TIME);
-  kprintf("Timeout2: %i]", timeout);
-  //res = sem_timedwait(&mbox->full, timeout ? timeout : INFINITE_TIME);
-  if (res == ERR_TIMED_OUT) {
-    //LTRACE_EXIT;
-    return SYS_ARCH_TIMEOUT; //timeout ? SYS_ARCH_TIMEOUT : 0;
+  while ((mbox->tail + 1) >= (mbox->head + SYS_MBOX_SIZE)) {
+    mbox->wait_send++;
+    sys_sem_signal(&mbox->lock);
+    sys_arch_sem_wait(&mbox->empty, 0);
+    sys_arch_sem_wait(&mbox->lock, 0);
+    mbox->wait_send--;
   }
 
-  kprintf("L7");
-  ubthread_mutex_lock(&mbox->lock);
+  mbox->msgs[mbox->tail % SYS_MBOX_SIZE] = msg;
 
-  *msg = mbox->queue[mbox->tail];
-  mbox->tail = (mbox->tail + 1) % mbox->size;
+  if (mbox->tail == mbox->head) {
+    head = 1;
+  } else {
+    head = 0;
+  }
 
-  ubthread_mutex_unlock(&mbox->lock);
-  sys_sem_signal(&(mbox->empty));
-  //sem_post(&mbox->empty);
+  mbox->tail++;
 
-  return sys_now() - start;
+  if (head) {
+    sys_sem_signal(&mbox->full);
+  }
+
+  sys_sem_signal(&mbox->lock);
 }
 
-uint32_t sys_arch_mbox_tryfetch(sys_mbox_t * mbox, void **msg) {
-//LTRACE_ENTRY;
+err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg) {
+  uint8_t head;
+  struct sys_mbox *mbox;
+  LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
+  mbox = *mb;
 
-//status_t res;
-  uint32_t res;
+  sys_arch_sem_wait(&mbox->lock, 0);
 
-res = sys_arch_sem_wait(&(mbox->full), 0x0);
-//res = sem_trywait(&mbox->full);
-if (res == ERR_NOT_READY) {
-//LTRACE_EXIT;
-return SYS_MBOX_EMPTY;
+  LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_trypost: mbox %p msg %p\n",
+                          (void *)mbox, (void *)msg));
+
+  if ((mbox->tail + 1) >= (mbox->head + SYS_MBOX_SIZE)) {
+    sys_sem_signal(&mbox->lock);
+    return ERR_MEM;
+  }
+
+  mbox->msgs[mbox->tail % SYS_MBOX_SIZE] = msg;
+
+  if (mbox->tail == mbox->head) {
+    head = 1;
+  } else {
+    head = 0;
+  }
+
+  mbox->tail++;
+
+  if (head) {
+    sys_sem_signal(&mbox->full);
+  }
+
+  sys_sem_signal(&mbox->lock);
+
+  return ERR_OK;
 }
 
-  kprintf("L8");
-ubthread_mutex_lock(&mbox->lock);
+uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout) {
+  uint32_t time_needed = 0;
+  struct sys_mbox *mbox;
+  LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
+  mbox = *mb;
 
-*msg = mbox->queue[mbox->tail];
-mbox->tail = (mbox->tail + 1) % mbox->size;
+  /* The mutex lock is quick so we don't bother with the timeout
+     stuff here. */
+  sys_arch_sem_wait(&mbox->lock, 0);
 
-ubthread_mutex_unlock(&mbox->lock);
-sys_sem_signal(&(mbox->empty));
-//sem_post(&mbox->empty);
+  while (mbox->head == mbox->tail) {
+    sys_sem_signal(&mbox->lock);
 
-//LTRACE_EXIT;
-return 0;
+    /* We block while waiting for a mail to arrive in the mailbox. We
+       must be prepared to timeout. */
+    if (timeout != 0) {
+      time_needed = sys_arch_sem_wait(&mbox->full, timeout);
+
+      if (time_needed == SYS_ARCH_TIMEOUT) {
+        return SYS_ARCH_TIMEOUT;
+      }
+    } else {
+      sys_arch_sem_wait(&mbox->full, 0);
+    }
+
+    sys_arch_sem_wait(&mbox->lock, 0);
+  }
+
+  if (msg != NULL) {
+    LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_fetch: mbox %p msg %p\n", (void *)mbox, *msg));
+    *msg = mbox->msgs[mbox->head % SYS_MBOX_SIZE];
+  }
+  else{
+    LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_fetch: mbox %p, null msg\n", (void *)mbox));
+  }
+
+  mbox->head++;
+
+  if (mbox->wait_send) {
+    sys_sem_signal(&mbox->empty);
+  }
+
+  sys_sem_signal(&mbox->lock);
+
+  return time_needed;
+}
+
+uint32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg) {
+  struct sys_mbox *mbox;
+  LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
+  mbox = *mb;
+
+  sys_arch_sem_wait(&mbox->lock, 0);
+
+  if (mbox->head == mbox->tail) {
+    sys_sem_signal(&mbox->lock);
+    return SYS_MBOX_EMPTY;
+  }
+
+  if (msg != NULL) {
+    LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_tryfetch: mbox %p msg %p\n", (void *)mbox, *msg));
+    *msg = mbox->msgs[mbox->head % SYS_MBOX_SIZE];
+  }
+  else{
+    LWIP_DEBUGF(SYS_DEBUG, ("sys_mbox_tryfetch: mbox %p, null msg\n", (void *)mbox));
+  }
+
+  mbox->head++;
+
+  if (mbox->wait_send) {
+    sys_sem_signal(&mbox->empty);
+  }
+
+  sys_sem_signal(&mbox->lock);
+
+  return 0;
 }
 
 
 int sys_mbox_valid(sys_mbox_t *mbox) {
-  return mbox->queue != NULL;
+  return(0x0);
+  //return mbox->queue != NULL;
 }
 
 void sys_mbox_set_invalid(sys_mbox_t *mbox) {
@@ -323,7 +398,7 @@ struct thread_start_param {
 };
 
 
-static uint16_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint16_t timeout) {
+static uint32_t cond_wait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, uint32_t timeout) {
   unsigned int tdiff;
   unsigned long sec, usec;
   struct timeval rtime1, rtime2;
@@ -409,114 +484,3 @@ unsigned long sys_unix_now() {
 uint32_t sys_now() {
   return (sys_unix_now());
 }
-
-#ifdef _BALLS
-
-#define UMAX(a, b)      ((a) > (b) ? (a) : (b))
-
-struct sys_mbox_msg {
-  struct sys_mbox_msg *next;
-  void *msg;
-};
-
-struct sys_mbox *sys_mbox_new_BALLS() {
-  struct sys_mbox *mbox;
-
-  mbox = kmalloc(sizeof(struct sys_mbox));
-  memset(mbox, 0x0, sizeof(struct sys_mbox));
-  mbox->first = mbox->last = 0;
-  mbox->mail = sys_sem_new_(0);
-  mbox->mutex = sys_sem_new_(1);
-
-  return (mbox);
-}
-
-uint32_t sys_arch_mbox_fetch_BALLS(struct sys_mbox *mbox, void **msg, uint32_t timeout) {
-  uint16_t time = 1;
-
-  /* The mutex lock is quick so we don't bother with the timeout
-   stuff here. */
-  //kprintf("sem wait0");
-  sys_arch_sem_wait(mbox->mutex, 0);
-  //kprintf("sem wait1");
-
-  while (mbox->first == mbox->last) {
-    //kprintf("sem wait2");
-    sys_sem_signal(mbox->mutex);
-    //kprintf("sem wait3");
-
-    /* We block while waiting for a mail to arrive in the mailbox. We
-     must be prepared to timeout. */
-    if (timeout != 0) {
-      // kprintf("sem wait4");
-      time = sys_arch_sem_wait(mbox->mail, timeout);
-      //kprintf("sem wait5");
-
-      /* If time == 0, the sem_wait timed out, and we return 0. */
-      if (time == 0) {
-        return 0;
-      }
-    }
-    else {
-      //kprintf("sem wait6");
-      sys_arch_sem_wait(mbox->mail, 0);
-      //kprintf("sem wait7");
-    }
-
-    //kprintf("sem wait8");
-    sys_arch_sem_wait(mbox->mutex, 0);
-    // kprintf("sem wait9");
-  }
-  //kprintf("sem wait10");
-
-  if (msg != NULL) {
-    //kprintf("sys_mbox_fetch: mbox %p msg %p\n", mbox, *msg);
-    *msg = mbox->msgs[mbox->first];
-  }
-
-  mbox->first++;
-  if (mbox->first == SYS_MBOX_SIZE) {
-    mbox->first = 0;
-  }
-
-  sys_sem_signal(mbox->mutex);
-
-  return (time);
-}
-
-void sys_mbox_free_BALLS(struct sys_mbox *mbox) {
-  if (mbox != SYS_MBOX_NULL) {
-    sys_sem_wait(mbox->mutex);
-    sys_sem_free_(mbox->mail);
-    sys_sem_free_(mbox->mutex);
-    mbox->mail = mbox->mutex = NULL;
-    kfree(mbox);
-  }
-}
-
-void sys_mbox_post_BALLS(struct sys_mbox *mbox, void *msg) {
-  uInt8 first;
-
-  sys_sem_wait(mbox->mutex);
-
-  //kprintf("sys_mbox_post: mbox %p msg %p\n", mbox, msg);
-
-  mbox->msgs[mbox->last] = msg;
-
-  if (mbox->last == mbox->first)
-  first = 1;
-  else
-  first = 0;
-
-  mbox->last++;
-
-  if (mbox->last == SYS_MBOX_SIZE)
-  mbox->last = 0;
-
-  if (first)
-  sys_sem_signal(mbox->mail);
-
-  sys_sem_signal(mbox->mutex);
-}
-
-#endif

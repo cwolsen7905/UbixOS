@@ -132,13 +132,13 @@ void sys_mutex_set_invalid(sys_mutex_t *mutex);
  * @param count initial count of the semaphore
  * @return ERR_OK if successful, another err_t otherwise
  */
-err_t sys_sem_new(sys_sem_t *sem, u8_t count);
+err_t sys_sem_new(sys_sem_t **sem, u8_t count);
 /**
  * @ingroup sys_sem
  * Signals a semaphore
  * @param sem the semaphore to signal
  */
-void sys_sem_signal(sys_sem_t *sem);
+void sys_sem_signal(struct sys_sem **s);
 /**
  * @ingroup sys_sem
  * Wait for a semaphore for the specified timeout
@@ -147,13 +147,13 @@ void sys_sem_signal(sys_sem_t *sem);
  * @return time (in milliseconds) waited for the semaphore
  *         or SYS_ARCH_TIMEOUT on timeout
  */
-u32_t sys_arch_sem_wait(sys_sem_t *sem, u32_t timeout);
+uint32_t sys_arch_sem_wait(struct sys_sem **s, uint32_t timeout);
 /**
  * @ingroup sys_sem
  * Delete a semaphore
  * @param sem semaphore to delete
  */
-void sys_sem_free(sys_sem_t *sem);
+void sys_sem_free(sys_sem_t **sem);
 /** Wait for a semaphore - forever/no timeout */
 #define sys_sem_wait(sem)                  sys_arch_sem_wait(sem, 0)
 #ifndef sys_sem_valid
@@ -200,7 +200,7 @@ void sys_msleep(u32_t ms); /* only has a (close to) 1 ms resolution. */
  * @param size (minimum) number of messages in this mbox
  * @return ERR_OK if successful, another err_t otherwise
  */
-err_t sys_mbox_new(sys_mbox_t *mbox, int size);
+err_t sys_mbox_new(struct sys_mbox **mb, int size);
 /**
  * @ingroup sys_mbox
  * Post a message to an mbox - may not fail
@@ -208,14 +208,14 @@ err_t sys_mbox_new(sys_mbox_t *mbox, int size);
  * @param mbox mbox to posts the message
  * @param msg message to post (ATTENTION: can be NULL)
  */
-void sys_mbox_post(sys_mbox_t *mbox, void *msg);
+void sys_mbox_post(struct sys_mbox **mb, void *msg);
 /**
  * @ingroup sys_mbox
  * Try to post a message to an mbox - may fail if full or ISR
  * @param mbox mbox to posts the message
  * @param msg message to post (ATTENTION: can be NULL)
  */
-err_t sys_mbox_trypost(sys_mbox_t *mbox, void *msg);
+err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg);
 /**
  * @ingroup sys_mbox
  * Wait for a new message to arrive in the mbox
@@ -226,7 +226,7 @@ err_t sys_mbox_trypost(sys_mbox_t *mbox, void *msg);
            or SYS_ARCH_TIMEOUT on timeout
  *         The returned time has to be accurate to prevent timer jitter!
  */
-u32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, u32_t timeout);
+uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout);
 /* Allow port to override with a macro, e.g. special timeout for sys_arch_mbox_fetch() */
 #ifndef sys_arch_mbox_tryfetch
 /**
@@ -237,7 +237,7 @@ u32_t sys_arch_mbox_fetch(sys_mbox_t *mbox, void **msg, u32_t timeout);
  * @return 0 (milliseconds) if a message has been received
  *         or SYS_MBOX_EMPTY if the mailbox is empty
  */
-u32_t sys_arch_mbox_tryfetch(sys_mbox_t *mbox, void **msg);
+uint32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg);
 #endif
 /**
  * For now, we map straight to sys_arch implementation.
@@ -248,7 +248,7 @@ u32_t sys_arch_mbox_tryfetch(sys_mbox_t *mbox, void **msg);
  * Delete an mbox
  * @param mbox mbox to delete
  */
-void sys_mbox_free(sys_mbox_t *mbox);
+void sys_mbox_free(struct sys_mbox **mb);
 #define sys_mbox_fetch(mbox, msg) sys_arch_mbox_fetch(mbox, msg, 0)
 #ifndef sys_mbox_valid
 /**

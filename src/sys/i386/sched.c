@@ -86,7 +86,7 @@ void sched() {
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
 
-  if ( !spinTryLock( &schedulerSpinLock ) )
+  if ( spinTryLock( &schedulerSpinLock ) )
     return;
 
   tmpTask = _current->next;
