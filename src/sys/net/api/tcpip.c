@@ -215,16 +215,16 @@ kprintf("INPKT %i\n", __LINE__);
  */
 err_t tcpip_input(struct pbuf *p, struct netif *inp) {
 #if LWIP_ETHERNET
-  kprintf("tcpip_input0\n");
+  //kprintf("tcpip_input0\n");
   if (inp->flags & (NETIF_FLAG_ETHARP | NETIF_FLAG_ETHERNET)) {
-    kprintf("tcpip_input1\n");
+    //kprintf("tcpip_input1\n");
     return tcpip_inpkt(p, inp, ethernet_input);
   }
   else
 #endif /* LWIP_ETHERNET */
-    kprintf("tcpip_input2\n");
+    //kprintf("tcpip_input2\n");
   return tcpip_inpkt(p, inp, ip_input);
-  kprintf("tcpip_input3\n");
+  //kprintf("tcpip_input3\n");
 }
 
 /**

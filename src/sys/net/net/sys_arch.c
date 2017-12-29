@@ -148,8 +148,7 @@ void sys_mutex_unlock(sys_mutex_t *mutex) {
 
 err_t sys_mbox_new(struct sys_mbox **mb, int size) {
   struct sys_mbox *mbox = 0x0;
-  LWIP_ASSERT("mbox null", mbox);
-  //MrOlsen (2017-12-28) - lock is not a pointer
+  LWIP_UNUSED_ARG(size);
 
   mbox = (struct sys_mbox *)kmalloc(sizeof(struct sys_mbox));
 
@@ -177,6 +176,7 @@ err_t sys_mbox_new(struct sys_mbox **mb, int size) {
   //  return ERR_MEM;
   //}
 
+  *mb = mbox;
   return (ERR_OK);
 }
 
@@ -345,8 +345,7 @@ uint32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg) {
 
 
 int sys_mbox_valid(sys_mbox_t *mbox) {
-  return(0x0);
-  //return mbox->queue != NULL;
+  return mbox != NULL;
 }
 
 void sys_mbox_set_invalid(sys_mbox_t *mbox) {
