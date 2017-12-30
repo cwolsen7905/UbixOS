@@ -248,7 +248,7 @@ void execFile(char *file,int argc,char **argv,int console) {
       */
       for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
           K_PANIC("Remap Page Failed");
 
         memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x),0x0,0x1000);
@@ -274,12 +274,12 @@ void execFile(char *file,int argc,char **argv,int console) {
 
   /* Set Up Stack Space */
   for (x = 1;x < 100;x++) {
-    vmm_remapPage(vmmFindFreePage(_current->id),STACK_ADDR - (x * 0x1000),PAGE_DEFAULT | PAGE_STACK);
+    vmm_remapPage(vmm_findFreePage(_current->id),STACK_ADDR - (x * 0x1000),PAGE_DEFAULT | PAGE_STACK);
     }
 
   /* Kernel Stack 0x2000 bytes long */
-  vmm_remapPage(vmmFindFreePage(_current->id),0x5BC000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
-  vmm_remapPage(vmmFindFreePage(_current->id),0x5BB000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remapPage(vmm_findFreePage(_current->id),0x5BC000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remapPage(vmm_findFreePage(_current->id),0x5BB000,KERNEL_PAGE_DEFAULT | PAGE_STACK);
 
   /* Set All The Proper Information For The Task */
   _current->tss.back_link    = 0x0;
@@ -435,7 +435,7 @@ void sysExec(char *file,char *ap) {
         */
         for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x),0x0,0x1000);
           }
@@ -613,7 +613,7 @@ void sys_exec(char *file,char *ap) {
         */
         for (x = 0x0;x < (programHeader[i].phMemsz);x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmmFindFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id),((programHeader[i].phVaddr & 0xFFFFF000) + x),PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
           memset((void *)((programHeader[i].phVaddr & 0xFFFFF000) + x),0x0,0x1000);
           }

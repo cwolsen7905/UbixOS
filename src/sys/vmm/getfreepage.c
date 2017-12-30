@@ -31,11 +31,11 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 
-static spinLock_t vmmGFPlock = SPIN_LOCK_INITIALIZER;
+static struct spinLock vmmGFPlock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 
- Function: void *vmmGetFreePage(pidType pid);
+ Function: void *vmm_getFreePage(pidType pid);
 
  Description: Returns A Free Page Mapped To The VM Space
 
@@ -59,10 +59,10 @@ void *vmm_getFreePage( pidType pid ) {
       /* Loop Through The Page Table Find An UnAllocated Page */
       if ( (uInt32) pageTableSrc[y] == (uInt32) 0x0 ) {
         /* Map A Physical Page To The Virtual Page */
-        if ( (vmm_remapPage( vmmFindFreePage( pid ), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT )) == 0x0 )
-          kpanic( "vmmRemapPage: vmmGetFreePage\n" );
+        if ( (vmm_remapPage( vmm_findFreePage( pid ), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT )) == 0x0 )
+          kpanic( "vmmRemapPage: vmm_getFreePage\n" );
         /* Clear This Page So No Garbage Is There */
-        vmmClearVirtualPage( (uInt32)( (x * 0x400000) + (y * 0x1000) ) );
+        vmm_clearVirtualPage( (uInt32)( (x * 0x400000) + (y * 0x1000) ) );
         /* Return The Address Of The Newly Allocate Page */
         spinUnlock( &vmmGFPlock );
         return ((void *) ((x * 0x400000) + (y * 0x1000)));

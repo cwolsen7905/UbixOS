@@ -53,7 +53,7 @@ static uint32_t nextID = -1;
 kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;
 
-static spinLock_t schedulerSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 
@@ -86,7 +86,7 @@ void sched() {
   kTask_t *tmpTask = 0x0;
   kTask_t *delTask = 0x0;
 
-  if ( !spinTryLock( &schedulerSpinLock ) )
+  if ( spinTryLock( &schedulerSpinLock ) )
     return;
 
   tmpTask = _current->next;

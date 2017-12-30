@@ -40,15 +40,15 @@
 #include <i386/cpu.h>
 
 static uInt32 freePages = 0;
-static spinLock_t vmmSpinLock = SPIN_LOCK_INITIALIZER;
-static spinLock_t vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
 int numPages = 0x0;
 mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
 
 /************************************************************************
 
- Function: void vmmMemMapInit();
+ Function: void vmm_memMapInit();
  Description: This Function Initializes The Memory Map For the System
  Notes:
 
@@ -212,7 +212,7 @@ int countMemory() {
 
 /************************************************************************
 
- Function: uInt32 vmmFindFreePage(pid_t pid);
+ Function: uInt32 vmm_findFreePage(pid_t pid);
 
  Description: This Returns A Free  Physical Page Address Then Marks It
  Not Available As Well As Setting The PID To The Proccess
@@ -425,7 +425,7 @@ void vmm_freeProcessPages(pidType pid) {
  vmm_pageFault: deadlock resolved thanks to a propper solution suggested by geist
 
  Revision 1.7  2004/07/19 02:04:32  reddawg
- memory.c: added spinlocks to vmmFindFreePage and vmmFreePage to prevent two tasks from possibly allocating the same page
+ memory.c: added spinlocks to vmm_findFreePage and vmmFreePage to prevent two tasks from possibly allocating the same page
 
  Revision 1.6  2004/06/14 12:20:54  reddawg
  notes: many bugs repaired and ld works 100% now.

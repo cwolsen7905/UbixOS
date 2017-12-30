@@ -127,8 +127,8 @@ extern "C" void sdeThread() {
           else {
             windows = 0x0;
             }
-          vmmUnmapPages(buf->buffer,buf->bSize);
-          vmmUnmapPages(buf->lineOfs,buf->lSize);
+          vmm_unmapPages(buf->buffer,buf->bSize);
+          vmm_unmapPages(buf->lineOfs,buf->lSize);
         //  kfree(tmp->buf);
           kfree(tmp);
           tmp = 0x0;

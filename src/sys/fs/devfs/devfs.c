@@ -37,7 +37,7 @@
 #include <lib/kprintf.h>
 
 /* Spinlock for devfs we should start converting to sem/mutex */
-static spinLock_t devfsSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock devfsSpinLock = SPIN_LOCK_INITIALIZER;
 
 /* Length of dev list */
 static int devfs_len = 0x0;

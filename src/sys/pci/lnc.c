@@ -33,9 +33,13 @@
 #include <lib/kprintf.h>
 #include <sys/video.h>
 #include <isa/8259.h>
+#include <net/net.h>
 #include <net/netif.h>
+#include <ubixos/spinlock.h>
 
 struct lncInfo *lnc = 0x0;
+
+static struct spinLock lnc_intSpinLock = SPIN_LOCK_INITIALIZER;
 
 static char const * const nicIdent[] = { "Unknown", "BICC", "NE2100", "DEPCA", "CNET98S" };
 
@@ -246,50 +250,67 @@ void lnc_INT() {
   uint16_t csr0 = 0x0;
 
   //kprintf("\nINTR\n");
-  while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
+  //while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
     //kprintf("CSR0: [0x%X]\n", csr0);
     if (csr0 & ERR) {
       kprintf("Error: [0x%X]\n", csr0);
     }
     if (csr0 & RINT) {
-      lnc_rxINT();
-/*
-asm(
-  "  mov $0xA0,%dx        \n"
-  "  mov $0x20,%ax        \n"
-  "  outb %al,%dx         \n"
-  "  mov $0x20,%dx        \n"
-  "  mov $0x20,%ax        \n"
-  "  outb %al,%dx         \n"
-);
-*/
+      asm("nop");
+      //lnc_rxINT();
     }
     if (csr0 & TINT) {
       asm("nop");
        //kprintf("TINT");
        //lnc_txINT();
-/*
-asm(
-  "  mov $0xA0,%dx        \n"
-  "  mov $0x20,%ax        \n"
-  "  outb %al,%dx         \n"
-  "  mov $0x20,%dx        \n"
-  "  mov $0x20,%ax        \n"
-  "  outb %al,%dx         \n"
-);
-*/
     }
-    lnc_writeCSR32(lnc, CSR0, 0x7940);//csr0);
-    //kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
-  }
-
-  kprintf("INT DONE");
+ //   kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
+//  }
+  lnc_writeCSR32(lnc, CSR0, 0x7940);//csr0);
+//  kprintf("INT DONE");
 }
+
+void lnc_thread() {
+  int i = 0;
+
+  if (tmpBuf == 0x0) {
+    tmpBuf = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
+    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+  }
+  else {
+    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+  }
+kprintf("STARTING THREAD LNC");
+  while (1) {
+  while (lnc_driverOwnsRX(lnc)) {
+    //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
+    int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff ) - 4;
+/*
+    if (plen > 0)
+      kprintf("plen.0: [0x%X]", plen);
+*/
+
+    tmpBuf->length = plen;
+    tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
+
+ // kprintf("RINT2\n");
+    ethernetif_input(&lnc_netif);
+  //kprintf("RINT3\n");
+  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+    lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
+  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+    lnc_nextRxPtr(lnc);
+  //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+  }
+//  kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+
+  sched_yield();
+  }
+}
+
 
 void lnc_rxINT() {
   int i = 0;
-
-  //kprintf("RINT\n");
 
   if (tmpBuf == 0x0) {
     tmpBuf = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
@@ -310,11 +331,17 @@ void lnc_rxINT() {
     tmpBuf->length = plen;
     tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
 
-    ethernetif_input(netif_default);
+ // kprintf("RINT2\n");
+    //ethernetif_input(netif_default);
+  //kprintf("RINT3\n");
+  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
     lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
+  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
     lnc_nextRxPtr(lnc);
+  //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
   }
-  //kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+ // kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+//while(1);
   
 }
 
@@ -370,7 +397,7 @@ asm(
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
-  "  call lnc_INT       \n"
+  "  call lnc_INT         \n"
   "  mov $0xA0,%dx        \n"
   "  mov $0x20,%ax        \n"
   "  outb %al,%dx         \n"

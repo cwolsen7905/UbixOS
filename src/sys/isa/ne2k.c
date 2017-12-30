@@ -41,7 +41,7 @@
 #include <assert.h>
 
 
-static spinLock_t ne2k_spinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock ne2k_spinLock = SPIN_LOCK_INITIALIZER;
 
 static int dp_pkt2user(struct device *dev,int page,int length);
 static void getblock(struct device *dev,int page,size_t offset,size_t size,void *dst);

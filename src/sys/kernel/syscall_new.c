@@ -37,7 +37,7 @@
 #include <lib/string.h>
 #include <lib/kprintf.h>
 
-spinLock_t Master = SPIN_LOCK_INITIALIZER;
+struct spinLock Master = SPIN_LOCK_INITIALIZER;
 
 void syscall( struct trapframe *frame ) {
   uint32_t code = 0x0;
@@ -61,6 +61,7 @@ void syscall( struct trapframe *frame ) {
 
   if ( code > totalCalls ) {
     kprintf( "Invalid Call: [%i]\n", frame->tf_eax );
+    kpanic("PID: %i", _current->id);
   }
   else if ( (uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID ) {
     kprintf( "Invalid Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name );
@@ -129,10 +130,6 @@ int invalidCall() {
   );
 
   kprintf( "Invalid System Call #[%i]\n", sys_call );
+  kpanic("PID: %i", _current->id);
   return (0);
 }
-
-/***
- END
- ***/
-

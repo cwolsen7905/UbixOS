@@ -34,8 +34,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <lib/string.h>
 #include <sys/io.h>
 
-static spinLock_t initSpinLock = SPIN_LOCK_INITIALIZER;
-static spinLock_t cpuInfoLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock initSpinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock cpuInfoLock = SPIN_LOCK_INITIALIZER;
 static uInt32 cpus = 0;
 struct cpuinfo_t cpuinfo[8];
 
@@ -119,7 +119,7 @@ void cpu3_thread(void) {
   }
 }
 
-static spinLock_t bkl = SPIN_LOCK_INITIALIZER;
+static struct spinLock bkl = SPIN_LOCK_INITIALIZER;
 uInt8 kernel_function(void) {
   struct cpuinfo_t *cpu;
 

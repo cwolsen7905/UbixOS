@@ -111,8 +111,6 @@ int kmain(uInt32 rootdev) {
     if (init_tasks[i]() != 0x0)
       kpanic("Error: Initializing System Task[%i].\n", i);
   }
- // irqEnable(0x0);
-//while(1);
 
   /* New Root Mount Point */
   //Old 2 new 10
@@ -140,19 +138,13 @@ int kmain(uInt32 rootdev) {
 
   sysTask = kmalloc(0x2000);
 
-  asm("nop");
-
   if (sysTask == 0x0)
     kprintf("OS: Unable to allocate memory\n");
 
   execThread(systemTask, (uInt32) sysTask + 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
-   irqEnable(0x0);
-   while (0x1)
-     asm("hlt");
-
-  execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
+ // execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
   //execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */
 
   irqEnable(0x0);

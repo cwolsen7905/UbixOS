@@ -44,12 +44,14 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 
+void lnc_thread();
+
 //void netMainThread();
 //static void tcpip_init_done(void *arg);
+struct netif lnc_netif;
 
 int net_init() {
   ip_addr_t ipaddr, netmask, gw;
-  struct netif netif;
 
   tcpip_init(NULL, NULL);
 
@@ -57,10 +59,11 @@ int net_init() {
   IP4_ADDR(&ipaddr, 10, 50, 0, 7);
   IP4_ADDR(&netmask, 255, 255, 0, 0);
 
-  netif_add(&netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+  netif_add(&lnc_netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+  netif_set_default(&lnc_netif);
 
   //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
-  irqEnable(0x9);
+  sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
 
   return(0x0);
 }
@@ -72,7 +75,6 @@ int net_init_dead() {
   memp_init();
   pbuf_init();
 
-  sys_thread_new("mainThread", (void *) (netMainThread), 0x0, 0x1000, 0x0);
 
   return (0x0);
 }
@@ -104,7 +106,6 @@ void netMainThread() {
   //udpecho_init();
   shell_init();
   //bot_init();
-  irqEnable(0x9);
   endTask(_current->id);
   while (1)
     sched_yield();

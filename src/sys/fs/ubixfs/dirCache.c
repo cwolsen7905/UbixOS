@@ -36,7 +36,7 @@
 
 #include <ubixos/spinlock.h>
 
-static spinLock_t dca_spinLock = SPIN_LOCK_INITIALIZER;
+static struct spinLock dca_spinLock = SPIN_LOCK_INITIALIZER;
 
 static struct directoryEntry *
 ubixfs_findName( struct directoryEntry * dirList, uInt32 size, char * name ) {

@@ -31,7 +31,7 @@
 
 /************************************************************************
 
- Function: void vmmUnmapPage(uInt32 pageAddr,int flags);
+ Function: void vmm_unmapPage(uInt32 pageAddr,int flags);
  Description: This Function Will Unmap A Page From The Kernel VM Space
  The Flags Variable Decides If Its To Free The Page Or Not
  A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It
@@ -79,7 +79,7 @@ void vmm_unmapPage(uInt32 pageAddr, int flags) {
 
 /************************************************************************
 
- Function: void vmmUnmapPages(uInt32 pageAddr,int flags);
+ Function: void vmm_unmapPages(uInt32 pageAddr,int flags);
  Description: This Function Will Unmap A Page From The Kernel VM Space
  The Flags Variable Decides If Its To Free The Page Or Not
  A Flag Of 0 Will Free It And A Flag Of 1 Will Keep It

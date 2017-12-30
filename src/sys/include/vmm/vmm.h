@@ -93,12 +93,12 @@ extern int numPages;
 extern mMap *vmmMemoryMap;
 
 int vmm_init();
-int vmmMemMapInit();
+int vmm_memMapInit();
 int countMemory();
-uint32_t vmmFindFreePage( pidType pid );
+uint32_t vmm_findFreePage( pidType pid );
 int freePage( uInt32 pageAddr );
 int adjustCowCounter( uInt32 baseAddr, int adjustment );
-void vmmFreeProcessPages( pidType pid );
+void vmm_freeProcessPages( pidType pid );
 
 
 #ifdef __cplusplus
