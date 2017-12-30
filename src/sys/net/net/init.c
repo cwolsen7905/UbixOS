@@ -46,8 +46,6 @@
 
 void lnc_thread();
 
-//void netMainThread();
-//static void tcpip_init_done(void *arg);
 struct netif lnc_netif;
 
 int net_init() {
@@ -61,59 +59,7 @@ int net_init() {
 
   netif_add(&lnc_netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
   netif_set_default(&lnc_netif);
-
-  //netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
   sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
 
   return(0x0);
 }
-
-#ifdef _BALLS
-int net_init_dead() {
-  sys_init();
-  mem_init();
-  memp_init();
-  pbuf_init();
-
-
-  return (0x0);
-}
-
-void netMainThread() {
-  struct ip_addr ipaddr, netmask, gw;
-  sys_sem_t sem;
-
-  netif_init();
-
-  sem = sys_sem_new(0);
-  tcpip_init(tcpip_init_done, &sem);
-
-  sys_sem_wait(sem);
-  sys_sem_free(sem);
-
-  kprintf("TCP/IP initialized.\n");
-
-  IP4_ADDR(&gw, 10, 50, 0, 1);
-  IP4_ADDR(&ipaddr, 10, 50, 0, 7);
-  IP4_ADDR(&netmask, 255, 255, 0, 0);
-  netif_set_default(netif_add(&ipaddr, &netmask, &gw, ethernetif_init, tcpip_input));
-
-  IP4_ADDR(&gw, 127, 0, 0, 1);
-  IP4_ADDR(&ipaddr, 127, 0, 0, 1);
-  IP4_ADDR(&netmask, 255, 0, 0, 0);
-  netif_add(&ipaddr, &netmask, &gw, loopif_init, tcpip_input);
-
-  //udpecho_init();
-  shell_init();
-  //bot_init();
-  endTask(_current->id);
-  while (1)
-    sched_yield();
-}
-
-static void tcpip_init_done(void *arg) {
-  sys_sem_t *sem = 0x0;
-  sem = arg;
-  sys_sem_signal(*sem);
-}
-#endif

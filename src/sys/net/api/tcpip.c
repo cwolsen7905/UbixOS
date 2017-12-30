@@ -1,9 +1,3 @@
-/**
- * @file
- * Sequential API Main thread module
- *
- */
-
 /*
  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
  * All rights reserved.
@@ -183,20 +177,20 @@ err_t tcpip_inpkt(struct pbuf *p, struct netif *inp, netif_input_fn input_fn) {
   if (msg == NULL) {
     return ERR_MEM;
   }
-kprintf("INPKT %i\n", __LINE__);
+  kprintf("INPKT %i\n", __LINE__);
 
   msg->type = TCPIP_MSG_INPKT;
   msg->msg.inp.p = p;
   msg->msg.inp.netif = inp;
   msg->msg.inp.input_fn = input_fn;
-kprintf("%s:%i\n", __FILE__, __LINE__);
+  kprintf("%s:%i\n", __FILE__, __LINE__);
   if (sys_mbox_trypost(&mbox, msg) != ERR_OK) {
-kprintf("INPKT %i\n", __LINE__);
+    kprintf("INPKT %i\n", __LINE__);
     memp_free(MEMP_TCPIP_MSG_INPKT, msg);
-kprintf("INPKT %i\n", __LINE__);
+    kprintf("INPKT %i\n", __LINE__);
     return ERR_MEM;
   }
-kprintf("INPKT %i\n", __LINE__);
+  kprintf("INPKT %i\n", __LINE__);
 
   return ERR_OK;
 #endif /* LWIP_TCPIP_CORE_LOCKING_INPUT */
@@ -223,7 +217,7 @@ err_t tcpip_input(struct pbuf *p, struct netif *inp) {
   else
 #endif /* LWIP_ETHERNET */
     //kprintf("tcpip_input2\n");
-  return tcpip_inpkt(p, inp, ip_input);
+    return tcpip_inpkt(p, inp, ip_input);
   //kprintf("tcpip_input3\n");
 }
 

@@ -52,13 +52,11 @@ struct ubthread {
 
 struct ubthread_cond {
     int id;
-    //_Atomic bool lock;
     bool lock;
 };
 
 struct ubthread_mutex {
     int id;
-    //_Atomic bool lock;
     bool lock;
     pidType pid;
 };

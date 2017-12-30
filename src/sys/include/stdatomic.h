@@ -83,11 +83,11 @@
  */
 
 #if defined(__CLANG_ATOMICS)
-#define	ATOMIC_VAR_INIT(value)		(value)
-#define	atomic_init(obj, value)		__c11_atomic_init(obj, value)
+#define	 ATOMIC_VAR_INIT(value)		(value)
+#define	 atomic_init(obj, value)		__c11_atomic_init(obj, value)
 #else
-#define	ATOMIC_VAR_INIT(value)		{ .__val = (value) }
-#define	atomic_init(obj, value)		((void)((obj)->__val = (value)))
+#define 	ATOMIC_VAR_INIT(value)		{ .__val = (value) }
+#define	 atomic_init(obj, value)		((void)((obj)->__val = (value)))
 #endif
 
 /*
@@ -123,41 +123,32 @@
  */
 
 typedef enum {
-	memory_order_relaxed = __ATOMIC_RELAXED,
-	memory_order_consume = __ATOMIC_CONSUME,
-	memory_order_acquire = __ATOMIC_ACQUIRE,
-	memory_order_release = __ATOMIC_RELEASE,
-	memory_order_acq_rel = __ATOMIC_ACQ_REL,
-	memory_order_seq_cst = __ATOMIC_SEQ_CST
+  memory_order_relaxed = __ATOMIC_RELAXED, memory_order_consume = __ATOMIC_CONSUME, memory_order_acquire = __ATOMIC_ACQUIRE, memory_order_release = __ATOMIC_RELEASE, memory_order_acq_rel = __ATOMIC_ACQ_REL, memory_order_seq_cst = __ATOMIC_SEQ_CST
 } memory_order;
 
 /*
  * 7.17.4 Fences.
  */
 
-static __inline void
-atomic_thread_fence(memory_order __order __unused)
-{
+static __inline void atomic_thread_fence(memory_order __order __unused) {
 
 #ifdef __CLANG_ATOMICS
-	__c11_atomic_thread_fence(__order);
+  __c11_atomic_thread_fence(__order);
 #elif defined(__GNUC_ATOMICS)
-	__atomic_thread_fence(__order);
+  __atomic_thread_fence(__order);
 #else
-	__sync_synchronize();
+  __sync_synchronize();
 #endif
 }
 
-static __inline void
-atomic_signal_fence(memory_order __order __unused)
-{
+static __inline void atomic_signal_fence(memory_order __order __unused) {
 
 #ifdef __CLANG_ATOMICS
-	__c11_atomic_signal_fence(__order);
+  __c11_atomic_signal_fence(__order);
 #elif defined(__GNUC_ATOMICS)
-	__atomic_signal_fence(__order);
+  __atomic_signal_fence(__order);
 #else
-	__asm volatile ("" ::: "memory");
+  __asm volatile ("" ::: "memory");
 #endif
 }
 
@@ -184,43 +175,43 @@ atomic_signal_fence(memory_order __order __unused)
  * 7.17.6 Atomic integer types.
  */
 
-typedef _Atomic(_Bool)			atomic_bool;
-typedef _Atomic(char)			atomic_char;
-typedef _Atomic(signed char)		atomic_schar;
-typedef _Atomic(unsigned char)		atomic_uchar;
-typedef _Atomic(short)			atomic_short;
-typedef _Atomic(unsigned short)		atomic_ushort;
-typedef _Atomic(int)			atomic_int;
-typedef _Atomic(unsigned int)		atomic_uint;
-typedef _Atomic(long)			atomic_long;
-typedef _Atomic(unsigned long)		atomic_ulong;
-typedef _Atomic(long long)		atomic_llong;
-typedef _Atomic(unsigned long long)	atomic_ullong;
-typedef _Atomic(__char16_t)		atomic_char16_t;
-typedef _Atomic(__char32_t)		atomic_char32_t;
-typedef _Atomic(___wchar_t)		atomic_wchar_t;
-typedef _Atomic(__int_least8_t)		atomic_int_least8_t;
-typedef _Atomic(__uint_least8_t)	atomic_uint_least8_t;
-typedef _Atomic(__int_least16_t)	atomic_int_least16_t;
-typedef _Atomic(__uint_least16_t)	atomic_uint_least16_t;
-typedef _Atomic(__int_least32_t)	atomic_int_least32_t;
-typedef _Atomic(__uint_least32_t)	atomic_uint_least32_t;
-typedef _Atomic(__int_least64_t)	atomic_int_least64_t;
-typedef _Atomic(__uint_least64_t)	atomic_uint_least64_t;
-typedef _Atomic(__int_fast8_t)		atomic_int_fast8_t;
-typedef _Atomic(__uint_fast8_t)		atomic_uint_fast8_t;
-typedef _Atomic(__int_fast16_t)		atomic_int_fast16_t;
-typedef _Atomic(__uint_fast16_t)	atomic_uint_fast16_t;
-typedef _Atomic(__int_fast32_t)		atomic_int_fast32_t;
-typedef _Atomic(__uint_fast32_t)	atomic_uint_fast32_t;
-typedef _Atomic(__int_fast64_t)		atomic_int_fast64_t;
-typedef _Atomic(__uint_fast64_t)	atomic_uint_fast64_t;
-typedef _Atomic(__intptr_t)		atomic_intptr_t;
-typedef _Atomic(__uintptr_t)		atomic_uintptr_t;
-typedef _Atomic(__size_t)		atomic_size_t;
-typedef _Atomic(__ptrdiff_t)		atomic_ptrdiff_t;
-typedef _Atomic(__intmax_t)		atomic_intmax_t;
-typedef _Atomic(__uintmax_t)		atomic_uintmax_t;
+typedef _Atomic(_Bool) atomic_bool;
+typedef _Atomic(char) atomic_char;
+typedef _Atomic(signed char) atomic_schar;
+typedef _Atomic(unsigned char) atomic_uchar;
+typedef _Atomic(short) atomic_short;
+typedef _Atomic(unsigned short) atomic_ushort;
+typedef _Atomic(int) atomic_int;
+typedef _Atomic(unsigned int) atomic_uint;
+typedef _Atomic(long) atomic_long;
+typedef _Atomic(unsigned long) atomic_ulong;
+typedef _Atomic(long long) atomic_llong;
+typedef _Atomic(unsigned long long) atomic_ullong;
+typedef _Atomic(__char16_t) atomic_char16_t;
+typedef _Atomic(__char32_t) atomic_char32_t;
+typedef _Atomic(___wchar_t) atomic_wchar_t;
+typedef _Atomic(__int_least8_t) atomic_int_least8_t;
+typedef _Atomic(__uint_least8_t) atomic_uint_least8_t;
+typedef _Atomic(__int_least16_t) atomic_int_least16_t;
+typedef _Atomic(__uint_least16_t) atomic_uint_least16_t;
+typedef _Atomic(__int_least32_t) atomic_int_least32_t;
+typedef _Atomic(__uint_least32_t) atomic_uint_least32_t;
+typedef _Atomic(__int_least64_t) atomic_int_least64_t;
+typedef _Atomic(__uint_least64_t) atomic_uint_least64_t;
+typedef _Atomic(__int_fast8_t) atomic_int_fast8_t;
+typedef _Atomic(__uint_fast8_t) atomic_uint_fast8_t;
+typedef _Atomic(__int_fast16_t) atomic_int_fast16_t;
+typedef _Atomic(__uint_fast16_t) atomic_uint_fast16_t;
+typedef _Atomic(__int_fast32_t) atomic_int_fast32_t;
+typedef _Atomic(__uint_fast32_t) atomic_uint_fast32_t;
+typedef _Atomic(__int_fast64_t) atomic_int_fast64_t;
+typedef _Atomic(__uint_fast64_t) atomic_uint_fast64_t;
+typedef _Atomic(__intptr_t) atomic_intptr_t;
+typedef _Atomic(__uintptr_t) atomic_uintptr_t;
+typedef _Atomic(__size_t) atomic_size_t;
+typedef _Atomic(__ptrdiff_t) atomic_ptrdiff_t;
+typedef _Atomic(__intmax_t) atomic_intmax_t;
+typedef _Atomic(__uintmax_t) atomic_uintmax_t;
 
 /*
  * 7.17.7 Operations on atomic types.
@@ -372,39 +363,29 @@ __extension__ ({							\
  */
 
 typedef struct {
-	atomic_bool	__flag;
+    atomic_bool __flag;
 } atomic_flag;
 
 #define	ATOMIC_FLAG_INIT		{ ATOMIC_VAR_INIT(0) }
 
-static __inline _Bool
-atomic_flag_test_and_set_explicit(volatile atomic_flag *__object,
-    memory_order __order)
-{
-	return (atomic_exchange_explicit(&__object->__flag, 1, __order));
+static __inline _Bool atomic_flag_test_and_set_explicit(volatile atomic_flag *__object, memory_order __order) {
+  return (atomic_exchange_explicit(&__object->__flag, 1, __order));
 }
 
-static __inline void
-atomic_flag_clear_explicit(volatile atomic_flag *__object, memory_order __order)
-{
+static __inline void atomic_flag_clear_explicit(volatile atomic_flag *__object, memory_order __order) {
 
-	atomic_store_explicit(&__object->__flag, 0, __order);
+  atomic_store_explicit(&__object->__flag, 0, __order);
 }
 
 #ifndef _KERNEL
-static __inline _Bool
-atomic_flag_test_and_set(volatile atomic_flag *__object)
-{
+static __inline _Bool atomic_flag_test_and_set(volatile atomic_flag *__object) {
 
-	return (atomic_flag_test_and_set_explicit(__object,
-	    memory_order_seq_cst));
+  return (atomic_flag_test_and_set_explicit(__object, memory_order_seq_cst));
 }
 
-static __inline void
-atomic_flag_clear(volatile atomic_flag *__object)
-{
+static __inline void atomic_flag_clear(volatile atomic_flag *__object) {
 
-	atomic_flag_clear_explicit(__object, memory_order_seq_cst);
+  atomic_flag_clear_explicit(__object, memory_order_seq_cst);
 }
 #endif /* !_KERNEL */
 

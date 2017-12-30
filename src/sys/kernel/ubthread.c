@@ -87,19 +87,18 @@ int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), v
 int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
   ubthread_mutex_t ubmutex = *mutex;
 
-  if (ubmutex->lock == TRUE && ubmutex->pid != _current->id) {
-    kprintf("Mutex Already Lock By PID %x Wiating To Be Relocked By %x\n", ubmutex->pid, _current->id);
-    while (1) {
-      if (!xchg_32(&ubmutex->lock, TRUE))
-        break;
-
-      while (ubmutex->lock == TRUE)
-        sched_yield();
-    }
-  }
-  else if (ubmutex->lock == TRUE && ubmutex->pid == _current->id) {
+  if (ubmutex->lock == TRUE && ubmutex->pid == _current->id) {
     kprintf("Mutex Already Locked By This Thread");
+    kpanic("WHY?");
     return (0x0);
+  }
+
+  while (1) {
+    if (!xchg_32(&ubmutex->lock, TRUE))
+      break;
+
+    while (ubmutex->lock == TRUE)
+      sched_yield();
   }
 
   ubmutex->pid = _current->id;
@@ -116,6 +115,7 @@ int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
   }
   else {
     kprintf("Trying To Unlock Mutex From No Locking Thread[%i - %i:0x%X]\n", ubmutex->pid, _current->id, *ubmutex);
+    kpanic("WTF2");
     while (ubmutex->pid != _current->id)
       sched_yield();
     kprintf("GOT IT UNLOCKING");
