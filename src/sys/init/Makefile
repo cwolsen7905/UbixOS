@@ -2,6 +2,7 @@
 #  $Id: Makefile 54 2016-01-11 01:29:55Z reddawg $
 
 # Include Global 'Source' Options
+include ../../Makefile.incl
 include ../Makefile.incl
 
 #  Objects

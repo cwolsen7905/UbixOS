@@ -1,6 +1,3 @@
-#tmp
-include ../Makefile.incl
-
 KERNEL_SRC=${.CURDIR}
 KERNEL_OBJ=${OBJ_DIR}${KERNEL_SRC}
 KERNEL_CONF=${KERNEL_SRC}/${_ARCH}/conf
