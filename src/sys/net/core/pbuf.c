@@ -725,17 +725,17 @@ pbuf_free(struct pbuf *p)
       ("pbuf_free(p == NULL) was called.\n"));
     return 0;
   }
+
   LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_TRACE, ("pbuf_free(%p)\n", (void *)p));
 
   PERF_START;
 
-  LWIP_ASSERT("pbuf_free: sane type",
-    p->type == PBUF_RAM || p->type == PBUF_ROM ||
-    p->type == PBUF_REF || p->type == PBUF_POOL);
+  LWIP_ASSERT("pbuf_free: sane type", p->type == PBUF_RAM || p->type == PBUF_ROM || p->type == PBUF_REF || p->type == PBUF_POOL);
 
   count = 0;
   /* de-allocate all consecutive pbufs from the head of the chain that
    * obtain a zero reference count after decrementing*/
+
   while (p != NULL) {
     u16_t ref;
     SYS_ARCH_DECL_PROTECT(old_level);
@@ -744,6 +744,8 @@ pbuf_free(struct pbuf *p)
      * further protection. */
     SYS_ARCH_PROTECT(old_level);
     /* all pbufs in a chain are referenced at least once */
+    if (_current->id == 4)
+    kprintf("p->ref %i", p->ref);
     LWIP_ASSERT("pbuf_free: p->ref > 0", p->ref > 0);
     /* decrease reference count (number of pointers to pbuf) */
     ref = --(p->ref);

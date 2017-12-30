@@ -25,6 +25,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #define _NET_H
 
 #include <sys/types.h>
+#include <net/netif.h>
 
 struct netif lnc_netif;
 

@@ -118,14 +118,16 @@ uint32_t sys_arch_sem_wait(struct sys_sem **s, uint32_t timeout) {
   return time_needed;
 }
 
-int sys_sem_valid(sys_sem_t *sem) {
+int sys_sem_valid(struct sys_sem **s) {
+  struct sys_sem *sem = *s;
   if (sem == 0)
-    return 1;
-  else
     return 0;
+  else
+    return 1;
 }
 
-void sys_sem_set_invalid(sys_sem_t *sem) {
+void sys_sem_set_invalid(struct sys_sem **s) {
+  *s = 0x0;
   kprintf("NEED TO DO THIS");
 }
 
@@ -139,9 +141,7 @@ void sys_mutex_free(sys_mutex_t *mutex) {
 }
 
 void sys_mutex_lock(sys_mutex_t *mutex) {
-  kprintf("L4.0");
   ubthread_mutex_lock(&(mutex->mutex));
-  kprintf("L4.1");
 }
 
 void sys_mutex_unlock(sys_mutex_t *mutex) {
@@ -269,10 +269,14 @@ err_t sys_mbox_trypost(struct sys_mbox **mb, void *msg) {
 }
 
 uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout) {
-  uint32_t time_needed = 0;
-  struct sys_mbox *mbox;
+  uint32_t time_needed = 0x0;
+  struct sys_mbox *mbox = 0x0;
+
   LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
   mbox = *mb;
+
+  if (_current->id == 4)
+    kprintf("MBOX: 0x%X]", mbox);
 
   /* The mutex lock is quick so we don't bother with the timeout
    stuff here. */
@@ -347,11 +351,16 @@ uint32_t sys_arch_mbox_tryfetch(struct sys_mbox **mb, void **msg) {
   return 0;
 }
 
-int sys_mbox_valid(sys_mbox_t *mbox) {
-  return mbox != NULL;
+int sys_mbox_valid(struct sys_mbox **mb) {
+  struct sys_mbox *mbox = *mb;
+  if (mbox == NULL)
+    return(0);
+  else
+    return(1);
 }
 
-void sys_mbox_set_invalid(sys_mbox_t *mbox) {
+void sys_mbox_set_invalid(struct sys_mbox **mb) {
+  *mb = 0x0;
 }
 
 sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *arg, int stacksize, int prio) {

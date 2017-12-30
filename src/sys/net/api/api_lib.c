@@ -149,6 +149,7 @@ netconn_new_with_proto_and_callback(enum netconn_type t, u8_t proto, netconn_cal
       return NULL;
     }
   }
+  kprintf("netconn_new");
   API_MSG_VAR_FREE(msg);
   return conn;
 }
@@ -421,19 +422,23 @@ netconn_accept(struct netconn *conn, struct netconn **new_conn)
 #else
   sys_arch_mbox_fetch(&conn->acceptmbox, &accept_ptr, 0);
 #endif /* LWIP_SO_RCVTIMEO*/
+kprintf("%s:%i", __FILE__, __LINE__);
   newconn = (struct netconn *)accept_ptr;
   /* Register event with callback */
   API_EVENT(conn, NETCONN_EVT_RCVMINUS, 0);
+kprintf("%s:%i", __FILE__, __LINE__);
 
   if (accept_ptr == &netconn_aborted) {
     /* a connection has been aborted: out of pcbs or out of netconns during accept */
     /* @todo: set netconn error, but this would be fatal and thus block further accepts */
 #if TCP_LISTEN_BACKLOG
+kprintf("[%s:%i]", __FILE__, __LINE__);
     API_MSG_VAR_FREE(msg);
 #endif /* TCP_LISTEN_BACKLOG */
     return ERR_ABRT;
   }
   if (newconn == NULL) {
+kprintf("[%s:%i]", __FILE__, __LINE__);
     /* connection has been aborted */
     /* in this special case, we set the netconn error from application thread, as
        on a ready-to-accept listening netconn, there should not be anything running
@@ -444,6 +449,7 @@ netconn_accept(struct netconn *conn, struct netconn **new_conn)
 #endif /* TCP_LISTEN_BACKLOG */
     return ERR_CLSD;
   }
+kprintf("[%s:%i]", __FILE__, __LINE__);
 #if TCP_LISTEN_BACKLOG
   /* Let the stack know that we have accepted the connection. */
   API_MSG_VAR_REF(msg).conn = newconn;
@@ -452,8 +458,10 @@ netconn_accept(struct netconn *conn, struct netconn **new_conn)
   API_MSG_VAR_FREE(msg);
 #endif /* TCP_LISTEN_BACKLOG */
 
+kprintf("[%s:%i]", __FILE__, __LINE__);
   *new_conn = newconn;
   /* don't set conn->last_err: it's only ERR_OK, anyway */
+kprintf("[%s:%i]", __FILE__, __LINE__);
   return ERR_OK;
 #else /* LWIP_TCP */
   LWIP_UNUSED_ARG(conn);

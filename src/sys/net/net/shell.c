@@ -56,7 +56,9 @@ char *buffer = 0x0;
 // UBU static struct netconn *conns[NCONNS];
 
 static void sendstr(const char *str, struct netconn *conn) {
-  netconn_write(conn, (void *) str, strlen(str), NETCONN_NOCOPY);
+kprintf("[%s:%i](%s){%i}", __FILE__,__LINE__, str, strlen(str));
+  netconn_write(conn, (void *) str, strlen(str), NETCONN_COPY);
+kprintf("[%s:%i]", __FILE__,__LINE__);
 }
 
 static void prompt(struct netconn *conn) {
@@ -66,11 +68,15 @@ static void prompt(struct netconn *conn) {
 static void shell_main(struct netconn *conn) {
   struct netbuf *buf = 0x0;
   uInt32 len;
+  uInt32 err = 0;
   // UBU int i;
   // UBU char bufr[1500];
+  buf = kmalloc(1500);
+kprintf("[%s:%i]", __FILE__,__LINE__);
   prompt(conn);
+kprintf("[%s:%i]", __FILE__,__LINE__);
   while (1) {
-    buf = netconn_recv(conn);
+    err = netconn_recv(conn, &buf);
     if (buf != 0x0)
       netbuf_copy(buf, buffer, 1024);
     len = netbuf_len(buf);
@@ -91,18 +97,21 @@ static void shell_main(struct netconn *conn) {
   }
 }
 
-static void shell_thread(void *arg) {
+void shell_thread(void *arg) {
   struct netconn *conn = 0x0, *newconn = 0x0;
 
   buffer = (char *) kmalloc(1024);
 
+  kprintf("shell_thread: %i", _current->id);
+
   conn = netconn_new(NETCONN_TCP);
-  netconn_bind(conn, NULL, 23);
+
+  netconn_bind(conn, IP4_ADDR_ANY, 23);
   netconn_listen(conn);
 
   while (1) {
-    kprintf("shell1");
-    newconn = netconn_accept(conn);
+    kprintf("shell1: 0x%X:0x%X", conn->recvmbox, conn->acceptmbox);
+    netconn_accept(conn,&newconn);
     kprintf("2");
     shell_main(newconn);
     kprintf("3");
@@ -110,12 +119,3 @@ static void shell_thread(void *arg) {
     kprintf("4");
   }
 }
-
-void shell_init(void) {
-  sys_thread_new(shell_thread, NULL);
-}
-
-/***
- END
- ***/
-

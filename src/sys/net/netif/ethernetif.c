@@ -155,6 +155,7 @@ low_level_output(struct netif *netif, struct pbuf *p)
      time. The size of the data in each pbuf is kept in the ->len
      variable. */
     //send data from(q->payload, q->len);
+    //kprintf("SENDING DATA!!!!!");
     lnc_sendPacket(lnc, q->payload, q->len,0x0);
   }
 

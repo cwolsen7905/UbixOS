@@ -542,13 +542,13 @@ int lnc_nextRxPtr(struct lncInfo *lnc) {
 
 
 int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest) {
-  //kprintf("SEND PACKET1!\n");
+  //kprintf("SEND PACKET1![%i]\n", lnc->txPtr);
   if (!lnc_driverOwnsTX(lnc)) {
     kpanic("NO TX BUFFERS");
     return (0);
   }
 
-  //kprintf("SEND PACKET2!\n");
+  //kprintf("SEND PACKET2![%i]\n", lnc->txPtr);
 
   memcpy((void *) (lnc->txBuffer + (lnc->txPtr * lnc->bufferSize)), packet, len);
 
@@ -563,6 +563,8 @@ int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest)
   lnc->txRing[lnc->txPtr].md[1] |= 0x80;
 
   lnc_nextTxPtr(lnc);
+
+  //kprintf("SEND PACKET3![%i]\n", lnc->txPtr);
   return (len);
 }
 

@@ -161,14 +161,14 @@ void sys_sem_free(sys_sem_t **sem);
  * @ingroup sys_sem
  * Check if a semaphore is valid/allocated: return 1 for valid, 0 for invalid
  */
-int sys_sem_valid(sys_sem_t *sem);
+int sys_sem_valid(struct sys_sem **s);
 #endif
 #ifndef sys_sem_set_invalid
 /**
  * @ingroup sys_sem
  * Set a semaphore invalid so that sys_sem_valid returns 0
  */
-void sys_sem_set_invalid(sys_sem_t *sem);
+void sys_sem_set_invalid(struct sys_sem **s);
 #endif
 #ifndef sys_sem_valid_val
 /**
@@ -255,14 +255,14 @@ void sys_mbox_free(struct sys_mbox **mb);
  * @ingroup sys_mbox
  * Check if an mbox is valid/allocated: return 1 for valid, 0 for invalid
  */
-int sys_mbox_valid(sys_mbox_t *mbox);
+int sys_mbox_valid(struct sys_mbox **mb);
 #endif
 #ifndef sys_mbox_set_invalid
 /**
  * @ingroup sys_mbox
  * Set an mbox invalid so that sys_mbox_valid returns 0
  */
-void sys_mbox_set_invalid(sys_mbox_t *mbox);
+void sys_mbox_set_invalid(struct sys_mbox **mb);
 #endif
 #ifndef sys_mbox_valid_val
 /**

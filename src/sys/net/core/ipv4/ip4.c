@@ -387,6 +387,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
   /* identify the IP header */
   iphdr = (struct ip_hdr *)p->payload;
   if (IPH_V(iphdr) != 4) {
+//kprintf("%s:%i", __FILE__, __LINE__);
     LWIP_DEBUGF(IP_DEBUG | LWIP_DBG_LEVEL_WARNING, ("IP packet dropped due to bad version number %"U16_F"\n", (u16_t)IPH_V(iphdr)));
     ip4_debug_print(p);
     pbuf_free(p);
@@ -463,6 +464,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
   /* match packet against an interface, i.e. is this packet for us? */
   if (ip4_addr_ismulticast(ip4_current_dest_addr())) {
 #if LWIP_IGMP
+kpanic("A");
     if ((inp->flags & NETIF_FLAG_IGMP) && (igmp_lookfor_group(inp, ip4_current_dest_addr()))) {
       /* IGMP snooping switches need 0.0.0.0 to be allowed as source address (RFC 4541) */
       ip4_addr_t allsystems;
@@ -476,6 +478,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
       netif = NULL;
     }
 #else /* LWIP_IGMP */
+kpanic("B");
     if ((netif_is_up(inp)) && (!ip4_addr_isany_val(*netif_ip4_addr(inp)))) {
       netif = inp;
     } else {
@@ -489,6 +492,8 @@ ip4_input(struct pbuf *p, struct netif *inp)
     int first = 1;
     netif = inp;
     do {
+if (ip4_addr_get_u32(&iphdr->dest)  == ip4_addr_get_u32(netif_ip4_addr(netif)))
+//kprintf("netif: 0x%X-0x%X-0x%X", netif, ip4_addr_get_u32(&iphdr->dest), ip4_addr_get_u32(netif_ip4_addr(netif)));
       LWIP_DEBUGF(IP_DEBUG, ("ip_input: iphdr->dest 0x%"X32_F" netif->ip_addr 0x%"X32_F" (0x%"X32_F", 0x%"X32_F", 0x%"X32_F")\n",
           ip4_addr_get_u32(&iphdr->dest), ip4_addr_get_u32(netif_ip4_addr(netif)),
           ip4_addr_get_u32(&iphdr->dest) & ip4_addr_get_u32(netif_ip4_netmask(netif)),
@@ -527,6 +532,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
          * interface that does not have the loopback address assigned to it,
          * unless a non-loopback interface is used for loopback traffic. */
         if (ip4_addr_isloopback(ip4_current_dest_addr())) {
+kpanic("D");
           netif = NULL;
           break;
         }
@@ -553,6 +559,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
    * #define LWIP_IP_ACCEPT_UDP_PORT(dst_port) ((dst_port) == PP_NTOHS(12345))
    */
   if (netif == NULL) {
+//kprintf("%s:%i", __FILE__, __LINE__);
     /* remote port is DHCP server? */
     if (IPH_PROTO(iphdr) == IP_PROTO_UDP) {
       struct udp_hdr *udphdr = (struct udp_hdr *)((u8_t *)iphdr + iphdr_hlen);
@@ -577,6 +584,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
      )
 #endif /* LWIP_IGMP || IP_ACCEPT_LINK_LAYER_ADDRESSING */
   {
+//kprintf("%s:%i", __FILE__, __LINE__);
     if ((ip4_addr_isbroadcast(ip4_current_src_addr(), inp)) ||
         (ip4_addr_ismulticast(ip4_current_src_addr()))) {
       /* packet source is not valid */
@@ -586,12 +594,15 @@ ip4_input(struct pbuf *p, struct netif *inp)
       IP_STATS_INC(ip.drop);
       MIB2_STATS_INC(mib2.ipinaddrerrors);
       MIB2_STATS_INC(mib2.ipindiscards);
+//kprintf("%s:%i", __FILE__, __LINE__);
       return ERR_OK;
     }
   }
+//kprintf("%s:%i", __FILE__, __LINE__);
 
   /* packet not for us? */
   if (netif == NULL) {
+//kprintf("%s:%i", __FILE__, __LINE__);
     /* packet not for us, route or discard */
     LWIP_DEBUGF(IP_DEBUG | LWIP_DBG_TRACE, ("ip4_input: packet not for us.\n"));
 #if IP_FORWARD
@@ -609,8 +620,10 @@ ip4_input(struct pbuf *p, struct netif *inp)
     pbuf_free(p);
     return ERR_OK;
   }
+//kprintf("%s:%i", __FILE__, __LINE__);
   /* packet consists of multiple fragments? */
   if ((IPH_OFFSET(iphdr) & PP_HTONS(IP_OFFMASK | IP_MF)) != 0) {
+//kprintf("%s:%i", __FILE__, __LINE__);
 #if IP_REASSEMBLY /* packet fragment reassembly code present? */
     LWIP_DEBUGF(IP_DEBUG, ("IP packet is a fragment (id=0x%04"X16_F" tot_len=%"U16_F" len=%"U16_F" MF=%"U16_F" offset=%"U16_F"), calling ip4_reass()\n",
       lwip_ntohs(IPH_ID(iphdr)), p->tot_len, lwip_ntohs(IPH_LEN(iphdr)), (u16_t)!!(IPH_OFFSET(iphdr) & PP_HTONS(IP_MF)), (u16_t)((lwip_ntohs(IPH_OFFSET(iphdr)) & IP_OFFMASK)*8)));
@@ -618,9 +631,11 @@ ip4_input(struct pbuf *p, struct netif *inp)
     p = ip4_reass(p);
     /* packet not fully reassembled yet? */
     if (p == NULL) {
+//kprintf("%s:%i", __FILE__, __LINE__);
       return ERR_OK;
     }
     iphdr = (struct ip_hdr *)p->payload;
+//kprintf("%s:%i", __FILE__, __LINE__);
 #else /* IP_REASSEMBLY == 0, no packet fragment reassembly code present */
     pbuf_free(p);
     LWIP_DEBUGF(IP_DEBUG | LWIP_DBG_LEVEL_SERIOUS, ("IP packet dropped since it was fragmented (0x%"X16_F") (while IP_REASSEMBLY == 0).\n",
@@ -647,6 +662,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
     IP_STATS_INC(ip.drop);
     /* unsupported protocol feature */
     MIB2_STATS_INC(mib2.ipinunknownprotos);
+//kprintf("%s:%i", __FILE__, __LINE__);
     return ERR_OK;
   }
 #endif /* IP_OPTIONS_ALLOWED == 0 */
@@ -660,6 +676,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
   ip_data.current_input_netif = inp;
   ip_data.current_ip4_header = iphdr;
   ip_data.current_ip_header_tot_len = IPH_HL(iphdr) * 4;
+//kprintf("%s:%i", __FILE__, __LINE__);
 
 #if LWIP_RAW
   /* raw input did not eat the packet? */
@@ -668,6 +685,8 @@ ip4_input(struct pbuf *p, struct netif *inp)
   {
     pbuf_header(p, -(s16_t)iphdr_hlen); /* Move to payload, no check necessary. */
 
+//kprintf("IPH_PROTO(%i))", IPH_PROTO(iphdr));
+
     switch (IPH_PROTO(iphdr)) {
 #if LWIP_UDP
     case IP_PROTO_UDP:
@@ -675,6 +694,7 @@ ip4_input(struct pbuf *p, struct netif *inp)
     case IP_PROTO_UDPLITE:
 #endif /* LWIP_UDPLITE */
       MIB2_STATS_INC(mib2.ipindelivers);
+//kprintf("UDP");
       udp_input(p, inp);
       break;
 #endif /* LWIP_UDP */

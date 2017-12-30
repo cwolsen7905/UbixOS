@@ -87,6 +87,7 @@ ethernet_input(struct pbuf *p, struct netif *netif)
 #endif /* LWIP_ARP || ETHARP_SUPPORT_VLAN */
 
   if (p->len <= SIZEOF_ETH_HDR) {
+    kprintf("BAD HEADER");
     /* a packet with only an ethernet header (or less) is not valid for us */
     ETHARP_STATS_INC(etharp.proterr);
     ETHARP_STATS_INC(etharp.drop);
@@ -165,6 +166,7 @@ ethernet_input(struct pbuf *p, struct netif *netif)
 #if LWIP_IPV4 && LWIP_ARP
     /* IP packet? */
     case PP_HTONS(ETHTYPE_IP):
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
       if (!(netif->flags & NETIF_FLAG_ETHARP)) {
         goto free_and_return;
       }
@@ -177,12 +179,15 @@ ethernet_input(struct pbuf *p, struct netif *netif)
         goto free_and_return;
       } else {
         /* pass to IP layer */
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
         ip4_input(p, netif);
       }
       break;
 
     case PP_HTONS(ETHTYPE_ARP):
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
       if (!(netif->flags & NETIF_FLAG_ETHARP)) {
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
         goto free_and_return;
       }
       /* skip Ethernet header */
@@ -193,25 +198,30 @@ ethernet_input(struct pbuf *p, struct netif *netif)
         LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("Can't move over header in packet"));
         ETHARP_STATS_INC(etharp.lenerr);
         ETHARP_STATS_INC(etharp.drop);
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
         goto free_and_return;
       } else {
         /* pass p to ARP module */
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
         etharp_input(p, netif);
       }
       break;
 #endif /* LWIP_IPV4 && LWIP_ARP */
 #if PPPOE_SUPPORT
     case PP_HTONS(ETHTYPE_PPPOEDISC): /* PPP Over Ethernet Discovery Stage */
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
       pppoe_disc_input(netif, p);
       break;
 
     case PP_HTONS(ETHTYPE_PPPOE): /* PPP Over Ethernet Session Stage */
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
       pppoe_data_input(netif, p);
       break;
 #endif /* PPPOE_SUPPORT */
 
 #if LWIP_IPV6
     case PP_HTONS(ETHTYPE_IPV6): /* IPv6 */
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
       /* skip Ethernet header */
       if ((p->len < ip_hdr_offset) || pbuf_header(p, (s16_t)-ip_hdr_offset)) {
         LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_LEVEL_WARNING,
@@ -226,6 +236,7 @@ ethernet_input(struct pbuf *p, struct netif *netif)
 #endif /* LWIP_IPV6 */
 
     default:
+//kprintf("%s:%i - Type: %i", __FILE__, __LINE__, type);
 #ifdef LWIP_HOOK_UNKNOWN_ETH_PROTOCOL
       if(LWIP_HOOK_UNKNOWN_ETH_PROTOCOL(p, netif) == ERR_OK) {
         break;

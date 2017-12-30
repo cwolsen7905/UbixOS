@@ -94,7 +94,7 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
   }
 
   while (1) {
-    if (!xchg_32(&ubmutex->lock, TRUE))
+    if (xchg_32(&ubmutex->lock, TRUE) == FALSE)
       break;
 
     while (ubmutex->lock == TRUE)
@@ -108,21 +108,21 @@ int ubthread_mutex_lock(ubthread_mutex_t *mutex) {
 int ubthread_mutex_unlock(ubthread_mutex_t *mutex) {
   ubthread_mutex_t ubmutex = *mutex;
 
-  if (ubmutex->pid == _current->id) {
-    while (xchg_32(&ubmutex->lock, FALSE))
-      sched_yield();
-    return (0x0);
-  }
-  else {
+  if (ubmutex->lock != TRUE)
+    kpanic("NOT LOCKED?");
+
+  if (ubmutex->pid != _current->id)
     kprintf("Trying To Unlock Mutex From No Locking Thread[%i - %i:0x%X]\n", ubmutex->pid, _current->id, *ubmutex);
-    kpanic("WTF2");
-    while (ubmutex->pid != _current->id)
+
+  while (1) {
+    if (xchg_32(&ubmutex->lock, FALSE) == TRUE)
+      break;
+    while (ubmutex->lock == FALSE)
       sched_yield();
-    kprintf("GOT IT UNLOCKING");
-    while (!xchg_32(&ubmutex->lock, FALSE))
-      sched_yield();
-    return (0x0);
   }
+
+  ubmutex->pid = 0x0;
+  return (0x0);
 }
 
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime) {

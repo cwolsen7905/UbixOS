@@ -48,7 +48,7 @@
 
 static kTask_t *taskList = 0x0;
 static kTask_t *delList = 0x0;
-static uint32_t nextID = -1;
+static uint32_t nextID = 1;
 
 kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;

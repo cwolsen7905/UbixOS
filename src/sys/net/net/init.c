@@ -45,6 +45,7 @@
 #include <lib/kprintf.h>
 
 void lnc_thread();
+void shell_thread(void *);
 
 struct netif lnc_netif;
 
@@ -58,8 +59,12 @@ int net_init() {
   IP4_ADDR(&netmask, 255, 255, 0, 0);
 
   netif_add(&lnc_netif, &ipaddr, &netmask, &gw, NULL, ethernetif_init, tcpip_input);
+  netif_set_link_up(&lnc_netif);
+  netif_set_up(&lnc_netif);
+
   netif_set_default(&lnc_netif);
   sys_thread_new("lncThread", (void *) lnc_thread, 0x0, 0x1000, 0x0);
+  sys_thread_new("shellThread", (void *) shell_thread, 0x0, 0x1000, 0x0);
 
   return(0x0);
 }

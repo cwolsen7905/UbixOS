@@ -46,7 +46,7 @@
 /* Core locking and MPU */
 #define LWIP_MPU_COMPATIBLE           0
 #define LWIP_TCPIP_CORE_LOCKING       1
-#define LWIP_TCPIP_CORE_LOCKING_INPUT 0
+#define LWIP_TCPIP_CORE_LOCKING_INPUT 1
 #define SYS_LIGHTWEIGHT_PROT          0
 
 
@@ -134,7 +134,7 @@
 
 #define ICMP_TTL   (IP_DEFAULT_TTL)
 
-#define LWIP_BROADCAST_PING   0
+#define LWIP_BROADCAST_PING   1
 
 #define LWIP_MULTICAST_PING   0
 
@@ -232,7 +232,7 @@
 
 #define LWIP_LOOPIF_MULTICAST 0
 
-#define LWIP_NETIF_LOOPBACK 0
+#define LWIP_NETIF_LOOPBACK 1
 
 #define LWIP_LOOPBACK_MAX_PBUFS 0
 
@@ -446,7 +446,7 @@
 
 #define INET_DEBUG LWIP_DBG_OFF
 
-#define IP_DEBUG LWIP_DBG_OFF
+#define IP_DEBUG LWIP_DBG_ON
 
 #define IP_REASS_DEBUG LWIP_DBG_OFF
 
