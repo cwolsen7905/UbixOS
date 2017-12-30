@@ -47,28 +47,17 @@ void udpecho_thread(void *arg) {
   static unsigned short port;
   char buffer[4096];
 
-  kprintf("1");
   conn = netconn_new(NETCONN_UDP);
-  kprintf("2");
   netconn_bind(conn, NULL, 7);
-  kprintf("3");
 
   while (1) {
-    kprintf("a");
     buf = netconn_recv(conn);
-    kprintf("b");
     addr = netbuf_fromaddr(buf);
-    kprintf("c");
     port = netbuf_fromport(buf);
-    kprintf("d");
     netconn_connect(conn, addr, port);
-    kprintf("e");
     netconn_send(conn, buf);
-    kprintf("f");
     netbuf_copy(buf, buffer, sizeof(buffer));
-    kprintf("got %s\n", buffer);
     netbuf_delete(buf);
-    kprintf("g");
   }
 }
 /*-----------------------------------------------------------------------------------*/

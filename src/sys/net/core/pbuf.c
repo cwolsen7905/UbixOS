@@ -745,7 +745,6 @@ pbuf_free(struct pbuf *p)
     SYS_ARCH_PROTECT(old_level);
     /* all pbufs in a chain are referenced at least once */
     if (_current->id == 4)
-    kprintf("p->ref %i", p->ref);
     LWIP_ASSERT("pbuf_free: p->ref > 0", p->ref > 0);
     /* decrease reference count (number of pointers to pbuf) */
     ref = --(p->ref);

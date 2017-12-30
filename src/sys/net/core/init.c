@@ -341,54 +341,39 @@ lwip_init(void)
 
   /* Modules initialization */
   stats_init();
-kprintf("STATS INIT");
 #if !NO_SYS
   sys_init();
-kprintf("SYS INIT");
 #endif /* !NO_SYS */
   mem_init();
-kprintf("MEM INIT");
   memp_init();
-kprintf("MEMP INIT");
   pbuf_init();
-kprintf("PBUF INIT");
   netif_init();
-kprintf("NETIF INIT");
 #if LWIP_IPV4
   ip_init();
-kprintf("IP INIT");
 #if LWIP_ARP
   etharp_init();
-kprintf("ETHARP INIT");
 #endif /* LWIP_ARP */
 #endif /* LWIP_IPV4 */
 #if LWIP_RAW
   raw_init();
-kprintf("RAW INIT");
 #endif /* LWIP_RAW */
 #if LWIP_UDP
   udp_init();
-kprintf("UDP INIT");
 #endif /* LWIP_UDP */
 #if LWIP_TCP
   tcp_init();
-kprintf("TCP INIT");
 #endif /* LWIP_TCP */
 #if LWIP_IGMP
   igmp_init();
-kprintf("IGMP INIT");
 #endif /* LWIP_IGMP */
 #if LWIP_DNS
   dns_init();
-kprintf("DNS INIT");
 #endif /* LWIP_DNS */
 #if PPP_SUPPORT
   ppp_init();
-kprintf("PPP INIT");
 #endif
  
 #if LWIP_TIMERS
   sys_timeouts_init();
-kprintf("SYS TIMEOUTS INIT");
 #endif /* LWIP_TIMERS */
 }

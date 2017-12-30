@@ -144,7 +144,7 @@ int kmain(uInt32 rootdev) {
   execThread(systemTask, (uInt32) sysTask + 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
- // execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
+  execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
   //execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */
 
   irqEnable(0x0);

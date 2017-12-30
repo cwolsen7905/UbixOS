@@ -128,7 +128,6 @@ int sys_sem_valid(struct sys_sem **s) {
 
 void sys_sem_set_invalid(struct sys_sem **s) {
   *s = 0x0;
-  kprintf("NEED TO DO THIS");
 }
 
 err_t sys_mutex_new(sys_mutex_t *mutex) {
@@ -173,7 +172,6 @@ err_t sys_mbox_new(struct sys_mbox **mb, int size) {
   //mbox->queue = kmalloc(sizeof(void *) * size);//calloc(size, sizeof(void *));
 
   //if (!mbox->queue) {
-  //  kprintf("WTF: [%i]", size);
   //  return ERR_MEM;
   //}
 
@@ -275,9 +273,6 @@ uint32_t sys_arch_mbox_fetch(struct sys_mbox **mb, void **msg, uint32_t timeout)
   LWIP_ASSERT("invalid mbox", (mb != NULL) && (*mb != NULL));
   mbox = *mb;
 
-  if (_current->id == 4)
-    kprintf("MBOX: 0x%X]", mbox);
-
   /* The mutex lock is quick so we don't bother with the timeout
    stuff here. */
   sys_arch_sem_wait(&mbox->lock, 0);
@@ -371,11 +366,8 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
   LWIP_ASSERT("Non-positive prio", prio > 0);
   LWIP_ASSERT("Prio is too big", prio < 20);
 
-  kprintf("sys_thread: [0x%X]\n", sizeof(struct sys_thread));
-
   new_thread = kmalloc(sizeof(struct sys_thread));
   memset(new_thread, 0x0, sizeof(struct sys_thread));
-  kprintf("THREAD: [0x%X]\n", new_thread);
 
   spinLock(&netThreadSpinlock);
   new_thread->next = threads;
@@ -392,11 +384,9 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
    thread_param->thread = thread;
    */
   //execThread((void *)function,0x0,0x0);
-  kprintf("thread->ubthread: [0x%X]\n", new_thread->ubthread);
   if (ubthread_create(&new_thread->ubthread, 0x0, (void *) (thread), arg) != 0x0) {
     kpanic("sys_thread_new: ubthread_create");
   }
-  kprintf("thread->ubthread: [0x%X]\n", new_thread->ubthread);
   return (new_thread);
 }
 
@@ -451,16 +441,13 @@ static struct sys_thread *current_thread(void) {
   struct sys_thread *st;
   kTask_t *pt;
   pt = ubthread_self();
-  //kprintf("SL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinLock(&netThreadSpinlock);
   for (st = threads; st != NULL; st = st->next) {
     if (st->ubthread == pt) {
-      //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
       spinUnlock(&netThreadSpinlock);
       return st;
     }
   }
-  //kprintf("SUL: %i-0x%X]", _current->id, &netThreadSpinlock);
   spinUnlock(&netThreadSpinlock);
   kprintf("sys: current_thread: could not find current thread!\n");
   kprintf("This is due to a race condition in the LinuxThreads\n");
