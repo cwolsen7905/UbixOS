@@ -89,10 +89,7 @@ int sys_fork( struct thread *td, struct sys_fork_args *args ) {
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  kprintf( "Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id );
-
   newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace( newProcess->id );
-  //kprintf( "Copied Mem Space!\n" );
 
   newProcess->state = FORK;
 
@@ -101,7 +98,6 @@ int sys_fork( struct thread *td, struct sys_fork_args *args ) {
     sched_yield();
 
   /* Return Id of Proccess */
-  kprintf("Returning! [%i][0x%X]\n", _current->id,newProcess->tss.cr3);
   return (newProcess->id);
 
 }
@@ -125,7 +121,6 @@ int fork_copyProcess( struct taskStruct *newProcess, long ebp, long edi, long es
 
   /* Set Up New Tasks Information */
   memcpy( newProcess->oInfo.cwd, _current->oInfo.cwd, 1024 );
-  //kprintf( "Initializing New CWD!\n" );
 
   newProcess->tss.eip = eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
@@ -165,17 +160,15 @@ int fork_copyProcess( struct taskStruct *newProcess, long ebp, long edi, long es
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
   /* Create A Copy Of The VM Space For New Task */
-  kprintf( "Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr );
   newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace( newProcess->id );
-  //kprintf( "Copied Mem Space!\n" );
 
   newProcess->state = FORK;
 
   /* Fix gcc optimization problems */
   while ( tmpProcPtr->state == FORK )
     sched_yield();
+
   /* Return Id of Proccess */
-  kprintf( "Returning! [%i]", _current->id );
   return (newProcess->id);
 }
 

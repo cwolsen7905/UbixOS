@@ -99,8 +99,6 @@ int initLNC() {
 
   lnc->nic.ic = lnc_probe(lnc);
 
-  //kprintf("ID: %i\n", lnc->nic.ic);
-
   if ((lnc->nic.ic > 0) && (lnc->nic.ic >= PCnet_32)) {
     lnc->nic.ident = NE2100;
     lnc->nic.memMode = DMA_FIXED;
@@ -111,11 +109,9 @@ int initLNC() {
     /* Extract MAC address from PROM */
     for (i = 0; i < ETHER_ADDR_LEN; i++) {
       lnc->arpcom.ac_enaddr[i] = inportByte(lnc->ioAddr + i);
-      kprintf("[0x%X]", lnc->arpcom.ac_enaddr[i]);
     }
   }
   else {
-    kprintf("LNC Init Error\n");
     return (-1);
   }
 
@@ -280,29 +276,18 @@ void lnc_thread() {
   else {
     memset(tmpBuf,0x0,sizeof(struct nicBuffer));
   }
-kprintf("STARTING THREAD LNC");
   while (1) {
   while (lnc_driverOwnsRX(lnc)) {
     //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
     int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff ) - 4;
-/*
-    if (plen > 0)
-      kprintf("plen.0: [0x%X]", plen);
-*/
 
     tmpBuf->length = plen;
     tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
 
- // kprintf("RINT2\n");
     ethernetif_input(&lnc_netif);
-  //kprintf("RINT3\n");
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
     lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
     lnc_nextRxPtr(lnc);
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
   }
-//  kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
 
   sched_yield();
   }

@@ -368,7 +368,7 @@ USETOOLS?=	no
 #
 # Host platform information; may be overridden
 #
-.include <ubix.host.mk>
+.include <bsd.host.mk>
 
 .if ${USETOOLS} == "yes"						# {
 
@@ -1481,6 +1481,17 @@ ${var}?= no
 # variable is set to "no".
 #
 .for var in USE_HESIOD USE_INET6 USE_KERBEROS USE_LDAP USE_PAM USE_YP
+.if (${${var:S/USE_/MK/}} == "no")
+${var}:= no
+.else
+${var}?= yes
+.endif
+.endfor
+
+#MINIX-specific vars
+.for var in \
+	USE_WATCHDOG USE_ACPI USE_PAE USE_APIC USE_DEBUGREG USE_SYSDEBUG \
+	USE_LIVEUPDATE USE_PCI USE_BITCODE USE_MAGIC USE_ASR
 .if (${${var:S/USE_/MK/}} == "no")
 ${var}:= no
 .else

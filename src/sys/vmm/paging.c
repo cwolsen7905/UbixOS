@@ -617,14 +617,6 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
 
   pageDir = (uint32_t *) PD_BASE_ADDR;
 
-  /*
-   #ifdef DEBUG
-   */
-  kprintf("CVS: [0x%X]\n", addr);
-  /*
-   #endif
-   */
-
   for (x = (addr / (1024 * 4096)); x < PD_INDEX(VMM_USER_END); x++) {
     if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT) {
       pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (0x1000 * x));

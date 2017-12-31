@@ -61,7 +61,6 @@
 /* Temp Holder */
 int sys_execve( struct thread *td, struct sys_execve_args *args ) {
   int ret = sys_exec( td, args->fname, args->argv, args->envp );
-  kprintf("RETURNING: [%i]\n", ret);
   return (ret);
 }
 
@@ -191,7 +190,6 @@ void execFile( char *file, int argc, char **argv, int console ) {
 
   /* Now We Must Create A Virtual Space For This Proccess To Run In */
   _current->tss.cr3 = (uInt32) vmm_createVirtualSpace( _current->id );
-  kprintf( "_current->tss.cr3: 0x%X", _current->tss.cr3 );
   /* To Better Load This Application We Will Switch Over To Its VM Space */
   asm volatile(
       "movl %0,%%eax          \n"
@@ -216,7 +214,6 @@ void execFile( char *file, int argc, char **argv, int console ) {
   /* Load ELF Header */
   binaryHeader = (elfHeader *) kmalloc( sizeof(elfHeader) );
 
-  //kprintf(">a:%i:0x%X:0x%X<",sizeof(elfHeader),binaryHeader,tmpFd);
   fread( binaryHeader, sizeof(elfHeader), 1, tmpFd );
 
   /* Check If App Is A Real Application */
@@ -356,7 +353,6 @@ void execFile( char *file, int argc, char **argv, int console ) {
       : : "d" ((uInt32 *)(kernelPageDirectory))
   );
 
-  kprintf( "execFile Return: %i\n", _current->id );
   /* Finally Return */
   return;
 }
@@ -518,24 +514,21 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
         }
 
       if ((programHeader[i].phFlags & PF_X) && text_size < seg_size) {
-          kprintf( "setting text: 0x%X - 0x%X\n", seg_addr, seg_size );
           text_size = seg_size;
           text_addr = seg_addr;
         }
         else {
-          kprintf( "setting data: 0x%X - 0x%X\n", seg_addr, seg_size );
           data_size = seg_size;
           data_addr = seg_addr;
           /*
            _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
            _current->td.vm_daddr = (char *) seg_addr;
-           kprintf( "setting daddr: 0x%X, dsiize: 0x%X\n", _current->td.vm_daddr, _current->td.vm_dsize );
            */
         }
 
         /*
          *  MrOlsen (2016-01-19) NOTE: Note Sure, I should Do This Later
-         * Thjis is for stack space
+         * This is for stack space
          */
         _current->oInfo.vmStart = ((programHeader[i].phVaddr & 0xFFFFF000) + 0xA900000);
         break;
@@ -546,11 +539,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
         fread( (void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, fd );
         break;
       case PT_INTERP:
-        kprintf( "Malloc: %i\n", programHeader[i].phFilesz );
         interp = (char *) kmalloc( programHeader[i].phFilesz );
         fseek( fd, programHeader[i].phOffset, 0 );
         fread( (void *) interp, programHeader[i].phFilesz, 1, fd );
-        kprintf( "Interp: [%s]\n", interp );
         ldAddr = ldEnable();
         break;
       case PT_GNU_STACK:
@@ -565,8 +556,6 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   _current->td.vm_dsize = data_size >> PAGE_SHIFT;
   _current->td.vm_daddr = data_addr;
 
-  kprintf( "Done Looping\n" );
-
   /* What is this doing? 11/23/06 */
   if ( elfDynamicS != 0x0 ) {
     for ( i = 0; i < 12; i++ ) {
@@ -580,11 +569,6 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
         tmp[1] = (uInt32) fd;
         break;
       }
-      /*
-       else {
-       kprintf("dyn_val: %i",elfDynamicS[i].dynVal);
-       }
-       */
     }
   }
   /*
@@ -598,9 +582,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 //MrOlsen (2016-01-12) FIX: Not sure why argv[0] == 0
     argc = ((int) argv[0] > 0) ? (int) argv[0] : 1;
 
-    kprintf( "argc: %i", argc );
     args = (char *) vmmGetFreeVirtualPage( _current->id, 1, VM_TASK );
-    kprintf( "argc: %i, args 0x%X", argc, args );
     memset( args, 0x0, 0x1000 );
     x = 0x0;
     argvNew = (char **) kmalloc( sizeof(char *) * argc );

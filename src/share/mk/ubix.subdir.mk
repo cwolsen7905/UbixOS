@@ -1,6 +1,9 @@
-.include <ubix.init.mk>
+#	$NetBSD: bsd.subdir.mk,v 1.52 2010/05/26 00:48:15 uwe Exp $
+#	@(#)bsd.subdir.mk	8.1 (Berkeley) 6/8/93
 
-.if !defined(NOSUBDIR)                                  # {
+.include <bsd.init.mk>
+
+.if !defined(NOSUBDIR)					# {
 
 .for dir in ${SUBDIR}
 .if "${dir}" == ".WAIT"
@@ -29,10 +32,10 @@ __recurse: .USE
 	@${MAKEDIRTARGET} ${.TARGET:C/^[^-]*-//} ${.TARGET:C/-.*$//}
 
 .if make(cleandir)
-__RECURSETARG=  ${TARGETS:Nclean}
+__RECURSETARG=	${TARGETS:Nclean}
 clean:
 .else
-__RECURSETARG=  ${TARGETS}
+__RECURSETARG=	${TARGETS}
 .endif
 
 # for obscure reasons, we can't do a simple .if ${dir} == ".WAIT"
@@ -51,6 +54,6 @@ subdir-${targ}: .PHONY ${SUBDIR_${targ}}
 ${targ}: subdir-${targ}
 .endfor
 
-.endif  # ! NOSUBDIR                                    # }
+.endif	# ! NOSUBDIR					# }
 
-${TARGETS}:     # ensure existence
+${TARGETS}:	# ensure existence
