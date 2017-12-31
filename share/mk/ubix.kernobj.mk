@@ -21,7 +21,7 @@
 #		`${KERNSRCDIR}/${KERNARCHDIR}/compile'.
 #
 
-.include <bsd.own.mk>
+.include <ubix.own.mk>
 
 KERNSRCDIR?=		${UBIXBSDSRCDIR}/sys
 KERNARCHDIR?=		arch/${MACHINE}
