@@ -26,6 +26,7 @@
 
 #include <ubixos/spinlock.h>
 #include <ubixos/sched.h>
+#include <string.h>
 
 #define atomic_xadd(P, V) __sync_fetch_and_add((P), (V))
 #define cmpxchg(P, O, N) __sync_val_compare_and_swap((P), (O), (N))
@@ -41,7 +42,7 @@
 #define cpu_relax() asm volatile("pause\n": : :"memory")
 
 void spinLockInit(spinLock_t lock) {
-  memset(lock, 0x0, sizeof(spinLock_t));
+  memset(lock, 0x0, sizeof(struct spinLock));
 }
 
 int spinTryLock(spinLock_t lock) {

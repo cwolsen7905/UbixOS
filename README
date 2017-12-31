@@ -10,3 +10,11 @@ Installation:
     2) cd ../boot2;make
     3) cat boot1 boot2 > /dev/fd0
     4) gcc -o test test.c;./test /dev/fd0 1;rm ./test
+Directory Structure:
+
+  bin     - Applications for UbixOS
+  include - Include files to build anything userland
+  lib     - Userland libraries
+  sys     - Kernel code
+  tools   - Tool kit required to build and install UbixOS
+

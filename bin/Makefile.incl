@@ -1,6 +1,6 @@
 # 'bin' options
 
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin
+CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument
 
 INCLUDES = -I../../include 
 

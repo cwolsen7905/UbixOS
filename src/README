@@ -1,8 +1,0 @@
-Directory Structure:
-
-  bin     - Applications for UbixOS
-  include - Include files to build anything userland
-  lib     - Userland libraries
-  sys     - Kernel code
-  tools   - Tool kit required to build and install UbixOS
-

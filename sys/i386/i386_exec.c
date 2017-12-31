@@ -39,6 +39,7 @@
 #include <lib/kprintf.h>
 #include <lib/string.h>
 #include <assert.h>
+#include <string.h>
 
 #define STACK_ADDR 0xC800000
 
@@ -599,7 +600,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
     argc = ((int) argv[0] > 0) ? (int) argv[0] : 1;
 
     kprintf( "argc: %i", argc );
-    args = (char *) vmmGetFreeVirtualPage( _current->id, 1, VM_TASK );
+    args = (char *) vmm_getFreeVirtualPage( _current->id, 1, VM_TASK );
     kprintf( "argc: %i, args 0x%X", argc, args );
     memset( args, 0x0, 0x1000 );
     x = 0x0;
@@ -860,7 +861,7 @@ int sys_exec_dead( char *file, char *ap ) {
 
   if ( argv[1] != 0x0 ) {
     argc = (int) argv[0];
-    args = (char *) vmmGetFreeVirtualPage( _current->id, 1, VM_TASK );
+    args = (char *) vmm_getFreeVirtualPage( _current->id, 1, VM_TASK );
     memset( args, 0x0, 0x1000 );
     x = 0x0;
     argvNew = (char **) kmalloc( sizeof(char *) * argc );
@@ -892,7 +893,7 @@ int sys_exec_dead( char *file, char *ap ) {
     tmp[i + 1] = (uint32_t) argv[i];
   }
   //! Build ENV
-  args = (char *) vmmGetFreeVirtualPage( _current->id, 1, VM_TASK );
+  args = (char *) vmm_getFreeVirtualPage( _current->id, 1, VM_TASK );
   memset( args, 0x0, 0x1000 );
   strcpy( args, "LIBRARY_PATH=/lib" );
   tmp[argc + 2] = (uint32_t) args;

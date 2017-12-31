@@ -37,7 +37,7 @@ static struct spinLock fvpSpinLock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 
- Function: void *vmmGetFreeVirtualPage(pidType pid,int count);
+ Function: void *vmm_getFreeVirtualPage(pidType pid,int count);
  Description: Returns A Free Page Mapped To The VM Space
  Notes:
 
@@ -46,7 +46,7 @@ static struct spinLock fvpSpinLock = SPIN_LOCK_INITIALIZER;
  08/11/02 - This Will Return Next Avilable Free Page Of Tasks VM Space
 
  ************************************************************************/
-void *vmmGetFreeVirtualPage( pidType pid, int count, int type ) {
+void *vmm_getFreeVirtualPage( pidType pid, int count, int type ) {
   int y = 0, counter = 0, pdI = 0x0, ptI = 0x0;
   uint32_t *pageTableSrc = 0x0;
   uint32_t *pageDir = 0x0;

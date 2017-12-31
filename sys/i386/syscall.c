@@ -124,16 +124,16 @@ int sysCheckPid( int pid, int *ptr ) {
  ************************************************************************/
 int sysGetFreePage( struct thread *td, uint32_t *count) {
   //MrOlsen 2017-12-15 kprintf("sysGetFreePage - Count: %i\n", *count);
-  return((int) vmmGetFreeVirtualPage(_current->id, *count, VM_THRD));
-  //return(vmmGetFreeVirtualPage(_current->id, *count, VM_TASK));
+  return((int) vmm_getFreeVirtualPage(_current->id, *count, VM_THRD));
+  //return(vmm_getFreeVirtualPage(_current->id, *count, VM_TASK));
 }
 
 int sysGetFreePage_OLD( long *ptr, int count, int type ) {
   if ( ptr ) {
     if ( type == 2 )
-      *ptr = (long) vmmGetFreeVirtualPage( _current->id, count, VM_THRD );
+      *ptr = (long) vmm_getFreeVirtualPage( _current->id, count, VM_THRD );
     else
-      *ptr = (long) vmmGetFreeVirtualPage( _current->id, count, VM_TASK );
+      *ptr = (long) vmm_getFreeVirtualPage( _current->id, count, VM_TASK );
   }
   return (0);
 }

@@ -36,6 +36,7 @@
 #include <sys/elf.h>
 #include <lib/string.h>
 #include <lib/kprintf.h>
+#include <ubixos/kpanic.h>
 
 struct spinLock Master = SPIN_LOCK_INITIALIZER;
 

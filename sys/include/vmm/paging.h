@@ -99,6 +99,7 @@ int obreak(struct thread *, struct obreak_args *);
 int munmap(struct thread *, struct munmap_args *);
 
 int vmm_cleanVirtualSpace(uint32_t);
+void *vmm_getFreeVirtualPage( pidType pid, int count, int type );
 
 extern uInt32 *kernelPageDirectory;
 

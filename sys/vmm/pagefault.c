@@ -97,7 +97,7 @@ kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err
       src = (uInt32 *) (memAddr & 0xFFFFF000);
       /* Allocate A Free Page For Destination */
       /* USE vmInfo */
-      dst = (uInt32 *) vmmGetFreeVirtualPage(_current->id, 1, 0x1);
+      dst = (uInt32 *) vmm_getFreeVirtualPage(_current->id, 1, 0x1);
       /* Copy Memory */
       for (i = 0; i < PD_ENTRIES; i++) {
         dst[i] = src[i];
