@@ -48,7 +48,7 @@ static elfPltInfo *binaryElfRel = 0x0;
 uInt32 ld( uInt32 got2, uInt32 entry ) {
   int i = 0x0;
   int x = 0x0;
-  int y = 0x0;
+  //int y = 0x0;
   int rel = 0x0;
   int relDyn = 0x0;
   uInt32 *reMap = 0x0;

@@ -8,7 +8,7 @@ include ../Makefile.incl
 INCLUDES = -I../../include.new -I./
 
 CFLAGS+=        -Wall -DFREEBSD_ELF -DIN_RTLD -DPIC 
-CFLAGS = -O2 -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -fpic -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -Werror -DDEBUG
+CFLAGS = -m32 -O2 -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -fpic -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -Werror -DDEBUG
 #MrOlsen 2016-01-13 CFLAGS = -O2 -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -fpic -elf -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -Werror -DDEBUG
 
 
@@ -52,7 +52,7 @@ $(OUTPUT) : $(OBJS)
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .S.o:
-	$(CC)  -Wall $(CLFAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 # Clean Up The junk
 clean:

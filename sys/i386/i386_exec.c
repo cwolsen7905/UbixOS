@@ -406,7 +406,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   struct i386_frame *iFrame = 0x0;
   //struct i386_frame *iFrameNew = 0x0;
 
-  Elf_Auxargs *auxargs = 0x0;
+  //Elf_Auxargs *auxargs = 0x0;
 
   asm("movl %%cr3, %0;" : "=r" (cr3));
 
@@ -728,7 +728,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
    "ljmp $0x20,$0\n"
    );
 */
-  tmp = (char *)iFrame->eip;
+  //tmp = (char *)iFrame->eip;
 
   //kprintf("N:[0x%X]\n", tmp[0]);
   //kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X], CR3: [0x%X-0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp, cr3, kernelPageDirectory );
@@ -739,7 +739,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
  * \brief New exec...
  */
 int sys_exec_dead( char *file, char *ap ) {
-  int error = 0x0;
+  //int error = 0x0;
   int i = 0x0;
   int x = 0x0;
   int argc = 0x0;

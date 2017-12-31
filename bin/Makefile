@@ -1,7 +1,7 @@
 # $Id: Makefile 121 2016-01-14 03:18:20Z reddawg $
 # The System Makefile (C) 2002 The UbixOS Project
 
-all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ld-bin ttyd-bin stat-bin ls-bin #rtld-elf-bin
+all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin ls-bin
 # MrOlsen (2016-01-11) ERROR: weird it didnt like -elf rtld-elf-bin
 # MrOlsen (2016-01-11) NOTE: edit-bin cat-bin
 # test-bin pwd-bin cat-bin de-bin ls-bin goofball-bin mount-bin
@@ -26,9 +26,6 @@ pwd-bin: pwd
 
 cat-bin: cat
 	(cd cat;make)
-
-ld-bin: ld
-	(cd ld;make)
 
 de-bin: de
 	(cd de;make)
@@ -72,9 +69,6 @@ stat-bin: stat
 mount-bin: mount
 	(cd mount;make)
 
-rtld-elf-bin: rtld-elf
-	(cd rtld-elf;make)
-
 clean:
 	(cd cp;make clean)
 	(cd fdisk;make clean)
@@ -87,9 +81,7 @@ clean:
 	(cd format;make clean)
 	(cd disklabel;make clean)
 	(cd ubistry;make clean)
-	(cd ld;make clean)
 	(cd edit;make clean)
 	(cd ttyd;make clean)
 	(cd stat;make clean)
 	(cd mount;make clean)
-	(cd rtld-elf;make clean)

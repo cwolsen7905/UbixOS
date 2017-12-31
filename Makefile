@@ -9,6 +9,7 @@ OBJ_DIR?= ${CURDIR}/obj
 CLEANDIR=clean
 
 WORLD_LIB_SRC=${CURDIR}/lib
+WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
 WORLD_INC=${CURDIR}/include.new
 WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm  OBJDUMP= OBJCOPY="objcopy"  RANLIB=ranlib
@@ -35,6 +36,7 @@ world:
 	@echo "Step 1: Clean World"
 	@echo "***************************************************************"
 	#cd ${WORLD_LIB_SRC}; ${WMAKE} ${CLEANDIR}
+	#cd ${WORLD_LIBEXEC_SRC}; ${WMAKE} ${CLEANDIR}
 	#cd ${WORLD_BIN_SRC}; ${WMAKE} ${CLEANDIR}
 	@echo
 	@echo "***************************************************************"
@@ -43,7 +45,12 @@ world:
 	cd ${WORLD_LIB_SRC}; ${WMAKE} all
 	@echo
 	@echo "***************************************************************"
-	@echo "Step 3: Build World Binaries"
+	@echo "Step 3: Build World Libexec"
+	@echo "***************************************************************"
+	cd ${WORLD_LIBEXEC_SRC}; ${WMAKE} all
+	@echo
+	@echo "***************************************************************"
+	@echo "Step 4: Build World Binaries"
 	@echo "***************************************************************"
 	cd ${WORLD_BIN_SRC}; ${WMAKE} all
 	@echo
@@ -94,6 +101,7 @@ clean:
 	(cd sys;${MAKE} clean)
 	(cd bin;${WMAKE} clean)
 	(cd lib;${WMAKE} clean)
+	(cd libexec;${WMAKE} clean)
 #	(cd src/lib/ubix;make clean)
 #	(cd src/lib/objgfx40;make clean)
 #	(cd src/lib/libcpp;make clean)
