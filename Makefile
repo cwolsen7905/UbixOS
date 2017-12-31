@@ -1,5 +1,4 @@
-# $Id: Makefile 148 2016-01-18 19:34:32Z reddawg $
-# The System Makefile (C) 2002 The UbixOS Project
+# The System Makefile (C) 2002, 2017 The UbixOS Project
 
 MAKE=make
 
