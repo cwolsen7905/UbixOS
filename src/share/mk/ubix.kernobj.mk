@@ -1,7 +1,7 @@
-#	$NetBSD: bsd.kernobj.mk,v 1.14 2013/06/03 07:39:07 mrg Exp $
+#	$UBIXBSD: bsd.kernobj.mk,v 1.14 2013/06/03 07:39:07 mrg Exp $
 
 # KERNSRCDIR	Is the location of the top of the kernel src.
-# 		It defaults to `${NETBSDSRCDIR}/sys'.
+# 		It defaults to `${UBIXBSDSRCDIR}/sys'.
 #
 # KERNARCHDIR	Is the location of the machine dependent kernel sources.
 #		It defaults to `arch/${MACHINE}', but may be overridden
@@ -23,7 +23,7 @@
 
 .include <bsd.own.mk>
 
-KERNSRCDIR?=		${NETBSDSRCDIR}/sys
+KERNSRCDIR?=		${UBIXBSDSRCDIR}/sys
 KERNARCHDIR?=		arch/${MACHINE}
 KERNCONFDIRDEFAULT?=	${KERNSRCDIR}/${KERNARCHDIR}/conf
 KERNCONFDIR?=		${KERNCONFDIRDEFAULT}

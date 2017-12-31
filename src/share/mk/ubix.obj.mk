@@ -1,7 +1,7 @@
-#	$NetBSD: ubix.obj.mk,v 1.49 2010/01/25 00:43:00 christos Exp $
+#	$UBIXBSD: ubix.obj.mk,v 1.49 2010/01/25 00:43:00 christos Exp $
 
-.if !defined(_BSD_OBJ_MK_)
-_BSD_OBJ_MK_=1
+.if !defined(_UBIX_OBJ_MK_)
+_UBIX_OBJ_MK_=1
 
 .include <ubix.own.mk>
 
@@ -106,4 +106,4 @@ print-objdir:
 
 .include <ubix.sys.mk>
 
-.endif	# !defined(_BSD_OBJ_MK_)
+.endif	# !defined(_UBIX_OBJ_MK_)

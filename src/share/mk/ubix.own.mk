@@ -6,7 +6,7 @@
 .if !defined(_UBIX_OWN_MK_)
 _UBIX_OWN_MK_=1
 
-.if defined(__MINIX)
+.if defined(__UBIX)
 
 LDSTATIC?=	-static
 MKDYNAMICROOT?=	no
@@ -170,7 +170,7 @@ MKLIBCXX?=	yes # Build by default libc++
 # The default value of MKBINUTILS cannot be set before the previous test.
 MKBINUTILS?=	no
 
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 MAKECONF?=	/etc/mk.conf
 .-include "${MAKECONF}"
@@ -571,11 +571,11 @@ TOOL_ZIC=		${TOOLDIR}/bin/${_TOOL_PREFIX}zic
 
 # Clang supports C, C++ and Objective C
 TOOL_CC.clang=		clang
-.if defined(__MINIX)
+.if defined(__UBIX)
 TOOL_CPP.clang=		clang -E
 .else
 TOOL_CPP.clang=		clang-cpp
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 TOOL_CXX.clang=		clang++
 TOOL_OBJC.clang=	clang
 TOOL_OPT.clang=		opt
@@ -601,7 +601,7 @@ TOOL_AWK=		awk
 TOOL_CAP_MKDB=		cap_mkdb
 TOOL_CAT=		cat
 TOOL_CKSUM=		cksum
-.if defined(__MINIX)
+.if defined(__UBIX)
 # LSC: A full path has to be provided, as this is also used as a make
 #      target.
 .  if  exists(/usr/pkg/bin/clang-tblgen)
@@ -611,7 +611,7 @@ TOOL_CLANG_TBLGEN=	/usr/bin/clang-tblgen
 .  endif # exists(/usr/pkg/bin/clang-tblgen)
 .else
 TOOL_CLANG_TBLGEN=	clang-tblgen
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 TOOL_COMPILE_ET=	compile_et
 TOOL_CONFIG=		config
 TOOL_CRUNCHGEN=		crunchgen
@@ -635,7 +635,7 @@ TOOL_INDXBIB=		indxbib
 TOOL_INSTALLBOOT=	installboot
 TOOL_INSTALL_INFO=	install-info
 TOOL_JOIN=		join
-.if defined(__MINIX)
+.if defined(__UBIX)
 # LSC: A full path has to be provided, as this is also used as a make
 #      target.
 .  if  exists(/usr/pkg/bin/llvm-tblgen)
@@ -645,25 +645,25 @@ TOOL_LLVM_TBLGEN=	/usr/bin/llvm-tblgen
 .  endif # exists(/usr/pkg/bin/llvm-tblgen)
 .else
 TOOL_LLVM_TBLGEN=	llvm-tblgen
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 TOOL_M4=		m4
 TOOL_MACPPCFIXCOFF=	macppc-fixcoff
 TOOL_MAKEFS=		makefs
 TOOL_MAKEINFO=		makeinfo
-.if defined(__MINIX)
+.if defined(__UBIX)
 # LSC: A full path has to be provided, as this is also used as a make
 #      target.
 TOOL_MAKEKEYS=		/usr/X11R7/bin/makekeys
 .else
 TOOL_MAKEKEYS=		makekeys
-.endif # defined(__MINIX)
-.if defined(__MINIX)
+.endif # defined(__UBIX)
+.if defined(__UBIX)
 # LSC: A full path has to be provided, as this is also used as a make
 #      target.
 TOOL_MAKESTRS=		/usr/X11R7/bin/makestrs
 .else
 TOOL_MAKESTRS=		makestrs
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 TOOL_MAKEWHATIS=	/usr/libexec/makewhatis
 TOOL_MANDOC_ASCII=	mandoc -Tascii
 TOOL_MANDOC_HTML=	mandoc -Thtml
@@ -704,20 +704,20 @@ TOOL_SED=		sed
 TOOL_SOELIM=		soelim
 TOOL_SPARKCRC=		sparkcrc
 TOOL_STAT=		stat
-.if defined(__MINIX)
+.if defined(__UBIX)
 TOOL_STRFILE=		/usr/games/strfile
 .else
 TOOL_STRFILE=		strfile
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 TOOL_SUNLABEL=		sunlabel
 TOOL_TBL=		tbl
-.if defined(__MINIX)
+.if defined(__UBIX)
 # LSC: There is a tic packaged, which has a completly different set of
 #      options, so make sure to use the base system one, always.
 TOOL_TIC=		/usr/bin/tic
 .else
 TOOL_TIC=		tic
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 TOOL_TOPROTO=		toproto
 TOOL_UUDECODE=		uudecode
 TOOL_VGRIND=		vgrind -f
@@ -1036,7 +1036,7 @@ GNU_ARCH.sh3eb=sh
 GNU_ARCH.sh3el=shle
 GNU_ARCH.mips64eb=mips64
 
-.if defined(__MINIX)
+.if defined(__UBIX)
 # MINIX/arm default
 GCC_CONFIG_ARCH.earm=armv7-a
 
@@ -1044,7 +1044,7 @@ GCC_CONFIG_ARCH.earm=armv7-a
 GNU_ARCH.i386=i586
 GCC_CONFIG_ARCH.i386=i586
 
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 MACHINE_GNU_ARCH=${GNU_ARCH.${MACHINE_ARCH}:U${MACHINE_ARCH}}
 
@@ -1067,7 +1067,7 @@ MACHINE_GNU_PLATFORM?=${MACHINE_GNU_ARCH}--netubixelf
 MACHINE_GNU_PLATFORM?=${MACHINE_GNU_ARCH}--netubix
 .endif
 
-.if defined(__MINIX)
+.if defined(__UBIX)
 # We have a simpler toolchain naming scheme
 MACHINE_GNU_PLATFORM:=${MACHINE_GNU_ARCH}-elf32-minix
 
@@ -1087,7 +1087,7 @@ MACHINE_GNU_PLATFORM:=${MACHINE_GNU_ARCH}-elf32-minix
       USE_BITCODE:=no
 .    endif
 .  endif # ${_HAVE_GOLD:U} == ""
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 .if !empty(MACHINE_ARCH:M*arm*)
 # Flags to pass to CC for using the old APCS ABI on ARM for compat or stand.

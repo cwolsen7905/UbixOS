@@ -29,10 +29,10 @@ __DPSRCS.all+=	${SRCS:C/\.(c|m|s|S|C|cc|cpp|cxx)$/.d/} \
 __DPSRCS.d=	${__DPSRCS.all:O:u:M*.d}
 __DPSRCS.notd=	${__DPSRCS.all:O:u:N*.d}
 
-.if defined(__MINIX)
+.if defined(__UBIX)
 __DPSRCS.bcd=	${"${USE_BITCODE:Uno}" == "yes":? ${SRCS:M*.c:O:u:.c=.bcd}:}
 __DPSRCS.d+=	${__DPSRCS.bcd}
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 .NOPATH: .depend ${__DPSRCS.d}
 
@@ -59,7 +59,7 @@ _MKDEP_FILEFLAGS=
 	rm -f .depend
 	${MKDEP} ${_MKDEP_MERGEFLAGS} -d -f ${.TARGET} ${__DPSRCS.d}
 
-.if !defined(__MINIX)
+.if !defined(__UBIX)
 .SUFFIXES: .d .s .S .c .C .cc .cpp .cxx .m
 .else
 .SUFFIXES: .bcd .d .s .S .c .C .cc .cpp .cxx .m
@@ -71,7 +71,7 @@ _MKDEP_FILEFLAGS=
 	    ${CFLAGS:C/-([IDU])[  ]*/-\1/Wg:M-[IDU]*} \
 	    ${CPPFLAGS} ${CPPFLAGS.${.IMPSRC:T}} ${.IMPSRC}
 .endif # ${USE_BITCODE:Uno} == "yes"
-.endif # !defined(__MINIX)
+.endif # !defined(__UBIX)
 
 .c.d:
 	${_MKTARGET_CREATE}

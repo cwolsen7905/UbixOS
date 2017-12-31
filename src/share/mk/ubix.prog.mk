@@ -270,10 +270,10 @@ PAM_STATIC_LDADD=
 PAM_STATIC_DPADD=
 .endif
 
-.if defined(__MINIX) && ${MACHINE_ARCH} == "earm"
+.if defined(__UBIX) && ${MACHINE_ARCH} == "earm"
 # LSC: On ARM, when compiling statically, with gcc, lgcc_eh is required
 LDFLAGS+= ${${ACTIVE_CC} == "gcc":? -lgcc_eh:}
-.endif # defined(__MINIX) && ${MACHINE_ARCH} == "earm"
+.endif # defined(__UBIX) && ${MACHINE_ARCH} == "earm"
 
 #	NB:	If you are a library here, add it in ubix.README
 .for _lib in \
@@ -369,10 +369,10 @@ _CCLINKFLAGS=
 PROG=		${PROG_CXX}
 _CCLINK=	${CXX} ${_CCLINKFLAGS}
 
-.if defined(__MINIX)
+.if defined(__UBIX)
 # BJG - stack unwinding (for C++ exceptions) doesn't work on static executables when built with llvm.
 LDSTATIC=	-dynamic
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 .endif
 
 .if defined(RUMPPRG)
@@ -474,7 +474,7 @@ _CCLINK.${_P}=	${CXX} ${_CCLINKFLAGS}
 .endfor
 
 # Language-independent definitions.
-.if defined(__MINIX)
+.if defined(__UBIX)
 .if ${USE_BITCODE:Uno} == "yes"
 CFLAGS+= -flto
 .endif # ${USE_BITCODE:Uno} == "yes"
@@ -484,7 +484,7 @@ CFLAGS+= -flto
 #    a sysroot parameter has been given.
 LDFLAGS+= -L ${DESTDIR}/usr/lib
 .endif # ${USE_BITCODE:U} == "no"
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 .for _P in ${PROGS} ${PROGS_CXX}					# {
 
@@ -576,7 +576,7 @@ CLEANFILES+=	${_P}.d
 
 ${OBJS.${_P}} ${LOBJS.${_P}}: ${DPSRCS}
 
-.if defined(__MINIX) && ${USE_BITCODE:Uno} == "yes"
+.if defined(__UBIX) && ${USE_BITCODE:Uno} == "yes"
 CLEANFILES+= ${_P}.opt.bcl ${_P}.bcl ${_P}.bcl.o
 
 OPTFLAGS.${_P}?= ${OPTFLAGS}
@@ -634,7 +634,7 @@ ${_P}: .gdbinit ${LIBCRT0} ${LIBCRTI} ${OBJS.${_P}} ${LIBC} ${LIBCRTBEGIN} \
 	${OBJCOPY} -R .ident ${.TARGET}
 .endif
 .endif	# !commands(${_P})
-.endif  # defined(__MINIX) && ${USE_BITCODE:Uno} == "yes"
+.endif  # defined(__UBIX) && ${USE_BITCODE:Uno} == "yes"
 .endif	# USE_COMBINE
 
 ${_P}.ro: ${OBJS.${_P}} ${_DPADD.${_P}}

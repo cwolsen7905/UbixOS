@@ -1,4 +1,4 @@
-#	$NetBSD: ubix.man.mk,v 1.117 2014/12/19 22:25:39 christos Exp $
+#	$UBIXBSD: ubix.man.mk,v 1.117 2014/12/19 22:25:39 christos Exp $
 #	@(#)ubix.man.mk	8.1 (Berkeley) 6/8/93
 
 .include <ubix.init.mk>

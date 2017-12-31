@@ -1,7 +1,7 @@
-#	$NetBSD: ubix.gcc.mk,v 1.11 2015/06/07 15:04:28 matt Exp $
+#	$UBIXBSD: ubix.gcc.mk,v 1.11 2015/06/07 15:04:28 matt Exp $
 
-.if !defined(_BSD_GCC_MK_)
-_BSD_GCC_MK_=1
+.if !defined(_UBIX_GCC_MK_)
+_UBIX_GCC_MK_=1
 
 .if defined(EXTERNAL_TOOLCHAIN)
 _GCC_CRTBEGIN!=		${CC} --print-file-name=crtbegin.o
@@ -31,4 +31,4 @@ _GCC_CRTDIR?=		${DESTDIR}/usr/lib${MLIBDIR:D/${MLIBDIR}}
 _GCC_LIBGCCDIR?=	${DESTDIR}/usr/lib${MLIBDIR:D/${MLIBDIR}}
 .endif
 
-.endif	# ! defined(_BSD_GCC_MK_)
+.endif	# ! defined(_UBIX_GCC_MK_)

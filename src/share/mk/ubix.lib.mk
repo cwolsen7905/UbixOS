@@ -1,4 +1,4 @@
-#	$NetBSD: bsd.lib.mk,v 1.362 2015/09/08 16:06:42 uebayasi Exp $
+#	$UBIXBSD: bsd.lib.mk,v 1.362 2015/09/08 16:06:42 uebayasi Exp $
 #	@(#)bsd.lib.mk	8.3 (Berkeley) 4/22/94
 
 .include <bsd.init.mk>
@@ -75,11 +75,11 @@ DPADD+=	${SHLIB_VERSION_FILE}
 
 # Check for higher installed library versions.
 .if !defined(NOCHECKVER) && !defined(NOCHECKVER_${LIB}) && \
-	exists(${NETBSDSRCDIR}/lib/checkver)
+	exists(${UBIXBSDSRCDIR}/lib/checkver)
 checkver:
 	@(cd "${.CURDIR}" && \
 	    HOST_SH=${HOST_SH:Q} AWK=${TOOL_AWK:Q} \
-	    ${HOST_SH} ${NETBSDSRCDIR}/lib/checkver -v ${SHLIB_VERSION_FILE} \
+	    ${HOST_SH} ${UBIXBSDSRCDIR}/lib/checkver -v ${SHLIB_VERSION_FILE} \
 		    -d ${_DEST.OBJ} ${LIB})
 .endif
 .endif									# }
@@ -137,7 +137,7 @@ SHLIB_FULLVERSION=${SHLIB_MAJOR}
 #			numbers of shared library
 # SHLIB_SOVERSION:	version number to be compiled into a shared library
 #			via -soname. Usualy ${SHLIB_MAJOR} on ELF.
-#			NetBSD/pmax used to use ${SHLIB_MAJOR}[.${SHLIB_MINOR}
+#			UBIXBSD/pmax used to use ${SHLIB_MAJOR}[.${SHLIB_MINOR}
 #			[.${SHLIB_TEENY}]]
 # SHLIB_SHFLAGS:	Flags to tell ${LD} to emit shared library.
 #			with ELF, also set shared-lib version for ld.so.
@@ -207,12 +207,12 @@ LIBSTRIPFOBJS=	yes
 LIBSTRIPSHLIBOBJS=	yes
 .endif
 
-.if defined(__MINIX) && ${USE_BITCODE:Uno} == "yes"
+.if defined(__UBIX) && ${USE_BITCODE:Uno} == "yes"
 SHLIB_SHFLAGS+= -L ${DESTDIR}/usr/lib
 SHLIB_SHFLAGS+= -Wl,-plugin=${GOLD_PLUGIN} \
 		-Wl,-plugin-opt=-disable-opt
 
-SECTIONIFYPASS?=${NETBSDSRCDIR}/minix/llvm/bin/sectionify.so
+SECTIONIFYPASS?=${UBIXBSDSRCDIR}/minix/llvm/bin/sectionify.so
 # dcvmoole: the following construction is a hack for libmagicrt.  For reasons
 # not entirely under our control, clang refuses to take .bc objects even when
 # using the gold linker, saying that LLVM IR code cannot be linked.  In order
@@ -238,7 +238,7 @@ SECTIONIFYMV?=mv -f
 .cc.bc .cxx.bc .cpp.bc:
 	${_MKTARGET_COMPILE}
 	${COMPILE.cc} ${COPTS.${.IMPSRC:T}} ${CPUFLAGS.${.IMPSRC:T}} ${CPPFLAGS.${.IMPSRC:T}} ${.IMPSRC} -o ${.TARGET} -flto
-.endif # defined(__MINIX) && ${USE_BITCODE:Uno} == "yes"
+.endif # defined(__UBIX) && ${USE_BITCODE:Uno} == "yes"
 .c.o:
 	${_MKTARGET_COMPILE}
 	${COMPILE.c} ${COPTS.${.IMPSRC:T}} ${CPUFLAGS.${.IMPSRC:T}} ${CPPFLAGS.${.IMPSRC:T}} ${.IMPSRC} -o ${.TARGET}
@@ -433,9 +433,9 @@ _LIB_p.a:=${_LIB}_p.a
 _LIB_g.a:=${_LIB}_g.a
 _LIB_pic.a:=${_LIB}_pic.a
 _LIB.ln:=llib-l${LIB}.ln
-.if defined(__MINIX) && ${USE_BITCODE:Uno} == "yes"
+.if defined(__UBIX) && ${USE_BITCODE:Uno} == "yes"
 _LIB_bc.a:=${_LIB}_bc.a
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 .if ${MKPIC} != "no" && defined(SHLIB_FULLVERSION)
 _LIB.so:=${_LIB}.so
@@ -659,14 +659,14 @@ DPLIBC ?= ${DESTDIR}${LIBC_SO}
 .else
 LDLIBC ?= -nodefaultlibs
 .if ${HAVE_LIBGCC} == "yes" && (${LIB} == "c" || ${LIB} == "minc")
-.if !defined(__MINIX)
+.if !defined(__UBIX)
 LDADD+= -lgcc
 .else
 LDADD+= ${${ACTIVE_CC} == "gcc":? -lgcc:}
 .if ${MACHINE_ARCH} == "earm"
 LDADD+= ${${ACTIVE_CC} == "gcc":? -lgcc_eh:}
 .endif # ${MACHINE_ARCH} == "earm"
-.endif # !defined(__MINIX)
+.endif # !defined(__UBIX)
 .endif
 .endif
 .endif
@@ -758,12 +758,12 @@ libclean2: .PHONY .MADE __cleanuse LIBCLEANFILES2
 libclean3: .PHONY .MADE __cleanuse LIBCLEANFILES3
 libclean4: .PHONY .MADE __cleanuse LIBCLEANFILES4
 libclean5: .PHONY .MADE __cleanuse LIBCLEANFILES5
-.if defined(__MINIX)
+.if defined(__UBIX)
 # MINIX: core conflicts with core/ in lib/liblwip
 CLEANFILES+= a.out [Ee]rrs mklog *.core
 .else
 CLEANFILES+= a.out [Ee]rrs mklog core *.core
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 LIBCLEANFILES1+= ${_LIB.a}   ${STOBJS} ${STOBJS:=.tmp}
 LIBCLEANFILES2+= ${_LIB_p.a} ${POBJS}  ${POBJS:=.tmp}
 LIBCLEANFILES3+= ${_LIB_g.a} ${GOBJS}  ${GOBJS:=.tmp}
@@ -774,7 +774,7 @@ LIBCLEANFILES4+= ${_LIB.so}.* ${_LIB.so} ${_LIB.so.debug}
 LIBCLEANFILES4+= ${SOBJS} ${SOBJS:=.tmp}
 LIBCLEANFILES5+= ${_LIB.ln} ${LOBJS}
 
-.if defined(__MINIX)
+.if defined(__UBIX)
 clean: libclean6
 libclean6: .PHONY .MADE __cleanuse LIBCLEANFILES6
 LIBCLEANFILES6+= ${_LIB_bc.a} ${BCOBJS} ${BCOBJS:=.tmp}

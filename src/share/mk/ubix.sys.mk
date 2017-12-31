@@ -1,19 +1,19 @@
-.if !defined(_BSD_SYS_MK_)
-_BSD_SYS_MK_=1
+.if !defined(_UBIX_SYS_MK_)
+_UBIX_SYS_MK_=1
 
 .if !empty(.INCLUDEDFROMFILE:MMakefile*)
 error1:
 	@(echo "bsd.sys.mk should not be included from Makefiles" >& 2; exit 1)
 .endif
-.if !defined(_BSD_OWN_MK_)
+.if !defined(_UBIX_OWN_MK_)
 error2:
 	@(echo "bsd.own.mk must be included before bsd.sys.mk" >& 2; exit 1)
 .endif
 
-.if defined(__MINIX)
+.if defined(__UBIX)
 #LSC: Be a bit smarter about the default compiler
-.if exists(/usr/pkg/bin/clang) || exists(/usr/bin/clang)
-CC?=	clang
+.if exists(/usr/pkg/bin/cc) || exists(/usr/bin/cc)
+CC?=	cc
 .endif
 
 .if exists(/usr/pkg/bin/gcc) || exists(/usr/bin/gcc)
@@ -22,15 +22,15 @@ CC?=	gcc
 
 MKDEP?= CC=${CC:Q} mkdep
 MKDEPCXX?= CC=${CXX:Q} mkdep
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 .if ${MKREPRO:Uno} == "yes"
-CPPFLAGS+=	-Wp,-iremap,${NETBSDSRCDIR}:/usr/src
+CPPFLAGS+=	-Wp,-iremap,${UBIXBSDSRCDIR}:/usr/src
 CPPFLAGS+=	-Wp,-iremap,${DESTDIR}/:/
 CPPFLAGS+=	-Wp,-iremap,${X11SRCDIR}:/usr/xsrc
 .endif
 
-# NetBSD sources use C99 style, with some GCC extensions.
+# UBIXBSD sources use C99 style, with some GCC extensions.
 CFLAGS+=	${${ACTIVE_CC} == "clang":? -std=gnu99 :}
 CFLAGS+=	${${ACTIVE_CC} == "gcc":? -std=gnu99 :}
 CFLAGS+=	${${ACTIVE_CC} == "pcc":? -std=gnu99 :}
@@ -109,9 +109,9 @@ CWARNFLAGS+=	${CWARNFLAGS.${ACTIVE_CC}}
 
 CPPFLAGS+=	${AUDIT:D-D__AUDIT__}
 _NOWERROR=	${defined(NOGCCERROR) || (${ACTIVE_CC} == "clang" && defined(NOCLANGERROR)):?yes:no}
-.if defined(__MINIX) && ${USE_BITCODE:Uno} == "yes"
+.if defined(__UBIX) && ${USE_BITCODE:Uno} == "yes"
 _NOWERROR=	yes
-.endif # defined(__MINIX) && ${USE_BITCODE} == "yes"
+.endif # defined(__UBIX) && ${USE_BITCODE} == "yes"
 CFLAGS+=	${${_NOWERROR} == "no" :?-Werror:} ${CWARNFLAGS}
 LINTFLAGS+=	${DESTDIR:D-d ${DESTDIR}/usr/include}
 
@@ -282,4 +282,4 @@ OBJCOPYLIBFLAGS_EXTRA=-w -K '[$$][adt]' -K '[$$][adt]\.*'
 .endif
 OBJCOPYLIBFLAGS?=${"${.TARGET:M*.po}" != "":?-X:-x} ${OBJCOPYLIBFLAGS_EXTRA}
 
-.endif	# !defined(_BSD_SYS_MK_)
+.endif	# !defined(_UBIX_SYS_MK_)

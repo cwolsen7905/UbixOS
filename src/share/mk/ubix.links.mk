@@ -1,4 +1,4 @@
-#	$NetBSD: ubix.links.mk,v 1.34 2009/04/10 16:16:12 apb Exp $
+#	$UBIXBSD: ubix.links.mk,v 1.34 2009/04/10 16:16:12 apb Exp $
 
 .include <ubix.init.mk>
 

@@ -1,13 +1,11 @@
 # This variable should be used to differentiate Minix builds in Makefiles.
-__MINIX=	yes
+__UBIX=	yes
 
-.if !defined(__MINIX)
-unix?=		We run NetBSD.
-
+.if !defined(__UBIX)
+unix?=		We run BSD
 .SUFFIXES: .a .o .ln .s .S .c .cc .cpp .cxx .C .f .F .r .p .l .y .sh
 .else
-unix?=		We run MINIX.
-
+unix?=		We run UBIX.
 .SUFFIXES: .a .o .bc .ln .s .S .c .cc .cpp .cxx .C .f .F .r .p .l .y .sh
 
 .if ${MKSMALL:U} == "yes"
@@ -16,7 +14,7 @@ DBG=	-Os
 .endif
 
 .if ${MKMAGIC:Uno} == "yes" || ${MKASR:Uno} == "yes"
-CPPFLAGS+= -D_MINIX_MAGIC=1
+CPPFLAGS+= -D_UBIX_MAGIC=1
 STRIPFLAG= -s
 DBG=-g
 .endif
@@ -29,7 +27,7 @@ CC?=	cc
 .if exists(/usr/pkg/bin/gcc) || exists(/usr/bin/gcc)
 CC?=	gcc
 .endif
-.endif # defined(__MINIX)
+.endif # defined(__UBIX)
 
 .LIBS:		.a
 
@@ -61,11 +59,11 @@ DBG?=	-O1 -fgcse -fstrength-reduce -fgcse-after-reload
 .else
 DBG?=	-O2
 .endif
-.if !defined(__MINIX)
+.if !defined(__UBIX)
 CFLAGS?=	${DBG}
 .else
 CFLAGS+=	${DBG}
-.endif # !defined(__MINIX)
+.endif # !defined(__UBIX)
 LDFLAGS?=
 COMPILE.c?=	${CC} ${CFLAGS} ${CPPFLAGS} -c
 LINK.c?=	${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS}
@@ -79,7 +77,7 @@ CXXFLAGS?=	${CFLAGS:N-Wno-traditional:N-Wstrict-prototypes:N-Wmissing-prototypes
 
 __ALLSRC1=	${empty(DESTDIR):?${.ALLSRC}:${.ALLSRC:S|^${DESTDIR}|^destdir|}}
 __ALLSRC2=	${empty(MAKEOBJDIR):?${__ALLSRC1}:${__ALLSRC1:S|^${MAKEOBJDIR}|^obj|}}
-__ALLSRC3=	${empty(NETBSDSRCDIR):?${__ALLSRC2}:${__ALLSRC2:S|^${NETBSDSRCDIR}|^src|}}
+__ALLSRC3=	${empty(UBIXBSDSRCDIR):?${__ALLSRC2}:${__ALLSRC2:S|^${UBIXBSDSRCDIR}|^src|}}
 __BUILDSEED=	${BUILDSEED}/${__ALLSRC3:O}/${.TARGET}
 _CXXSEED?=	${BUILDSEED:D-frandom-seed=${__BUILDSEED:hash}}
 

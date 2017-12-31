@@ -1,4 +1,4 @@
-#	$NetBSD: ubix.inc.mk,v 1.32 2006/03/16 18:43:34 jwise Exp $
+#	$UBIXBSD: ubix.inc.mk,v 1.32 2006/03/16 18:43:34 jwise Exp $
 
 .include <ubix.init.mk>
 

@@ -1,7 +1,7 @@
-#	$NetBSD: bsd.shlib.mk,v 1.8 2012/08/23 21:21:17 joerg Exp $
+#	$UBIXBSD: bsd.shlib.mk,v 1.8 2012/08/23 21:21:17 joerg Exp $
 
-.if !defined(_BSD_SHLIB_MK_)
-_BSD_SHLIB_MK_=1
+.if !defined(_UBIX_SHLIB_MK_)
+_UBIX_SHLIB_MK_=1
 
 .if ${MKDYNAMICROOT} == "no"
 SHLIBINSTALLDIR?= /usr/lib
@@ -37,4 +37,4 @@ SHLINKDIR?=	/usr/libexec
 SHLINKDIR?=	/libexec
 .endif
 
-.endif	# !defined(_BSD_SHLIB_MK_)
+.endif	# !defined(_UBIX_SHLIB_MK_)

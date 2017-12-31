@@ -1,7 +1,7 @@
-#	$NetBSD: ubix.files.mk,v 1.43 2013/04/06 15:39:19 uebayasi Exp $
+#	$UBIXBSD: ubix.files.mk,v 1.43 2013/04/06 15:39:19 uebayasi Exp $
 
-.if !defined(_BSD_FILES_MK_)
-_BSD_FILES_MK_=1
+.if !defined(_UBIX_FILES_MK_)
+_UBIX_FILES_MK_=1
 
 .include <ubix.init.mk>
 
@@ -159,4 +159,4 @@ CLEANFILES+= ${CLEANUUDECODE_FILES}
 .include <ubix.sys.mk>
 .include <ubix.clean.mk>
 
-.endif	# !defined(_BSD_FILES_MK_)
+.endif	# !defined(_UBIX_FILES_MK_)

@@ -1,4 +1,4 @@
-# $NetBSD: ubix.clean.mk,v 1.8 2012/11/19 16:04:54 apb Exp $
+# $UBIXBSD: ubix.clean.mk,v 1.8 2012/11/19 16:04:54 apb Exp $
 
 # <ubix.clean.mk>
 #
@@ -26,8 +26,8 @@
 # delete a directory as part of "make clean" or "make cleandir" then you
 # need to provide your own target.
 
-.if !defined(_BSD_CLEAN_MK_)
-_BSD_CLEAN_MK_=1
+.if !defined(_UBIX_CLEAN_MK_)
+_UBIX_CLEAN_MK_=1
 
 .include <ubix.init.mk>
 
@@ -88,4 +88,4 @@ __cleanuse: .USE
 .MAKE.DEPENDFILE := .depend.no-such-file
 .endif
 
-.endif	# !defined(_BSD_CLEAN_MK)
+.endif	# !defined(_UBIX_CLEAN_MK)

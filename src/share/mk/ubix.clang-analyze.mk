@@ -1,5 +1,3 @@
-# $NetBSD: bsd.clang-analyze.mk,v 1.3 2012/04/04 10:37:18 joerg Exp $
-
 .ifndef CLANG_ANALYZE_SRCS
 
 CLANG_ANALYZE_FLAGS+=	--analyze

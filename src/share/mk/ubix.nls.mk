@@ -1,4 +1,4 @@
-#	$NetBSD: ubix.nls.mk,v 1.47 2011/09/10 16:57:35 apb Exp $
+#	$UBIXBSD: ubix.nls.mk,v 1.47 2011/09/10 16:57:35 apb Exp $
 
 .include <ubix.init.mk>
 
