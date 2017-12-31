@@ -1,37 +1,19 @@
-# $Id: Makefile 141 2016-01-17 02:05:18Z reddawg $
-# The System Makefile (C) 2002 The UbixOS Project
+.include <ubix.own.mk>
 
-# Include Global 'Source' Options
-include ../../Makefile.incl
-include ../Makefile.incl
+CSU_MACHINE_ARCH?=      ${MACHINE_ARCH}
+CSU_MACHINE_CPU?=       ${MACHINE_CPU}
 
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-uninitialized -O2 -fno-strict-aliasing -pipe -Wsystem-headers -Werror -Wall -Wno-format-y2k -W -Wno-unused-parameter -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wshadow -Wcast-align -Wunused-parameter -Wchar-subscripts -Winline -Wnested-externs -Wredundant-decls #-DGCRT
+.if !empty(CSU_MACHINE_ARCH:Mearm*)
+ARCHDIR:=       ${.CURDIR}/arch/earm
+.elif exists(${.CURDIR}/arch/${CSU_MACHINE_ARCH}/Makefile.incl)
+ARCHDIR:=       ${.CURDIR}/arch/${CSU_MACHINE_ARCH}
+.elif exists(${.CURDIR}/arch/${CSU_MACHINE_CPU}/Makefile.incl)
+ARCHDIR:=       ${.CURDIR}/arch/${CSU_MACHINE_CPU}
+.else
+.error Architecture (${CSU_MACHINE_ARCH} or ${CSU_MACHINE_CPU}) unsupported
+.endif
 
-INCLUDES+= -I../libc/include
-# -I../../include.new
 
-#Objects
-OBJS = crtn.o crti.o crt1.o crtbrand.o
-
-all: $(OBJS)
-
-# Compile the source files
-.cc.o:
-	$(CXX) $(CFLAGS) -Wall -nostdlib -O $(INCLUDES) -c -o $@ $<
- 
-.cc.s:
-	$(CXX) $(CFLAGS) -Wall -nostdlib -O $(INCLUDES) -S -o $@ $<
- 
-.c.o:
-	$(CC) $(CFLAGS) -Wall -nostdlib -O $(INCLUDES) -c $<
-
-.c.s:
-	$(CC) $(CFLAGS) -Wall -nostdlib -O $(INCLUDES) -S -o $@ $<
- 
-.S.o:
-	$(CC) $(CFLAGS) -Wall -nostdlib -c -o $@ $<
- 
-# Clean up the junk
-clean:
-	$(REMOVE) $(OBJS)
-
+.PATH:  ${ARCHDIR}
+.include "${ARCHDIR}/Makefile.incl"
+.include "${.CURDIR}/common/Makefile.incl"
