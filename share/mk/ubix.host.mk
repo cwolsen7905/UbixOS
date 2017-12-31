@@ -1,18 +1,18 @@
 .if !defined(_UBIX_HOST_MK_)
 _UBIX_HOST_MK_=1
 
-.if ${HOST_OSTYPE:C/\-.*//:U} == "Minix"
+.if ${HOST_OSTYPE:C/\-.*//:U} == "Ubix"
 HOST_LDFLAGS?=	-static
 
 #LSC: Be a bit smarter about the default compiler
-.if exists(/usr/pkg/bin/clang) || exists(/usr/bin/clang)
-HOST_CC?=   clang
+.if exists(/usr/pkg/bin/cc) || exists(/usr/bin/cc)
+HOST_CC?=   cc
 .endif
 
 .if exists(/usr/pkg/bin/gcc) || exists(/usr/bin/gcc)
 HOST_CC?=   gcc
 .endif
-.endif # ${HOST_OSTYPE:C/\-.*//:U} == "Minix"
+.endif # ${HOST_OSTYPE:C/\-.*//:U} == "Ubix"
 
 # Helpers for cross-compiling
 HOST_CC?=	cc

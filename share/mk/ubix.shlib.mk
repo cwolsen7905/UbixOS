@@ -4,17 +4,17 @@
 _UBIX_SHLIB_MK_=1
 
 .if ${MKDYNAMICROOT} == "no"
-SHLIBINSTALLDIR?= /usr/lib
+SHLIBINSTALLDIR?= /ubixos/usr/lib
 .else
-SHLIBINSTALLDIR?= /lib
+SHLIBINSTALLDIR?= /ubixos/lib
 .endif
 
 .if ${MKDYNAMICROOT} == "no" || \
     (${BINDIR:Ux} != "/bin" && ${BINDIR:Ux} != "/sbin" && \
      ${BINDIR:Ux} != "/libexec" && ${USE_SHLIBDIR:Uno} == "no")
-SHLIBDIR?=	/usr/lib
+SHLIBDIR?=	/ubixos/usr/lib
 .else
-SHLIBDIR?=	/lib
+SHLIBDIR?=	/ubixos/lib
 .endif
 
 .if ${USE_SHLIBDIR:Uno} != "no"
@@ -24,17 +24,17 @@ _LIBSODIR?=	${LIBDIR}
 .endif
 
 .if ${MKDYNAMICROOT} == "no"
-SHLINKINSTALLDIR?= /usr/libexec
+SHLINKINSTALLDIR?= /ubixos/usr/libexec
 .else
-SHLINKINSTALLDIR?= /libexec
+SHLINKINSTALLDIR?= /ubixos/libexec
 .endif
 
 .if ${MKDYNAMICROOT} == "no" || \
     (${BINDIR:Ux} != "/bin" && ${BINDIR:Ux} != "/sbin" && \
      ${BINDIR:Ux} != "/libexec")
-SHLINKDIR?=	/usr/libexec
+SHLINKDIR?=	/ubixos/usr/libexec
 .else
-SHLINKDIR?=	/libexec
+SHLINKDIR?=	/ubixos/libexec
 .endif
 
 .endif	# !defined(_UBIX_SHLIB_MK_)

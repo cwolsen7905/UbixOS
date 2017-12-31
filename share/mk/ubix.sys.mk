@@ -25,18 +25,18 @@ MKDEPCXX?= CC=${CXX:Q} mkdep
 .endif # defined(__UBIX)
 
 .if ${MKREPRO:Uno} == "yes"
-CPPFLAGS+=	-Wp,-iremap,${UBIXBSDSRCDIR}:/usr/src
+CPPFLAGS+=	-Wp,-iremap,${UBIXSRCDIR}:/usr/src
 CPPFLAGS+=	-Wp,-iremap,${DESTDIR}/:/
 CPPFLAGS+=	-Wp,-iremap,${X11SRCDIR}:/usr/xsrc
 .endif
 
 # UBIXBSD sources use C99 style, with some GCC extensions.
-CFLAGS+=	${${ACTIVE_CC} == "clang":? -std=gnu99 :}
+CFLAGS+=	${${ACTIVE_CC} == "cc":? -std=gnu99 :}
 CFLAGS+=	${${ACTIVE_CC} == "gcc":? -std=gnu99 :}
 CFLAGS+=	${${ACTIVE_CC} == "pcc":? -std=gnu99 :}
 
 .if defined(WARNS)
-CFLAGS+=	${${ACTIVE_CC} == "clang":? -Wno-sign-compare -Wno-pointer-sign :}
+CFLAGS+=	${${ACTIVE_CC} == "cc":? -Wno-sign-compare -Wno-pointer-sign :}
 .if ${WARNS} > 0
 CFLAGS+=	-Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith
 #CFLAGS+=	-Wmissing-declarations -Wredundant-decls -Wnested-externs
@@ -69,7 +69,7 @@ CFLAGS+=	-Wreturn-type -Wswitch -Wshadow
 .if ${WARNS} > 2
 CFLAGS+=	-Wcast-qual -Wwrite-strings
 CFLAGS+=	-Wextra -Wno-unused-parameter
-# Readd -Wno-sign-compare to override -Wextra with clang
+# Readd -Wno-sign-compare to override -Wextra with cc
 CFLAGS+=	-Wno-sign-compare
 CXXFLAGS+=	-Wabi
 CXXFLAGS+=	-Wold-style-cast
@@ -88,7 +88,7 @@ CFLAGS+=	-Wsign-compare -Wformat=2
 CFLAGS+=	${${ACTIVE_CC} == "gcc":? -Wno-format-zero-length :}
 .endif
 .if ${WARNS} > 3 && defined(HAVE_LLVM)
-CFLAGS+=	${${ACTIVE_CC} == "clang":? -Wpointer-sign -Wmissing-noreturn :}
+CFLAGS+=	${${ACTIVE_CC} == "cc":? -Wpointer-sign -Wmissing-noreturn :}
 .endif
 .if (defined(HAVE_GCC) \
      && (${MACHINE_ARCH} == "coldfire" || \
@@ -108,7 +108,7 @@ CFLAGS+=	-Wno-maybe-uninitialized
 CWARNFLAGS+=	${CWARNFLAGS.${ACTIVE_CC}}
 
 CPPFLAGS+=	${AUDIT:D-D__AUDIT__}
-_NOWERROR=	${defined(NOGCCERROR) || (${ACTIVE_CC} == "clang" && defined(NOCLANGERROR)):?yes:no}
+_NOWERROR=	${defined(NOGCCERROR) || (${ACTIVE_CC} == "cc" && defined(NOCLANGERROR)):?yes:no}
 .if defined(__UBIX) && ${USE_BITCODE:Uno} == "yes"
 _NOWERROR=	yes
 .endif # defined(__UBIX) && ${USE_BITCODE} == "yes"
@@ -134,7 +134,7 @@ COPTS+=	-fstack-protector -Wstack-protector
 COPTS+=	-Wno-error=stack-protector 
 .endif
 
-COPTS+=	${${ACTIVE_CC} == "clang":? --param ssp-buffer-size=1 :}
+COPTS+=	${${ACTIVE_CC} == "cc":? --param ssp-buffer-size=1 :}
 COPTS+=	${${ACTIVE_CC} == "gcc":? --param ssp-buffer-size=1 :}
 .endif
 

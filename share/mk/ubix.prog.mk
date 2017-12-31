@@ -327,13 +327,13 @@ CPPFLAGS+=	-DRESCUEDIR=\"${RESCUEDIR}\"
 .endif
 
 _PROGLDOPTS=
-.if ${SHLINKDIR} != "/usr/libexec"	# XXX: change or remove if ld.so moves
+.if ${SHLINKDIR} != "/ubixos/usr/libexec"	# XXX: change or remove if ld.so moves
 _PROGLDOPTS+=	-Wl,-dynamic-linker=${_SHLINKER}
 .endif
-.if ${SHLIBDIR} != "/usr/lib"
+.if ${SHLIBDIR} != "/ubixos/usr/lib"
 _PROGLDOPTS+=	-Wl,-rpath,${SHLIBDIR} \
 		-L=${SHLIBDIR}
-.elif ${SHLIBINSTALLDIR} != "/usr/lib"
+.elif ${SHLIBINSTALLDIR} != "/ubixos/usr/lib"
 _PROGLDOPTS+=	-Wl,-rpath-link,${DESTDIR}${SHLIBINSTALLDIR} \
 		-L=${SHLIBINSTALLDIR}
 .endif
@@ -778,7 +778,7 @@ LINKSMODE?= ${BINMODE}
 .include <ubix.links.mk>
 .include <ubix.sys.mk>
 .include <ubix.dep.mk>
-.include <ubix.clang-analyze.mk>
+.include <ubix.cc-analyze.mk>
 .include <ubix.clean.mk>
 
 ${TARGETS}:	# ensure existence

@@ -18,7 +18,7 @@ MANDIR?=	/usr/man
 
 MKKYUA?=	yes
 MKMCLINKER?=	no
-MKCLANGRT?=	no
+MKCCRT?=	no
 MKGCC?=		no
 MKGCCCMDS?=	no
 MKPROFILE?=	no
@@ -156,7 +156,7 @@ MKLLVM?=	yes
 
 .if ${MKLLVM:Uno} == "yes"
 HAVE_LLVM?=	yes
-MKBINUTILS?=	yes # We are installing clang, so trigger binutils.
+MKBINUTILS?=	yes # We are installing cc, so trigger binutils.
 .endif # ${MKLLVM:Uno} == "yes"
 
 .if ${HAVE_LLVM:Dyes} == "yes"
@@ -404,12 +404,12 @@ TOOL_CXX.gcc=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-c++
 TOOL_FC.gcc=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-g77
 TOOL_OBJC.gcc=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-gcc
 
-TOOL_CC.clang=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-clang
-TOOL_CPP.clang=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-clang-cpp
-TOOL_CXX.clang=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-clang++
-TOOL_OBJC.clang=	${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-clang
-TOOL_OPT.clang=		${EXTERNAL_TOOLCHAIN}/bin/opt
-TOOL_LLC.clang=		${EXTERNAL_TOOLCHAIN}/bin/llc
+TOOL_CC.cc=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-cc
+TOOL_CPP.cc=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-cc-cpp
+TOOL_CXX.cc=		${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-cc++
+TOOL_OBJC.cc=	${EXTERNAL_TOOLCHAIN}/bin/${MACHINE_GNU_PLATFORM}-cc
+TOOL_OPT.cc=		${EXTERNAL_TOOLCHAIN}/bin/opt
+TOOL_LLC.cc=		${EXTERNAL_TOOLCHAIN}/bin/llc
 .else									# } {
 # Define default locations for common tools.
 .if ${USETOOLS_BINUTILS:Uyes} == "yes"					#  {
@@ -434,12 +434,12 @@ TOOL_OBJC.gcc=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-gcc
 .endif									#  }
 
 # Clang supports C, C++ and Objective C
-TOOL_CC.clang=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-clang
-TOOL_CPP.clang=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-clang-cpp
-TOOL_CXX.clang=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-clang++
-TOOL_OBJC.clang=	${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-clang
-TOOL_OPT.clang=		${TOOLDIR}/bin/opt
-TOOL_LLC.clang=		${TOOLDIR}/bin/llc
+TOOL_CC.cc=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-cc
+TOOL_CPP.cc=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-cc-cpp
+TOOL_CXX.cc=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-cc++
+TOOL_OBJC.cc=	${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-cc
+TOOL_OPT.cc=		${TOOLDIR}/bin/opt
+TOOL_LLC.cc=		${TOOLDIR}/bin/llc
 
 # PCC supports C and Fortran
 TOOL_CC.pcc=		${TOOLDIR}/bin/${MACHINE_GNU_PLATFORM}-pcc
@@ -485,7 +485,7 @@ TOOL_AWK=		${TOOLDIR}/bin/${_TOOL_PREFIX}awk
 TOOL_CAP_MKDB=		${TOOLDIR}/bin/${_TOOL_PREFIX}cap_mkdb
 TOOL_CAT=		${TOOLDIR}/bin/${_TOOL_PREFIX}cat
 TOOL_CKSUM=		${TOOLDIR}/bin/${_TOOL_PREFIX}cksum
-TOOL_CLANG_TBLGEN=		${TOOLDIR}/bin/${_TOOL_PREFIX}clang-tblgen
+TOOL_CC_TBLGEN=		${TOOLDIR}/bin/${_TOOL_PREFIX}cc-tblgen
 TOOL_COMPILE_ET=	${TOOLDIR}/bin/${_TOOL_PREFIX}compile_et
 TOOL_CONFIG=		${TOOLDIR}/bin/${_TOOL_PREFIX}config
 TOOL_CRUNCHGEN=		MAKE=${.MAKE:Q} ${TOOLDIR}/bin/${_TOOL_PREFIX}crunchgen
@@ -570,16 +570,16 @@ TOOL_ZIC=		${TOOLDIR}/bin/${_TOOL_PREFIX}zic
 .else	# USETOOLS != yes						# } {
 
 # Clang supports C, C++ and Objective C
-TOOL_CC.clang=		clang
+TOOL_CC.cc=		cc
 .if defined(__UBIX)
-TOOL_CPP.clang=		clang -E
+TOOL_CPP.cc=		cc -E
 .else
-TOOL_CPP.clang=		clang-cpp
+TOOL_CPP.cc=		cc-cpp
 .endif # defined(__UBIX)
-TOOL_CXX.clang=		clang++
-TOOL_OBJC.clang=	clang
-TOOL_OPT.clang=		opt
-TOOL_LLC.clang=		llc
+TOOL_CXX.cc=		cc++
+TOOL_OBJC.cc=	cc
+TOOL_OPT.cc=		opt
+TOOL_LLC.cc=		llc
 
 # GCC supports C, C++, Fortran and Objective C
 TOOL_CC.gcc=	gcc
@@ -604,13 +604,13 @@ TOOL_CKSUM=		cksum
 .if defined(__UBIX)
 # LSC: A full path has to be provided, as this is also used as a make
 #      target.
-.  if  exists(/usr/pkg/bin/clang-tblgen)
-TOOL_CLANG_TBLGEN=	/usr/pkg/bin/clang-tblgen
+.  if  exists(/usr/pkg/bin/cc-tblgen)
+TOOL_CC_TBLGEN=	/usr/pkg/bin/cc-tblgen
 .  else
-TOOL_CLANG_TBLGEN=	/usr/bin/clang-tblgen
-.  endif # exists(/usr/pkg/bin/clang-tblgen)
+TOOL_CC_TBLGEN=	/usr/bin/cc-tblgen
+.  endif # exists(/usr/pkg/bin/cc-tblgen)
 .else
-TOOL_CLANG_TBLGEN=	clang-tblgen
+TOOL_CC_TBLGEN=	cc-tblgen
 .endif # defined(__UBIX)
 TOOL_COMPILE_ET=	compile_et
 TOOL_CONFIG=		config
@@ -735,7 +735,7 @@ TOOL_OBJC.false=	false
 TOOL_OPT.false=		false
 TOOL_LLC.false=		false
 
-AVAILABLE_COMPILER?=	${HAVE_PCC:Dpcc} ${HAVE_LLVM:Dclang} ${HAVE_GCC:Dgcc} ${EXTERNAL_TOOLCHAIN:Dgcc} false
+AVAILABLE_COMPILER?=	${HAVE_PCC:Dpcc} ${HAVE_LLVM:Dcc} ${HAVE_GCC:Dgcc} ${EXTERNAL_TOOLCHAIN:Dgcc} false
 
 .for _t in CC CPP CXX FC OBJC OPT LLC
 ACTIVE_${_t}=	${AVAILABLE_COMPILER:@.c.@ ${ !defined(UNSUPPORTED_COMPILER.${.c.}) && defined(TOOL_${_t}.${.c.}) :? ${.c.} : }@:[1]}
@@ -1093,10 +1093,10 @@ MACHINE_GNU_PLATFORM:=${MACHINE_GNU_ARCH}-elf32-minix
 # Flags to pass to CC for using the old APCS ABI on ARM for compat or stand.
 ARM_APCS_FLAGS=	-mabi=apcs-gnu -mfloat-abi=soft
 ARM_APCS_FLAGS+=${${ACTIVE_CC} == "gcc":? -marm :}
-ARM_APCS_FLAGS+=${${ACTIVE_CC} == "clang":? -target ${MACHINE_GNU_ARCH}--netubixelf -B ${TOOLDIR}/${MACHINE_GNU_PLATFORM}/bin :}
+ARM_APCS_FLAGS+=${${ACTIVE_CC} == "cc":? -target ${MACHINE_GNU_ARCH}--netubixelf -B ${TOOLDIR}/${MACHINE_GNU_PLATFORM}/bin :}
 .endif
 
-GENASSYM_CPPFLAGS+=	${${ACTIVE_CC} == "clang":? -no-integrated-as :}
+GENASSYM_CPPFLAGS+=	${${ACTIVE_CC} == "cc":? -no-integrated-as :}
 
 TARGETS+=	all clean cleandir depend dependall includes \
 		install lint obj regress tags html analyze

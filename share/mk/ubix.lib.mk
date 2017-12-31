@@ -1,11 +1,11 @@
-#	$UBIXBSD: bsd.lib.mk,v 1.362 2015/09/08 16:06:42 uebayasi Exp $
-#	@(#)bsd.lib.mk	8.3 (Berkeley) 4/22/94
+#	$UBIXBSD: ubix.lib.mk,v 1.362 2015/09/08 16:06:42 uebayasi Exp $
+#	@(#)ubix.lib.mk	8.3 (Berkeley) 4/22/94
 
-.include <bsd.init.mk>
-.include <bsd.shlib.mk>
-.include <bsd.gcc.mk>
-# Pull in <bsd.sys.mk> here so we can override its .c.o rule
-.include <bsd.sys.mk>
+.include <ubix.init.mk>
+.include <ubix.shlib.mk>
+.include <ubix.gcc.mk>
+# Pull in <ubix.sys.mk> here so we can override its .c.o rule
+.include <ubix.sys.mk>
 
 LIBISMODULE?=	no
 LIBISPRIVATE?=	no
@@ -75,11 +75,11 @@ DPADD+=	${SHLIB_VERSION_FILE}
 
 # Check for higher installed library versions.
 .if !defined(NOCHECKVER) && !defined(NOCHECKVER_${LIB}) && \
-	exists(${UBIXBSDSRCDIR}/lib/checkver)
+	exists(${UBIXSRCDIR}/lib/checkver)
 checkver:
 	@(cd "${.CURDIR}" && \
 	    HOST_SH=${HOST_SH:Q} AWK=${TOOL_AWK:Q} \
-	    ${HOST_SH} ${UBIXBSDSRCDIR}/lib/checkver -v ${SHLIB_VERSION_FILE} \
+	    ${HOST_SH} ${UBIXSRCDIR}/lib/checkver -v ${SHLIB_VERSION_FILE} \
 		    -d ${_DEST.OBJ} ${LIB})
 .endif
 .endif									# }
@@ -212,7 +212,7 @@ SHLIB_SHFLAGS+= -L ${DESTDIR}/usr/lib
 SHLIB_SHFLAGS+= -Wl,-plugin=${GOLD_PLUGIN} \
 		-Wl,-plugin-opt=-disable-opt
 
-SECTIONIFYPASS?=${UBIXBSDSRCDIR}/minix/llvm/bin/sectionify.so
+SECTIONIFYPASS?=${UBIXSRCDIR}/minix/llvm/bin/sectionify.so
 # dcvmoole: the following construction is a hack for libmagicrt.  For reasons
 # not entirely under our control, clang refuses to take .bc objects even when
 # using the gold linker, saying that LLVM IR code cannot be linked.  In order
@@ -674,7 +674,7 @@ LDADD+= ${${ACTIVE_CC} == "gcc":? -lgcc_eh:}
 .if ${LIBISCXX} != "no"
 LIBCC:=	${CXX}
 . if ${MKLIBCXX} == "yes"
-LIBDPLIBS+=     c++	${.CURDIR}/../../../../../external/bsd/libc++/lib
+LIBDPLIBS+=     c++	${.CURDIR}/../../../../../external/ubix/libc++/lib
 . else
 LIBDPLIBS+=     stdc++	${.CURDIR}/../../../../../external/gpl3/${EXTERNAL_GCC_SUBDIR}/lib/libstdc++-v3
 . endif
@@ -745,12 +745,12 @@ lint: ${LOBJS}
 
 
 # If the number of entries in CLEANFILES is too large, then the
-# commands in bsd.clean.mk encounter errors like "exec(/bin/sh)
+# commands in ubix.clean.mk encounter errors like "exec(/bin/sh)
 # failed (Argument list too long)".  Avoid that by splitting the
 # files to clean into several lists using different variable names.
-# __cleanuse is an internal target in bsd.clean.mk; the way we
+# __cleanuse is an internal target in ubix.clean.mk; the way we
 # use it here mimics the way it's used by the clean target in
-# bsd.clean.mk.
+# ubix.clean.mk.
 #
 clean: libclean1 libclean2 libclean3 libclean4 libclean5
 libclean1: .PHONY .MADE __cleanuse LIBCLEANFILES1
@@ -956,13 +956,13 @@ ${_DEST.LINT}/${_LIB.ln}: ${_LIB.ln}
 LINKSOWN?= ${LIBOWN}
 LINKSGRP?= ${LIBGRP}
 LINKSMODE?= ${LIBMODE}
-.include <bsd.man.mk>
-.include <bsd.nls.mk>
-.include <bsd.files.mk>
-.include <bsd.inc.mk>
-.include <bsd.links.mk>
-.include <bsd.dep.mk>
-.include <bsd.clang-analyze.mk>
-.include <bsd.clean.mk>
+.include <ubix.man.mk>
+.include <ubix.nls.mk>
+.include <ubix.files.mk>
+.include <ubix.inc.mk>
+.include <ubix.links.mk>
+.include <ubix.dep.mk>
+.include <ubix.clang-analyze.mk>
+.include <ubix.clean.mk>
 
 ${TARGETS}:	# ensure existence
