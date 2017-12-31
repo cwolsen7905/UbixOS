@@ -87,6 +87,8 @@ int main(int argc,char **argv) {
   startup:
   i = fork();
 
+    printf("FORKED: %i!\n", i);
+
   if (0 == i) {
     printf("Starting Login Daemon.\n");
     execve("sys:/bin/login",0x0,0x0);
