@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,19 +31,23 @@
 static char sccsid[] = "@(#)recv.c	8.2 (Berkeley) 2/21/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/recv.c 288045 2015-09-20 21:21:01Z rodrigc $");
 
-#include "namespace.h"
 #include <sys/types.h>
 #include <sys/socket.h>
+#include "libc_private.h"
 
 #include <stddef.h>
-#include "un-namespace.h"
 
 ssize_t
-recv(s, buf, len, flags)
-	int s, flags;
-	size_t len;
-	void *buf;
+recv(int s, void *buf, size_t len, int flags)
 {
-	return (_recvfrom(s, buf, len, flags, NULL, 0));
+	/*
+	 * POSIX says recv() shall be a cancellation point, so call the
+	 * cancellation-enabled recvfrom() and not _recvfrom().
+	 */
+	return (((ssize_t (*)(int, void *, size_t, int,
+	    struct sockaddr *, socklen_t *))
+	    __libc_interposing[INTERPOS_recvfrom])(s, buf, len, flags,
+	   NULL, NULL));
 }

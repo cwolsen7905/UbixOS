@@ -14,10 +14,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -39,7 +35,7 @@
 static char sccsid[] = "@(#)setlocale.c	8.1 (Berkeley) 7/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/setlocale.c,v 1.50 2004/01/31 19:15:32 ache Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/setlocale.c 288037 2015-09-20 20:50:18Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -61,7 +57,7 @@ __FBSDID("$FreeBSD: src/lib/libc/locale/setlocale.c,v 1.50 2004/01/31 19:15:32 a
 /*
  * Category names for getenv()
  */
-static char *categories[_LC_LAST] = {
+static const char categories[_LC_LAST][12] = {
     "LC_ALL",
     "LC_COLLATE",
     "LC_CTYPE",
@@ -99,12 +95,10 @@ static char current_locale_string[_LC_LAST * (ENCODING_LEN + 1/*"/"*/ + 1)];
 
 static char	*currentlocale(void);
 static char	*loadlocale(int);
-static const char *__get_locale_env(int);
+const char *__get_locale_env(int);
 
 char *
-setlocale(category, locale)
-	int category;
-	const char *locale;
+setlocale(int category, const char *locale)
 {
 	int i, j, len, saverr;
         const char *env, *r;
@@ -213,7 +207,7 @@ setlocale(category, locale)
 }
 
 static char *
-currentlocale()
+currentlocale(void)
 {
 	int i;
 
@@ -232,8 +226,7 @@ currentlocale()
 }
 
 static char *
-loadlocale(category)
-	int category;
+loadlocale(int category)
 {
 	char *new = new_categories[category];
 	char *old = current_categories[category];
@@ -282,15 +275,15 @@ loadlocale(category)
 
 	if (func(new) != _LDP_ERROR) {
 		(void)strcpy(old, new);
+		(void)strcpy(__xlocale_global_locale.components[category-1]->locale, new);
 		return (old);
 	}
 
 	return (NULL);
 }
 
-static const char *
-__get_locale_env(category)
-        int category;
+const char *
+__get_locale_env(int category)
 {
         const char *env;
 

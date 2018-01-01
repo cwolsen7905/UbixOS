@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/uuid/uuid_equal.c,v 1.3 2005/01/03 02:56:15 marcel Exp $
+ * $FreeBSD: releng/11.1/lib/libc/uuid/uuid_equal.c 139601 2005-01-03 02:56:15Z marcel $
  */
 
 #include <string.h>

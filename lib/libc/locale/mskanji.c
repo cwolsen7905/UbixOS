@@ -1,10 +1,17 @@
 /*
+ * Copyright 2013 Garrett D'Amore <garrett@damore.org>
+ * Copyright 2010 Nexenta Systems, Inc.  All rights reserved.
  * Copyright (c) 2002-2004 Tim J. Robbins. All rights reserved.
  *
  *    ja_JP.SJIS locale table for BSD4.4/rune
  *    version 1.0
  *    (C) Sin'ichiro MIYATANI / Phase One, Inc
  *    May 12, 1995
+ *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,21 +30,21 @@
  * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE  
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL  
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS  
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)  
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT  
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY  
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF  
- * SUCH DAMAGE.  
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
  */  
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)mskanji.c	1.0 (Phase One) 5/5/95";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/mskanji.c,v 1.17 2005/02/27 15:11:09 phantom Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/mskanji.c 297557 2016-04-04 15:56:14Z ache $");
 
 #include <sys/types.h>
 #include <errno.h>
@@ -47,10 +54,18 @@ __FBSDID("$FreeBSD: src/lib/libc/locale/mskanji.c,v 1.17 2005/02/27 15:11:09 pha
 #include <wchar.h>
 #include "mblocal.h"
 
+extern int __mb_sb_limit;
+
 static size_t	_MSKanji_mbrtowc(wchar_t * __restrict, const char * __restrict,
 		    size_t, mbstate_t * __restrict);
 static int	_MSKanji_mbsinit(const mbstate_t *);
 static size_t	_MSKanji_wcrtomb(char * __restrict, wchar_t,
+		    mbstate_t * __restrict);
+static size_t	_MSKanji_mbsnrtowcs(wchar_t * __restrict,
+		    const char ** __restrict, size_t, size_t,
+		    mbstate_t * __restrict);
+static size_t	_MSKanji_wcsnrtombs(char * __restrict,
+		    const wchar_t ** __restrict, size_t, size_t,
 		    mbstate_t * __restrict);
 
 typedef struct {
@@ -58,14 +73,17 @@ typedef struct {
 } _MSKanjiState;
 
 int
-_MSKanji_init(_RuneLocale *rl)
+_MSKanji_init(struct xlocale_ctype *l, _RuneLocale *rl)
 {
 
-	__mbrtowc = _MSKanji_mbrtowc;
-	__wcrtomb = _MSKanji_wcrtomb;
-	__mbsinit = _MSKanji_mbsinit;
-	_CurrentRuneLocale = rl;
-	__mb_cur_max = 2;
+	l->__mbrtowc = _MSKanji_mbrtowc;
+	l->__wcrtomb = _MSKanji_wcrtomb;
+	l->__mbsnrtowcs = _MSKanji_mbsnrtowcs;
+	l->__wcsnrtombs = _MSKanji_wcsnrtombs;
+	l->__mbsinit = _MSKanji_mbsinit;
+	l->runes = rl;
+	l->__mb_cur_max = 2;
+	l->__mb_sb_limit = 224;
 	return (0);
 }
 
@@ -154,4 +172,20 @@ _MSKanji_wcrtomb(char * __restrict s, wchar_t wc, mbstate_t * __restrict ps)
 	for (i = len; i-- > 0; )
 		*s++ = wc >> (i << 3);
 	return (len);
+}
+
+static size_t
+_MSKanji_mbsnrtowcs(wchar_t * __restrict dst,
+    const char ** __restrict src, size_t nms,
+    size_t len, mbstate_t * __restrict ps)
+{
+	return (__mbsnrtowcs_std(dst, src, nms, len, ps, _MSKanji_mbrtowc));
+}
+
+static size_t
+_MSKanji_wcsnrtombs(char * __restrict dst,
+    const wchar_t ** __restrict src, size_t nwc,
+    size_t len, mbstate_t * __restrict ps)
+{
+	return (__wcsnrtombs_std(dst, src, nwc, len, ps, _MSKanji_wcrtomb));
 }

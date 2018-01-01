@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)signal.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/signal.c,v 1.3 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/signal.c 287292 2015-08-29 14:25:01Z kib $");
 
 /*
  * Almost backwards compatible signal.
@@ -45,12 +41,10 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/signal.c,v 1.3 2002/02/01 00:57:29 obrien E
 #include "un-namespace.h"
 #include "libc_private.h"
 
-sigset_t _sigintr;		/* shared with siginterrupt */
+sigset_t _sigintr __hidden;	/* shared with siginterrupt */
 
 sig_t
-signal(s, a)
-	int s;
-	sig_t a;
+signal(int s, sig_t a)
 {
 	struct sigaction sa, osa;
 
@@ -59,7 +53,7 @@ signal(s, a)
 	sa.sa_flags = 0;
 	if (!sigismember(&_sigintr, s))
 		sa.sa_flags |= SA_RESTART;
-	if (_sigaction(s, &sa, &osa) < 0)
+	if (__libc_sigaction(s, &sa, &osa) < 0)
 		return (SIG_ERR);
 	return (osa.sa_handler);
 }

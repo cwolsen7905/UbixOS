@@ -29,15 +29,15 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/strchr.S,v 1.9 2002/06/02 20:05:37 schweikh Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/strchr.S 258451 2013-11-21 22:31:18Z andreast $");
 
 /*
  * strchr(s, c)
- *	return a pointer to the first occurance of the character c in
+ *	return a pointer to the first occurrence of the character c in
  *	string s, or NULL if c does not occur in the string.
  *
  * %edx - pointer iterating through string
- * %eax - pointer to first occurance of 'c'
+ * %eax - pointer to first occurrence of 'c'
  * %cl  - character we're comparing against
  * %bl  - character at %edx
  *
@@ -61,3 +61,8 @@ L1:
 L2:
 	popl	%ebx
 	ret
+END(strchr)
+
+WEAK_REFERENCE(strchr, index)
+
+	.section .note.GNU-stack,"",%progbits

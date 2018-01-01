@@ -1,32 +1,31 @@
 /*	$NetBSD: svc_dg.c,v 1.4 2000/07/06 03:10:35 christos Exp $	*/
 
-/*
- * Sun RPC is a product of Sun Microsystems, Inc. and is provided for
- * unrestricted use provided that this legend is included on all tape
- * media and as a part of the software program in whole or part.  Users
- * may copy or modify Sun RPC without charge, but are not authorized
- * to license or distribute it to anyone else except as part of a product or
- * program developed by the user.
+/*-
+ * Copyright (c) 2009, Sun Microsystems, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * - Redistributions of source code must retain the above copyright notice, 
+ *   this list of conditions and the following disclaimer.
+ * - Redistributions in binary form must reproduce the above copyright notice, 
+ *   this list of conditions and the following disclaimer in the documentation 
+ *   and/or other materials provided with the distribution.
+ * - Neither the name of Sun Microsystems, Inc. nor the names of its 
+ *   contributors may be used to endorse or promote products derived 
+ *   from this software without specific prior written permission.
  * 
- * SUN RPC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE
- * WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
- * 
- * Sun RPC is provided with no support and without any obligation on the
- * part of Sun Microsystems, Inc. to assist in its use, correction,
- * modification or enhancement.
- * 
- * SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
- * INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY SUN RPC
- * OR ANY PART THEREOF.
- * 
- * In no event will Sun Microsystems, Inc. be liable for any lost revenue
- * or profits or other special, indirect and consequential damages, even if
- * Sun has been advised of the possibility of such damages.
- * 
- * Sun Microsystems, Inc.
- * 2550 Garcia Avenue
- * Mountain View, California  94043
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*
@@ -37,7 +36,7 @@
 #ident	"@(#)svc_dg.c	1.17	94/04/24 SMI"
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/rpc/svc_dg.c,v 1.7 2004/10/16 06:11:35 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/rpc/svc_dg.c 290253 2015-11-02 01:22:06Z ngie $");
 
 /*
  * svc_dg.c, Server side for connectionless RPC.
@@ -51,6 +50,7 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/svc_dg.c,v 1.7 2004/10/16 06:11:35 obrien E
 #include <sys/socket.h>
 #include <rpc/rpc.h>
 #include <rpc/svc_dg.h>
+#include <assert.h>
 #include <errno.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -64,6 +64,7 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/svc_dg.c,v 1.7 2004/10/16 06:11:35 obrien E
 #include "un-namespace.h"
 
 #include "rpc_com.h"
+#include "mt_misc.h"
 
 #define	su_data(xprt)	((struct svc_dg_data *)(xprt->xp_p2))
 #define	rpc_buffer(xprt) ((xprt)->xp_p1)
@@ -95,14 +96,13 @@ int svc_dg_enablecache(SVCXPRT *, u_int);
  */
 static const char svc_dg_str[] = "svc_dg_create: %s";
 static const char svc_dg_err1[] = "could not get transport information";
-static const char svc_dg_err2[] = " transport does not support data transfer";
+static const char svc_dg_err2[] = "transport does not support data transfer";
+static const char svc_dg_err3[] = "getsockname failed";
+static const char svc_dg_err4[] = "cannot set IP_RECVDSTADDR";
 static const char __no_mem_str[] = "out of memory";
 
 SVCXPRT *
-svc_dg_create(fd, sendsize, recvsize)
-	int fd;
-	u_int sendsize;
-	u_int recvsize;
+svc_dg_create(int fd, u_int sendsize, u_int recvsize)
 {
 	SVCXPRT *xprt;
 	struct svc_dg_data *su = NULL;
@@ -124,10 +124,9 @@ svc_dg_create(fd, sendsize, recvsize)
 		return (NULL);
 	}
 
-	xprt = mem_alloc(sizeof (SVCXPRT));
+	xprt = svc_xprt_alloc();
 	if (xprt == NULL)
 		goto freedata;
-	memset(xprt, 0, sizeof (SVCXPRT));
 
 	su = mem_alloc(sizeof (*su));
 	if (su == NULL)
@@ -145,37 +144,109 @@ svc_dg_create(fd, sendsize, recvsize)
 	xprt->xp_rtaddr.maxlen = sizeof (struct sockaddr_storage);
 
 	slen = sizeof ss;
-	if (_getsockname(fd, (struct sockaddr *)(void *)&ss, &slen) < 0)
-		goto freedata;
+	if (_getsockname(fd, (struct sockaddr *)(void *)&ss, &slen) < 0) {
+		warnx(svc_dg_str, svc_dg_err3);
+		goto freedata_nowarn;
+	}
 	xprt->xp_ltaddr.buf = mem_alloc(sizeof (struct sockaddr_storage));
 	xprt->xp_ltaddr.maxlen = sizeof (struct sockaddr_storage);
 	xprt->xp_ltaddr.len = slen;
 	memcpy(xprt->xp_ltaddr.buf, &ss, slen);
 
+	if (ss.ss_family == AF_INET) {
+		struct sockaddr_in *sin;
+		static const int true_value = 1;
+
+		sin = (struct sockaddr_in *)(void *)&ss;
+		if (sin->sin_addr.s_addr == INADDR_ANY) {
+		    su->su_srcaddr.buf = mem_alloc(sizeof (ss));
+		    su->su_srcaddr.maxlen = sizeof (ss);
+
+		    if (_setsockopt(fd, IPPROTO_IP, IP_RECVDSTADDR,
+				    &true_value, sizeof(true_value))) {
+			    warnx(svc_dg_str,  svc_dg_err4);
+			    goto freedata_nowarn;
+		    }
+		}
+	}
+
 	xprt_register(xprt);
 	return (xprt);
 freedata:
 	(void) warnx(svc_dg_str, __no_mem_str);
+freedata_nowarn:
 	if (xprt) {
 		if (su)
 			(void) mem_free(su, sizeof (*su));
-		(void) mem_free(xprt, sizeof (SVCXPRT));
+		svc_xprt_free(xprt);
 	}
 	return (NULL);
 }
 
 /*ARGSUSED*/
 static enum xprt_stat
-svc_dg_stat(xprt)
-	SVCXPRT *xprt;
+svc_dg_stat(SVCXPRT *xprt)
 {
 	return (XPRT_IDLE);
 }
 
+static int
+svc_dg_recvfrom(int fd, char *buf, int buflen,
+    struct sockaddr *raddr, socklen_t *raddrlen,
+    struct sockaddr *laddr, socklen_t *laddrlen)
+{
+	struct msghdr msg;
+	struct iovec msg_iov[1];
+	struct sockaddr_in *lin = (struct sockaddr_in *)laddr;
+	int rlen;
+	bool_t have_lin = FALSE;
+	char tmp[CMSG_LEN(sizeof(*lin))];
+	struct cmsghdr *cmsg;
+
+	memset((char *)&msg, 0, sizeof(msg));
+	msg_iov[0].iov_base = buf;
+	msg_iov[0].iov_len = buflen;
+	msg.msg_iov = msg_iov;
+	msg.msg_iovlen = 1;
+	msg.msg_namelen = *raddrlen;
+	msg.msg_name = (char *)raddr;
+	if (laddr != NULL) {
+	    msg.msg_control = (caddr_t)tmp;
+	    msg.msg_controllen = CMSG_LEN(sizeof(*lin));
+	}
+	rlen = _recvmsg(fd, &msg, 0);
+	if (rlen >= 0)
+		*raddrlen = msg.msg_namelen;
+
+	if (rlen == -1 || laddr == NULL ||
+	    msg.msg_controllen < sizeof(struct cmsghdr) ||
+	    msg.msg_flags & MSG_CTRUNC)
+		return rlen;
+
+	for (cmsg = CMSG_FIRSTHDR(&msg); cmsg != NULL;
+	     cmsg = CMSG_NXTHDR(&msg, cmsg)) {
+		if (cmsg->cmsg_level == IPPROTO_IP &&
+		    cmsg->cmsg_type == IP_RECVDSTADDR) {
+			have_lin = TRUE;
+			memcpy(&lin->sin_addr,
+			    (struct in_addr *)CMSG_DATA(cmsg),
+			    sizeof(struct in_addr));
+			break;
+		}
+	}
+
+	lin->sin_family = AF_INET;
+	lin->sin_port = 0;
+	*laddrlen = sizeof(struct sockaddr_in);
+
+	if (!have_lin)
+		lin->sin_addr.s_addr = INADDR_ANY;
+
+	return rlen;
+}
+
 static bool_t
-svc_dg_recv(xprt, msg)
-	SVCXPRT *xprt;
-	struct rpc_msg *msg;
+svc_dg_recv(SVCXPRT *xprt, struct rpc_msg *msg)
 {
 	struct svc_dg_data *su = su_data(xprt);
 	XDR *xdrs = &(su->su_xdrs);
@@ -187,11 +258,12 @@ svc_dg_recv(xprt, msg)
 
 again:
 	alen = sizeof (struct sockaddr_storage);
-	rlen = _recvfrom(xprt->xp_fd, rpc_buffer(xprt), su->su_iosz, 0,
-	    (struct sockaddr *)(void *)&ss, &alen);
+	rlen = svc_dg_recvfrom(xprt->xp_fd, rpc_buffer(xprt), su->su_iosz,
+	    (struct sockaddr *)(void *)&ss, &alen,
+	    (struct sockaddr *)su->su_srcaddr.buf, &su->su_srcaddr.len);
 	if (rlen == -1 && errno == EINTR)
 		goto again;
-	if (rlen == -1 || (rlen < (ssize_t)(4 * sizeof (uint32_t))))
+	if (rlen == -1 || (rlen < (ssize_t)(4 * sizeof (u_int32_t))))
 		return (FALSE);
 	if (xprt->xp_rtaddr.len < alen) {
 		if (xprt->xp_rtaddr.len != 0)
@@ -222,24 +294,73 @@ again:
 	return (TRUE);
 }
 
+static int
+svc_dg_sendto(int fd, char *buf, int buflen,
+    const struct sockaddr *raddr, socklen_t raddrlen,
+    const struct sockaddr *laddr, socklen_t laddrlen)
+{
+	struct msghdr msg;
+	struct iovec msg_iov[1];
+	struct sockaddr_in *laddr_in = (struct sockaddr_in *)laddr;
+	struct in_addr *lin = &laddr_in->sin_addr;
+	char tmp[CMSG_SPACE(sizeof(*lin))];
+	struct cmsghdr *cmsg;
+
+	memset((char *)&msg, 0, sizeof(msg));
+	msg_iov[0].iov_base = buf;
+	msg_iov[0].iov_len = buflen;
+	msg.msg_iov = msg_iov;
+	msg.msg_iovlen = 1;
+	msg.msg_namelen = raddrlen;
+	msg.msg_name = (char *)raddr;
+
+	if (laddr != NULL && laddr->sa_family == AF_INET &&
+	    lin->s_addr != INADDR_ANY) {
+		msg.msg_control = (caddr_t)tmp;
+		msg.msg_controllen = CMSG_LEN(sizeof(*lin));
+		cmsg = CMSG_FIRSTHDR(&msg);
+		cmsg->cmsg_len = CMSG_LEN(sizeof(*lin));
+		cmsg->cmsg_level = IPPROTO_IP;
+		cmsg->cmsg_type = IP_SENDSRCADDR;
+		memcpy(CMSG_DATA(cmsg), lin, sizeof(*lin));
+	}
+
+	return _sendmsg(fd, &msg, 0);
+}
+
 static bool_t
-svc_dg_reply(xprt, msg)
-	SVCXPRT *xprt;
-	struct rpc_msg *msg;
+svc_dg_reply(SVCXPRT *xprt, struct rpc_msg *msg)
 {
 	struct svc_dg_data *su = su_data(xprt);
 	XDR *xdrs = &(su->su_xdrs);
-	bool_t stat = FALSE;
+	bool_t stat = TRUE;
 	size_t slen;
+	xdrproc_t xdr_proc;
+	caddr_t xdr_where;
 
 	xdrs->x_op = XDR_ENCODE;
 	XDR_SETPOS(xdrs, 0);
 	msg->rm_xid = su->su_xid;
-	if (xdr_replymsg(xdrs, msg)) {
+	if (msg->rm_reply.rp_stat == MSG_ACCEPTED &&
+	    msg->rm_reply.rp_acpt.ar_stat == SUCCESS) {
+		xdr_proc = msg->acpted_rply.ar_results.proc;
+		xdr_where = msg->acpted_rply.ar_results.where;
+		msg->acpted_rply.ar_results.proc = (xdrproc_t) xdr_void;
+		msg->acpted_rply.ar_results.where = NULL;
+
+		if (!xdr_replymsg(xdrs, msg) ||
+		    !SVCAUTH_WRAP(&SVC_AUTH(xprt), xdrs, xdr_proc, xdr_where))
+			stat = FALSE;
+	} else {
+		stat = xdr_replymsg(xdrs, msg);
+	}
+	if (stat) {
 		slen = XDR_GETPOS(xdrs);
-		if (_sendto(xprt->xp_fd, rpc_buffer(xprt), slen, 0,
+		if (svc_dg_sendto(xprt->xp_fd, rpc_buffer(xprt), slen,
 		    (struct sockaddr *)xprt->xp_rtaddr.buf,
-		    (socklen_t)xprt->xp_rtaddr.len) == (ssize_t) slen) {
+		    (socklen_t)xprt->xp_rtaddr.len,
+		    (struct sockaddr *)su->su_srcaddr.buf,
+		    (socklen_t)su->su_srcaddr.len) == (ssize_t) slen) {
 			stat = TRUE;
 			if (su->su_cache)
 				cache_set(xprt, slen);
@@ -249,19 +370,18 @@ svc_dg_reply(xprt, msg)
 }
 
 static bool_t
-svc_dg_getargs(xprt, xdr_args, args_ptr)
-	SVCXPRT *xprt;
-	xdrproc_t xdr_args;
-	void *args_ptr;
+svc_dg_getargs(SVCXPRT *xprt, xdrproc_t xdr_args, void *args_ptr)
 {
-	return (*xdr_args)(&(su_data(xprt)->su_xdrs), args_ptr);
+	struct svc_dg_data *su;
+
+	assert(xprt != NULL);
+	su = su_data(xprt);
+	return (SVCAUTH_UNWRAP(&SVC_AUTH(xprt),
+		&su->su_xdrs, xdr_args, args_ptr));
 }
 
 static bool_t
-svc_dg_freeargs(xprt, xdr_args, args_ptr)
-	SVCXPRT *xprt;
-	xdrproc_t xdr_args;
-	void *args_ptr;
+svc_dg_freeargs(SVCXPRT *xprt, xdrproc_t xdr_args, void *args_ptr)
 {
 	XDR *xdrs = &(su_data(xprt)->su_xdrs);
 
@@ -270,8 +390,7 @@ svc_dg_freeargs(xprt, xdr_args, args_ptr)
 }
 
 static void
-svc_dg_destroy(xprt)
-	SVCXPRT *xprt;
+svc_dg_destroy(SVCXPRT *xprt)
 {
 	struct svc_dg_data *su = su_data(xprt);
 
@@ -280,33 +399,29 @@ svc_dg_destroy(xprt)
 		(void)_close(xprt->xp_fd);
 	XDR_DESTROY(&(su->su_xdrs));
 	(void) mem_free(rpc_buffer(xprt), su->su_iosz);
+	if (su->su_srcaddr.buf)
+		(void) mem_free(su->su_srcaddr.buf, su->su_srcaddr.maxlen);
 	(void) mem_free(su, sizeof (*su));
 	if (xprt->xp_rtaddr.buf)
 		(void) mem_free(xprt->xp_rtaddr.buf, xprt->xp_rtaddr.maxlen);
 	if (xprt->xp_ltaddr.buf)
 		(void) mem_free(xprt->xp_ltaddr.buf, xprt->xp_ltaddr.maxlen);
-	if (xprt->xp_tp)
-		(void) free(xprt->xp_tp);
-	(void) mem_free(xprt, sizeof (SVCXPRT));
+	free(xprt->xp_tp);
+	svc_xprt_free(xprt);
 }
 
 static bool_t
 /*ARGSUSED*/
-svc_dg_control(xprt, rq, in)
-	SVCXPRT *xprt;
-	const u_int	rq;
-	void		*in;
+svc_dg_control(SVCXPRT *xprt, const u_int rq, void *in)
 {
 	return (FALSE);
 }
 
 static void
-svc_dg_ops(xprt)
-	SVCXPRT *xprt;
+svc_dg_ops(SVCXPRT *xprt)
 {
 	static struct xp_ops ops;
 	static struct xp_ops2 ops2;
-	extern mutex_t ops_lock;
 
 /* VARIABLES PROTECTED BY ops_lock: ops */
 
@@ -355,7 +470,7 @@ struct cache_node {
 	/*
 	 * Index into cache is xid, proc, vers, prog and address
 	 */
-	uint32_t cache_xid;
+	u_int32_t cache_xid;
 	rpcproc_t cache_proc;
 	rpcvers_t cache_vers;
 	rpcprog_t cache_prog;
@@ -392,8 +507,6 @@ struct cl_cache {
 	(xid % (SPARSENESS * ((struct cl_cache *) \
 		su_data(transp)->su_cache)->uc_size))
 
-extern mutex_t	dupreq_lock;
-
 /*
  * Enable use of the cache. Returns 1 on success, 0 on failure.
  * Note: there is no disable.
@@ -403,9 +516,7 @@ static const char alloc_err[] = "could not allocate cache ";
 static const char enable_err[] = "cache already enabled";
 
 int
-svc_dg_enablecache(transp, size)
-	SVCXPRT *transp;
-	u_int size;
+svc_dg_enablecache(SVCXPRT *transp, u_int size)
 {
 	struct svc_dg_data *su = su_data(transp);
 	struct cl_cache *uc;
@@ -460,9 +571,7 @@ static const char cache_set_err2[] = "victim alloc failed";
 static const char cache_set_err3[] = "could not allocate new rpc buffer";
 
 static void
-cache_set(xprt, replylen)
-	SVCXPRT *xprt;
-	size_t replylen;
+cache_set(SVCXPRT *xprt, size_t replylen)
 {
 	cache_ptr victim;
 	cache_ptr *vicp;
@@ -550,11 +659,7 @@ cache_set(xprt, replylen)
  * return 1 if found, 0 if not found and set the stage for cache_set()
  */
 static int
-cache_get(xprt, msg, replyp, replylenp)
-	SVCXPRT *xprt;
-	struct rpc_msg *msg;
-	char **replyp;
-	size_t *replylenp;
+cache_get(SVCXPRT *xprt, struct rpc_msg *msg, char **replyp, size_t *replylenp)
 {
 	u_int loc;
 	cache_ptr ent;

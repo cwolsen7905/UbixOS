@@ -10,11 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)system.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/system.c,v 1.10 2002/03/22 21:53:10 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/system.c 287292 2015-08-29 14:25:01Z kib $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -43,15 +39,24 @@ __FBSDID("$FreeBSD: src/lib/libc/stdlib/system.c,v 1.10 2002/03/22 21:53:10 obri
 #include <signal.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
 #include <unistd.h>
 #include <paths.h>
 #include <errno.h>
 #include "un-namespace.h"
 #include "libc_private.h"
 
+#pragma weak system
 int
-__system(command)
-	const char *command;
+system(const char *command)
+{
+
+	return (((int (*)(const char *))
+	    __libc_interposing[INTERPOS_system])(command));
+}
+
+int
+__libc_system(const char *command)
 {
 	pid_t pid, savedpid;
 	int pstat;
@@ -61,42 +66,47 @@ __system(command)
 	if (!command)		/* just checking... */
 		return(1);
 
-	/*
-	 * Ignore SIGINT and SIGQUIT, block SIGCHLD. Remember to save
-	 * existing signal dispositions.
-	 */
-	ign.sa_handler = SIG_IGN;
-	(void)sigemptyset(&ign.sa_mask);
-	ign.sa_flags = 0;
-	(void)_sigaction(SIGINT, &ign, &intact);
-	(void)_sigaction(SIGQUIT, &ign, &quitact);
 	(void)sigemptyset(&newsigblock);
 	(void)sigaddset(&newsigblock, SIGCHLD);
-	(void)_sigprocmask(SIG_BLOCK, &newsigblock, &oldsigblock);
-	switch(pid = fork()) {
+	(void)sigaddset(&newsigblock, SIGINT);
+	(void)sigaddset(&newsigblock, SIGQUIT);
+	(void)__libc_sigprocmask(SIG_BLOCK, &newsigblock, &oldsigblock);
+	switch(pid = vfork()) {
+	/*
+	 * In the child, use unwrapped syscalls.  libthr is in
+	 * undefined state after vfork().
+	 */
 	case -1:			/* error */
-		break;
+		(void)__libc_sigprocmask(SIG_SETMASK, &oldsigblock, NULL);
+		return (-1);
 	case 0:				/* child */
 		/*
 		 * Restore original signal dispositions and exec the command.
 		 */
-		(void)_sigaction(SIGINT, &intact, NULL);
-		(void)_sigaction(SIGQUIT,  &quitact, NULL);
-		(void)_sigprocmask(SIG_SETMASK, &oldsigblock, NULL);
+		(void)__sys_sigprocmask(SIG_SETMASK, &oldsigblock, NULL);
 		execl(_PATH_BSHELL, "sh", "-c", command, (char *)NULL);
 		_exit(127);
-	default:			/* parent */
-		savedpid = pid;
-		do {
-			pid = _wait4(savedpid, &pstat, 0, (struct rusage *)0);
-		} while (pid == -1 && errno == EINTR);
-		break;
 	}
-	(void)_sigaction(SIGINT, &intact, NULL);
-	(void)_sigaction(SIGQUIT,  &quitact, NULL);
-	(void)_sigprocmask(SIG_SETMASK, &oldsigblock, NULL);
-	return(pid == -1 ? -1 : pstat);
+	/* 
+	 * If we are running means that the child has either completed
+	 * its execve, or has failed.
+	 * Block SIGINT/QUIT because sh -c handles it and wait for
+	 * it to clean up.
+	 */
+	memset(&ign, 0, sizeof(ign));
+	ign.sa_handler = SIG_IGN;
+	(void)sigemptyset(&ign.sa_mask);
+	(void)__libc_sigaction(SIGINT, &ign, &intact);
+	(void)__libc_sigaction(SIGQUIT, &ign, &quitact);
+	savedpid = pid;
+	do {
+		pid = _wait4(savedpid, &pstat, 0, (struct rusage *)0);
+	} while (pid == -1 && errno == EINTR);
+	(void)__libc_sigaction(SIGINT, &intact, NULL);
+	(void)__libc_sigaction(SIGQUIT,  &quitact, NULL);
+	(void)__libc_sigprocmask(SIG_SETMASK, &oldsigblock, NULL);
+	return (pid == -1 ? -1 : pstat);
 }
 
-__weak_reference(__system, system);
-__weak_reference(__system, _system);
+__weak_reference(__libc_system, __system);
+__weak_reference(__libc_system, _system);

@@ -16,10 +16,10 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: inet_neta.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_neta.c,v 1.3 2005/04/27 04:56:20 sra Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_neta.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_neta.c 288038 2015-09-20 20:50:56Z rodrigc $");
 
 #include "port_before.h"
 
@@ -40,7 +40,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_neta.c,v 1.2.2.1 2006/07/17 10:09:56 
 # define SPRINTF(x) ((size_t)sprintf x)
 #endif
 
-/*
+/*%
  * char *
  * inet_neta(src, dst, size)
  *	format an in_addr_t network number into presentation format.
@@ -52,10 +52,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_neta.c,v 1.2.2.1 2006/07/17 10:09:56 
  *	Paul Vixie (ISC), July 1996
  */
 char *
-inet_neta(src, dst, size)
-	in_addr_t src;
-	char *dst;
-	size_t size;
+inet_neta(in_addr_t src, char *dst, size_t size)
 {
 	char *odst = dst;
 	char *tp;
@@ -94,3 +91,5 @@ inet_neta(src, dst, size)
  */
 #undef inet_neta
 __weak_reference(__inet_neta, inet_neta);
+
+/*! \file */

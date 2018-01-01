@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)strcmp.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/string/strcmp.c,v 1.5 2002/03/21 18:44:54 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/string/strcmp.c 251069 2013-05-28 20:57:40Z emaste $");
 
 #include <string.h>
 
@@ -46,11 +42,10 @@ __FBSDID("$FreeBSD: src/lib/libc/string/strcmp.c,v 1.5 2002/03/21 18:44:54 obrie
  * Compare strings.
  */
 int
-strcmp(s1, s2)
-	const char *s1, *s2;
+strcmp(const char *s1, const char *s2)
 {
 	while (*s1 == *s2++)
-		if (*s1++ == 0)
+		if (*s1++ == '\0')
 			return (0);
 	return (*(const unsigned char *)s1 - *(const unsigned char *)(s2 - 1));
 }

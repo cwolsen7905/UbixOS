@@ -12,10 +12,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -58,8 +54,8 @@ static char sccsid[] = "@(#)gethostnamadr.c	8.1 (Berkeley) 6/4/93";
 static char fromrcsid[] = "From: Id: gethnamaddr.c,v 8.23 1998/04/07 04:59:46 vixie Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/gethostbydns.c 299341 2016-05-10 07:45:44Z bapt $");
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -91,7 +87,7 @@ static void addrsort(char **, int, res_state);
 #endif
 
 #ifdef DEBUG
-static void dprintf(char *, int, res_state) __printflike(1, 0);
+static void dbg_printf(char *, int, res_state) __printflike(1, 0);
 #endif
 
 #define MAXPACKET	(64*1024)
@@ -110,10 +106,7 @@ int _dns_ttl_;
 
 #ifdef DEBUG
 static void
-dprintf(msg, num, res)
-	char *msg;
-	int num;
-	res_state res;
+dbg_printf(char *msg, int num, res_state res)
 {
 	if (res->options & RES_DEBUG) {
 		int save = errno;
@@ -123,7 +116,7 @@ dprintf(msg, num, res)
 	}
 }
 #else
-# define dprintf(msg, num, res) /*nada*/
+# define dbg_printf(msg, num, res) /*nada*/
 #endif
 
 #define BOUNDED_INCR(x) \
@@ -297,7 +290,7 @@ gethostanswer(const querybuf *answer, int anslen, const char *qname, int qtype,
 			continue;
 		}
 		if (type != qtype) {
-			if (type != T_SIG)
+			if (type != T_SIG && type != ns_t_dname)
 				syslog(LOG_NOTICE|LOG_AUTH,
 	"gethostby*.gethostanswer: asked for \"%s %s %s\", got type \"%s\"",
 				       qname, p_class(C_IN), p_type(qtype),
@@ -376,13 +369,13 @@ gethostanswer(const querybuf *answer, int anslen, const char *qname, int qtype,
 			bp += sizeof(align) - ((u_long)bp % sizeof(align));
 
 			if (bp + n >= ep) {
-				dprintf("size (%d) too big\n", n, statp);
+				dbg_printf("size (%d) too big\n", n, statp);
 				had_error++;
 				continue;
 			}
 			if (hap >= &hed->h_addr_ptrs[_MAXADDRS-1]) {
 				if (!toobig++)
-					dprintf("Too many addresses (%d)\n",
+					dbg_printf("Too many addresses (%d)\n",
 						_MAXADDRS, statp);
 				cp += n;
 				continue;
@@ -396,7 +389,7 @@ gethostanswer(const querybuf *answer, int anslen, const char *qname, int qtype,
 			}
 			break;
 		default:
-			dprintf("Impossible condition (type=%d)\n", type,
+			dbg_printf("Impossible condition (type=%d)\n", type,
 			    statp);
 			RES_SET_H_ERRNO(statp, NO_RECOVERY);
 			return (-1);
@@ -523,25 +516,36 @@ _dns_gethostbyname(void *rval, void *cb_data, va_list ap)
 	n = res_nsearch(statp, name, C_IN, type, buf->buf, sizeof(buf->buf));
 	if (n < 0) {
 		free(buf);
-		dprintf("res_nsearch failed (%d)\n", n, statp);
+		dbg_printf("res_nsearch failed (%d)\n", n, statp);
 		*h_errnop = statp->res_h_errno;
-		return (0);
+		return (NS_NOTFOUND);
 	} else if (n > sizeof(buf->buf)) {
 		free(buf);
-		dprintf("static buffer is too small (%d)\n", n, statp);
+		dbg_printf("static buffer is too small (%d)\n", n, statp);
 		*h_errnop = statp->res_h_errno;
-		return (0);
+		return (NS_UNAVAIL);
 	}
 	error = gethostanswer(buf, n, name, type, &he, hed, statp);
 	free(buf);
 	if (error != 0) {
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		switch (statp->res_h_errno) {
+		case HOST_NOT_FOUND:
+			return (NS_NOTFOUND);
+		case TRY_AGAIN:
+			return (NS_TRYAGAIN);
+		default:
+			return (NS_UNAVAIL);
+		}
+		/*NOTREACHED*/
 	}
 	if (__copy_hostent(&he, hptr, buffer, buflen) != 0) {
+		*errnop = errno;
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		return (NS_RETURN);
 	}
+	RES_SET_H_ERRNO(statp, NETDB_SUCCESS);
 	*((struct hostent **)rval) = hptr;
 	return (NS_SUCCESS);
 }
@@ -619,20 +623,28 @@ _dns_gethostbyaddr(void *rval, void *cb_data, va_list ap)
 	    sizeof buf->buf);
 	if (n < 0) {
 		free(buf);
-		dprintf("res_nquery failed (%d)\n", n, statp);
+		dbg_printf("res_nquery failed (%d)\n", n, statp);
 		*h_errnop = statp->res_h_errno;
 		return (NS_UNAVAIL);
 	}
 	if (n > sizeof buf->buf) {
 		free(buf);
-		dprintf("static buffer is too small (%d)\n", n, statp);
+		dbg_printf("static buffer is too small (%d)\n", n, statp);
 		*h_errnop = statp->res_h_errno;
 		return (NS_UNAVAIL);
 	}
 	if (gethostanswer(buf, n, qbuf, T_PTR, &he, hed, statp) != 0) {
 		free(buf);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);	/* h_errno was set by gethostanswer() */
+		switch (statp->res_h_errno) {
+		case HOST_NOT_FOUND:
+			return (NS_NOTFOUND);
+		case TRY_AGAIN:
+			return (NS_TRYAGAIN);
+		default:
+			return (NS_UNAVAIL);
+		}
+		/*NOTREACHED*/
 	}
 	free(buf);
 #ifdef SUNSECURITY
@@ -686,11 +698,13 @@ _dns_gethostbyaddr(void *rval, void *cb_data, va_list ap)
 		he.h_addrtype = AF_INET6;
 		he.h_length = NS_IN6ADDRSZ;
 	}
-	RES_SET_H_ERRNO(statp, NETDB_SUCCESS);
 	if (__copy_hostent(&he, hptr, buffer, buflen) != 0) {
+		*errnop = errno;
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		return (NS_RETURN);
 	}
+	RES_SET_H_ERRNO(statp, NETDB_SUCCESS);
 	*((struct hostent **)rval) = hptr;
 	return (NS_SUCCESS);
 }
@@ -751,7 +765,7 @@ _sethostdnsent(int stayopen)
 }
 
 void
-_endhostdnsent()
+_endhostdnsent(void)
 {
 	res_state statp;
 

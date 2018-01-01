@@ -5,12 +5,22 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/pmadvise.c,v 1.3 2003/08/09 03:23:24 bms Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/pmadvise.c 261290 2014-01-30 18:04:39Z kib $");
 
 #include <sys/mman.h>
+#include <errno.h>
 
 int
 posix_madvise(void *address, size_t size, int how)
 {
-	return madvise(address, size, how);
+	int ret, saved_errno;
+
+	saved_errno = errno;
+	if (madvise(address, size, how) == -1) {
+		ret = errno;
+		errno = saved_errno;
+	} else {
+		ret = 0;
+	}
+	return (ret);
 }

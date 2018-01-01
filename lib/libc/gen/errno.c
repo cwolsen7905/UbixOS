@@ -25,6 +25,6 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/errno.c,v 1.1 2002/10/09 08:04:24 peter Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/errno.c 104704 2002-10-09 08:04:24Z peter $");
 
 int errno;

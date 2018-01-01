@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -31,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.10 (Berkeley) 7/20/94
- * $FreeBSD: src/lib/libc/db/btree/extern.h,v 1.3 2002/03/22 09:18:22 obrien Exp $
+ * $FreeBSD: releng/11.1/lib/libc/db/btree/extern.h 165903 2007-01-09 00:28:16Z imp $
  */
 
 int	 __bt_close(DB *);
@@ -54,7 +50,7 @@ EPG	*__bt_search(BTREE *, const DBT *, int *);
 int	 __bt_seq(const DB *, DBT *, DBT *, u_int);
 void	 __bt_setcur(BTREE *, pgno_t, u_int);
 int	 __bt_split(BTREE *, PAGE *,
-	    const DBT *, const DBT *, int, size_t, uint32_t);
+	    const DBT *, const DBT *, int, size_t, u_int32_t);
 int	 __bt_sync(const DB *, u_int);
 
 int	 __ovfl_delete(BTREE *, void *);

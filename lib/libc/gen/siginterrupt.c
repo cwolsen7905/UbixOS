@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)siginterrupt.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/siginterrupt.c,v 1.4 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/siginterrupt.c 287292 2015-08-29 14:25:01Z kib $");
 
 #include "namespace.h"
 #include <signal.h>
@@ -47,14 +43,13 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/siginterrupt.c,v 1.4 2002/02/01 00:57:29 ob
  * after an instance of the indicated signal.
  */
 int
-siginterrupt(sig, flag)
-	int sig, flag;
+siginterrupt(int sig, int flag)
 {
-	extern sigset_t _sigintr;
+	extern sigset_t _sigintr __hidden;
 	struct sigaction sa;
 	int ret;
 
-	if ((ret = _sigaction(sig, (struct sigaction *)0, &sa)) < 0)
+	if ((ret = __libc_sigaction(sig, (struct sigaction *)0, &sa)) < 0)
 		return (ret);
 	if (flag) {
 		sigaddset(&_sigintr, sig);
@@ -63,5 +58,5 @@ siginterrupt(sig, flag)
 		sigdelset(&_sigintr, sig);
 		sa.sa_flags |= SA_RESTART;
 	}
-	return (_sigaction(sig, &sa, (struct sigaction *)0));
+	return (__libc_sigaction(sig, &sa, (struct sigaction *)0));
 }

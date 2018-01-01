@@ -32,6 +32,7 @@
  * Compatibility shims for the GNU C Library-style nsswitch interface.
  */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/nss_compat.c 288014 2015-09-20 04:17:53Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -78,6 +79,16 @@ do {									\
 
 DECLARE_TERMINATOR(group);
 
+int __nss_compat_getgrnam_r(void *retval, void *mdata, va_list ap);
+int __nss_compat_getgrgid_r(void *retval, void *mdata, va_list ap);
+int __nss_compat_getgrent_r(void *retval, void *mdata, va_list ap);
+int __nss_compat_setgrent(void *retval, void *mdata, va_list ap);
+int __nss_compat_endgrent(void *retval, void *mdata, va_list ap);
+int __nss_compat_getpwnam_r(void *retval, void *mdata, va_list ap);
+int __nss_compat_getpwuid_r(void *retval, void *mdata, va_list ap);
+int __nss_compat_getpwent_r(void *retval, void *mdata, va_list ap);
+int __nss_compat_setpwent(void *retval, void *mdata, va_list ap);
+int __nss_compat_endpwent(void *retval, void *mdata, va_list ap);
 
 int
 __nss_compat_getgrnam_r(void *retval, void *mdata, va_list ap)

@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/getcontext.S,v 1.1 2003/09/04 00:20:40 peter Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/getcontext.S 258451 2013-11-21 22:31:18Z andreast $");
 
 #include <SYS.h>
 
@@ -34,17 +34,15 @@ __FBSDID("$FreeBSD: src/lib/libc/i386/sys/getcontext.S,v 1.1 2003/09/04 00:20:40
  * Otherwise, the setcontext() syscall will return here and we'll
  * pop off the return address and go to the *setcontext* call.
  */
-	.weak	_getcontext
-	.set	_getcontext,__sys_getcontext
-	.weak	getcontext
-	.set	getcontext,__sys_getcontext
+	WEAK_REFERENCE(__sys_getcontext, _getcontext) 
+	WEAK_REFERENCE(__sys_getcontext, getcontext)
 ENTRY(__sys_getcontext)
 	movl	(%esp),%ecx	/* save getcontext return address */
 	mov	$SYS_getcontext,%eax
 	KERNCALL
-	jb	1f
+	jb	HIDENAME(cerror)
 	addl	$4,%esp		/* remove stale (setcontext) return address */
 	jmp	*%ecx		/* restore return address */
-1:
-	PIC_PROLOGUE
-	jmp	PIC_PLT(HIDENAME(cerror))
+END(__sys_getcontext)
+
+	.section .note.GNU-stack,"",%progbits

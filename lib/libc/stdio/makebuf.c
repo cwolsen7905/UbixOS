@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)makebuf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/makebuf.c,v 1.4 2002/03/22 21:53:04 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/makebuf.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -46,8 +42,10 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/makebuf.c,v 1.4 2002/03/22 21:53:04 obrie
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "local.h"
 #include "un-namespace.h"
+
+#include "libc_private.h"
+#include "local.h"
 
 /*
  * Allocate a file buffer, or switch to unbuffered I/O.
@@ -57,8 +55,7 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/makebuf.c,v 1.4 2002/03/22 21:53:04 obrie
  * optimisation) right after the _fstat() that finds the buffer size.
  */
 void
-__smakebuf(fp)
-	FILE *fp;
+__smakebuf(FILE *fp)
 {
 	void *p;
 	int flags;
@@ -81,9 +78,8 @@ __smakebuf(fp)
 	flags |= __SMBF;
 	fp->_bf._base = fp->_p = p;
 	fp->_bf._size = size;
-	if (couldbetty && isatty(fp->_file)) {
-          flags |= __SLBF;
-          }        
+	if (couldbetty && isatty(fp->_file))
+		flags |= __SLBF;
 	fp->_flags |= flags;
 }
 
@@ -91,10 +87,7 @@ __smakebuf(fp)
  * Internal routine to determine `proper' buffering for a file.
  */
 int
-__swhatbuf(fp, bufsize, couldbetty)
-	FILE *fp;
-	size_t *bufsize;
-	int *couldbetty;
+__swhatbuf(FILE *fp, size_t *bufsize, int *couldbetty)
 {
 	struct stat st;
 

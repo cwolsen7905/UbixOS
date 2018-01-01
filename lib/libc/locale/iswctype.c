@@ -18,10 +18,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -40,174 +36,153 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/iswctype.c,v 1.6 2002/08/17 20:30:34 ache Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/iswctype.c 290494 2015-11-07 12:43:35Z bapt $");
 
 #include <wctype.h>
 
 #undef iswalnum
 int
-iswalnum(wc)
-	wint_t wc;
+iswalnum(wint_t wc)
 {
-	return (__istype(wc, _CTYPE_A|_CTYPE_D));
+	return (__istype(wc, _CTYPE_A|_CTYPE_N));
 }
 
 #undef iswalpha
 int
-iswalpha(wc)
-	wint_t wc;
+iswalpha(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_A));
 }
 
 #undef iswascii
 int
-iswascii(wc)
-	wint_t wc;
+iswascii(wint_t wc)
 {
 	return ((wc & ~0x7F) == 0);
 }
 
 #undef iswblank
 int
-iswblank(wc)
-	wint_t wc;
+iswblank(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_B));
 }
 
 #undef iswcntrl
 int
-iswcntrl(wc)
-	wint_t wc;
+iswcntrl(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_C));
 }
 
 #undef iswdigit
 int
-iswdigit(wc)
-	wint_t wc;
+iswdigit(wint_t wc)
 {
-	return (__isctype(wc, _CTYPE_D));
+	return (__istype(wc, _CTYPE_D));
 }
 
 #undef iswgraph
 int
-iswgraph(wc)
-	wint_t wc;
+iswgraph(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_G));
 }
 
 #undef iswhexnumber 
 int
-iswhexnumber(wc)
-	wint_t wc;
+iswhexnumber(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_X));
 }
 
 #undef iswideogram
 int
-iswideogram(wc)
-	wint_t wc;
+iswideogram(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_I));
 }
 
 #undef iswlower
 int
-iswlower(wc)
-	wint_t wc;
+iswlower(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_L));
 }
 
 #undef iswnumber
 int
-iswnumber(wc)
-	wint_t wc;
+iswnumber(wint_t wc)
 {
-	return (__istype(wc, _CTYPE_D));
+	return (__istype(wc, _CTYPE_N));
 }
 
 #undef iswphonogram	
 int
-iswphonogram(wc)
-	wint_t wc;
+iswphonogram(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_Q));
 }
 
 #undef iswprint
 int
-iswprint(wc)
-	wint_t wc;
+iswprint(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_R));
 }
 
 #undef iswpunct
 int
-iswpunct(wc)
-	wint_t wc;
+iswpunct(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_P));
 }
 
 #undef iswrune
 int
-iswrune(wc)
-	wint_t wc;
+iswrune(wint_t wc)
 {
 	return (__istype(wc, 0xFFFFFF00L));
 }
 
 #undef iswspace
 int
-iswspace(wc)
-	wint_t wc;
+iswspace(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_S));
 }
 
 #undef iswspecial
 int
-iswspecial(wc)
-	wint_t wc;
+iswspecial(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_T));
 }
 
 #undef iswupper
 int
-iswupper(wc)
-	wint_t wc;
+iswupper(wint_t wc)
 {
 	return (__istype(wc, _CTYPE_U));
 }
 
 #undef iswxdigit
 int
-iswxdigit(wc)
-	wint_t wc;
+iswxdigit(wint_t wc)
 {
-	return (__isctype(wc, _CTYPE_X));
+	return (__istype(wc, _CTYPE_X));
 }
 
 #undef towlower
 wint_t
-towlower(wc)
-	wint_t wc;
+towlower(wint_t wc)
 {
         return (__tolower(wc));
 }
 
 #undef towupper
 wint_t
-towupper(wc)
-	wint_t wc;
+towupper(wint_t wc)
 {
         return (__toupper(wc));
 }

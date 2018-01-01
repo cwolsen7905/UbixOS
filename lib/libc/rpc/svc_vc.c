@@ -1,32 +1,31 @@
 /*	$NetBSD: svc_vc.c,v 1.7 2000/08/03 00:01:53 fvdl Exp $	*/
 
-/*
- * Sun RPC is a product of Sun Microsystems, Inc. and is provided for
- * unrestricted use provided that this legend is included on all tape
- * media and as a part of the software program in whole or part.  Users
- * may copy or modify Sun RPC without charge, but are not authorized
- * to license or distribute it to anyone else except as part of a product or
- * program developed by the user.
+/*-
+ * Copyright (c) 2009, Sun Microsystems, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * - Redistributions of source code must retain the above copyright notice, 
+ *   this list of conditions and the following disclaimer.
+ * - Redistributions in binary form must reproduce the above copyright notice, 
+ *   this list of conditions and the following disclaimer in the documentation 
+ *   and/or other materials provided with the distribution.
+ * - Neither the name of Sun Microsystems, Inc. nor the names of its 
+ *   contributors may be used to endorse or promote products derived 
+ *   from this software without specific prior written permission.
  * 
- * SUN RPC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE
- * WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
- * 
- * Sun RPC is provided with no support and without any obligation on the
- * part of Sun Microsystems, Inc. to assist in its use, correction,
- * modification or enhancement.
- * 
- * SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
- * INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY SUN RPC
- * OR ANY PART THEREOF.
- * 
- * In no event will Sun Microsystems, Inc. be liable for any lost revenue
- * or profits or other special, indirect and consequential damages, even if
- * Sun has been advised of the possibility of such damages.
- * 
- * Sun Microsystems, Inc.
- * 2550 Garcia Avenue
- * Mountain View, California  94043
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
@@ -34,7 +33,7 @@ static char *sccsid2 = "@(#)svc_tcp.c 1.21 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc_tcp.c	2.2 88/08/01 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/rpc/svc_vc.c,v 1.24 2004/10/16 06:11:35 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/rpc/svc_vc.c 305616 2016-09-08 15:12:20Z pfg $");
 
 /*
  * svc_vc.c, Server side for Connection Oriented based RPC. 
@@ -46,7 +45,6 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/svc_vc.c,v 1.24 2004/10/16 06:11:35 obrien 
 
 #include "namespace.h"
 #include "reentrant.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/poll.h>
 #include <sys/socket.h>
@@ -68,9 +66,8 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/svc_vc.c,v 1.24 2004/10/16 06:11:35 obrien 
 #include <rpc/rpc.h>
 
 #include "rpc_com.h"
+#include "mt_misc.h"
 #include "un-namespace.h"
-
-extern rwlock_t svc_fd_lock;
 
 static SVCXPRT *makefd_xprt(int, u_int, u_int);
 static bool_t rendezvous_request(SVCXPRT *, struct rpc_msg *);
@@ -98,7 +95,7 @@ struct cf_rendezvous { /* kept in xprt->xp_p1 for rendezvouser */
 
 struct cf_conn {  /* kept in xprt->xp_p1 for actual connection */
 	enum xprt_stat strm_stat;
-	uint32_t x_id;
+	u_int32_t x_id;
 	XDR xdrs;
 	char verf_body[MAX_AUTH_BYTES];
 	u_int sendsize;
@@ -125,36 +122,31 @@ struct cf_conn {  /* kept in xprt->xp_p1 for actual connection */
  * 0 => use the system default.
  */
 SVCXPRT *
-svc_vc_create(fd, sendsize, recvsize)
-	int fd;
-	u_int sendsize;
-	u_int recvsize;
+svc_vc_create(int fd, u_int sendsize, u_int recvsize)
 {
-	SVCXPRT *xprt;
+	SVCXPRT *xprt = NULL;
 	struct cf_rendezvous *r = NULL;
 	struct __rpc_sockinfo si;
 	struct sockaddr_storage sslocal;
 	socklen_t slen;
+
+	if (!__rpc_fd2sockinfo(fd, &si))
+		return NULL;
 
 	r = mem_alloc(sizeof(*r));
 	if (r == NULL) {
 		warnx("svc_vc_create: out of memory");
 		goto cleanup_svc_vc_create;
 	}
-	if (!__rpc_fd2sockinfo(fd, &si))
-		return NULL;
 	r->sendsize = __rpc_get_t_size(si.si_af, si.si_proto, (int)sendsize);
 	r->recvsize = __rpc_get_t_size(si.si_af, si.si_proto, (int)recvsize);
 	r->maxrec = __svc_maxrec;
-	xprt = mem_alloc(sizeof(SVCXPRT));
+	xprt = svc_xprt_alloc();
 	if (xprt == NULL) {
 		warnx("svc_vc_create: out of memory");
 		goto cleanup_svc_vc_create;
 	}
-	xprt->xp_tp = NULL;
 	xprt->xp_p1 = r;
-	xprt->xp_p2 = NULL;
-	xprt->xp_p3 = NULL;
 	xprt->xp_verf = _null_auth;
 	svc_vc_rendezvous_ops(xprt);
 	xprt->xp_port = (u_short)-1;	/* It is the rendezvouser */
@@ -178,6 +170,8 @@ svc_vc_create(fd, sendsize, recvsize)
 	xprt_register(xprt);
 	return (xprt);
 cleanup_svc_vc_create:
+	if (xprt)
+		mem_free(xprt, sizeof(*xprt));
 	if (r != NULL)
 		mem_free(r, sizeof(*r));
 	return (NULL);
@@ -188,10 +182,7 @@ cleanup_svc_vc_create:
  * descriptor as its first input.
  */
 SVCXPRT *
-svc_fd_create(fd, sendsize, recvsize)
-	int fd;
-	u_int sendsize;
-	u_int recvsize;
+svc_fd_create(int fd, u_int sendsize, u_int recvsize)
 {
 	struct sockaddr_storage ss;
 	socklen_t slen;
@@ -245,10 +236,7 @@ freedata:
 }
 
 static SVCXPRT *
-makefd_xprt(fd, sendsize, recvsize)
-	int fd;
-	u_int sendsize;
-	u_int recvsize;
+makefd_xprt(int fd, u_int sendsize, u_int recvsize)
 {
 	SVCXPRT *xprt;
 	struct cf_conn *cd;
@@ -257,16 +245,15 @@ makefd_xprt(fd, sendsize, recvsize)
  
 	assert(fd != -1);
 
-	xprt = mem_alloc(sizeof(SVCXPRT));
+	xprt = svc_xprt_alloc();
 	if (xprt == NULL) {
 		warnx("svc_vc: makefd_xprt: out of memory");
 		goto done;
 	}
-	memset(xprt, 0, sizeof *xprt);
 	cd = mem_alloc(sizeof(struct cf_conn));
 	if (cd == NULL) {
 		warnx("svc_tcp: makefd_xprt: out of memory");
-		mem_free(xprt, sizeof(SVCXPRT));
+		svc_xprt_free(xprt);
 		xprt = NULL;
 		goto done;
 	}
@@ -275,7 +262,7 @@ makefd_xprt(fd, sendsize, recvsize)
 	    xprt, read_vc, write_vc);
 	xprt->xp_p1 = cd;
 	xprt->xp_verf.oa_base = cd->verf_body;
-	svc_vc_ops(xprt);  /* truely deals with calls */
+	svc_vc_ops(xprt);  /* truly deals with calls */
 	xprt->xp_port = 0;  /* this is a connection, not a rendezvouser */
 	xprt->xp_fd = fd;
         if (__rpc_fd2sockinfo(fd, &si) && __rpc_sockinfo2netid(&si, &netid))
@@ -288,15 +275,13 @@ done:
 
 /*ARGSUSED*/
 static bool_t
-rendezvous_request(xprt, msg)
-	SVCXPRT *xprt;
-	struct rpc_msg *msg;
+rendezvous_request(SVCXPRT *xprt, struct rpc_msg *msg)
 {
 	int sock, flags;
 	struct cf_rendezvous *r;
 	struct cf_conn *cd;
-	struct sockaddr_storage addr;
-	socklen_t len;
+	struct sockaddr_storage addr, sslocal;
+	socklen_t len, slen;
 	struct __rpc_sockinfo si;
 	SVCXPRT *newxprt;
 	fd_set cleanfds;
@@ -361,6 +346,20 @@ again:
 		__xdrrec_setnonblock(&cd->xdrs, cd->maxrec);
 	} else
 		cd->nonblock = FALSE;
+	slen = sizeof(struct sockaddr_storage);
+	if(_getsockname(sock, (struct sockaddr *)(void *)&sslocal, &slen) < 0) {
+		warnx("svc_vc_create: could not retrieve local addr");
+		newxprt->xp_ltaddr.maxlen = newxprt->xp_ltaddr.len = 0;
+	} else {
+		newxprt->xp_ltaddr.maxlen = newxprt->xp_ltaddr.len = sslocal.ss_len;
+		newxprt->xp_ltaddr.buf = mem_alloc((size_t)sslocal.ss_len);
+		if (newxprt->xp_ltaddr.buf == NULL) {
+			warnx("svc_vc_create: no mem for local addr");
+			newxprt->xp_ltaddr.maxlen = newxprt->xp_ltaddr.len = 0;
+		} else {
+			memcpy(newxprt->xp_ltaddr.buf, &sslocal, (size_t)sslocal.ss_len);
+		}
+	}
 
 	gettimeofday(&cd->last_recv_time, NULL);
 
@@ -369,16 +368,14 @@ again:
 
 /*ARGSUSED*/
 static enum xprt_stat
-rendezvous_stat(xprt)
-	SVCXPRT *xprt;
+rendezvous_stat(SVCXPRT *xprt)
 {
 
 	return (XPRT_IDLE);
 }
 
 static void
-svc_vc_destroy(xprt)
-	SVCXPRT *xprt;
+svc_vc_destroy(SVCXPRT *xprt)
 {
 	assert(xprt != NULL);
 	
@@ -387,8 +384,7 @@ svc_vc_destroy(xprt)
 }
 
 static void
-__svc_vc_dodestroy(xprt)
-	SVCXPRT *xprt;
+__svc_vc_dodestroy(SVCXPRT *xprt)
 {
 	struct cf_conn *cd;
 	struct cf_rendezvous *r;
@@ -411,28 +407,20 @@ __svc_vc_dodestroy(xprt)
 		mem_free(xprt->xp_rtaddr.buf, xprt->xp_rtaddr.maxlen);
 	if (xprt->xp_ltaddr.buf)
 		mem_free(xprt->xp_ltaddr.buf, xprt->xp_ltaddr.maxlen);
-	if (xprt->xp_tp)
-		free(xprt->xp_tp);
-	if (xprt->xp_netid)
-		free(xprt->xp_netid);
-	mem_free(xprt, sizeof(SVCXPRT));
+	free(xprt->xp_tp);
+	free(xprt->xp_netid);
+	svc_xprt_free(xprt);
 }
 
 /*ARGSUSED*/
 static bool_t
-svc_vc_control(xprt, rq, in)
-	SVCXPRT *xprt;
-	const u_int rq;
-	void *in;
+svc_vc_control(SVCXPRT *xprt, const u_int rq, void *in)
 {
 	return (FALSE);
 }
 
 static bool_t
-svc_vc_rendezvous_control(xprt, rq, in)
-	SVCXPRT *xprt;
-	const u_int rq;
-	void *in;
+svc_vc_rendezvous_control(SVCXPRT *xprt, const u_int rq, void *in)
 {
 	struct cf_rendezvous *cfp;
 
@@ -460,10 +448,7 @@ svc_vc_rendezvous_control(xprt, rq, in)
  * fatal for the connection.
  */
 static int
-read_vc(xprtp, buf, len)
-	void *xprtp;
-	void *buf;
-	int len;
+read_vc(void *xprtp, void *buf, int len)
 {
 	SVCXPRT *xprt;
 	int sock;
@@ -523,10 +508,7 @@ fatal_err:
  * Any error is fatal and the connection is closed.
  */
 static int
-write_vc(xprtp, buf, len)
-	void *xprtp;
-	void *buf;
-	int len;
+write_vc(void *xprtp, void *buf, int len)
 {
 	SVCXPRT *xprt;
 	int i, cnt;
@@ -548,7 +530,7 @@ write_vc(xprtp, buf, len)
 				cd->strm_stat = XPRT_DIED;
 				return (-1);
 			}
-			if (cd->nonblock && i != cnt) {
+			if (cd->nonblock) {
 				/*
 				 * For non-blocking connections, do not
 				 * take more than 2 seconds writing the
@@ -562,6 +544,7 @@ write_vc(xprtp, buf, len)
 					return (-1);
 				}
 			}
+			i = 0;
 		}
 	}
 
@@ -569,8 +552,7 @@ write_vc(xprtp, buf, len)
 }
 
 static enum xprt_stat
-svc_vc_stat(xprt)
-	SVCXPRT *xprt;
+svc_vc_stat(SVCXPRT *xprt)
 {
 	struct cf_conn *cd;
 
@@ -586,9 +568,7 @@ svc_vc_stat(xprt)
 }
 
 static bool_t
-svc_vc_recv(xprt, msg)
-	SVCXPRT *xprt;
-	struct rpc_msg *msg;
+svc_vc_recv(SVCXPRT *xprt, struct rpc_msg *msg)
 {
 	struct cf_conn *cd;
 	XDR *xdrs;
@@ -602,10 +582,11 @@ svc_vc_recv(xprt, msg)
 	if (cd->nonblock) {
 		if (!__xdrrec_getrec(xdrs, &cd->strm_stat, TRUE))
 			return FALSE;
+	} else {
+		(void)xdrrec_skiprecord(xdrs);
 	}
 
 	xdrs->x_op = XDR_DECODE;
-	(void)xdrrec_skiprecord(xdrs);
 	if (xdr_callmsg(xdrs, msg)) {
 		cd->x_id = msg->rm_xid;
 		return (TRUE);
@@ -615,23 +596,18 @@ svc_vc_recv(xprt, msg)
 }
 
 static bool_t
-svc_vc_getargs(xprt, xdr_args, args_ptr)
-	SVCXPRT *xprt;
-	xdrproc_t xdr_args;
-	void *args_ptr;
+svc_vc_getargs(SVCXPRT *xprt, xdrproc_t xdr_args, void *args_ptr)
 {
+	struct cf_conn *cd;
 
 	assert(xprt != NULL);
-	/* args_ptr may be NULL */
-	return ((*xdr_args)(&(((struct cf_conn *)(xprt->xp_p1))->xdrs),
-	    args_ptr));
+	cd = (struct cf_conn *)(xprt->xp_p1);
+	return (SVCAUTH_UNWRAP(&SVC_AUTH(xprt),
+		&cd->xdrs, xdr_args, args_ptr));
 }
 
 static bool_t
-svc_vc_freeargs(xprt, xdr_args, args_ptr)
-	SVCXPRT *xprt;
-	xdrproc_t xdr_args;
-	void *args_ptr;
+svc_vc_freeargs(SVCXPRT *xprt, xdrproc_t xdr_args, void *args_ptr)
 {
 	XDR *xdrs;
 
@@ -645,13 +621,14 @@ svc_vc_freeargs(xprt, xdr_args, args_ptr)
 }
 
 static bool_t
-svc_vc_reply(xprt, msg)
-	SVCXPRT *xprt;
-	struct rpc_msg *msg;
+svc_vc_reply(SVCXPRT *xprt, struct rpc_msg *msg)
 {
 	struct cf_conn *cd;
 	XDR *xdrs;
 	bool_t rstat;
+	xdrproc_t xdr_proc;
+	caddr_t xdr_where;
+	u_int pos;
 
 	assert(xprt != NULL);
 	assert(msg != NULL);
@@ -661,18 +638,35 @@ svc_vc_reply(xprt, msg)
 
 	xdrs->x_op = XDR_ENCODE;
 	msg->rm_xid = cd->x_id;
-	rstat = xdr_replymsg(xdrs, msg);
-	(void)xdrrec_endofrecord(xdrs, TRUE);
+	rstat = TRUE;
+	if (msg->rm_reply.rp_stat == MSG_ACCEPTED &&
+	    msg->rm_reply.rp_acpt.ar_stat == SUCCESS) {
+		xdr_proc = msg->acpted_rply.ar_results.proc;
+		xdr_where = msg->acpted_rply.ar_results.where;
+		msg->acpted_rply.ar_results.proc = (xdrproc_t) xdr_void;
+		msg->acpted_rply.ar_results.where = NULL;
+
+		pos = XDR_GETPOS(xdrs);
+		if (!xdr_replymsg(xdrs, msg) ||
+		    !SVCAUTH_WRAP(&SVC_AUTH(xprt), xdrs, xdr_proc, xdr_where)) {
+			XDR_SETPOS(xdrs, pos);
+			rstat = FALSE;
+		}
+	} else {
+		rstat = xdr_replymsg(xdrs, msg);
+	}
+
+	if (rstat)
+		(void)xdrrec_endofrecord(xdrs, TRUE);
+
 	return (rstat);
 }
 
 static void
-svc_vc_ops(xprt)
-	SVCXPRT *xprt;
+svc_vc_ops(SVCXPRT *xprt)
 {
 	static struct xp_ops ops;
 	static struct xp_ops2 ops2;
-	extern mutex_t ops_lock;
 
 /* VARIABLES PROTECTED BY ops_lock: ops, ops2 */
 
@@ -692,12 +686,10 @@ svc_vc_ops(xprt)
 }
 
 static void
-svc_vc_rendezvous_ops(xprt)
-	SVCXPRT *xprt;
+svc_vc_rendezvous_ops(SVCXPRT *xprt)
 {
 	static struct xp_ops ops;
 	static struct xp_ops2 ops2;
-	extern mutex_t ops_lock;
 
 	mutex_lock(&ops_lock);
 	if (ops.xp_recv == NULL) {
@@ -708,7 +700,7 @@ svc_vc_rendezvous_ops(xprt)
 		ops.xp_reply =
 		    (bool_t (*)(SVCXPRT *, struct rpc_msg *))abort;
 		ops.xp_freeargs =
-		    (bool_t (*)(SVCXPRT *, xdrproc_t, void *))abort,
+		    (bool_t (*)(SVCXPRT *, xdrproc_t, void *))abort;
 		ops.xp_destroy = svc_vc_destroy;
 		ops2.xp_control = svc_vc_rendezvous_control;
 	}

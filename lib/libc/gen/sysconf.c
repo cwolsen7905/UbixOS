@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,23 +34,28 @@
 static char sccsid[] = "@(#)sysconf.c	8.2 (Berkeley) 3/20/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/sysconf.c,v 1.20 2002/11/17 08:54:29 dougb Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/sysconf.c 317130 2017-04-19 10:54:08Z kib $");
 
+#include "namespace.h"
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/sysctl.h>
 #include <sys/resource.h>
 #include <sys/socket.h>
 
+#include <elf.h>
 #include <errno.h>
 #include <limits.h>
 #include <paths.h>
 #include <pthread.h>		/* we just need the limits */
+#include <semaphore.h>
 #include <time.h>
 #include <unistd.h>
+#include "un-namespace.h"
 
 #include "../stdlib/atexit.h"
-#include "../stdtime/tzfile.h"
+#include "tzfile.h"		/* from ../../../contrib/tzcode/stdtime */
+#include "libc_private.h"
 
 #define	_PATH_ZONEINFO	TZDIR	/* from tzfile.h */
 
@@ -71,16 +72,14 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/sysconf.c,v 1.20 2002/11/17 08:54:29 dougb 
  * less useful than returning up-to-date values, however.
  */
 long
-sysconf(name)
-	int name;
+sysconf(int name)
 {
 	struct rlimit rl;
 	size_t len;
 	int mib[2], sverrno, value;
-	long defaultresult;
+	long lvalue, defaultresult;
 	const char *path;
 
-	len = sizeof(value);
 	defaultresult = -1;
 
 	switch (name) {
@@ -105,7 +104,6 @@ sysconf(name)
 		mib[1] = KERN_NGROUPS;
 		break;
 	case _SC_OPEN_MAX:
-	case _SC_STREAM_MAX:	/* assume fds run out before memory does */
 		if (getrlimit(RLIMIT_NOFILE, &rl) != 0)
 			return (-1);
 		if (rl.rlim_cur == RLIM_INFINITY)
@@ -114,6 +112,25 @@ sysconf(name)
 			errno = EOVERFLOW;
 			return (-1);
 		}
+		return ((long)rl.rlim_cur);
+	case _SC_STREAM_MAX:
+		if (getrlimit(RLIMIT_NOFILE, &rl) != 0)
+			return (-1);
+		if (rl.rlim_cur == RLIM_INFINITY)
+			return (-1);
+		if (rl.rlim_cur > LONG_MAX) {
+			errno = EOVERFLOW;
+			return (-1);
+		}
+		/*
+		 * struct __sFILE currently has a limitation that
+		 * file descriptors must fit in a signed short.
+		 * This doesn't precisely capture the letter of POSIX
+		 * but approximates the spirit.
+		 */
+		if (rl.rlim_cur > SHRT_MAX)
+			return (SHRT_MAX);
+
 		return ((long)rl.rlim_cur);
 	case _SC_JOB_CONTROL:
 		return (_POSIX_JOB_CONTROL);
@@ -170,11 +187,11 @@ sysconf(name)
 do_NAME_MAX:
 		sverrno = errno;
 		errno = 0;
-		value = pathconf(path, _PC_NAME_MAX);
-		if (value == -1 && errno != 0)
+		lvalue = pathconf(path, _PC_NAME_MAX);
+		if (lvalue == -1 && errno != 0)
 			return (-1);
 		errno = sverrno;
-		return (value);
+		return (lvalue);
 
 	case _SC_ASYNCHRONOUS_IO:
 #if _POSIX_ASYNCHRONOUS_IO == 0
@@ -283,13 +300,9 @@ do_NAME_MAX:
 		mib[1] = CTL_P1003_1B_RTSIG_MAX;
 		goto yesno;
 	case _SC_SEM_NSEMS_MAX:
-		mib[0] = CTL_P1003_1B;
-		mib[1] = CTL_P1003_1B_SEM_NSEMS_MAX;
-		goto yesno;
+		return (-1);
 	case _SC_SEM_VALUE_MAX:
-		mib[0] = CTL_P1003_1B;
-		mib[1] = CTL_P1003_1B_SEM_VALUE_MAX;
-		goto yesno;
+		return (SEM_VALUE_MAX);
 	case _SC_SIGQUEUE_MAX:
 		mib[0] = CTL_P1003_1B;
 		mib[1] = CTL_P1003_1B_SIGQUEUE_MAX;
@@ -297,12 +310,13 @@ do_NAME_MAX:
 	case _SC_TIMER_MAX:
 		mib[0] = CTL_P1003_1B;
 		mib[1] = CTL_P1003_1B_TIMER_MAX;
-
-yesno:		if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
+yesno:
+		len = sizeof(value);
+		if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
 			return (-1);
 		if (value == 0)
 			return (defaultresult);
-		return (value);
+		return ((long)value);
 
 	case _SC_2_PBS:
 	case _SC_2_PBS_ACCOUNTING:
@@ -343,11 +357,7 @@ yesno:		if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
 		return (_POSIX_CLOCK_SELECTION);
 #endif
 	case _SC_CPUTIME:
-#if _POSIX_CPUTIME == 0
-#error "_POSIX_CPUTIME"
-#else
 		return (_POSIX_CPUTIME);
-#endif
 #ifdef notdef
 	case _SC_FILE_LOCKING:
 		/*
@@ -355,11 +365,17 @@ yesno:		if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
 		 * _POSIX_FILE_LOCKING, so we can't answer this one.
 		 */
 #endif
-#if _POSIX_THREAD_SAFE_FUNCTIONS > -1
+
+	/*
+	 * SUSv4tc1 says the following about _SC_GETGR_R_SIZE_MAX and
+	 * _SC_GETPW_R_SIZE_MAX:
+	 * Note that sysconf(_SC_GETGR_R_SIZE_MAX) may return -1 if
+	 * there is no hard limit on the size of the buffer needed to
+	 * store all the groups returned.
+	 */
 	case _SC_GETGR_R_SIZE_MAX:
 	case _SC_GETPW_R_SIZE_MAX:
-#error "somebody needs to implement this"
-#endif
+		return (-1);
 	case _SC_HOST_NAME_MAX:
 		return (MAXHOSTNAMELEN - 1); /* does not include \0 */
 	case _SC_LOGIN_NAME_MAX:
@@ -530,8 +546,9 @@ yesno:		if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
 		return (_XOPEN_REALTIME_THREADS);
 #endif
 	case _SC_XOPEN_SHM:
+		len = sizeof(lvalue);
 		sverrno = errno;
-		if (sysctlbyname("kern.ipc.shmmin", &value, &len, NULL, 
+		if (sysctlbyname("kern.ipc.shmmin", &lvalue, &len, NULL,
 		    0) == -1) {
 			errno = sverrno;
 			return (-1);
@@ -557,10 +574,10 @@ yesno:		if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
 	case _SC_IPV6:
 #if _POSIX_IPV6 == 0
 		sverrno = errno;
-		value = socket(PF_INET6, SOCK_DGRAM, 0);
+		value = _socket(PF_INET6, SOCK_DGRAM, 0);
 		errno = sverrno;
 		if (value >= 0) {
-			close(value);
+			_close(value);
 			return (200112L);
 		} else
 			return (0);
@@ -570,13 +587,35 @@ yesno:		if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
 
 	case _SC_NPROCESSORS_CONF:
 	case _SC_NPROCESSORS_ONLN:
+		if (_elf_aux_info(AT_NCPUS, &value, sizeof(value)) == 0)
+			return ((long)value);
 		mib[0] = CTL_HW;
 		mib[1] = HW_NCPU;
 		break;
+
+#ifdef _SC_PHYS_PAGES
+	case _SC_PHYS_PAGES:
+		len = sizeof(lvalue);
+		if (sysctlbyname("hw.availpages", &lvalue, &len, NULL, 0) == -1)
+			return (-1);
+		return (lvalue);
+#endif
+
+#ifdef _SC_CPUSET_SIZE
+	case _SC_CPUSET_SIZE:
+		len = sizeof(value);
+		if (sysctlbyname("kern.sched.cpusetsize", &value, &len, NULL,
+		    0) == -1)
+			return (-1);
+		return ((long)value);
+#endif
 
 	default:
 		errno = EINVAL;
 		return (-1);
 	}
-	return (sysctl(mib, 2, &value, &len, NULL, 0) == -1 ? -1 : value);
+	len = sizeof(value);
+	if (sysctl(mib, 2, &value, &len, NULL, 0) == -1)
+		value = -1;
+	return ((long)value);
 }

@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -55,6 +51,7 @@
 static char sccsid[] = "@(#)gethostnamadr.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/gethostbyht.c 254700 2013-08-23 13:59:47Z jilles $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -63,6 +60,7 @@ static char sccsid[] = "@(#)gethostnamadr.c	8.1 (Berkeley) 6/4/93";
 #include <netdb.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <errno.h>
 #include <string.h>
 #include <stdarg.h>
 #include <nsswitch.h>
@@ -74,7 +72,7 @@ void
 _sethosthtent(int f, struct hostent_data *hed)
 {
 	if (!hed->hostf)
-		hed->hostf = fopen(_PATH_HOSTS, "r");
+		hed->hostf = fopen(_PATH_HOSTS, "re");
 	else
 		rewind(hed->hostf);
 	hed->stayopen = f;
@@ -98,7 +96,7 @@ gethostent_p(struct hostent *he, struct hostent_data *hed, int mapped,
 	int af, len;
 	char hostbuf[BUFSIZ + 1];
 
-	if (!hed->hostf && !(hed->hostf = fopen(_PATH_HOSTS, "r"))) {
+	if (!hed->hostf && !(hed->hostf = fopen(_PATH_HOSTS, "re"))) {
 		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		return (-1);
 	}
@@ -195,8 +193,11 @@ gethostent_r(struct hostent *hptr, char *buffer, size_t buflen,
 	}
 	if (gethostent_p(&he, hed, statp->options & RES_USE_INET6, statp) != 0)
 		return (-1);
-	if (__copy_hostent(&he, hptr, buffer, buflen) != 0)
-		return (-1);
+	if (__copy_hostent(&he, hptr, buffer, buflen) != 0) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
+		*h_errnop = statp->res_h_errno;
+		return ((errno != 0) ? errno : -1);
+	}
 	*result = hptr;
 	return (0);
 }
@@ -271,8 +272,10 @@ found:
 		return (NS_NOTFOUND);
 	}
 	if (__copy_hostent(&he, hptr, buffer, buflen) != 0) {
+		*errnop = errno;
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		return (NS_RETURN);
 	}
 	*((struct hostent **)rval) = hptr;
 	return (NS_SUCCESS);
@@ -326,8 +329,10 @@ _ht_gethostbyaddr(void *rval, void *cb_data, va_list ap)
 	if (error != 0)
 		return (NS_NOTFOUND);
 	if (__copy_hostent(&he, hptr, buffer, buflen) != 0) {
+		*errnop = errno;
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		return (NS_RETURN);
 	}
 	*((struct hostent **)rval) = hptr;
 	return (NS_SUCCESS);

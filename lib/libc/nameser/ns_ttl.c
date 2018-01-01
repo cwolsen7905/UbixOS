@@ -16,10 +16,10 @@
  */
 
 #ifndef lint
-static const char rcsid[] = "$Id: ns_ttl.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: ns_ttl.c,v 1.4 2005/07/28 06:51:49 marka Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/nameser/ns_ttl.c,v 1.1.1.1.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/nameser/ns_ttl.c 269867 2014-08-12 12:36:06Z ume $");
 
 /* Import. */
 
@@ -160,3 +160,5 @@ fmt1(int t, char s, char **buf, size_t *buflen) {
 	*buflen -= len;
 	return (0);
 }
+
+/*! \file */

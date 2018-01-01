@@ -24,7 +24,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/uuid/uuid_create.c,v 1.2 2003/08/08 19:18:43 marcel Exp $
+ * $FreeBSD: releng/11.1/lib/libc/uuid/uuid_create.c 118670 2003-08-08 19:18:43Z marcel $
  */
 
 #include <uuid.h>

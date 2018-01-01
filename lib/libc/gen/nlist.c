@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)nlist.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/nlist.c,v 1.18.12.1 2005/12/30 22:13:56 marcel Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/nlist.c 298120 2016-04-16 17:52:00Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -51,7 +47,10 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/nlist.c,v 1.18.12.1 2005/12/30 22:13:56 mar
 #include <unistd.h>
 #include "un-namespace.h"
 
+/* i386 is the only current FreeBSD architecture that used a.out format. */
+#ifdef __i386__
 #define _NLIST_DO_AOUT
+#endif
 #define _NLIST_DO_ELF
 
 #ifdef _NLIST_DO_ELF
@@ -62,15 +61,14 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/nlist.c,v 1.18.12.1 2005/12/30 22:13:56 mar
 int __fdnlist(int, struct nlist *);
 int __aout_fdnlist(int, struct nlist *);
 int __elf_fdnlist(int, struct nlist *);
+int __elf_is_okay__(Elf_Ehdr *);
 
 int
-nlist(name, list)
-	const char *name;
-	struct nlist *list;
+nlist(const char *name, struct nlist *list)
 {
 	int fd, n;
 
-	fd = _open(name, O_RDONLY, 0);
+	fd = _open(name, O_RDONLY | O_CLOEXEC, 0);
 	if (fd < 0)
 		return (-1);
 	n = __fdnlist(fd, list);
@@ -90,13 +88,12 @@ static struct nlist_handlers {
 };
 
 int
-__fdnlist(fd, list)
-	int fd;
-	struct nlist *list;
+__fdnlist(int fd, struct nlist *list)
 {
-	int n = -1, i;
+	int n = -1;
+	unsigned int i;
 
-	for (i = 0; i < sizeof(nlist_fn) / sizeof(nlist_fn[0]); i++) {
+	for (i = 0; i < nitems(nlist_fn); i++) {
 		n = (nlist_fn[i].fn)(fd, list);
 		if (n != -1)
 			break;
@@ -108,9 +105,7 @@ __fdnlist(fd, list)
 
 #ifdef _NLIST_DO_AOUT
 int
-__aout_fdnlist(fd, list)
-	int fd;
-	struct nlist *list;
+__aout_fdnlist(int fd, struct nlist *list)
 {
 	struct nlist *p, *symtab;
 	caddr_t strtab, a_out_mmap;
@@ -213,8 +208,7 @@ static void elf_sym_to_nlist(struct nlist *, Elf_Sym *, Elf_Shdr *, int);
  * as such its use should be restricted.
  */
 int
-__elf_is_okay__(ehdr)
-	Elf_Ehdr *ehdr;
+__elf_is_okay__(Elf_Ehdr *ehdr)
 {
 	int retval = 0;
 	/*
@@ -237,9 +231,7 @@ __elf_is_okay__(ehdr)
 }
 
 int
-__elf_fdnlist(fd, list)
-	int fd;
-	struct nlist *list;
+__elf_fdnlist(int fd, struct nlist *list)
 {
 	struct nlist *p;
 	Elf_Off symoff = 0, symstroff = 0;
@@ -273,7 +265,7 @@ __elf_fdnlist(fd, list)
 	}
 
 	/* mmap section header table */
-	base = mmap(NULL, (size_t)shdr_size, PROT_READ, 0, fd,
+	base = mmap(NULL, (size_t)shdr_size, PROT_READ, MAP_PRIVATE, fd,
 	    (off_t)ehdr.e_shoff);
 	if (base == MAP_FAILED)
 		return (-1);
@@ -306,7 +298,7 @@ __elf_fdnlist(fd, list)
 	 * making the memory allocation permanent as with malloc/free
 	 * (i.e., munmap will return it to the system).
 	 */
-	base = mmap(NULL, (size_t)symstrsize, PROT_READ, 0, fd,
+	base = mmap(NULL, (size_t)symstrsize, PROT_READ, MAP_PRIVATE, fd,
 	    (off_t)symstroff);
 	if (base == MAP_FAILED)
 		goto done;
@@ -379,11 +371,7 @@ __elf_fdnlist(fd, list)
  * n_value and n_type members.
  */
 static void
-elf_sym_to_nlist(nl, s, shdr, shnum)
-	struct nlist *nl;
-	Elf_Sym *s;
-	Elf_Shdr *shdr;
-	int shnum;
+elf_sym_to_nlist(struct nlist *nl, Elf_Sym *s, Elf_Shdr *shdr, int shnum)
 {
 	nl->n_value = s->st_value;
 

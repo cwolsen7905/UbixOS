@@ -1,7 +1,24 @@
 /*
+ * Portions Copyright (C) 2004-2009  Internet Systems Consortium, Inc. ("ISC")
+ * Portions Copyright (C) 1996-2003  Internet Software Consortium.
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH
+ * REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS.  IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT,
+ * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+ * LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+ * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
+ */
+
+/*
  * Copyright (c) 1985, 1989, 1993
  *    The Regents of the University of California.  All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -10,14 +27,10 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- * 	This product includes software developed by the University of
- * 	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -33,14 +46,14 @@
 
 /*
  * Portions Copyright (c) 1993 by Digital Equipment Corporation.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies, and that
  * the name of Digital Equipment Corporation not be used in advertising or
  * publicity pertaining to distribution of the document or software without
  * specific, written prior permission.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND DIGITAL EQUIPMENT CORP. DISCLAIMS ALL
  * WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS.   IN NO EVENT SHALL DIGITAL EQUIPMENT
@@ -51,41 +64,24 @@
  * SOFTWARE.
  */
 
-/*
- * Copyright (c) 2005 by Internet Systems Consortium, Inc. ("ISC")
- * Portions Copyright (c) 1996-1999 by Internet Software Consortium.
- *
- * Permission to use, copy, modify, and distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
- *
- * THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS.  IN NO EVENT SHALL ISC BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
- * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
-
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char sccsid[] = "@(#)res_send.c	8.1 (Berkeley) 6/4/93";
-static const char rcsid[] = "$Id: res_send.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: res_send.c,v 1.22 2009/01/22 23:49:23 tbox Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/resolv/res_send.c,v 1.2.2.2 2006/08/07 19:14:55 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/resolv/res_send.c 298226 2016-04-18 21:05:15Z avos $");
 
-/*
+/*! \file
+ * \brief
  * Send query to name server and wait for reply.
  */
 
 #include "port_before.h"
-#ifndef USE_KQUEUE
+#if !defined(USE_KQUEUE) && !defined(USE_POLL)
 #include "fd_setsize.h"
 #endif
 
 #include "namespace.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/time.h>
 #include <sys/socket.h>
@@ -122,16 +118,16 @@ __FBSDID("$FreeBSD: src/lib/libc/resolv/res_send.c,v 1.2.2.2 2006/08/07 19:14:55
 #include "un-namespace.h"
 
 /* Options.  Leave them on. */
-#define DEBUG
+#ifndef	DEBUG
+#define	DEBUG
+#endif
 #include "res_debug.h"
 #include "res_private.h"
 
 #define EXT(res) ((res)->_u._ext)
 
-#ifndef USE_POLL
+#if !defined(USE_POLL) && !defined(USE_KQUEUE)
 static const int highestFD = FD_SETSIZE - 1;
-#else
-static int highestFD = 0;
 #endif
 
 /* Forward. */
@@ -145,7 +141,7 @@ static int		send_dg(res_state,
 				int kq,
 #endif
 				const u_char *, int,
-				u_char *, int, int *, int,
+				u_char *, int, int *, int, int,
 				int *, int *);
 static void		Aerror(const res_state, FILE *, const char *, int,
 			       const struct sockaddr *, int);
@@ -162,14 +158,15 @@ static const int niflags = NI_NUMERICHOST | NI_NUMERICSERV;
 
 /* Public. */
 
-/* int
- * res_isourserver(ina)
+/*%
  *	looks up "ina" in _res.ns_addr_list[]
+ *
  * returns:
- *	0  : not found
- *	>0 : found
+ *\li	0  : not found
+ *\li	>0 : found
+ *
  * author:
- *	paul vixie, 29may94
+ *\li	paul vixie, 29may94
  */
 int
 res_ourserver_p(const res_state statp, const struct sockaddr *sa) {
@@ -212,17 +209,19 @@ res_ourserver_p(const res_state statp, const struct sockaddr *sa) {
 	return (0);
 }
 
-/* int
- * res_nameinquery(name, type, class, buf, eom)
+/*%
  *	look for (name,type,class) in the query section of packet (buf,eom)
+ *
  * requires:
- *	buf + HFIXEDSZ <= eom
+ *\li	buf + HFIXEDSZ <= eom
+ *
  * returns:
- *	-1 : format error
- *	0  : not found
- *	>0 : found
+ *\li	-1 : format error
+ *\li	0  : not found
+ *\li	>0 : found
+ *
  * author:
- *	paul vixie, 29may94
+ *\li	paul vixie, 29may94
  */
 int
 res_nameinquery(const char *name, int type, int class,
@@ -250,16 +249,17 @@ res_nameinquery(const char *name, int type, int class,
 	return (0);
 }
 
-/* int
- * res_queriesmatch(buf1, eom1, buf2, eom2)
+/*%
  *	is there a 1:1 mapping of (name,type,class)
  *	in (buf1,eom1) and (buf2,eom2)?
+ *
  * returns:
- *	-1 : format error
- *	0  : not a 1:1 mapping
- *	>0 : is a 1:1 mapping
+ *\li	-1 : format error
+ *\li	0  : not a 1:1 mapping
+ *\li	>0 : is a 1:1 mapping
+ *
  * author:
- *	paul vixie, 29may94
+ *\li	paul vixie, 29may94
  */
 int
 res_queriesmatch(const u_char *buf1, const u_char *eom1,
@@ -303,17 +303,14 @@ int
 res_nsend(res_state statp,
 	  const u_char *buf, int buflen, u_char *ans, int anssiz)
 {
-	int gotsomewhere, terrno, try, v_circuit, resplen, ns, n;
+	int gotsomewhere, terrno, tries, v_circuit, resplen, ns, n;
 #ifdef USE_KQUEUE
 	int kq;
 #endif
 	char abuf[NI_MAXHOST];
 
-#ifdef USE_POLL
-	highestFD = sysconf(_SC_OPEN_MAX) - 1;
-#endif
-
-	if (statp->nscount == 0) {
+	/* No name servers or res_init() failure */
+	if (statp->nscount == 0 || EXT(statp).ext == NULL) {
 		errno = ESRCH;
 		return (-1);
 	}
@@ -357,7 +354,7 @@ res_nsend(res_state statp,
 				if (EXT(statp).nssocks[ns] == -1)
 					continue;
 				peerlen = sizeof(peer);
-				if (_getsockname(EXT(statp).nssocks[ns],
+				if (_getpeername(EXT(statp).nssocks[ns],
 				    (struct sockaddr *)&peer, &peerlen) < 0) {
 					needclose++;
 					break;
@@ -408,7 +405,7 @@ res_nsend(res_state statp,
 		nstime = EXT(statp).nstimes[0];
 		for (ns = 0; ns < lastns; ns++) {
 			if (EXT(statp).ext != NULL)
-                                EXT(statp).ext->nsaddrs[ns] = 
+				EXT(statp).ext->nsaddrs[ns] =
 					EXT(statp).ext->nsaddrs[ns + 1];
 			statp->nsaddr_list[ns] = statp->nsaddr_list[ns + 1];
 			EXT(statp).nssocks[ns] = EXT(statp).nssocks[ns + 1];
@@ -424,7 +421,7 @@ res_nsend(res_state statp,
 	/*
 	 * Send request, RETRY times, or until successful.
 	 */
-	for (try = 0; try < statp->retry; try++) {
+	for (tries = 0; tries < statp->retry; tries++) {
 	    for (ns = 0; ns < statp->nscount; ns++) {
 		struct sockaddr *nsap;
 		int nsaplen;
@@ -475,7 +472,7 @@ res_nsend(res_state statp,
 
 		if (v_circuit) {
 			/* Use VC; at most one attempt per server. */
-			try = statp->retry;
+			tries = statp->retry;
 			n = send_vc(statp, buf, buflen, ans, anssiz, &terrno,
 				    ns);
 			if (n < 0)
@@ -490,7 +487,7 @@ res_nsend(res_state statp,
 				    kq,
 #endif
 				    buf, buflen, ans, anssiz, &terrno,
-				    ns, &v_circuit, &gotsomewhere);
+				    ns, tries, &v_circuit, &gotsomewhere);
 			if (n < 0)
 				goto fail;
 			if (n == 0)
@@ -561,9 +558,9 @@ res_nsend(res_state statp,
 #endif
 	if (!v_circuit) {
 		if (!gotsomewhere)
-			errno = ECONNREFUSED;	/* no nameservers found */
+			errno = ECONNREFUSED;	/*%< no nameservers found */
 		else
-			errno = ETIMEDOUT;	/* no answer obtained */
+			errno = ETIMEDOUT;	/*%< no answer obtained */
 	} else
 		errno = terrno;
 	return (-1);
@@ -578,8 +575,7 @@ res_nsend(res_state statp,
 /* Private */
 
 static int
-get_salen(sa)
-	const struct sockaddr *sa;
+get_salen(const struct sockaddr *sa)
 {
 
 #ifdef HAVE_SA_LEN
@@ -593,16 +589,14 @@ get_salen(sa)
 	else if (sa->sa_family == AF_INET6)
 		return (sizeof(struct sockaddr_in6));
 	else
-		return (0);	/* unknown, die on connect */
+		return (0);	/*%< unknown, die on connect */
 }
 
-/*
+/*%
  * pick appropriate nsaddr_list for use.  see res_init() for initialization.
  */
 static struct sockaddr *
-get_nsaddr(statp, n)
-	res_state statp;
-	size_t n;
+get_nsaddr(res_state statp, size_t n)
 {
 
 	if (!statp->nsaddr_list[n].sin_family && EXT(statp).ext) {
@@ -636,6 +630,9 @@ send_vc(res_state statp,
 	u_short len;
 	u_char *cp;
 	void *tmp;
+#ifdef SO_NOSIGPIPE
+	int on = 1;
+#endif
 
 	nsap = get_nsaddr(statp, ns);
 	nsaplen = get_salen(nsap);
@@ -661,11 +658,14 @@ send_vc(res_state statp,
 		if (statp->_vcsock >= 0)
 			res_nclose(statp);
 
-		statp->_vcsock = _socket(nsap->sa_family, SOCK_STREAM, 0);
+		statp->_vcsock = _socket(nsap->sa_family, SOCK_STREAM |
+		    SOCK_CLOEXEC, 0);
+#if !defined(USE_POLL) && !defined(USE_KQUEUE)
 		if (statp->_vcsock > highestFD) {
 			res_nclose(statp);
 			errno = ENOTSOCK;
 		}
+#endif
 		if (statp->_vcsock < 0) {
 			switch (errno) {
 			case EPROTONOSUPPORT:
@@ -681,6 +681,17 @@ send_vc(res_state statp,
 				return (-1);
 			}
 		}
+#ifdef SO_NOSIGPIPE
+		/*
+		 * Disable generation of SIGPIPE when writing to a closed
+		 * socket.  Write should return -1 and set errno to EPIPE
+		 * instead.
+		 *
+		 * Push on even if setsockopt(SO_NOSIGPIPE) fails.
+		 */
+		(void)_setsockopt(statp->_vcsock, SOL_SOCKET, SO_NOSIGPIPE, &on,
+				 sizeof(on));
+#endif
 		errno = 0;
 		if (_connect(statp->_vcsock, nsap, nsaplen) < 0) {
 			*terrno = errno;
@@ -812,8 +823,9 @@ send_dg(res_state statp,
 #ifdef USE_KQUEUE
 	int kq,
 #endif
-	const u_char *buf, int buflen, u_char *ans, int anssiz,
-	int *terrno, int ns, int *v_circuit, int *gotsomewhere)
+	const u_char *buf, int buflen, u_char *ans,
+	int anssiz, int *terrno, int ns, int tries, int *v_circuit,
+	int *gotsomewhere)
 {
 	const HEADER *hp = (const HEADER *) buf;
 	HEADER *anhp = (HEADER *) ans;
@@ -838,11 +850,13 @@ send_dg(res_state statp,
 	nsaplen = get_salen(nsap);
 	if (EXT(statp).nssocks[ns] == -1) {
 		EXT(statp).nssocks[ns] = _socket(nsap->sa_family,
-		    SOCK_DGRAM, 0);
+		    SOCK_DGRAM | SOCK_CLOEXEC, 0);
+#if !defined(USE_POLL) && !defined(USE_KQUEUE)
 		if (EXT(statp).nssocks[ns] > highestFD) {
 			res_nclose(statp);
 			errno = ENOTSOCK;
 		}
+#endif
 		if (EXT(statp).nssocks[ns] < 0) {
 			switch (errno) {
 			case EPROTONOSUPPORT:
@@ -914,7 +928,7 @@ send_dg(res_state statp,
 	/*
 	 * Wait for reply.
 	 */
-	seconds = (statp->retrans << ns);
+	seconds = (statp->retrans << tries);
 	if (ns > 0)
 		seconds /= statp->nscount;
 	if (seconds <= 0)
@@ -947,7 +961,7 @@ send_dg(res_state statp,
 		timeout.tv_nsec/1000000;
 	pollfd.fd = s;
 	pollfd.events = POLLRDNORM;
-	n = poll(&pollfd, 1, polltimeout);
+	n = _poll(&pollfd, 1, polltimeout);
 #endif /* USE_POLL */
 
 	if (n == 0) {
@@ -1086,8 +1100,6 @@ Aerror(const res_state statp, FILE *file, const char *string, int error,
 	int save = errno;
 	char hbuf[NI_MAXHOST];
 	char sbuf[NI_MAXSERV];
-
-	alen = alen;
 
 	if ((statp->options & RES_DEBUG) != 0U) {
 		if (getnameinfo(address, alen, hbuf, sizeof(hbuf),

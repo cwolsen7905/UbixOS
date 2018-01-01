@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)seekdir.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/seekdir.c,v 1.5 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/seekdir.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -44,6 +40,7 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/seekdir.c,v 1.5 2002/02/01 00:57:29 obrien 
 #include "un-namespace.h"
 
 #include "libc_private.h"
+#include "gen-private.h"
 #include "telldir.h"
 
 /*
@@ -51,13 +48,11 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/seekdir.c,v 1.5 2002/02/01 00:57:29 obrien 
  * _seekdir is in telldir.c so that it can share opaque data structures.
  */
 void
-seekdir(dirp, loc)
-	DIR *dirp;
-	long loc;
+seekdir(DIR *dirp, long loc)
 {
 	if (__isthreaded)
-		_pthread_mutex_lock((pthread_mutex_t *)&dirp->dd_lock);
+		_pthread_mutex_lock(&dirp->dd_lock);
 	_seekdir(dirp, loc);
 	if (__isthreaded)
-		_pthread_mutex_unlock((pthread_mutex_t *)&dirp->dd_lock);
+		_pthread_mutex_unlock(&dirp->dd_lock);
 }

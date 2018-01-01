@@ -29,13 +29,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/gen/telldir.h,v 1.2 2001/01/24 12:59:24 deischen Exp $
+ * $FreeBSD: releng/11.1/lib/libc/gen/telldir.h 282485 2015-05-05 14:52:33Z julian $
  */
 
 #ifndef _TELLDIR_H_
 #define	_TELLDIR_H_
 
 #include <sys/queue.h>
+#include <stdbool.h>
 
 /*
  * One of these structures is malloced to describe the current directory
@@ -59,8 +60,10 @@ struct _telldir {
 	long	td_loccnt;	/* index of entry for sequential readdir's */
 };
 
-struct dirent	*_readdir_unlocked(DIR *);
+bool		_filldir(DIR *, bool);
+struct dirent	*_readdir_unlocked(DIR *, int);
 void 		_reclaim_telldir(DIR *);
 void 		_seekdir(DIR *, long);
+void		_fixtelldir(DIR *dirp, long oldseek, long oldloc);
 
 #endif

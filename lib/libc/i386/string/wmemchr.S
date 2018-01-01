@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/wmemchr.S,v 1.2 2003/03/12 06:46:16 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/wmemchr.S 217106 2011-01-07 16:08:40Z kib $");
 
 /*
  * wchar_t *
@@ -103,3 +103,6 @@ no:	xorl	%eax,%eax
 	popl	%ebx
 	popl	%edi
 	ret
+END(wmemchr)
+
+	.section .note.GNU-stack,"",%progbits

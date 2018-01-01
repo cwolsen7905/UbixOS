@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)putc.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/putc.c,v 1.13 2004/03/19 09:04:56 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/putc.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -47,11 +43,10 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/putc.c,v 1.13 2004/03/19 09:04:56 tjr Exp
 #include "libc_private.h"
 
 #undef putc
+#undef putc_unlocked
 
 int
-putc(c, fp)
-	int c;
-	FILE *fp;
+putc(int c, FILE *fp)
 {
 	int retval;
 	FLOCKFILE(fp);
@@ -60,4 +55,11 @@ putc(c, fp)
 	retval = __sputc(c, fp);
 	FUNLOCKFILE(fp);
 	return (retval);
+}
+
+int
+putc_unlocked(int ch, FILE *fp)
+{
+
+	return (__sputc(ch, fp));
 }

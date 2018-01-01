@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,14 +31,13 @@
 static char sccsid[] = "@(#)isatty.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/isatty.c,v 1.5 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/isatty.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include <termios.h>
 #include <unistd.h>
 
 int
-isatty(fd)
-	int fd;
+isatty(int fd)
 {
 	int retval;
 	struct termios t;

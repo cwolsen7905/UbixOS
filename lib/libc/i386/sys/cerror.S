@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,11 +34,12 @@
 	.asciz "@(#)cerror.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/cerror.S,v 1.12 2002/03/23 02:10:28 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/cerror.S 296474 2016-03-08 00:09:34Z emaste $");
 
 #include "SYS.h"
 
 	.globl HIDENAME(cerror)
+	.hidden HIDENAME(cerror)
 
 	/*
 	 * The __error() function is thread aware. For non-threaded
@@ -52,13 +49,14 @@ __FBSDID("$FreeBSD: src/lib/libc/i386/sys/cerror.S,v 1.12 2002/03/23 02:10:28 ob
 	.globl	CNAME(__error)
 	.type	CNAME(__error),@function
 HIDENAME(cerror):
-	pushl	%eax
 #ifdef PIC
-	/* The caller must execute the PIC prologue before jumping to cerror. */
+	PIC_PROLOGUE
+	pushl	%eax
 	call	PIC_PLT(CNAME(__error))
 	popl	%ecx
 	PIC_EPILOGUE
 #else
+	pushl	%eax
 	call	CNAME(__error)
 	popl	%ecx
 #endif
@@ -67,3 +65,4 @@ HIDENAME(cerror):
 	movl	$-1,%edx
 	ret
 
+	.section .note.GNU-stack,"",%progbits

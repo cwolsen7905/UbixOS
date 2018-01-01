@@ -1,6 +1,6 @@
-/* $FreeBSD: src/lib/libc/net/res_config.h,v 1.8.14.1 2006/07/17 10:09:57 ume Exp $ */
+/* $FreeBSD: releng/11.1/lib/libc/net/res_config.h 298830 2016-04-30 01:24:24Z pfg $ */
 
 #define	DEBUG	1	/* enable debugging code (needed for dig) */
 #define	RESOLVSORT	/* allow sorting of addresses in gethostbyname */
-#undef	SUNSECURITY	/* verify gethostbyaddr() calls - WE DONT NEED IT  */
+#undef	SUNSECURITY	/* verify gethostbyaddr() calls - WE DON'T NEED IT  */
 #define MULTI_PTRS_ARE_ALIASES 1 /* fold multiple PTR records into aliases */

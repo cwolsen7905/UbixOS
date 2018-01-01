@@ -10,6 +10,11 @@
  * This code is derived from software contributed to Berkeley by
  * Paul Borman at Krystal Technologies.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -18,10 +23,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -40,15 +41,21 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/wcwidth.c,v 1.7 2004/08/12 12:19:11 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/wcwidth.c 227753 2011-11-20 14:45:42Z theraven $");
 
 #include <wchar.h>
+#include <wctype.h>
+#include <xlocale.h>
 
 #undef wcwidth
 
 int
 wcwidth(wchar_t wc)
 {
-
 	return (__wcwidth(wc));
+}
+int
+wcwidth_l(wchar_t wc, locale_t locale)
+{
+	return (__wcwidth_l(wc, locale));
 }

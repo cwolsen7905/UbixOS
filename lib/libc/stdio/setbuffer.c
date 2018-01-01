@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,15 +34,12 @@
 static char sccsid[] = "@(#)setbuffer.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/setbuffer.c,v 1.7 2002/03/22 21:53:04 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/setbuffer.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include <stdio.h>
 
 void
-setbuffer(fp, buf, size)
-	FILE *fp;
-	char *buf;
-	int size;
+setbuffer(FILE *fp, char *buf, int size)
 {
 
 	(void)setvbuf(fp, buf, buf ? _IOFBF : _IONBF, (size_t)size);
@@ -56,8 +49,7 @@ setbuffer(fp, buf, size)
  * set line buffering
  */
 int
-setlinebuf(fp)
-	FILE *fp;
+setlinebuf(FILE *fp)
 {
 
 	return (setvbuf(fp, (char *)NULL, _IOLBF, (size_t)0));

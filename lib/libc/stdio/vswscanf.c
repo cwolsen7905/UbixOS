@@ -5,6 +5,11 @@
  * This code is derived from software contributed to Berkeley by
  * Donn Seeley at UUNET Technologies, Inc.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,11 +18,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -41,7 +42,7 @@ static char sccsid[] = "@(#)vsscanf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 __FBSDID("FreeBSD: src/lib/libc/stdio/vsscanf.c,v 1.11 2002/08/21 16:19:57 mike Exp ");
 #endif
-__FBSDID("$FreeBSD: src/lib/libc/stdio/vswscanf.c,v 1.3 2004/04/07 09:55:05 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/vswscanf.c 249808 2013-04-23 13:33:13Z emaste $");
 
 #include <limits.h>
 #include <stdarg.h>
@@ -50,6 +51,7 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/vswscanf.c,v 1.3 2004/04/07 09:55:05 tjr 
 #include <string.h>
 #include <wchar.h>
 #include "local.h"
+#include "xlocale_private.h"
 
 static int	eofread(void *, char *, int);
 
@@ -61,16 +63,17 @@ eofread(void *cookie, char *buf, int len)
 }
 
 int
-vswscanf(const wchar_t * __restrict str, const wchar_t * __restrict fmt,
-    va_list ap)
+vswscanf_l(const wchar_t * __restrict str, locale_t locale,
+		const wchar_t * __restrict fmt, va_list ap)
 {
 	static const mbstate_t initial;
 	mbstate_t mbs;
-	FILE f;
-	struct __sFILEX ext;
+	FILE f = FAKE_FILE;
 	char *mbstr;
 	size_t mlen;
 	int r;
+	const wchar_t *strp;
+	FIX_LOCALE(locale);
 
 	/*
 	 * XXX Convert the wide character string to multibyte, which
@@ -79,21 +82,23 @@ vswscanf(const wchar_t * __restrict str, const wchar_t * __restrict fmt,
 	if ((mbstr = malloc(wcslen(str) * MB_CUR_MAX + 1)) == NULL)
 		return (EOF);
 	mbs = initial;
-	if ((mlen = wcsrtombs(mbstr, &str, SIZE_T_MAX, &mbs)) == (size_t)-1) {
+	strp = str;
+	if ((mlen = wcsrtombs_l(mbstr, &strp, SIZE_T_MAX, &mbs, locale)) == (size_t)-1) {
 		free(mbstr);
 		return (EOF);
 	}
-	f._file = -1;
 	f._flags = __SRD;
 	f._bf._base = f._p = (unsigned char *)mbstr;
 	f._bf._size = f._r = mlen;
 	f._read = eofread;
-	f._ub._base = NULL;
-	f._lb._base = NULL;
-	f._extra = &ext;
-	INITEXTRA(&f);
-	r = __vfwscanf(&f, fmt, ap);
+	r = __vfwscanf(&f, locale, fmt, ap);
 	free(mbstr);
 
 	return (r);
+}
+int
+vswscanf(const wchar_t * __restrict str, const wchar_t * __restrict fmt,
+    va_list ap)
+{
+	return vswscanf_l(str, __get_locale(), fmt, ap);
 }

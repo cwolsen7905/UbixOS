@@ -12,7 +12,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/seed48.c,v 1.2 2002/03/22 21:52:05 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/seed48.c 92986 2002-03-22 21:53:29Z obrien $");
 
 #include "rand48.h"
 

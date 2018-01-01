@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)closedir.c	8.1 (Berkeley) 6/10/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/closedir.c,v 1.10 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/closedir.c 254499 2013-08-18 20:11:34Z pjd $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -46,29 +42,35 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/closedir.c,v 1.10 2002/02/01 00:57:29 obrie
 #include "un-namespace.h"
 
 #include "libc_private.h"
+#include "gen-private.h"
 #include "telldir.h"
 
 /*
  * close a directory.
  */
 int
-closedir(dirp)
-	DIR *dirp;
+fdclosedir(DIR *dirp)
 {
 	int fd;
 
 	if (__isthreaded)
-		_pthread_mutex_lock((pthread_mutex_t *)&dirp->dd_lock);
-	_seekdir(dirp, dirp->dd_rewind);	/* free seekdir storage */
+		_pthread_mutex_lock(&dirp->dd_lock);
 	fd = dirp->dd_fd;
 	dirp->dd_fd = -1;
 	dirp->dd_loc = 0;
 	free((void *)dirp->dd_buf);
 	_reclaim_telldir(dirp);
 	if (__isthreaded) {
-		_pthread_mutex_unlock((pthread_mutex_t *)&dirp->dd_lock);
-		_pthread_mutex_destroy((pthread_mutex_t *)&dirp->dd_lock);
+		_pthread_mutex_unlock(&dirp->dd_lock);
+		_pthread_mutex_destroy(&dirp->dd_lock);
 	}
 	free((void *)dirp);
-	return(_close(fd));
+	return (fd);
+}
+
+int
+closedir(DIR *dirp)
+{
+
+	return (_close(fdclosedir(dirp)));
 }

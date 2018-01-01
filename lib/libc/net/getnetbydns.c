@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -62,6 +58,7 @@
 static char sccsid[] = "@(#)gethostnamadr.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/getnetbydns.c 288045 2015-09-20 21:21:01Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/socket.h>
@@ -358,8 +355,10 @@ _dns_getnetbyaddr(void *rval, void *cb_data, va_list ap)
 			net >>= 8;
 		ne.n_net = net;
 		if (__copy_netent(&ne, nptr, buffer, buflen) != 0) {
+			*errnop = errno;
+			RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 			*h_errnop = statp->res_h_errno;
-			return (NS_NOTFOUND);
+			return (NS_RETURN);
 		}
 		*((struct netent **)rval) = nptr;
 		return (NS_SUCCESS);
@@ -434,8 +433,10 @@ _dns_getnetbyname(void *rval, void *cb_data, va_list ap)
 		return (NS_NOTFOUND);
 	}
 	if (__copy_netent(&ne, nptr, buffer, buflen) != 0) {
+		*errnop = errno;
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		return (NS_RETURN);
 	}
 	*((struct netent **)rval) = nptr;
 	return (NS_SUCCESS);
@@ -454,7 +455,7 @@ _setnetdnsent(int stayopen)
 }
 
 void
-_endnetdnsent()
+_endnetdnsent(void)
 {
 	res_state statp;
 

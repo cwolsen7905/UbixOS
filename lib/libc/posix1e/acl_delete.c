@@ -30,7 +30,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/10.2/lib/libc/posix1e/acl_delete.c 192586 2009-05-22 15:56:43Z trasz $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/posix1e/acl_delete.c 192586 2009-05-22 15:56:43Z trasz $");
 
 #include <sys/types.h>
 #include "namespace.h"

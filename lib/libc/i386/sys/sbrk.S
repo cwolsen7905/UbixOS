@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,7 +34,7 @@
 	.asciz "@(#)sbrk.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/sbrk.S,v 1.11 2002/08/08 17:28:07 kan Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/sbrk.S 240152 2012-09-05 21:41:05Z jilles $");
 
 #include "SYS.h"
 
@@ -63,7 +59,7 @@ ENTRY(sbrk)
 	addl	%eax,4(%esp)
 	mov	$SYS_break,%eax
 	KERNCALL
-	jb	err
+	jb	HIDENAME(cerror)
 	PIC_PROLOGUE
 	movl	PIC_GOT(HIDENAME(curbrk)),%edx
 	movl	(%edx),%eax
@@ -71,9 +67,6 @@ ENTRY(sbrk)
 	PIC_EPILOGUE
 back:
 	ret
-err:
-	PIC_PROLOGUE
-	jmp	PIC_PLT(HIDENAME(cerror))
 
 #else /* !PIC */
 
@@ -84,11 +77,12 @@ err:
 	addl	%eax,4(%esp)
 	mov	$SYS_break,%eax
 	KERNCALL
-	jb	err
+	jb	HIDENAME(cerror)
 	movl	HIDENAME(curbrk),%eax
 	addl	%ecx,HIDENAME(curbrk)
 back:
 	ret
-err:
-	jmp	HIDENAME(cerror)
 #endif /* PIC */
+END(sbrk)
+
+	.section .note.GNU-stack,"",%progbits

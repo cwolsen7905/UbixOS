@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)fflush.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/fflush.c,v 1.13 2004/07/04 20:17:00 cperciva Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/fflush.c 275665 2014-12-10 08:18:22Z delphij $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -64,7 +60,7 @@ fflush(FILE *fp)
 
 	/*
 	 * There is disagreement about the correct behaviour of fflush()
-	 * when passed a file which is not open for reading.  According to
+	 * when passed a file which is not open for writing.  According to
 	 * the ISO C standard, the behaviour is undefined.
 	 * Under linux, such an fflush returns success and has no effect;
 	 * under Windows, such an fflush is documented as behaving instead
@@ -72,11 +68,13 @@ fflush(FILE *fp)
 	 * Given that applications may be written with the expectation of
 	 * either of these two behaviours, the only safe (non-astonishing)
 	 * option is to return EBADF and ask that applications be fixed.
+	 * SUSv3 now requires that fflush() returns success on a read-only
+	 * stream.
+	 *
 	 */
-	if ((fp->_flags & (__SWR | __SRW)) == 0) {
-		errno = EBADF;
-		retval = EOF;
-	} else
+	if ((fp->_flags & (__SWR | __SRW)) == 0)
+		retval = 0;
+	else
 		retval = __sflush(fp);
 	FUNLOCKFILE(fp);
 	return (retval);
@@ -93,10 +91,9 @@ __fflush(FILE *fp)
 
 	if (fp == NULL)
 		return (_fwalk(sflush_locked));
-	if ((fp->_flags & (__SWR | __SRW)) == 0) {
-		errno = EBADF;
-		retval = EOF;
-	} else
+	if ((fp->_flags & (__SWR | __SRW)) == 0)
+		retval = 0;
+	else
 		retval = __sflush(fp);
 	return (retval);
 }
@@ -126,6 +123,14 @@ __sflush(FILE *fp)
 	for (; n > 0; n -= t, p += t) {
 		t = _swrite(fp, (char *)p, n);
 		if (t <= 0) {
+			/* Reset _p and _w. */
+			if (p > fp->_p) {
+				/* Some was written. */
+				memmove(fp->_p, p, n);
+				fp->_p += n;
+				if ((fp->_flags & (__SLBF | __SNBF)) == 0)
+					fp->_w -= n;
+			}
 			fp->_flags |= __SERR;
 			return (EOF);
 		}

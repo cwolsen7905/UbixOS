@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -34,28 +30,27 @@
  * SUCH DAMAGE.
  *
  *	@(#)SYS.h	5.5 (Berkeley) 5/7/91
- * $FreeBSD: src/lib/libc/i386/SYS.h,v 1.24 2002/09/17 01:48:51 peter Exp $
+ * $FreeBSD: releng/11.1/lib/libc/i386/SYS.h 258451 2013-11-21 22:31:18Z andreast $
  */
 
 #include <sys/syscall.h>
 #include <machine/asm.h>
 
-#define	SYSCALL(x)	2: PIC_PROLOGUE; jmp PIC_PLT(HIDENAME(cerror));	\
-			ENTRY(__CONCAT(__sys_,x));			\
-			.weak CNAME(x);					\
-			.set CNAME(x),CNAME(__CONCAT(__sys_,x));	\
-			.weak CNAME(__CONCAT(_,x));			\
-			.set CNAME(__CONCAT(_,x)),CNAME(__CONCAT(__sys_,x)); \
-			mov __CONCAT($SYS_,x),%eax; KERNCALL; jb 2b
+#define	SYSCALL(name)	ENTRY(__sys_##name);				\
+			WEAK_REFERENCE(__sys_##name, name);		\
+			WEAK_REFERENCE(__sys_##name, _##name);		\
+			mov $SYS_##name,%eax; KERNCALL;			\
+			jb HIDENAME(cerror)
 
-#define	RSYSCALL(x)	SYSCALL(x); ret
+#define	RSYSCALL(name)	SYSCALL(name); ret; END(__sys_##name)
 
-#define	PSEUDO(x)	ENTRY(__CONCAT(__sys_,x));			\
-			.weak CNAME(__CONCAT(_,x));			\
-			.set CNAME(__CONCAT(_,x)),CNAME(__CONCAT(__sys_,x)); \
-			mov __CONCAT($SYS_,x),%eax; KERNCALL; ret
+#define	PSEUDO(name)	ENTRY(__sys_##name);				\
+			WEAK_REFERENCE(__sys_##name, _##name);		\
+			mov $SYS_##name,%eax; KERNCALL;			\
+			jb HIDENAME(cerror); ret;			\
+			END(__sys_##name)
 
 /* gas messes up offset -- although we don't currently need it, do for BCS */
 #define	LCALL(x,y)	.byte 0x9a ; .long y; .word x
 
-#define KERNCALL	int $0x81
+#define KERNCALL	int $0x80

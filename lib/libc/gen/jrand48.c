@@ -12,13 +12,16 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/jrand48.c,v 1.2 2002/03/22 21:52:05 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/jrand48.c 310319 2016-12-20 07:42:15Z ed $");
+
+#include <stdint.h>
 
 #include "rand48.h"
 
 long
 jrand48(unsigned short xseed[3])
 {
+
 	_dorand48(xseed);
-	return ((long) xseed[2] << 16) + (long) xseed[1];
+	return ((int32_t)(((uint32_t)xseed[2] << 16) | (uint32_t)xseed[1]));
 }

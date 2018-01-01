@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,14 +34,12 @@
 	.asciz "@(#)Ovfork.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/Ovfork.S,v 1.19 2002/03/23 02:10:28 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/Ovfork.S 258451 2013-11-21 22:31:18Z andreast $");
 
 #include "SYS.h"
 
-	.weak	_vfork
-	.set	_vfork,__sys_vfork
-	.weak	vfork
-	.set	vfork,__sys_vfork
+	WEAK_REFERENCE(__sys_vfork, _vfork)
+	WEAK_REFERENCE(__sys_vfork, vfork)
 ENTRY(__sys_vfork)
 	popl	%ecx		/* my rta into ecx */
 	mov	$SYS_vfork,%eax
@@ -54,5 +48,7 @@ ENTRY(__sys_vfork)
 	jmp	*%ecx
 1:
 	pushl	%ecx
-	PIC_PROLOGUE
-	jmp     PIC_PLT(HIDENAME(cerror))
+	jmp     HIDENAME(cerror)
+END(__sys_vfork)
+
+	.section .note.GNU-stack,"",%progbits

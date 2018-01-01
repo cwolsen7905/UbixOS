@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -46,12 +42,14 @@ static char sccsid[] = "@(#)getnetent.c	8.1 (Berkeley) 6/4/93";
 static char orig_rcsid[] = "From: Id: getnetent.c,v 8.4 1997/06/01 20:34:37 vixie Exp";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/getnetbyht.c 301708 2016-06-08 23:30:13Z ngie $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <arpa/nameser.h>
+#include <errno.h>
 #include <netdb.h>
 #include <resolv.h>
 #include <stdio.h>
@@ -65,7 +63,7 @@ _setnethtent(int f, struct netent_data *ned)
 {
 
 	if (ned->netf == NULL)
-		ned->netf = fopen(_PATH_NETWORKS, "r");
+		ned->netf = fopen(_PATH_NETWORKS, "re");
 	else
 		rewind(ned->netf);
 	ned->stayopen |= f;
@@ -91,7 +89,7 @@ getnetent_p(struct netent *ne, struct netent_data *ned)
 	char line[BUFSIZ + 1];
 
 	if (ned->netf == NULL &&
-	    (ned->netf = fopen(_PATH_NETWORKS, "r")) == NULL)
+	    (ned->netf = fopen(_PATH_NETWORKS, "re")) == NULL)
 		return (-1);
 again:
 	p = fgets(line, sizeof line, ned->netf);
@@ -165,8 +163,11 @@ getnetent_r(struct netent *nptr, char *buffer, size_t buflen,
 	}
 	if (getnetent_p(&ne, ned) != 0)
 		return (-1);
-	if (__copy_netent(&ne, nptr, buffer, buflen) != 0)
-		return (-1);
+	if (__copy_netent(&ne, nptr, buffer, buflen) != 0) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
+		*h_errnop = statp->res_h_errno;
+		return ((errno != 0) ? errno : -1);
+	}
 	*result = nptr;
 	return (0);
 }
@@ -229,8 +230,10 @@ found:
 		return (NS_NOTFOUND);
 	}
 	if (__copy_netent(&ne, nptr, buffer, buflen) != 0) {
+		*errnop = errno;
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		return (NS_RETURN);
 	}
 	*((struct netent **)rval) = nptr;
 	return (NS_SUCCESS);
@@ -275,8 +278,10 @@ _ht_getnetbyaddr(void *rval, void *cb_data, va_list ap)
 		return (NS_NOTFOUND);
 	}
 	if (__copy_netent(&ne, nptr, buffer, buflen) != 0) {
+		*errnop = errno;
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		*h_errnop = statp->res_h_errno;
-		return (NS_NOTFOUND);
+		return (NS_RETURN);
 	}
 	*((struct netent **)rval) = nptr;
 	return (NS_SUCCESS);

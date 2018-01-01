@@ -5,6 +5,11 @@
  * This code is derived from software contributed to Berkeley by
  * Donn Seeley at UUNET Technologies, Inc.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,11 +18,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,23 +39,28 @@
 static char sccsid[] = "@(#)vscanf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/vscanf.c,v 1.12 2003/01/03 23:27:27 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/vscanf.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include "namespace.h"
 #include <stdio.h>
 #include "un-namespace.h"
 #include "libc_private.h"
 #include "local.h"
+#include "xlocale_private.h"
 
 int
-vscanf(fmt, ap)
-	const char * __restrict fmt;
-	__va_list ap;
+vscanf_l(locale_t locale, const char * __restrict fmt, __va_list ap)
 {
 	int retval;
+	FIX_LOCALE(locale);
 
 	FLOCKFILE(stdin);
-	retval = __svfscanf(stdin, fmt, ap);
+	retval = __svfscanf(stdin, locale, fmt, ap);
 	FUNLOCKFILE(stdin);
 	return (retval);
+}
+int
+vscanf(const char * __restrict fmt, __va_list ap)
+{
+	return vscanf_l(__get_locale(), fmt, ap);
 }

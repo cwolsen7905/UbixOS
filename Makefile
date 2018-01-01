@@ -1,5 +1,4 @@
 # The System Makefile (C) 2002, 2017 The UbixOS Project
-
 MAKE=make
 
 CURDIR=${.CURDIR}

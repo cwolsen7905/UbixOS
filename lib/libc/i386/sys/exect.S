@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,7 +34,7 @@
 	.asciz "@(#)exect.s	5.1 (Berkeley) 4/23/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/exect.S,v 1.9 2002/03/23 02:10:28 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/exect.S 240152 2012-09-05 21:41:05Z jilles $");
 
 #include "SYS.h"
 #include <machine/psl.h>
@@ -51,5 +47,7 @@ ENTRY(exect)
 	pushl	%edx
 	popf
 	KERNCALL
-	PIC_PROLOGUE
-	jmp	PIC_PLT(HIDENAME(cerror))	/* exect(file, argv, env); */
+	jmp	HIDENAME(cerror)	/* exect(file, argv, env); */
+END(exect)
+
+	.section .note.GNU-stack,"",%progbits

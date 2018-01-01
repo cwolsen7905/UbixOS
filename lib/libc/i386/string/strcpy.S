@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/strcpy.S,v 1.10 2002/06/02 20:05:37 schweikh Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/strcpy.S 217106 2011-01-07 16:08:40Z kib $");
 
 /*
  * strcpy (dst, src)
@@ -87,3 +87,6 @@ L1:	movb	(%edx),%al		/* unroll loop, but not too much */
 	jne	L1
 L2:	popl	%eax			/* pop dst address */
 	ret
+END(strcpy)
+
+	.section .note.GNU-stack,"",%progbits

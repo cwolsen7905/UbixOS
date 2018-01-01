@@ -1,7 +1,14 @@
 /*-
+ * Copyright 2013 Garrett D'Amore <garrett@damore.org>
+ * Copyright 2010 Nexenta Systems, Inc.  All rights reserved.
  * Copyright (c) 2004 Tim J. Robbins. All rights reserved.
  * Copyright (c) 2003 David Xu <davidxu@freebsd.org>
  * All rights reserved.
+ *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +33,7 @@
  */
 
 #include <sys/param.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/gb2312.c,v 1.9 2005/02/27 15:11:09 phantom Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/gb2312.c 290494 2015-11-07 12:43:35Z bapt $");
 
 #include <errno.h>
 #include <runetype.h>
@@ -40,6 +47,13 @@ static size_t	_GB2312_mbrtowc(wchar_t * __restrict, const char * __restrict,
 static int	_GB2312_mbsinit(const mbstate_t *);
 static size_t	_GB2312_wcrtomb(char * __restrict, wchar_t,
 		    mbstate_t * __restrict);
+static size_t	_GB2312_mbsnrtowcs(wchar_t * __restrict,
+		    const char ** __restrict, size_t, size_t,
+		    mbstate_t * __restrict);
+static size_t	_GB2312_wcsnrtombs(char * __restrict,
+		    const wchar_t ** __restrict, size_t, size_t,
+		    mbstate_t * __restrict);
+
 
 typedef struct {
 	int	count;
@@ -47,14 +61,17 @@ typedef struct {
 } _GB2312State;
 
 int
-_GB2312_init(_RuneLocale *rl)
+_GB2312_init(struct xlocale_ctype *l, _RuneLocale *rl)
 {
 
-	_CurrentRuneLocale = rl;
-	__mbrtowc = _GB2312_mbrtowc;
-	__wcrtomb = _GB2312_wcrtomb;
-	__mbsinit = _GB2312_mbsinit;
-	__mb_cur_max = 2;
+	l->runes = rl;
+	l->__mbrtowc = _GB2312_mbrtowc;
+	l->__wcrtomb = _GB2312_wcrtomb;
+	l->__mbsinit = _GB2312_mbsinit;
+	l->__mbsnrtowcs = _GB2312_mbsnrtowcs;
+	l->__wcsnrtombs = _GB2312_wcsnrtombs;
+	l->__mb_cur_max = 2;
+	l->__mb_sb_limit = 128;
 	return (0);
 }
 
@@ -65,7 +82,7 @@ _GB2312_mbsinit(const mbstate_t *ps)
 	return (ps == NULL || ((const _GB2312State *)ps)->count == 0);
 }
 
-static __inline int
+static int
 _GB2312_check(const char *str, size_t n)
 {
 	const u_char *s = (const u_char *)str;
@@ -84,7 +101,7 @@ _GB2312_check(const char *str, size_t n)
 	} else if (s[0] & 0x80) {
 		/* Invalid multibyte sequence */
 		return (-1);
-	} 
+	}
 	return (1);
 }
 
@@ -151,4 +168,20 @@ _GB2312_wcrtomb(char * __restrict s, wchar_t wc, mbstate_t * __restrict ps)
 	}
 	*s = wc & 0xff;
 	return (1);
+}
+
+static size_t
+_GB2312_mbsnrtowcs(wchar_t * __restrict dst,
+    const char ** __restrict src, size_t nms, size_t len,
+    mbstate_t * __restrict ps)
+{
+	return (__mbsnrtowcs_std(dst, src, nms, len, ps, _GB2312_mbrtowc));
+}
+
+static size_t
+_GB2312_wcsnrtombs(char * __restrict dst,
+    const wchar_t ** __restrict src, size_t nwc, size_t len,
+    mbstate_t * __restrict ps)
+{
+	return (__wcsnrtombs_std(dst, src, nwc, len, ps, _GB2312_wcrtomb));
 }

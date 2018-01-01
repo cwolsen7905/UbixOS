@@ -32,13 +32,12 @@
 __RCSID("$NetBSD: wcslen.c,v 1.1 2000/12/23 23:14:36 itojun Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD: src/lib/libc/string/wcslen.c,v 1.6 2002/09/21 00:29:23 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/string/wcslen.c 188080 2009-02-03 17:58:20Z danger $");
 
 #include <wchar.h>
 
 size_t
-wcslen(s)
-	const wchar_t *s;
+wcslen(const wchar_t *s)
 {
 	const wchar_t *p;
 

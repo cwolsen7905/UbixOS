@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)pw_scan.c	8.3 (Berkeley) 4/2/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/pw_scan.c,v 1.25 2004/01/18 21:33:25 charnier Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/pw_scan.c 195827 2009-07-22 20:46:17Z kensmith $");
 
 /*
  * This module is used to "verify" password entries by chpass(1) and
@@ -62,8 +58,14 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/pw_scan.c,v 1.25 2004/01/18 21:33:25 charni
  *
  * If pw_big_ids_warning is -1 on entry to pw_scan(), it will be set based
  * on the existence of PW_SCAN_BIG_IDS in the environment.
+ *
+ * It is believed all baseline system software that can not handle the
+ * normal ID sizes is now gone so pw_big_ids_warning is disabled for now.
+ * But the code has been left in place in case end-users want to re-enable
+ * it and/or for the next time the ID sizes get bigger but pieces of the
+ * system lag behind.
  */
-static int	pw_big_ids_warning = -1;
+static int	pw_big_ids_warning = 0;
 
 int
 __pw_scan(char *bp, struct passwd *pw, int flags)
@@ -71,6 +73,7 @@ __pw_scan(char *bp, struct passwd *pw, int flags)
 	uid_t id;
 	int root;
 	char *ep, *p, *sh;
+	unsigned long temp;
 
 	if (pw_big_ids_warning == -1)
 		pw_big_ids_warning = getenv("PW_SCAN_BIG_IDS") == NULL ? 1 : 0;
@@ -98,12 +101,14 @@ __pw_scan(char *bp, struct passwd *pw, int flags)
 			return (0);
 		}
 	}
-	id = strtoul(p, &ep, 10);
-	if (errno == ERANGE) {
+	errno = 0;
+	temp = strtoul(p, &ep, 10);
+	if ((temp == ULONG_MAX && errno == ERANGE) || temp > UID_MAX) {
 		if (flags & _PWSCAN_WARN)
-			warnx("%s > max uid value (%lu)", p, ULONG_MAX);
+			warnx("%s > max uid value (%u)", p, UID_MAX);
 		return (0);
 	}
+	id = temp;
 	if (*ep != '\0') {
 		if (flags & _PWSCAN_WARN)
 			warnx("%s uid is incorrect", p);
@@ -131,12 +136,14 @@ __pw_scan(char *bp, struct passwd *pw, int flags)
 			return (0);
 		}
 	}
-	id = strtoul(p, &ep, 10);
-	if (errno == ERANGE) {
+	errno = 0;
+	temp = strtoul(p, &ep, 10);
+	if ((temp == ULONG_MAX && errno == ERANGE) || temp > GID_MAX) {
 		if (flags & _PWSCAN_WARN)
-			warnx("%s > max gid value (%lu)", p, ULONG_MAX);
+			warnx("%s > max gid value (%u)", p, GID_MAX);
 		return (0);
 	}
+	id = temp;
 	if (*ep != '\0') {
 		if (flags & _PWSCAN_WARN)
 			warnx("%s gid is incorrect", p);

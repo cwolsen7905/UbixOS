@@ -28,6 +28,7 @@
  */
 
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/yp/xdryp.c 228826 2011-12-23 01:56:25Z ghelmer $");
 
 #include <rpc/rpc.h>
 #include <rpcsvc/yp.h>
@@ -41,7 +42,7 @@ extern void *ypresp_data;
  * I'm leaving the xdr_datum() function in purely for backwards
  * compatibility. yplib.c doesn't actually use it, but it's listed
  * in yp_prot.h as being available, so it's probably a good idea to
- * leave it in in case somebody goes looking for it.
+ * leave it in case somebody goes looking for it.
  */
 typedef struct {
 	char *dptr;
@@ -81,10 +82,21 @@ xdr_ypresp_all_seq(XDR *xdrs, u_long *objp)
 		switch (status) {
 		case YP_TRUE:
 			key = (char *)malloc(out.ypresp_all_u.val.key.keydat_len + 1);
+			if (key == NULL) {
+				xdr_free((xdrproc_t)xdr_ypresp_all, &out);
+				*objp = YP_YPERR;
+				return (FALSE);
+			}
 			bcopy(out.ypresp_all_u.val.key.keydat_val, key,
 				out.ypresp_all_u.val.key.keydat_len);
 			key[out.ypresp_all_u.val.key.keydat_len] = '\0';
 			val = (char *)malloc(out.ypresp_all_u.val.val.valdat_len + 1);
+			if (val == NULL) {
+				free(key);
+				xdr_free((xdrproc_t)xdr_ypresp_all, &out);
+				*objp = YP_YPERR;
+				return (FALSE);
+			}
 			bcopy(out.ypresp_all_u.val.val.valdat_val, val,
 				out.ypresp_all_u.val.val.valdat_len);
 			val[out.ypresp_all_u.val.val.valdat_len] = '\0';

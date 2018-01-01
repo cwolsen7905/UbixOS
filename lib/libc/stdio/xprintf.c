@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/10.2/lib/libc/stdio/xprintf.c 238111 2012-07-04 17:35:07Z pjd $
+ * $FreeBSD: releng/11.1/lib/libc/stdio/xprintf.c 238111 2012-07-04 17:35:07Z pjd $
  */
 
 #include "namespace.h"

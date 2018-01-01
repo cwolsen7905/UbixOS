@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- * 	This product includes software developed by the University of
- * 	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -70,13 +66,12 @@
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char sccsid[] = "@(#)res_comp.c	8.1 (Berkeley) 6/4/93";
-static const char rcsid[] = "$Id: res_comp.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: res_comp.c,v 1.5 2005/07/28 06:51:50 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/resolv/res_comp.c,v 1.2.2.1 2006/07/17 10:09:58 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/resolv/res_comp.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include "port_before.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <netinet/in.h>
 #include <arpa/nameser.h>
@@ -87,12 +82,13 @@ __FBSDID("$FreeBSD: src/lib/libc/resolv/res_comp.c,v 1.2.2.1 2006/07/17 10:09:58
 #include <unistd.h>
 #include "port_after.h"
 
-/*
+/*%
  * Expand compressed domain name 'src' to full domain name.
- * 'msg' is a pointer to the begining of the message,
- * 'eom' points to the first location after the message,
- * 'dst' is a pointer to a buffer of size 'dstsiz' for the result.
- * Return size of compressed name or -1 if there was an error.
+ *
+ * \li 'msg' is a pointer to the beginning of the message,
+ * \li 'eom' points to the first location after the message,
+ * \li 'dst' is a pointer to a buffer of size 'dstsiz' for the result.
+ * \li Return size of compressed name or -1 if there was an error.
  */
 int
 dn_expand(const u_char *msg, const u_char *eom, const u_char *src,
@@ -105,10 +101,11 @@ dn_expand(const u_char *msg, const u_char *eom, const u_char *src,
 	return (n);
 }
 
-/*
+/*%
  * Pack domain name 'exp_dn' in presentation form into 'comp_dn'.
- * Return the size of the compressed name or -1.
- * 'length' is the size of the array pointed to by 'comp_dn'.
+ *
+ * \li Return the size of the compressed name or -1.
+ * \li 'length' is the size of the array pointed to by 'comp_dn'.
  */
 int
 dn_comp(const char *src, u_char *dst, int dstsiz,
@@ -119,7 +116,7 @@ dn_comp(const char *src, u_char *dst, int dstsiz,
 				 (const u_char **)lastdnptr));
 }
 
-/*
+/*%
  * Skip over a compressed domain name. Return the size or -1.
  */
 int
@@ -131,11 +128,9 @@ dn_skipname(const u_char *ptr, const u_char *eom) {
 	return (ptr - saveptr);
 }
 
-/*
+/*%
  * Verify that a domain name uses an acceptable character set.
- */
-
-/*
+ *
  * Note the conspicuous absence of ctype macros in these definitions.  On
  * non-ASCII hosts, we can't depend on string literals or ctype macros to
  * tell us anything about network-format data.  The rest of the BIND system
@@ -144,13 +139,18 @@ dn_skipname(const u_char *ptr, const u_char *eom) {
 #define PERIOD 0x2e
 #define	hyphenchar(c) ((c) == 0x2d)
 #define bslashchar(c) ((c) == 0x5c)
+#define underscorechar(c) ((c) == 0x5f)
 #define periodchar(c) ((c) == PERIOD)
 #define asterchar(c) ((c) == 0x2a)
 #define alphachar(c) (((c) >= 0x41 && (c) <= 0x5a) \
 		   || ((c) >= 0x61 && (c) <= 0x7a))
 #define digitchar(c) ((c) >= 0x30 && (c) <= 0x39)
 
+#ifdef	RES_ENFORCE_RFC1034
 #define borderchar(c) (alphachar(c) || digitchar(c))
+#else
+#define borderchar(c) (alphachar(c) || digitchar(c) || underscorechar(c))
+#endif
 #define middlechar(c) (borderchar(c) || hyphenchar(c))
 #define	domainchar(c) ((c) > 0x20 && (c) < 0x7f)
 
@@ -178,7 +178,7 @@ res_hnok(const char *dn) {
 	return (1);
 }
 
-/*
+/*%
  * hostname-like (A, MX, WKS) owners can have "*" as their first label
  * but must otherwise be as a host name.
  */
@@ -193,7 +193,7 @@ res_ownok(const char *dn) {
 	return (res_hnok(dn));
 }
 
-/*
+/*%
  * SOA RNAMEs and RP RNAMEs can have any printable character in their first
  * label, but the rest of the name has to look like a host name.
  */
@@ -221,8 +221,8 @@ res_mailok(const char *dn) {
 	return (0);
 }
 
-/*
- * This function is quite liberal, since RFC 1034's character sets are only
+/*%
+ * This function is quite liberal, since RFC1034's character sets are only
  * recommendations.
  */
 int
@@ -236,7 +236,7 @@ res_dnok(const char *dn) {
 }
 
 #ifdef BIND_4_COMPAT
-/*
+/*%
  * This module must export the following externally-visible symbols:
  *	___putlong
  *	___putshort
@@ -256,10 +256,10 @@ res_dnok(const char *dn) {
 #pragma weak    putshort        =       __putshort
 #endif /* SOLARIS2 */
 
-void __putlong(uint32_t src, u_char *dst) { ns_put32(src, dst); }
+void __putlong(u_int32_t src, u_char *dst) { ns_put32(src, dst); }
 void __putshort(u_int16_t src, u_char *dst) { ns_put16(src, dst); }
 #ifndef __ultrix__
-uint32_t _getlong(const u_char *src) { return (ns_get32(src)); }
+u_int32_t _getlong(const u_char *src) { return (ns_get32(src)); }
 u_int16_t _getshort(const u_char *src) { return (ns_get16(src)); }
 #endif /*__ultrix__*/
 #endif /*BIND_4_COMPAT*/
@@ -272,3 +272,5 @@ u_int16_t _getshort(const u_char *src) { return (ns_get16(src)); }
 __weak_reference(__dn_comp, dn_comp);
 #undef dn_expand
 __weak_reference(__dn_expand, dn_expand);
+
+/*! \file */

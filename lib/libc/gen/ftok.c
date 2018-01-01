@@ -26,16 +26,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/ftok.c,v 1.7 2004/06/01 06:53:07 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/ftok.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ipc.h>
 
 key_t
-ftok(path, id)
-	const char *path;
-	int id;
+ftok(const char *path, int id)
 {
 	struct stat st;
 

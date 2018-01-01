@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,7 +34,7 @@
 	.asciz "@(#)brk.s	5.2 (Berkeley) 12/17/90"
 #endif /* SYSLIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/brk.S,v 1.10 2002/03/23 02:10:28 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/brk.S 240152 2012-09-05 21:41:05Z jilles $");
 
 #include "SYS.h"
 
@@ -46,6 +42,7 @@ __FBSDID("$FreeBSD: src/lib/libc/i386/sys/brk.S,v 1.10 2002/03/23 02:10:28 obrie
 	.globl	HIDENAME(minbrk)
 ENTRY(_brk)
 	jmp	ok
+END(_brk)
 
 ENTRY(brk)
 #ifdef PIC
@@ -61,14 +58,11 @@ ENTRY(brk)
 ok:
 	mov	$SYS_break,%eax
 	KERNCALL
-	jb	err
+	jb	HIDENAME(cerror)
 	movl	4(%esp),%eax
 	movl	%eax,(%edx)
 	movl	$0,%eax
 	ret
-err:
-	PIC_PROLOGUE
-	jmp	PIC_PLT(HIDENAME(cerror))
 
 #else
 
@@ -80,11 +74,12 @@ err:
 ok:
 	mov	$SYS_break,%eax
 	KERNCALL
-	jb	err
+	jb	HIDENAME(cerror)
 	movl	4(%esp),%eax
 	movl	%eax,HIDENAME(curbrk)
 	movl	$0,%eax
 	ret
-err:
-	jmp	HIDENAME(cerror)
 #endif
+END(brk)
+
+	.section .note.GNU-stack,"",%progbits

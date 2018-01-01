@@ -30,9 +30,9 @@
  */
 
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/rthdr.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 
 #include <netinet/in.h>
@@ -46,8 +46,7 @@
  */
 
 size_t
-inet6_rthdr_space(type, seg)
-	int type, seg;
+inet6_rthdr_space(int type, int seg)
 {
 	switch (type) {
 	case IPV6_RTHDR_TYPE_0:
@@ -66,9 +65,7 @@ inet6_rthdr_space(type, seg)
 }
 
 struct cmsghdr *
-inet6_rthdr_init(bp, type)
-	void *bp;
-	int type;
+inet6_rthdr_init(void *bp, int type)
 {
 	struct cmsghdr *ch = (struct cmsghdr *)bp;
 	struct ip6_rthdr *rthdr;
@@ -97,10 +94,7 @@ inet6_rthdr_init(bp, type)
 
 /* ARGSUSED */
 int
-inet6_rthdr_add(cmsg, addr, flags)
-	struct cmsghdr *cmsg;
-	const struct in6_addr *addr;
-	u_int flags;
+inet6_rthdr_add(struct cmsghdr *cmsg, const struct in6_addr *addr, u_int flags)
 {
 	struct ip6_rthdr *rthdr;
 
@@ -142,9 +136,7 @@ inet6_rthdr_add(cmsg, addr, flags)
 
 /* ARGSUSED */
 int
-inet6_rthdr_lasthop(cmsg, flags)
-	struct cmsghdr *cmsg;
-	unsigned int flags;
+inet6_rthdr_lasthop(struct cmsghdr *cmsg, unsigned int flags)
 {
 	struct ip6_rthdr *rthdr;
 
@@ -182,9 +174,7 @@ inet6_rthdr_lasthop(cmsg, flags)
 
 #if 0
 int
-inet6_rthdr_reverse(in, out)
-	const struct cmsghdr *in;
-	struct cmsghdr *out;
+inet6_rthdr_reverse(const struct cmsghdr *in, struct cmsghdr *out)
 {
 
 	return (-1);
@@ -192,8 +182,7 @@ inet6_rthdr_reverse(in, out)
 #endif
 
 int
-inet6_rthdr_segments(cmsg)
-	const struct cmsghdr *cmsg;
+inet6_rthdr_segments(const struct cmsghdr *cmsg)
 {
 	struct ip6_rthdr *rthdr;
 
@@ -216,9 +205,7 @@ inet6_rthdr_segments(cmsg)
 }
 
 struct in6_addr *
-inet6_rthdr_getaddr(cmsg, idx)
-	struct cmsghdr *cmsg;
-	int idx;
+inet6_rthdr_getaddr(struct cmsghdr *cmsg, int idx)
 {
 	struct ip6_rthdr *rthdr;
 
@@ -248,9 +235,7 @@ inet6_rthdr_getaddr(cmsg, idx)
 }
 
 int
-inet6_rthdr_getflags(cmsg, idx)
-	const struct cmsghdr *cmsg;
-	int idx;
+inet6_rthdr_getflags(const struct cmsghdr *cmsg, int idx)
 {
 	struct ip6_rthdr *rthdr;
 
@@ -291,7 +276,9 @@ inet6_rth_space(int type, int segments)
 {
 	switch (type) {
 	case IPV6_RTHDR_TYPE_0:
-		return (((segments * 2) + 1) << 3);
+		if ((segments >= 0) && (segments <= 127))
+			return (((segments * 2) + 1) << 3);
+		/* FALLTHROUGH */
 	default:
 		return (0);	/* type not suppported */
 	}
@@ -307,6 +294,9 @@ inet6_rth_init(void *bp, socklen_t bp_len, int type, int segments)
 	case IPV6_RTHDR_TYPE_0:
 		/* length validation */
 		if (bp_len < inet6_rth_space(IPV6_RTHDR_TYPE_0, segments))
+			return (NULL);
+		/* segment validation */
+		if ((segments < 0) || (segments > 127))
 			return (NULL);
 
 		memset(bp, 0, bp_len);
@@ -333,6 +323,9 @@ inet6_rth_add(void *bp, const struct in6_addr *addr)
 	switch (rth->ip6r_type) {
 	case IPV6_RTHDR_TYPE_0:
 		rth0 = (struct ip6_rthdr0 *)rth;
+		/* Don't exceed the number of stated segments */
+		if (rth0->ip6r0_segleft == (rth0->ip6r0_len / 2))
+			return (-1);
 		nextaddr = (struct in6_addr *)(rth0 + 1) + rth0->ip6r0_segleft;
 		*nextaddr = *addr;
 		rth0->ip6r0_segleft++;

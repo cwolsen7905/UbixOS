@@ -5,6 +5,11 @@
  * This code is derived from software contributed to Berkeley by
  * Paul Borman at Krystal Technologies.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,10 +18,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,17 +36,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/toupper.c,v 1.11 2004/07/29 06:16:19 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/toupper.c 288037 2015-09-20 20:50:18Z rodrigc $");
 
+#include <ctype.h>
 #include <stdio.h>
 #include <runetype.h>
+#include <wchar.h>
+#include "mblocal.h"
 
 __ct_rune_t
-___toupper(c)
-	__ct_rune_t c;
+___toupper_l(__ct_rune_t c, locale_t l)
 {
 	size_t lim;
-	_RuneRange *rr = &_CurrentRuneLocale->__mapupper_ext;
+	FIX_LOCALE(l);
+	_RuneRange *rr = &XLOCALE_CTYPE(l)->runes->__mapupper_ext;
 	_RuneEntry *base, *re;
 
 	if (c < 0 || c == EOF)
@@ -56,7 +60,9 @@ ___toupper(c)
 	for (lim = rr->__nranges; lim != 0; lim >>= 1) {
 		re = base + (lim >> 1);
 		if (re->__min <= c && c <= re->__max)
+		{
 			return (re->__map + c - re->__min);
+		}
 		else if (c > re->__max) {
 			base = re + 1;
 			lim--;
@@ -64,4 +70,9 @@ ___toupper(c)
 	}
 
 	return(c);
+}
+__ct_rune_t
+___toupper(__ct_rune_t c)
+{
+	return ___toupper_l(c, __get_locale());
 }

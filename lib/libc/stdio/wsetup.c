@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)wsetup.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/wsetup.c,v 1.9 2004/06/08 05:44:52 das Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/wsetup.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include <errno.h>
 #include <stdio.h>
@@ -51,19 +47,19 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/wsetup.c,v 1.9 2004/06/08 05:44:52 das Ex
  * _wsetup returns 0 if OK to write; otherwise, it returns EOF and sets errno.
  */
 int
-__swsetup(fp)
-	FILE *fp;
+__swsetup(FILE *fp)
 {
 	/* make sure stdio is set up */
-	if (!__sdidinit) {
+	if (!__sdidinit)
 		__sinit();
-               }
+
 	/*
 	 * If we are not writing, we had better be reading and writing.
 	 */
 	if ((fp->_flags & __SWR) == 0) {
 		if ((fp->_flags & __SRW) == 0) {
 			errno = EBADF;
+			fp->_flags |= __SERR;
 			return (EOF);
 		}
 		if (fp->_flags & __SRD) {
@@ -80,9 +76,8 @@ __swsetup(fp)
 	/*
 	 * Make a buffer if necessary, then set _w.
 	 */
-	if (fp->_bf._base == NULL) {
+	if (fp->_bf._base == NULL)
 		__smakebuf(fp);
-                }
 	if (fp->_flags & __SLBF) {
 		/*
 		 * It is line buffered, so make _lbfsize be -_bufsize

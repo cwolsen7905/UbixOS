@@ -1,30 +1,34 @@
-/*
- * Sun RPC is a product of Sun Microsystems, Inc. and is provided for
- * unrestricted use provided that this legend is included on all tape
- * media and as a part of the software program in whole or part.  Users
- * may copy or modify Sun RPC without charge, but are not authorized
- * to license or distribute it to anyone else except as part of a product or
- * program developed by the user.
+/*	$NetBSD: xdr_mem.c,v 1.15 2000/01/22 22:19:18 mycroft Exp $	*/
+
+/*-
+ * Copyright (c) 2010, Oracle America, Inc.
  *
- * SUN RPC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE
- * WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
  *
- * Sun RPC is provided with no support and without any obligation on the
- * part of Sun Microsystems, Inc. to assist in its use, correction,
- * modification or enhancement.
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ *       copyright notice, this list of conditions and the following
+ *       disclaimer in the documentation and/or other materials
+ *       provided with the distribution.
+ *     * Neither the name of the "Oracle America, Inc." nor the names of its
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
  *
- * SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
- * INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY SUN RPC
- * OR ANY PART THEREOF.
- *
- * In no event will Sun Microsystems, Inc. be liable for any lost revenue
- * or profits or other special, indirect and consequential damages, even if
- * Sun has been advised of the possibility of such damages.
- *
- * Sun Microsystems, Inc.
- * 2550 Garcia Avenue
- * Mountain View, California  94043
+ *   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ *   FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ *   COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+ *   INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ *   DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ *   GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ *   INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ *   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ *   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
@@ -32,11 +36,10 @@ static char *sccsid2 = "@(#)xdr_mem.c 1.19 87/08/11 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)xdr_mem.c	2.1 88/07/29 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/xdr/xdr_mem.c 297790 2016-04-10 19:33:58Z pfg $");
 
 /*
  * xdr_mem.h, XDR implementation using memory buffers.
- *
- * Copyright (C) 1984, Sun Microsystems, Inc.
  *
  * If you have some data to be interpreted as external data representation
  * or to be converted to external data representation in a memory buffer,
@@ -95,11 +98,7 @@ static const struct	xdr_ops xdrmem_ops_unaligned = {
  * memory buffer.
  */
 void
-xdrmem_create(xdrs, addr, size, op)
-	XDR *xdrs;
-	char *addr;
-	u_int size;
-	enum xdr_op op;
+xdrmem_create(XDR *xdrs, char *addr, u_int size, enum xdr_op op)
 {
 
 	xdrs->x_op = op;
@@ -111,46 +110,39 @@ xdrmem_create(xdrs, addr, size, op)
 
 /*ARGSUSED*/
 static void
-xdrmem_destroy(xdrs)
-	XDR *xdrs;
+xdrmem_destroy(XDR *xdrs)
 {
 
 }
 
 static bool_t
-xdrmem_getlong_aligned(xdrs, lp)
-	XDR *xdrs;
-	long *lp;
+xdrmem_getlong_aligned(XDR *xdrs, long *lp)
 {
 
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
 	xdrs->x_handy -= sizeof(int32_t);
-	*lp = ntohl(*(uint32_t *)xdrs->x_private);
+	*lp = ntohl(*(u_int32_t *)xdrs->x_private);
 	xdrs->x_private = (char *)xdrs->x_private + sizeof(int32_t);
 	return (TRUE);
 }
 
 static bool_t
-xdrmem_putlong_aligned(xdrs, lp)
-	XDR *xdrs;
-	const long *lp;
+xdrmem_putlong_aligned(XDR *xdrs, const long *lp)
 {
 
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
 	xdrs->x_handy -= sizeof(int32_t);
-	*(uint32_t *)xdrs->x_private = htonl((uint32_t)*lp);
+	*(u_int32_t *)xdrs->x_private = htonl((u_int32_t)*lp);
 	xdrs->x_private = (char *)xdrs->x_private + sizeof(int32_t);
 	return (TRUE);
 }
 
 static bool_t
-xdrmem_getlong_unaligned(xdrs, lp)
-	XDR *xdrs;
-	long *lp;
+xdrmem_getlong_unaligned(XDR *xdrs, long *lp)
 {
-	uint32_t l;
+	u_int32_t l;
 
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
@@ -162,26 +154,21 @@ xdrmem_getlong_unaligned(xdrs, lp)
 }
 
 static bool_t
-xdrmem_putlong_unaligned(xdrs, lp)
-	XDR *xdrs;
-	const long *lp;
+xdrmem_putlong_unaligned(XDR *xdrs, const long *lp)
 {
-	uint32_t l;
+	u_int32_t l;
 
 	if (xdrs->x_handy < sizeof(int32_t))
 		return (FALSE);
 	xdrs->x_handy -= sizeof(int32_t);
-	l = htonl((uint32_t)*lp);
+	l = htonl((u_int32_t)*lp);
 	memmove(xdrs->x_private, &l, sizeof(int32_t));
 	xdrs->x_private = (char *)xdrs->x_private + sizeof(int32_t);
 	return (TRUE);
 }
 
 static bool_t
-xdrmem_getbytes(xdrs, addr, len)
-	XDR *xdrs;
-	char *addr;
-	u_int len;
+xdrmem_getbytes(XDR *xdrs, char *addr, u_int len)
 {
 
 	if (xdrs->x_handy < len)
@@ -193,10 +180,7 @@ xdrmem_getbytes(xdrs, addr, len)
 }
 
 static bool_t
-xdrmem_putbytes(xdrs, addr, len)
-	XDR *xdrs;
-	const char *addr;
-	u_int len;
+xdrmem_putbytes(XDR *xdrs, const char *addr, u_int len)
 {
 
 	if (xdrs->x_handy < len)
@@ -208,8 +192,7 @@ xdrmem_putbytes(xdrs, addr, len)
 }
 
 static u_int
-xdrmem_getpos(xdrs)
-	XDR *xdrs;
+xdrmem_getpos(XDR *xdrs)
 {
 
 	/* XXX w/64-bit pointers, u_int not enough! */
@@ -217,9 +200,7 @@ xdrmem_getpos(xdrs)
 }
 
 static bool_t
-xdrmem_setpos(xdrs, pos)
-	XDR *xdrs;
-	u_int pos;
+xdrmem_setpos(XDR *xdrs, u_int pos)
 {
 	char *newaddr = xdrs->x_base + pos;
 	char *lastaddr = (char *)xdrs->x_private + xdrs->x_handy;
@@ -232,11 +213,9 @@ xdrmem_setpos(xdrs, pos)
 }
 
 static int32_t *
-xdrmem_inline_aligned(xdrs, len)
-	XDR *xdrs;
-	u_int len;
+xdrmem_inline_aligned(XDR *xdrs, u_int len)
 {
-	int32_t *buf = 0;
+	int32_t *buf = NULL;
 
 	if (xdrs->x_handy >= len) {
 		xdrs->x_handy -= len;
@@ -248,9 +227,7 @@ xdrmem_inline_aligned(xdrs, len)
 
 /* ARGSUSED */
 static int32_t *
-xdrmem_inline_unaligned(xdrs, len)
-	XDR *xdrs;
-	u_int len;
+xdrmem_inline_unaligned(XDR *xdrs, u_int len)
 {
 
 	return (0);

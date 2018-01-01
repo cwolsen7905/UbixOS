@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,12 +31,11 @@
 static char sccsid[] = "@(#)getlogin.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/getlogin.c,v 1.9 2003/10/29 10:45:01 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/getlogin.c 264161 2014-04-05 18:14:58Z marcel $");
 
 #include <sys/param.h>
 #include <errno.h>
 #include <pwd.h>
-#include <utmp.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -55,7 +50,7 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/getlogin.c,v 1.9 2003/10/29 10:45:01 tjr Ex
 
 extern int		_getlogin(char *, int);
 
-int			_logname_valid;		/* known to setlogin() */
+int			_logname_valid __hidden; /* known to setlogin() */
 static pthread_mutex_t	logname_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static char *
@@ -92,11 +87,16 @@ getlogin_r(char *logname, int namelen)
 	char	*result;
 	int	len;
 	int	status;
-	
+
+	if (namelen < 1)
+		return (ERANGE);
+	logname[0] = '\0';
+
 	THREAD_LOCK();
 	result = getlogin_basic(&status);
-	if (status == 0) {
-		if ((len = strlen(result) + 1) > namelen)
+	if (status == 0 && result != NULL) {
+		len = strlen(result) + 1;
+		if (len > namelen)
 			status = ERANGE;
 		else
 			strncpy(logname, result, len);

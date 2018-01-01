@@ -1,3 +1,4 @@
+/*	$NetBSD: lockf.c,v 1.3 2008/04/28 20:22:59 martin Exp $	*/
 /*-
  * Copyright (c) 1997 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -13,13 +14,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *        This product includes software developed by the NetBSD
- *        Foundation, Inc. and its contributors.
- * 4. Neither the name of The NetBSD Foundation nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -34,21 +28,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*	$NetBSD: lockf.c,v 1.1 1997/12/20 20:23:18 kleink Exp $	*/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/lockf.c,v 1.8 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/lockf.c 292510 2015-12-20 11:55:39Z kib $");
 
 #include "namespace.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include "un-namespace.h"
+#include "libc_private.h"
 
 int
-lockf(filedes, function, size)
-	int filedes;
-	int function;
-	off_t size;
+lockf(int filedes, int function, off_t size)
 {
 	struct flock fl;
 	int cmd;
@@ -72,9 +63,12 @@ lockf(filedes, function, size)
 		break;
 	case F_TEST:
 		fl.l_type = F_WRLCK;
-		if (_fcntl(filedes, F_GETLK, &fl) == -1)
+		if (((int (*)(int, int, ...))
+		    __libc_interposing[INTERPOS_fcntl])(filedes, F_GETLK, &fl)
+		    == -1)
 			return (-1);
-		if (fl.l_type == F_UNLCK || fl.l_pid == getpid())
+		if (fl.l_type == F_UNLCK || (fl.l_sysid == 0 &&
+		    fl.l_pid == getpid()))
 			return (0);
 		errno = EAGAIN;
 		return (-1);
@@ -85,5 +79,6 @@ lockf(filedes, function, size)
 		/* NOTREACHED */
 	}
 
-	return (_fcntl(filedes, cmd, &fl));
+	return (((int (*)(int, int, ...))
+	    __libc_interposing[INTERPOS_fcntl])(filedes, cmd, &fl));
 }

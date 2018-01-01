@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,8 +34,9 @@
 static char sccsid[] = "@(#)wbuf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/wbuf.c,v 1.11 2004/06/08 05:45:32 das Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/wbuf.c 268930 2014-07-20 21:24:29Z pfg $");
 
+#include <errno.h>
 #include <stdio.h>
 #include "local.h"
 
@@ -51,9 +48,7 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/wbuf.c,v 1.11 2004/06/08 05:45:32 das Exp
  * Non-MT-safe
  */
 int
-__swbuf(c, fp)
-	int c;
-	FILE *fp;
+__swbuf(int c, FILE *fp)
 {
 	int n;
 
@@ -65,8 +60,10 @@ __swbuf(c, fp)
 	 * calls might wrap _w from negative to positive.
 	 */
 	fp->_w = fp->_lbfsize;
-	if (prepwrite(fp) != 0)
+	if (prepwrite(fp) != 0) {
+		errno = EBADF;
 		return (EOF);
+	}
 	c = (unsigned char)c;
 
 	ORIENT(fp, -1);

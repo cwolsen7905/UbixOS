@@ -91,14 +91,13 @@
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char sccsid[] = "@(#)res_debug.c	8.1 (Berkeley) 6/4/93";
-static const char rcsid[] = "$Id: res_debug.c 103 2016-01-12 05:32:24Z reddawg $";
+static const char rcsid[] = "$Id: res_debug.c,v 1.19 2009/02/26 11:20:20 tbox Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/10.2/lib/libc/resolv/res_debug.c 270838 2014-08-30 10:16:25Z ume $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/resolv/res_debug.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 
@@ -188,7 +187,7 @@ do_section(const res_state statp,
 				p_class(ns_rr_class(rr)));
 		else if (section == ns_s_ar && ns_rr_type(rr) == ns_t_opt) {
 			u_int16_t optcode, optlen, rdatalen = ns_rr_rdlen(rr);
-			uint32_t ttl = ns_rr_ttl(rr);
+			u_int32_t ttl = ns_rr_ttl(rr);
 
 			fprintf(file,
 				"; EDNS: version: %u, udp=%u, flags=%04x\n",
@@ -367,11 +366,8 @@ p_cdname(const u_char *cp, const u_char *msg, FILE *file) {
    length supplied).  */
 
 const u_char *
-p_fqnname(cp, msg, msglen, name, namelen)
-	const u_char *cp, *msg;
-	int msglen;
-	char *name;
-	int namelen;
+p_fqnname(const u_char *cp, const u_char *msg, int msglen, char *name,
+    int namelen)
 {
 	int n, newlen;
 
@@ -704,7 +700,7 @@ p_option(u_long option) {
  * Return a mnemonic for a time to live.
  */
 const char *
-p_time(uint32_t value) {
+p_time(u_int32_t value) {
 	char *nbuf = p_time_nbuf;
 
 	if (ns_format_ttl(value, nbuf, sizeof nbuf) < 0)
@@ -758,8 +754,7 @@ static unsigned int poweroften[10] = {1, 10, 100, 1000, 10000, 100000,
 
 /*% takes an XeY precision/size value, returns a string representation. */
 static const char *
-precsize_ntoa(prec)
-	u_int8_t prec;
+precsize_ntoa(u_int8_t prec)
 {
 	char *retbuf = precsize_ntoa_retbuf;
 	unsigned long val;
@@ -815,10 +810,10 @@ precsize_aton(const char **strptr) {
 }
 
 /*% converts ascii lat/lon to unsigned encoded 32-bit number.  moves pointer. */
-static uint32_t
+static u_int32_t
 latlon2ul(const char **latlonstrptr, int *which) {
 	const char *cp;
-	uint32_t retval;
+	u_int32_t retval;
 	int deg = 0, min = 0, secs = 0, secsfrac = 0;
 
 	cp = *latlonstrptr;
@@ -912,15 +907,13 @@ latlon2ul(const char **latlonstrptr, int *which) {
  * converts a zone file representation in a string to an RDATA on-the-wire
  * representation. */
 int
-loc_aton(ascii, binary)
-	const char *ascii;
-	u_char *binary;
+loc_aton(const char *ascii, u_char *binary)
 {
 	const char *cp, *maxcp;
 	u_char *bcp;
 
-	uint32_t latit = 0, longit = 0, alt = 0;
-	uint32_t lltemp1 = 0, lltemp2 = 0;
+	u_int32_t latit = 0, longit = 0, alt = 0;
+	u_int32_t lltemp1 = 0, lltemp2 = 0;
 	int altmeters = 0, altfrac = 0, altsign = 1;
 	u_int8_t hp = 0x16;	/*%< default = 1e6 cm = 10000.00m = 10km */
 	u_int8_t vp = 0x13;	/*%< default = 1e3 cm = 10.00m */
@@ -1023,9 +1016,7 @@ loc_aton(ascii, binary)
 
 /*% takes an on-the-wire LOC RR and formats it in a human readable format. */
 const char *
-loc_ntoa(binary, ascii)
-	const u_char *binary;
-	char *ascii;
+loc_ntoa(const u_char *binary, char *ascii)
 {
 	static const char *error = "?";
 	static char tmpbuf[sizeof
@@ -1038,10 +1029,10 @@ loc_ntoa(binary, ascii)
 	const char *altsign;
 	int altmeters, altfrac;
 
-	const uint32_t referencealt = 100000 * 100;
+	const u_int32_t referencealt = 100000 * 100;
 
 	int32_t latval, longval, altval;
-	uint32_t templ;
+	u_int32_t templ;
 	u_int8_t sizeval, hpval, vpval, versionval;
 
 	char *sizestr, *hpstr, *vpstr;

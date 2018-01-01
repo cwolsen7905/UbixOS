@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,11 +31,10 @@
 static char sccsid[] = "@(#)exec.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/exec.c,v 1.22 2003/07/01 12:30:03 bde Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/exec.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "namespace.h"
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <unistd.h>
@@ -50,6 +45,7 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/exec.c,v 1.22 2003/07/01 12:30:03 bde Exp $
 
 #include <stdarg.h>
 #include "un-namespace.h"
+#include "libc_private.h"
 
 extern char **environ;
 
@@ -57,7 +53,7 @@ int
 execl(const char *name, const char *arg, ...)
 {
 	va_list ap;
-	char **argv;
+	const char **argv;
 	int n;
 
 	va_start(ap, arg);
@@ -72,18 +68,19 @@ execl(const char *name, const char *arg, ...)
 	}
 	va_start(ap, arg);
 	n = 1;
-	argv[0] = (char *)arg;
+	argv[0] = arg;
 	while ((argv[n] = va_arg(ap, char *)) != NULL)
 		n++;
 	va_end(ap);
-	return (_execve(name, argv, environ));
+	return (_execve(name, __DECONST(char **, argv), environ));
 }
 
 int
 execle(const char *name, const char *arg, ...)
 {
 	va_list ap;
-	char **argv, **envp;
+	const char **argv;
+	char **envp;
 	int n;
 
 	va_start(ap, arg);
@@ -98,19 +95,19 @@ execle(const char *name, const char *arg, ...)
 	}
 	va_start(ap, arg);
 	n = 1;
-	argv[0] = (char *)arg;
+	argv[0] = arg;
 	while ((argv[n] = va_arg(ap, char *)) != NULL)
 		n++;
 	envp = va_arg(ap, char **);
 	va_end(ap);
-	return (_execve(name, argv, envp));
+	return (_execve(name, __DECONST(char **, argv), envp));
 }
 
 int
 execlp(const char *name, const char *arg, ...)
 {
 	va_list ap;
-	char **argv;
+	const char **argv;
 	int n;
 
 	va_start(ap, arg);
@@ -125,17 +122,15 @@ execlp(const char *name, const char *arg, ...)
 	}
 	va_start(ap, arg);
 	n = 1;
-	argv[0] = (char *)arg;
+	argv[0] = arg;
 	while ((argv[n] = va_arg(ap, char *)) != NULL)
 		n++;
 	va_end(ap);
-	return (execvp(name, argv));
+	return (execvp(name, __DECONST(char **, argv)));
 }
 
 int
-execv(name, argv)
-	const char *name;
-	char * const *argv;
+execv(const char *name, char * const *argv)
 {
 	(void)_execve(name, argv, environ);
 	return (-1);
@@ -144,33 +139,25 @@ execv(name, argv)
 int
 execvp(const char *name, char * const *argv)
 {
-	const char *path;
-
-	/* Get the path we're searching. */
-	if ((path = getenv("PATH")) == NULL)
-		path = _PATH_DEFPATH;
-
-	return (execvP(name, path, argv));
+	return (_execvpe(name, argv, environ));
 }
 
-int
-execvP(name, path, argv)
-	const char *name;
-	const char *path;
-	char * const *argv;
+static int
+execvPe(const char *name, const char *path, char * const *argv,
+    char * const *envp)
 {
-	char **memp;
-	int cnt, lp, ln;
-	char *p;
+	const char **memp;
+	size_t cnt, lp, ln;
 	int eacces, save_errno;
-	char *bp, *cur, buf[MAXPATHLEN];
+	char *cur, buf[MAXPATHLEN];
+	const char *p, *bp;
 	struct stat sb;
 
 	eacces = 0;
 
 	/* If it's an absolute or relative path name, it's easy. */
-	if (index(name, '/')) {
-		bp = (char *)name;
+	if (strchr(name, '/')) {
+		bp = name;
 		cur = NULL;
 		goto retry;
 	}
@@ -217,7 +204,7 @@ execvP(name, path, argv)
 		bcopy(name, buf + lp + 1, ln);
 		buf[lp + ln + 1] = '\0';
 
-retry:		(void)_execve(bp, argv, environ);
+retry:		(void)_execve(bp, argv, envp);
 		switch (errno) {
 		case E2BIG:
 			goto done;
@@ -236,7 +223,8 @@ retry:		(void)_execve(bp, argv, environ);
 			memp[0] = "sh";
 			memp[1] = bp;
 			bcopy(argv + 1, memp + 2, cnt * sizeof(char *));
-			(void)_execve(_PATH_BSHELL, memp, environ);
+ 			(void)_execve(_PATH_BSHELL,
+			    __DECONST(char **, memp), envp);
 			goto done;
 		case ENOMEM:
 			goto done;
@@ -272,4 +260,22 @@ retry:		(void)_execve(bp, argv, environ);
 		errno = ENOENT;
 done:
 	return (-1);
+}
+
+int
+execvP(const char *name, const char *path, char * const argv[])
+{
+	return execvPe(name, path, argv, environ);
+}
+
+int
+_execvpe(const char *name, char * const argv[], char * const envp[])
+{
+	const char *path;
+
+	/* Get the path we're searching. */
+	if ((path = getenv("PATH")) == NULL)
+		path = _PATH_DEFPATH;
+
+	return (execvPe(name, path, argv, envp));
 }

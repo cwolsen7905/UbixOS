@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)sysctl.c	8.2 (Berkeley) 1/4/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/sysctl.c,v 1.5 2003/02/16 17:29:09 nectar Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/sysctl.c 285188 2015-07-06 01:42:12Z pkelsey $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -47,18 +43,30 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/sysctl.c,v 1.5 2003/02/16 17:29:09 nectar E
 #include <unistd.h>
 #include <string.h>
 
-extern int __sysctl(int *name, u_int namelen, void *oldp, size_t *oldlenp,
-    void *newp, size_t newlen);
+extern int __sysctl(const int *name, u_int namelen, void *oldp,
+    size_t *oldlenp, const void *newp, size_t newlen);
 
 int
-sysctl(name, namelen, oldp, oldlenp, newp, newlen)
-	int *name;
-	u_int namelen;
-	void *oldp, *newp;
-	size_t *oldlenp, newlen;
+sysctl(const int *name, u_int namelen, void *oldp, size_t *oldlenp,
+    const void *newp, size_t newlen)
 {
-	if (name[0] != CTL_USER)
-		return (__sysctl(name, namelen, oldp, oldlenp, newp, newlen));
+	int retval;
+	size_t orig_oldlen;
+
+	orig_oldlen = oldlenp ? *oldlenp : 0;
+	retval = __sysctl(name, namelen, oldp, oldlenp, newp, newlen);
+	/*
+	 * All valid names under CTL_USER have a dummy entry in the sysctl
+	 * tree (to support name lookups and enumerations) with an
+	 * empty/zero value, and the true value is supplied by this routine.
+	 * For all such names, __sysctl() is used solely to validate the
+	 * name.
+	 *
+	 * Return here unless there was a successful lookup for a CTL_USER
+	 * name.
+	 */
+	if (retval || name[0] != CTL_USER)
+		return (retval);
 
 	if (newp != NULL) {
 		errno = EPERM;
@@ -71,7 +79,7 @@ sysctl(name, namelen, oldp, oldlenp, newp, newlen)
 
 	switch (name[1]) {
 	case USER_CS_PATH:
-		if (oldp && *oldlenp < sizeof(_PATH_STDPATH)) {
+		if (oldp && orig_oldlen < sizeof(_PATH_STDPATH)) {
 			errno = ENOMEM;
 			return -1;
 		}

@@ -27,7 +27,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/string/memmem.c,v 1.1.2.1 2005/08/29 18:46:39 andre Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/string/memmem.c 283584 2015-05-26 21:16:07Z emaste $");
 
 #include <string.h>
 
@@ -36,17 +36,15 @@ __FBSDID("$FreeBSD: src/lib/libc/string/memmem.c,v 1.1.2.1 2005/08/29 18:46:39 a
  */
 
 void *
-memmem(l, l_len, s, s_len)
-	const void *l; size_t l_len;
-	const void *s; size_t s_len;
+memmem(const void *l, size_t l_len, const void *s, size_t s_len)
 {
 	register char *cur, *last;
 	const char *cl = (const char *)l;
 	const char *cs = (const char *)s;
 
-	/* we need something to compare */
-	if (l_len == 0 || s_len == 0)
-		return NULL;
+	/* empty "s" matches the beginning of "l" */
+	if (s_len == 0)
+		return (void *)cl;
 
 	/* "s" must be smaller or equal to "l" */
 	if (l_len < s_len)

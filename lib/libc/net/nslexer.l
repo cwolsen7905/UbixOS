@@ -16,13 +16,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *        This product includes software developed by the NetBSD
- *        Foundation, Inc. and its contributors.
- * 4. Neither the name of The NetBSD Foundation nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -40,7 +33,7 @@
 #include <sys/cdefs.h>
 #if defined(LIBC_SCCS) && !defined(lint)
 static char *rcsid = 
-  "$FreeBSD: src/lib/libc/net/nslexer.l,v 1.5 2003/04/17 14:14:22 nectar Exp $";
+  "$FreeBSD: releng/11.1/lib/libc/net/nslexer.l 288045 2015-09-20 21:21:01Z rodrigc $";
 #endif /* LIBC_SCCS and not lint */
 
 #include "namespace.h"
@@ -53,10 +46,10 @@ static char *rcsid =
 
 #include "nsparser.h"
 
-#define YY_NO_UNPUT
-
 %}
 
+%option noinput
+%option nounput
 %option yylineno
 
 BLANK		[ \t]
@@ -104,14 +97,13 @@ STRING		[a-zA-Z][a-zA-Z0-9_]*
 
 #undef _nsyywrap
 int
-_nsyywrap()
+_nsyywrap(void)
 {
 	return 1;
 } /* _nsyywrap */
 
 void
-_nsyyerror(msg)
-	const char *msg;
+_nsyyerror(const char *msg)
 {
 
 	 syslog(LOG_ERR, "NSSWITCH(nslexer): %s line %d: %s at '%s'",

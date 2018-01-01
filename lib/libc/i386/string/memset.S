@@ -29,7 +29,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/memset.S,v 1.8 2002/03/23 02:44:19 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/memset.S 217106 2011-01-07 16:08:40Z kib $");
 
 /*
  * memset(void *b, int c, size_t len)
@@ -87,3 +87,6 @@ L1:	rep
 	popl	%ebx
 	popl	%edi
 	ret
+END(memset)
+
+	.section .note.GNU-stack,"",%progbits

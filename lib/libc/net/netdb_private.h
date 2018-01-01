@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/net/netdb_private.h,v 1.9.4.1 2006/07/17 10:09:57 ume Exp $
+ * $FreeBSD: releng/11.1/lib/libc/net/netdb_private.h 292719 2015-12-25 10:49:40Z ume $
  */
 
 #ifndef _NETDB_PRIVATE_H_
@@ -100,22 +100,6 @@ struct protoent_data {
 	char line[_MAXLINELEN + 1];
 };
 
-struct servent_data {
-	FILE *fp;
-	char *aliases[_MAXALIASES];
-	int stayopen;
-	char line[_MAXLINELEN + 1];
-#ifdef YP
-	int yp_stepping;
-	char *yp_name;
-	char *yp_proto;
-	int yp_port;
-	char *yp_domain;
-	char *yp_key;
-	int yp_keylen;
-#endif
-};
-
 struct hostdata {
 	struct hostent host;
 	char data[sizeof(struct hostent_data)];
@@ -131,11 +115,6 @@ struct protodata {
 	char data[sizeof(struct protoent_data)];
 };
 
-struct servdata {
-	struct servent serv;
-	char data[sizeof(struct servent_data)];
-};
-
 struct hostdata *__hostdata_init(void);
 struct hostent *__hostent_init(void);
 struct hostent_data *__hostent_data_init(void);
@@ -143,30 +122,41 @@ struct netdata *__netdata_init(void);
 struct netent_data *__netent_data_init(void);
 struct protodata *__protodata_init(void);
 struct protoent_data *__protoent_data_init(void);
-struct servdata *__servdata_init(void);
-struct servent_data *__servent_data_init(void);
 int __copy_hostent(struct hostent *, struct hostent *, char *, size_t);
 int __copy_netent(struct netent *, struct netent *, char *, size_t);
 int __copy_protoent(struct protoent *, struct protoent *, char *, size_t);
-int __copy_servent(struct servent *, struct servent *, char *, size_t);
 
 void __endprotoent_p(struct protoent_data *);
-void __endservent_p(struct servent_data *);
 int __getprotoent_p(struct protoent *, struct protoent_data *);
-int __getservent_p(struct servent *, struct servent_data *);
 void __setprotoent_p(int, struct protoent_data *);
-void __setservent_p(int, struct servent_data *);
 void _endhostdnsent(void);
 void _endhosthtent(struct hostent_data *);
 void _endnetdnsent(void);
 void _endnethtent(struct netent_data *);
-struct hostent *_gethostbynisaddr(const void *, socklen_t, int);
-struct hostent *_gethostbynisname(const char *, int);
 void _map_v4v6_address(const char *, char *);
 void _map_v4v6_hostent(struct hostent *, char **, char *);
 void _sethostdnsent(int);
 void _sethosthtent(int, struct hostent_data *);
 void _setnetdnsent(int);
 void _setnethtent(int, struct netent_data *);
+
+struct hostent *__dns_getanswer(const char *, int, const char *, int);
+int _dns_gethostbyaddr(void *, void *, va_list);
+int _dns_gethostbyname(void *, void *, va_list);
+int _dns_getnetbyaddr(void *, void *, va_list);
+int _dns_getnetbyname(void *, void *, va_list);
+int _ht_gethostbyaddr(void *, void *, va_list);
+int _ht_gethostbyname(void *, void *, va_list);
+int _ht_getnetbyaddr(void *, void *, va_list);
+int _ht_getnetbyname(void *, void *, va_list);
+int _nis_gethostbyaddr(void *, void *, va_list);
+int _nis_gethostbyname(void *, void *, va_list);
+int _nis_getnetbyaddr(void *, void *, va_list);
+int _nis_getnetbyname(void *, void *, va_list);
+#ifdef NS_CACHING
+int __proto_id_func(char *, size_t *, va_list, void *);
+int __proto_marshal_func(char *, size_t *, void *, va_list, void *);
+int __proto_unmarshal_func(char *, size_t, void *, va_list, void *);
+#endif
 
 #endif /* _NETDB_PRIVATE_H_ */

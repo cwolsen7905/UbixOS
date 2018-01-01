@@ -22,7 +22,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/resolv/h_errno.c,v 1.2.2.1 2006/07/17 10:09:58 ume Exp $
+ * $FreeBSD: releng/11.1/lib/libc/resolv/h_errno.c 288018 2015-09-20 04:26:55Z rodrigc $
  */
 
 #include <sys/types.h>
@@ -32,6 +32,9 @@
 
 #undef	h_errno
 extern int h_errno;
+
+int *__h_errno(void);
+void __h_errno_set(res_state res, int err);
 
 int *
 __h_errno(void)
@@ -44,6 +47,3 @@ __h_errno_set(res_state res, int err)
 {
 	h_errno = res->res_h_errno = err;
 }
-
-/* binary backward compatibility for FreeBSD 5.x and 6.x */
-__weak_reference(__h_errno, __h_error);

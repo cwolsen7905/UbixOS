@@ -26,6 +26,7 @@
  */
 
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/if_nameindex.c 235640 2012-05-19 02:39:43Z marcel $");
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -122,7 +123,7 @@ if_nameindex(void)
 		if (ifa->ifa_addr &&
 		    ifa->ifa_addr->sa_family == AF_LINK) {
 			ifni2->if_index =
-			    ((struct sockaddr_dl*)ifa->ifa_addr)->sdl_index;
+			    LLINDEX((struct sockaddr_dl*)ifa->ifa_addr);
 			ifni2->if_name = cp;
 			strcpy(cp, ifa->ifa_name);
 			ifni2++;

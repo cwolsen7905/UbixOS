@@ -16,13 +16,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *        This product includes software developed by the NetBSD
- *        Foundation, Inc. and its contributors.
- * 4. Neither the name of The NetBSD Foundation nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -38,12 +31,13 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/net/nsparser.y,v 1.4 2003/04/17 14:14:22 nectar Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/nsparser.y 288045 2015-09-20 21:21:01Z rodrigc $");
 
 #include "namespace.h"
 #define _NS_PRIVATE
 #include <nsswitch.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
 #include "un-namespace.h"
@@ -82,6 +76,9 @@ Lines
 Entry
 	: NL
 	| Database ':' NL
+		{
+			free((char*)curdbt.name);
+		}
 	| Database ':' Srclist NL
 		{
 			_nsdbtput(&curdbt);
@@ -148,8 +145,7 @@ Action
 %%
 
 static void
-_nsaddsrctomap(elem)
-	const char *elem;
+_nsaddsrctomap(const char *elem)
 {
 	int		i, lineno;
 	extern int	_nsyylineno;
@@ -157,11 +153,13 @@ _nsaddsrctomap(elem)
 
 	lineno = _nsyylineno - (*_nsyytext == '\n' ? 1 : 0);
 	if (curdbt.srclistsize > 0) {
-		if ((strcasecmp(elem, NSSRC_COMPAT) == 0) ||
+		if (((strcasecmp(elem, NSSRC_COMPAT) == 0) &&
+		    (strcasecmp(curdbt.srclist[0].name, NSSRC_CACHE) != 0)) ||
 		    (strcasecmp(curdbt.srclist[0].name, NSSRC_COMPAT) == 0)) {
 			syslog(LOG_ERR,
-	    "NSSWITCH(nsparser): %s line %d: 'compat' used with other sources",
+	    "NSSWITCH(nsparser): %s line %d: 'compat' used with sources, other than 'cache'",
 			    _PATH_NS_CONF, lineno);
+			free((void*)elem);
 			return;
 		}
 	}
@@ -170,6 +168,7 @@ _nsaddsrctomap(elem)
 			syslog(LOG_ERR,
 		       "NSSWITCH(nsparser): %s line %d: duplicate source '%s'",
 			    _PATH_NS_CONF, lineno, elem);
+			free((void*)elem);
 			return;
 		}
 	}

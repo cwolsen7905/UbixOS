@@ -29,13 +29,14 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/stdlib/ldiv.S,v 1.10 2002/12/22 06:41:09 kan Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/stdlib/ldiv.S 217106 2011-01-07 16:08:40Z kib $");
 
 ENTRY(ldiv)
         movl    4(%esp),%eax
         movl    8(%esp),%ecx
         cdq
         idiv    %ecx
-        movl    %eax,4(%esp)
-        movl    %edx,8(%esp)
         ret
+END(ldiv)
+
+	.section .note.GNU-stack,"",%progbits

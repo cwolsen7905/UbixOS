@@ -18,10 +18,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -43,191 +39,168 @@
 static char sccsid[] = "@(#)isctype.c	8.3 (Berkeley) 2/24/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/isctype.c,v 1.9 2002/08/17 20:03:44 ache Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/isctype.c 290494 2015-11-07 12:43:35Z bapt $");
 
 #include <ctype.h>
 
 #undef digittoint
 int
-digittoint(c)
-	int c;
+digittoint(int c)
 {
-	return (__maskrune(c, 0xFF));
+	return (__sbmaskrune(c, 0xFF));
 }
 
 #undef isalnum
 int
-isalnum(c)
-	int c;
+isalnum(int c)
 {
-	return (__istype(c, _CTYPE_A|_CTYPE_D));
+	return (__sbistype(c, _CTYPE_A|_CTYPE_N));
 }
 
 #undef isalpha
 int
-isalpha(c)
-	int c;
+isalpha(int c)
 {
-	return (__istype(c, _CTYPE_A));
+	return (__sbistype(c, _CTYPE_A));
 }
 
 #undef isascii
 int
-isascii(c)
-	int c;
+isascii(int c)
 {
 	return ((c & ~0x7F) == 0);
 }
 
 #undef isblank
 int
-isblank(c)
-	int c;
+isblank(int c)
 {
-	return (__istype(c, _CTYPE_B));
+	return (__sbistype(c, _CTYPE_B));
 }
 
 #undef iscntrl
 int
-iscntrl(c)
-	int c;
+iscntrl(int c)
 {
-	return (__istype(c, _CTYPE_C));
+	return (__sbistype(c, _CTYPE_C));
 }
 
 #undef isdigit
 int
-isdigit(c)
-	int c;
+isdigit(int c)
 {
 	return (__isctype(c, _CTYPE_D));
 }
 
 #undef isgraph
 int
-isgraph(c)
-	int c;
+isgraph(int c)
 {
-	return (__istype(c, _CTYPE_G));
+	return (__sbistype(c, _CTYPE_G));
 }
 
 #undef ishexnumber 
 int
-ishexnumber(c)
-	int c;
+ishexnumber(int c)
 {
-	return (__istype(c, _CTYPE_X));
+	return (__sbistype(c, _CTYPE_X));
 }
 
 #undef isideogram
 int
-isideogram(c)
-	int c;
+isideogram(int c)
 {
-	return (__istype(c, _CTYPE_I));
+	return (__sbistype(c, _CTYPE_I));
 }
 
 #undef islower
 int
-islower(c)
-	int c;
+islower(int c)
 {
-	return (__istype(c, _CTYPE_L));
+	return (__sbistype(c, _CTYPE_L));
 }
 
 #undef isnumber
 int
-isnumber(c)
-	int c;
+isnumber(int c)
 {
-	return (__istype(c, _CTYPE_D));
+	return (__sbistype(c, _CTYPE_N));
 }
 
 #undef isphonogram	
 int
-isphonogram(c)
-	int c;
+isphonogram(int c)
 {
-	return (__istype(c, _CTYPE_Q));
+	return (__sbistype(c, _CTYPE_Q));
 }
 
 #undef isprint
 int
-isprint(c)
-	int c;
+isprint(int c)
 {
-	return (__istype(c, _CTYPE_R));
+	return (__sbistype(c, _CTYPE_R));
 }
 
 #undef ispunct
 int
-ispunct(c)
-	int c;
+ispunct(int c)
 {
-	return (__istype(c, _CTYPE_P));
+	return (__sbistype(c, _CTYPE_P));
 }
 
 #undef isrune
 int
-isrune(c)
-	int c;
+isrune(int c)
 {
-	return (__istype(c, 0xFFFFFF00L));
+	return (__sbistype(c, 0xFFFFFF00L));
 }
 
 #undef isspace
 int
-isspace(c)
-	int c;
+isspace(int c)
 {
-	return (__istype(c, _CTYPE_S));
+	return (__sbistype(c, _CTYPE_S));
 }
 
 #undef isspecial
 int
-isspecial(c)
-	int c;
+isspecial(int c)
 {
-	return (__istype(c, _CTYPE_T));
+	return (__sbistype(c, _CTYPE_T));
 }
 
 #undef isupper
 int
-isupper(c)
-	int c;
+isupper(int c)
 {
-	return (__istype(c, _CTYPE_U));
+	return (__sbistype(c, _CTYPE_U));
 }
 
 #undef isxdigit
 int
-isxdigit(c)
-	int c;
+isxdigit(int c)
 {
 	return (__isctype(c, _CTYPE_X));
 }
 
 #undef toascii
 int
-toascii(c)
-	int c;
+toascii(int c)
 {
 	return (c & 0x7F);
 }
 
 #undef tolower
 int
-tolower(c)
-	int c;
+tolower(int c)
 {
-        return (__tolower(c));
+	return (__sbtolower(c));
 }
 
 #undef toupper
 int
-toupper(c)
-	int c;
+toupper(int c)
 {
-        return (__toupper(c));
+	return (__sbtoupper(c));
 }
 

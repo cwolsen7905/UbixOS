@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,19 +31,20 @@
 static char sccsid[] = "@(#)daemon.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/daemon.c,v 1.6 2003/11/10 22:01:42 ghelmer Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/daemon.c 287292 2015-08-29 14:25:01Z kib $");
 
 #include "namespace.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <paths.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 #include "un-namespace.h"
+#include "libc_private.h"
 
 int
-daemon(nochdir, noclose)
-	int nochdir, noclose;
+daemon(int nochdir, int noclose)
 {
 	struct sigaction osa, sa;
 	int fd;
@@ -59,7 +56,7 @@ daemon(nochdir, noclose)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = SIG_IGN;
 	sa.sa_flags = 0;
-	osa_ok = _sigaction(SIGHUP, &sa, &osa);
+	osa_ok = __libc_sigaction(SIGHUP, &sa, &osa);
 
 	switch (fork()) {
 	case -1:
@@ -67,13 +64,17 @@ daemon(nochdir, noclose)
 	case 0:
 		break;
 	default:
+		/*
+		 * A fine point:  _exit(0), not exit(0), to avoid triggering
+		 * atexit(3) processing
+		 */
 		_exit(0);
 	}
 
 	newgrp = setsid();
 	oerrno = errno;
 	if (osa_ok != -1)
-		_sigaction(SIGHUP, &osa, NULL);
+		__libc_sigaction(SIGHUP, &osa, NULL);
 
 	if (newgrp == -1) {
 		errno = oerrno;

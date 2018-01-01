@@ -1,25 +1,25 @@
 /*
- * Copyright (c) 2004 by Internet Systems Consortium, Inc. ("ISC")
- * Copyright (c) 1996,1999 by Internet Software Consortium.
+ * Copyright (C) 2004, 2005, 2008  Internet Systems Consortium, Inc. ("ISC")
+ * Copyright (C) 1996, 1998, 1999, 2001, 2003  Internet Software Consortium.
  *
- * Permission to use, copy, modify, and distribute this software for any
+ * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
  *
- * THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS.  IN NO EVENT SHALL ISC BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
- * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH
+ * REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS.  IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT,
+ * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+ * LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+ * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: inet_net_pton.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_net_pton.c,v 1.10 2008/11/14 02:36:51 marka Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_net_pton.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_net_pton.c 269867 2014-08-12 12:36:06Z ume $");
 
 #include "port_before.h"
 
@@ -44,7 +44,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_net_pton.c,v 1.2.2.1 2006/07/17 10:09
 # define SPRINTF(x) ((size_t)sprintf x)
 #endif
 
-/*
+/*%
  * static int
  * inet_net_pton_ipv4(src, dst, size)
  *	convert IPv4 network number from presentation to network format.
@@ -75,7 +75,7 @@ inet_net_pton_ipv4(const char *src, u_char *dst, size_t size) {
 		if (size <= 0U)
 			goto emsgsize;
 		dirty = 0;
-		src++;	/* skip x or X. */
+		src++;	/*%< skip x or X. */
 		while ((ch = *src++) != '\0' && isascii(ch) && isxdigit(ch)) {
 			if (isupper(ch))
 				ch = tolower(ch);
@@ -92,7 +92,7 @@ inet_net_pton_ipv4(const char *src, u_char *dst, size_t size) {
 				dirty = 0;
 			}
 		}
-		if (dirty) {  /* Odd trailing nybble? */
+		if (dirty) {  /*%< Odd trailing nybble? */
 			if (size-- <= 0U)
 				goto emsgsize;
 			*dst++ = (u_char) (tmp << 4);
@@ -128,18 +128,18 @@ inet_net_pton_ipv4(const char *src, u_char *dst, size_t size) {
 	if (ch == '/' && isascii((unsigned char)(src[0])) &&
 	    isdigit((unsigned char)(src[0])) && dst > odst) {
 		/* CIDR width specifier.  Nothing can follow it. */
-		ch = *src++;	/* Skip over the /. */
+		ch = *src++;	/*%< Skip over the /. */
 		bits = 0;
 		do {
 			n = strchr(digits, ch) - digits;
 			assert(n >= 0 && n <= 9);
 			bits *= 10;
 			bits += n;
+			if (bits > 32)
+				goto enoent;
 		} while ((ch = *src++) != '\0' && isascii(ch) && isdigit(ch));
 		if (ch != '\0')
 			goto enoent;
-		if (bits > 32)
-			goto emsgsize;
 	}
 
 	/* Firey death and destruction unless we prefetched EOS. */
@@ -151,15 +151,15 @@ inet_net_pton_ipv4(const char *src, u_char *dst, size_t size) {
 		goto enoent;
 	/* If no CIDR spec was given, infer width from net class. */
 	if (bits == -1) {
-		if (*odst >= 240)	/* Class E */
+		if (*odst >= 240)	/*%< Class E */
 			bits = 32;
-		else if (*odst >= 224)	/* Class D */
+		else if (*odst >= 224)	/*%< Class D */
 			bits = 8;
-		else if (*odst >= 192)	/* Class C */
+		else if (*odst >= 192)	/*%< Class C */
 			bits = 24;
-		else if (*odst >= 128)	/* Class B */
+		else if (*odst >= 128)	/*%< Class B */
 			bits = 16;
-		else			/* Class A */
+		else			/*%< Class A */
 			bits = 8;
 		/* If imputed mask is narrower than specified octets, widen. */
 		if (bits < ((dst - odst) * 8))
@@ -202,11 +202,11 @@ getbits(const char *src, int *bitsp) {
 
 		pch = strchr(digits, ch);
 		if (pch != NULL) {
-			if (n++ != 0 && val == 0)	/* no leading zeros */
+			if (n++ != 0 && val == 0)	/*%< no leading zeros */
 				return (0);
 			val *= 10;
 			val += (pch - digits);
-			if (val > 128)			/* range */
+			if (val > 128)			/*%< range */
 				return (0);
 			continue;
 		}
@@ -233,16 +233,16 @@ getv4(const char *src, u_char *dst, int *bitsp) {
 
 		pch = strchr(digits, ch);
 		if (pch != NULL) {
-			if (n++ != 0 && val == 0)	/* no leading zeros */
+			if (n++ != 0 && val == 0)	/*%< no leading zeros */
 				return (0);
 			val *= 10;
 			val += (pch - digits);
-			if (val > 255)			/* range */
+			if (val > 255)			/*%< range */
 				return (0);
 			continue;
 		}
 		if (ch == '.' || ch == '/') {
-			if (dst - odst > 3)		/* too many octets? */
+			if (dst - odst > 3)		/*%< too many octets? */
 				return (0);
 			*dst++ = val;
 			if (ch == '/')
@@ -255,7 +255,7 @@ getv4(const char *src, u_char *dst, int *bitsp) {
 	}
 	if (n == 0)
 		return (0);
-	if (dst - odst > 3)		/* too many octets? */
+	if (dst - odst > 3)		/*%< too many octets? */
 		return (0);
 	*dst++ = val;
 	return (1);
@@ -324,7 +324,7 @@ inet_net_pton_ipv6(const char *src, u_char *dst, size_t size) {
 			tp += NS_INADDRSZ;
 			saw_xdigit = 0;
 			ipv4 = 1;
-			break;	/* '\0' was seen by inet_pton4(). */
+			break;	/*%< '\\0' was seen by inet_pton4(). */
 		}
 		if (ch == '/' && getbits(src, &bits) > 0)
 			break;
@@ -380,7 +380,7 @@ inet_net_pton_ipv6(const char *src, u_char *dst, size_t size) {
 	return (-1);
 }
 
-/*
+/*%
  * int
  * inet_net_pton(af, src, dst, size)
  *	convert network number from presentation to network format.
@@ -412,3 +412,5 @@ inet_net_pton(int af, const char *src, void *dst, size_t size) {
  */
 #undef inet_net_pton
 __weak_reference(__inet_net_pton, inet_net_pton);
+
+/*! \file */

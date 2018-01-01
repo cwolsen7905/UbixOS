@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -31,14 +27,14 @@
  * SUCH DAMAGE.
  *
  *	@(#)extern.h	8.3 (Berkeley) 6/4/94
- * $FreeBSD: src/lib/libc/db/recno/extern.h,v 1.2 2002/03/21 22:46:28 obrien Exp $
+ * $FreeBSD: releng/11.1/lib/libc/db/recno/extern.h 165903 2007-01-09 00:28:16Z imp $
  */
 
 #include "../btree/extern.h"
 
 int	 __rec_close(DB *);
 int	 __rec_delete(const DB *, const DBT *, u_int);
-int	 __rec_dleaf(BTREE *, PAGE *, uint32_t);
+int	 __rec_dleaf(BTREE *, PAGE *, u_int32_t);
 int	 __rec_fd(const DB *);
 int	 __rec_fmap(BTREE *, recno_t);
 int	 __rec_fout(BTREE *);

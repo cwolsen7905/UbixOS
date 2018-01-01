@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- * 	This product includes software developed by the University of
- * 	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -70,14 +66,13 @@
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char sccsid[] = "@(#)inet_addr.c	8.1 (Berkeley) 6/17/93";
-static const char rcsid[] = "$Id: inet_addr.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_addr.c,v 1.5 2005/04/27 04:56:19 sra Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_addr.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_addr.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 
-#include <sys/types.h>
 #include <sys/param.h>
 
 #include <netinet/in.h>
@@ -87,7 +82,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_addr.c,v 1.2.2.1 2006/07/17 10:09:56 
 
 #include "port_after.h"
 
-/*
+/*%
  * Ascii internet address interpretation routine.
  * The value returned is in network order.
  */
@@ -100,7 +95,7 @@ inet_addr(const char *cp) {
 	return (INADDR_NONE);
 }
 
-/* 
+/*%
  * Check whether "cp" is a valid ascii representation
  * of an Internet address and convert to a binary address.
  * Returns 1 if the address is valid, 0 if not.
@@ -181,22 +176,22 @@ inet_aton(const char *cp, struct in_addr *addr) {
 	 */
 	n = pp - parts + 1;
 	switch (n) {
-	case 1:				/* a -- 32 bits */
+	case 1:				/*%< a -- 32 bits */
 		break;
 
-	case 2:				/* a.b -- 8.24 bits */
+	case 2:				/*%< a.b -- 8.24 bits */
 		if (val > 0xffffffU)
 			return (0);
 		val |= parts[0] << 24;
 		break;
 
-	case 3:				/* a.b.c -- 8.8.16 bits */
+	case 3:				/*%< a.b.c -- 8.8.16 bits */
 		if (val > 0xffffU)
 			return (0);
 		val |= (parts[0] << 24) | (parts[1] << 16);
 		break;
 
-	case 4:				/* a.b.c.d -- 8.8.8.8 bits */
+	case 4:				/*%< a.b.c.d -- 8.8.8.8 bits */
 		if (val > 0xffU)
 			return (0);
 		val |= (parts[0] << 24) | (parts[1] << 16) | (parts[2] << 8);
@@ -215,3 +210,5 @@ inet_aton(const char *cp, struct in_addr *addr) {
 __weak_reference(__inet_addr, inet_addr);
 #undef inet_aton
 __weak_reference(__inet_aton, inet_aton);
+
+/*! \file */

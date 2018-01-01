@@ -16,14 +16,13 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: nsap_addr.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: nsap_addr.c,v 1.5 2005/07/28 06:51:48 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/nsap_addr.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/nsap_addr.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 
@@ -118,3 +117,5 @@ inet_nsap_ntoa(int binlen, const u_char *binary, char *ascii) {
 __weak_reference(__inet_nsap_addr, inet_nsap_addr);
 #undef inet_nsap_ntoa
 __weak_reference(__inet_nsap_ntoa, inet_nsap_ntoa);
+
+/*! \file */

@@ -10,11 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,15 +31,17 @@
 static char sccsid[] = "@(#)exit.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/exit.c,v 1.7 2003/12/19 17:11:20 kan Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/exit.c 304524 2016-08-20 11:58:23Z kib $");
 
 #include "namespace.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include "un-namespace.h"
-#include "atexit.h"
 
-void (*__cleanup)();
+#include "atexit.h"
+#include "libc_private.h"
+
+void (*__cleanup)(void);
 
 /*
  * This variable is zero until a process has created a thread.
@@ -58,16 +56,19 @@ int	__isthreaded	= 0;
  * Exit, flushing stdio buffers if necessary.
  */
 void
-exit(status)
-	int status;
+exit(int status)
 {
-   //HACK
-   _exit(status);
 	/* Ensure that the auto-initialization routine is linked in: */
 	extern int _thread_autoinit_dummy_decl;
 
 	_thread_autoinit_dummy_decl = 1;
 
+	/*
+	 * We're dealing with cleaning up thread_local destructors in the case of
+	 * the process termination through main() exit.
+	 * Other cases are handled elsewhere.
+	 */
+	__cxa_thread_call_dtors();
 	__cxa_finalize(NULL);
 	if (__cleanup)
 		(*__cleanup)();

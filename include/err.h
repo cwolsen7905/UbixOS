@@ -10,11 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -31,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)err.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: src/include/err.h,v 1.11 2002/08/21 16:19:55 mike Exp $
+ * $FreeBSD: releng/11.1/include/err.h 315282 2017-03-14 20:14:57Z pfg $
  */
 
 #ifndef _ERR_H_
@@ -46,6 +42,8 @@
  */
 #include <sys/cdefs.h>
 #include <sys/_types.h>
+
+__NULLABILITY_PRAGMA_PUSH
 
 __BEGIN_DECLS
 void	err(int, const char *, ...) __dead2 __printf0like(2, 3);
@@ -62,7 +60,8 @@ void	vwarnc(int, const char *, __va_list) __printf0like(2, 0);
 void	warnx(const char *, ...) __printflike(1, 2);
 void	vwarnx(const char *, __va_list) __printflike(1, 0);
 void	err_set_file(void *);
-void	err_set_exit(void (*)(int));
+void	err_set_exit(void (* _Nullable)(int));
 __END_DECLS
+__NULLABILITY_PRAGMA_POP
 
 #endif /* !_ERR_H_ */

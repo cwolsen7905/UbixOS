@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,18 +31,34 @@
 static char sccsid[] = "@(#)rewinddir.c	8.1 (Berkeley) 6/8/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/rewinddir.c,v 1.5 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/rewinddir.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
+#include "namespace.h"
 #include <sys/types.h>
 #include <dirent.h>
+#include <pthread.h>
+#include <unistd.h>
+#include "un-namespace.h"
 
+#include "libc_private.h"
+#include "gen-private.h"
 #include "telldir.h"
 
 void
-rewinddir(dirp)
-	DIR *dirp;
+rewinddir(DIR *dirp)
 {
 
-	_seekdir(dirp, dirp->dd_rewind);
-	dirp->dd_rewind = telldir(dirp);
+	if (__isthreaded)
+		_pthread_mutex_lock(&dirp->dd_lock);
+	dirp->dd_flags &= ~__DTF_SKIPREAD; /* current contents are invalid */
+	if (dirp->dd_flags & __DTF_READALL)
+		_filldir(dirp, false);
+	else {
+		(void) lseek(dirp->dd_fd, 0, SEEK_SET);
+		dirp->dd_seek = 0;
+	}
+	dirp->dd_loc = 0;
+	_reclaim_telldir(dirp);
+	if (__isthreaded)
+		_pthread_mutex_unlock(&dirp->dd_lock);
 }

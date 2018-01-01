@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,17 +31,23 @@
 static char sccsid[] = "@(#)raise.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/raise.c,v 1.4 2003/07/19 05:22:56 davidxu Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/raise.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include <signal.h>
 #include <unistd.h>
 
+#include "libc_private.h"
+
 __weak_reference(__raise, raise);
 __weak_reference(__raise, _raise);
+int __raise(int);
 
 int
-__raise(s)
-	int s;
+__raise(int s)
 {
-	return(kill(getpid(), s));
+	long id;
+
+	if (__sys_thr_self(&id) == -1)
+		return (-1);
+	return (__sys_thr_kill(id, s));
 }

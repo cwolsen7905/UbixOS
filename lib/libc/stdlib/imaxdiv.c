@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/imaxdiv.c,v 1.1 2001/11/15 02:05:03 mike Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/imaxdiv.c 301115 2016-06-01 10:14:25Z ache $");
 
 #include <inttypes.h>
 
@@ -37,9 +37,11 @@ imaxdiv(intmax_t numer, intmax_t denom)
 
 	retval.quot = numer / denom;
 	retval.rem = numer % denom;
+#if !defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L)
 	if (numer >= 0 && retval.rem < 0) {
 		retval.quot++;
 		retval.rem -= denom;
 	}
+#endif
 	return (retval);
 }

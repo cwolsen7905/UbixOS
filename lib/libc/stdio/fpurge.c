@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)fpurge.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/fpurge.c,v 1.10 2002/03/22 21:53:04 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/fpurge.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include "namespace.h"
 #include <errno.h>
@@ -53,8 +49,7 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/fpurge.c,v 1.10 2002/03/22 21:53:04 obrie
  * given FILE's buffer empty.
  */
 int
-fpurge(fp)
-	FILE *fp;
+fpurge(FILE *fp)
 {
 	int retval;
 	FLOCKFILE(fp);
@@ -66,7 +61,7 @@ fpurge(fp)
 			FREEUB(fp);
 		fp->_p = fp->_bf._base;
 		fp->_r = 0;
-		fp->_w = fp->_flags & (__SLBF|__SNBF) ? 0 : fp->_bf._size;
+		fp->_w = fp->_flags & (__SLBF|__SNBF|__SRD) ? 0 : fp->_bf._size;
 		retval = 0;
 	}
 	FUNLOCKFILE(fp);

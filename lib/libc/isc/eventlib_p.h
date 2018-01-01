@@ -15,18 +15,18 @@
  * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-/* eventlib_p.h - private interfaces for eventlib
- * vix 09sep95 [initial]
+/*! \file 
+ * \brief private interfaces for eventlib
+ * \author vix 09sep95 [initial]
  *
- * $Id: eventlib_p.h 89 2016-01-12 00:20:40Z reddawg $
- * $FreeBSD: src/lib/libc/isc/eventlib_p.h,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $
+ * $Id: eventlib_p.h,v 1.9 2006/03/09 23:57:56 marka Exp $
+ * $FreeBSD: releng/11.1/lib/libc/isc/eventlib_p.h 298226 2016-04-18 21:05:15Z avos $
  */
 
 #ifndef _EVENTLIB_P_H
 #define _EVENTLIB_P_H
 
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/un.h>
@@ -48,6 +48,8 @@
 #define	EV_MASK_ALL	(EV_READ | EV_WRITE | EV_EXCEPT)
 #define EV_ERR(e)		return (errno = (e), -1)
 #define OK(x)		if ((x) < 0) EV_ERR(errno); else (void)NULL
+#define OKFREE(x, y)	if ((x) < 0) { FREE((y)); EV_ERR(errno); } \
+			else (void)NULL
 
 #define	NEW(p)		if (((p) = memget(sizeof *(p))) != NULL) \
 				FILL(p); \
@@ -78,9 +80,9 @@ typedef struct evConn {
 	void *		uap;
 	int		fd;
 	int		flags;
-#define EV_CONN_LISTEN		0x0001		/* Connection is a listener. */
-#define EV_CONN_SELECTED	0x0002		/* evSelectFD(conn->file). */
-#define EV_CONN_BLOCK		0x0004		/* Listener fd was blocking. */
+#define EV_CONN_LISTEN		0x0001		/*%< Connection is a listener. */
+#define EV_CONN_SELECTED	0x0002		/*%< evSelectFD(conn->file). */
+#define EV_CONN_BLOCK		0x0004		/*%< Listener fd was blocking. */
 	evFileID	file;
 	struct evConn *	prev;
 	struct evConn *	next;
@@ -128,7 +130,7 @@ typedef struct evStream {
 	evFileID	file;
 	evTimerID	timer;
 	int		flags;
-#define EV_STR_TIMEROK	0x0001	/* IFF timer valid. */
+#define EV_STR_TIMEROK	0x0001	/*%< IFF timer valid. */
 	int		fd;
 	struct iovec *	iovOrig;
 	int		iovOrigCount;
@@ -280,6 +282,8 @@ evWait *evFreeWait(evContext_p *ctx, evWait *old);
 #endif
 
 /* Global options */
+#ifndef _LIBC
 extern int	__evOptMonoTime;
+#endif
 
 #endif /*_EVENTLIB_P_H*/

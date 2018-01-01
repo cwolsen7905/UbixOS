@@ -16,10 +16,10 @@
  */
 
 #ifndef lint
-static const char rcsid[] = "$Id: ns_samedomain.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: ns_samedomain.c,v 1.6 2005/04/27 04:56:40 sra Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/nameser/ns_samedomain.c,v 1.3.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/nameser/ns_samedomain.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include "port_before.h"
 
@@ -30,22 +30,22 @@ __FBSDID("$FreeBSD: src/lib/libc/nameser/ns_samedomain.c,v 1.3.2.1 2006/07/17 10
 
 #include "port_after.h"
 
-#ifndef _LIBC
-/*
- * int
- * ns_samedomain(a, b)
+/*%
  *	Check whether a name belongs to a domain.
+ *
  * Inputs:
- *	a - the domain whose ancestory is being verified
- *	b - the potential ancestor we're checking against
+ *\li	a - the domain whose ancestry is being verified
+ *\li	b - the potential ancestor we're checking against
+ *
  * Return:
- *	boolean - is a at or below b?
+ *\li	boolean - is a at or below b?
+ *
  * Notes:
- *	Trailing dots are first removed from name and domain.
+ *\li	Trailing dots are first removed from name and domain.
  *	Always compare complete subdomains, not only whether the
  *	domain name is the trailing string of the given name.
  *
- *	"host.foobar.top" lies in "foobar.top" and in "top" and in ""
+ *\li	"host.foobar.top" lies in "foobar.top" and in "top" and in ""
  *	but NOT in "bar.top"
  */
 
@@ -143,9 +143,8 @@ ns_samedomain(const char *a, const char *b) {
 	return (strncasecmp(cp, b, lb) == 0);
 }
 
-/*
- * int
- * ns_subdomain(a, b)
+#ifndef _LIBC
+/*%
  *	is "a" a subdomain of "b"?
  */
 int
@@ -154,30 +153,31 @@ ns_subdomain(const char *a, const char *b) {
 }
 #endif
 
-/*
- * int
- * ns_makecanon(src, dst, dstsize)
+/*%
  *	make a canonical copy of domain name "src"
+ *
  * notes:
+ * \code
  *	foo -> foo.
  *	foo. -> foo.
  *	foo.. -> foo.
  *	foo\. -> foo\..
  *	foo\\. -> foo\\.
+ * \endcode
  */
 
 int
 ns_makecanon(const char *src, char *dst, size_t dstsize) {
 	size_t n = strlen(src);
 
-	if (n + sizeof "." > dstsize) {			/* Note: sizeof == 2 */
+	if (n + sizeof "." > dstsize) {			/*%< Note: sizeof == 2 */
 		errno = EMSGSIZE;
 		return (-1);
 	}
 	strcpy(dst, src);
-	while (n >= 1U && dst[n - 1] == '.')		/* Ends in "." */
-		if (n >= 2U && dst[n - 2] == '\\' &&	/* Ends in "\." */
-		    (n < 3U || dst[n - 3] != '\\'))	/* But not "\\." */
+	while (n >= 1U && dst[n - 1] == '.')		/*%< Ends in "." */
+		if (n >= 2U && dst[n - 2] == '\\' &&	/*%< Ends in "\." */
+		    (n < 3U || dst[n - 3] != '\\'))	/*%< But not "\\." */
 			break;
 		else
 			dst[--n] = '\0';
@@ -186,14 +186,13 @@ ns_makecanon(const char *src, char *dst, size_t dstsize) {
 	return (0);
 }
 
-/*
- * int
- * ns_samename(a, b)
+/*%
  *	determine whether domain name "a" is the same as domain name "b"
+ *
  * return:
- *	-1 on error
- *	0 if names differ
- *	1 if names are the same
+ *\li	-1 on error
+ *\li	0 if names differ
+ *\li	1 if names are the same
  */
 
 int
@@ -208,3 +207,5 @@ ns_samename(const char *a, const char *b) {
 	else
 		return (0);
 }
+
+/*! \file */

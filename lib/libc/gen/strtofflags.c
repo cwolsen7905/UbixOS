@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)stat_flags.c	8.1 (Berkeley) 5/31/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/strtofflags.c,v 1.22 2002/04/16 11:03:22 joe Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/strtofflags.c 287797 2015-09-14 18:59:01Z rodrigc $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -43,36 +39,53 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/strtofflags.c,v 1.22 2002/04/16 11:03:22 jo
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-static struct {
-	char *name;
-	u_long flag;
-	int invert;
-} mapping[] = {
-	/* shorter names per flag first, all prefixed by "no" */
-	{ "nosappnd",		SF_APPEND,	0 },
-	{ "nosappend",		SF_APPEND,	0 },
-	{ "noarch",		SF_ARCHIVED,	0 },
-	{ "noarchived",		SF_ARCHIVED,	0 },
-	{ "noschg",		SF_IMMUTABLE,	0 },
-	{ "noschange",		SF_IMMUTABLE,	0 },
-	{ "nosimmutable",	SF_IMMUTABLE,	0 },
-	{ "nosunlnk",		SF_NOUNLINK,	0 },
-	{ "nosunlink",		SF_NOUNLINK,	0 },
-#ifdef SF_SNAPSHOT
-	{ "nosnapshot",		SF_SNAPSHOT,	0 },
-#endif
-	{ "nouappnd",		UF_APPEND,	0 },
-	{ "nouappend",		UF_APPEND,	0 },
-	{ "nouchg",		UF_IMMUTABLE,	0 },
-	{ "nouchange",		UF_IMMUTABLE,	0 },
-	{ "nouimmutable",	UF_IMMUTABLE,	0 },
-	{ "nodump",		UF_NODUMP,	1 },
-	{ "noopaque",		UF_OPAQUE,	0 },
-	{ "nouunlnk",		UF_NOUNLINK,	0 },
-	{ "nouunlink",		UF_NOUNLINK,	0 }
-};
 #define longestflaglen	12
+static struct {
+	char name[longestflaglen + 1];
+	char invert;
+	u_long flag;
+} const mapping[] = {
+	/* shorter names per flag first, all prefixed by "no" */
+	{ "nosappnd",		0, SF_APPEND	},
+	{ "nosappend",		0, SF_APPEND	},
+	{ "noarch",		0, SF_ARCHIVED	},
+	{ "noarchived",		0, SF_ARCHIVED	},
+	{ "noschg",		0, SF_IMMUTABLE	},
+	{ "noschange",		0, SF_IMMUTABLE	},
+	{ "nosimmutable",	0, SF_IMMUTABLE	},
+	{ "nosunlnk",		0, SF_NOUNLINK	},
+	{ "nosunlink",		0, SF_NOUNLINK	},
+#ifdef SF_SNAPSHOT
+	{ "nosnapshot",		0, SF_SNAPSHOT	},
+#endif
+	{ "nouappnd",		0, UF_APPEND	},
+	{ "nouappend",		0, UF_APPEND	},
+	{ "nouarch", 		0, UF_ARCHIVE	},
+	{ "nouarchive",		0, UF_ARCHIVE	},
+	{ "nohidden",		0, UF_HIDDEN	},
+	{ "nouhidden",		0, UF_HIDDEN	},
+	{ "nouchg",		0, UF_IMMUTABLE	},
+	{ "nouchange",		0, UF_IMMUTABLE	},
+	{ "nouimmutable",	0, UF_IMMUTABLE	},
+	{ "nodump",		1, UF_NODUMP	},
+	{ "nouunlnk",		0, UF_NOUNLINK	},
+	{ "nouunlink",		0, UF_NOUNLINK	},
+	{ "nooffline",		0, UF_OFFLINE	},
+	{ "nouoffline",		0, UF_OFFLINE	},
+	{ "noopaque",		0, UF_OPAQUE	},
+	{ "nordonly",		0, UF_READONLY	},
+	{ "nourdonly",		0, UF_READONLY	},
+	{ "noreadonly",		0, UF_READONLY	},
+	{ "noureadonly",	0, UF_READONLY	},
+	{ "noreparse",		0, UF_REPARSE	},
+	{ "noureparse",		0, UF_REPARSE	},
+	{ "nosparse",		0, UF_SPARSE	},
+	{ "nousparse",		0, UF_SPARSE	},
+	{ "nosystem",		0, UF_SYSTEM	},
+	{ "nousystem",		0, UF_SYSTEM	}
+};
 #define nmappings	(sizeof(mapping) / sizeof(mapping[0]))
 
 /*
@@ -81,13 +94,13 @@ static struct {
  *	are set, return the empty string.
  */
 char *
-fflagstostr(flags)
-	u_long flags;
+fflagstostr(u_long flags)
 {
 	char *string;
-	char *sp, *dp;
+	const char *sp;
+	char *dp;
 	u_long setflags;
-	int i;
+	u_int i;
 
 	if ((string = (char *)malloc(nmappings * (longestflaglen + 1))) == NULL)
 		return (NULL);
@@ -114,9 +127,7 @@ fflagstostr(flags)
  *	to the offending token.
  */
 int
-strtofflags(stringp, setp, clrp)
-	char **stringp;
-	u_long *setp, *clrp;
+strtofflags(char **stringp, u_long *setp, u_long *clrp)
 {
 	char *string, *p;
 	int i;

@@ -10,10 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by John Birrell.
- * 4. Neither the name of the author nor the names of any co-contributors
+ * 3. Neither the name of the author nor the names of any co-contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -31,52 +28,51 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/_spinlock_stub.c,v 1.8 2003/03/26 04:02:24 jeff Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/_spinlock_stub.c 319442 2017-06-01 16:03:01Z vangyzen $");
 
 #include <stdio.h>
 
 #include "spinlock.h"
+#include "libc_private.h"
 
-/*
- * Declare weak definitions in case the application is not linked
- * with libpthread.
- */
+long _atomic_lock_stub(volatile long *);
+void _spinlock_stub(spinlock_t *);
+void _spinunlock_stub(spinlock_t *);
+
 __weak_reference(_atomic_lock_stub, _atomic_lock);
-__weak_reference(_spinlock_stub, _spinlock);
-__weak_reference(_spinlock_stub, _spinunlock);
-__weak_reference(_spinlock_debug_stub, _spinlock_debug);
 
-
-/*
- * This function is a stub for the _atomic_lock function in libpthread.
- */
 long
-_atomic_lock_stub(volatile long *lck)
+_atomic_lock_stub(volatile long *lck __unused)
 {
 	return (0L);
 }
 
-
-/*
- * This function is a stub for the spinlock function in libpthread.
- */
+#pragma weak _spinlock
 void
-_spinlock_stub(spinlock_t *lck)
+_spinlock(spinlock_t *lck)
+{
+
+	((void (*)(spinlock_t *lck))__libc_interposing[INTERPOS_spinlock])
+	    (lck);
+
+}
+
+#pragma weak _spinunlock
+void
+_spinunlock(spinlock_t *lck)
+{
+
+	((void (*)(spinlock_t *lck))__libc_interposing[INTERPOS_spinunlock])
+	    (lck);
+
+}
+
+void
+__libc_spinlock_stub(spinlock_t *lck __unused)
 {
 }
 
-/*
- * This function is a stub for the spinunlock function in libpthread.
- */
 void
-_spinunlock_stub(spinlock_t *lck)
-{
-}
-
-/*
- * This function is a stub for the debug spinlock function in libpthread.
- */
-void
-_spinlock_debug_stub(spinlock_t *lck, char *fname, int lineno)
+__libc_spinunlock_stub(spinlock_t *lck __unused)
 {
 }

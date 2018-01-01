@@ -2,6 +2,11 @@
  * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -10,11 +15,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,12 +36,13 @@
 static char sccsid[] = "@(#)strtol.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/strtol.c,v 1.19 2005/01/21 13:31:02 ache Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/strtol.c 251672 2013-06-13 00:19:30Z emaste $");
 
 #include <limits.h>
 #include <ctype.h>
 #include <errno.h>
 #include <stdlib.h>
+#include "xlocale_private.h"
 
 
 /*
@@ -50,13 +52,15 @@ __FBSDID("$FreeBSD: src/lib/libc/stdlib/strtol.c,v 1.19 2005/01/21 13:31:02 ache
  * alphabets and digits are each contiguous.
  */
 long
-strtol(const char * __restrict nptr, char ** __restrict endptr, int base)
+strtol_l(const char * __restrict nptr, char ** __restrict endptr, int base,
+		locale_t locale)
 {
 	const char *s;
 	unsigned long acc;
 	char c;
 	unsigned long cutoff;
 	int neg, any, cutlim;
+	FIX_LOCALE(locale);
 
 	/*
 	 * Skip white space and pick up leading +/- sign if any.
@@ -66,7 +70,7 @@ strtol(const char * __restrict nptr, char ** __restrict endptr, int base)
 	s = nptr;
 	do {
 		c = *s++;
-	} while (isspace((unsigned char)c));
+	} while (isspace_l((unsigned char)c, locale));
 	if (c == '-') {
 		neg = 1;
 		c = *s++;
@@ -141,4 +145,14 @@ noconv:
 	if (endptr != NULL)
 		*endptr = (char *)(any ? s - 1 : nptr);
 	return (acc);
+}
+long
+strtol(const char * __restrict nptr, char ** __restrict endptr, int base)
+{
+	return strtol_l(nptr, endptr, base, __get_locale());
+}
+long double
+strtold(const char * __restrict nptr, char ** __restrict endptr)
+{
+	return strtold_l(nptr, endptr, __get_locale());
 }

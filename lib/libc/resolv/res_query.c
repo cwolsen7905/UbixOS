@@ -1,7 +1,24 @@
 /*
+ * Portions Copyright (C) 2004, 2005, 2008  Internet Systems Consortium, Inc. ("ISC")
+ * Portions Copyright (C) 1996-2001, 2003  Internet Software Consortium.
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH
+ * REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+ * AND FITNESS.  IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT,
+ * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+ * LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+ * OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
+ */
+
+/*
  * Copyright (c) 1988, 1993
  *    The Regents of the University of California.  All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -10,14 +27,10 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- * 	This product includes software developed by the University of
- * 	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -33,14 +46,14 @@
 
 /*
  * Portions Copyright (c) 1993 by Digital Equipment Corporation.
- * 
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies, and that
  * the name of Digital Equipment Corporation not be used in advertising or
  * publicity pertaining to distribution of the document or software without
  * specific, written prior permission.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND DIGITAL EQUIPMENT CORP. DISCLAIMS ALL
  * WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS.   IN NO EVENT SHALL DIGITAL EQUIPMENT
@@ -51,32 +64,14 @@
  * SOFTWARE.
  */
 
-/*
- * Copyright (c) 2004 by Internet Systems Consortium, Inc. ("ISC")
- * Portions Copyright (c) 1996-1999 by Internet Software Consortium.
- *
- * Permission to use, copy, modify, and distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
- *
- * THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS.  IN NO EVENT SHALL ISC BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
- * OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
- */
-
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char sccsid[] = "@(#)res_query.c	8.1 (Berkeley) 6/4/93";
-static const char rcsid[] = "$Id: res_query.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: res_query.c,v 1.11 2008/11/14 02:36:51 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/resolv/res_query.c,v 1.3.2.1 2006/07/17 10:09:58 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/resolv/res_query.c 299880 2016-05-16 01:38:24Z truckman $");
 
 #include "port_before.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -92,7 +87,9 @@ __FBSDID("$FreeBSD: src/lib/libc/resolv/res_query.c,v 1.3.2.1 2006/07/17 10:09:5
 #include "port_after.h"
 
 /* Options.  Leave them on. */
-#define DEBUG
+#ifndef	DEBUG
+#define	DEBUG
+#endif
 
 #if PACKETSZ > 1024
 #define MAXPACKET	PACKETSZ
@@ -100,7 +97,7 @@ __FBSDID("$FreeBSD: src/lib/libc/resolv/res_query.c,v 1.3.2.1 2006/07/17 10:09:5
 #define MAXPACKET	1024
 #endif
 
-/*
+/*%
  * Formulate a normal query, send, and await answer.
  * Returned answer is placed in supplied buffer "answer".
  * Perform preliminary check of answer, returning success only
@@ -112,21 +109,21 @@ __FBSDID("$FreeBSD: src/lib/libc/resolv/res_query.c,v 1.3.2.1 2006/07/17 10:09:5
  */
 int
 res_nquery(res_state statp,
-	   const char *name,	/* domain name */
-	   int class, int type,	/* class and type of query */
-	   u_char *answer,	/* buffer to put answer */
-	   int anslen)		/* size of answer buffer */
+	   const char *name,	/*%< domain name */
+	   int class, int type,	/*%< class and type of query */
+	   u_char *answer,	/*%< buffer to put answer */
+	   int anslen)		/*%< size of answer buffer */
 {
 	u_char buf[MAXPACKET];
 	HEADER *hp = (HEADER *) answer;
-	int n;
 	u_int oflags;
+	u_char *rdata;
+	int n;
 
 	oflags = statp->_flags;
 
 again:
-	hp->rcode = NOERROR;	/* default */
-
+	hp->rcode = NOERROR;	/*%< default */
 #ifdef DEBUG
 	if (statp->options & RES_DEBUG)
 		printf(";; res_query(%s, %d, %d)\n", name, class, type);
@@ -136,8 +133,14 @@ again:
 			 buf, sizeof(buf));
 #ifdef RES_USE_EDNS0
 	if (n > 0 && (statp->_flags & RES_F_EDNS0ERR) == 0 &&
-	    (statp->options & (RES_USE_EDNS0|RES_USE_DNSSEC)) != 0U)
+	    (statp->options & (RES_USE_EDNS0|RES_USE_DNSSEC|RES_NSID))) {
 		n = res_nopt(statp, n, buf, sizeof(buf), anslen);
+		if (n > 0 && (statp->options & RES_NSID) != 0U) {
+			rdata = &buf[n];
+			n = res_nopt_rdata(statp, n, buf, sizeof(buf), rdata,
+					   NS_OPT_NSID, 0, NULL);
+		}
+	}
 #endif
 	if (n <= 0) {
 #ifdef DEBUG
@@ -147,6 +150,7 @@ again:
 		RES_SET_H_ERRNO(statp, NO_RECOVERY);
 		return (n);
 	}
+
 	n = res_nsend(statp, buf, n, answer, anslen);
 	if (n < 0) {
 #ifdef RES_USE_EDNS0
@@ -198,7 +202,7 @@ again:
 	return (n);
 }
 
-/*
+/*%
  * Formulate a normal query, send, and retrieve answer in supplied buffer.
  * Return the size of the response on success, -1 on error.
  * If enabled, implement search rules until answer or unrecoverable failure
@@ -206,10 +210,10 @@ again:
  */
 int
 res_nsearch(res_state statp,
-	    const char *name,	/* domain name */
-	    int class, int type,	/* class and type of query */
-	    u_char *answer,	/* buffer to put answer */
-	    int anslen)		/* size of answer */
+	    const char *name,	/*%< domain name */
+	    int class, int type,	/*%< class and type of query */
+	    u_char *answer,	/*%< buffer to put answer */
+	    int anslen)		/*%< size of answer */
 {
 	const char *cp, * const *domain;
 	HEADER *hp = (HEADER *) answer;
@@ -221,8 +225,7 @@ res_nsearch(res_state statp,
 	int searched = 0;
 
 	errno = 0;
-	RES_SET_H_ERRNO(statp, HOST_NOT_FOUND);  /* True if we never query. */
-
+	RES_SET_H_ERRNO(statp, HOST_NOT_FOUND);  /*%< True if we never query. */
 	dots = 0;
 	for (cp = name; *cp != '\0'; cp++)
 		dots += (*cp == '.');
@@ -395,7 +398,7 @@ giveup:
 	return (-1);
 }
 
-/*
+/*%
  * Perform a call on res_query on the concatenation of name and domain,
  * removing a trailing dot from name if domain is NULL.
  */
@@ -403,9 +406,9 @@ int
 res_nquerydomain(res_state statp,
 	    const char *name,
 	    const char *domain,
-	    int class, int type,	/* class and type of query */
-	    u_char *answer,		/* buffer to put answer */
-	    int anslen)		/* size of answer */
+	    int class, int type,	/*%< class and type of query */
+	    u_char *answer,		/*%< buffer to put answer */
+	    int anslen)		/*%< size of answer */
 {
 	char nbuf[MAXDNAME];
 	const char *longname = nbuf;
@@ -455,7 +458,7 @@ res_hostalias(const res_state statp, const char *name, char *dst, size_t siz) {
 	if (issetugid())
 		return (NULL);
 	file = getenv("HOSTALIASES");
-	if (file == NULL || (fp = fopen(file, "r")) == NULL)
+	if (file == NULL || (fp = fopen(file, "re")) == NULL)
 		return (NULL);
 	setbuf(fp, NULL);
 	buf[sizeof(buf) - 1] = '\0';
@@ -483,3 +486,5 @@ res_hostalias(const res_state statp, const char *name, char *dst, size_t siz) {
 	fclose(fp);
 	return (NULL);
 }
+
+/*! \file */

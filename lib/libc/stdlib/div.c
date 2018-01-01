@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)div.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/div.c,v 1.2 2002/03/22 21:53:10 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/div.c 301115 2016-06-01 10:14:25Z ache $");
 
 #include <stdlib.h>		/* div_t */
 
@@ -50,6 +46,7 @@ div(num, denom)
 
 	r.quot = num / denom;
 	r.rem = num % denom;
+#if !defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L)
 	/*
 	 * The ANSI standard says that |r.quot| <= |n/d|, where
 	 * n/d is to be computed in infinite precision.  In other
@@ -77,5 +74,6 @@ div(num, denom)
 		r.quot++;
 		r.rem -= denom;
 	}
+#endif
 	return (r);
 }

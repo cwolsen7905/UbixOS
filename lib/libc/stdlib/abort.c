@@ -10,11 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)abort.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/abort.c,v 1.9 2003/08/16 11:43:57 davidxu Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/abort.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #include "namespace.h"
 #include <signal.h>
@@ -45,10 +41,10 @@ __FBSDID("$FreeBSD: src/lib/libc/stdlib/abort.c,v 1.9 2003/08/16 11:43:57 davidx
 #include <pthread.h>
 #include "un-namespace.h"
 
-void (*__cleanup)();
+#include "libc_private.h"
 
 void
-abort()
+abort(void)
 {
 	struct sigaction act;
 
@@ -65,7 +61,7 @@ abort()
 	 * any errors -- ISO C doesn't allow abort to return anyway.
 	 */
 	sigdelset(&act.sa_mask, SIGABRT);
-	(void)_sigprocmask(SIG_SETMASK, &act.sa_mask, NULL);
+	(void)__libc_sigprocmask(SIG_SETMASK, &act.sa_mask, NULL);
 	(void)raise(SIGABRT);
 
 	/*
@@ -75,9 +71,9 @@ abort()
 	act.sa_handler = SIG_DFL;
 	act.sa_flags = 0;
 	sigfillset(&act.sa_mask);
-	(void)_sigaction(SIGABRT, &act, NULL);
+	(void)__libc_sigaction(SIGABRT, &act, NULL);
 	sigdelset(&act.sa_mask, SIGABRT);
-	(void)_sigprocmask(SIG_SETMASK, &act.sa_mask, NULL);
+	(void)__libc_sigprocmask(SIG_SETMASK, &act.sa_mask, NULL);
 	(void)raise(SIGABRT);
 	exit(1);
 }

@@ -24,6 +24,7 @@
  */
 
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/gethostnamadr.c 298830 2016-04-30 01:24:24Z pfg $");
 
 #include "namespace.h"
 #include "reentrant.h"
@@ -43,23 +44,24 @@
 #include <resolv.h>			/* XXX hack for _res */
 #include "un-namespace.h"
 #include "netdb_private.h"
-
-extern int _ht_gethostbyname(void *, void *, va_list);
-extern int _dns_gethostbyname(void *, void *, va_list);
-extern int _nis_gethostbyname(void *, void *, va_list);
-extern int _ht_gethostbyaddr(void *, void *, va_list);
-extern int _dns_gethostbyaddr(void *, void *, va_list);
-extern int _nis_gethostbyaddr(void *, void *, va_list);
+#ifdef NS_CACHING
+#include "nscache.h"
+#endif
 
 static int gethostbyname_internal(const char *, int, struct hostent *, char *,
     size_t, struct hostent **, int *, res_state);
 
-/* Host lookup order if nsswitch.conf is broken or nonexistant */
+/* Host lookup order if nsswitch.conf is broken or nonexistent */
 static const ns_src default_src[] = {
 	{ NSSRC_FILES, NS_SUCCESS },
 	{ NSSRC_DNS, NS_SUCCESS },
 	{ 0 }
 };
+#ifdef NS_CACHING
+static int host_id_func(char *, size_t *, va_list, void *);
+static int host_marshal_func(char *, size_t *, void *, va_list, void *);
+static int host_unmarshal_func(char *, size_t, void *, va_list, void *);
+#endif
 
 NETDB_THREAD_ALLOC(hostent)
 NETDB_THREAD_ALLOC(hostent_data)
@@ -151,9 +153,284 @@ __copy_hostent(struct hostent *he, struct hostent *hptr, char *buf,
 	return (0);
 }
 
+#ifdef NS_CACHING
+static int
+host_id_func(char *buffer, size_t *buffer_size, va_list ap, void *cache_mdata)
+{
+	res_state statp;
+	u_long res_options;
+
+	const int op_id = 1;
+	char *str;
+	void *addr;
+	socklen_t len;
+	int type;
+
+	size_t desired_size, size;
+	enum nss_lookup_type lookup_type;
+	char *p;
+	int res = NS_UNAVAIL;
+
+	statp = __res_state();
+	res_options = statp->options & (RES_RECURSE | RES_DEFNAMES |
+	    RES_DNSRCH | RES_NOALIASES | RES_USE_INET6);
+
+	lookup_type = (enum nss_lookup_type)cache_mdata;
+	switch (lookup_type) {
+	case nss_lt_name:
+		str = va_arg(ap, char *);
+		type = va_arg(ap, int);
+
+		size = strlen(str);
+		desired_size = sizeof(res_options) + sizeof(int) +
+		    sizeof(enum nss_lookup_type) + sizeof(int) + size + 1;
+
+		if (desired_size > *buffer_size) {
+			res = NS_RETURN;
+			goto fin;
+		}
+
+		p = buffer;
+
+		memcpy(p, &res_options, sizeof(res_options));
+		p += sizeof(res_options);
+
+		memcpy(p, &op_id, sizeof(int));
+		p += sizeof(int);
+
+		memcpy(p, &lookup_type, sizeof(enum nss_lookup_type));
+		p += sizeof(int);
+
+		memcpy(p, &type, sizeof(int));
+		p += sizeof(int);
+
+		memcpy(p, str, size + 1);
+
+		res = NS_SUCCESS;
+		break;
+	case nss_lt_id:
+		addr = va_arg(ap, void *);
+		len = va_arg(ap, socklen_t);
+		type = va_arg(ap, int);
+
+		desired_size = sizeof(res_options) + sizeof(int) +
+		    sizeof(enum nss_lookup_type) + sizeof(int) +
+		    sizeof(socklen_t) + len;
+
+		if (desired_size > *buffer_size) {
+			res = NS_RETURN;
+			goto fin;
+		}
+
+		p = buffer;
+		memcpy(p, &res_options, sizeof(res_options));
+		p += sizeof(res_options);
+
+		memcpy(p, &op_id, sizeof(int));
+		p += sizeof(int);
+
+		memcpy(p, &lookup_type, sizeof(enum nss_lookup_type));
+		p += sizeof(int);
+
+		memcpy(p, &type, sizeof(int));
+		p += sizeof(int);
+
+		memcpy(p, &len, sizeof(socklen_t));
+		p += sizeof(socklen_t);
+
+		memcpy(p, addr, len);
+
+		res = NS_SUCCESS;
+		break;
+	default:
+		/* should be unreachable */
+		return (NS_UNAVAIL);
+	}
+
+fin:
+	*buffer_size = desired_size;
+	return (res);
+}
+
+static int
+host_marshal_func(char *buffer, size_t *buffer_size, void *retval, va_list ap,
+    void *cache_mdata)
+{
+	char *str;
+	void *addr;
+	socklen_t len;
+	int type;
+	struct hostent *ht;
+
+	struct hostent new_ht;
+	size_t desired_size, aliases_size, addr_size, size;
+	char *p, **iter;
+
+	switch ((enum nss_lookup_type)cache_mdata) {
+	case nss_lt_name:
+		str = va_arg(ap, char *);
+		type = va_arg(ap, int);
+		break;
+	case nss_lt_id:
+		addr = va_arg(ap, void *);
+		len = va_arg(ap, socklen_t);
+		type = va_arg(ap, int);
+		break;
+	default:
+		/* should be unreachable */
+		return (NS_UNAVAIL);
+	}
+	ht = va_arg(ap, struct hostent *);
+
+	desired_size = _ALIGNBYTES + sizeof(struct hostent) + sizeof(char *);
+	if (ht->h_name != NULL)
+		desired_size += strlen(ht->h_name) + 1;
+
+	if (ht->h_aliases != NULL) {
+		aliases_size = 0;
+		for (iter = ht->h_aliases; *iter; ++iter) {
+			desired_size += strlen(*iter) + 1;
+			++aliases_size;
+		}
+
+		desired_size += _ALIGNBYTES +
+		    (aliases_size + 1) * sizeof(char *);
+	}
+
+	if (ht->h_addr_list != NULL) {
+		addr_size = 0;
+		for (iter = ht->h_addr_list; *iter; ++iter)
+			++addr_size;
+
+		desired_size += addr_size * _ALIGN(ht->h_length);
+		desired_size += _ALIGNBYTES + (addr_size + 1) * sizeof(char *);
+	}
+
+	if (desired_size > *buffer_size) {
+		/* this assignment is here for future use */
+		*buffer_size = desired_size;
+		return (NS_RETURN);
+	}
+
+	memcpy(&new_ht, ht, sizeof(struct hostent));
+	memset(buffer, 0, desired_size);
+
+	*buffer_size = desired_size;
+	p = buffer + sizeof(struct hostent) + sizeof(char *);
+	memcpy(buffer + sizeof(struct hostent), &p, sizeof(char *));
+	p = (char *)_ALIGN(p);
+
+	if (new_ht.h_name != NULL) {
+		size = strlen(new_ht.h_name);
+		memcpy(p, new_ht.h_name, size);
+		new_ht.h_name = p;
+		p += size + 1;
+	}
+
+	if (new_ht.h_aliases != NULL) {
+		p = (char *)_ALIGN(p);
+		memcpy(p, new_ht.h_aliases, sizeof(char *) * aliases_size);
+		new_ht.h_aliases = (char **)p;
+		p += sizeof(char *) * (aliases_size + 1);
+
+		for (iter = new_ht.h_aliases; *iter; ++iter) {
+			size = strlen(*iter);
+			memcpy(p, *iter, size);
+			*iter = p;
+			p += size + 1;
+		}
+	}
+
+	if (new_ht.h_addr_list != NULL) {
+		p = (char *)_ALIGN(p);
+		memcpy(p, new_ht.h_addr_list, sizeof(char *) * addr_size);
+		new_ht.h_addr_list = (char **)p;
+		p += sizeof(char *) * (addr_size + 1);
+
+		size = _ALIGN(new_ht.h_length);
+		for (iter = new_ht.h_addr_list; *iter; ++iter) {
+			memcpy(p, *iter, size);
+			*iter = p;
+			p += size + 1;
+		}
+	}
+	memcpy(buffer, &new_ht, sizeof(struct hostent));
+	return (NS_SUCCESS);
+}
+
+static int
+host_unmarshal_func(char *buffer, size_t buffer_size, void *retval, va_list ap,
+    void *cache_mdata)
+{
+	char *str;
+	void *addr;
+	socklen_t len;
+	int type;
+	struct hostent *ht;
+
+	char *p;
+	char **iter;
+	char *orig_buf;
+	size_t orig_buf_size;
+
+	switch ((enum nss_lookup_type)cache_mdata) {
+	case nss_lt_name:
+		str = va_arg(ap, char *);
+		type = va_arg(ap, int);
+		break;
+	case nss_lt_id:
+		addr = va_arg(ap, void *);
+		len = va_arg(ap, socklen_t);
+		type = va_arg(ap, int);
+		break;
+	default:
+		/* should be unreachable */
+		return (NS_UNAVAIL);
+	}
+
+	ht = va_arg(ap, struct hostent *);
+	orig_buf = va_arg(ap, char *);
+	orig_buf_size = va_arg(ap, size_t);
+
+	if (orig_buf_size <
+	    buffer_size - sizeof(struct hostent) - sizeof(char *)) {
+		errno = ERANGE;
+		return (NS_RETURN);
+	}
+
+	memcpy(ht, buffer, sizeof(struct hostent));
+	memcpy(&p, buffer + sizeof(struct hostent), sizeof(char *));
+
+	orig_buf = (char *)_ALIGN(orig_buf);
+	memcpy(orig_buf, buffer + sizeof(struct hostent) + sizeof(char *) +
+	    _ALIGN(p) - (size_t)p,
+	    buffer_size - sizeof(struct hostent) - sizeof(char *) -
+	    _ALIGN(p) + (size_t)p);
+	p = (char *)_ALIGN(p);
+
+	NS_APPLY_OFFSET(ht->h_name, orig_buf, p, char *);
+	if (ht->h_aliases != NULL) {
+		NS_APPLY_OFFSET(ht->h_aliases, orig_buf, p, char **);
+
+		for (iter = ht->h_aliases; *iter; ++iter)
+			NS_APPLY_OFFSET(*iter, orig_buf, p, char *);
+	}
+
+	if (ht->h_addr_list != NULL) {
+		NS_APPLY_OFFSET(ht->h_addr_list, orig_buf, p, char **);
+
+		for (iter = ht->h_addr_list; *iter; ++iter)
+			NS_APPLY_OFFSET(*iter, orig_buf, p, char *);
+	}
+
+	*((struct hostent **)retval) = ht;
+	return (NS_SUCCESS);
+}
+#endif /* NS_CACHING */
+
 static int
 fakeaddr(const char *name, int af, struct hostent *hp, char *buf,
-size_t buflen, res_state statp)
+    size_t buflen, res_state statp)
 {
 	struct hostent_data *hed;
 	struct hostent he;
@@ -196,8 +473,12 @@ size_t buflen, res_state statp)
 	hed->h_addr_ptrs[0] = (char *)hed->host_addr;
 	hed->h_addr_ptrs[1] = NULL;
 	he.h_addr_list = hed->h_addr_ptrs;
+	if (__copy_hostent(&he, hp, buf, buflen) != 0) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
+		return (-1);
+	}
 	RES_SET_H_ERRNO(statp, NETDB_SUCCESS);
-	return (__copy_hostent(&he, hp, buf, buflen));
+	return (0);
 }
 
 int
@@ -244,13 +525,22 @@ gethostbyname_internal(const char *name, int af, struct hostent *hp, char *buf,
     size_t buflen, struct hostent **result, int *h_errnop, res_state statp)
 {
 	const char *cp;
-	int rval, ret_errno;
+	int rval, ret_errno = 0;
 	char abuf[MAXDNAME];
 
+#ifdef NS_CACHING
+	static const nss_cache_info cache_info =
+		NS_COMMON_CACHE_INFO_INITIALIZER(
+		hosts, (void *)nss_lt_name,
+		host_id_func, host_marshal_func, host_unmarshal_func);
+#endif
 	static const ns_dtab dtab[] = {
 		NS_FILES_CB(_ht_gethostbyname, NULL)
 		{ NSSRC_DNS, _dns_gethostbyname, NULL },
 		NS_NIS_CB(_nis_gethostbyname, NULL) /* force -DHESIOD */
+#ifdef NS_CACHING
+		NS_CACHE_CB(&cache_info)
+#endif
 		{ 0 }
 	};
 
@@ -283,7 +573,11 @@ gethostbyname_internal(const char *name, int af, struct hostent *hp, char *buf,
 	    "gethostbyname2_r", default_src, name, af, hp, buf, buflen,
 	    &ret_errno, h_errnop);
 
-	return ((rval == NS_SUCCESS) ? 0 : -1);
+	if (rval != NS_SUCCESS) {
+		errno = ret_errno;
+		return ((ret_errno != 0) ? ret_errno : -1);
+	}
+	return (0);
 }
 
 int
@@ -293,13 +587,22 @@ gethostbyaddr_r(const void *addr, socklen_t len, int af, struct hostent *hp,
 	const u_char *uaddr = (const u_char *)addr;
 	const struct in6_addr *addr6;
 	socklen_t size;
-	int rval, ret_errno;
+	int rval, ret_errno = 0;
 	res_state statp;
 
+#ifdef NS_CACHING
+	static const nss_cache_info cache_info =
+		NS_COMMON_CACHE_INFO_INITIALIZER(
+		hosts, (void *)nss_lt_id,
+		host_id_func, host_marshal_func, host_unmarshal_func);
+#endif
 	static const ns_dtab dtab[] = {
 		NS_FILES_CB(_ht_gethostbyaddr, NULL)
 		{ NSSRC_DNS, _dns_gethostbyaddr, NULL },
 		NS_NIS_CB(_nis_gethostbyaddr, NULL) /* force -DHESIOD */
+#ifdef NS_CACHING
+		NS_CACHE_CB(&cache_info)
+#endif
 		{ 0 }
 	};
 
@@ -349,7 +652,11 @@ gethostbyaddr_r(const void *addr, socklen_t len, int af, struct hostent *hp,
 	    "gethostbyaddr_r", default_src, uaddr, len, af, hp, buf, buflen,
 	    &ret_errno, h_errnop);
 
-	return ((rval == NS_SUCCESS) ? 0 : -1);
+	if (rval != NS_SUCCESS) {
+		errno = ret_errno;
+		return ((ret_errno != 0) ? ret_errno : -1);
+	}
+	return (0);
 }
 
 struct hostent *
@@ -383,7 +690,7 @@ gethostbyname2(const char *name, int af)
 }
 
 struct hostent *
-gethostbyaddr(const void *addr, int len, int af)
+gethostbyaddr(const void *addr, socklen_t len, int af)
 {
 	struct hostdata *hd;
 	struct hostent *rval;
@@ -391,7 +698,7 @@ gethostbyaddr(const void *addr, int len, int af)
 
 	if ((hd = __hostdata_init()) == NULL)
 		return (NULL);
-	if (gethostbyaddr_r(addr, (socklen_t)len, af, &hd->host, hd->data,
+	if (gethostbyaddr_r(addr, len, af, &hd->host, hd->data,
 	    sizeof(hd->data), &rval, &ret_h_errno) != 0)
 		return (NULL);
 	return (rval);

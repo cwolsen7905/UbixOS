@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)gets.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/gets.c,v 1.16 2003/01/30 23:32:53 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/gets.c 268928 2014-07-20 20:29:28Z pfg $");
 
 #include "namespace.h"
 #include <unistd.h>
@@ -51,13 +47,12 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/gets.c,v 1.16 2003/01/30 23:32:53 tjr Exp
 __warn_references(gets, "warning: this program uses gets(), which is unsafe.");
 
 char *
-gets(buf)
-	char *buf;
+gets(char *buf)
 {
 	int c;
 	char *s;
 	static int warned;
-	static char w[] =
+	static const char w[] =
 	    "warning: this program uses gets(), which is unsafe.\n";
 
 	FLOCKFILE(stdin);

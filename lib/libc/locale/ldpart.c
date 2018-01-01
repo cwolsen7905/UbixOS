@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/ldpart.c,v 1.15 2004/04/25 19:56:50 ache Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/ldpart.c 241046 2012-09-29 11:54:34Z jilles $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -87,7 +87,7 @@ __part_load_locale(const char *name,
 	strcat(filename, name);
 	strcat(filename, "/");
 	strcat(filename, category_filename);
-	if ((fd = _open(filename, O_RDONLY)) < 0)
+	if ((fd = _open(filename, O_RDONLY | O_CLOEXEC)) < 0)
 		return (_LDP_ERROR);
 	if (_fstat(fd, &st) != 0)
 		goto bad_locale;

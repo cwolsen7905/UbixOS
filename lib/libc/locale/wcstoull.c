@@ -2,6 +2,11 @@
  * Copyright (c) 1992, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -10,10 +15,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,26 +39,28 @@ static char sccsid[] = "@(#)strtouq.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 __FBSDID("FreeBSD: src/lib/libc/stdlib/strtoull.c,v 1.18 2002/09/06 11:23:59 tjr Exp ");
 #endif
-__FBSDID("$FreeBSD: src/lib/libc/locale/wcstoull.c,v 1.1 2002/09/22 08:06:45 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/wcstoull.c 227753 2011-11-20 14:45:42Z theraven $");
 
 #include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <wchar.h>
 #include <wctype.h>
+#include "xlocale_private.h"
 
 /*
  * Convert a wide character string to an unsigned long long integer.
  */
 unsigned long long
-wcstoull(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr,
-    int base)
+wcstoull_l(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr,
+    int base, locale_t locale)
 {
 	const wchar_t *s;
 	unsigned long long acc;
 	wchar_t c;
 	unsigned long long cutoff;
 	int neg, any, cutlim;
+	FIX_LOCALE(locale);
 
 	/*
 	 * See strtoull for comments as to the logic used.
@@ -65,7 +68,7 @@ wcstoull(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr,
 	s = nptr;
 	do {
 		c = *s++;
-	} while (iswspace(c));
+	} while (iswspace_l(c, locale));
 	if (c == L'-') {
 		neg = 1;
 		c = *s++;
@@ -90,8 +93,8 @@ wcstoull(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr,
 	cutlim = ULLONG_MAX % base;
 	for ( ; ; c = *s++) {
 #ifdef notyet
-		if (iswdigit(c))
-			c = digittoint(c);
+		if (iswdigit_l(c, locale))
+			c = digittoint_l(c, locale);
 		else
 #endif
 		if (c >= L'0' && c <= L'9')
@@ -123,4 +126,10 @@ noconv:
 	if (endptr != NULL)
 		*endptr = (wchar_t *)(any ? s - 1 : nptr);
 	return (acc);
+}
+unsigned long long
+wcstoull(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr,
+    int base)
+{
+	return wcstoull_l(nptr, endptr, base, __get_locale());
 }

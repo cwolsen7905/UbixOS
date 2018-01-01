@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,9 +34,12 @@
 	.asciz "@(#)fabs.s	5.2 (Berkeley) 12/17/90"
 #endif /* LIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/gen/fabs.S,v 1.9 2002/03/23 02:44:18 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/gen/fabs.S 217106 2011-01-07 16:08:40Z kib $");
 
 ENTRY(fabs)
 	fldl	4(%esp)
 	fabs
 	ret
+END(fabs)
+
+	.section .note.GNU-stack,"",%progbits

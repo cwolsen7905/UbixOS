@@ -2,6 +2,11 @@
  * Copyright (c) 2002 Tim J. Robbins
  * All rights reserved.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -25,11 +30,12 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/wcstod.c,v 1.4 2004/04/07 09:47:56 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/wcstod.c 309333 2016-11-30 20:47:54Z vangyzen $");
 
 #include <stdlib.h>
 #include <wchar.h>
 #include <wctype.h>
+#include "xlocale_private.h"
 
 /*
  * Convert a string to a double-precision number.
@@ -41,7 +47,8 @@ __FBSDID("$FreeBSD: src/lib/libc/locale/wcstod.c,v 1.4 2004/04/07 09:47:56 tjr E
  * for at least the digits, radix character and letters.
  */
 double
-wcstod(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr)
+wcstod_l(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr,
+		locale_t locale)
 {
 	static const mbstate_t initial;
 	mbstate_t mbs;
@@ -49,9 +56,15 @@ wcstod(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr)
 	char *buf, *end;
 	const wchar_t *wcp;
 	size_t len;
+	size_t spaces;
+	FIX_LOCALE(locale);
 
-	while (iswspace(*nptr))
-		nptr++;
+	wcp = nptr;
+	spaces = 0;
+	while (iswspace_l(*wcp, locale)) {
+		wcp++;
+		spaces++;
+	}
 
 	/*
 	 * Convert the supplied numeric wide char. string to multibyte.
@@ -63,20 +76,22 @@ wcstod(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr)
 	 * duplicates a lot of strtod()'s functionality and slows down the
 	 * most common cases.
 	 */
-	wcp = nptr;
 	mbs = initial;
-	if ((len = wcsrtombs(NULL, &wcp, 0, &mbs)) == (size_t)-1) {
+	if ((len = wcsrtombs_l(NULL, &wcp, 0, &mbs, locale)) == (size_t)-1) {
 		if (endptr != NULL)
 			*endptr = (wchar_t *)nptr;
 		return (0.0);
 	}
-	if ((buf = malloc(len + 1)) == NULL)
+	if ((buf = malloc(len + 1)) == NULL) {
+		if (endptr != NULL)
+			*endptr = (wchar_t *)nptr;
 		return (0.0);
+	}
 	mbs = initial;
-	wcsrtombs(buf, &wcp, len + 1, &mbs);
+	wcsrtombs_l(buf, &wcp, len + 1, &mbs, locale);
 
 	/* Let strtod() do most of the work for us. */
-	val = strtod(buf, &end);
+	val = strtod_l(buf, &end, locale);
 
 	/*
 	 * We only know where the number ended in the _multibyte_
@@ -84,11 +99,18 @@ wcstod(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr)
 	 * where it ended, count multibyte characters to find the
 	 * corresponding position in the wide char string.
 	 */
-	if (endptr != NULL)
-		/* XXX Assume each wide char is one byte. */
+	if (endptr != NULL) {
 		*endptr = (wchar_t *)nptr + (end - buf);
+		if (buf != end)
+			*endptr += spaces;
+	}
 
 	free(buf);
 
 	return (val);
+}
+double
+wcstod(const wchar_t * __restrict nptr, wchar_t ** __restrict endptr)
+{
+	return wcstod_l(nptr, endptr, __get_locale());
 }

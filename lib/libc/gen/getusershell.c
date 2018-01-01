@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -36,7 +32,7 @@ static char sccsid[] = "@(#)getusershell.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 /*	$NetBSD: getusershell.c,v 1.17 1999/01/25 01:09:34 lukem Exp $	*/
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/getusershell.c,v 1.9 2003/04/24 20:16:21 nectar Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/getusershell.c 288029 2015-09-20 20:23:16Z rodrigc $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -62,12 +58,6 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/getusershell.c,v 1.9 2003/04/24 20:16:21 ne
 #endif
 #include "un-namespace.h"
 
-/*
- * Local shells should NOT be added here.  They should be added in
- * /etc/shells.
- */
-
-static const char *const okshells[] = { _PATH_BSHELL, _PATH_CSHELL, NULL };
 static const char *const *curshell;
 static StringList	 *sl;
 
@@ -112,10 +102,7 @@ static int	_local_initshells(void *, void *, va_list);
 
 /*ARGSUSED*/
 static int
-_local_initshells(rv, cb_data, ap)
-	void	*rv;
-	void	*cb_data;
-	va_list	 ap;
+_local_initshells(void	*rv, void *cb_data, va_list ap)
 {
 	char	*sp, *cp;
 	FILE	*fp;
@@ -125,10 +112,10 @@ _local_initshells(rv, cb_data, ap)
 		sl_free(sl, 1);
 	sl = sl_init();
 
-	if ((fp = fopen(_PATH_SHELLS, "r")) == NULL)
+	if ((fp = fopen(_PATH_SHELLS, "re")) == NULL)
 		return NS_UNAVAIL;
 
-	sp = cp = line;
+	cp = line;
 	while (fgets(cp, MAXPATHLEN + 1, fp) != NULL) {
 		while (*cp != '#' && *cp != '/' && *cp != '\0')
 			cp++;
@@ -149,10 +136,7 @@ static int	_dns_initshells(void *, void *, va_list);
 
 /*ARGSUSED*/
 static int
-_dns_initshells(rv, cb_data, ap)
-	void	*rv;
-	void	*cb_data;
-	va_list	 ap;
+_dns_initshells(void *rv, void *cb_data, va_list ap)
 {
 	char	  shellname[] = "shells-XXXXX";
 	int	  hsindex, hpi, r;
@@ -193,10 +177,7 @@ static int	_nis_initshells(void *, void *, va_list);
 
 /*ARGSUSED*/
 static int
-_nis_initshells(rv, cb_data, ap)
-	void	*rv;
-	void	*cb_data;
-	va_list	 ap;
+_nis_initshells(void *rv, void *cb_data, va_list ap)
 {
 	static char *ypdomain;
 	char	*key, *data;
@@ -249,7 +230,7 @@ _nis_initshells(rv, cb_data, ap)
 #endif /* YP */
 
 static const char *const *
-initshells()
+initshells(void)
 {
 	static const ns_dtab dtab[] = {
 		NS_FILES_CB(_local_initshells, NULL)
@@ -265,8 +246,13 @@ initshells()
 	    != NS_SUCCESS) {
 		if (sl)
 			sl_free(sl, 1);
-		sl = NULL;
-		return (okshells);
+		sl = sl_init();
+		/*
+		 * Local shells should NOT be added here.  They should be
+		 * added in /etc/shells.
+		 */
+		sl_add(sl, strdup(_PATH_BSHELL));
+		sl_add(sl, strdup(_PATH_CSHELL));
 	}
 	sl_add(sl, NULL);
 

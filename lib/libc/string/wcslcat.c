@@ -33,7 +33,7 @@
 __RCSID("$NetBSD: wcslcat.c,v 1.1 2000/12/23 23:14:36 itojun Exp $");
 #endif /* LIBC_SCCS and not lint */
 #endif
-__FBSDID("$FreeBSD: src/lib/libc/string/wcslcat.c,v 1.6 2002/09/21 00:29:23 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/string/wcslcat.c 293856 2016-01-13 21:50:08Z brooks $");
 
 #include <sys/types.h>
 #include <wchar.h>
@@ -46,10 +46,7 @@ __FBSDID("$FreeBSD: src/lib/libc/string/wcslcat.c,v 1.6 2002/09/21 00:29:23 tjr 
  * truncation occurred.
  */
 size_t
-wcslcat(dst, src, siz)
-	wchar_t *dst;
-	const wchar_t *src;
-	size_t siz;
+wcslcat(wchar_t *dst, const wchar_t *src, size_t siz)
 {
 	wchar_t *d = dst;
 	const wchar_t *s = src;
@@ -57,7 +54,7 @@ wcslcat(dst, src, siz)
 	size_t dlen;
 
 	/* Find the end of dst and adjust bytes left but don't go past end */
-	while (*d != '\0' && n-- != 0)
+	while (n-- != 0 && *d != '\0')
 		d++;
 	dlen = d - dst;
 	n = siz - dlen;

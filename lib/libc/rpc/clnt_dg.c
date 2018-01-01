@@ -1,32 +1,31 @@
 /*	$NetBSD: clnt_dg.c,v 1.4 2000/07/14 08:40:41 fvdl Exp $	*/
 
-/*
- * Sun RPC is a product of Sun Microsystems, Inc. and is provided for
- * unrestricted use provided that this legend is included on all tape
- * media and as a part of the software program in whole or part.  Users
- * may copy or modify Sun RPC without charge, but are not authorized
- * to license or distribute it to anyone else except as part of a product or
- * program developed by the user.
+/*-
+ * Copyright (c) 2009, Sun Microsystems, Inc.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * - Redistributions of source code must retain the above copyright notice, 
+ *   this list of conditions and the following disclaimer.
+ * - Redistributions in binary form must reproduce the above copyright notice, 
+ *   this list of conditions and the following disclaimer in the documentation 
+ *   and/or other materials provided with the distribution.
+ * - Neither the name of Sun Microsystems, Inc. nor the names of its 
+ *   contributors may be used to endorse or promote products derived 
+ *   from this software without specific prior written permission.
  * 
- * SUN RPC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE
- * WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
- * 
- * Sun RPC is provided with no support and without any obligation on the
- * part of Sun Microsystems, Inc. to assist in its use, correction,
- * modification or enhancement.
- * 
- * SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
- * INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY SUN RPC
- * OR ANY PART THEREOF.
- * 
- * In no event will Sun Microsystems, Inc. be liable for any lost revenue
- * or profits or other special, indirect and consequential damages, even if
- * Sun has been advised of the possibility of such damages.
- * 
- * Sun Microsystems, Inc.
- * 2550 Garcia Avenue
- * Mountain View, California  94043
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 /*
  * Copyright (c) 1986-1991 by Sun Microsystems Inc. 
@@ -37,7 +36,7 @@
 static char sccsid[] = "@(#)clnt_dg.c 1.19 89/03/16 Copyr 1988 Sun Micro";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/rpc/clnt_dg.c,v 1.17 2004/10/16 06:11:34 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/rpc/clnt_dg.c 298830 2016-04-30 01:24:24Z pfg $");
 
 /*
  * Implements a connectionless client side RPC.
@@ -52,6 +51,7 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/clnt_dg.c,v 1.17 2004/10/16 06:11:34 obrien
 #include <sys/ioctl.h>
 #include <arpa/inet.h>
 #include <rpc/rpc.h>
+#include <rpc/rpcsec_gss.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
@@ -60,9 +60,17 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/clnt_dg.c,v 1.17 2004/10/16 06:11:34 obrien
 #include <err.h>
 #include "un-namespace.h"
 #include "rpc_com.h"
+#include "mt_misc.h"
 
 
+#ifdef _FREEFALL_CONFIG
+/*
+ * Disable RPC exponential back-off for FreeBSD.org systems.
+ */
+#define	RPC_MAX_BACKOFF		1 /* second */
+#else
 #define	RPC_MAX_BACKOFF		30 /* seconds */
+#endif
 
 
 static struct clnt_ops *clnt_dg_ops(void);
@@ -92,7 +100,6 @@ static void clnt_dg_destroy(CLIENT *);
  *	at a time.
  */
 static int	*dg_fd_locks;
-extern mutex_t clnt_fd_lock;
 static cond_t	*dg_cv;
 #define	release_fd_lock(fd, mask) {		\
 	mutex_lock(&clnt_fd_lock);	\
@@ -105,6 +112,8 @@ static cond_t	*dg_cv;
 static const char mem_err_clnt_dg[] = "clnt_dg_create: out of memory";
 
 /* VARIABLES PROTECTED BY clnt_fd_lock: dg_fd_locks, dg_cv */
+
+#define	MCALL_MSG_SIZE 24
 
 /*
  * Private data kept per client handle
@@ -120,6 +129,7 @@ struct cu_data {
 	XDR			cu_outxdrs;
 	u_int			cu_xdrpos;
 	u_int			cu_sendsz;	/* send size */
+	char			cu_outhdr[MCALL_MSG_SIZE];
 	char			*cu_outbuf;
 	u_int			cu_recvsz;	/* recv size */
 	int			cu_async;
@@ -143,15 +153,17 @@ struct cu_data {
  * If they are 0, use the transport default.
  *
  * If svcaddr is NULL, returns NULL.
+ *
+ * fd      - open file descriptor
+ * svcaddr - servers address
+ * program - program number
+ * version - version number
+ * sendsz  - buffer recv size
+ * recvsz  - buffer send size
  */
 CLIENT *
-clnt_dg_create(fd, svcaddr, program, version, sendsz, recvsz)
-	int fd;				/* open file descriptor */
-	const struct netbuf *svcaddr;	/* servers address */
-	rpcprog_t program;		/* program number */
-	rpcvers_t version;		/* version number */
-	u_int sendsz;			/* buffer recv size */
-	u_int recvsz;			/* buffer send size */
+clnt_dg_create(int fd, const struct netbuf *svcaddr, rpcprog_t program,
+    rpcvers_t version, u_int sendsz, u_int recvsz)
 {
 	CLIENT *cl = NULL;		/* client handle */
 	struct cu_data *cu = NULL;	/* private data */
@@ -246,13 +258,16 @@ clnt_dg_create(fd, svcaddr, program, version, sendsz, recvsz)
 	call_msg.rm_xid = __RPC_GETXID(&now);
 	call_msg.rm_call.cb_prog = program;
 	call_msg.rm_call.cb_vers = version;
-	xdrmem_create(&(cu->cu_outxdrs), cu->cu_outbuf, sendsz, XDR_ENCODE);
-	if (! xdr_callhdr(&(cu->cu_outxdrs), &call_msg)) {
+	xdrmem_create(&(cu->cu_outxdrs), cu->cu_outhdr, MCALL_MSG_SIZE,
+	    XDR_ENCODE);
+	if (! xdr_callhdr(&cu->cu_outxdrs, &call_msg)) {
 		rpc_createerr.cf_stat = RPC_CANTENCODEARGS;  /* XXX */
 		rpc_createerr.cf_error.re_errno = 0;
 		goto err2;
 	}
 	cu->cu_xdrpos = XDR_GETPOS(&(cu->cu_outxdrs));
+	XDR_DESTROY(&cu->cu_outxdrs);
+	xdrmem_create(&cu->cu_outxdrs, cu->cu_outbuf, sendsz, XDR_ENCODE);
 
 	/* XXX fvdl - do we still want this? */
 #if 0
@@ -288,15 +303,18 @@ err2:
 	return (NULL);
 }
 
+/*
+ * cl       - client handle
+ * proc     - procedure number
+ * xargs    - xdr routine for args
+ * argsp    - pointer to args
+ * xresults - xdr routine for results
+ * resultsp - pointer to results
+ * utimeout - seconds to wait before giving up
+ */
 static enum clnt_stat
-clnt_dg_call(cl, proc, xargs, argsp, xresults, resultsp, utimeout)
-	CLIENT	*cl;			/* client handle */
-	rpcproc_t	proc;		/* procedure number */
-	xdrproc_t	xargs;		/* xdr routine for args */
-	void		*argsp;		/* pointer to args */
-	xdrproc_t	xresults;	/* xdr routine for results */
-	void		*resultsp;	/* pointer to results */
-	struct timeval	utimeout;	/* seconds to wait before giving up */
+clnt_dg_call(CLIENT *cl, rpcproc_t proc, xdrproc_t xargs, void *argsp,
+    xdrproc_t xresults, void *resultsp, struct timeval utimeout)
 {
 	struct cu_data *cu = (struct cu_data *)cl->cl_private;
 	XDR *xdrs;
@@ -305,6 +323,7 @@ clnt_dg_call(cl, proc, xargs, argsp, xresults, resultsp, utimeout)
 	XDR reply_xdrs;
 	bool_t ok;
 	int nrefreshes = 2;		/* number of times to refresh cred */
+	int nretries = 0;		/* number of times we retransmitted */
 	struct timeval timeout;
 	struct timeval retransmit_time;
 	struct timeval next_sendtime, starttime, time_waited, tv;
@@ -313,10 +332,10 @@ clnt_dg_call(cl, proc, xargs, argsp, xresults, resultsp, utimeout)
 	struct sockaddr *sa;
 	sigset_t mask;
 	sigset_t newmask;
-	socklen_t inlen, salen;
+	socklen_t salen;
 	ssize_t recvlen = 0;
 	int kin_len, n, rpc_lock_value;
-	uint32_t xid;
+	u_int32_t xid;
 
 	outlen = 0;
 	sigfillset(&newmask);
@@ -368,25 +387,37 @@ clnt_dg_call(cl, proc, xargs, argsp, xresults, resultsp, utimeout)
 	kin_len = 1;
 
 call_again:
-	xdrs = &(cu->cu_outxdrs);
 	if (cu->cu_async == TRUE && xargs == NULL)
 		goto get_reply;
-	xdrs->x_op = XDR_ENCODE;
-	XDR_SETPOS(xdrs, cu->cu_xdrpos);
 	/*
 	 * the transaction is the first thing in the out buffer
 	 * XXX Yes, and it's in network byte order, so we should to
 	 * be careful when we increment it, shouldn't we.
 	 */
-	xid = ntohl(*(uint32_t *)(void *)(cu->cu_outbuf));
+	xid = ntohl(*(u_int32_t *)(void *)(cu->cu_outhdr));
 	xid++;
-	*(uint32_t *)(void *)(cu->cu_outbuf) = htonl(xid);
+	*(u_int32_t *)(void *)(cu->cu_outhdr) = htonl(xid);
+call_again_same_xid:
+	xdrs = &(cu->cu_outxdrs);
+	xdrs->x_op = XDR_ENCODE;
+	XDR_SETPOS(xdrs, 0);
 
-	if ((! XDR_PUTINT32(xdrs, &proc)) ||
-	    (! AUTH_MARSHALL(cl->cl_auth, xdrs)) ||
-	    (! (*xargs)(xdrs, argsp))) {
-		cu->cu_error.re_status = RPC_CANTENCODEARGS;
-		goto out;
+	if (cl->cl_auth->ah_cred.oa_flavor != RPCSEC_GSS) {
+		if ((! XDR_PUTBYTES(xdrs, cu->cu_outhdr, cu->cu_xdrpos)) ||
+		    (! XDR_PUTINT32(xdrs, &proc)) ||
+		    (! AUTH_MARSHALL(cl->cl_auth, xdrs)) ||
+		    (! (*xargs)(xdrs, argsp))) {
+			cu->cu_error.re_status = RPC_CANTENCODEARGS;
+			goto out;
+		}
+	} else {
+		*(uint32_t *) &cu->cu_outhdr[cu->cu_xdrpos] = htonl(proc);
+		if (!__rpc_gss_wrap(cl->cl_auth, cu->cu_outhdr,
+			cu->cu_xdrpos + sizeof(uint32_t),
+			xdrs, xargs, argsp)) {
+			cu->cu_error.re_status = RPC_CANTENCODEARGS;
+			goto out;
+		}
 	}
 	outlen = (size_t)XDR_GETPOS(xdrs);
 
@@ -413,8 +444,13 @@ get_reply:
 	 * (We assume that this is actually only executed once.)
 	 */
 	reply_msg.acpted_rply.ar_verf = _null_auth;
-	reply_msg.acpted_rply.ar_results.where = resultsp;
-	reply_msg.acpted_rply.ar_results.proc = xresults;
+	if (cl->cl_auth->ah_cred.oa_flavor != RPCSEC_GSS) {
+		reply_msg.acpted_rply.ar_results.where = resultsp;
+		reply_msg.acpted_rply.ar_results.proc = xresults;
+	} else {
+		reply_msg.acpted_rply.ar_results.where = NULL;
+		reply_msg.acpted_rply.ar_results.proc = (xdrproc_t)xdr_void;
+	}
 
 	for (;;) {
 		/* Decide how long to wait. */
@@ -446,10 +482,10 @@ get_reply:
 				cu->cu_error.re_status = RPC_CANTRECV;
 				goto out;
 			}
-			if (recvlen >= sizeof(uint32_t) &&
+			if (recvlen >= sizeof(u_int32_t) &&
 			    (cu->cu_async == TRUE ||
-			    *((uint32_t *)(void *)(cu->cu_inbuf)) ==
-			    *((uint32_t *)(void *)(cu->cu_outbuf)))) {
+			    *((u_int32_t *)(void *)(cu->cu_inbuf)) ==
+			    *((u_int32_t *)(void *)(cu->cu_outbuf)))) {
 				/* We now assume we have the proper reply. */
 				break;
 			}
@@ -476,10 +512,19 @@ get_reply:
 				    &retransmit_time);
 			timeradd(&next_sendtime, &retransmit_time,
 			    &next_sendtime);
-			goto send_again;
+			nretries++;
+
+			/*
+			 * When retransmitting a RPCSEC_GSS message,
+			 * we must use a new sequence number (handled
+			 * by __rpc_gss_wrap above).
+			 */
+			if (cl->cl_auth->ah_cred.oa_flavor != RPCSEC_GSS)
+				goto send_again;
+			else
+				goto call_again_same_xid;
 		}
 	}
-	inlen = (socklen_t)recvlen;
 
 	/*
 	 * now decode and validate the response
@@ -498,8 +543,37 @@ get_reply:
 		if (cu->cu_error.re_status == RPC_SUCCESS) {
 			if (! AUTH_VALIDATE(cl->cl_auth,
 					    &reply_msg.acpted_rply.ar_verf)) {
+				if (nretries &&
+				    cl->cl_auth->ah_cred.oa_flavor
+				    == RPCSEC_GSS)
+					/*
+					 * If we retransmitted, its
+					 * possible that we will
+					 * receive a reply for one of
+					 * the earlier transmissions
+					 * (which will use an older
+					 * RPCSEC_GSS sequence
+					 * number). In this case, just
+					 * go back and listen for a
+					 * new reply. We could keep a
+					 * record of all the seq
+					 * numbers we have transmitted
+					 * so far so that we could
+					 * accept a reply for any of
+					 * them here.
+					 */
+					goto get_reply;
 				cu->cu_error.re_status = RPC_AUTHERROR;
 				cu->cu_error.re_why = AUTH_INVALIDRESP;
+			} else {
+				if (cl->cl_auth->ah_cred.oa_flavor
+				    == RPCSEC_GSS) {
+					if (!__rpc_gss_unwrap(cl->cl_auth,
+						&reply_xdrs, xresults,
+						resultsp))
+						cu->cu_error.re_status =
+							RPC_CANTDECODERES;
+				}
 			}
 			if (reply_msg.acpted_rply.ar_verf.oa_base != NULL) {
 				xdrs->x_op = XDR_FREE;
@@ -508,7 +582,7 @@ get_reply:
 			}
 		}		/* end successful completion */
 		/*
-		 * If unsuccesful AND error is an authentication error
+		 * If unsuccessful AND error is an authentication error
 		 * then refresh credentials and try again, else break
 		 */
 		else if (cu->cu_error.re_status == RPC_AUTHERROR)
@@ -533,9 +607,7 @@ out:
 }
 
 static void
-clnt_dg_geterr(cl, errp)
-	CLIENT *cl;
-	struct rpc_err *errp;
+clnt_dg_geterr(CLIENT *cl, struct rpc_err *errp)
 {
 	struct cu_data *cu = (struct cu_data *)cl->cl_private;
 
@@ -543,10 +615,7 @@ clnt_dg_geterr(cl, errp)
 }
 
 static bool_t
-clnt_dg_freeres(cl, xdr_res, res_ptr)
-	CLIENT *cl;
-	xdrproc_t xdr_res;
-	void *res_ptr;
+clnt_dg_freeres(CLIENT *cl, xdrproc_t xdr_res, void *res_ptr)
 {
 	struct cu_data *cu = (struct cu_data *)cl->cl_private;
 	XDR *xdrs = &(cu->cu_outxdrs);
@@ -569,16 +638,12 @@ clnt_dg_freeres(cl, xdr_res, res_ptr)
 
 /*ARGSUSED*/
 static void
-clnt_dg_abort(h)
-	CLIENT *h;
+clnt_dg_abort(CLIENT *h)
 {
 }
 
 static bool_t
-clnt_dg_control(cl, request, info)
-	CLIENT *cl;
-	u_int request;
-	void *info;
+clnt_dg_control(CLIENT *cl, u_int request, void *info)
 {
 	struct cu_data *cu = (struct cu_data *)cl->cl_private;
 	struct netbuf *addr;
@@ -662,14 +727,14 @@ clnt_dg_control(cl, request, info)
 		 * first element in the call structure *.
 		 * This will get the xid of the PREVIOUS call
 		 */
-		*(uint32_t *)info =
-		    ntohl(*(uint32_t *)(void *)cu->cu_outbuf);
+		*(u_int32_t *)info =
+		    ntohl(*(u_int32_t *)(void *)cu->cu_outhdr);
 		break;
 
 	case CLSET_XID:
 		/* This will set the xid of the NEXT call */
-		*(uint32_t *)(void *)cu->cu_outbuf =
-		    htonl(*(uint32_t *)info - 1);
+		*(u_int32_t *)(void *)cu->cu_outhdr =
+		    htonl(*(u_int32_t *)info - 1);
 		/* decrement by 1 as clnt_dg_call() increments once */
 		break;
 
@@ -677,34 +742,34 @@ clnt_dg_control(cl, request, info)
 		/*
 		 * This RELIES on the information that, in the call body,
 		 * the version number field is the fifth field from the
-		 * begining of the RPC header. MUST be changed if the
+		 * beginning of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
-		*(uint32_t *)info =
-		    ntohl(*(uint32_t *)(void *)(cu->cu_outbuf +
+		*(u_int32_t *)info =
+		    ntohl(*(u_int32_t *)(void *)(cu->cu_outhdr +
 		    4 * BYTES_PER_XDR_UNIT));
 		break;
 
 	case CLSET_VERS:
-		*(uint32_t *)(void *)(cu->cu_outbuf + 4 * BYTES_PER_XDR_UNIT)
-			= htonl(*(uint32_t *)info);
+		*(u_int32_t *)(void *)(cu->cu_outhdr + 4 * BYTES_PER_XDR_UNIT)
+			= htonl(*(u_int32_t *)info);
 		break;
 
 	case CLGET_PROG:
 		/*
 		 * This RELIES on the information that, in the call body,
 		 * the program number field is the fourth field from the
-		 * begining of the RPC header. MUST be changed if the
+		 * beginning of the RPC header. MUST be changed if the
 		 * call_struct is changed
 		 */
-		*(uint32_t *)info =
-		    ntohl(*(uint32_t *)(void *)(cu->cu_outbuf +
+		*(u_int32_t *)info =
+		    ntohl(*(u_int32_t *)(void *)(cu->cu_outhdr +
 		    3 * BYTES_PER_XDR_UNIT));
 		break;
 
 	case CLSET_PROG:
-		*(uint32_t *)(void *)(cu->cu_outbuf + 3 * BYTES_PER_XDR_UNIT)
-			= htonl(*(uint32_t *)info);
+		*(u_int32_t *)(void *)(cu->cu_outhdr + 3 * BYTES_PER_XDR_UNIT)
+			= htonl(*(u_int32_t *)info);
 		break;
 	case CLSET_ASYNC:
 		cu->cu_async = *(int *)info;
@@ -721,8 +786,7 @@ clnt_dg_control(cl, request, info)
 }
 
 static void
-clnt_dg_destroy(cl)
-	CLIENT *cl;
+clnt_dg_destroy(CLIENT *cl)
 {
 	struct cu_data *cu = (struct cu_data *)cl->cl_private;
 	int cu_fd = cu->cu_fd;
@@ -751,10 +815,9 @@ clnt_dg_destroy(cl)
 }
 
 static struct clnt_ops *
-clnt_dg_ops()
+clnt_dg_ops(void)
 {
 	static struct clnt_ops ops;
-	extern mutex_t	ops_lock;
 	sigset_t mask;
 	sigset_t newmask;
 
@@ -780,8 +843,7 @@ clnt_dg_ops()
  * Make sure that the time is not garbage.  -1 value is allowed.
  */
 static bool_t
-time_not_ok(t)
-	struct timeval *t;
+time_not_ok(struct timeval *t)
 {
 	return (t->tv_sec < -1 || t->tv_sec > 100000000 ||
 		t->tv_usec < -1 || t->tv_usec > 1000000);

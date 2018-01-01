@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,21 +34,18 @@
 static char sccsid[] = "@(#)memchr.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/string/memchr.c,v 1.4 2002/03/21 18:44:54 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/string/memchr.c 251069 2013-05-28 20:57:40Z emaste $");
 
 #include <string.h>
 
 void *
-memchr(s, c, n)
-	const void *s;
-	unsigned char c;
-	size_t n;
+memchr(const void *s, int c, size_t n)
 {
 	if (n != 0) {
 		const unsigned char *p = s;
 
 		do {
-			if (*p++ == c)
+			if (*p++ == (unsigned char)c)
 				return ((void *)(p - 1));
 		} while (--n != 0);
 	}

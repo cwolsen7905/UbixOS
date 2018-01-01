@@ -1,4 +1,4 @@
-/*	$OpenBSD: getopt_long.c,v 1.21 2006/09/22 17:22:05 millert Exp $	*/
+/*	$OpenBSD: getopt_long.c,v 1.26 2013/06/08 22:47:56 millert Exp $	*/
 /*	$NetBSD: getopt_long.c,v 1.15 2002/01/31 22:43:40 tv Exp $	*/
 
 /*
@@ -35,13 +35,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *        This product includes software developed by the NetBSD
- *        Foundation, Inc. and its contributors.
- * 4. Neither the name of The NetBSD Foundation nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -62,7 +55,7 @@ static char *rcsid = "$OpenBSD: getopt_long.c,v 1.16 2004/02/04 18:17:25 millert
 #endif /* LIBC_SCCS and not lint */
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/getopt_long.c,v 1.12.8.1 2006/09/25 17:19:28 ache Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/getopt_long.c 267756 2014-06-22 21:54:57Z ache $");
 
 #include <err.h>
 #include <errno.h>
@@ -228,6 +221,7 @@ parse_long_options(char * const *nargv, const char *options,
 	second_partial_match = 0;
 
 	optind++;
+
 	if ((has_equal = strchr(current_argv, '=')) != NULL) {
 		/* argument found (--option=arg) */
 		current_argv_len = has_equal - current_argv;
@@ -254,7 +248,7 @@ parse_long_options(char * const *nargv, const char *options,
 		if (short_too && current_argv_len == 1)
 			continue;
 
-		if (match == -1)        /* first partial match */
+		if (match == -1)	/* first partial match */
 			match = i;
 		else if ((flags & FLAG_LONGONLY) ||
 			 long_options[i].has_arg !=
@@ -365,29 +359,10 @@ getopt_internal(int nargc, char * const *nargv, const char *options,
 {
 	char *oli;				/* option letter list index */
 	int optchar, short_too;
-	int posixly_correct;	/* no static, can be changed on the fly */
+	static int posixly_correct = -1;
 
 	if (options == NULL)
 		return (-1);
-
-	/*
-	 * Disable GNU extensions if POSIXLY_CORRECT is set or options
-	 * string begins with a '+'.
-	 */
-	posixly_correct = (getenv("POSIXLY_CORRECT") != NULL);
-#ifdef GNU_COMPATIBLE
-	if (*options == '-')
-		flags |= FLAG_ALLARGS;
-	else if (posixly_correct || *options == '+')
-		flags &= ~FLAG_PERMUTE;
-#else
-	if (posixly_correct || *options == '+')
-		flags &= ~FLAG_PERMUTE;
-	else if (*options == '-')
-		flags |= FLAG_ALLARGS;
-#endif
-	if (*options == '+' || *options == '-')
-		options++;
 
 	/*
 	 * XXX Some GNU programs (like cvs) set optind to 0 instead of
@@ -395,6 +370,19 @@ getopt_internal(int nargc, char * const *nargv, const char *options,
 	 */
 	if (optind == 0)
 		optind = optreset = 1;
+
+	/*
+	 * Disable GNU extensions if POSIXLY_CORRECT is set or options
+	 * string begins with a '+'.
+	 */
+	if (posixly_correct == -1 || optreset)
+		posixly_correct = (getenv("POSIXLY_CORRECT") != NULL);
+	if (*options == '-')
+		flags |= FLAG_ALLARGS;
+	else if (posixly_correct || *options == '+')
+		flags &= ~FLAG_PERMUTE;
+	if (*options == '+' || *options == '-')
+		options++;
 
 	optarg = NULL;
 	if (optreset)

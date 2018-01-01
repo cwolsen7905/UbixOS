@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,16 +31,25 @@
 static char sccsid[] = "@(#)creat.c	8.1 (Berkeley) 6/2/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/compat-43/creat.c,v 1.7 2002/03/22 21:51:56 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/compat-43/creat.c 288016 2015-09-20 04:21:44Z rodrigc $");
 
 #include "namespace.h"
 #include <fcntl.h>
 #include "un-namespace.h"
+#include "libc_private.h"
 
+__weak_reference(__creat, creat);
+__weak_reference(__creat, _creat);
+
+int __creat(const char *path, mode_t mode);
+
+#pragma weak creat
 int
 __creat(const char *path, mode_t mode)
 {
-	return(_open(path, O_WRONLY|O_CREAT|O_TRUNC, mode));
+
+	return (((int (*)(int, const char *, int, ...))
+	    __libc_interposing[INTERPOS_openat])(AT_FDCWD, path, O_WRONLY |
+	    O_CREAT | O_TRUNC, mode));
 }
-__weak_reference(__creat, creat);
-__weak_reference(__creat, _creat);
+

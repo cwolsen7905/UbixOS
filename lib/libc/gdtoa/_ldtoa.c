@@ -25,13 +25,14 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gdtoa/_ldtoa.c,v 1.2 2004/01/18 07:53:49 das Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gdtoa/_ldtoa.c 288010 2015-09-20 04:06:04Z rodrigc $");
 
 #include <float.h>
 #include <inttypes.h>
 #include <limits.h>
 #include <math.h>
 #include <stdlib.h>
+#include "../stdio/floatio.h"
 #include "fpmath.h"
 #include "gdtoaimp.h"
 
@@ -46,11 +47,11 @@ char *
 __ldtoa(long double *ld, int mode, int ndigits, int *decpt, int *sign,
     char **rve)
 {
-	static FPI fpi = {
+	FPI fpi = {
 		LDBL_MANT_DIG,			/* nbits */
 		LDBL_MIN_EXP - LDBL_MANT_DIG,	/* emin */
 		LDBL_MAX_EXP - LDBL_MANT_DIG,	/* emax */
-		FPI_Round_near,	       		/* rounding */
+		FLT_ROUNDS,	       		/* rounding */
 #ifdef Sudden_Underflow	/* unused, but correct anyway */
 		1
 #else
@@ -61,9 +62,18 @@ __ldtoa(long double *ld, int mode, int ndigits, int *decpt, int *sign,
 	char *ret;
 	union IEEEl2bits u;
 	uint32_t bits[(LDBL_MANT_DIG + 31) / 32];
+	void *vbits = bits;
 
 	u.e = *ld;
+
+	/*
+	 * gdtoa doesn't know anything about the sign of the number, so
+	 * if the number is negative, we need to swap rounding modes of
+	 * 2 (upwards) and 3 (downwards).
+	 */
 	*sign = u.bits.sign;
+	fpi.rounding ^= (fpi.rounding >> 1) & u.bits.sign;
+
 	be = u.bits.exp - (LDBL_MAX_EXP - 1) - (LDBL_MANT_DIG - 1);
 	LDBL_TO_ARRAY32(u, bits);
 
@@ -79,9 +89,7 @@ __ldtoa(long double *ld, int mode, int ndigits, int *decpt, int *sign,
 		break;
 	case FP_SUBNORMAL:
 		kind = STRTOG_Denormal;
-#ifdef	LDBL_IMPLICIT_NBIT
 		be++;
-#endif
 		break;
 	case FP_INFINITE:
 		kind = STRTOG_Infinite;
@@ -93,7 +101,7 @@ __ldtoa(long double *ld, int mode, int ndigits, int *decpt, int *sign,
 		abort();
 	}
 
-	ret = gdtoa(&fpi, be, (ULong *)bits, &kind, mode, ndigits, decpt, rve);
+	ret = gdtoa(&fpi, be, vbits, &kind, mode, ndigits, decpt, rve);
 	if (*decpt == -32768)
 		*decpt = INT_MAX;
 	return ret;

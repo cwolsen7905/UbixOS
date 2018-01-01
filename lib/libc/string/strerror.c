@@ -10,11 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)strerror.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/string/strerror.c,v 1.15 2005/02/27 21:17:22 phantom Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/string/strerror.c 255108 2013-08-31 22:32:42Z jilles $");
 
 #if defined(NLS)
 #include <nl_types.h>
@@ -45,6 +41,8 @@ __FBSDID("$FreeBSD: src/lib/libc/string/strerror.c,v 1.15 2005/02/27 21:17:22 ph
 #include <errno.h>
 #include <string.h>
 #include <stdio.h>
+
+#include "errlst.h"
 
 #define	UPREFIX		"Unknown error"
 
@@ -91,7 +89,7 @@ strerror_r(int errnum, char *strerrbuf, size_t buflen)
 	catd = catopen("libc", NL_CAT_LOCALE);
 #endif
 
-	if (errnum < 1 || errnum >= sys_nerr) {
+	if (errnum < 0 || errnum >= __hidden_sys_nerr) {
 		errstr(errnum,
 #if defined(NLS)
 			catgets(catd, 1, 0xffff, UPREFIX),
@@ -103,9 +101,9 @@ strerror_r(int errnum, char *strerrbuf, size_t buflen)
 	} else {
 		if (strlcpy(strerrbuf,
 #if defined(NLS)
-			catgets(catd, 1, errnum, sys_errlist[errnum]),
+			catgets(catd, 1, errnum, __hidden_sys_errlist[errnum]),
 #else
-			sys_errlist[errnum],
+			__hidden_sys_errlist[errnum],
 #endif
 			buflen) >= buflen)
 		retval = ERANGE;
@@ -125,6 +123,6 @@ strerror(int num)
 	static char ebuf[NL_TEXTMAX];
 
 	if (strerror_r(num, ebuf, sizeof(ebuf)) != 0)
-	errno = EINVAL;
+		errno = EINVAL;
 	return (ebuf);
 }

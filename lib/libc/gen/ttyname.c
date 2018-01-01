@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,11 +31,10 @@
 static char sccsid[] = "@(#)ttyname.c	8.2 (Berkeley) 1/27/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/ttyname.c,v 1.23 2005/05/20 15:39:20 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/ttyname.c 317391 2017-04-24 22:37:54Z brooks $");
 
 #include "namespace.h"
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <sys/filio.h>
 #include <fcntl.h>
@@ -64,30 +59,25 @@ static int		ttyname_keycreated = 0;
 int
 ttyname_r(int fd, char *buf, size_t len)
 {
-	struct stat	sb;
-	struct fiodgname_arg fgn;
 	size_t used;
+
+	/* Don't write off the end of a zero-length buffer. */
+	if (len < 1)
+		return (ERANGE);
 
 	*buf = '\0';
 
 	/* Must be a terminal. */
 	if (!isatty(fd))
-		return (ENOTTY);
-	/* Must be a character device. */
-	if (_fstat(fd, &sb) || !S_ISCHR(sb.st_mode))
-		return (ENOTTY);
+		return (errno);
 	/* Must have enough room */
 	if (len <= sizeof(_PATH_DEV))
 		return (ERANGE);
 
 	strcpy(buf, _PATH_DEV);
 	used = strlen(buf);
-	fgn.len = len - used;
-	fgn.buf = buf + used;
-	if (!_ioctl(fd, FIODGNAME, &fgn))
-		return (0);
-	used = strlen(buf);
-	devname_r(sb.st_rdev, S_IFCHR, buf + used, len - used);
+	if (fdevname_r(fd, buf + used, len - used) == NULL)
+		return (errno == EINVAL ? ERANGE : errno);
 	return (0);
 }
 

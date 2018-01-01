@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)putchar.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/putchar.c,v 1.13 2004/03/19 09:04:56 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/putchar.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -47,13 +43,13 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/putchar.c,v 1.13 2004/03/19 09:04:56 tjr 
 #include "libc_private.h"
 
 #undef putchar
+#undef putchar_unlocked
 
 /*
  * A subroutine version of the macro putchar
  */
 int
-putchar(c)
-	int c;
+putchar(int c)
 {
 	int retval;
 	FILE *so = stdout;
@@ -64,4 +60,11 @@ putchar(c)
 	retval = __sputc(c, so);
 	FUNLOCKFILE(so);
 	return (retval);
+}
+
+int
+putchar_unlocked(int ch)
+{
+
+	return (__sputc(ch, stdout));
 }

@@ -5,6 +5,11 @@
  * This code is derived from software contributed to Berkeley by
  * Paul Borman at Krystal Technologies.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,10 +18,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,16 +36,20 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/runetype.c,v 1.12 2005/02/27 14:54:23 phantom Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/runetype.c 227753 2011-11-20 14:45:42Z theraven $");
 
+#include <ctype.h>
 #include <stdio.h>
 #include <runetype.h>
+#include <wchar.h>
+#include "mblocal.h"
 
 unsigned long
-___runetype(__ct_rune_t c)
+___runetype_l(__ct_rune_t c, locale_t locale)
 {
 	size_t lim;
-	_RuneRange *rr = &_CurrentRuneLocale->__runetype_ext;
+	FIX_LOCALE(locale);
+	_RuneRange *rr = &(XLOCALE_CTYPE(locale)->runes->__runetype_ext);
 	_RuneEntry *base, *re;
 
 	if (c < 0 || c == EOF)
@@ -66,4 +71,19 @@ ___runetype(__ct_rune_t c)
 	}
 
 	return(0L);
+}
+unsigned long
+___runetype(__ct_rune_t c)
+{
+	return ___runetype_l(c, __get_locale());
+}
+
+int ___mb_cur_max(void)
+{
+	return XLOCALE_CTYPE(__get_locale())->__mb_cur_max;
+}
+int ___mb_cur_max_l(locale_t locale)
+{
+	FIX_LOCALE(locale);
+	return XLOCALE_CTYPE(locale)->__mb_cur_max;
 }

@@ -10,10 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by John Birrell.
- * 4. Neither the name of the author nor the names of any co-contributors
+ * 3. Neither the name of the author nor the names of any co-contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -29,6 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
+ * $FreeBSD: releng/11.1/lib/libc/include/spinlock.h 319442 2017-06-01 16:03:01Z vangyzen $
  *
  * Lock definitions used in both libc and libpthread.
  *
@@ -43,21 +41,17 @@
  * Lock structure with room for debugging information.
  */
 struct _spinlock {
-	volatile long	access_lock;
-	volatile long	lock_owner;
-	volatile char	*fname;
-	volatile int	lineno;
+	long	spare1;
+	long	spare2;
+	void	*thr_extra;
+	int	spare3;
 };
 typedef struct _spinlock spinlock_t;
 
 #define	_SPINLOCK_INITIALIZER	{ 0, 0, 0, 0 }
 
 #define _SPINUNLOCK(_lck)	_spinunlock(_lck);
-#ifdef	_LOCK_DEBUG
-#define	_SPINLOCK(_lck)		_spinlock_debug(_lck, __FILE__, __LINE__)
-#else
 #define	_SPINLOCK(_lck)		_spinlock(_lck)
-#endif
 
 /*
  * Thread function prototype definitions:
@@ -66,7 +60,6 @@ __BEGIN_DECLS
 long	_atomic_lock(volatile long *);
 void	_spinlock(spinlock_t *);
 void	_spinunlock(spinlock_t *);
-void	_spinlock_debug(spinlock_t *, char *, int);
 __END_DECLS
 
 #endif /* _SPINLOCK_H_ */

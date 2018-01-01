@@ -14,10 +14,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)regex2.h	8.4 (Berkeley) 3/20/94
- * $FreeBSD: src/lib/libc/regex/regex2.h,v 1.8 2004/07/12 07:35:59 tjr Exp $
+ * $FreeBSD: releng/11.1/lib/libc/regex/regex2.h 317894 2017-05-07 01:31:42Z pfg $
  */
 
 /*
@@ -77,7 +73,7 @@
  * immediately *preceding* "execution" of that operator.
  */
 typedef unsigned long sop;	/* strip operator */
-typedef long sopno;
+typedef unsigned long sopno;
 #define	OPRMASK	0xf8000000L
 #define	OPDMASK	0x07ffffffL
 #define	OPSHIFT	((unsigned)27)
@@ -117,21 +113,19 @@ typedef struct {
 typedef struct {
 	unsigned char	bmp[NC / 8];
 	wctype_t	*types;
-	int		ntypes;
+	unsigned int	ntypes;
 	wint_t		*wides;
-	int		nwides;
+	unsigned int	nwides;
 	crange		*ranges;
-	int		nranges;
+	unsigned int	nranges;
 	int		invert;
 	int		icase;
 } cset;
 
 static int
-CHIN1(cs, ch)
-cset *cs;
-wint_t ch;
+CHIN1(cset *cs, wint_t ch)
 {
-	int i;
+	unsigned int i;
 
 	assert(ch >= 0);
 	if (ch < NC)
@@ -150,9 +144,7 @@ wint_t ch;
 }
 
 static __inline int
-CHIN(cs, ch)
-cset *cs;
-wint_t ch;
+CHIN(cset *cs, wint_t ch)
 {
 
 	assert(ch >= 0);
@@ -173,7 +165,7 @@ struct re_guts {
 	int magic;
 #		define	MAGIC2	((('R'^0200)<<8)|'E')
 	sop *strip;		/* malloced area for strip */
-	int ncsets;		/* number of csets in use */
+	unsigned int ncsets;	/* number of csets in use */
 	cset *sets;		/* -> cset [ncsets] */
 	int cflags;		/* copy of regcomp() cflags argument */
 	sopno nstates;		/* = number of sops */
@@ -196,5 +188,5 @@ struct re_guts {
 };
 
 /* misc utilities */
-#define	OUT	(-2)	/* a non-character value */
+#define	OUT	(CHAR_MIN - 1)	/* a non-character value */
 #define ISWORD(c)       (iswalnum((uch)(c)) || (c) == '_')

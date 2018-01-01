@@ -16,15 +16,14 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: inet_ntop.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_ntop.c,v 1.5 2005/11/03 22:59:52 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_ntop.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_ntop.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 
 #include <netinet/in.h>
@@ -37,7 +36,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_ntop.c,v 1.2.2.1 2006/07/17 10:09:56 
 
 #include "port_after.h"
 
-/*
+/*%
  * WARNING: Don't even consider trying to compile this on a system where
  * sizeof(int) < 4.  sizeof(int) > 4 is fine; all the world's not a VAX.
  */
@@ -45,7 +44,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_ntop.c,v 1.2.2.1 2006/07/17 10:09:56 
 static const char *inet_ntop4(const u_char *src, char *dst, socklen_t size);
 static const char *inet_ntop6(const u_char *src, char *dst, socklen_t size);
 
-/* char *
+/* const char *
  * inet_ntop(af, src, dst, size)
  *	convert a network format address to presentation format.
  * return:
@@ -169,8 +168,10 @@ inet_ntop6(const u_char *src, char *dst, socklen_t size)
 		if (i == 6 && best.base == 0 && (best.len == 6 ||
 		    (best.len == 7 && words[7] != 0x0001) ||
 		    (best.len == 5 && words[5] == 0xffff))) {
-			if (!inet_ntop4(src+12, tp, sizeof tmp - (tp - tmp)))
+			if (!inet_ntop4(src+12, tp, sizeof tmp - (tp - tmp))) {
+				errno = ENOSPC;
 				return (NULL);
+			}
 			tp += strlen(tp);
 			break;
 		}
@@ -199,3 +200,5 @@ inet_ntop6(const u_char *src, char *dst, socklen_t size)
  */
 #undef inet_ntop
 __weak_reference(__inet_ntop, inet_ntop);
+
+/*! \file */

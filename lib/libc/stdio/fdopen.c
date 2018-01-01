@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)fdopen.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/fdopen.c,v 1.7 2002/03/22 21:53:04 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/fdopen.c 290110 2015-10-28 14:40:02Z ache $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -46,20 +42,27 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/fdopen.c,v 1.7 2002/03/22 21:53:04 obrien
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <limits.h>
 #include "un-namespace.h"
 #include "local.h"
 
 FILE *
-fdopen(fd, mode)
-	int fd;
-	const char *mode;
+fdopen(int fd, const char *mode)
 {
 	FILE *fp;
-	static int nofile;
 	int flags, oflags, fdflags, tmp;
 
-	if (nofile == 0)
-		nofile = getdtablesize();
+	/*
+	 * File descriptors are a full int, but _file is only a short.
+	 * If we get a valid file descriptor that is greater than
+	 * SHRT_MAX, then the fd will get sign-extended into an
+	 * invalid file descriptor.  Handle this case by failing the
+	 * open.
+	 */
+	if (fd > SHRT_MAX) {
+		errno = EMFILE;
+		return (NULL);
+	}
 
 	if ((flags = __sflags(mode, &oflags)) == 0)
 		return (NULL);
@@ -67,7 +70,8 @@ fdopen(fd, mode)
 	/* Make sure the mode the user wants is a subset of the actual mode. */
 	if ((fdflags = _fcntl(fd, F_GETFL, 0)) < 0)
 		return (NULL);
-	tmp = fdflags & O_ACCMODE;
+	/* Work around incorrect O_ACCMODE. */
+	tmp = fdflags & (O_ACCMODE | O_EXEC);
 	if (tmp != O_RDWR && (tmp != (oflags & O_ACCMODE))) {
 		errno = EINVAL;
 		return (NULL);
@@ -75,13 +79,21 @@ fdopen(fd, mode)
 
 	if ((fp = __sfp()) == NULL)
 		return (NULL);
+
+	if ((oflags & O_CLOEXEC) && _fcntl(fd, F_SETFD, FD_CLOEXEC) == -1) {
+		fp->_flags = 0;
+		return (NULL);
+	}
+
 	fp->_flags = flags;
 	/*
 	 * If opened for appending, but underlying descriptor does not have
 	 * O_APPEND bit set, assert __SAPP so that __swrite() caller
 	 * will _sseek() to the end before write.
 	 */
-	if ((oflags & O_APPEND) && !(fdflags & O_APPEND))
+	if (fdflags & O_APPEND)
+		fp->_flags2 |= __S2OAP;
+	else if (oflags & O_APPEND)
 		fp->_flags |= __SAPP;
 	fp->_file = fd;
 	fp->_cookie = fp;

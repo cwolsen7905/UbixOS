@@ -5,6 +5,11 @@
  * This code is derived from software contributed to Berkeley by
  * Chris Torek.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -13,11 +18,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,30 +39,35 @@
 static char sccsid[] = "@(#)sprintf.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/sprintf.c,v 1.14 2002/09/06 11:23:55 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/sprintf.c 249808 2013-04-23 13:33:13Z emaste $");
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <limits.h>
 #include "local.h"
+#include "xlocale_private.h"
 
 int
 sprintf(char * __restrict str, char const * __restrict fmt, ...)
 {
 	int ret;
 	va_list ap;
-	FILE f;
-	struct __sFILEX ext;
 
-	f._file = -1;
-	f._flags = __SWR | __SSTR;
-	f._bf._base = f._p = (unsigned char *)str;
-	f._bf._size = f._w = INT_MAX;
-	f._extra = &ext;
-	INITEXTRA(&f);
 	va_start(ap, fmt);
-	ret = __vfprintf(&f, fmt, ap);
+	ret = vsprintf(str, fmt, ap);
 	va_end(ap);
-	*f._p = 0;
+	return (ret);
+}
+int
+sprintf_l(char * __restrict str, locale_t locale, char const * __restrict fmt,
+		...)
+{
+	int ret;
+	va_list ap;
+	FIX_LOCALE(locale);
+
+	va_start(ap, fmt);
+	ret = vsprintf_l(str, locale, fmt, ap);
+	va_end(ap);
 	return (ret);
 }

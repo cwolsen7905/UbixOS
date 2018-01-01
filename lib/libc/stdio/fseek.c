@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,7 +34,7 @@
 static char sccsid[] = "@(#)fseek.c	8.3 (Berkeley) 1/2/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/fseek.c,v 1.41 2004/05/22 15:19:41 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/fseek.c 249810 2013-04-23 14:36:44Z emaste $");
 
 #include "namespace.h"
 #include <sys/types.h>
@@ -55,10 +51,7 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/fseek.c,v 1.41 2004/05/22 15:19:41 tjr Ex
 #define	POS_ERR	(-(fpos_t)1)
 
 int
-fseek(fp, offset, whence)
-	FILE *fp;
-	long offset;
-	int whence;
+fseek(FILE *fp, long offset, int whence)
 {
 	int ret;
 	int serrno = errno;
@@ -76,10 +69,7 @@ fseek(fp, offset, whence)
 }
 
 int
-fseeko(fp, offset, whence)
-	FILE *fp;
-	off_t offset;
-	int whence;
+fseeko(FILE *fp, off_t offset, int whence)
 {
 	int ret;
 	int serrno = errno;
@@ -101,11 +91,7 @@ fseeko(fp, offset, whence)
  * `Whence' must be one of the three SEEK_* macros.
  */
 int
-_fseeko(fp, offset, whence, ltest)
-	FILE *fp;
-	off_t offset;
-	int whence;
-	int ltest;
+_fseeko(FILE *fp, off_t offset, int whence, int ltest)
 {
 	fpos_t (*seekfn)(void *, fpos_t, int);
 	fpos_t target, curoff, ret;
@@ -237,7 +223,7 @@ _fseeko(fp, offset, whence, ltest)
 	 */
 	if (HASUB(fp)) {
 		curoff += fp->_r;	/* kill off ungetc */
-		n = fp->_extra->_up - fp->_bf._base;
+		n = fp->_up - fp->_bf._base;
 		curoff -= n;
 		n += fp->_ur;
 	} else {
@@ -259,7 +245,7 @@ _fseeko(fp, offset, whence, ltest)
 		if (HASUB(fp))
 			FREEUB(fp);
 		fp->_flags &= ~__SEOF;
-		memset(&fp->_extra->mbstate, 0, sizeof(mbstate_t));
+		memset(&fp->_mbstate, 0, sizeof(mbstate_t));
 		return (0);
 	}
 
@@ -287,6 +273,7 @@ abspos:
 		fp->_r -= n;
 	}
 	fp->_flags &= ~__SEOF;
+	memset(&fp->_mbstate, 0, sizeof(mbstate_t));
 	return (0);
 
 	/*
@@ -297,6 +284,11 @@ dumb:
 	if (__sflush(fp) ||
 	    (ret = _sseek(fp, (fpos_t)offset, whence)) == POS_ERR)
 		return (-1);
+	if (ltest && ret > LONG_MAX) {
+		fp->_flags |= __SERR;
+		errno = EOVERFLOW;
+		return (-1);
+	}
 	/* success: clear EOF indicator and discard ungetc() data */
 	if (HASUB(fp))
 		FREEUB(fp);
@@ -304,11 +296,6 @@ dumb:
 	fp->_r = 0;
 	/* fp->_w = 0; */	/* unnecessary (I think...) */
 	fp->_flags &= ~__SEOF;
-	memset(&fp->_extra->mbstate, 0, sizeof(mbstate_t));
-	if (ltest && ret > LONG_MAX) {
-		fp->_flags |= __SERR;
-		errno = EOVERFLOW;
-		return (-1);
-	}
+	memset(&fp->_mbstate, 0, sizeof(mbstate_t));
 	return (0);
 }

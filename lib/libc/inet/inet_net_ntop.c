@@ -16,10 +16,10 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: inet_net_ntop.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_net_ntop.c,v 1.5 2006/06/20 02:50:14 marka Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_net_ntop.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_net_ntop.c 288038 2015-09-20 20:50:56Z rodrigc $");
 
 #include "port_before.h"
 
@@ -46,7 +46,7 @@ static char *	inet_net_ntop_ipv4(const u_char *src, int bits, char *dst,
 static char *	inet_net_ntop_ipv6(const u_char *src, int bits, char *dst,
 		    size_t size);
 
-/*
+/*%
  * char *
  * inet_net_ntop(af, src, bits, dst, size)
  *	convert network number from network to presentation format.
@@ -57,12 +57,7 @@ static char *	inet_net_ntop_ipv6(const u_char *src, int bits, char *dst,
  *	Paul Vixie (ISC), July 1996
  */
 char *
-inet_net_ntop(af, src, bits, dst, size)
-	int af;
-	const void *src;
-	int bits;
-	char *dst;
-	size_t size;
+inet_net_ntop(int af, const void *src, int bits, char *dst, size_t size)
 {
 	switch (af) {
 	case AF_INET:
@@ -75,7 +70,7 @@ inet_net_ntop(af, src, bits, dst, size)
 	}
 }
 
-/*
+/*%
  * static char *
  * inet_net_ntop_ipv4(src, bits, dst, size)
  *	convert IPv4 network number from network to presentation format.
@@ -89,11 +84,7 @@ inet_net_ntop(af, src, bits, dst, size)
  *	Paul Vixie (ISC), July 1996
  */
 static char *
-inet_net_ntop_ipv4(src, bits, dst, size)
-	const u_char *src;
-	int bits;
-	char *dst;
-	size_t size;
+inet_net_ntop_ipv4(const u_char *src, int bits, char *dst, size_t size)
 {
 	char *odst = dst;
 	char *t;
@@ -150,7 +141,7 @@ inet_net_ntop_ipv4(src, bits, dst, size)
 	return (NULL);
 }
 
-/*
+/*%
  * static char *
  * inet_net_ntop_ipv6(src, bits, fakebits, dst, size)
  *	convert IPv6 network number from network to presentation format.
@@ -266,7 +257,7 @@ inet_net_ntop_ipv6(const u_char *src, int bits, char *dst, size_t size) {
 		}
 	}
 	/* Format CIDR /width. */
-	SPRINTF((cp, "/%u", bits));
+	sprintf(cp, "/%u", bits);
 	if (strlen(outbuf) + 1 > size)
 		goto emsgsize;
 	strcpy(dst, outbuf);
@@ -284,3 +275,5 @@ emsgsize:
  */
 #undef inet_net_ntop
 __weak_reference(__inet_net_ntop, inet_net_ntop);
+
+/*! \file */

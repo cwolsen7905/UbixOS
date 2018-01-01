@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright (c) 1983, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -33,10 +29,10 @@
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char sccsid[] = "@(#)inet_ntoa.c	8.1 (Berkeley) 6/4/93";
-static const char rcsid[] = "$Id: inet_ntoa.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_ntoa.c,v 1.2 2005/04/27 04:56:21 sra Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_ntoa.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_ntoa.c 269867 2014-08-12 12:36:06Z ume $");
 
 #include "port_before.h"
 
@@ -50,7 +46,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_ntoa.c,v 1.2.2.1 2006/07/17 10:09:56 
 
 #include "port_after.h"
 
-/*
+/*%
  * Convert network-format internet address
  * to base 256 d.d.d.d representation.
  */
@@ -63,9 +59,20 @@ inet_ntoa(struct in_addr in) {
 	return (ret);
 }
 
+char *
+inet_ntoa_r(struct in_addr in, char *buf, socklen_t size)
+{
+
+	(void) inet_ntop(AF_INET, &in, buf, size);
+	return (buf);
+}
+
 /*
  * Weak aliases for applications that use certain private entry points,
  * and fail to include <arpa/inet.h>.
  */
 #undef inet_ntoa
 __weak_reference(__inet_ntoa, inet_ntoa);
+__weak_reference(__inet_ntoa_r, inet_ntoa_r);
+
+/*! \file */

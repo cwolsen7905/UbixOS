@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,9 +34,10 @@
 static char sccsid[] = "@(#)fgets.c	8.2 (Berkeley) 12/22/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/fgets.c,v 1.13 2002/08/13 09:30:41 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/fgets.c 305584 2016-09-08 07:16:15Z ache $");
 
 #include "namespace.h"
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include "un-namespace.h"
@@ -53,20 +50,22 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/fgets.c,v 1.13 2002/08/13 09:30:41 tjr Ex
  * Return first argument, or NULL if no characters were read.
  */
 char *
-fgets(buf, n, fp)
-	char *buf;
-	int n;
-	FILE *fp;
+fgets(char * __restrict buf, int n, FILE * __restrict fp)
 {
 	size_t len;
 	char *s;
 	unsigned char *p, *t;
 
-	if (n <= 0)		/* sanity check */
-		return (NULL);
-
 	FLOCKFILE(fp);
 	ORIENT(fp, -1);
+
+	if (n <= 0) {		/* sanity check */
+		fp->_flags |= __SERR;
+		errno = EINVAL;
+		FUNLOCKFILE(fp);
+		return (NULL);
+	}
+
 	s = buf;
 	n--;			/* leave space for NUL */
 	while (n != 0) {
@@ -76,7 +75,7 @@ fgets(buf, n, fp)
 		if ((len = fp->_r) <= 0) {
 			if (__srefill(fp)) {
 				/* EOF/error: stop with partial or no line */
-				if (s == buf) {
+				if (!__sfeof(fp) || s == buf) {
 					FUNLOCKFILE(fp);
 					return (NULL);
 				}

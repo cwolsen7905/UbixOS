@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,10 +31,16 @@
 static char sccsid[] = "@(#)getpagesize.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/getpagesize.c,v 1.4 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/getpagesize.c 317734 2017-05-03 09:52:11Z kib $");
 
 #include <sys/param.h>
 #include <sys/sysctl.h>
+
+#include <errno.h>
+#include <link.h>
+#include <unistd.h>
+
+#include "libc_private.h"
 
 /*
  * This is unlikely to change over the running time of any
@@ -49,18 +51,25 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/getpagesize.c,v 1.4 2002/02/01 00:57:29 obr
  */
 
 int
-getpagesize()
+getpagesize(void)
 {
-	int mib[2]; 
+	int mib[2];
 	static int value;
 	size_t size;
+	int error;
 
-	if (!value) {
-		mib[0] = CTL_HW;
-		mib[1] = HW_PAGESIZE;
-		size = sizeof value;
-		if (sysctl(mib, 2, &value, &size, NULL, 0) == -1)
-			return (-1);
-	}
+	if (value != 0)
+		return (value);
+
+	error = _elf_aux_info(AT_PAGESZ, &value, sizeof(value));
+	if (error == 0 && value != 0)
+		return (value);
+
+	mib[0] = CTL_HW;
+	mib[1] = HW_PAGESIZE;
+	size = sizeof value;
+	if (sysctl(mib, nitems(mib), &value, &size, NULL, 0) == -1)
+		return (PAGE_SIZE);
+
 	return (value);
 }

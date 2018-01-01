@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- * 	This product includes software developed by the University of
- * 	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -50,15 +46,14 @@
 
 #if defined(LIBC_SCCS) && !defined(lint)
 static const char sccsid[] = "@(#)herror.c	8.1 (Berkeley) 6/4/93";
-static const char rcsid[] = "$Id: herror.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: herror.c,v 1.4 2005/04/27 04:56:41 sra Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/resolv/herror.c,v 1.2.2.1 2006/07/17 10:09:58 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/resolv/herror.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 
 #include "namespace.h"
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/uio.h>
 
@@ -75,17 +70,17 @@ __FBSDID("$FreeBSD: src/lib/libc/resolv/herror.c,v 1.2.2.1 2006/07/17 10:09:58 u
 
 const char *h_errlist[] = {
 	"Resolver Error 0 (no error)",
-	"Unknown host",				/* 1 HOST_NOT_FOUND */
-	"Host name lookup failure",		/* 2 TRY_AGAIN */
-	"Unknown server error",			/* 3 NO_RECOVERY */
-	"No address associated with name",	/* 4 NO_ADDRESS */
+	"Unknown host",				/*%< 1 HOST_NOT_FOUND */
+	"Host name lookup failure",		/*%< 2 TRY_AGAIN */
+	"Unknown server error",			/*%< 3 NO_RECOVERY */
+	"No address associated with name",	/*%< 4 NO_ADDRESS */
 };
-const int h_nerr = { sizeof h_errlist / sizeof h_errlist[0] };
+const int h_nerr = { nitems(h_errlist) };
 
 #undef	h_errno
 int	h_errno;
 
-/*
+/*%
  * herror --
  *	print the error indicated by the h_errno value.
  */
@@ -114,7 +109,7 @@ herror(const char *s) {
 	_writev(STDERR_FILENO, iov, (v - iov) + 1);
 }
 
-/*
+/*%
  * hstrerror --
  *	return the string associated with a given "host" errno value.
  */
@@ -126,3 +121,5 @@ hstrerror(int err) {
 		return (h_errlist[err]);
 	return ("Unknown resolver error");
 }
+
+/*! \file */

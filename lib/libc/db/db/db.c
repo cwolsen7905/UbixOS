@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)db.c	8.4 (Berkeley) 2/21/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/db/db/db.c,v 1.2 2002/03/22 21:52:01 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/db/db/db.c 296423 2016-03-06 04:38:08Z lidl $");
 
 #include <sys/types.h>
 
@@ -46,18 +42,20 @@ __FBSDID("$FreeBSD: src/lib/libc/db/db/db.c,v 1.2 2002/03/22 21:52:01 obrien Exp
 
 #include <db.h>
 
+static int __dberr(void);
+
+#ifndef O_CLOEXEC
+#define O_CLOEXEC 0
+#endif
+
 DB *
-dbopen(fname, flags, mode, type, openinfo)
-	const char *fname;
-	int flags, mode;
-	DBTYPE type;
-	const void *openinfo;
+dbopen(const char *fname, int flags, int mode, DBTYPE type, const void *openinfo)
 {
 
 #define	DB_FLAGS	(DB_LOCK | DB_SHMEM | DB_TXN)
 #define	USE_OPEN_FLAGS							\
-	(O_CREAT | O_EXCL | O_EXLOCK | O_NONBLOCK | O_RDONLY |		\
-	 O_RDWR | O_SHLOCK | O_TRUNC)
+	(O_CREAT | O_EXCL | O_EXLOCK | O_NOFOLLOW | O_NONBLOCK | 	\
+	 O_RDONLY | O_RDWR | O_SHLOCK | O_SYNC | O_TRUNC | O_CLOEXEC)
 
 	if ((flags & ~(USE_OPEN_FLAGS | DB_FLAGS)) == 0)
 		switch (type) {
@@ -76,7 +74,7 @@ dbopen(fname, flags, mode, type, openinfo)
 }
 
 static int
-__dberr()
+__dberr(void)
 {
 	return (RET_ERROR);
 }
@@ -88,14 +86,13 @@ __dberr()
  *	dbp:	pointer to the DB structure.
  */
 void
-__dbpanic(dbp)
-	DB *dbp;
+__dbpanic(DB *dbp)
 {
 	/* The only thing that can succeed is a close. */
-	dbp->del = (int (*)())__dberr;
-	dbp->fd = (int (*)())__dberr;
-	dbp->get = (int (*)())__dberr;
-	dbp->put = (int (*)())__dberr;
-	dbp->seq = (int (*)())__dberr;
-	dbp->sync = (int (*)())__dberr;
+	dbp->del = (int (*)(const struct __db *, const DBT*, u_int))__dberr;
+	dbp->fd = (int (*)(const struct __db *))__dberr;
+	dbp->get = (int (*)(const struct __db *, const DBT*, DBT *, u_int))__dberr;
+	dbp->put = (int (*)(const struct __db *, DBT *, const DBT *, u_int))__dberr;
+	dbp->seq = (int (*)(const struct __db *, DBT *, DBT *, u_int))__dberr;
+	dbp->sync = (int (*)(const struct __db *, u_int))__dberr;
 }

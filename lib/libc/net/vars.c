@@ -30,6 +30,7 @@
  */
 
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/vars.c 95023 2002-04-19 04:46:24Z suz $");
 
 #include <sys/types.h>
 #include <netinet/in.h>

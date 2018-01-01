@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/getprogname.c,v 1.4 2002/03/29 22:43:41 markm Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/getprogname.c 93399 2002-03-29 22:43:43Z markm $");
 
 #include "namespace.h"
 #include <stdlib.h>
@@ -9,6 +9,9 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/getprogname.c,v 1.4 2002/03/29 22:43:41 mar
 
 __weak_reference(_getprogname, getprogname);
 
-const char *_getprogname(void) {
-  return (__progname);
-  }
+const char *
+_getprogname(void)
+{
+
+	return (__progname);
+}

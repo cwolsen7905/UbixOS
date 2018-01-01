@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,16 +31,15 @@
 static char sccsid[] = "@(#)devname.c	8.2 (Berkeley) 4/29/95";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/devname.c,v 1.9 2003/06/20 09:52:27 phk Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/devname.c 298226 2016-04-18 21:05:15Z avos $");
 
-#include <sys/types.h>
+#include <sys/param.h>
 #include <sys/sysctl.h>
 
-#include <err.h>
-#include <fcntl.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
-#include <sys/param.h>
 #include <sys/stat.h>
 
 char *
@@ -52,22 +47,22 @@ devname_r(dev_t dev, mode_t type, char *buf, int len)
 {
 	int i;
 	size_t j;
-	char *r;
 
-	if ((type & S_IFMT) == S_IFCHR) {
+	if (dev == NODEV || !(S_ISCHR(type) || S_ISBLK(dev))) {
+		strlcpy(buf, "#NODEV", len);
+		return (buf);
+	}
+
+	if (S_ISCHR(type)) {
 		j = len;
 		i = sysctlbyname("kern.devname", buf, &j, &dev, sizeof (dev));
 		if (i == 0)
-		    return (buf);
+			return (buf);
 	}
 
 	/* Finally just format it */
-	if (dev == NODEV)
-		r = "#NODEV";
-	else 
-		r = "#%c:%d:0x%x";
-	snprintf(buf, len, r,
-	    (type & S_IFMT) == S_IFCHR ? 'C' : 'B', major(dev), minor(dev));
+	snprintf(buf, len, "#%c:%#jx",
+	    S_ISCHR(type) ? 'C' : 'B', (uintmax_t)dev);
 	return (buf);
 }
 
@@ -76,5 +71,5 @@ devname(dev_t dev, mode_t type)
 {
 	static char buf[SPECNAMELEN + 1];
 
-	return(devname_r(dev, type, buf, sizeof(buf)));
+	return (devname_r(dev, type, buf, sizeof(buf)));
 }

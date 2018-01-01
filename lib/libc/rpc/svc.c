@@ -1,32 +1,31 @@
 /*	$NetBSD: svc.c,v 1.21 2000/07/06 03:10:35 christos Exp $	*/
 
-/*
- * Sun RPC is a product of Sun Microsystems, Inc. and is provided for
- * unrestricted use provided that this legend is included on all tape
- * media and as a part of the software program in whole or part.  Users
- * may copy or modify Sun RPC without charge, but are not authorized
- * to license or distribute it to anyone else except as part of a product or
- * program developed by the user.
+/*-
+ * Copyright (c) 2009, Sun Microsystems, Inc.
+ * All rights reserved.
  *
- * SUN RPC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND INCLUDING THE
- * WARRANTIES OF DESIGN, MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE, OR ARISING FROM A COURSE OF DEALING, USAGE OR TRADE PRACTICE.
- *
- * Sun RPC is provided with no support and without any obligation on the
- * part of Sun Microsystems, Inc. to assist in its use, correction,
- * modification or enhancement.
- *
- * SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT TO THE
- * INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY PATENTS BY SUN RPC
- * OR ANY PART THEREOF.
- *
- * In no event will Sun Microsystems, Inc. be liable for any lost revenue
- * or profits or other special, indirect and consequential damages, even if
- * Sun has been advised of the possibility of such damages.
- *
- * Sun Microsystems, Inc.
- * 2550 Garcia Avenue
- * Mountain View, California  94043
+ * Redistribution and use in source and binary forms, with or without 
+ * modification, are permitted provided that the following conditions are met:
+ * - Redistributions of source code must retain the above copyright notice, 
+ *   this list of conditions and the following disclaimer.
+ * - Redistributions in binary form must reproduce the above copyright notice, 
+ *   this list of conditions and the following disclaimer in the documentation 
+ *   and/or other materials provided with the distribution.
+ * - Neither the name of Sun Microsystems, Inc. nor the names of its 
+ *   contributors may be used to endorse or promote products derived 
+ *   from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ * POSSIBILITY OF SUCH DAMAGE.
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
@@ -34,7 +33,7 @@ static char *sccsid2 = "@(#)svc.c 1.44 88/02/08 Copyr 1984 Sun Micro";
 static char *sccsid = "@(#)svc.c	2.4 88/08/11 4.0 RPCSRC";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/rpc/svc.c,v 1.23 2004/10/16 06:11:35 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/rpc/svc.c 318322 2017-05-15 22:41:01Z brooks $");
 
 /*
  * svc.c, Server-side remote procedure call interface.
@@ -62,11 +61,12 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/svc.c,v 1.23 2004/10/16 06:11:35 obrien Exp
 #include "un-namespace.h"
 
 #include "rpc_com.h"
+#include "mt_misc.h"
 
 #define	RQCRED_SIZE	400		/* this size is excessive */
 
 #define SVC_VERSQUIET 0x0001		/* keep quiet about vers mismatch */
-#define version_keepquiet(xp) ((u_long)(xp)->xp_p3 & SVC_VERSQUIET)
+#define version_keepquiet(xp) (SVC_EXT(xp)->xp_flags & SVC_VERSQUIET)
 
 #define max(a, b) (a > b ? a : b)
 
@@ -74,7 +74,7 @@ __FBSDID("$FreeBSD: src/lib/libc/rpc/svc.c,v 1.23 2004/10/16 06:11:35 obrien Exp
  * The services list
  * Each entry represents a set of procedures (an rpc program).
  * The dispatch routine takes request structs and runs the
- * apropriate procedure.
+ * appropriate procedure.
  */
 static struct svc_callout {
 	struct svc_callout *sc_next;
@@ -84,8 +84,8 @@ static struct svc_callout {
 	void		    (*sc_dispatch)(struct svc_req *, SVCXPRT *);
 } *svc_head;
 
-extern rwlock_t svc_lock;
-extern rwlock_t svc_fd_lock;
+SVCXPRT **__svc_xports;
+int __svc_maxrec;
 
 static struct svc_callout *svc_find(rpcprog_t, rpcvers_t,
     struct svc_callout **, char *);
@@ -97,8 +97,7 @@ static void __xprt_do_unregister (SVCXPRT *xprt, bool_t dolock);
  * Activate a transport handle.
  */
 void
-xprt_register(xprt)
-	SVCXPRT *xprt;
+xprt_register(SVCXPRT *xprt)
 {
 	int sock;
 
@@ -109,16 +108,19 @@ xprt_register(xprt)
 	rwlock_wrlock(&svc_fd_lock);
 	if (__svc_xports == NULL) {
 		__svc_xports = (SVCXPRT **)
-			mem_alloc(FD_SETSIZE * sizeof(SVCXPRT *));
-		if (__svc_xports == NULL)
+			mem_alloc((FD_SETSIZE + 1) * sizeof(SVCXPRT *));
+		if (__svc_xports == NULL) {
+			rwlock_unlock(&svc_fd_lock);
 			return;
-		memset(__svc_xports, '\0', FD_SETSIZE * sizeof(SVCXPRT *));
+		}
+		memset(__svc_xports, '\0', (FD_SETSIZE + 1) * sizeof(SVCXPRT *));
 	}
 	if (sock < FD_SETSIZE) {
 		__svc_xports[sock] = xprt;
 		FD_SET(sock, &svc_fdset);
 		svc_maxfd = max(svc_maxfd, sock);
-	}
+	} else if (sock == FD_SETSIZE)
+		__svc_xports[sock] = xprt;
 	rwlock_unlock(&svc_fd_lock);
 }
 
@@ -138,9 +140,7 @@ __xprt_unregister_unlocked(SVCXPRT *xprt)
  * De-activate a transport handle.
  */
 static void
-__xprt_do_unregister(xprt, dolock)
-	SVCXPRT *xprt;
-	bool_t dolock;
+__xprt_do_unregister(SVCXPRT *xprt, bool_t dolock)
 {
 	int sock;
 
@@ -158,7 +158,8 @@ __xprt_do_unregister(xprt, dolock)
 				if (__svc_xports[svc_maxfd])
 					break;
 		}
-	}
+	} else if ((sock == FD_SETSIZE) && (__svc_xports[sock] == xprt))
+		__svc_xports[sock] = NULL;
 	if (dolock)
 		rwlock_unlock(&svc_fd_lock);
 }
@@ -169,12 +170,9 @@ __xprt_do_unregister(xprt, dolock)
  * program number comes in.
  */
 bool_t
-svc_reg(xprt, prog, vers, dispatch, nconf)
-	SVCXPRT *xprt;
-	const rpcprog_t prog;
-	const rpcvers_t vers;
-	void (*dispatch)(struct svc_req *, SVCXPRT *);
-	const struct netconfig *nconf;
+svc_reg(SVCXPRT *xprt, const rpcprog_t prog, const rpcvers_t vers,
+    void (*dispatch)(struct svc_req *, SVCXPRT *),
+    const struct netconfig *nconf)
 {
 	bool_t dummy;
 	struct svc_callout *prev;
@@ -202,8 +200,7 @@ svc_reg(xprt, prog, vers, dispatch, nconf)
 
 	rwlock_wrlock(&svc_lock);
 	if ((s = svc_find(prog, vers, &prev, netid)) != NULL) {
-		if (netid)
-			free(netid);
+		free(netid);
 		if (s->sc_dispatch == dispatch)
 			goto rpcb_it; /* he is registering another xptr */
 		rwlock_unlock(&svc_lock);
@@ -211,8 +208,7 @@ svc_reg(xprt, prog, vers, dispatch, nconf)
 	}
 	s = mem_alloc(sizeof (struct svc_callout));
 	if (s == NULL) {
-		if (netid)
-			free(netid);
+		free(netid);
 		rwlock_unlock(&svc_lock);
 		return (FALSE);
 	}
@@ -243,9 +239,7 @@ rpcb_it:
  * Remove a service program from the callout list.
  */
 void
-svc_unreg(prog, vers)
-	const rpcprog_t prog;
-	const rpcvers_t vers;
+svc_unreg(const rpcprog_t prog, const rpcvers_t vers)
 {
 	struct svc_callout *prev;
 	struct svc_callout *s;
@@ -276,12 +270,9 @@ svc_unreg(prog, vers)
  * program number comes in.
  */
 bool_t
-svc_register(xprt, prog, vers, dispatch, protocol)
-	SVCXPRT *xprt;
-	u_long prog;
-	u_long vers;
-	void (*dispatch)(struct svc_req *, SVCXPRT *);
-	int protocol;
+svc_register(SVCXPRT *xprt, u_long prog, u_long vers,
+    void (*dispatch)(struct svc_req *, SVCXPRT *),
+    int protocol)
 {
 	struct svc_callout *prev;
 	struct svc_callout *s;
@@ -316,9 +307,7 @@ pmap_it:
  * Remove a service program from the callout list.
  */
 void
-svc_unregister(prog, vers)
-	u_long prog;
-	u_long vers;
+svc_unregister(u_long prog, u_long vers)
 {
 	struct svc_callout *prev;
 	struct svc_callout *s;
@@ -343,11 +332,8 @@ svc_unregister(prog, vers)
  * struct.
  */
 static struct svc_callout *
-svc_find(prog, vers, prev, netid)
-	rpcprog_t prog;
-	rpcvers_t vers;
-	struct svc_callout **prev;
-	char *netid;
+svc_find(rpcprog_t prog, rpcvers_t vers, struct svc_callout **prev,
+    char *netid)
 {
 	struct svc_callout *s, *p;
 
@@ -371,10 +357,8 @@ svc_find(prog, vers, prev, netid)
  * Send a reply to an rpc request
  */
 bool_t
-svc_sendreply(xprt, xdr_results, xdr_location)
-	SVCXPRT *xprt;
-	xdrproc_t xdr_results;
-	void * xdr_location;
+svc_sendreply(SVCXPRT *xprt, xdrproc_t xdr_results,
+    void * xdr_location)
 {
 	struct rpc_msg rply; 
 
@@ -393,8 +377,7 @@ svc_sendreply(xprt, xdr_results, xdr_location)
  * No procedure error reply
  */
 void
-svcerr_noproc(xprt)
-	SVCXPRT *xprt;
+svcerr_noproc(SVCXPRT *xprt)
 {
 	struct rpc_msg rply;
 
@@ -411,8 +394,7 @@ svcerr_noproc(xprt)
  * Can't decode args error reply
  */
 void
-svcerr_decode(xprt)
-	SVCXPRT *xprt;
+svcerr_decode(SVCXPRT *xprt)
 {
 	struct rpc_msg rply; 
 
@@ -429,8 +411,7 @@ svcerr_decode(xprt)
  * Some system error
  */
 void
-svcerr_systemerr(xprt)
-	SVCXPRT *xprt;
+svcerr_systemerr(SVCXPRT *xprt)
 {
 	struct rpc_msg rply; 
 
@@ -451,37 +432,30 @@ svcerr_systemerr(xprt)
  * protocol: the portmapper (or rpc binder).
  */
 void
-__svc_versquiet_on(xprt)
-	SVCXPRT *xprt;
+__svc_versquiet_on(SVCXPRT *xprt)
 {
-	u_long	tmp;
 
-	tmp = ((u_long) xprt->xp_p3) | SVC_VERSQUIET;
-	xprt->xp_p3 = tmp;
+	SVC_EXT(xprt)->xp_flags |= SVC_VERSQUIET;
 }
 
 void
-__svc_versquiet_off(xprt)
-	SVCXPRT *xprt;
+__svc_versquiet_off(SVCXPRT *xprt)
 {
-	u_long	tmp;
 
-	tmp = ((u_long) xprt->xp_p3) & ~SVC_VERSQUIET;
-	xprt->xp_p3 = tmp;
+	SVC_EXT(xprt)->xp_flags &= ~SVC_VERSQUIET;
 }
 
 void
-svc_versquiet(xprt)
-	SVCXPRT *xprt;
+svc_versquiet(SVCXPRT *xprt)
 {
 	__svc_versquiet_on(xprt);
 }
 
 int
-__svc_versquiet_get(xprt)
-	SVCXPRT *xprt;
+__svc_versquiet_get(SVCXPRT *xprt)
 {
-	return ((int) xprt->xp_p3) & SVC_VERSQUIET;
+
+	return (SVC_EXT(xprt)->xp_flags & SVC_VERSQUIET);
 }
 #endif
 
@@ -489,9 +463,7 @@ __svc_versquiet_get(xprt)
  * Authentication error reply
  */
 void
-svcerr_auth(xprt, why)
-	SVCXPRT *xprt;
-	enum auth_stat why;
+svcerr_auth(SVCXPRT *xprt, enum auth_stat why)
 {
 	struct rpc_msg rply;
 
@@ -508,8 +480,7 @@ svcerr_auth(xprt, why)
  * Auth too weak error reply
  */
 void
-svcerr_weakauth(xprt)
-	SVCXPRT *xprt;
+svcerr_weakauth(SVCXPRT *xprt)
 {
 
 	assert(xprt != NULL);
@@ -521,8 +492,7 @@ svcerr_weakauth(xprt)
  * Program unavailable error reply
  */
 void 
-svcerr_noprog(xprt)
-	SVCXPRT *xprt;
+svcerr_noprog(SVCXPRT *xprt)
 {
 	struct rpc_msg rply;  
 
@@ -539,10 +509,7 @@ svcerr_noprog(xprt)
  * Program version mismatch error reply
  */
 void  
-svcerr_progvers(xprt, low_vers, high_vers)
-	SVCXPRT *xprt; 
-	rpcvers_t low_vers;
-	rpcvers_t high_vers;
+svcerr_progvers(SVCXPRT *xprt, rpcvers_t low_vers, rpcvers_t high_vers)
 {
 	struct rpc_msg rply;
 
@@ -552,9 +519,48 @@ svcerr_progvers(xprt, low_vers, high_vers)
 	rply.rm_reply.rp_stat = MSG_ACCEPTED;
 	rply.acpted_rply.ar_verf = xprt->xp_verf;
 	rply.acpted_rply.ar_stat = PROG_MISMATCH;
-	rply.acpted_rply.ar_vers.low = (uint32_t)low_vers;
-	rply.acpted_rply.ar_vers.high = (uint32_t)high_vers;
+	rply.acpted_rply.ar_vers.low = (u_int32_t)low_vers;
+	rply.acpted_rply.ar_vers.high = (u_int32_t)high_vers;
 	SVC_REPLY(xprt, &rply);
+}
+
+/*
+ * Allocate a new server transport structure. All fields are
+ * initialized to zero and xp_p3 is initialized to point at an
+ * extension structure to hold various flags and authentication
+ * parameters.
+ */
+SVCXPRT *
+svc_xprt_alloc(void)
+{
+	SVCXPRT *xprt;
+	SVCXPRT_EXT *ext;
+
+	xprt = mem_alloc(sizeof(SVCXPRT));
+	if (xprt == NULL)
+		return (NULL);
+	memset(xprt, 0, sizeof(SVCXPRT));
+	ext = mem_alloc(sizeof(SVCXPRT_EXT));
+	if (ext == NULL) {
+		mem_free(xprt, sizeof(SVCXPRT));
+		return (NULL);
+	}
+	memset(ext, 0, sizeof(SVCXPRT_EXT));
+	xprt->xp_p3 = ext;
+	ext->xp_auth.svc_ah_ops = &svc_auth_null_ops;
+
+	return (xprt);
+}
+
+/*
+ * Free a server transport structure.
+ */
+void
+svc_xprt_free(SVCXPRT *xprt)
+{
+
+	mem_free(xprt->xp_p3, sizeof(SVCXPRT_EXT));
+	mem_free(xprt, sizeof(SVCXPRT));
 }
 
 /* ******************* SERVER INPUT STUFF ******************* */
@@ -576,8 +582,7 @@ svcerr_progvers(xprt, low_vers, high_vers)
  */
 
 void
-svc_getreq(rdfds)
-	int rdfds;
+svc_getreq(int rdfds)
 {
 	fd_set readfds;
 
@@ -587,8 +592,7 @@ svc_getreq(rdfds)
 }
 
 void
-svc_getreqset(readfds)
-	fd_set *readfds;
+svc_getreqset(fd_set *readfds)
 {
 	int bit, fd;
 	fd_mask mask, *maskp;
@@ -598,8 +602,8 @@ svc_getreqset(readfds)
 
 	maskp = readfds->fds_bits;
 	for (sock = 0; sock < FD_SETSIZE; sock += NFDBITS) {
-	    for (mask = *maskp++; (bit = ffs(mask)) != 0;
-		mask ^= (1 << (bit - 1))) {
+	    for (mask = *maskp++; (bit = ffsl(mask)) != 0;
+		mask ^= (1ul << (bit - 1))) {
 		/* sock has input waiting */
 		fd = sock + bit - 1;
 		svc_getreq_common(fd);
@@ -608,8 +612,7 @@ svc_getreqset(readfds)
 }
 
 void
-svc_getreq_common(fd)
-	int fd;
+svc_getreq_common(int fd)
 {
 	SVCXPRT *xprt;
 	struct svc_req r;
@@ -645,7 +648,15 @@ svc_getreq_common(fd)
 			r.rq_cred = msg.rm_call.cb_cred;
 			/* first authenticate the message */
 			if ((why = _authenticate(&r, &msg)) != AUTH_OK) {
-				svcerr_auth(xprt, why);
+				/*
+				 * RPCSEC_GSS uses this return code
+				 * for requests that form part of its
+				 * context establishment protocol and
+				 * should not be dispatched to the
+				 * application.
+				 */
+				if (why != RPCSEC_GSS_NODISPATCH)
+					svcerr_auth(xprt, why);
 				goto call_done;
 			}
 			/* now match message with a registered service*/
@@ -672,7 +683,7 @@ svc_getreq_common(fd)
 			if (prog_found)
 				svcerr_progvers(xprt, low_vers, high_vers);
 			else
-				 svcerr_noprog(xprt);
+				svcerr_noprog(xprt);
 			/* Fall through to ... */
 		}
 		/*
@@ -696,9 +707,7 @@ call_done:
 
 
 void
-svc_getreq_poll(pfdp, pollretval)
-	struct pollfd	*pfdp;
-	int	pollretval;
+svc_getreq_poll(struct pollfd *pfdp, int pollretval)
 {
 	int i;
 	int fds_found;

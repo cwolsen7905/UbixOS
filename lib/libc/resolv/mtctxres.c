@@ -1,5 +1,5 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/resolv/mtctxres.c,v 1.2.2.1 2006/07/17 10:09:58 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/resolv/mtctxres.c 297790 2016-04-10 19:33:58Z pfg $");
 
 #include <port_before.h>
 #ifdef DO_PTHREADS
@@ -75,7 +75,7 @@ __res_init_ctx(void) {
 		return (0);
 	}
 
-	if ((mt = malloc(sizeof (mtctxres_t))) == 0) {
+	if ((mt = malloc(sizeof(mtctxres_t))) == NULL) {
 		errno = ENOMEM;
 		return (-1);
 	}
@@ -94,10 +94,7 @@ __res_init_ctx(void) {
 static void
 __res_destroy_ctx(void *value) {
 
-	mtctxres_t	*mt = (mtctxres_t *)value;
-
-	if (mt != 0)
-		free(mt);
+	free(value);
 }
 #endif
 
@@ -118,9 +115,10 @@ ___mtctxres(void) {
 	 */
 	if (!mt_key_initialized) {
 		static pthread_mutex_t keylock = PTHREAD_MUTEX_INITIALIZER;
-                pthread_mutex_lock(&keylock);
-		_mtctxres_init();
-                pthread_mutex_unlock(&keylock);
+                if (pthread_mutex_lock(&keylock) == 0) {
+			_mtctxres_init();
+			(void) pthread_mutex_unlock(&keylock);
+		}
 	}
 
 	/*
@@ -129,9 +127,9 @@ ___mtctxres(void) {
 	 * that fails return a global context.
 	 */
 	if (mt_key_initialized) {
-		if (((mt = pthread_getspecific(key)) != 0) ||
+		if (((mt = pthread_getspecific(key)) != NULL) ||
 		    (__res_init_ctx() == 0 &&
-		     (mt = pthread_getspecific(key)) != 0)) {
+		     (mt = pthread_getspecific(key)) != NULL)) {
 			return (mt);
 		}
 	}

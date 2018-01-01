@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/i386_set_gsbase.c,v 1.1 2005/04/14 00:01:35 peter Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/i386_set_gsbase.c 145036 2005-04-14 00:01:35Z peter $");
 
 #include <machine/sysarch.h>
 

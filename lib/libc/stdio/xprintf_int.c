@@ -30,7 +30,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/stdio/xprintf_int.c,v 1.2.2.1 2006/06/25 07:35:51 phk Exp $
+ * $FreeBSD: releng/11.1/lib/libc/stdio/xprintf_int.c 153641 2005-12-22 14:23:54Z cognet $
  */
 
 #include <namespace.h>

@@ -1,9 +1,14 @@
-/*
+/*-
  * Copyright (c) 1990, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
  * This code is derived from software contributed to Berkeley by
  * Chris Torek.
+ *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -13,11 +18,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -34,10 +35,15 @@
  * SUCH DAMAGE.
  */
 
+#if defined(LIBC_SCCS) && !defined(lint)
+static char sccsid[] = "@(#)printf.c	8.1 (Berkeley) 6/4/93";
+#endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/printf.c 249808 2013-04-23 13:33:13Z emaste $");
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <xlocale.h>
 
 int
 printf(char const * __restrict fmt, ...)
@@ -47,6 +53,17 @@ printf(char const * __restrict fmt, ...)
 
 	va_start(ap, fmt);
 	ret = vfprintf(stdout, fmt, ap);
+	va_end(ap);
+	return (ret);
+}
+int
+printf_l(locale_t locale, char const * __restrict fmt, ...)
+{
+	int ret;
+	va_list ap;
+
+	va_start(ap, fmt);
+	ret = vfprintf_l(stdout, locale, fmt, ap);
 	va_end(ap);
 	return (ret);
 }

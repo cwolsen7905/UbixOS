@@ -25,7 +25,7 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/llabs.c,v 1.1 2001/11/15 02:05:03 mike Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/llabs.c 86368 2001-11-15 02:05:03Z mike $");
 
 #include <stdlib.h>
 

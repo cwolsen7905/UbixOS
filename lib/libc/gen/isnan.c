@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/gen/isnan.c,v 1.2 2004/09/24 06:33:22 das Exp $
+ * $FreeBSD: releng/11.1/lib/libc/gen/isnan.c 275004 2014-11-25 03:50:31Z emaste $
  */
 
 #include <math.h>
@@ -33,8 +33,14 @@
 /*
  * XXX These routines belong in libm, but they must remain in libc for
  *     binary compat until we can bump libm's major version number.
+ *
+ * Note this only applies to the dynamic versions of libm and libc, so
+ * for the static and profiled versions we stub out the definitions.
+ * Otherwise you cannot link statically to libm and libc at the same
+ * time, when calling both functions.
  */
 
+#ifdef PIC
 __weak_reference(__isnan, isnan);
 __weak_reference(__isnanf, isnanf);
 
@@ -55,3 +61,4 @@ __isnanf(float f)
 	u.f = f;
 	return (u.bits.exp == 255 && u.bits.man != 0);
 }
+#endif /* PIC */

@@ -13,10 +13,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -38,21 +34,17 @@
 	.asciz "@(#)setlogin.s	5.2 (Berkeley) 4/12/91"
 #endif /* LIBC_SCCS and not lint */
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/sys/setlogin.S,v 1.9 2002/03/23 02:10:28 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/sys/setlogin.S 254463 2013-08-17 19:24:58Z jilles $");
 
 #include "SYS.h"
 
 .globl	CNAME(_logname_valid)		/* in _getlogin() */
 
 SYSCALL(setlogin)
-#ifdef PIC
 	PIC_PROLOGUE
-	pushl	%eax
-	movl	PIC_GOT(CNAME(_logname_valid)),%eax
-	movl	$0,(%eax)
-	popl	%eax
+	movl	$0,PIC_GOTOFF(CNAME(_logname_valid))
 	PIC_EPILOGUE
-#else
-	movl	$0,CNAME(_logname_valid)
-#endif
 	ret				/* setlogin(name) */
+END(__sys_setlogin)
+
+	.section .note.GNU-stack,"",%progbits

@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "From: @(#)uname.c	8.1 (Berkeley) 1/4/94";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/uname.c,v 1.9 2002/02/01 00:57:29 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/uname.c 288028 2015-09-20 20:21:49Z rodrigc $");
 
 #define uname wrapped_uname
 #include <sys/param.h>
@@ -43,6 +39,8 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/uname.c,v 1.9 2002/02/01 00:57:29 obrien Ex
 #include <sys/utsname.h>
 #include <errno.h>
 #undef uname
+
+int uname(struct utsname *);
 
 int
 uname(struct utsname *name)

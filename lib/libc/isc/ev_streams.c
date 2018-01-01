@@ -20,10 +20,10 @@
  */
 
 #if !defined(LINT) && !defined(CODECENTER)
-static const char rcsid[] = "$Id: ev_streams.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: ev_streams.c,v 1.5 2005/04/27 04:56:36 sra Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/isc/ev_streams.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/isc/ev_streams.c 269867 2014-08-12 12:36:06Z ume $");
 
 #include "port_before.h"
 #ifndef _LIBC
@@ -314,3 +314,5 @@ readable(evContext opaqueCtx, void *uap, int fd, int evmask) {
 		done(opaqueCtx, str);
 }
 #endif
+
+/*! \file */

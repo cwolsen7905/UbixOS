@@ -12,10 +12,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -34,7 +30,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/bcopy.S,v 1.10 2002/10/15 09:50:07 sobomax Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/bcopy.S 217106 2011-01-07 16:08:40Z kib $");
 
 #if 0
 	RCSID("$NetBSD: bcopy.S,v 1.6 1996/11/12 00:50:06 jtc Exp $")
@@ -101,3 +97,14 @@ ENTRY(bcopy)
 	popl	%esi
 	cld
 	ret
+#ifdef MEMCOPY
+END(memcpy)
+#else
+#ifdef MEMMOVE
+END(memmove)
+#else
+END(bcopy)
+#endif
+#endif
+
+	.section .note.GNU-stack,"",%progbits

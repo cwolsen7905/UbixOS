@@ -10,11 +10,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -35,10 +31,17 @@
 static char sccsid[] = "@(#)bsearch.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/bsearch.c,v 1.3 2002/03/21 22:48:41 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/bsearch.c 288030 2015-09-20 20:24:28Z rodrigc $");
 
 #include <stddef.h>
 #include <stdlib.h>
+
+#ifdef	I_AM_BSEARCH_B
+#include "block_abi.h"
+#define	COMPAR(x,y)	CALL_BLOCK(compar, x, y)
+#else
+#define	COMPAR(x,y)	compar(x, y)
+#endif
 
 /*
  * Perform a binary search.
@@ -56,13 +59,15 @@ __FBSDID("$FreeBSD: src/lib/libc/stdlib/bsearch.c,v 1.3 2002/03/21 22:48:41 obri
  * have to make lim 3, then halve, obtaining 1, so that we will only
  * look at item 3.
  */
+#ifdef I_AM_BSEARCH_B
 void *
-bsearch(key, base0, nmemb, size, compar)
-	const void *key;
-	const void *base0;
-	size_t nmemb;
-	size_t size;
-	int (*compar)(const void *, const void *);
+bsearch_b(const void *key, const void *base0, size_t nmemb, size_t size,
+    DECLARE_BLOCK(int, compar, const void *, const void *))
+#else
+void *
+bsearch(const void *key, const void *base0, size_t nmemb, size_t size,
+    int (*compar)(const void *, const void *))
+#endif
 {
 	const char *base = base0;
 	size_t lim;
@@ -71,7 +76,7 @@ bsearch(key, base0, nmemb, size, compar)
 
 	for (lim = nmemb; lim != 0; lim >>= 1) {
 		p = base + (lim >> 1) * size;
-		cmp = (*compar)(key, p);
+		cmp = COMPAR(key, p);
 		if (cmp == 0)
 			return ((void *)p);
 		if (cmp > 0) {	/* key > p: move right */

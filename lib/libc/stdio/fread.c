@@ -13,11 +13,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -38,9 +34,11 @@
 static char sccsid[] = "@(#)fread.c	8.2 (Berkeley) 12/11/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdio/fread.c,v 1.12.14.1 2005/12/23 06:07:43 davidxu Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdio/fread.c 249808 2013-04-23 13:33:13Z emaste $");
 
 #include "namespace.h"
+#include <errno.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include "un-namespace.h"
@@ -54,7 +52,7 @@ __FBSDID("$FreeBSD: src/lib/libc/stdio/fread.c,v 1.12.14.1 2005/12/23 06:07:43 d
 size_t
 fread(void * __restrict buf, size_t size, size_t count, FILE * __restrict fp)
 {
-	int ret;
+	size_t ret;
 
 	FLOCKFILE(fp);
 	ret = __fread(buf, size, count, fp);
@@ -71,12 +69,29 @@ __fread(void * __restrict buf, size_t size, size_t count, FILE * __restrict fp)
 	size_t total;
 
 	/*
-	 * The ANSI standard requires a return value of 0 for a count
-	 * or a size of 0.  Peculiarily, it imposes no such requirements
-	 * on fwrite; it only requires fread to be broken.
+	 * ANSI and SUSv2 require a return value of 0 if size or count are 0.
 	 */
-	if ((resid = count * size) == 0)
+	if ((count == 0) || (size == 0))
 		return (0);
+
+	/*
+	 * Check for integer overflow.  As an optimization, first check that
+	 * at least one of {count, size} is at least 2^16, since if both
+	 * values are less than that, their product can't possible overflow
+	 * (size_t is always at least 32 bits on FreeBSD).
+	 */
+	if (((count | size) > 0xFFFF) &&
+	    (count > SIZE_MAX / size)) {
+		errno = EINVAL;
+		fp->_flags |= __SERR;
+		return (0);
+	}
+
+	/*
+	 * Compute the (now required to not overflow) number of bytes to
+	 * read and actually do the work.
+	 */
+	resid = count * size;
 	ORIENT(fp, -1);
 	if (fp->_r < 0)
 		fp->_r = 0;

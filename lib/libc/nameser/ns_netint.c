@@ -16,10 +16,10 @@
  */
 
 #ifndef lint
-static const char rcsid[] = "$Id: ns_netint.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: ns_netint.c,v 1.3 2005/04/27 04:56:40 sra Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/nameser/ns_netint.c,v 1.1.1.1.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/nameser/ns_netint.c 269867 2014-08-12 12:36:06Z ume $");
 
 /* Import. */
 
@@ -56,3 +56,5 @@ void
 ns_put32(u_long src, u_char *dst) {
 	NS_PUT32(src, dst);
 }
+
+/*! \file */

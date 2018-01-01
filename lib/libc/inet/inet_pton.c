@@ -16,14 +16,13 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: inet_pton.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_pton.c,v 1.5 2005/07/28 06:51:47 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_pton.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_pton.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 #include <sys/param.h>
-#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -32,7 +31,7 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_pton.c,v 1.2.2.1 2006/07/17 10:09:56 
 #include <errno.h>
 #include "port_after.h"
 
-/*
+/*%
  * WARNING: Don't even consider trying to compile this on a system where
  * sizeof(int) < 4.  sizeof(int) > 4 is fine; all the world's not a VAX.
  */
@@ -183,7 +182,7 @@ inet_pton6(const char *src, u_char *dst)
 		    inet_pton4(curtok, tp) > 0) {
 			tp += NS_INADDRSZ;
 			seen_xdigits = 0;
-			break;	/* '\0' was seen by inet_pton4(). */
+			break;	/*%< '\\0' was seen by inet_pton4(). */
 		}
 		return (0);
 	}
@@ -221,3 +220,5 @@ inet_pton6(const char *src, u_char *dst)
  */
 #undef inet_pton
 __weak_reference(__inet_pton, inet_pton);
+
+/*! \file */

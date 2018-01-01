@@ -1,4 +1,4 @@
-/*	$OpenBSD: ftw.c,v 1.4 2004/07/07 16:05:23 millert Exp $	*/
+/*	$OpenBSD: ftw.c,v 1.5 2005/08/08 08:05:34 espie Exp $	*/
 
 /*
  * Copyright (c) 2003, 2004 Todd C. Miller <Todd.Miller@courtesan.com>
@@ -20,21 +20,14 @@
  * Materiel Command, USAF, under agreement number F39502-99-1-0512.
  */
 
-#if 0
-#if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$OpenBSD: ftw.c,v 1.4 2004/07/07 16:05:23 millert Exp $";
-#endif /* LIBC_SCCS and not lint */
-#endif
-
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/ftw.c,v 1.4 2004/08/24 13:00:55 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/ftw.c 239151 2012-08-09 15:11:38Z jilles $");
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <fts.h>
 #include <ftw.h>
-#include <limits.h>
 
 int
 ftw(const char *path, int (*fn)(const char *, const struct stat *, int),
@@ -46,7 +39,7 @@ ftw(const char *path, int (*fn)(const char *, const struct stat *, int),
 	int error = 0, fnflag, sverrno;
 
 	/* XXX - nfds is currently unused */
-	if (nfds < 1 || nfds > OPEN_MAX) {
+	if (nfds < 1) {
 		errno = EINVAL;
 		return (-1);
 	}

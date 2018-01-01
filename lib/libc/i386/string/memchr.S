@@ -29,11 +29,11 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/memchr.S,v 1.12 2002/06/02 20:05:37 schweikh Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/memchr.S 249582 2013-04-17 11:40:10Z gabor $");
 
 /*
  * memchr (b, c, len)
- *	locates the first occurance of c in string b.
+ *	locates the first occurrence of c in string b.
  *
  * Written by:
  *	J.T. Conklin (jtc@wimsey.com), Winning Strategies, Inc.
@@ -56,3 +56,6 @@ ENTRY(memchr)
 L1:	xorl	%eax,%eax
 	popl	%edi
 	ret
+END(memchr)
+
+	.section .note.GNU-stack,"",%progbits

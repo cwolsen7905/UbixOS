@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,13 +31,16 @@
 static char sccsid[] = "@(#)getttyent.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/getttyent.c,v 1.12.14.1 2005/07/25 20:19:39 mdodd Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/getttyent.c 316215 2017-03-30 05:13:47Z ngie $");
 
-#include <ttyent.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
+#include <ttyent.h>
 
 static char zapchar;
 static FILE *tf;
@@ -54,8 +53,7 @@ static char *skip(char *);
 static char *value(char *);
 
 struct ttyent *
-getttynam(tty)
-	const char *tty;
+getttynam(const char *tty)
 {
 	struct ttyent *t;
 
@@ -69,8 +67,38 @@ getttynam(tty)
 	return (t);
 }
 
+static int
+auto_tty_status(const char *ty_name)
+{
+	size_t len;
+	char *buf, *cons, *nextcons;
+
+	/* Check if this is an enabled kernel console line */
+	buf = NULL;
+	if (sysctlbyname("kern.console", NULL, &len, NULL, 0) == -1)
+		return (0); /* Errors mean don't enable */
+	buf = malloc(len);
+	if (sysctlbyname("kern.console", buf, &len, NULL, 0) == -1)
+		goto done;
+
+	if ((cons = strchr(buf, '/')) == NULL)
+		goto done;
+	*cons = '\0';
+	nextcons = buf;
+	while ((cons = strsep(&nextcons, ",")) != NULL && strlen(cons) != 0) {
+		if (strcmp(cons, ty_name) == 0) {
+			free(buf);
+			return (TTY_ON);
+		}
+	}
+
+done:
+	free(buf);
+	return (0);
+}
+
 struct ttyent *
-getttyent()
+getttyent(void)
 {
 	static struct ttyent tty;
 	char *p;
@@ -83,7 +111,7 @@ getttyent()
 		if (!fgets(p = line, lbsize, tf))
 			return (NULL);
 		/* extend buffer if line was too big, and retry */
-		while (!index(p, '\n')) {
+		while (!strchr(p, '\n') && !feof(tf)) {
 			i = strlen(p);
 			lbsize += MALLOCCHUNK;
 			if ((p = realloc(line, lbsize)) == NULL) {
@@ -131,6 +159,8 @@ getttyent()
 			tty.ty_status &= ~TTY_ON;
 		else if (scmp(_TTYS_ON))
 			tty.ty_status |= TTY_ON;
+		else if (scmp(_TTYS_ONIFCONSOLE))
+			tty.ty_status |= auto_tty_status(tty.ty_name);
 		else if (scmp(_TTYS_SECURE))
 			tty.ty_status |= TTY_SECURE;
 		else if (scmp(_TTYS_INSECURE))
@@ -153,7 +183,7 @@ getttyent()
 	tty.ty_comment = p;
 	if (*p == 0)
 		tty.ty_comment = 0;
-	if ( (p = index(p, '\n')) )
+	if ((p = strchr(p, '\n')))
 		*p = '\0';
 	return (&tty);
 }
@@ -165,8 +195,7 @@ getttyent()
  * the next field.
  */
 static char *
-skip(p)
-	char *p;
+skip(char *p)
 {
 	char *t;
 	int c, q;
@@ -199,15 +228,14 @@ skip(p)
 }
 
 static char *
-value(p)
-	char *p;
+value(char *p)
 {
 
-	return ((p = index(p, '=')) ? ++p : NULL);
+	return ((p = strchr(p, '=')) ? ++p : NULL);
 }
 
 int
-setttyent()
+setttyent(void)
 {
 
 	if (line == NULL) {
@@ -218,13 +246,13 @@ setttyent()
 	if (tf) {
 		rewind(tf);
 		return (1);
-	} else if ( (tf = fopen(_PATH_TTYS, "r")) )
+	} else if ( (tf = fopen(_PATH_TTYS, "re")) )
 		return (1);
 	return (0);
 }
 
 int
-endttyent()
+endttyent(void)
 {
 	int rval;
 
@@ -241,9 +269,7 @@ endttyent()
 }
 
 static int
-isttystat(tty, flag)
-	const char *tty;
-	int flag;
+isttystat(const char *tty, int flag)
 {
 	struct ttyent *t;
 
@@ -252,15 +278,14 @@ isttystat(tty, flag)
 
 
 int
-isdialuptty(tty)
-	const char *tty;
+isdialuptty(const char *tty)
 {
 
 	return isttystat(tty, TTY_DIALUP);
 }
 
-int isnettty(tty)
-	const char *tty;
+int
+isnettty(const char *tty)
 {
 
 	return isttystat(tty, TTY_NETWORK);

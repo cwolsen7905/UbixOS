@@ -1,4 +1,4 @@
-/*	$NetBSD: getopt.c,v 1.26 2003/08/07 16:43:40 agc Exp $	*/
+/*	$NetBSD: getopt.c,v 1.29 2014/06/05 22:00:22 christos Exp $	*/
 
 /*
  * Copyright (c) 1987, 1993, 1994
@@ -12,11 +12,7 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
- * 4. Neither the name of the University nor the names of its contributors
+ * 3. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
@@ -37,7 +33,7 @@
 static char sccsid[] = "@(#)getopt.c	8.3 (Berkeley) 4/27/95";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/stdlib/getopt.c,v 1.7 2004/03/06 17:05:45 ache Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/stdlib/getopt.c 267745 2014-06-22 20:13:57Z pfg $");
 
 #include "namespace.h"
 #include <stdio.h>
@@ -63,36 +59,27 @@ char	*optarg;		/* argument associated with option */
  *	Parse argc/argv argument vector.
  */
 int
-getopt(nargc, nargv, ostr)
-	int nargc;
-	char * const nargv[];
-	const char *ostr;
+getopt(int nargc, char * const nargv[], const char *ostr)
 {
 	static char *place = EMSG;		/* option letter processing */
 	char *oli;				/* option letter list index */
-  char tmp[32];
-sprintf(tmp,"0x%X:%i",&optind,optind);
-__sys_write(1,tmp,32);
+
 	if (optreset || *place == 0) {		/* update scanning pointer */
-__sys_write(1,"opt",3);
 		optreset = 0;
 		place = nargv[optind];
 		if (optind >= nargc || *place++ != '-') {
-__sys_write(1,"moo",3);
 			/* Argument is absent or is not an option */
 			place = EMSG;
 			return (-1);
 		}
 		optopt = *place++;
 		if (optopt == '-' && *place == 0) {
-__sys_write(1,"woo",3);
 			/* "--" => end of options */
 			++optind;
 			place = EMSG;
 			return (-1);
 		}
 		if (optopt == 0) {
-__sys_write(1,"boo",3);
 			/* Solitary '-', treat as a '-' option
 			   if the program (eg su) is looking for it. */
 			place = EMSG;
@@ -125,6 +112,12 @@ __sys_write(1,"boo",3);
 		   entire next argument. */
 		if (*place)
 			optarg = place;
+		else if (oli[2] == ':')
+			/*
+			 * GNU Extension, for optional arguments if the rest of
+			 * the argument is empty, we return NULL
+			 */
+			optarg = NULL;
 		else if (nargc > ++optind)
 			optarg = nargv[optind];
 		else {
@@ -141,10 +134,5 @@ __sys_write(1,"boo",3);
 		place = EMSG;
 		++optind;
 	}
-tmp[0] = '0' + optind;
-tmp[1] = 'a' + *place;
-tmp[2] = '\0';
-__sys_write(1,tmp,3);
-
 	return (optopt);			/* return option letter */
 }

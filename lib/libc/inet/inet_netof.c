@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static const char sccsid[] = "@(#)inet_netof.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_netof.c,v 1.2.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_netof.c 288038 2015-09-20 20:50:56Z rodrigc $");
 
 #include "port_before.h"
 
@@ -45,13 +41,12 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_netof.c,v 1.2.2.1 2006/07/17 10:09:56
 
 #include "port_after.h"
 
-/*
+/*%
  * Return the network number from an internet
  * address; handles class a/b/c network #'s.
  */
 in_addr_t
-inet_netof(in)
-	struct in_addr in;
+inet_netof(struct in_addr in)
 {
 	in_addr_t i = ntohl(in.s_addr);
 
@@ -69,3 +64,5 @@ inet_netof(in)
  */
 #undef inet_netof
 __weak_reference(__inet_netof, inet_netof);
+
+/*! \file */

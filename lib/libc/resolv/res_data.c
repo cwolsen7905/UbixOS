@@ -16,14 +16,13 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: res_data.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: res_data.c,v 1.7 2008/12/11 09:59:00 marka Exp $";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/resolv/res_data.c,v 1.3.2.1 2006/07/17 10:09:58 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/resolv/res_data.c 298226 2016-04-18 21:05:15Z avos $");
 
 #include "port_before.h"
 
-#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/socket.h>
 #include <sys/time.h>
@@ -47,8 +46,8 @@ const char *_res_opcodes[] = {
 	"QUERY",
 	"IQUERY",
 	"CQUERYM",
-	"CQUERYU",	/* experimental */
-	"NOTIFY",	/* experimental */
+	"CQUERYU",	/*%< experimental */
+	"NOTIFY",	/*%< experimental */
 	"UPDATE",
 	"6",
 	"7",
@@ -77,9 +76,10 @@ const char *_res_sectioncodes[] = {
 
 int  res_ourserver_p(const res_state, const struct sockaddr_in *);
 
-int
+__noinline int
 res_init(void) {
 	extern int __res_vinit(res_state, int);
+	res_state statp = &_res;
 
 	/*
 	 * These three fields used to be statically initialized.  This made
@@ -100,21 +100,14 @@ res_init(void) {
 	 * set in RES_DEFAULT).  Our solution is to declare such applications
 	 * "broken".  They could fool us by setting RES_INIT but none do (yet).
 	 */
-	if (!_res.retrans)
-		_res.retrans = RES_TIMEOUT;
-	if (!_res.retry)
-		_res.retry = RES_DFLRETRY;
-	if (!(_res.options & RES_INIT))
-		_res.options = RES_DEFAULT;
+	if (!statp->retrans)
+		statp->retrans = RES_TIMEOUT;
+	if (!statp->retry)
+		statp->retry = RES_DFLRETRY;
+	if (!(statp->options & RES_INIT))
+		statp->options = RES_DEFAULT;
 
-	/*
-	 * This one used to initialize implicitly to zero, so unless the app
-	 * has set it to something in particular, we can randomize it now.
-	 */
-	if (!_res.id)
-		_res.id = res_randomid();
-
-	return (__res_vinit(&_res, 1));
+	return (__res_vinit(statp, 1));
 }
 
 void
@@ -129,52 +122,56 @@ fp_query(const u_char *msg, FILE *file) {
 
 void
 fp_nquery(const u_char *msg, int len, FILE *file) {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1)
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1)
 		return;
 
-	res_pquery(&_res, msg, len, file);
+	res_pquery(statp, msg, len, file);
 }
 
 int
-res_mkquery(int op,			/* opcode of query */
-	    const char *dname,		/* domain name */
-	    int class, int type,	/* class and type of query */
-	    const u_char *data,		/* resource record data */
-	    int datalen,		/* length of data */
-	    const u_char *newrr_in,	/* new rr for modify or append */
-	    u_char *buf,		/* buffer to put query */
-	    int buflen)			/* size of buffer */
+res_mkquery(int op,			/*!< opcode of query  */
+	    const char *dname,		/*!< domain name  */
+	    int class, int type,	/*!< class and type of query  */
+	    const u_char *data,		/*!< resource record data  */
+	    int datalen,		/*!< length of data  */
+	    const u_char *newrr_in,	/*!< new rr for modify or append  */
+	    u_char *buf,		/*!< buffer to put query  */
+	    int buflen)			/*!< size of buffer  */
 {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
-		RES_SET_H_ERRNO(&_res, NETDB_INTERNAL);
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		return (-1);
 	}
-	return (res_nmkquery(&_res, op, dname, class, type,
+	return (res_nmkquery(statp, op, dname, class, type,
 			     data, datalen,
 			     newrr_in, buf, buflen));
 }
 
 int
 res_mkupdate(ns_updrec *rrecp_in, u_char *buf, int buflen) {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
-		RES_SET_H_ERRNO(&_res, NETDB_INTERNAL);
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		return (-1);
 	}
 
-	return (res_nmkupdate(&_res, rrecp_in, buf, buflen));
+	return (res_nmkupdate(statp, rrecp_in, buf, buflen));
 }
 
 int
-res_query(const char *name,	/* domain name */
-	  int class, int type,	/* class and type of query */
-	  u_char *answer,	/* buffer to put answer */
-	  int anslen)		/* size of answer buffer */
+res_query(const char *name,	/*!< domain name  */
+	  int class, int type,	/*!< class and type of query  */
+	  u_char *answer,	/*!< buffer to put answer  */
+	  int anslen)		/*!< size of answer buffer  */
 {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
-		RES_SET_H_ERRNO(&_res, NETDB_INTERNAL);
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		return (-1);
 	}
-	return (res_nquery(&_res, name, class, type, answer, anslen));
+	return (res_nquery(statp, name, class, type, answer, anslen));
 }
 
 #ifndef _LIBC
@@ -196,12 +193,13 @@ res_isourserver(const struct sockaddr_in *inp) {
 
 int
 res_send(const u_char *buf, int buflen, u_char *ans, int anssiz) {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
 		/* errno should have been set by res_init() in this case. */
 		return (-1);
 	}
 
-	return (res_nsend(&_res, buf, buflen, ans, anssiz));
+	return (res_nsend(statp, buf, buflen, ans, anssiz));
 }
 
 #ifndef _LIBC
@@ -209,12 +207,13 @@ int
 res_sendsigned(const u_char *buf, int buflen, ns_tsig_key *key,
 	       u_char *ans, int anssiz)
 {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
 		/* errno should have been set by res_init() in this case. */
 		return (-1);
 	}
 
-	return (res_nsendsigned(&_res, buf, buflen, key, ans, anssiz));
+	return (res_nsendsigned(statp, buf, buflen, key, ans, anssiz));
 }
 #endif
 
@@ -225,43 +224,57 @@ res_close(void) {
 
 int
 res_update(ns_updrec *rrecp_in) {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
-		RES_SET_H_ERRNO(&_res, NETDB_INTERNAL);
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		return (-1);
 	}
 
-	return (res_nupdate(&_res, rrecp_in, NULL));
+	return (res_nupdate(statp, rrecp_in, NULL));
 }
 
 int
-res_search(const char *name,	/* domain name */
-	   int class, int type,	/* class and type of query */
-	   u_char *answer,	/* buffer to put answer */
-	   int anslen)		/* size of answer */
+res_search(const char *name,	/*!< domain name  */
+	   int class, int type,	/*!< class and type of query  */
+	   u_char *answer,	/*!< buffer to put answer  */
+	   int anslen)		/*!< size of answer  */
 {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
-		RES_SET_H_ERRNO(&_res, NETDB_INTERNAL);
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		return (-1);
 	}
 
-	return (res_nsearch(&_res, name, class, type, answer, anslen));
+	return (res_nsearch(statp, name, class, type, answer, anslen));
 }
 
 int
 res_querydomain(const char *name,
 		const char *domain,
-		int class, int type,	/* class and type of query */
-		u_char *answer,		/* buffer to put answer */
-		int anslen)		/* size of answer */
+		int class, int type,	/*!< class and type of query  */
+		u_char *answer,		/*!< buffer to put answer  */
+		int anslen)		/*!< size of answer  */
 {
-	if ((_res.options & RES_INIT) == 0U && res_init() == -1) {
-		RES_SET_H_ERRNO(&_res, NETDB_INTERNAL);
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
 		return (-1);
 	}
 
-	return (res_nquerydomain(&_res, name, domain,
+	return (res_nquerydomain(statp, name, domain,
 				 class, type,
 				 answer, anslen));
+}
+
+u_int
+res_randomid(void) {
+	res_state statp = &_res;
+	if ((statp->options & RES_INIT) == 0U && res_init() == -1) {
+		RES_SET_H_ERRNO(statp, NETDB_INTERNAL);
+		return (-1);
+	}
+
+	return (res_nrandomid(statp));
 }
 
 int
@@ -277,23 +290,19 @@ hostalias(const char *name) {
 	return (res_hostalias(&_res, name, abuf, sizeof abuf));
 }
 
-/* binary backward compatibility for FreeBSD 5.x */
-const char *
-_res_hostalias(const char *name, char *dst, size_t siz) {
-	return (res_hostalias(&_res, name, dst, siz));
-}
-
 #ifdef ultrix
 int
 local_hostname_length(const char *hostname) {
 	int len_host, len_domain;
+	res_state statp;
 
-	if (!*_res.defdname)
+	statp = &_res;
+	if (!*statp->defdname)
 		res_init();
 	len_host = strlen(hostname);
-	len_domain = strlen(_res.defdname);
+	len_domain = strlen(statp->defdname);
 	if (len_host > len_domain &&
-	    !strcasecmp(hostname + len_host - len_domain, _res.defdname) &&
+	    !strcasecmp(hostname + len_host - len_domain, statp->defdname) &&
 	    hostname[len_host - len_domain - 1] == '.')
 		return (len_host - len_domain - 1);
 	return (0);
@@ -322,3 +331,5 @@ __weak_reference(__res_search, res_search);
 __weak_reference(__res_querydomain, res_querydomain);
 
 #endif
+
+/*! \file */

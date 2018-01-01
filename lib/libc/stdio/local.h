@@ -35,7 +35,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)local.h	8.3 (Berkeley) 7/3/94
- * $FreeBSD: releng/10.2/lib/libc/stdio/local.h 234799 2012-04-29 16:28:39Z das $
+ * $FreeBSD: releng/11.1/lib/libc/stdio/local.h 234799 2012-04-29 16:28:39Z das $
  */
 
 #include <sys/types.h>	/* for off_t */

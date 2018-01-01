@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)getloadavg.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/getloadavg.c,v 1.2 2002/03/22 21:52:05 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/getloadavg.c 287793 2015-09-14 18:44:13Z rodrigc $");
 
 #include <sys/param.h>
 #include <sys/time.h>
@@ -52,9 +48,7 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/getloadavg.c,v 1.2 2002/03/22 21:52:05 obri
  * Return number of samples retrieved, or -1 on error.
  */
 int
-getloadavg(loadavg, nelem)
-	double loadavg[];
-	int nelem;
+getloadavg(double loadavg[], int nelem)
 {
 	struct loadavg loadinfo;
 	int i, mib[2];

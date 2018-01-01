@@ -15,13 +15,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *        This product includes software developed by the NetBSD
- *        Foundation, Inc. and its contributors.
- * 4. Neither the name of The NetBSD Foundation nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -68,6 +61,7 @@
  *
  */
 #include <sys/cdefs.h>
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/net/nsdispatch.c 316613 2017-04-07 16:08:04Z pfg $");
 
 #include "namespace.h"
 #include <sys/param.h>
@@ -79,12 +73,18 @@
 #define _NS_PRIVATE
 #include <nsswitch.h>
 #include <pthread.h>
+#include <pthread_np.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <syslog.h>
 #include <unistd.h>
 #include "un-namespace.h"
+#include "nss_tls.h"
+#include "libc_private.h"
+#ifdef NS_CACHING
+#include "nscache.h"
+#endif
 
 enum _nss_constants {
 	/* Number of elements allocated when we grow a vector */
@@ -122,6 +122,30 @@ static	ns_mod			*_nsmod;
 /* Placeholder for builtin modules' dlopen `handle'. */
 static	int			 __nss_builtin_handle;
 static	void			*nss_builtin_handle = &__nss_builtin_handle;
+
+#ifdef NS_CACHING
+/*
+ * Cache lookup cycle prevention function - if !NULL then no cache lookups
+ * will be made
+ */
+static	void			*nss_cache_cycle_prevention_func = NULL;
+#endif
+
+/*
+ * We keep track of nsdispatch() nesting depth in dispatch_depth.  When a
+ * fallback method is invoked from nsdispatch(), we temporarily set
+ * fallback_depth to the current dispatch depth plus one.  Subsequent
+ * calls at that exact depth will run in fallback mode (restricted to the
+ * same source as the call that was handled by the fallback method), while
+ * calls below that depth will be handled normally, allowing fallback
+ * methods to perform arbitrary lookups.
+ */
+struct fb_state {
+	int	dispatch_depth;
+	int	fallback_depth;
+};
+static	void	fb_endstate(void *);
+NSS_TLS_HANDLING(fb);
 
 /*
  * Attempt to spew relatively uniform messages to syslog.
@@ -189,7 +213,7 @@ vector_append(const void *elem, void *vec, unsigned int *count, size_t esize)
 	void	*p;
 
 	if ((*count % ELEMSPERCHUNK) == 0) {
-		p = realloc(vec, (*count + ELEMSPERCHUNK) * esize);
+		p = reallocarray(vec, *count + ELEMSPERCHUNK, esize);
 		if (p == NULL) {
 			nss_log_simple(LOG_ERR, "memory allocation failure");
 			return (vec);
@@ -230,8 +254,6 @@ vector_free(void *vec, unsigned int *count, size_t esize,
 	*count = 0;
 }
 
-
-
 /*
  * Comparison functions for vector_search.
  */
@@ -254,8 +276,6 @@ mtab_compare(const void *a, const void *b)
 	      return (strcmp(((const ns_mtab *)a)->database,
 		  ((const ns_mtab *)b)->database));
 }
-
-
 
 /*
  * NSS nsmap management.
@@ -312,11 +332,13 @@ _nsdbtdump(const ns_dbt *dbt)
 static int
 nss_configure(void)
 {
-	static pthread_mutex_t conf_lock = PTHREAD_MUTEX_INITIALIZER;
 	static time_t	 confmod;
 	struct stat	 statbuf;
 	int		 result, isthreaded;
 	const char	*path;
+#ifdef NS_CACHING
+	void		*handle;
+#endif
 
 	result = 0;
 	isthreaded = __isthreaded;
@@ -327,43 +349,50 @@ nss_configure(void)
 	path = getenv("NSSWITCH_CONF");
 	if (path == NULL)
 #endif
-	path = _PATH_NS_CONF;
+		path = _PATH_NS_CONF;
 	if (stat(path, &statbuf) != 0)
 		return (0);
 	if (statbuf.st_mtime <= confmod)
 		return (0);
 	if (isthreaded) {
-	    result = _pthread_mutex_trylock(&conf_lock);
-	    if (result != 0)
-		    return (0);
-	    (void)_pthread_rwlock_unlock(&nss_lock);
-	    result = _pthread_rwlock_wrlock(&nss_lock);
-	    if (result != 0)
-		    goto fin2;
+		(void)_pthread_rwlock_unlock(&nss_lock);
+		result = _pthread_rwlock_wrlock(&nss_lock);
+		if (result != 0)
+			return (result);
+		if (stat(path, &statbuf) != 0)
+			goto fin;
+		if (statbuf.st_mtime <= confmod)
+			goto fin;
 	}
-	_nsyyin = fopen(path, "r");
+	_nsyyin = fopen(path, "re");
 	if (_nsyyin == NULL)
 		goto fin;
 	VECTOR_FREE(_nsmap, &_nsmapsize, sizeof(*_nsmap),
 	    (vector_free_elem)ns_dbt_free);
 	VECTOR_FREE(_nsmod, &_nsmodsize, sizeof(*_nsmod),
 	    (vector_free_elem)ns_mod_free);
+	if (confmod == 0)
+		(void)atexit(nss_atexit);
 	nss_load_builtin_modules();
 	_nsyyparse();
 	(void)fclose(_nsyyin);
 	vector_sort(_nsmap, _nsmapsize, sizeof(*_nsmap), string_compare);
-	if (confmod == 0)
-		(void)atexit(nss_atexit);
 	confmod = statbuf.st_mtime;
+
+#ifdef NS_CACHING
+	handle = libc_dlopen(NULL, RTLD_LAZY | RTLD_GLOBAL);
+	if (handle != NULL) {
+		nss_cache_cycle_prevention_func = dlsym(handle,
+		    "_nss_cache_cycle_prevention_function");
+		dlclose(handle);
+	}
+#endif
 fin:
 	if (isthreaded) {
-	    (void)_pthread_rwlock_unlock(&nss_lock);
-	    if (result == 0)
-		    result = _pthread_rwlock_rdlock(&nss_lock);
+		(void)_pthread_rwlock_unlock(&nss_lock);
+		if (result == 0)
+			result = _pthread_rwlock_rdlock(&nss_lock);
 	}
-fin2:
-	if (isthreaded)
-		(void)_pthread_mutex_unlock(&conf_lock);
 	return (result);
 }
 
@@ -392,6 +421,8 @@ static void
 ns_dbt_free(ns_dbt *dbt)
 {
 	ns_src_free(&dbt->srclist, dbt->srclistsize);
+	if (dbt->name)
+		free((void *)dbt->name);
 }
 
 
@@ -459,7 +490,7 @@ nss_load_module(const char *source, nss_module_register_fn reg_fn)
 		if (snprintf(buf, sizeof(buf), "nss_%s.so.%d", mod.name,
 		    NSS_MODULE_INTERFACE_VERSION) >= (int)sizeof(buf))
 			goto fin;
-		mod.handle = dlopen(buf, RTLD_LOCAL|RTLD_LAZY);
+		mod.handle = libc_dlopen(buf, RTLD_LOCAL|RTLD_LAZY);
 		if (mod.handle == NULL) {
 #ifdef _NSS_DEBUG
 			/* This gets pretty annoying since the built-in
@@ -561,13 +592,16 @@ nss_method_lookup(const char *source, const char *database,
 			return (match->method);
 		}
 	}
-	if (is_dynamic())
-		nss_log(LOG_DEBUG, "%s, %s, %s, not found", source, database,
-		    method);
+
 	*mdata = NULL;
 	return (NULL);
 }
 
+static void
+fb_endstate(void *p)
+{
+	free(p);
+}
 
 __weak_reference(_nsdispatch, nsdispatch);
 
@@ -578,9 +612,20 @@ _nsdispatch(void *retval, const ns_dtab disp_tab[], const char *database,
 	va_list		 ap;
 	const ns_dbt	*dbt;
 	const ns_src	*srclist;
-	nss_method	 method;
+	nss_method	 method, fb_method;
 	void		*mdata;
 	int		 isthreaded, serrno, i, result, srclistsize;
+	struct fb_state	*st;
+	int		 saved_depth;
+
+#ifdef NS_CACHING
+	nss_cache_data	 cache_data;
+	nss_cache_data	*cache_data_p;
+	int		 cache_flag;
+#endif
+	
+	dbt = NULL;
+	fb_method = NULL;
 
 	isthreaded = __isthreaded;
 	serrno = errno;
@@ -591,13 +636,26 @@ _nsdispatch(void *retval, const ns_dtab disp_tab[], const char *database,
 			goto fin;
 		}
 	}
+
+	result = fb_getstate(&st);
+	if (result != 0) {
+		result = NS_UNAVAIL;
+		goto fin;
+	}
+
 	result = nss_configure();
 	if (result != 0) {
 		result = NS_UNAVAIL;
 		goto fin;
 	}
-	dbt = vector_search(&database, _nsmap, _nsmapsize, sizeof(*_nsmap),
-	    string_compare);
+	++st->dispatch_depth;
+	if (st->dispatch_depth > st->fallback_depth) {
+		dbt = vector_search(&database, _nsmap, _nsmapsize, sizeof(*_nsmap),
+		    string_compare);
+		fb_method = nss_method_lookup(NSSRC_FALLBACK, database,
+		    method_name, disp_tab, &mdata);
+	}
+
 	if (dbt != NULL) {
 		srclist = dbt->srclist;
 		srclistsize = dbt->srclistsize;
@@ -607,20 +665,98 @@ _nsdispatch(void *retval, const ns_dtab disp_tab[], const char *database,
 		while (srclist[srclistsize].name != NULL)
 			srclistsize++;
 	}
+
+#ifdef NS_CACHING
+	cache_data_p = NULL;
+	cache_flag = 0;
+#endif
 	for (i = 0; i < srclistsize; i++) {
 		result = NS_NOTFOUND;
 		method = nss_method_lookup(srclist[i].name, database,
 		    method_name, disp_tab, &mdata);
+
 		if (method != NULL) {
+#ifdef NS_CACHING
+			if (strcmp(srclist[i].name, NSSRC_CACHE) == 0 &&
+			    nss_cache_cycle_prevention_func == NULL) {
+#ifdef NS_STRICT_LIBC_EID_CHECKING
+				if (issetugid() != 0)
+					continue;
+#endif
+				cache_flag = 1;
+
+				memset(&cache_data, 0, sizeof(nss_cache_data));
+				cache_data.info = (nss_cache_info const *)mdata;
+				cache_data_p = &cache_data;
+
+				va_start(ap, defaults);
+				if (cache_data.info->id_func != NULL)
+					result = __nss_common_cache_read(retval,
+					    cache_data_p, ap);
+				else if (cache_data.info->marshal_func != NULL)
+					result = __nss_mp_cache_read(retval,
+					    cache_data_p, ap);
+				else
+					result = __nss_mp_cache_end(retval,
+					    cache_data_p, ap);
+				va_end(ap);
+			} else {
+				cache_flag = 0;
+				errno = 0;
+				va_start(ap, defaults);
+				result = method(retval, mdata, ap);
+				va_end(ap);
+			}
+#else /* NS_CACHING */
+			errno = 0;
 			va_start(ap, defaults);
 			result = method(retval, mdata, ap);
 			va_end(ap);
+#endif /* NS_CACHING */
+
 			if (result & (srclist[i].flags))
 				break;
+		} else {
+			if (fb_method != NULL) {
+				saved_depth = st->fallback_depth;
+				st->fallback_depth = st->dispatch_depth + 1;
+				va_start(ap, defaults);
+				result = fb_method(retval,
+				    (void *)srclist[i].name, ap);
+				va_end(ap);
+				st->fallback_depth = saved_depth;
+			} else
+				nss_log(LOG_DEBUG, "%s, %s, %s, not found, "
+				    "and no fallback provided",
+				    srclist[i].name, database, method_name);
 		}
 	}
+
+#ifdef NS_CACHING
+	if (cache_data_p != NULL &&
+	    (result & (NS_NOTFOUND | NS_SUCCESS)) && cache_flag == 0) {
+		va_start(ap, defaults);
+		if (result == NS_SUCCESS) {
+			if (cache_data.info->id_func != NULL)
+				__nss_common_cache_write(retval, cache_data_p,
+				    ap);
+			else if (cache_data.info->marshal_func != NULL)
+				__nss_mp_cache_write(retval, cache_data_p, ap);
+		} else if (result == NS_NOTFOUND) {
+			if (cache_data.info->id_func == NULL) {
+				if (cache_data.info->marshal_func != NULL)
+					__nss_mp_cache_write_submit(retval,
+					    cache_data_p, ap);
+			} else
+				__nss_common_cache_write_negative(cache_data_p);
+		}
+		va_end(ap);
+	}
+#endif /* NS_CACHING */
+
 	if (isthreaded)
 		(void)_pthread_rwlock_unlock(&nss_lock);
+	--st->dispatch_depth;
 fin:
 	errno = serrno;
 	return (result);

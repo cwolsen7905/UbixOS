@@ -16,10 +16,10 @@
  */
 
 #if defined(LIBC_SCCS) && !defined(lint)
-static const char rcsid[] = "$Id: inet_cidr_ntop.c 89 2016-01-12 00:20:40Z reddawg $";
+static const char rcsid[] = "$Id: inet_cidr_ntop.c,v 1.7 2006/10/11 02:18:18 marka Exp $";
 #endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/inet/inet_cidr_ntop.c,v 1.1.1.1.2.1 2006/07/17 10:09:56 ume Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/inet/inet_cidr_ntop.c 269867 2014-08-12 12:36:06Z ume $");
 
 #include "port_before.h"
 
@@ -42,12 +42,12 @@ __FBSDID("$FreeBSD: src/lib/libc/inet/inet_cidr_ntop.c,v 1.1.1.1.2.1 2006/07/17 
 # define SPRINTF(x) ((size_t)sprintf x)
 #endif
 
-static char *	inet_cidr_ntop_ipv4 __P((const u_char *src, int bits,
-					 char *dst, size_t size));
-static char *	inet_cidr_ntop_ipv6 __P((const u_char *src, int bits,
-					 char *dst, size_t size));
+static char *
+inet_cidr_ntop_ipv4(const u_char *src, int bits, char *dst, size_t size);
+static char *
+inet_cidr_ntop_ipv6(const u_char *src, int bits, char *dst, size_t size);
 
-/*
+/*%
  * char *
  * inet_cidr_ntop(af, src, bits, dst, size)
  *	convert network address from network to presentation format.
@@ -94,7 +94,7 @@ decoct(const u_char *src, int bytes, char *dst, size_t size) {
 	return (dst - odst);
 }
 
-/*
+/*%
  * static char *
  * inet_cidr_ntop_ipv4(src, bits, dst, size)
  *	convert IPv4 network address from network to presentation format.
@@ -261,3 +261,5 @@ inet_cidr_ntop_ipv6(const u_char *src, int bits, char *dst, size_t size) {
 	strcpy(dst, tmp);
 	return (dst);
 }
+
+/*! \file */

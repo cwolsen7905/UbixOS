@@ -22,10 +22,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: src/lib/libc/resolv/res_state.c,v 1.3.2.1 2006/07/17 10:09:58 ume Exp $
+ * $FreeBSD: releng/11.1/lib/libc/resolv/res_state.c 292216 2015-12-14 17:21:06Z vangyzen $
  */
 
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/time.h>
 #include <netinet/in.h>
 #include <arpa/nameser.h>
 #include <resolv.h>
@@ -34,6 +36,8 @@
 #include "namespace.h"
 #include "reentrant.h"
 #include "un-namespace.h"
+
+#include "res_private.h"
 
 #undef _res
 
@@ -59,13 +63,44 @@ res_keycreate(void)
 	res_thr_keycreated = thr_keycreate(&res_key, free_res) == 0;
 }
 
+static res_state
+res_check_reload(res_state statp)
+{
+	struct timespec now;
+	struct stat sb;
+	struct __res_state_ext *ext;
+
+	if ((statp->options & RES_INIT) == 0) {
+		return (statp);
+	}
+
+	ext = statp->_u._ext.ext;
+	if (ext == NULL || ext->reload_period == 0) {
+		return (statp);
+	}
+
+	if (clock_gettime(CLOCK_MONOTONIC_FAST, &now) != 0 ||
+	    (now.tv_sec - ext->conf_stat) < ext->reload_period) {
+		return (statp);
+	}
+
+	ext->conf_stat = now.tv_sec;
+	if (stat(_PATH_RESCONF, &sb) == 0 &&
+	    (sb.st_mtim.tv_sec  != ext->conf_mtim.tv_sec ||
+	     sb.st_mtim.tv_nsec != ext->conf_mtim.tv_nsec)) {
+		statp->options &= ~RES_INIT;
+	}
+
+	return (statp);
+}
+
 res_state
 __res_state(void)
 {
 	res_state statp;
 
 	if (thr_main() != 0)
-		return (&_res);
+		return res_check_reload(&_res);
 
 	if (thr_once(&res_init_once, res_keycreate) != 0 ||
 	    !res_thr_keycreated)
@@ -73,7 +108,7 @@ __res_state(void)
 
 	statp = thr_getspecific(res_key);
 	if (statp != NULL)
-		return (statp);
+		return res_check_reload(statp);
 	statp = calloc(1, sizeof(*statp));
 	if (statp == NULL)
 		return (&_res);
@@ -85,12 +120,3 @@ __res_state(void)
 	free(statp);
 	return (&_res);
 }
-
-/* binary backward compatibility for FreeBSD 5.x and 6.x */
-struct __res_state_ext *
-___res_ext(void)
-{
-	return (__res_state()->_u._ext.ext);
-}
-
-__weak_reference(__res_state, ___res);

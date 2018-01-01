@@ -25,7 +25,7 @@
  */
 
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/wcscmp.S,v 1.1 2003/03/10 10:54:36 tjr Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/wcscmp.S 217106 2011-01-07 16:08:40Z kib $");
 
 /*
  * int
@@ -77,3 +77,6 @@ no0:	subl	(%esi),%eax
 	popl	%esi
 	popl	%edi
 	ret
+END(wcscmp)
+
+	.section .note.GNU-stack,"",%progbits

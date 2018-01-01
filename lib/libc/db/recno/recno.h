@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -31,7 +27,7 @@
  * SUCH DAMAGE.
  *
  *	@(#)recno.h	8.1 (Berkeley) 6/4/93
- * $FreeBSD: src/lib/libc/db/recno/recno.h,v 1.2 2002/03/22 23:41:40 obrien Exp $
+ * $FreeBSD: releng/11.1/lib/libc/db/recno/recno.h 165903 2007-01-09 00:28:16Z imp $
  */
 
 enum SRCHOP { SDELETE, SINSERT, SEARCH};	/* Rec_search operation. */

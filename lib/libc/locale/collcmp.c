@@ -2,6 +2,11 @@
  * Copyright (C) 1996 by Andrey A. Chernov, Moscow, Russia.
  * All rights reserved.
  *
+ * Copyright (c) 2011 The FreeBSD Foundation
+ * All rights reserved.
+ * Portions of this software were developed by David Chisnall
+ * under sponsorship from the FreeBSD Foundation.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -25,20 +30,34 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/locale/collcmp.c,v 1.18 2005/02/27 14:54:23 phantom Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/locale/collcmp.c 304275 2016-08-17 08:51:47Z ache $");
 
 #include <string.h>
+#include <wchar.h>
 #include "collate.h"
 
 /*
  * Compare two characters using collate
  */
 
-int __collate_range_cmp(int c1, int c2)
+int __collate_range_cmp(char c1, char c2)
 {
-	static char s1[2], s2[2];
+	char s1[2], s2[2];
 
 	s1[0] = c1;
+	s1[1] = '\0';
 	s2[0] = c2;
+	s2[1] = '\0';
 	return (strcoll(s1, s2));
+}
+
+int __wcollate_range_cmp(wchar_t c1, wchar_t c2)
+{
+	wchar_t s1[2], s2[2];
+
+	s1[0] = c1;
+	s1[1] = L'\0';
+	s2[0] = c2;
+	s2[1] = L'\0';
+	return (wcscoll(s1, s2));
 }

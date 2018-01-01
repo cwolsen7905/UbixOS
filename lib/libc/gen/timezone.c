@@ -10,10 +10,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *	This product includes software developed by the University of
- *	California, Berkeley and its contributors.
  * 4. Neither the name of the University nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
@@ -35,7 +31,7 @@
 static char sccsid[] = "@(#)timezone.c	8.1 (Berkeley) 6/4/93";
 #endif /* LIBC_SCCS and not lint */
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: src/lib/libc/gen/timezone.c,v 1.5 2002/02/01 01:08:48 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/gen/timezone.c 229403 2012-01-03 18:51:58Z ed $");
 
 #include <sys/types.h>
 #include <sys/time.h>
@@ -44,7 +40,7 @@ __FBSDID("$FreeBSD: src/lib/libc/gen/timezone.c,v 1.5 2002/02/01 01:08:48 obrien
 #include <string.h>
 #define TZ_MAX_CHARS 255
 
-char *_tztab();
+char *_tztab(int, int);
 
 /*
  * timezone --
@@ -57,15 +53,13 @@ char *_tztab();
 static char	czone[TZ_MAX_CHARS];		/* space for zone name */
 
 char *
-timezone(zone, dst)
-	int	zone,
-		dst;
+timezone(int zone, int dst)
 {
 	char	*beg,
 			*end;
 
 	if ( (beg = getenv("TZNAME")) ) {	/* set in environment */
-		if ( (end = index(beg, ',')) ) {/* "PST,PDT" */
+		if ((end = strchr(beg, ','))) {	/* "PST,PDT" */
 			if (dst)
 				return(++end);
 			*end = '\0';
@@ -110,9 +104,7 @@ static struct zone {
  *	STANDARD LIBRARY.
  */
 char *
-_tztab(zone,dst)
-	int	zone;
-	int	dst;
+_tztab(int zone, int dst)
 {
 	struct zone	*zp;
 	char	sign;

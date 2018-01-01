@@ -1,5 +1,5 @@
 #include <machine/asm.h>
-__FBSDID("$FreeBSD: src/lib/libc/i386/string/memcpy.S,v 1.2 2002/03/23 02:44:19 obrien Exp $");
+__FBSDID("$FreeBSD: releng/11.1/lib/libc/i386/string/memcpy.S 218303 2011-02-04 21:04:00Z kib $");
 
 #define MEMCOPY
 #include "bcopy.S"
