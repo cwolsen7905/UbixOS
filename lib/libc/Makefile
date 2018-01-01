@@ -172,7 +172,7 @@ libkern.${LIBC_ARCH}:: ${KMSRCS}
 SUBDIR+=	tests
 .endif
 
-.include <bsd.lib.mk>
+.include <ubix.lib.mk>
 
 .if !defined(_SKIP_BUILD)
 # We need libutil.h, get it directly to avoid

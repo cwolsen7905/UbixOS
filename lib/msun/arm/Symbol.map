@@ -1,0 +1,16 @@
+/*
+ * $FreeBSD: releng/11.1/lib/msun/arm/Symbol.map 309741 2016-12-09 17:20:24Z emaste $
+ */
+FBSD_1.0 {
+};
+
+FBSD_1.3 {
+	fesetexceptflag;
+	feraiseexcept;
+	fegetenv;
+	feholdexcept;
+	feupdateenv;
+	feenableexcept;
+	fedisableexcept;
+	fegetexcept;
+};
