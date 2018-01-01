@@ -26,14 +26,10 @@ THIS SOFTWARE.
 
 ****************************************************************/
 
-/* Please send bug reports to
-	David M. Gay
-	Bell Laboratories, Room 2C-463
-	600 Mountain Avenue
-	Murray Hill, NJ 07974-0636
-	U.S.A.
-	dmg@bell-labs.com
- */
+/* Please send bug reports to David M. Gay (dmg at acm dot org,
+ * with " at " changed at "@" and " dot " changed to ".").	*/
+
+/* $FreeBSD: releng/11.1/contrib/gdtoa/strtorQ.c 227753 2011-11-20 14:45:42Z theraven $ */
 
 #include "gdtoaimp.h"
 
@@ -69,11 +65,18 @@ ULtoQ(ULong *L, ULong *bits, Long exp, int k)
 		break;
 
 	  case STRTOG_Normal:
-	  case STRTOG_NaNbits:
 		L[_3] = bits[0];
 		L[_2] = bits[1];
 		L[_1] = bits[2];
 		L[_0] = (bits[3] & ~0x10000) | ((exp + 0x3fff + 112) << 16);
+		break;
+
+	  case STRTOG_NaNbits:
+		L[_3] = bits[0];
+		L[_2] = bits[1];
+		L[_1] = bits[2];
+		L[_0] = (bits[3] & ~0x10000)
+		    | (((exp + 0x3fff + 112) << 16) | (1 << 15));
 		break;
 
 	  case STRTOG_Denormal:
@@ -89,8 +92,10 @@ ULtoQ(ULong *L, ULong *bits, Long exp, int k)
 		break;
 
 	  case STRTOG_NaN:
-		L[_0] = 0x7fffffff;
-		L[_1] = L[_2] = L[_3] = (ULong)-1;
+		L[0] = ld_QNAN0;
+		L[1] = ld_QNAN1;
+		L[2] = ld_QNAN2;
+		L[3] = ld_QNAN3;
 	  }
 	if (k & STRTOG_Neg)
 		L[_0] |= 0x80000000L;
@@ -98,9 +103,10 @@ ULtoQ(ULong *L, ULong *bits, Long exp, int k)
 
  int
 #ifdef KR_headers
-strtorQ(s, sp, rounding, L) CONST char *s; char **sp; int rounding; void *L;
+strtorQ_l(s, sp, rounding, L, locale) CONST char *s; char **sp; int rounding;
+void *L; locale_t locale;
 #else
-strtorQ(CONST char *s, char **sp, int rounding, void *L)
+strtorQ_l(CONST char *s, char **sp, int rounding, void *L, locale_t locale)
 #endif
 {
 	static FPI fpi0 = { 113, 1-16383-113+1, 32766-16383-113+1, 1, SI };
@@ -115,7 +121,7 @@ strtorQ(CONST char *s, char **sp, int rounding, void *L)
 		fpi1.rounding = rounding;
 		fpi = &fpi1;
 		}
-	k = strtodg(s, sp, fpi, &exp, bits);
+	k = strtodg_l(s, sp, fpi, &exp, bits, locale);
 	ULtoQ((ULong*)L, bits, exp, k);
 	return k;
 	}

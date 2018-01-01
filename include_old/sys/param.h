@@ -58,8 +58,8 @@
  *
  * scheme is:  <major><two digit minor><0 if release branch, otherwise 1>xx
  */
-#undef __FreeBSD_version
-#define __FreeBSD_version 502104	/* Master, propagated to newvers */
+#undef __UbixOS_version
+#define __UbixOS_version 1002000	/* Master, propagated to newvers */
 
 #ifndef LOCORE
 #include <sys/types.h>

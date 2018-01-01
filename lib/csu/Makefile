@@ -7,8 +7,7 @@ include ../Makefile.incl
 
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-uninitialized -O2 -fno-strict-aliasing -pipe -Wsystem-headers -Werror -Wall -Wno-format-y2k -W -Wno-unused-parameter -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wshadow -Wcast-align -Wunused-parameter -Wchar-subscripts -Winline -Wnested-externs -Wredundant-decls #-DGCRT
 
-INCLUDES+= -I../libc/include
-# -I../../include.new
+INCLUDES+= -I../libc_old/include
 
 #Objects
 OBJS = crtn.o crti.o crt1.o crtbrand.o

@@ -38,4 +38,6 @@ long strtol(const char * __restrict nptr, char ** __restrict endptr, int base);
 
 const char *getprogname(void);
 
+int atexit(void (*)(void));
+
 #endif

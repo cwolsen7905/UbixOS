@@ -15,16 +15,16 @@ $(OUTPUT): $(OBJS)
 
 # Compile the source files
 .cc.o:
-	$(CXX) $(CFLAGS) -Wall -nostdlib -O -I../../../include -c -o $@ $<
+	$(CXX) $(CFLAGS) -Wall -nostdlib -O -I../../../include_old -c -o $@ $<
  
 .cc.s:
-	$(CXX) $(CFLAGS) -Wall -nostdlib -O -I../../../include -S -o $@ $<
+	$(CXX) $(CFLAGS) -Wall -nostdlib -O -I../../../include_old -S -o $@ $<
  
 .c.o:
-	$(CC) $(CFLAGS) -Wall -nostdlib -O -I. -I../../../include -c $<
+	$(CC) $(CFLAGS) -Wall -nostdlib -O -I. -I../../../include_old -c $<
 
 .c.s:
-	$(CC) $(CFLAGS) -Wall -nostdlib -O -I../../../include -S -o $@ $<
+	$(CC) $(CFLAGS) -Wall -nostdlib -O -I../../../include_old -S -o $@ $<
  
 .S.o:
 	$(CC) $(CFLAGS) -Wall -nostdlib -c -o $@ $<

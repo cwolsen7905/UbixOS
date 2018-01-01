@@ -83,7 +83,7 @@ NOASM=
 .include "${LIBC_SRCTOP}/nameser/Makefile.inc"
 .include "${LIBC_SRCTOP}/net/Makefile.inc"
 .include "${LIBC_SRCTOP}/nls/Makefile.inc"
-#MrOlsen.include "${LIBC_SRCTOP}/posix1e/Makefile.inc"
+.include "${LIBC_SRCTOP}/posix1e/Makefile.inc"
 .if ${LIBC_ARCH} != "aarch64" && \
     ${LIBC_ARCH} != "amd64" && \
     ${LIBC_ARCH} != "powerpc64" && \

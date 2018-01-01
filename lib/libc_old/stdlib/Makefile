@@ -21,7 +21,7 @@ $(OUTPUT): $(OBJS)
 	$(CXX)  -Wall ${CFLAGS} -nostdinc -O -I../include -S -o $@ $<
  
 .c.o:
-	$(CC)  -Wall ${CFLAGS} -nostdinc -O -I../include -I../../../include -c $<
+	$(CC)  -Wall ${CFLAGS} -nostdinc -O -I../include -I../../../include_old -c $<
 
 .c.s:
 	$(CC)  -Wall ${CFLAGS} -nostdinc -O -I../include -S -o $@ $<

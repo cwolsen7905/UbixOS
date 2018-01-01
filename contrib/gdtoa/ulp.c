@@ -26,27 +26,21 @@ THIS SOFTWARE.
 
 ****************************************************************/
 
-/* Please send bug reports to
-	David M. Gay
-	Bell Laboratories, Room 2C-463
-	600 Mountain Avenue
-	Murray Hill, NJ 07974-0636
-	U.S.A.
-	dmg@bell-labs.com
- */
+/* Please send bug reports to David M. Gay (dmg at acm dot org,
+ * with " at " changed at "@" and " dot " changed to ".").	*/
 
 #include "gdtoaimp.h"
 
  double
 ulp
 #ifdef KR_headers
-	(x) double x;
+	(x) U *x;
 #else
-	(double x)
+	(U *x)
 #endif
 {
 	Long L;
-	double a;
+	U a;
 
 	L = (word0(x) & Exp_mask) - (P-1)*Exp_msk1;
 #ifndef Sudden_Underflow
@@ -55,22 +49,22 @@ ulp
 #ifdef IBM
 		L |= Exp_msk1 >> 4;
 #endif
-		word0(a) = L;
-		word1(a) = 0;
+		word0(&a) = L;
+		word1(&a) = 0;
 #ifndef Sudden_Underflow
 		}
 	else {
 		L = -L >> Exp_shift;
 		if (L < Exp_shift) {
-			word0(a) = 0x80000 >> L;
-			word1(a) = 0;
+			word0(&a) = 0x80000 >> L;
+			word1(&a) = 0;
 			}
 		else {
-			word0(a) = 0;
+			word0(&a) = 0;
 			L -= Exp_shift;
-			word1(a) = L >= 31 ? 1 : 1 << 31 - L;
+			word1(&a) = L >= 31 ? 1 : 1 << (31 - L);
 			}
 		}
 #endif
-	return a;
+	return dval(&a);
 	}

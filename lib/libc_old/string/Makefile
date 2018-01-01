@@ -20,7 +20,7 @@ $(OUTPUT): $(OBJS)
 	$(CXX) $(CFLAGS) -Wall -nostdinc -O -I../include -S -o $@ $<
  
 .c.o:
-	$(CC) $(CFLAGS) -Wall -nostdinc -O -I./include -I../../../include -I../locale -c $<
+	$(CC) $(CFLAGS) -Wall -nostdinc -O -I./include -I../../../include_old -I../locale -c $<
 
 .c.s:
 	$(CC) $(CFLAGS) -Wall -nostdinc -O -I../include -S -o $@ $<

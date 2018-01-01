@@ -41,6 +41,7 @@ __FBSDID("$FreeBSD: releng/11.1/lib/libc/gdtoa/machdep_ldisx.c 227753 2011-11-20
 #include <float.h>
 
 #include "gdtoaimp.h"
+#include "../locale/xlocale_private.h"
 
 long double
 strtold_l(const char * __restrict s, char ** __restrict sp, locale_t locale)

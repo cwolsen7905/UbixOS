@@ -26,14 +26,8 @@ THIS SOFTWARE.
 
 ****************************************************************/
 
-/* Please send bug reports to
-	David M. Gay
-	Bell Laboratories, Room 2C-463
-	600 Mountain Avenue
-	Murray Hill, NJ 07974-0636
-	U.S.A.
-	dmg@bell-labs.com
- */
+/* Please send bug reports to David M. Gay (dmg at acm dot org,
+ * with " at " changed at "@" and " dot " changed to ".").	*/
 
 #include "gdtoaimp.h"
 
@@ -67,8 +61,8 @@ ULtod(ULong *L, ULong *bits, Long exp, int k)
 		break;
 
 	  case STRTOG_NaN:
-		L[_0] = 0x7fffffff;
-		L[_1] = (ULong)-1;
+		L[0] = d_QNAN0;
+		L[1] = d_QNAN1;
 	  }
 	if (k & STRTOG_Neg)
 		L[_0] |= 0x80000000L;
@@ -76,9 +70,10 @@ ULtod(ULong *L, ULong *bits, Long exp, int k)
 
  int
 #ifdef KR_headers
-strtord(s, sp, rounding, d) CONST char *s; char **sp; int rounding; double *d;
+strtord_l(s, sp, rounding, d, locale) CONST char *s; char **sp; int rounding;
+double *d; locale_t locale;
 #else
-strtord(CONST char *s, char **sp, int rounding, double *d)
+strtord_l(CONST char *s, char **sp, int rounding, double *d, locale_t locale)
 #endif
 {
 	static FPI fpi0 = { 53, 1-1023-53+1, 2046-1023-53+1, 1, SI };
@@ -93,7 +88,8 @@ strtord(CONST char *s, char **sp, int rounding, double *d)
 		fpi1.rounding = rounding;
 		fpi = &fpi1;
 		}
-	k = strtodg(s, sp, fpi, &exp, bits);
+	k = strtodg_l(s, sp, fpi, &exp, bits, locale);
 	ULtod((ULong*)d, bits, exp, k);
 	return k;
 	}
+
