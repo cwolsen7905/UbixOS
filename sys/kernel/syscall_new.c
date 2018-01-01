@@ -89,7 +89,7 @@ void syscall( struct trapframe *frame ) {
       error = (int) systemCalls[code].sc_entry( td, params );
 
 if ( systemCalls[code].sc_status == SYSCALL_DUMMY ) {
-  kprintf("RET1");
+  kprintf("RET(%i)1", code);
 return;
 }
 

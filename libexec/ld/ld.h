@@ -15,6 +15,14 @@ typedef struct ldLibrary_s {
   char             *linkerDynStr;
   char             *output;
   int               sym;
+  /* TLS information */
+  int tlsindex;               /* Index in DTV for this module */
+  void *tlsinit;              /* Base address of TLS init block */
+  size_t tlsinitsize;         /* Size of TLS init block for this module */
+  size_t tlssize;             /* Size of TLS block for this module */
+  size_t tlsoffset;           /* Offset of static TLS block for this module */
+  size_t tlsalign;            /* Alignment of static TLS block */
+
   } ldLibrary;
 
 extern ldLibrary *libs;

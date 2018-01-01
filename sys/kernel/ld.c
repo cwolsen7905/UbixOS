@@ -66,6 +66,8 @@ uInt32 ldEnable() {
   assert(binaryHeader);
   fread(binaryHeader,sizeof(elfHeader),1,ldFd);
 
+  kprintf("{0x%X:0x%X}",binaryHeader->eIdent[4], binaryHeader->ePhnum);
+
   programHeader = (elfProgramHeader *)kmalloc(sizeof(elfProgramHeader)*binaryHeader->ePhnum);
   assert(programHeader);
   fseek(ldFd,binaryHeader->ePhoff,0);

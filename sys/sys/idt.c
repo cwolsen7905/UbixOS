@@ -39,6 +39,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/endtask.h>
 #include <string.h>
+#include <sys/trap.h>
 
 #define FP_TO_LINEAR(seg, off) ((void*) ((((uInt16) (seg)) << 4) + ((uInt16) (off))))
 
@@ -223,8 +224,28 @@ void _int5() {
   sched_yield();
 }
 
-void _int6() {
-  kpanic( "int6: Invalid opcode! [%i]\n", _current->id );
+asm volatile(
+  ".globl _int6       \n"
+  "_int6:             \n"
+  "  pushal               \n" /* Save all registers           */
+  "  push %ds             \n"
+  "  push %es             \n"
+  "  push %fs             \n"
+  "  push %gs             \n"
+  "  push %esp            \n"
+  "  call __int6          \n"
+  "  pop %gs              \n"
+  "  pop %fs              \n"
+  "  pop %es              \n"
+  "  pop %ds              \n"
+  "  popal                \n"
+  "  iret                 \n" /* Exit interrupt                           */
+);
+
+
+void __int6(struct trapframe *frame) {
+  kprintf("tf_gs: 0x%X, tf_fs: 0x%X, tf_es: 0x%X, tf_ds: 0x%X\n", frame->tf_gs, frame->tf_fs, frame->tf_es, frame->tf_ds);
+  kpanic( "int6: Invalid opcode! [%i:0x%X:0x%X]\n", _current->id, _current->tss.eip, frame->tf_eip );
   endTask( _current->id );
   sched_yield();
 }

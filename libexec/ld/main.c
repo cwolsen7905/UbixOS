@@ -144,7 +144,7 @@ uInt32 ld( uInt32 got2, uInt32 entry ) {
   x = ELF32_R_SYM( binaryElfRel[i].pltInfo );
   reMap = (uInt32 *) binaryElfRel[i].pltOffset;
   *reMap = ldFindFunc( binaryDynStr + binaryRelSymTab[x].dynName, binaryDynStr );
-  printf( "\nld(%s)", binaryDynStr + binaryRelSymTab[x].dynName );
+  printf( "\nld(%s:0x%X:0x%X)", binaryDynStr + binaryRelSymTab[x].dynName, reMap, *reMap );
   //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));
 
   if ( binaryFd ) {
