@@ -630,32 +630,36 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   //kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
+  argc = 1;
+
   iFrame->ebp = STACK_ADDR;
   iFrame->eip = binaryHeader->eEntry;
-  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 3));
+  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 5));
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
+  *tmp++ = 0x0;
+  *tmp++ = tmp + 1;
 
   //kprintf( "STACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
 
   //! build argc and argv[]
-/*MrOlsen Did I Fuck Up Stack?
-  *tmp-- = argc;
+  *tmp++ = argc;
 
   //kprintf( "xSTACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
 
   if ( argc == 1 ) {
-    *tmp-- = 0x0;
+    *tmp++ = 0x0;
   }
   else {
     for ( i = 0; i < argc; i++ ) {
 
-      *tmp-- = (u_int) argv[i];
+      *tmp++ = (u_int) argv[i];
     }
   }
 
-  *tmp-- = 0x0; // ARGV Terminator
-  *tmp-- = 0x0; // ENV Terminator
+  *tmp++ = 0x0; // ARGV Terminator
+  *tmp++ = 0x0; // ENV Terminator
+/*
 */
 
   /*

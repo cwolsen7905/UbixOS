@@ -43,7 +43,7 @@ typedef void (*fptr)(void);
 extern void _fini(void);
 extern void _init(void);
 extern int main(int, char **, char **);
-extern void _start(char *, ...);
+extern void _start(unsigned int *, ...);
 
 #ifdef GCRT
 extern void _mcleanup(void);
@@ -70,7 +70,7 @@ get_rtld_cleanup(void)
 
 /* The entry function. */
 void
-_start(char *ap, ...)
+_start(unsigned int *ap, ...)
 {
 	fptr cleanup;
 	int argc;
@@ -82,8 +82,9 @@ _start(char *ap, ...)
 	__asm__("and $0xfffffff0,%esp");
 #endif
 	cleanup = get_rtld_cleanup();
-	argv = &ap;
-	argc = *(long *)(void *)(argv - 1);
+	//argv = &ap;
+	argc = *ap++;// *(long *)(void *)(argv - 1);
+        argv = (char **)ap;
 	env = argv + argc + 1;
 	environ = env;
 

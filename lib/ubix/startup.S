@@ -36,8 +36,10 @@ _start:
   sub   $0x8,%esp
   add   $0xfffffff4,%esp
   add   $0xfffffff8,%esp
-  pushl 0xc(%ebp)
+//  pushl 0xc(%ebp)
+//  pushl 0x8(%ebp)
   pushl 0x8(%ebp)
+  pushl 0x4(%ebp)
   call  main
   push  %eax
   call  exit

@@ -58,6 +58,9 @@ int main(int argc,char **argv) {
   FILE *fd;
   struct directoryEntry *dirEntry = 0x0;
 
+  printf("argc: %i - %i\n", argc, argv[0]);
+  exit(0);
+
   pwd       = (char *)malloc(256);
   permsData = (char *)malloc(13);
 
