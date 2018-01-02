@@ -1,23 +1,35 @@
 char **environ;
 const char *__progname = "";
 
+typedef struct {
+  int a_type;
+  int a_val;
+} Elf32_Auxinfo;
+
 void _start(unsigned int *ap, ...) {
+  Elf32_Auxinfo *aux, *auxp;
+  unsigned int *argcp;
   int argc;
   char **argv;
   char **env;
-  const char *s;
 
-  //argv = &ap;
-  //argc = *(long *)(void *)(argv - 1);
-  //argc = *(long *)(void *)(argv - 1);
 printf("{0x%X}", ap);
+
+  argcp = ap;
   argc = *ap++;
   argv = (char **)ap;
   ap += argc + 1;
   env = (char **)ap;
+  environ = (char **)ap;
   while (*ap++ != 0)
     ;
-  environ = env;
+  aux = (Elf32_Auxinfo *) ap;
+
+  for (auxp = aux; auxp->a_type != 0x0; auxp++) {
+    printf("TEST");
+  }
+  printf("TEST2");
+  
 
 //  if (env[0] != 0) 
  //   printf("env[0]: 0x%X\n",env[0]);

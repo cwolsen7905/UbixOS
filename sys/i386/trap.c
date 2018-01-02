@@ -104,11 +104,14 @@ void trap( struct trapframe *frame ) {
 }
   }
 
-  kprintf("trap_code: %i(0x%X), EIP: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip);
+ cr2 = rcr2();
+ kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
+
 /*
   switch (trap_code) {
     case 0xC:
        cr2 = rcr2();
+       kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
        asm("sti"); // Turn Back On Ints!
        vmm_pageFault(frame, cr2);
        kprintf("Called page Fault\n");
