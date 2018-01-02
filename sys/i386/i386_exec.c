@@ -840,6 +840,10 @@ int sys_exec_dead( char *file, char *ap ) {
       case PT_PHDR:
         proghdr = programHeader[i].phVaddr;
         break;
+      case PT_TLS:
+        kprintf("Thread Local Storage: [0x%X]",  programHeader[i].phVaddr);
+        //iFrame->gs =  programHeader[i].phVaddr; 
+        break;
       default:
         break;
     }

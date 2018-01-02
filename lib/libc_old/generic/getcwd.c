@@ -23,16 +23,19 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 
 #include <sys/types.h>
 
-asm(
- ".text                     \n"
- ".globl getcwd          \n"
- ".type getcwd,@function \n"
- "getcwd:                \n"
- "movl $326,%eax              \n"
- "int $0x80                 \n"
- "ret                       \n"
-);
+char *_getcwd(char *buf, size_t size);
 
+asm(
+  ".globl _getcwd\n"
+  "_getcwd:\n"
+  "movl $0x146,%eax\n"
+  "int $0x80\n"
+  "ret\n"
+  );
+
+char *getcwd(char *buf, size_t size) {
+  return(_getcwd(buf,size));
+}
 
 /*
 char *getcwd(char *cwd,uInt32 len) {

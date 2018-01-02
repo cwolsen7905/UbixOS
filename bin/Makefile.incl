@@ -1,4 +1,5 @@
 # 'bin' options
+BUILD_DIR?=${SRCTOP}/build
 
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -Wno-unused-command-line-argument
 

@@ -132,9 +132,10 @@ struct sys_chdir_args {
 };
 
 struct sys_getcwd_args {
-    char buf_l_[PADL_( char * )];
-    char *buf;
-    char buf_r_[PADR_( char * )];
+    char buf_l_[PADL_( const void * )];
+    void *buf;
+    char buf_r_[PADR_( const void * )];
+
     char size_l_[PADL_( uint32_t )];
     uint32_t size;
     char size_r_[PADR_( uint32_t )];

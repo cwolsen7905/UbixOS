@@ -41,7 +41,7 @@ $(BINARY) : $(OBJS)
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
  
 .S.o:
-	$(CC)  -Wall $(CLFAGS) $(INCLUDES) -c -o $@ $<
+	$(CC)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
  
 # Clean Up The junk
 clean:

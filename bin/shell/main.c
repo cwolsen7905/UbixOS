@@ -34,22 +34,28 @@ char *cwd = 0x0;
 char *cwc = 0x0;
 
 int main() {
+  unsigned int *segbase = 0x0;
+
+  __asm __volatile("movl %%gs:0, %0" : "=r" (segbase));
+
+  printf("Segbase: 0x%X - 0x%X\n", segbase, &segbase);
 
   char *buffer = (char *) malloc( 512 );
   inputBuffer *inBuf = (inputBuffer *) malloc( sizeof(inputBuffer) );
 
   machine = (char *) malloc( 32 );
   cwd = (char *) malloc( 1024 );
+  memset(cwd, 'A', 1024);
+  cwd[1022] = '\n';
+  cwd[1023] = '\0';
 
   sprintf( machine, "uBixCube" );
   getcwd( cwd, 1024 );
 
-printf("Is this My ERROR?");
-
-  //MrOlsen 2017-11-17 printf( "[0x%X]\n", ubix_test() );
-
   while ( 1 ) {
-    aGain: printf( "%s@%s# ", machine, cwd );
+    aGain:
+
+    printf( "%s@%s# ", machine, cwd );
     gets( (char *) buffer );
 
     if ( buffer[0] == 0x0 )
