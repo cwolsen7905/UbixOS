@@ -331,24 +331,21 @@ void execFile( char *file, int argc, char **argv, int console ) {
   tmp[0] = binaryHeader->eEntry;
   tmp[3] = STACK_ADDR - 12;
 
-  //tmp = (uInt32 *) STACK_ADDR - 2;
   tmp = (uint32_t *) _current->tss.esp;
 
-  /*
-   if ( _current->id > 4 )
-   kprintf( "argv[0]: [%s]\n", argv[0] );
-   */
-
   kprintf( "argv: [0x%X]\n", argv );
-  *tmp-- = 0x1;
-  *tmp-- = 0x0;
-  *tmp-- = 0x0;
-  *tmp-- = 0x0;
-
-  /*
-   tmp[0] = (uint32_t) argv;
-   tmp[1] = (uint32_t) argv;
-   */
+  *tmp++ = 0x0; // Stack EIP Return Addr
+  *tmp++ = tmp + 1; // Pointer To AP
+  *tmp++ = 0x1; // ARGC
+  *tmp++ = 0x0; // ARGV
+  *tmp++ = 0x0; // ARGV TERM
+  *tmp++ = 0x0; // ENV
+  *tmp++ = 0x0; // ENV TERM
+  *tmp++ = 0x0; // AUX 1.A
+  *tmp++ = 0x0; // AUX 1.B
+  *tmp++ = 0x0; // AUX TERM
+  *tmp++ = 0x0; // AUX TERM 
+  *tmp++ = 0x0; // TERM
 
   /* Switch Back To The Kernels VM Space */
   asm volatile(
@@ -634,31 +631,37 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   iFrame->ebp = STACK_ADDR;
   iFrame->eip = binaryHeader->eEntry;
-  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 5));
+  iFrame->user_esp = ((uint32_t) STACK_ADDR) - ((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
-  *tmp++ = 0x0;
-  *tmp++ = tmp + 1;
+  *tmp++ = 0x0; // Stack EIP Return Addr
+  *tmp++ = tmp + 1; // Pointer To AP
 
-  //kprintf( "STACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
-
-  //! build argc and argv[]
-  *tmp++ = argc;
-
-  //kprintf( "xSTACK: 0x%X, ESP0: 0x%X\n", iFrame->user_esp, _current->tss.esp0 );
+  *tmp++ = argc; // ARGC
 
   if ( argc == 1 ) {
-    *tmp++ = 0x0;
+    *tmp++ = 0x0; //ARGV Pointers
   }
   else {
     for ( i = 0; i < argc; i++ ) {
-
       *tmp++ = (u_int) argv[i];
     }
   }
 
   *tmp++ = 0x0; // ARGV Terminator
+  *tmp++ = 0x0; // ENV 
   *tmp++ = 0x0; // ENV Terminator
+
+  *tmp++ = 0x0;
+  *tmp++ = 0x0;
+
+  *tmp++ = 0x0; // AUX VECTOR 8 Bytes
+  *tmp++ = 0x0; // Terminator
+
+  *tmp++ = 0x0; // End Marker
+
+  tmp = (void *)STACK_ADDR;
+  tmp[0] = (void *)iFrame->user_esp; //0x10;
 /*
 */
 

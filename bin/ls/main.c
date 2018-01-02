@@ -58,6 +58,13 @@ int main(int argc,char **argv) {
   FILE *fd;
   struct directoryEntry *dirEntry = 0x0;
 
+  unsigned int *segbase = 0x0;
+
+  __asm __volatile("movl %%gs:0, %0" : "=r" (segbase));
+
+  printf("Segbase: 0x%X - 0x%X\n", segbase, &segbase);
+
+
   printf("argc: %i - %i\n", argc, argv[0]);
   exit(0);
 

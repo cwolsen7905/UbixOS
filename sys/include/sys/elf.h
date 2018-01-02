@@ -203,6 +203,13 @@ typedef struct {
     uint32_t trace;
 } Elf_Auxargs;
 
+typedef struct {        /* Auxiliary vector entry on initial stack */
+        int     a_type;                 /* Entry type. */
+        union {
+                int     a_val;          /* Integer value. */
+        } a_un;
+} Elf32_Auxinfo;
+
 char *elfGetShType( int );
 char *elfGetPhType( int );
 char *elfGetRelType( int );

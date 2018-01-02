@@ -10,11 +10,13 @@ void _start(unsigned int *ap, ...) {
   //argv = &ap;
   //argc = *(long *)(void *)(argv - 1);
   //argc = *(long *)(void *)(argv - 1);
-printf("0x%X}}", ap);
+printf("{0x%X}", ap);
   argc = *ap++;
   argv = (char **)ap;
   ap += argc + 1;
   env = (char **)ap;
+  while (*ap++ != 0)
+    ;
   environ = env;
 
 //  if (env[0] != 0) 
