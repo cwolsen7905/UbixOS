@@ -37,14 +37,16 @@
 extern "C" {
 #endif
 
+#define STACK_ADDR 0xC800000 // Default App Stack Address
+
 #define memAvail     1
 #define memNotavail  2
 #define vmmID       -3
 
-/*
- #define vmmMemoryMapAddr 0xE6667000
- #define VMM_MMAP_ADDR_PMODE2 0xE6667000
- */
+  /*
+   #define vmmMemoryMapAddr 0xE6667000
+   #define VMM_MMAP_ADDR_PMODE2 0xE6667000
+   */
 
 #define VMM_MMAP_ADDR_PMODE  VMM_KERN_START /* (PD_BASE_ADDR + PAGE_SIZE) */
 #define VMM_MMAP_ADDR_RMODE  0x101000
@@ -55,51 +57,53 @@ extern "C" {
 #define VMM_USER_END   0xBFFFFFFF
 #define VMM_USER_START 0x00000000
 
-struct freebsd6_mmap_args {
-    char addr_l_[PADL_( caddr_t )];
-    caddr_t addr;
-    char addr_r_[PADR_( caddr_t )];
+  struct freebsd6_mmap_args {
+      char addr_l_[PADL_(caddr_t)];
+      caddr_t addr;
+      char addr_r_[PADR_(caddr_t)];
 
-    char len_l_[PADL_( size_t )];
-    size_t len;
-    char len_r_[PADR_( size_t )];
+      char len_l_[PADL_(size_t)];
+      size_t len;
+      char len_r_[PADR_(size_t)];
 
-    char prot_l_[PADL_(int)];
-    int prot;char prot_r_[PADR_(int)];
-    char flags_l_[PADL_(int)];
+      char prot_l_[PADL_(int)];
+      int prot;
+      char prot_r_[PADR_(int)];
+      char flags_l_[PADL_(int)];
 
-    int flags;char flags_r_[PADR_(int)];
-    char fd_l_[PADL_(int)];
-    int fd;char fd_r_[PADR_(int)];
+      int flags;
+      char flags_r_[PADR_(int)];
+      char fd_l_[PADL_(int)];
+      int fd;
+      char fd_r_[PADR_(int)];
 
-    char pad_l_[PADL_(int)];
-    int pad;
-    char pad_r_[PADR_(int)];
+      char pad_l_[PADL_(int)];
+      int pad;
+      char pad_r_[PADR_(int)];
 
-    char pos_l_[PADL_( off_t )];
-    off_t pos;
-    char pos_r_[PADR_( off_t )];
-};
+      char pos_l_[PADL_(off_t)];
+      off_t pos;
+      char pos_r_[PADR_(off_t)];
+  };
 
-typedef struct {
-    uint32_t pageAddr;
-    u_int16_t status;
-    u_int16_t reserved;
-    pid_t pid;
-    int cowCounter;
-} mMap;
+  typedef struct {
+      uint32_t pageAddr;
+      u_int16_t status;
+      u_int16_t reserved;
+      pid_t pid;
+      int cowCounter;
+  } mMap;
 
-extern int numPages;
-extern mMap *vmmMemoryMap;
+  extern int numPages;
+  extern mMap *vmmMemoryMap;
 
-int vmm_init();
-int vmm_memMapInit();
-int countMemory();
-uint32_t vmm_findFreePage( pidType pid );
-int freePage( uInt32 pageAddr );
-int adjustCowCounter( uInt32 baseAddr, int adjustment );
-void vmm_freeProcessPages( pidType pid );
-
+  int vmm_init();
+  int vmm_memMapInit();
+  int countMemory();
+  uint32_t vmm_findFreePage(pidType pid);
+  int freePage(uInt32 pageAddr);
+  int adjustCowCounter(uInt32 baseAddr, int adjustment);
+  void vmm_freeProcessPages(pidType pid);
 
 #ifdef __cplusplus
 }

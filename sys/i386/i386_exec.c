@@ -1,36 +1,32 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004, 2016 The UbixOS Project
- All rights reserved.
+/*-
+ * Copyright (c) 2002-2004, 2016, 2018 The UbixOS Project
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are
+ * permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list of
+ * conditions, the following disclaimer and the list of authors.  Redistributions in binary
+ * form must reproduce the above copyright notice, this list of conditions, the following
+ * disclaimer and the list of authors in the documentation and/or other materials provided
+ * with the distribution. Neither the name of the UbixOS Project nor the names of its
+ * contributors may be used to endorse or promote products derived from this software
+ * without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ * THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+ * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND F
- ITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: i386_exec.c 240 2016-01-24 03:14:50Z reddawg $
-
- *****************************************************************************************/
-
-#include <ubixos/exec.h>
 #include <sys/elf.h>
 #include <sys/gdt.h>
+#include <ubixos/exec.h>
 #include <ubixos/ld.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/endtask.h>
@@ -40,8 +36,6 @@
 #include <lib/string.h>
 #include <assert.h>
 #include <string.h>
-
-#define STACK_ADDR 0xC800000
 
 #define AT_NULL         0       /* Terminates the vector. */
 #define AT_IGNORE       1       /* Ignored entry. */
@@ -54,17 +48,7 @@
 #define AT_FLAGS        8       /* Flags (unused for i386). */
 #define AT_ENTRY        9       /* Where interpreter should transfer control. */
 
-//#define AUXARGS_ENTRY(pos, id, val) {memcpy((void *)pos++,(void *)id,sizeof(long)); memcpy((void *)pos++,(void *)val,sizeof(long));}
 #define AUXARGS_ENTRY(pos, id, val) {*pos = id;pos++; *pos = val;pos++;}
-
-//#define   PT_GNU_STACK    0x6474e551
-
-/* Temp Holder */
-int sys_execve( struct thread *td, struct sys_execve_args *args ) {
-  int ret = sys_exec( td, args->fname, args->argv, args->envp );
-  kprintf("RETURNING: [%i]\n", ret);
-  return (ret);
-}
 
 /*****************************************************************************************
 
@@ -173,7 +157,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
   uint32_t *tmp = 0x0;
 
   fileDescriptor *tmpFd = 0x0;
-  elfHeader *binaryHeader = 0x0;
+  Elf32_Ehdr *binaryHeader = 0x0;
   elfProgramHeader *programHeader = 0x0;
 
   /* Get A New Task For This Proccess */
@@ -215,25 +199,25 @@ void execFile( char *file, int argc, char **argv, int console ) {
   }
 
   /* Load ELF Header */
-  binaryHeader = (elfHeader *) kmalloc( sizeof(elfHeader) );
+  binaryHeader = (Elf32_Ehdr *) kmalloc( sizeof(Elf32_Ehdr) );
 
-  //kprintf(">a:%i:0x%X:0x%X<",sizeof(elfHeader),binaryHeader,tmpFd);
-  fread( binaryHeader, sizeof(elfHeader), 1, tmpFd );
+  //kprintf(">a:%i:0x%X:0x%X<",sizeof(Elf32_Ehdr),binaryHeader,tmpFd);
+  fread( binaryHeader, sizeof(Elf32_Ehdr), 1, tmpFd );
 
   /* Check If App Is A Real Application */
-  if ( (binaryHeader->eIdent[1] != 'E') && (binaryHeader->eIdent[2] != 'L') && (binaryHeader->eIdent[3] != 'F') ) {
+  if ( (binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F') ) {
     kprintf( "Exec Format Error: Binary File Not Executable.\n" );
     kfree( binaryHeader );
     fclose( tmpFd );
     return;
   }
-  else if ( binaryHeader->eType != 2 ) {
+  else if ( binaryHeader->e_type != 2 ) {
     kprintf( "Exec Format Error: Binary File Not Executable.\n" );
     kfree( binaryHeader );
     fclose( tmpFd );
     return;
   }
-  else if ( binaryHeader->eEntry == 0x300000 ) {
+  else if ( binaryHeader->e_entry == 0x300000 ) {
     kprintf( "Exec Format Error: Binary File Not Executable.\n" );
     kfree( binaryHeader );
     fclose( tmpFd );
@@ -392,7 +376,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   fileDescriptor *fd = 0x0;
 
-  elfHeader *binaryHeader = 0x0;
+  Elf32_Ehdr *binaryHeader = 0x0;
   elfProgramHeader *programHeader = 0x0;
   elfSectionHeader *sectionHeader = 0x0;
   elfDynamic *elfDynamicS = 0x0;
@@ -429,26 +413,26 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   vmm_cleanVirtualSpace( (uint32_t) 0x8048000 );
 
   /* Load ELF Header */
-  if ( (binaryHeader = (elfHeader *) kmalloc( sizeof(elfHeader) )) == 0x0 )
+  if ( (binaryHeader = (Elf32_Ehdr *) kmalloc( sizeof(Elf32_Ehdr) )) == 0x0 )
     K_PANIC( "MALLOC FAILED" );
 
-  fread( binaryHeader, sizeof(elfHeader), 1, fd );
+  fread( binaryHeader, sizeof(Elf32_Ehdr), 1, fd );
   /* Done Loading ELF Header */
 
   /* Check If App Is A Real Application */
-  if ( (binaryHeader->eIdent[1] != 'E') && (binaryHeader->eIdent[2] != 'L') && (binaryHeader->eIdent[3] != 'F') ) {
+  if ( (binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F') ) {
     kprintf( "Exec Format Error: Binary File Not Executable.\n" );
     kfree( binaryHeader );
     fclose( fd );
     return (-1);
   }
-  else if ( binaryHeader->eType != ET_EXEC ) {
+  else if ( binaryHeader->e_type != ET_EXEC ) {
     kprintf( "Exec Format Error: Binary File Not Executable.\n" );
     kfree( binaryHeader );
     fclose( fd );
     return (-1);
   }
-  else if ( binaryHeader->eEntry == 0x300000 ) {
+  else if ( binaryHeader->e_entry == 0x300000 ) {
     kprintf( "Exec Format Error: Binary File Not Executable.\n" );
     kfree( binaryHeader );
     fclose( fd );
@@ -456,29 +440,29 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   }
 
   /* Set Thread ABI */
-  td->abi = binaryHeader->eIdent[EI_OSABI];
+  td->abi = binaryHeader->e_ident[EI_OSABI];
 
   /* Load The Program Header(s) */
-  if ( (programHeader = (elfProgramHeader *) kmalloc( sizeof(elfProgramHeader) * binaryHeader->ePhnum )) == 0x0 )
+  if ( (programHeader = (elfProgramHeader *) kmalloc( sizeof(elfProgramHeader) * binaryHeader->e_phnum )) == 0x0 )
     K_PANIC( "MALLOC FAILED" );
 
   assert( programHeader );
 
-  fseek( fd, binaryHeader->ePhoff, 0 );
-  fread( programHeader, (sizeof(elfProgramHeader) * binaryHeader->ePhnum), 1, fd );
+  fseek( fd, binaryHeader->e_phoff, 0 );
+  fread( programHeader, (sizeof(elfProgramHeader) * binaryHeader->e_phnum), 1, fd );
   /* Done Loading Program Header(s) */
 
   /* Load The Section Header(s) */
-  if ( (sectionHeader = (elfSectionHeader *) kmalloc( sizeof(elfSectionHeader) * binaryHeader->eShnum )) == 0x0 )
+  if ( (sectionHeader = (elfSectionHeader *) kmalloc( sizeof(elfSectionHeader) * binaryHeader->e_shnum )) == 0x0 )
     K_PANIC( "MALLOC FAILED" );
 
   assert( sectionHeader );
-  fseek( fd, binaryHeader->eShoff, 0 );
-  fread( sectionHeader, sizeof(elfSectionHeader) * binaryHeader->eShnum, 1, fd );
+  fseek( fd, binaryHeader->e_shoff, 0 );
+  fread( sectionHeader, sizeof(elfSectionHeader) * binaryHeader->e_shnum, 1, fd );
   /* Done Loading Section Header(s) */
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
-  for ( i = 0; i < binaryHeader->ePhnum; i++ ) {
+  for ( i = 0; i < binaryHeader->e_phnum; i++ ) {
     switch ( programHeader[i].phType ) {
       case PT_LOAD:
         if ( programHeader[i].phMemsz == 0x0 )
@@ -741,215 +725,3 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   //kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X], CR3: [0x%X-0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp, cr3, kernelPageDirectory );
   return (0x0);
 }
-
-/*!
- * \brief New exec...
- */
-int sys_exec_dead( char *file, char *ap ) {
-  //int error = 0x0;
-  int i = 0x0;
-  int x = 0x0;
-  int argc = 0x0;
-  uint32_t *tmp = 0x0;
-  uint32_t seg_size = 0x0;
-  uint32_t seg_addr = 0x0;
-  uint32_t addr = 0x0;
-  uint32_t eip = 0x0;
-  uint32_t proghdr = 0x0;
-  char *args = 0x0;
-  char *interp = 0x0;
-  char **argv = 0x0;
-  char **argvNew = 0x0;
-  elfHeader *binaryHeader = 0x0;
-  elfProgramHeader *programHeader = 0x0;
-  struct i386_frame *iFrame = 0x0;
-  Elf_Auxargs *auxargs = 0x0;
-
-  kprintf( "SYS_EXEC: %s\n", file );
-
-  _current->imageFd = fopen( file, "r" );
-
-  if ( _current->imageFd == 0x0 )
-    return (-1);
-  /* MrOlsen (2016-01-10): BROKEN - Why Do I Return If I Can't?
-   return(-1);
-   */
-
-  /* Load the ELF header */
-  if ( (binaryHeader = (elfHeader *) kmalloc( sizeof(elfHeader) )) == 0x0 )
-    K_PANIC( "malloc failed!" );
-  fread( binaryHeader, sizeof(elfHeader), 1, _current->imageFd );
-
-  /* Check If App Is A Real Application */
-  if ( ((binaryHeader->eIdent[1] != 'E') && (binaryHeader->eIdent[2] != 'L') && (binaryHeader->eIdent[3] != 'F')) || (binaryHeader->eType != ET_EXEC) ) {
-    kfree( binaryHeader );
-    fclose( _current->imageFd );
-
-    /* MrOlsen (2016-01-10): BROKEN - Why Do I Return If I Can't?
-     return(-1);
-     */
-    return (-1);
-  }
-
-  /* Load The Program Header(s) */
-  if ( (programHeader = (elfProgramHeader *) kmalloc( sizeof(elfProgramHeader) * binaryHeader->ePhnum )) == 0x0 )
-    K_PANIC( "malloc failed!" );
-  fseek( _current->imageFd, binaryHeader->ePhoff, 0 );
-  fread( programHeader, (sizeof(elfProgramHeader) * binaryHeader->ePhnum), 1, _current->imageFd );
-
-  /* Loop Through The Header And Load Sections Which Need To Be Loaded */
-  for ( i = 0x0; i < binaryHeader->ePhnum; i++ ) {
-    switch ( programHeader[i].phType ) {
-      case PT_LOAD:
-        seg_addr = trunc_page( programHeader[i].phVaddr );
-        seg_size = round_page( programHeader[i].phMemsz + programHeader[i].phVaddr - seg_addr );
-
-        /*
-         Allocate Memory Im Going To Have To Make This Load Memory With Correct
-         Settings so it helps us in the future
-         */
-        for ( x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000 ) {
-          /* Make readonly and read/write !!! */
-          if ( vmm_remapPage( vmm_findFreePage( _current->id ), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT ) == 0x0 )
-            K_PANIC( "Error: Remap Page Failed" );
-          memset( (void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000 );
-        }
-
-        /* Now Load Section To Memory */
-        fseek( _current->imageFd, programHeader[i].phOffset, 0 );
-        fread( (void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, _current->imageFd );
-        if ( (programHeader[i].phFlags & 0x2) != 0x2 ) {
-          for ( x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000 ) {
-            if ( (vmm_setPageAttributes( (programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER )) != 0x0 )
-              K_PANIC( "vmm_setPageAttributes failed" );
-          }
-        }
-        if ( binaryHeader->eEntry >= programHeader[i].phVaddr && binaryHeader->eEntry < (programHeader[i].phVaddr + programHeader[i].phMemsz) ) {
-          /* We're suposed to do something here? */
-        }
-        else {
-          _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-          _current->td.vm_daddr = (u_long) seg_addr;
-        }
-
-        _current->oInfo.vmStart = ((programHeader[i].phVaddr & 0xFFFFF000) + 0xA900000);
-        break;
-      case PT_INTERP:
-        interp = (char *) kmalloc( programHeader[i].phFilesz );
-        if ( interp == 0x0 )
-          K_PANIC( "malloc failed" );
-
-        fseek( _current->imageFd, programHeader[i].phOffset, 0 );
-        fread( (void *) interp, programHeader[i].phFilesz, 1, _current->imageFd );
-        kprintf( "Interp: [%s]\n", interp );
-        //ldAddr = ldEnable();
-        break;
-      case PT_PHDR:
-        proghdr = programHeader[i].phVaddr;
-        break;
-      case PT_TLS:
-        kprintf("Thread Local Storage: [0x%X]",  programHeader[i].phVaddr);
-        //iFrame->gs =  programHeader[i].phVaddr; 
-        break;
-      default:
-        break;
-    }
-  }
-
-  addr = LD_START;
-
-  if ( interp != 0x0 ) {
-    //kprintf("TEST");
-    elf_loadfile( _current, interp, &addr, &eip );
-  }
-  kprintf( "[0x%X][0x%X]\n", eip, addr );
-
-  _current->td.vm_dsize = seg_size >> PAGE_SHIFT;
-  _current->td.vm_daddr = (u_long) seg_addr;
-
-  //! copy in arg strings
-  argv = (char **)ap;
-
-  if ( argv[1] != 0x0 ) {
-    argc = (int) argv[0];
-    args = (char *) vmm_getFreeVirtualPage( _current->id, 1, VM_TASK );
-    memset( args, 0x0, 0x1000 );
-    x = 0x0;
-    argvNew = (char **) kmalloc( sizeof(char *) * argc );
-    for ( i = 0x0; i < argc; i++ ) {
-      strcpy( args + x, argv[i + 1] );
-      argvNew[i] = args + x;
-      x += strlen( argv[i + 1] ) + 1;
-    }
-    argv = argvNew;
-  }
-
-  //! Clean the virtual of COW pages left over from the fork
-  vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
-
-  //! Adjust iframe
-  iFrame = (struct i386_frame *) _current->tss.esp0 - sizeof(struct i386_frame);
-  iFrame->ebp = STACK_ADDR;
-  iFrame->eip = eip;
-
-  //if (_current->id > 3) {
-
-  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (sizeof(uint32_t) * (argc + 4 + (sizeof(Elf_Auxargs) * 2)));
-  kprintf( "\n\n\nuser_esp: [0x%X]\n", iFrame->user_esp );
-  tmp = (uint32_t *) iFrame->user_esp;
-
-  //! build argc and argv[]
-  tmp[0] = argc;
-  for ( i = 0; i < argc; i++ ) {
-    tmp[i + 1] = (uint32_t) argv[i];
-  }
-  //! Build ENV
-  args = (char *) vmm_getFreeVirtualPage( _current->id, 1, VM_TASK );
-  memset( args, 0x0, 0x1000 );
-  strcpy( args, "LIBRARY_PATH=/lib" );
-  tmp[argc + 2] = (uint32_t) args;
-  kprintf( "env: [0x%X][0x%X]\n", (uInt32) tmp + argc + 2, tmp[argc + 2] );
-  tmp[argc + 3] = 0x0;
-  kprintf( "env: [0x%X][0x%X]\n", (uInt32) tmp + argc + 2, tmp[argc + 2] );
-  //auxargs = iFrame->user_esp + argc +  3;
-  tmp = (uint32_t *) iFrame->user_esp;
-  tmp += argc + 4;
-
-  auxargs->execfd = -1;
-  auxargs->phdr = proghdr;
-  auxargs->phent = binaryHeader->ePhentsize;
-  auxargs->phnum = binaryHeader->ePhnum;
-  auxargs->pagesz = PAGE_SIZE;
-  auxargs->base = addr;
-  auxargs->flags = 0x0;
-  auxargs->entry = binaryHeader->eEntry;
-  auxargs->trace = 0x0;
-
-  AUXARGS_ENTRY( tmp, AT_PHDR, auxargs->phdr );
-  AUXARGS_ENTRY( tmp, AT_PHENT, auxargs->phent );
-  AUXARGS_ENTRY( tmp, AT_PHNUM, auxargs->phnum );
-  AUXARGS_ENTRY( tmp, AT_PAGESZ, auxargs->pagesz );
-  AUXARGS_ENTRY( tmp, AT_FLAGS, auxargs->flags );
-  AUXARGS_ENTRY( tmp, AT_ENTRY, auxargs->entry );
-  AUXARGS_ENTRY( tmp, AT_BASE, auxargs->base );
-  AUXARGS_ENTRY( tmp, AT_NULL, 0 );
-
-  kprintf( "AT_BASE: [0x%X]\n", auxargs->base );
-
-  //iFrame->ebx = 0x0;
-  //iFrame->ebx = 0x0;
-
-  //iFrame->eip = binaryHeader->eEntry;
-  //kprintf("\n\nDOH: [0x%X]\n\n",iFrame->eip);
-
-  /*
-   error = elf_loadfile(_current,file,0x0,0x0);
-   if (error)
-   K_PANIC("elf_loadfile failed");
-   */
-  return (0x0);
-}
-
-/***
- END
- ***/
