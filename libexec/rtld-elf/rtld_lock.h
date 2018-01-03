@@ -22,7 +22,7 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $FreeBSD: releng/10.2/libexec/rtld-elf/rtld_lock.h 281453 2015-04-12 06:45:40Z kib $
+ * $FreeBSD: releng/11.1/libexec/rtld-elf/rtld_lock.h 280816 2015-03-29 18:53:21Z kib $
  */
 
 #ifndef _RTLD_LOCK_H_
