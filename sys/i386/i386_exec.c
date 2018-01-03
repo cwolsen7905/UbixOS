@@ -224,18 +224,18 @@ void execFile( char *file, int argc, char **argv, int console ) {
     return;
   }
 
-  _current->td.abi = binaryHeader->eIdent[EI_OSABI];
+  _current->td.abi = binaryHeader->e_ident[EI_OSABI];
 
   /* Load The Program Header(s) */
-  programHeader = (elfProgramHeader *) kmalloc( sizeof(elfProgramHeader) * binaryHeader->ePhnum );
-  fseek( tmpFd, binaryHeader->ePhoff, 0 );
+  programHeader = (elfProgramHeader *) kmalloc( sizeof(elfProgramHeader) * binaryHeader->e_phnum );
+  fseek( tmpFd, binaryHeader->e_phoff, 0 );
 
-  //kprintf(">c:%i:0x%X:0x%X<",sizeof(elfProgramHeader)*binaryHeader->ePhnum,programHeader,tmpFd);
-  fread( programHeader, (sizeof(elfProgramHeader) * binaryHeader->ePhnum), 1, tmpFd );
+  //kprintf(">c:%i:0x%X:0x%X<",sizeof(elfProgramHeader)*binaryHeader->e_phnum,programHeader,tmpFd);
+  fread( programHeader, (sizeof(elfProgramHeader) * binaryHeader->e_phnum), 1, tmpFd );
   //kprintf(">d<");
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
-  for ( i = 0; i < binaryHeader->ePhnum; i++ ) {
+  for ( i = 0; i < binaryHeader->e_phnum; i++ ) {
     if ( programHeader[i].phType == 1 ) {
       /*
        Allocate Memory Im Going To Have To Make This Load Memory With Correct
@@ -286,7 +286,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
   _current->tss.ss1 = 0x0;
   _current->tss.esp2 = 0x0;
   _current->tss.ss2 = 0x0;
-  _current->tss.eip = (long) binaryHeader->eEntry;
+  _current->tss.eip = (long) binaryHeader->e_entry;
   _current->tss.eflags = 0x206;
   _current->tss.esp = STACK_ADDR - 16;
   _current->tss.ebp = STACK_ADDR;
@@ -312,14 +312,14 @@ void execFile( char *file, int argc, char **argv, int console ) {
   fclose( tmpFd );
 
   tmp = (uInt32 *) _current->tss.esp0 - 5;
-  tmp[0] = binaryHeader->eEntry;
+  tmp[0] = binaryHeader->e_entry;
   tmp[3] = STACK_ADDR - 12;
 
   tmp = (uint32_t *) _current->tss.esp;
 
   kprintf( "argv: [0x%X]\n", argv );
-  *tmp++ = 0x0; // Stack EIP Return Addr
-  *tmp++ = tmp + 1; // Pointer To AP
+  //*tmp++ = 0x0; // Stack EIP Return Addr
+  //*tmp++ = tmp + 1; // Pointer To AP
   *tmp++ = 0x1; // ARGC
   *tmp++ = 0x0; // ARGV
   *tmp++ = 0x0; // ARGV TERM
@@ -611,18 +611,23 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   //kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
-  argc = 1;
+  argc = 2;
 
   iFrame->ebp = STACK_ADDR;
-  iFrame->eip = binaryHeader->eEntry;
-  iFrame->user_esp = ((uint32_t) STACK_ADDR) - ((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
+  iFrame->eip = binaryHeader->e_entry;
+  //iFrame->user_ebp = 0x0;
+  iFrame->edx = 0x0;
+  //iFrame->user_esp = ((uint32_t) STACK_ADDR) - ((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
+  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (128);//(sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
-  *tmp++ = 0x0; // Stack EIP Return Addr
-  *tmp++ = tmp + 1; // Pointer To AP
+
+  //memset(tmp,0x0,((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2)));
+  memset((char *)(STACK_ADDR - 128),0x0,128);
 
   *tmp++ = argc; // ARGC
 
+  /*
   if ( argc == 1 ) {
     *tmp++ = 0x0; //ARGV Pointers
   }
@@ -631,6 +636,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
       *tmp++ = (u_int) argv[i];
     }
   }
+  */
 
   *tmp++ = 0x0; // ARGV Terminator
   *tmp++ = 0x0; // ENV 
@@ -644,46 +650,11 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   *tmp++ = 0x0; // End Marker
 
-  tmp = (void *)STACK_ADDR;
-  tmp[0] = (void *)iFrame->user_esp; //0x10;
-/*
-*/
-
-  /*
-   * App Entry Stack
-   argc
-   argv[0]
-   argv[1]
-   argv[2] ..
-   argv[argc - 1] = null - END OF ARGV
-   env[0]
-   env[1]
-   NULL end of env
-   */
-
-  //}
-  //else {
-  //tmp = (uint32_t *)STACK_ADDR - 2;
-  //tmp[0] = 0x1;
-  //tmp[1] = 0x0;
-  //tmp[1] = (uint32_t)argv;
-  //}
   kfree( argvNew );
+
   /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
   kfree( binaryHeader );
   kfree( programHeader );
-
-  //kprintf( "EBP-3(%i): [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
-  //kprintf( "Done EXEC\n" );
-
-  /*
-   asm("cli");
-   _current->tss.eip = (long) iFrameNew->eip;
-   _current->tss.eflags = 0x206;
-   _current->tss.esp = iFrameNew->user_esp;
-   _current->tss.ebp = iFrameNew->ebp;
-   */
-  /* Set these up to be ring 3 tasks */
 
 /*
    _current->tss.es = 0x30 + 3;
@@ -713,15 +684,5 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
    */
 
-/*
-   asm(
-   "sti\n"
-   "ljmp $0x20,$0\n"
-   );
-*/
-  //tmp = (char *)iFrame->eip;
-
-  //kprintf("N:[0x%X]\n", tmp[0]);
-  //kprintf( "EBP-4(%i): [0x%X], EBP: [0x%X], EIP: [0x%X], ESP: [0x%X], CR3: [0x%X-0x%X]\n", _current->id, _current->oInfo.vmStart, iFrame->ebp, iFrame->eip, iFrame->user_esp, cr3, kernelPageDirectory );
   return (0x0);
 }

@@ -108,9 +108,6 @@ uInt32 ldEnable() {
         /* Tells us if the stack should be executable.  Failsafe to executable
          until we add checking */
       break;
-      case PT_PAX_FLAGS:
-        /* Not sure... */
-      break;
       default:
         kprintf("Unhandled Header (kernel) : %08x\n", programHeader[i].phType);
       break;

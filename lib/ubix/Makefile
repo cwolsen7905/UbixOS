@@ -9,7 +9,7 @@ include ../Makefile.incl
 BINARY = none 
 
 #Objects
-OBJS = sstart.o #startup.o
+OBJS = _start.o sstart.o #startup.o
 
 CFLAGS = -m32 -fno-builtin -Wno-uninitialized -O2 -fno-strict-aliasing -pipe -Wsystem-headers -Werror -Wall -Wno-format-y2k -W -Wno-unused-parameter -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wshadow -Wcast-align -Wunused-parameter -Wchar-subscripts -Winline -Wnested-externs -Wredundant-decls
 

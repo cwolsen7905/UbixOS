@@ -6,7 +6,34 @@ typedef struct {
   int a_val;
 } Elf32_Auxinfo;
 
-void _start(unsigned int *ap, ...) {
+typedef void (*fptr)(void);
+
+void _start1(fptr cleanup, int argc, char *argv[])
+{
+        char **env;
+
+        env = argv + argc + 1;
+/*
+        handle_argv(argc, argv, env);
+        if (&_DYNAMIC != NULL)
+                atexit(cleanup);
+        else
+                _init_tls();
+
+#ifdef GCRT
+        atexit(_mcleanup);
+        monstartup(&eprol, &etext);
+__asm__("eprol:");
+#endif
+
+        handle_static_init(argc, argv, env);
+*/
+        exit(main(argc, argv, env));
+}
+
+
+#ifdef _BALLS
+void _start1(unsigned int *ap, ...) {
   Elf32_Auxinfo *aux, *auxp;
   unsigned int *argcp;
   int argc;
@@ -52,3 +79,4 @@ printf("{0x%X}", ap);
   exit(main(argc, argv, env));
 
   }
+#endif

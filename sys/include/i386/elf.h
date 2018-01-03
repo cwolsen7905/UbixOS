@@ -1,25 +1,10 @@
 #ifndef _I386_ELF_H_
 #define _i386_ELF_H_ 1
 
+#include <ubixos/ubthread.h>
+
 #define elfExecutable 0x002
 #define elfLibrary    0x003
-
-typedef struct {
-    uInt8 eIdent[16]; /* File identification. */
-    uInt16 eType; /* File type. */
-    uInt16 eMachine; /* Machine architecture. */
-    uInt32 eVersion; /* ELF format version. */
-    uInt32 eEntry; /* Entry point. */
-    uInt32 ePhoff; /* Program header file offset. */
-    uInt32 eShoff; /* Section header file offset. */
-    uInt32 eFlags; /* Architecture-specific flags. */
-    uInt16 eEhsize; /* Size of ELF header in bytes. */
-    uInt16 ePhentsize; /* Size of program header entry. */
-    uInt16 ePhnum; /* Number of program header entries. */
-    uInt16 eShentsize; /* Size of section header entry. */
-    uInt16 eShnum; /* Number of section header entries. */
-    uInt16 eShstrndx; /* Section name strings section. */
-} elfHeader;
 
 typedef struct {
     uInt32 phType; /* Entry type. */
@@ -85,9 +70,5 @@ char *elfGetShType( int );
 char *elfGetPhType( int );
 char *elfGetRelType( int );
 int elf_loadfile( kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry );
-
-#define ELF32_R_SYM(i)      ((i)>>8)
-#define ELF32_R_TYPE(i)     ((unsigned char)(i))
-#define ELF32_R_INFO(s, t)  ((s)<<8+(unsigned char)(t))
 
 #endif
