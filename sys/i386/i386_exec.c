@@ -611,9 +611,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   //kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
-  argc = 2;
+  argc = 1;
 
-  iFrame->ebp = STACK_ADDR;
+  iFrame->ebp = 0x0;//STACK_ADDR;
   iFrame->eip = binaryHeader->e_entry;
   //iFrame->user_ebp = 0x0;
   iFrame->edx = 0x0;
@@ -622,10 +622,12 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
 
+  kprintf("[0x%X][0x%X]", iFrame->user_esp,tmp);
+
   //memset(tmp,0x0,((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2)));
   memset((char *)(STACK_ADDR - 128),0x0,128);
 
-  *tmp++ = argc; // ARGC
+  tmp[0] = argc; // ARGC
 
   /*
   if ( argc == 1 ) {
@@ -637,18 +639,19 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
     }
   }
   */
+  tmp[1] = 0x0; // ARGV
+  tmp[2] = 0x0; // ARGV Terminator
 
-  *tmp++ = 0x0; // ARGV Terminator
-  *tmp++ = 0x0; // ENV 
-  *tmp++ = 0x0; // ENV Terminator
+  tmp[3] = 0x0; // ENV 
+  tmp[4] = 0x0; // ENV Terminator
 
-  *tmp++ = 0x0;
-  *tmp++ = 0x0;
+  tmp[5] = 0x0;
+  tmp[6] = 0x0;
 
-  *tmp++ = 0x0; // AUX VECTOR 8 Bytes
-  *tmp++ = 0x0; // Terminator
+  tmp[7] = 0x0; // AUX VECTOR 8 Bytes
+  tmp[8] = 0x0; // Terminator
 
-  *tmp++ = 0x0; // End Marker
+  tmp[9] = 0x0; // End Marker
 
   kfree( argvNew );
 

@@ -18,7 +18,7 @@ uInt32 ldFindFunc(const char *func,const char *lib) {
       if (!strcmp(func,(libPtr->linkerDynStr + libPtr->linkerRelSymTab[i].dynName))) {
         funcPtr = (uInt32 *)((uInt32)(libPtr->linkerRelSymTab[i].dynValue) + (uInt32)libPtr->output);
         if (funcPtr == 0x0) {
-            printf("[%s:0x%X]\n",func,funcPtr);
+            printf("[%s:0x%X]\n",func,funcPtr,*funcPtr);
           }
         return((uInt32)funcPtr);
         break;
