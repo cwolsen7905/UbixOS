@@ -27,10 +27,35 @@
 
  *****************************************************************************************/
 
+#include <i386/signal.h>
 #include <sys/trap.h>
 #include <sys/gdt.h>
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
+
+static void trap_end_task(char *string, struct trapframe *regs, long error_code);
+
+#define TRAP_CODE(trap_nr, signr, str, trap_name, tsk) void do_##trap_name(struct trapframe *regs, long error_code) { \
+  trap_end_task(str, regs, error_code); \
+}
+
+TRAP_CODE( 0, SIGFPE,  "divide error", divide_error, _current)
+TRAP_CODE( 3, SIGTRAP, "int3", int3, _current)
+TRAP_CODE( 4, SIGSEGV, "overflow", overflow, _current)
+TRAP_CODE( 5, SIGSEGV, "bounds", bounds, _current)
+TRAP_CODE( 6, SIGILL,  "invalid operand", invalid_op, _current)
+TRAP_CODE( 7, SIGSEGV, "device not available", device_not_available, _current)
+TRAP_CODE( 8, SIGSEGV, "double fault", double_fault, _current)
+//TRAP_CODE( 9, SIGFPE,  "coprocessor segment overrun", coprocessor_segment_overrun, last_task_used_math)
+TRAP_CODE(10, SIGSEGV, "invalid TSS", invalid_TSS, _current)
+TRAP_CODE(11, SIGBUS,  "segment not present", segment_not_present, _current)
+TRAP_CODE(12, SIGBUS,  "stack segment", stack_segment, _current)
+TRAP_CODE(15, SIGSEGV, "reserved", reserved, _current)
+TRAP_CODE(17, SIGSEGV, "alignment check", alignment_check, _current)
+
+static void trap_end_task(char *string, struct trapframe *regs, long error_code) {
+  kprintf("S");
+}
 
 #define FIRST_TSS_ENTRY 6
 #define VM_MASK 0x00020000
@@ -55,37 +80,37 @@ __asm__("push %%fs;mov %%ax,%%fs;movb %%fs:%2,%%al;pop %%fs" \
 __res;})
 
 void die_if_kernel(char *str, struct trapframe *regs, long err) {
-	int i;
-	unsigned long esp;
-	unsigned short ss;
+  int i;
+  unsigned long esp;
+  unsigned short ss;
 
-	esp = (unsigned long) &regs->tf_esp;
-	//ss = KERNEL_DS;
-        ss = 0x10;
-	if ((regs->tf_eflags & VM_MASK) || (3 & regs->tf_cs) == 3)
-		return;
-	if (regs->tf_cs & 3) {
-		esp = regs->tf_esp;
-		ss = regs->tf_ss;
-	}
+  esp = (unsigned long) &regs->tf_esp;
+  //ss = KERNEL_DS;
+  ss = 0x10;
+  if ((regs->tf_eflags & VM_MASK) || (3 & regs->tf_cs) == 3)
+    return;
+  if (regs->tf_cs & 3) {
+    esp = regs->tf_esp;
+    ss = regs->tf_ss;
+  }
 
-	kprintf("%s: %04lx\n", str, err & 0xffff);
-	kprintf("EIP:    %04x:%08lx\nEFLAGS: %08lx\n", 0xffff & regs->tf_cs,regs->tf_eip,regs->tf_eflags);
-	kprintf("eax: %08lx   ebx: %08lx   ecx: %08lx   edx: %08lx\n", regs->tf_eax, regs->tf_ebx, regs->tf_ecx, regs->tf_edx);
-	kprintf("esi: %08lx   edi: %08lx   ebp: %08lx   esp: %08lx\n", regs->tf_esi, regs->tf_edi, regs->tf_ebp, esp);
-	kprintf("ds: %04x   es: %04x   fs: %04x   gs: %04x   ss: %04x\n", regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
-	store_TR(i);
-	//kprintf("Pid: %d, process nr: %d (%s)\nStack: ", _current->id, 0xffff & i, _current->comm);
-	kprintf("Pid: %d, process nr: %d ()\nStack: ", _current->id, 0xffff & i);
-	for(i=0;i<5;i++)
-		kprintf("%08lx ", get_seg_long(ss,(i+(unsigned long *)esp)));
-	kprintf("\nCode: ");
-	for(i=0;i<20;i++)
-		kprintf("%02x ",0xff & get_seg_byte(regs->tf_cs,(i+(char *)regs->tf_eip)));
-	kprintf("\n");
+  kprintf("%s: %04lx\n", str, err & 0xffff);
+  kprintf("EIP:    %04x:%08lx\nEFLAGS: %08lx\n", 0xffff & regs->tf_cs, regs->tf_eip, regs->tf_eflags);
+  kprintf("eax: %08lx   ebx: %08lx   ecx: %08lx   edx: %08lx\n", regs->tf_eax, regs->tf_ebx, regs->tf_ecx, regs->tf_edx);
+  kprintf("esi: %08lx   edi: %08lx   ebp: %08lx   esp: %08lx\n", regs->tf_esi, regs->tf_edi, regs->tf_ebp, esp);
+  kprintf("ds: %04x   es: %04x   fs: %04x   gs: %04x   ss: %04x\n", regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
+  store_TR(i);
+  //kprintf("Pid: %d, process nr: %d (%s)\nStack: ", _current->id, 0xffff & i, _current->comm);
+  kprintf("Pid: %d, process nr: %d ()\nStack: ", _current->id, 0xffff & i);
+  for (i = 0; i < 5; i++)
+    kprintf("%08lx ", get_seg_long(ss, (i+(unsigned long *)esp)));
+  kprintf("\nCode: ");
+  for (i = 0; i < 20; i++)
+    kprintf("%02x ", 0xff & get_seg_byte(regs->tf_cs, (i+(char *)regs->tf_eip)));
+  kprintf("\n");
 }
 
-void trap( struct trapframe *frame ) {
+void trap(struct trapframe *frame) {
   u_int trap_code;
   u_int cr2 = 0;
 
@@ -93,35 +118,35 @@ void trap( struct trapframe *frame ) {
 
   trap_code = frame->tf_trapno;
 
-  if ( (frame->tf_eflags & PSL_I) == 0 ) {
+  if ((frame->tf_eflags & PSL_I) == 0) {
     if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
-  die_if_kernel("TEST", frame, 0x100);
- //     kpanic( "INT OFF! USER" );
-}
+      die_if_kernel("TEST", frame, 0x100);
+      //     kpanic( "INT OFF! USER" );
+    }
     else {
-  die_if_kernel("TEST", frame, 0x100);
+      die_if_kernel("TEST", frame, 0x100);
 //      kpanic( "INT OFF! KERN[0x%X]", trap_code );
-}
+    }
   }
 
- cr2 = rcr2();
- kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
+  cr2 = rcr2();
+  kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
 
-/*
-  switch (trap_code) {
-    case 0xC:
-       cr2 = rcr2();
-       kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
-       asm("sti"); // Turn Back On Ints!
-       vmm_pageFault(frame, cr2);
-       kprintf("Called page Fault\n");
-    default:
-      break;
-  }
+  /*
+   switch (trap_code) {
+   case 0xC:
+   cr2 = rcr2();
+   kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
+   asm("sti"); // Turn Back On Ints!
+   vmm_pageFault(frame, cr2);
+   kprintf("Called page Fault\n");
+   default:
+   break;
+   }
 
-  kprintf("GOTTA RETURN!\n");
-  while(1);
-*/
+   kprintf("GOTTA RETURN!\n");
+   while(1);
+   */
 }
 
 /***
