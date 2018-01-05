@@ -28,6 +28,7 @@
  *****************************************************************************************/
 
 #include <sys/elf.h>
+#include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
 #include <vmm/vmm.h>
@@ -39,12 +40,14 @@ typedef struct elf_file {
 } *elf_file_type;
 
 int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry) {
+
   int i = 0x0;
   int x = 0x0;
   int numsegs = 0x0;
 
-  uint32_t base = 0x0;
+  //uint32_t base = 0x0;
   uint32_t base_addr = 0x0;
+  uint32_t real_base_addr = 0x0;
 
   Elf32_Ehdr *binaryHeader = 0x0;
   Elf32_Phdr *programHeader = 0x0;
@@ -71,9 +74,9 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
   }
 
   if (binaryHeader->e_type == ET_DYN)
-    base = *addr;
+    real_base_addr = *addr;
   else if (binaryHeader->e_type == ET_EXEC)
-    base = 0x0;
+    real_base_addr = 0x0;
   else
     return (-1);
 
@@ -85,7 +88,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 
   fread(programHeader, (sizeof(Elf32_Phdr) * binaryHeader->e_phnum), 1, exec_fd);
 
-  for (i = 0x0; i < binaryHeader->e_phnum; i++) {
+  for (numsegs = 0x0, i = 0x0; i < binaryHeader->e_phnum; i++) {
     switch (programHeader[i].p_type) {
       case PT_LOAD:
         /*
@@ -95,33 +98,35 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
         for (x = 0x0; x < (programHeader[i].p_memsz + 0xFFF); x += 0x1000) {
 
           /* Make readonly and read/write */
-          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + base), PAGE_DEFAULT) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + real_base_addr), PAGE_DEFAULT) == 0x0)
             K_PANIC("Error: Remap Page Failed");
 
-          memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + base), 0x0, 0x1000);
+          memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + real_base_addr), 0x0, 0x1000);
         }
 
         /* Now Load Section To Memory */
         fseek(exec_fd, programHeader[i].p_offset, 0);
-        fread((void *) programHeader[i].p_vaddr + base, programHeader[i].p_filesz, 1, exec_fd);
+        fread((void *) programHeader[i].p_vaddr + real_base_addr, programHeader[i].p_filesz, 1, exec_fd);
 
         if ((programHeader[i].p_flags & 0x2) != 0x2) {
           for (x = 0x0; x < (programHeader[i].p_memsz); x += 0x1000) {
-            if ((vmm_setPageAttributes((programHeader[i].p_vaddr & 0xFFFFF000) + x + base, PAGE_PRESENT | PAGE_USER)) != 0x0)
+            if ((vmm_setPageAttributes((programHeader[i].p_vaddr & 0xFFFFF000) + x + real_base_addr, PAGE_PRESENT | PAGE_USER)) != 0x0)
               K_PANIC("vmm_setPageAttributes failed");
           }
         }
         if (numsegs == 0x0)
-          base_addr = (programHeader[i].p_vaddr & 0xFFFFF000) + base;
+          base_addr = (programHeader[i].p_vaddr & 0xFFFFF000) + real_base_addr;
         numsegs++;
       break;
     }
   }
 
   *addr = base_addr;
-  kprintf("entry: [0x%X]\n", *entry);
-  *entry = binaryHeader->e_entry + base;
-  kprintf("entry: [0x%X]\n", *entry);
+
+  *entry = binaryHeader->e_entry + real_base_addr;
+
+  free(binaryHeader);
+  free(programHeader);
   return (0x0);
 }
 

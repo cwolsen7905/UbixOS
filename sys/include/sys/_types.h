@@ -24,8 +24,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __TYPES_H
-#define __TYPES_H
+#ifndef _SYS__TYPES_H_
+#define _SYS__TYPES_H_
 
 typedef char               __int8_t;
 typedef unsigned char      __uint8_t;
@@ -72,6 +72,5 @@ typedef       int             ___wchar_t;
 typedef __uint_least16_t __char16_t;
 typedef __uint_least32_t __char32_t;
 #endif
-
 
 #endif

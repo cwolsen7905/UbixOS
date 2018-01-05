@@ -21,8 +21,8 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 
 **************************************************************************************/
 
-#ifndef _FILE_H
-#define _FILE_H
+#ifndef _VFS_FILE_H_
+#define _VFS_FILE_H_ 1
 
 #include <sys/types.h>
 #include <ubixfs/dirCache.h>

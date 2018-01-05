@@ -27,14 +27,18 @@
 
  *****************************************************************************************/
 
-#ifndef _SYS_TYPES_H
-#define _SYS_TYPES_H
+#ifndef _SYS_TYPES_H_
+#define _SYS_TYPES_H_
 
 #include <sys/_types.h>
+
+#define NULL 0x0
 
 #ifndef NULL
 #define NULL 0x0
 #endif
+
+typedef char *caddr_t;
 
 /* unsigned integrals */
 typedef __uint8_t  uint8_t;
