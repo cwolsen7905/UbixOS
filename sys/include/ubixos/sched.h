@@ -54,6 +54,7 @@ struct osInfo {
 
 typedef struct taskStruct {
   pidType id;
+  char name[256];
   struct taskStruct *prev;
   struct taskStruct *next;
   struct tssStruct tss;

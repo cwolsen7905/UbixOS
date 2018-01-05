@@ -10,4 +10,4 @@ rtld-elf-bin: rtld-elf
 
 clean:
 	(cd ld;make clean)
-	(cd rtld-elf;make clean)
+#	(cd rtld-elf;make clean)

@@ -45,6 +45,14 @@ typedef struct {
 typedef struct {
     uInt32 dynVal;
     uInt32 dynPtr;
+} elfDynamic_Old;
+
+typedef struct {
+  uint32_t d_tag;
+  union {
+    uint32_t d_val;
+    uint32_t d_ptr;
+  } d_un;
 } elfDynamic;
 
 typedef struct {

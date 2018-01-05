@@ -321,7 +321,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
   //*tmp++ = 0x0; // Stack EIP Return Addr
   //*tmp++ = tmp + 1; // Pointer To AP
   *tmp++ = 0x1; // ARGC
-  *tmp++ = 0x0; // ARGV
+  *tmp++ = 0x100; // ARGV
   *tmp++ = 0x0; // ARGV TERM
   *tmp++ = 0x0; // ENV
   *tmp++ = 0x0; // ENV TERM
@@ -329,7 +329,7 @@ void execFile( char *file, int argc, char **argv, int console ) {
   *tmp++ = 0x0; // AUX 1.B
   *tmp++ = 0x0; // AUX TERM
   *tmp++ = 0x0; // AUX TERM 
-  *tmp++ = 0x0; // TERM
+  *tmp++ = 0x1; // TERM
 
   /* Switch Back To The Kernels VM Space */
   asm volatile(
@@ -380,6 +380,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
   elfProgramHeader *programHeader = 0x0;
   elfSectionHeader *sectionHeader = 0x0;
   elfDynamic *elfDynamicS = 0x0;
+  elfDynamic *dynp = 0x0;
 
   u_long text_addr = 0, text_size = 0;
   u_long data_addr = 0, data_size = 0;
@@ -551,22 +552,52 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   /* What is this doing? 11/23/06 */
   if ( elfDynamicS != 0x0 ) {
-    for ( i = 0; i < 12; i++ ) {
-      if ( elfDynamicS[i].dynVal == 0x3 ) {
-        tmp = (void *) elfDynamicS[i].dynPtr;
-        if ( tmp == 0x0 )
-          kpanic( "tmp: NULL\n" );
-        else
-          kprintf("[0x%X]", tmp);
-        tmp[2] = (uInt32) ldAddr;
-        tmp[1] = (uInt32) fd;
+    for ( dynp = elfDynamicS ; dynp->d_tag != 0x0; dynp++) {
+      switch (dynp->d_tag) {
+        case DT_NEEDED:
+          break;
+        case DT_INIT:
+          break;
+        case DT_FINI:
+          break;
+        case DT_HASH:
+          kprintf("COM BACK TO THIS");
+          break;
+        case DT_STRTAB:
+          break;
+        case DT_SYMTAB:
+          break;
+        case DT_STRSZ:
+          break;
+        case DT_SYMENT:
+          break;
+        case DT_DEBUG:
+          break;
+        case DT_PLTRE:
+          break;
+        case DT_JMPREL:
+          break;
+        case DT_REL:
+          break;
+        case DT_RELSZ:
+          break;
+        case DT_RELENT:
+          if (dynp->d_un.d_val != sizeof(Elf_Rel))
+            kpanic("NOEXEC");
+          break;
+        case DT_PLTGOT:
+          tmp = (void *) dynp->d_un.d_ptr;//elfDynamicS[i].dynPtr;
+          if ( tmp == 0x0 )
+            kpanic( "tmp: NULL\n" );
+          else
+            kprintf("[0x%X]", tmp);
+            tmp[2] = (uInt32) ldAddr;
+            tmp[1] = (uInt32) fd;
+        break;
+      default:
+        kprintf("t_tag: 0x%X>", dynp->d_tag);
         break;
       }
-      /*
-       else {
-       kprintf("dyn_val: %i",elfDynamicS[i].dynVal);
-       }
-       */
     }
   }
   /*
@@ -611,9 +642,9 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   //kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
 
-  argc = 2;
+  argc = 1;
 
-  iFrame->ebp = STACK_ADDR;
+  iFrame->ebp = 0x0;//STACK_ADDR;
   iFrame->eip = binaryHeader->e_entry;
   //iFrame->user_ebp = 0x0;
   iFrame->edx = 0x0;
@@ -622,10 +653,12 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
 
+  kprintf("[0x%X][0x%X]", iFrame->user_esp,tmp);
+
   //memset(tmp,0x0,((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2)));
   memset((char *)(STACK_ADDR - 128),0x0,128);
 
-  *tmp++ = argc; // ARGC
+  tmp[0] = argc; // ARGC
 
   /*
   if ( argc == 1 ) {
@@ -637,18 +670,19 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
     }
   }
   */
+  tmp[1] = 0x0; // ARGV
+  tmp[2] = 0x0; // ARGV Terminator
 
-  *tmp++ = 0x0; // ARGV Terminator
-  *tmp++ = 0x0; // ENV 
-  *tmp++ = 0x0; // ENV Terminator
+  tmp[3] = 0x0; // ENV 
+  tmp[4] = 0x0; // ENV Terminator
 
-  *tmp++ = 0x0;
-  *tmp++ = 0x0;
+  tmp[5] = 0x0;
+  tmp[6] = 0x0;
 
-  *tmp++ = 0x0; // AUX VECTOR 8 Bytes
-  *tmp++ = 0x0; // Terminator
+  tmp[7] = 0x0; // AUX VECTOR 8 Bytes
+  tmp[8] = 0x0; // Terminator
 
-  *tmp++ = 0x0; // End Marker
+  tmp[9] = 0xDEADBEEF; // End Marker
 
   kfree( argvNew );
 

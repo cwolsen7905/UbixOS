@@ -1,59 +1,94 @@
-# $Id: Makefile 115 2016-01-14 02:55:19Z reddawg $
-# Application Makefile (C) 2002-2004 The UbixOS Project
+# $FreeBSD: releng/11.1/libexec/rtld-elf/Makefile 319016 2017-05-28 00:13:44Z rgrimes $
 
-# Include Global 'Source' Options
-include ../../Makefile.incl
-include ../Makefile.incl
+# Use the following command to build local debug version of dynamic
+# linker:
+# make DEBUG_FLAGS=-g DEBUG=-DDEBUG WITHOUT_TESTS=yes all
 
-INCLUDES = -I../../include.new -I./
+.include <src.opts.mk>
+PACKAGE=	clibs
+MK_SSP=		no
 
-CFLAGS+=        -Wall -DFREEBSD_ELF -DIN_RTLD -DPIC 
-CFLAGS = -m32 -O2 -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -fpic -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -Werror -DDEBUG
-#MrOlsen 2016-01-13 CFLAGS = -O2 -fno-strict-aliasing -pipe  -Wall -DFREEBSD_ELF -DIN_RTLD -I./ -fpic -elf -DPIC -std=gnu99 -Wformat=2 -Wno-format-extra-args -Werror -DDEBUG
+PROG?=		ld-elf.so.1
+.if (${PROG:M*ld-elf32*} != "")
+TAGS+=		lib32
+.endif
+SRCS=		rtld_start.S \
+		reloc.c rtld.c rtld_lock.c rtld_printf.c map_object.c \
+		malloc.c xmalloc.c debug.c libmap.c
+MAN=		rtld.1
+CSTD?=		gnu99
+CFLAGS+=	-Wall -DFREEBSD_ELF -DIN_RTLD -ffreestanding
+CFLAGS+=	-I${SRCTOP}/lib/csu/common
+.if exists(${.CURDIR}/${MACHINE_ARCH})
+RTLD_ARCH=	${MACHINE_ARCH}
+.else
+RTLD_ARCH=	${MACHINE_CPUARCH}
+.endif
+CFLAGS+=	-I${.CURDIR}/${RTLD_ARCH} -I${.CURDIR}
+.if ${MACHINE_ARCH} == "powerpc64"
+LDFLAGS+=	-nostdlib -e _rtld_start
+.else
+LDFLAGS+=	-nostdlib -e .rtld_start
+.endif
+WARNS?=		2
+INSTALLFLAGS=	-C -b
+PRECIOUSPROG=
+BINDIR=		/libexec
+SYMLINKS=	../..${BINDIR}/${PROG} ${LIBEXECDIR}/${PROG}
+MLINKS=		rtld.1 ld-elf.so.1.1 \
+		rtld.1 ld.so.1
+
+.if ${MACHINE_CPUARCH} == "sparc64"
+CFLAGS+=	-fPIC
+.else
+CFLAGS+=	-fpic
+.endif
+CFLAGS+=	-DPIC $(DEBUG)
+.if ${MACHINE_CPUARCH} == "amd64" || ${MACHINE_CPUARCH} == "i386"
+CFLAGS+=	-fvisibility=hidden
+.endif
+LDFLAGS+=	-shared -Wl,-Bsymbolic -Wl,-z,defs
+LIBADD=		c_pic
+.if ${MK_TOOLCHAIN} == "no"
+LDFLAGS+=	-L${LIBCDIR}
+.endif
+
+.if ${MACHINE_CPUARCH} == "arm"
+# Some of the required math functions (div & mod) are implemented in
+# libcompiler_rt on ARM. The library also needs to be placed first to be
+# correctly linked. As some of the functions are used before we have
+# shared libraries.
+LIBADD+=	compiler_rt
+.endif
 
 
-#Linker
-LD = ld
 
-#Binary File Name
-OUTPUT = ld-elf.so.1
+.if ${MK_SYMVER} == "yes"
+VERSION_DEF=	${LIBCSRCDIR}/Versions.def
+SYMBOL_MAPS=	${.CURDIR}/Symbol.map
+VERSION_MAP=	Version.map
+LDFLAGS+=	-Wl,--version-script=${VERSION_MAP}
 
-#Delete Program
-REMOVE = rm -f
+.if exists(${.CURDIR}/${RTLD_ARCH}/Symbol.map)
+SYMBOL_MAPS+=	${.CURDIR}/${RTLD_ARCH}/Symbol.map
+.endif
+.endif
 
-#Objects
-OBJS = rtld_start.o  reloc.o rtld.o rtld_lock.o map_object.o  malloc.o xmalloc.o debug.o libmap.o
+.sinclude "${.CURDIR}/${RTLD_ARCH}/Makefile.inc"
 
-LIBRARIES = #../../lib/libc/libc.so
+# Since moving rtld-elf to /libexec, we need to create a symlink.
+# Fixup the existing binary that's there so we can symlink over it.
+beforeinstall:
+.if exists(${DESTDIR}/usr/libexec/${PROG}) && ${MK_STAGING} == "no"
+	-chflags -h noschg ${DESTDIR}/usr/libexec/${PROG}
+.endif
 
+.PATH: ${.CURDIR}/${RTLD_ARCH}
 
-# Link The Binary
-$(OUTPUT) : $(OBJS)
-#	$(CC) -fpic -nostdlib -shared -Wl,-soname,$(OUTPUT) -e .rtld_start -o $(OUTPUT) $(OBJS) $(LIBRARIES) $(SUBS)
-#	$(CC) $(CFLAGS)  -nostdlib -e .rtld_start -elf -shared -Wl,-Bsymbolic -o $(OUTPUT) $(OBJS) -lc_pic
-#	$(CC) $(CFLAGS)  -nostdlib -e .rtld_start -elf -shared -Wl,-Bsymbolic -o $(OUTPUT) $(OBJS) ./libc_pic.a #-lc_pic
-	$(CC) $(CFLAGS)  -nostdlib -e .rtld_start -elf -shared -Wl,-Bsymbolic -o ../../build/libexec/$(OUTPUT) $(OBJS) ../../lib/libc/pic.a #-lc_pic
-#	strip $(OUTPUT)
+.if ${MK_TESTS} != "no"
+SUBDIR+=	tests
+.endif
 
-# Compile the source files
-.cpp.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
-
-.cc.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
-
-.cc.s:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
-.c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
- 
-.c.s:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
-.S.o:
-	$(CC)  -Wall $(CFLAGS) $(INCLUDES) -c -o $@ $<
- 
-# Clean Up The junk
-clean:
-	$(REMOVE) $(OBJS) $(OUTPUT)
+.include <bsd.prog.mk>
+${PROG_FULL}:	${VERSION_MAP}
+.include <bsd.symver.mk>

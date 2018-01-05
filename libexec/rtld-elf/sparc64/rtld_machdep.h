@@ -23,7 +23,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- * $FreeBSD: releng/10.2/libexec/rtld-elf/i386/rtld_machdep.h 281453 2015-04-12 06:45:40Z kib $
+ * $FreeBSD: releng/11.1/libexec/rtld-elf/sparc64/rtld_machdep.h 316135 2017-03-29 11:03:08Z kib $
  */
 
 #ifndef RTLD_MACHDEP_H
@@ -35,22 +35,12 @@
 struct Struct_Obj_Entry;
 
 /* Return the address of the .dynamic section in the dynamic linker. */
-#define rtld_dynamic(obj) \
-    ((const Elf_Dyn *)((obj)->relocbase + (Elf_Addr)&_DYNAMIC))
+Elf_Dyn *rtld_dynamic_addr(void);
+#define	rtld_dynamic(obj)	rtld_dynamic_addr()
 
-/* Fixup the jump slot at "where" to transfer control to "target". */
-static inline Elf_Addr
-reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
-	      const struct Struct_Obj_Entry *obj,
-	      const struct Struct_Obj_Entry *refobj, const Elf_Rel *rel)
-{
-#ifdef dbg
-    dbg("reloc_jmpslot: *%p = %p", (void *)(where),
-	(void *)(target));
-#endif
-    (*(Elf_Addr *)(where) = (Elf_Addr)(target));
-    return target;
-}
+Elf_Addr reloc_jmpslot(Elf_Addr *, Elf_Addr,
+    const struct Struct_Obj_Entry *, const struct Struct_Obj_Entry *,
+    const Elf_Rel *);
 
 #define make_function_pointer(def, defobj) \
 	((defobj)->relocbase + (def)->st_value)
@@ -61,23 +51,27 @@ reloc_jmpslot(Elf_Addr *where, Elf_Addr target,
 #define call_init_pointer(obj, target) \
 	(((InitArrFunc)(target))(main_argc, main_argv, environ))
 
-#define round(size, align) \
+#define	call_ifunc_resolver(ptr) \
+	(((Elf_Addr (*)(void))ptr)())
+
+#define round(size, align)				\
 	(((size) + (align) - 1) & ~((align) - 1))
 #define calculate_first_tls_offset(size, align) \
 	round(size, align)
 #define calculate_tls_offset(prev_offset, prev_size, size, align) \
 	round((prev_offset) + (size), align)
-#define calculate_tls_end(off, size) 	(off)
+#define calculate_tls_end(off, size) 	((off) + (size))
 
 typedef struct {
     unsigned long ti_module;
     unsigned long ti_offset;
 } tls_index;
 
-void *___tls_get_addr(tls_index *ti) __attribute__((__regparm__(1))) __exported;
-void *__tls_get_addr(tls_index *ti) __exported;
+extern void *__tls_get_addr(tls_index *ti);
 
-#define	RTLD_DEFAULT_STACK_PF_EXEC	PF_X
-#define	RTLD_DEFAULT_STACK_EXEC		PROT_EXEC
+#define	RTLD_DEFAULT_STACK_PF_EXEC	0
+#define	RTLD_DEFAULT_STACK_EXEC		0
+
+#define md_abi_variant_hook(x)
 
 #endif

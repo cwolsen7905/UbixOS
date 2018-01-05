@@ -68,7 +68,7 @@ int idt_init() {
   /* Set up default vector table for all possible 256 interrupts */
 
   for ( i = 0x0; i < 256; i++ ) {
-    setVector( intNull, i, dPresent + dInt + dDpl3 );
+    setVector( intNull, i, dPresent + dTrap + dDpl3 );
   }
 
   /* Load the IDT into the system */
@@ -90,7 +90,7 @@ int idt_init() {
   setVector( _int3, 3, dPresent + dInt + dDpl0 );
   setVector( _int4, 4, dPresent + dInt + dDpl0 );
   setVector( _int5, 5, dPresent + dInt + dDpl0 );
-  setVector( _int6, 6, dPresent + dInt + dDpl0 );
+  setVector( _int6, 6, dPresent + dTrap + dDpl0 );
   setVector( _int7, 7, dPresent + dInt + dDpl0 );
   setTaskVector( 8, dPresent + dTask + dDpl0, 0x40 );
   setVector( _int9, 9, dPresent + dInt + dDpl0 );
@@ -227,6 +227,8 @@ void _int5() {
 asm volatile(
   ".globl _int6       \n"
   "_int6:             \n"
+  "  pushl $0x0            \n"
+  "  pushl $0x6            \n"
   "  pushal               \n" /* Save all registers           */
   "  push %ds             \n"
   "  push %es             \n"
@@ -245,7 +247,11 @@ asm volatile(
 
 void __int6(struct trapframe *frame) {
   die_if_kernel("invalid_op",frame,6);
+<<<<<<< HEAD
   //kprintf("tf_gs: 0x%X, tf_fs: 0x%X, tf_es: 0x%X, tf_ds: 0x%X\n", frame->tf_gs, frame->tf_fs, frame->tf_es, frame->tf_ds);
+=======
+  kprintf("tf_gs: 0x%X, tf_fs: 0x%X, tf_es: 0x%X, tf_ds: 0x%X\n", frame->tf_gs, frame->tf_fs, frame->tf_es, frame->tf_ds);
+>>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
   //kpanic( "int6: Invalid opcode! [%i:0x%X:0x%X]\n", _current->id, _current->tss.eip, frame->tf_eip );
   endTask( _current->id );
   sched_yield();
