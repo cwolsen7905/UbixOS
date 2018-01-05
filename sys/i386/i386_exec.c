@@ -573,7 +573,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
           break;
         case DT_DEBUG:
           break;
-        case DT_PLTRE:
+        case DT_PLTREL:
           break;
         case DT_JMPREL:
           break;
@@ -582,7 +582,7 @@ int sys_exec( struct thread *td, char *file, char **argv, char **envp ) {
         case DT_RELSZ:
           break;
         case DT_RELENT:
-          if (dynp->d_un.d_val != sizeof(Elf_Rel))
+          if (dynp->d_un.d_val != sizeof(Elf32_Rel))
             kpanic("NOEXEC");
           break;
         case DT_PLTGOT:
