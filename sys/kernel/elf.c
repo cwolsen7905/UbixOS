@@ -34,6 +34,97 @@
 #include <lib/kprintf.h>
 #include <string.h>
 
+typedef struct elf_file {
+
+} *elf_file_type;
+
+int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry) {
+  int i = 0x0;
+  int x = 0x0;
+  int numsegs = 0x0;
+
+  uint32_t base = 0x0;
+  uint32_t base_addr = 0x0;
+
+  Elf32_Ehdr *binaryHeader = 0x0;
+  Elf32_Phdr *programHeader = 0x0;
+
+  fileDescriptor *exec_fd = 0x0;
+
+  exec_fd = fopen(file, "r");
+
+  if (exec_fd == 0x0)
+    return (-1);
+
+
+  /* Load the ELF header */
+  if ((binaryHeader = (Elf32_Ehdr *) kmalloc(sizeof(Elf32_Ehdr))) == 0x0)
+    K_PANIC("malloc failed!");
+
+  fread(binaryHeader, sizeof(Elf32_Ehdr), 1, exec_fd);
+
+  /* Check If App Is A Real Application */
+  if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
+    kfree(binaryHeader);
+    fclose(exec_fd);
+    return (-1);
+  }
+
+  if (binaryHeader->e_type == ET_DYN)
+    base = *addr;
+  else if (binaryHeader->e_type == ET_EXEC)
+    base = 0x0;
+  else
+    return (-1);
+
+  /* Load The Program Header(s) */
+  if ((programHeader = (Elf32_Phdr *) kmalloc(sizeof(Elf32_Phdr) * binaryHeader->e_phnum)) == 0x0)
+    K_PANIC("malloc failed!");
+
+  fseek(exec_fd, binaryHeader->e_phoff, 0);
+
+  fread(programHeader, (sizeof(Elf32_Phdr) * binaryHeader->e_phnum), 1, exec_fd);
+
+  for (i = 0x0; i < binaryHeader->e_phnum; i++) {
+    switch (programHeader[i].p_type) {
+      case PT_LOAD:
+        /*
+         Allocate Memory Im Going To Have To Make This Load Memory With Correct
+         Settings so it helps us in the future
+         */
+        for (x = 0x0; x < (programHeader[i].p_memsz + 0xFFF); x += 0x1000) {
+
+          /* Make readonly and read/write */
+          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + base), PAGE_DEFAULT) == 0x0)
+            K_PANIC("Error: Remap Page Failed");
+
+          memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + base), 0x0, 0x1000);
+        }
+
+        /* Now Load Section To Memory */
+        fseek(exec_fd, programHeader[i].p_offset, 0);
+        fread((void *) programHeader[i].p_vaddr + base, programHeader[i].p_filesz, 1, exec_fd);
+
+        if ((programHeader[i].p_flags & 0x2) != 0x2) {
+          for (x = 0x0; x < (programHeader[i].p_memsz); x += 0x1000) {
+            if ((vmm_setPageAttributes((programHeader[i].p_vaddr & 0xFFFFF000) + x + base, PAGE_PRESENT | PAGE_USER)) != 0x0)
+              K_PANIC("vmm_setPageAttributes failed");
+          }
+        }
+        if (numsegs == 0x0)
+          base_addr = (programHeader[i].p_vaddr & 0xFFFFF000) + base;
+        numsegs++;
+      break;
+    }
+  }
+
+  *addr = base_addr;
+  kprintf("entry: [0x%X]\n", *entry);
+  *entry = binaryHeader->e_entry + base;
+  kprintf("entry: [0x%X]\n", *entry);
+  return (0x0);
+}
+
 const struct {
   char *elfTypeName;
   uInt32 id;
@@ -66,81 +157,7 @@ char *elfGetRelType(int relType) {
   return ((char *) elfRelType[relType].relTypeName);
 }
 
-int elf_loadfile(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry) {
-  int i = 0x0;
-  int x = 0x0;
-  int numsegs = 0x0;
-  uint32_t base = 0x0;
-  uint32_t base_addr = 0x0;
-  Elf32_Ehdr *binaryHeader = 0x0;
-  elfProgramHeader *programHeader = 0x0;
-  fileDescriptor *exec_fd = 0x0;
 
-  exec_fd = fopen(file, "r");
-  if (exec_fd == 0x0)
-    return (-1);
-  kprintf("MOO");
-  /* Load the ELF header */
-  if ((binaryHeader = (Elf32_Ehdr *) kmalloc(sizeof(Elf32_Ehdr))) == 0x0)
-    K_PANIC("malloc failed!");
-  fread(binaryHeader, sizeof(Elf32_Ehdr), 1, exec_fd);
-
-  /* Check If App Is A Real Application */
-  if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
-    kfree(binaryHeader);
-    fclose(exec_fd);
-    return (-1);
-  }
-
-  if (binaryHeader->e_type == ET_DYN)
-    base = *addr;
-  else if (binaryHeader->e_type == ET_EXEC)
-    base = 0x0;
-  else
-    return (-1);
-
-  /* Load The Program Header(s) */
-  if ((programHeader = (elfProgramHeader *) kmalloc(sizeof(elfProgramHeader) * binaryHeader->e_phnum)) == 0x0)
-    K_PANIC("malloc failed!");
-  fseek(exec_fd, binaryHeader->e_phoff, 0);
-  fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->e_phnum), 1, exec_fd);
-  kprintf("MEW: [0x%X]", base);
-  for (i = 0x0; i < binaryHeader->e_phnum; i++) {
-    switch (programHeader[i].phType) {
-      case PT_LOAD:
-        /*
-         Allocate Memory Im Going To Have To Make This Load Memory With Correct
-         Settings so it helps us in the future
-         */
-        for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
-          /* Make readonly and read/write */
-          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x + base), PAGE_DEFAULT) == 0x0)
-            K_PANIC("Error: Remap Page Failed");
-          memset((void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x + base), 0x0, 0x1000);
-        }
-
-        /* Now Load Section To Memory */
-        fseek(exec_fd, programHeader[i].phOffset, 0);
-        fread((void *) programHeader[i].phVaddr + base, programHeader[i].phFilesz, 1, exec_fd);
-
-        if ((programHeader[i].phFlags & 0x2) != 0x2) {
-          for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
-            if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x + base, PAGE_PRESENT | PAGE_USER)) != 0x0)
-              K_PANIC("vmm_setPageAttributes failed");
-          }
-        }
-        if (numsegs == 0x0)
-          base_addr = (programHeader[i].phVaddr & 0xFFFFF000) + base;
-        numsegs++;
-      break;
-    }
-  }
-  *addr = base_addr;
-  kprintf("entry: [0x%X]\n", *entry);
-  *entry = binaryHeader->e_entry + base;
-  kprintf("entry: [0x%X]\n", *entry);
-  return (0x0);
-}
 
 /***
  END

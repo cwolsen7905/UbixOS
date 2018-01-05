@@ -245,8 +245,8 @@ asm volatile(
 
 void __int6(struct trapframe *frame) {
   die_if_kernel("invalid_op",frame,6);
-  kprintf("tf_gs: 0x%X, tf_fs: 0x%X, tf_es: 0x%X, tf_ds: 0x%X\n", frame->tf_gs, frame->tf_fs, frame->tf_es, frame->tf_ds);
-  kpanic( "int6: Invalid opcode! [%i:0x%X:0x%X]\n", _current->id, _current->tss.eip, frame->tf_eip );
+  //kprintf("tf_gs: 0x%X, tf_fs: 0x%X, tf_es: 0x%X, tf_ds: 0x%X\n", frame->tf_gs, frame->tf_fs, frame->tf_es, frame->tf_ds);
+  //kpanic( "int6: Invalid opcode! [%i:0x%X:0x%X]\n", _current->id, _current->tss.eip, frame->tf_eip );
   endTask( _current->id );
   sched_yield();
 }

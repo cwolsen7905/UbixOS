@@ -69,6 +69,7 @@ typedef struct {        /* Auxiliary vector entry on initial stack */
 char *elfGetShType( int );
 char *elfGetPhType( int );
 char *elfGetRelType( int );
-int elf_loadfile( kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry );
+
+int elf_load_file( kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry );
 
 #endif
