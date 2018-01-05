@@ -32,6 +32,11 @@
 #include <sys/gdt.h>
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
+#include <vmm/vmm.h>
+
+int kmain(uint32_t);
+
+#define KERNEL_STACK 0x2000
 
 static void trap_end_task(char *string, struct trapframe *regs, long error_code);
 
@@ -83,28 +88,68 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   int i;
   unsigned long esp;
   unsigned short ss;
+  unsigned long *stack, addr, module_start, module_end;
+  char *_etext = 0x300a0;
 
   esp = (unsigned long) &regs->tf_esp;
-  //ss = KERNEL_DS;
-  ss = 0x10;
-  if ((regs->tf_eflags & VM_MASK) || (3 & regs->tf_cs) == 3)
-    return;
-  if (regs->tf_cs & 3) {
+
+  ss = 0x10; //KERNEL_DS
+
+  //if ((regs->tf_eflags & VM_MASK) || (3 & regs->tf_cs) == 3)
+  //  return;
+
+ // if ((regs->tf_cs & 3) == 3) {
     esp = regs->tf_esp;
     ss = regs->tf_ss;
-  }
+    kprintf("USER TASK!");
+  //}
 
-  kprintf("%s: %04lx\n", str, err & 0xffff);
-  kprintf("EIP:    %04x:%08lx\nEFLAGS: %08lx\n", 0xffff & regs->tf_cs, regs->tf_eip, regs->tf_eflags);
+  ss = 0x30;
+
+  kprintf("%s: %04lx(%i:%i)[0x%X]\n", str, err & 0xffff, regs->tf_trapno, regs->tf_err, regs->tf_ss);
+  kprintf("CPU: %d\n", 0);
+  kprintf("EIP:    %04x:[<%08lx>]\nEFLAGS: %08lx\n", 0xffff & regs->tf_cs, regs->tf_eip, regs->tf_eflags);
   kprintf("eax: %08lx   ebx: %08lx   ecx: %08lx   edx: %08lx\n", regs->tf_eax, regs->tf_ebx, regs->tf_ecx, regs->tf_edx);
   kprintf("esi: %08lx   edi: %08lx   ebp: %08lx   esp: %08lx\n", regs->tf_esi, regs->tf_edi, regs->tf_ebp, esp);
-  kprintf("ds: %04x   es: %04x   fs: %04x   gs: %04x   ss: %04x\n", regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
+  kprintf("cs: 0x%X ds: 0x%X   es: 0x%X   fs: 0x%X   gs: 0x%X   ss: 0x%X\n", regs->tf_cs, regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
   store_TR(i);
-  //kprintf("Pid: %d, process nr: %d (%s)\nStack: ", _current->id, 0xffff & i, _current->comm);
-  kprintf("Pid: %d, process nr: %d ()\nStack: ", _current->id, 0xffff & i);
-  for (i = 0; i < 5; i++)
-    kprintf("%08lx ", get_seg_long(ss, (i+(unsigned long *)esp)));
-  kprintf("\nCode: ");
+  kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, KERNEL_STACK);
+
+  stack = (unsigned long *)esp;
+  for (i = 0; i < 16; i++) {
+    if (i && ((i % 8) == 0))
+      kprintf("\n       ");
+    kprintf("%08lx ", get_seg_long(ss, stack++));
+  }
+  kprintf("\nCall Trace: ");
+  stack = (unsigned long *)esp;
+  i = 1;
+
+#define VMALLOC_OFFSET (8*1024*1024)
+#define MODULE_RANGE (8*1024*1024)
+
+  module_start = ((numPages + VMALLOC_OFFSET) & ~(VMALLOC_OFFSET-1));
+  module_end = module_start + MODULE_RANGE;
+
+  //while (((long) stack & 4095) != 0) {
+  while (i < 12) {
+    addr = get_seg_long(ss, stack++);
+    /*
+		 * If the address is either in the text segment of the
+		 * kernel, or in the region which contains vmalloc'ed
+		 * memory, it *may* be the address of a calling
+		 * routine; if so, print it so that someone tracing
+		 * down the cause of the crash will be able to figure
+		 * out the call path that was taken.
+    */
+    if (((addr >= (unsigned long) &kmain) && (addr <= (unsigned long) &_etext)) || ((addr >= module_start) && (addr <= module_end))) {
+			if (i && ((i % 8) == 0))
+				kprintf("\n       ");
+			kprintf("[<%08lx>] ", addr);
+			i++;
+		}
+	}
+
   for (i = 0; i < 20; i++)
     kprintf("%02x ", 0xff & get_seg_byte(regs->tf_cs, (i+(char *)regs->tf_eip)));
   kprintf("\n");
@@ -131,6 +176,10 @@ void trap(struct trapframe *frame) {
 
   cr2 = rcr2();
   kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
+  die_if_kernel("trapCode", frame, frame->tf_trapno);
+  endTask( _current->id );
+  sched_yield();
+
 
   /*
    switch (trap_code) {

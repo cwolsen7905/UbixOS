@@ -26,7 +26,6 @@ ldLibrary *ldAddLibrary(const char *lib) {
       }
     //if ((tmpLib->output = (char *)malloc((linkerFd->size+0x4000))) == 0x0) {
     //if ((tmpLib->output = (char *)malloc(0x111000)) == 0x0) {
-    printf("[%i](0x%X:0x%X)", __LINE__, linkerFd->size+0x4000, 0x111000);
     //if ((tmpLib->output = (char *)getPage((0x111000/0x1000),2)) == 0x0) {
     if ((tmpLib->output = (char *)getPage(((linkerFd->size+0x4000)/0x1000),2)) == 0x0) {
       printf("malloc failed: tmpLib->output\n");
@@ -35,43 +34,29 @@ ldLibrary *ldAddLibrary(const char *lib) {
     sprintf(tmpLib->name,lib);
     }
   printf("Base: {0x%X}[%i]\n",tmpLib->output, __LINE__);
-  printf("[%i]\n", __LINE__);
   if (tmpLib->linkerHeader == 0x0) {
-  printf("[%i]", __LINE__);
     fseek(linkerFd,0x0,0x0);
-  printf("[%i]", __LINE__);
     if ((tmpLib->linkerHeader = (elfHeader *)malloc(sizeof(elfHeader))) == 0x0) {
       printf("malloc failed: tmpLib->linkerHeader\n");
       exit(0x1);
       }
-  printf("[%i]", __LINE__);
     fread(tmpLib->linkerHeader,sizeof(elfHeader),1,linkerFd);
-  printf("[%i]", __LINE__);
     }
-  printf("[%i]", __LINE__);
   if (tmpLib->linkerProgramHeader == 0x0) {
-  printf("[%i]", __LINE__);
     if ((tmpLib->linkerProgramHeader = (elfProgramHeader *)malloc(sizeof(elfProgramHeader)*tmpLib->linkerHeader->ePhnum)) == 0x0) {
       printf("malloc failed: tmpLib->linkerProgramHeader\n");
       exit(0x1);
       }
-  printf("[%i]", __LINE__);
     fseek(linkerFd,tmpLib->linkerHeader->ePhoff,0);
     fread(tmpLib->linkerProgramHeader,sizeof(elfProgramHeader),tmpLib->linkerHeader->ePhnum,linkerFd);
-  printf("[%i]", __LINE__);
 
     for (i=0;i<tmpLib->linkerHeader->ePhnum;i++) {
-  printf("[%i]", __LINE__);
       switch (tmpLib->linkerProgramHeader[i].phType) {
         case PT_LOAD:
         case PT_DYNAMIC:
-  printf("[%i](0x%X)", __LINE__, tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
           newLoc = (char *)tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output;
-  printf("[%i]", __LINE__);
           fseek(linkerFd,tmpLib->linkerProgramHeader[i].phOffset,0);
-  printf("[%i](0x%X)", __LINE__,tmpLib->linkerProgramHeader[i].phFilesz);
           fread(newLoc,tmpLib->linkerProgramHeader[i].phFilesz,1,linkerFd);
-  printf("[%i]", __LINE__);
           break;
         case PT_TLS:
             tmpLib->tlsindex = 1;
@@ -79,17 +64,14 @@ ldLibrary *ldAddLibrary(const char *lib) {
             tmpLib->tlsalign = tmpLib->linkerProgramHeader[i].phAlign;//ph->p_align;
             tmpLib->tlsinitsize = tmpLib->linkerProgramHeader[i].phFilesz;//ph->p_filesz;
             tmpLib->tlsinit = (void*)(tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
-  printf("[%i](0x%X)", __LINE__, tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
+/*
           newLoc = (char *)tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output;
-  printf("[%i]", __LINE__);
           fseek(linkerFd,tmpLib->linkerProgramHeader[i].phOffset,0);
-  printf("[%i](0x%X)", __LINE__,tmpLib->linkerProgramHeader[i].phFilesz);
           fread(newLoc,tmpLib->linkerProgramHeader[i].phFilesz,1,linkerFd);
-  printf("[%i]", __LINE__);
+*/
           break;
 	case PT_GNU_STACK:
-        	/* Tells us if the stack should be executable.  Failsafe to 
-		executable until we add checking */
+          /* Tells us if the stack should be executable.  Failsafe to executable until we add checking */
           printf("NOT DEF1\n");
       	  break;
       	case PT_PAX_FLAGS:
@@ -103,7 +85,6 @@ ldLibrary *ldAddLibrary(const char *lib) {
       }
     }
 
-  printf("[%i]", __LINE__);
   if (tmpLib->linkerSectionHeader == 0x0) {
     if ((tmpLib->linkerSectionHeader = (elfSectionHeader *)malloc(sizeof(elfSectionHeader)*tmpLib->linkerHeader->eShnum)) == 0x0) {
       printf("malloc failed: tmpLib->linkerSectionHeader\n");
@@ -150,6 +131,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
             case R_386_TLS_DTPMOD32:
             case R_386_TLS_DTPOFF32:
               *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
+              *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uInt32)reMap;
               break;
             case R_386_PC32:
               *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uInt32)reMap;
@@ -179,10 +161,12 @@ ldLibrary *ldAddLibrary(const char *lib) {
           tmpLib->sym = i;
           }
         break;
+      default:
+        printf("[SHTYPE: 0x%X]", tmpLib->linkerSectionHeader[i].shType);
+        break;
       }
     }
   }
-  printf("[%i]", __LINE__);
   if (libs != 0x0)
     libs->prev    = tmpLib;
 

@@ -1,5 +1,5 @@
 #ifndef _I386_SIGNAL_H_
-#define _i386_SIGNAL_H_
+#define _I386_SIGNAL_H_
 
 #define _NSIG             32
 #define NSIG            _NSIG
