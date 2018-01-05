@@ -406,9 +406,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   uint32_t cr3 = 0x0;
 
   unsigned int *tmp = 0x0;
-  //uint32_t memAddr = 0x0;
 
-  uInt32 ldAddr = 0x0;
   uInt32 seg_size = 0x0;
   uInt32 seg_addr = 0x0;
 
@@ -422,9 +420,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   Elf32_Ehdr *binaryHeader = 0x0;
   Elf32_Phdr *programHeader = 0x0;
   Elf32_Shdr *sectionHeader = 0x0;
-
-  Elf32_Dyn *elfDynamicS = 0x0;
-  Elf32_Dyn *dynp = 0x0;
 
   elf_file_t ef = 0x0;
 
@@ -487,7 +482,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   td->abi = binaryHeader->e_ident[EI_OSABI];
 
   /* Load The Program Header(s) */
-  if ((programHeader = (elfProgramHeader *) kmalloc(sizeof(elfProgramHeader) * binaryHeader->e_phnum)) == 0x0)
+  if ((programHeader = (Elf32_Phdr *) kmalloc(sizeof(Elf32_Phdr) * binaryHeader->e_phnum)) == 0x0)
     K_PANIC("MALLOC FAILED");
 
   assert(programHeader);
@@ -497,7 +492,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   /* Done Loading Program Header(s) */
 
   /* Load The Section Header(s) */
-  if ((sectionHeader = (elfSectionHeader *) kmalloc(sizeof(elfSectionHeader) * binaryHeader->e_shnum)) == 0x0)
+  if ((sectionHeader = (Elf32_Shdr *) kmalloc(sizeof(Elf32_Shdr) * binaryHeader->e_shnum)) == 0x0)
     K_PANIC("MALLOC FAILED");
 
   assert(sectionHeader);
