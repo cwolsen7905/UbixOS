@@ -125,8 +125,8 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 
   *entry = binaryHeader->e_entry + real_base_addr;
 
-  free(binaryHeader);
-  free(programHeader);
+  kfree(binaryHeader);
+  kfree(programHeader);
   return (0x0);
 }
 

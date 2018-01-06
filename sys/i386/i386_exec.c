@@ -719,12 +719,16 @@ static int elf_parse_dynamic(elf_file_t ef) {
   for (dynp = ef->dynamic; dynp->d_tag != 0x0; dynp++) {
     switch (dynp->d_tag) {
       case DT_NEEDED:
+        asm("nop");
         break;
       case DT_INIT:
+        asm("nop");
         break;
       case DT_FINI:
+        asm("nop");
         break;
       case DT_HASH:
+        asm("nop");
         /* From src/libexec/rtld-elf/rtld.c */
         const Elf32_Hashelt *hashtab = (const Elf32_Hashelt *) (ef->address + dynp->d_un.d_ptr);
         ef->nbuckets = hashtab[0];
