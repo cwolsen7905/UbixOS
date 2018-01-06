@@ -39,6 +39,11 @@
 #include <assert.h>
 #include <string.h>
 
+#define ENVP_PAGE 0x1000
+#define ARGV_PAGE 0x1000
+#define ELF_AUX 0x1000
+#define STACK_PAD 16
+
 #define ENOEXEC -1
 
 #define AT_NULL         0       /* Terminates the vector. */
@@ -54,14 +59,13 @@
 
 #define AUXARGS_ENTRY(pos, id, val) {*pos = id;pos++; *pos = val;pos++;}
 
-
 static int argv_count(char **argv) {
   int i = 0;
 
   while (*argv++ != 0x0)
     i++;
 
-  return(i);
+  return (i);
 }
 
 static int envp_count(char **envp) {
@@ -70,7 +74,7 @@ static int envp_count(char **envp) {
   while (*envp++ != 0x0)
     i++;
 
-  return(i);
+  return (i);
 }
 
 static int elf_parse_dynamic(elf_file_t ef);
@@ -198,7 +202,6 @@ void execFile(char *file, char **argv, char **envp, int console) {
   newProcess = schedNewTask();
   assert(newProcess);
 
-
   newProcess->gid = 0x0;
   newProcess->uid = 0x0;
   newProcess->term = tty_find(console);
@@ -212,14 +215,12 @@ void execFile(char *file, char **argv, char **envp, int console) {
   /* Now We Must Create A Virtual Space For This Proccess To Run In */
   newProcess->tss.cr3 = (uint32_t) vmm_createVirtualSpace(newProcess->id);
 
-
   /* To Better Load This Application We Will Switch Over To Its VM Space */
   asm volatile(
     "movl %0,%%eax          \n"
     "movl %%eax,%%cr3       \n"
     : : "d" ((uint32_t *)(newProcess->tss.cr3))
   );
-
 
   /* Lets Find The File */
   newProcess->imageFd = fopen(file, "r");
@@ -314,9 +315,9 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Kernel Stack 0x2000 bytes long */
 
-  kprintf("PID: %i\n",newProcess->id);
+  kprintf("PID: %i\n", newProcess->id);
   vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
-  kprintf("PID: %i\n",newProcess->id);
+  kprintf("PID: %i\n", newProcess->id);
   vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
 
   /* Set All The Proper Information For The Task */
@@ -352,16 +353,10 @@ void execFile(char *file, char **argv, char **envp, int console) {
   kfree(programHeader);
   fclose(newProcess->imageFd);
 
-
-  tmp = (uInt32 *) newProcess->tss.esp0 -5;
+  tmp = (uInt32 *) newProcess->tss.esp0 - 5;
 
   tmp[0] = binaryHeader->e_entry;
   tmp[3] = STACK_ADDR - 12;
-
-  #define ENVP_PAGE 0x1000
-  #define ARGV_PAGE 0x1000
-  #define ELF_AUX 0x1000
-  #define STACK_PAD 16
 
   newProcess->tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD;
 
@@ -371,33 +366,33 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   uint32_t sp = 0x0;
 
-  for (i=1;i<=argc;i++) {
-    tmp[i] = STACK_ADDR - ARGV_PAGE + sp;  
-    strcpy(tmp[i], argv[i-1]);
-    sp += strlen(argv[i-1]) + 1;
+  for (i = 1; i <= argc; i++) {
+    tmp[i] = STACK_ADDR - ARGV_PAGE + sp;
+    strcpy(tmp[i], argv[i - 1]);
+    sp += strlen(argv[i - 1]) + 1;
   }
   tmp[i++] = 0x0;
 
   sp = 0;
-  for (int x = 0;x<envc;x++) {
-    tmp[x+i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-    strcpy(tmp[x+i], envp[x]);
+  for (int x = 0; x < envc; x++) {
+    tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
+    strcpy(tmp[x + i], envp[x]);
     sp += strlen(envp[x]) + 1;
   }
-  tmp[i+x] = 0x0;
+  tmp[i + x] = 0x0;
 
   //*tmp++ = 0x1; // ARGC
   //*tmp++ = 0x100; // ARGV
   //*tmp++ = 0x0; // ARGV TERM
   //*tmp++ = 0x0; // ENV
   //*tmp++ = 0x0; // ENV TERM
-/*
-  *tmp++ = 0xDEAD; // AUX 1.A
-  *tmp++ = 0xBEEF; // AUX 1.B
-  *tmp++ = 0x0; // AUX TERM
-  *tmp++ = 0x0; // AUX TERM 
-  *tmp++ = 0x1; // TERM
-*/
+  /*
+   *tmp++ = 0xDEAD; // AUX 1.A
+   *tmp++ = 0xBEEF; // AUX 1.B
+   *tmp++ = 0x0; // AUX TERM
+   *tmp++ = 0x0; // AUX TERM
+   *tmp++ = 0x1; // TERM
+   */
 
   /* Switch Back To The Kernels VM Space */
   asm volatile(
@@ -417,12 +412,13 @@ void execFile(char *file, char **argv, char **envp, int console) {
   return;
 }
 
-
 int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   int i = 0x0;
   int x = 0x0;
-  int argc = 0x0;
+
+  int argc = argv_count(argv);
+  int envc = envp_count(envp);
 
   uint32_t cr3 = 0x0;
 
@@ -432,9 +428,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   uInt32 seg_addr = 0x0;
 
   char *interp = 0x0;
-  //char **argv = 0x0;
-  char **argvNew = 0x0;
-  char *args = 0x0;
 
   fileDescriptor *fd = 0x0;
 
@@ -635,33 +628,54 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   iFrame->eip = binaryHeader->e_entry;
   iFrame->edx = 0x0;
   //iFrame->user_esp = ((uint32_t) STACK_ADDR) - ((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
-  iFrame->user_esp = ((uint32_t) STACK_ADDR) - (128);      //(sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
+  //iFrame->user_esp = ((uint32_t) STACK_ADDR) - (128);      //(sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
+
+  iFrame->user_esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD;
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
 
-  memset((char *) (STACK_ADDR - 128), 0x0, 128);
+  memset((char *) tmp, 0x0, ARGV_PAGE + ENVP_PAGE + ELF_AUX + (argc + 1) + (envc + 1) + STACK_PAD);
 
-  tmp[0] = argc; // ARGC
+  tmp[0] = argc;
 
-  tmp[1] = 0x0; // ARGV
-  tmp[2] = 0x0; // ARGV Terminator
+  uint32_t sp = 0x0;
 
-  tmp[3] = 0x0; // ENV 
-  tmp[4] = 0x0; // ENV Terminator
+  for (i = 1; i <= argc; i++) {
+    tmp[i] = STACK_ADDR - ARGV_PAGE + sp;
+    strcpy(tmp[i], argv[i - 1]);
+    sp += strlen(argv[i - 1]) + 1;
+  }
+  tmp[i++] = 0x0;
 
-  tmp[5] = 0x1;
-  tmp[6] = 0x2;
+  sp = 0;
+  for (int x = 0; x < envc; x++) {
+    tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
+    strcpy(tmp[x + i], envp[x]);
+    sp += strlen(envp[x]) + 1;
+  }
+  tmp[i + x] = 0x0;
 
-  tmp[7] = 0x3; // AUX VECTOR 8 Bytes
-  tmp[8] = 0x4; // Terminator
+  /*
+   tmp[0] = argc; // ARGC
 
-  tmp[9] = 0x5;
-  tmp[10] = 0x6;
+   tmp[1] = 0x0; // ARGV
+   tmp[2] = 0x0; // ARGV Terminator
 
-  tmp[11] = 0x7;
-  tmp[12] = 0x8;
+   tmp[3] = 0x0; // ENV
+   tmp[4] = 0x0; // ENV Terminator
 
-  kfree(argvNew);
+   tmp[5] = 0x1;
+   tmp[6] = 0x2;
+
+   tmp[7] = 0x3; // AUX VECTOR 8 Bytes
+   tmp[8] = 0x4; // Terminator
+
+   tmp[9] = 0x5;
+   tmp[10] = 0x6;
+
+   tmp[11] = 0x7;
+   tmp[12] = 0x8;
+   */
 
   /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
   kfree(binaryHeader);
@@ -775,7 +789,7 @@ static int elf_parse_dynamic(elf_file_t ef) {
         else
           kprintf("PLT[0x%X:0x%X]", tmp, ef->ld_addr);
         tmp[2] = (uInt32) ef->ld_addr;
-        tmp[1] = (uInt32) ef;//0x0;//0xBEEFEAD;//STACK_ADDR - 128;//_current->imageFd;//0xBEEFDEAD;//ef;
+        tmp[1] = (uInt32) ef; //0x0;//0xBEEFEAD;//STACK_ADDR - 128;//_current->imageFd;//0xBEEFDEAD;//ef;
       break;
       default:
         asm("nop");
