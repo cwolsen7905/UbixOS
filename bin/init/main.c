@@ -34,8 +34,8 @@
 #include <sys/sched.h>
 #include <sys/mpi.h>
 
-static char *argv_shell[2] = { "shell", NULL, };
-static char *envp_shell[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, };
+static char *argv_login[2] = { "login", NULL, };
+static char *envp_login[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, };
 
 int main(int argc,char **argv, char **envp) {
   int i=0x0;
@@ -93,7 +93,8 @@ int main(int argc,char **argv, char **envp) {
 
   if (0 == i) {
     printf("Starting Login Daemon.\n");
-    execve("sys:/bin/login", argv_shell, envp_shell);
+    printf("ARGV[0] %s - 0x%X\n", argv_login[0], &argv_login[0]);
+    execve("sys:/bin/login", argv_login, envp_login);
     printf("Error Starting System\n");
     exit(0x0);
   }

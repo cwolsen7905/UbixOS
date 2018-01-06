@@ -368,7 +368,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   for (i = 1; i <= argc; i++) {
     tmp[i] = STACK_ADDR - ARGV_PAGE + sp;
-    strcpy(tmp[i], argv[i - 1]);
+    strcpy((char *)tmp[i], argv[i - 1]);
     sp += strlen(argv[i - 1]) + 1;
   }
   tmp[i++] = 0x0;
@@ -376,7 +376,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   sp = 0;
   for (int x = 0; x < envc; x++) {
     tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-    strcpy(tmp[x + i], envp[x]);
+    strcpy((char *)tmp[x + i], envp[x]);
     sp += strlen(envp[x]) + 1;
   }
   tmp[i + x] = 0x0;
@@ -622,7 +622,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   //! Adjust iframe
 //  iFrame = (struct i386_frame *) (_current->tss.esp0 - sizeof(struct i386_frame));
   //kprintf( "EBP-1(%i): EBP: [0x%X], EIP: [0x%X], ESP: [0x%X]\n", _current->id, iFrame->ebp, iFrame->eip, iFrame->user_esp );
-  argc = 1;
 
   iFrame->ebp = 0x0;      //STACK_ADDR;
   iFrame->eip = binaryHeader->e_entry;
@@ -636,13 +635,17 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   memset((char *) tmp, 0x0, ARGV_PAGE + ENVP_PAGE + ELF_AUX + (argc + 1) + (envc + 1) + STACK_PAD);
 
+  kprintf("ARGC: [%i]", argc);
+  kprintf("ARGV[0] %s - 0x%X", argv[0], &argv[0]);
+  while(1);
+
   tmp[0] = argc;
 
   uint32_t sp = 0x0;
 
   for (i = 1; i <= argc; i++) {
     tmp[i] = STACK_ADDR - ARGV_PAGE + sp;
-    strcpy(tmp[i], argv[i - 1]);
+    strcpy((char *)tmp[i], argv[i - 1]);
     sp += strlen(argv[i - 1]) + 1;
   }
   tmp[i++] = 0x0;
@@ -650,7 +653,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   sp = 0;
   for (int x = 0; x < envc; x++) {
     tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-    strcpy(tmp[x + i], envp[x]);
+    strcpy((char *)tmp[x + i], envp[x]);
     sp += strlen(envp[x]) + 1;
   }
   tmp[i + x] = 0x0;
