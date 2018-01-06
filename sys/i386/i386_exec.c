@@ -77,6 +77,48 @@ static int envp_count(char **envp) {
   return (i);
 }
 
+static int args_copyin(char **argv_in, char **argv_out, char **args_out) {
+
+  int argc = argv_count(argv_in);
+
+  *argv_out = (char **)kmalloc(sizeof(char *) * (argc + 2)); // + 1 For ARGC + 1 For NULL TERM
+  *args_out = (char **)kmalloc(ARGV_PAGE);
+
+  argv_out[0] = argc;
+
+  uint32_t sp = 0x0;
+
+  int i = 0x0;
+
+  for (i = 1; i <=argc; i++) {
+    argv_out[i] = *args_out + sp;
+    strcpy(argv_out[i], argv_in[i - 1]);
+    sp += strlen(argv_in[i - 1]) + 1;
+  }
+  argv_out[i++] = 0x0;
+
+}
+
+static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
+
+  int envc = envp_count(envp_in);
+
+  *envp_out = (char **)kmalloc(sizeof(char *) * (envc + 1)); // + 1 For NULL TERM
+  *envs_out = (char **)kmalloc(ENVP_PAGE);
+
+  uint32_t sp = 0x0;
+
+  int i = 0x0;
+
+  for (i = 0; i < envc; i++) {
+    envp_out[i] = *envs_out + sp;
+    strcpy(envp_out[i], envp_in[i]);
+    sp += strlen(envp_in[i]) + 1;
+  }
+  envp_out[i++] = 0x0;
+
+}
+
 static int elf_parse_dynamic(elf_file_t ef);
 
 /*****************************************************************************************
@@ -459,6 +501,17 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   /* Set Threads FD to open FD */
   _current->imageFd = fd;
 
+  /* Copy In ARGS & ENVS Before Cleaning Virtual Space */
+  char *argv_out = 0x0;
+  char *args_out = 0x0;
+
+  args_copyin(&argv, &argv_out, &args_out);
+
+  char *envp_out = 0x0;
+  char *envs_out = 0x0;
+
+  envs_copyin(&envp, &envp_out, &envs_out);
+
   //! Clean the virtual of COW pages left over from the fork
   //vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
   //MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
@@ -642,40 +695,25 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   for (i = 1; i <= argc; i++) {
     tmp[i] = STACK_ADDR - ARGV_PAGE + sp;
-    strcpy(tmp[i], argv[i - 1]);
-    sp += strlen(argv[i - 1]) + 1;
+    strcpy(tmp[i], argv_out[i]);
+    sp += strlen(argv_out[i]) + 1;
   }
   tmp[i++] = 0x0;
 
+  kfree(*argv_out);
+  kfree(*args_out);
+
   sp = 0;
+
   for (int x = 0; x < envc; x++) {
     tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-    strcpy(tmp[x + i], envp[x]);
-    sp += strlen(envp[x]) + 1;
+    strcpy(tmp[x + i], envp_out[x]);
+    sp += strlen(envp_out[x]) + 1;
   }
   tmp[i + x] = 0x0;
 
-  /*
-   tmp[0] = argc; // ARGC
-
-   tmp[1] = 0x0; // ARGV
-   tmp[2] = 0x0; // ARGV Terminator
-
-   tmp[3] = 0x0; // ENV
-   tmp[4] = 0x0; // ENV Terminator
-
-   tmp[5] = 0x1;
-   tmp[6] = 0x2;
-
-   tmp[7] = 0x3; // AUX VECTOR 8 Bytes
-   tmp[8] = 0x4; // Terminator
-
-   tmp[9] = 0x5;
-   tmp[10] = 0x6;
-
-   tmp[11] = 0x7;
-   tmp[12] = 0x8;
-   */
+  kfree(*envp_out);
+  kfree(*envs_out);
 
   /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
   kfree(binaryHeader);
