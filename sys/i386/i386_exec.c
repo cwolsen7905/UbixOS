@@ -54,6 +54,25 @@
 
 #define AUXARGS_ENTRY(pos, id, val) {*pos = id;pos++; *pos = val;pos++;}
 
+
+static int argv_count(char **argv) {
+  int i = 0;
+
+  while (*argv++ != 0x0)
+    i++;
+
+  return(i);
+}
+
+static int envp_count(char **envp) {
+  int i = 0;
+
+  while (*envp++ != 0x0)
+    i++;
+
+  return(i);
+}
+
 static int elf_parse_dynamic(elf_file_t ef);
 
 /*****************************************************************************************
@@ -159,7 +178,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
  The Freshly Allocated Pages With The Correct Permissions
 
  *****************************************************************************************/
-void execFile(char *file, int argc, char **argv, int console) {
+void execFile(char *file, char **argv, char **envp, int console) {
 
   kTask_t *newProcess = 0x0;
 
@@ -171,6 +190,9 @@ void execFile(char *file, int argc, char **argv, int console) {
   Elf32_Ehdr *binaryHeader = 0x0;
 
   Elf32_Phdr *programHeader = 0x0;
+
+  int argc = argv_count(argv);
+  int envc = envp_count(envp);
 
   /* Get A New Task For This Proccess */
   newProcess = schedNewTask();
@@ -330,26 +352,52 @@ void execFile(char *file, int argc, char **argv, int console) {
   kfree(programHeader);
   fclose(newProcess->imageFd);
 
-  tmp = (uInt32 *) newProcess->tss.esp0 - 5;
+
+  tmp = (uInt32 *) newProcess->tss.esp0 -5;
 
   tmp[0] = binaryHeader->e_entry;
   tmp[3] = STACK_ADDR - 12;
 
+  #define ENVP_PAGE 0x1000
+  #define ARGV_PAGE 0x1000
+  #define ELF_AUX 0x1000
+  #define STACK_PAD 16
+
+  newProcess->tss.esp = STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD;
+
   tmp = (uint32_t *) newProcess->tss.esp;
 
-  kprintf("argv: [0x%X]\n", argv);
-  //*tmp++ = 0x0; // Stack EIP Return Addr
-  //*tmp++ = tmp + 1; // Pointer To AP
-  *tmp++ = 0x1; // ARGC
-  *tmp++ = 0x100; // ARGV
-  *tmp++ = 0x0; // ARGV TERM
-  *tmp++ = 0x0; // ENV
-  *tmp++ = 0x0; // ENV TERM
+  tmp[0] = argc;
+
+  uint32_t sp = 0x0;
+
+  for (i=1;i<=argc;i++) {
+    tmp[i] = STACK_ADDR - ARGV_PAGE + sp;  
+    strcpy(tmp[i], argv[i-1]);
+    sp += strlen(argv[i-1]) + 1;
+  }
+  tmp[i++] = 0x0;
+
+  sp = 0;
+  for (int x = 0;x<envc;x++) {
+    tmp[x+i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
+    strcpy(tmp[x+i], envp[x]);
+    sp += strlen(envp[x]) + 1;
+  }
+  tmp[i+x] = 0x0;
+
+  //*tmp++ = 0x1; // ARGC
+  //*tmp++ = 0x100; // ARGV
+  //*tmp++ = 0x0; // ARGV TERM
+  //*tmp++ = 0x0; // ENV
+  //*tmp++ = 0x0; // ENV TERM
+/*
   *tmp++ = 0xDEAD; // AUX 1.A
   *tmp++ = 0xBEEF; // AUX 1.B
   *tmp++ = 0x0; // AUX TERM
   *tmp++ = 0x0; // AUX TERM 
   *tmp++ = 0x1; // TERM
+*/
 
   /* Switch Back To The Kernels VM Space */
   asm volatile(
@@ -730,7 +778,8 @@ static int elf_parse_dynamic(elf_file_t ef) {
         tmp[1] = (uInt32) ef;//0x0;//0xBEEFEAD;//STACK_ADDR - 128;//_current->imageFd;//0xBEEFDEAD;//ef;
       break;
       default:
-        kprintf("t_tag: 0x%X>", dynp->d_tag);
+        asm("nop");
+        //kprintf("t_tag: 0x%X>", dynp->d_tag);
       break;
     }
   }

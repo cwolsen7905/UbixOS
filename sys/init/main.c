@@ -93,6 +93,10 @@ struct {
   union descriptorTableUnion *gdt __attribute__ ((packed));
 } loadGDT = { (11 * sizeof(union descriptorTableUnion) - 1), ubixGDT };
 
+
+static char *argv_init[2] = { "init", NULL, }; // ARGV For Initial Proccess
+static char *envp_init[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; //ENVP For Initial Proccess
+
 /**
  * \brief This is the entry point into the os where all of the kernels sub systems are started up.
  *
@@ -144,7 +148,7 @@ int kmain(uInt32 rootdev) {
   execThread(systemTask, (uInt32) sysTask + 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
-  execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
+  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
   kprintf("File Start!\n");
   //execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */
 

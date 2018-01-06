@@ -34,7 +34,7 @@
 #include <sys/sched.h>
 #include <sys/mpi.h>
 
-int main(int argc,char **argv) {
+int main(int argc,char **argv, char **envp) {
   int i=0x0;
   mpi_message_t myMsg;
 
@@ -55,7 +55,6 @@ int main(int argc,char **argv) {
     }
 
   printf("Initializing UbixOS\n");
-
 
   /* Start TTYD */
 /*

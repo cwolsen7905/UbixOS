@@ -34,7 +34,7 @@
 #include <ubixos/sched.h>
 
 uInt32 execThread( void (*tproc)( void ), uInt32, char * );
-void execFile( char *file, int argc, char **argv, int console );
+void execFile( char *file, char **argv, char **envp, int console );
 
 int sys_exec( struct thread *, char *, char **, char ** );
 
