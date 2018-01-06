@@ -1,31 +1,28 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: elf.c 141 2016-01-17 02:05:18Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2004, 2018 The UbixOS Project
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are
+ * permitted provided that the following conditions are met:
+ *
+ * Redistributions of source code must retain the above copyright notice, this list of
+ * conditions, the following disclaimer and the list of authors.  Redistributions in binary
+ * form must reproduce the above copyright notice, this list of conditions, the following
+ * disclaimer and the list of authors in the documentation and/or other materials provided
+ * with the distribution. Neither the name of the UbixOS Project nor the names of its
+ * contributors may be used to endorse or promote products derived from this software
+ * without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
+ * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+ * THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+ * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+ * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <sys/elf.h>
 #include <ubixos/sched.h>
@@ -37,15 +34,15 @@
 
 typedef struct elf_file {
 
-} *elf_file_type;
+}*elf_file_type;
 
 int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry) {
+  int ret = 0;
 
   int i = 0x0;
   int x = 0x0;
   int numsegs = 0x0;
 
-  //uint32_t base = 0x0;
   uint32_t base_addr = 0x0;
   uint32_t real_base_addr = 0x0;
 
@@ -59,7 +56,6 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
   if (exec_fd == 0x0)
     return (-1);
 
-
   /* Load the ELF header */
   if ((binaryHeader = (Elf32_Ehdr *) kmalloc(sizeof(Elf32_Ehdr))) == 0x0)
     K_PANIC("malloc failed!");
@@ -68,17 +64,18 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 
   /* Check If App Is A Real Application */
   if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
-    kfree(binaryHeader);
-    fclose(exec_fd);
-    return (-1);
+    ret = -1;
+    goto failed;
   }
 
   if (binaryHeader->e_type == ET_DYN)
     real_base_addr = *addr;
   else if (binaryHeader->e_type == ET_EXEC)
     real_base_addr = 0x0;
-  else
-    return (-1);
+  else {
+    ret = -1;
+    goto failed;
+  }
 
   /* Load The Program Header(s) */
   if ((programHeader = (Elf32_Phdr *) kmalloc(sizeof(Elf32_Phdr) * binaryHeader->e_phnum)) == 0x0)
@@ -115,7 +112,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
           }
         }
         if (numsegs == 0x0)
-          base_addr = (programHeader[i].p_vaddr & 0xFFFFF000) + real_base_addr;
+          base_addr = programHeader[i].p_vaddr + real_base_addr; //(programHeader[i].p_vaddr & 0xFFFFF000) + real_base_addr;
         numsegs++;
       break;
     }
@@ -125,9 +122,20 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
 
   *entry = binaryHeader->e_entry + real_base_addr;
 
-  kfree(binaryHeader);
-  kfree(programHeader);
-  return (0x0);
+  failed:
+
+  /* Close The Open File */
+  fclose(exec_fd);
+
+  /* Free Binary Header Memory */
+  if (binaryHeader != 0x0)
+    kfree(binaryHeader);
+
+  /* Free Program Header Memory */
+  if (programHeader != 0x0)
+    kfree(programHeader);
+
+  return (ret);
 }
 
 const struct {
@@ -161,8 +169,6 @@ char *elfGetPhType(int phType) {
 char *elfGetRelType(int relType) {
   return ((char *) elfRelType[relType].relTypeName);
 }
-
-
 
 /***
  END

@@ -91,7 +91,7 @@ typedef struct elf_file {
   Elf32_Addr pcpu_stop; /* Pre-relocation pcpu set stop. */
   Elf32_Addr pcpu_base; /* Relocated pcpu set address. */
   Elf32_Addr ld_addr; // Entry Point Of Linker (Load It Too)
-}*elf_file_t;
+} *elf_file_t;
 
 static int elf_parse_dynamic(elf_file_t ef);
 
@@ -106,12 +106,14 @@ static int elf_parse_dynamic(elf_file_t ef);
  so do not use out side of kernel space
 
  *****************************************************************************************/
-uInt32 execThread(void (*tproc)(void), uint32_t stack, char *arg) {
+uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
+
   kTask_t * newProcess = 0x0;
+
   /* Find A New Thread */
   newProcess = schedNewTask();
-
   assert(newProcess);
+
   if (stack < 0x100000)
     kpanic("exec: stack not in valid area: [0x%X]\n", stack);
 
@@ -131,7 +133,7 @@ uInt32 execThread(void (*tproc)(void), uint32_t stack, char *arg) {
   newProcess->tss.esi = 0x0;
   newProcess->tss.edi = 0x0;
 
-  /* Set these up to be ring 3 tasks */
+  /* Ring 3 Selectors */
   /*
    newProcess->tss.es           = 0x30+3;
    newProcess->tss.cs           = 0x28+3;
@@ -141,6 +143,7 @@ uInt32 execThread(void (*tproc)(void), uint32_t stack, char *arg) {
    newProcess->tss.gs           = 0x30+3;
    */
 
+  /* Ring 0 Selectors */
   newProcess->tss.es = 0x10;
   newProcess->tss.cs = 0x08;
   newProcess->tss.ss = 0x10;
@@ -157,26 +160,26 @@ uInt32 execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   /* Set up default stack for thread here filled with arg list 3 times */
   asm volatile(
-      "pusha               \n"
-      "movl   %%esp,%%ecx  \n"
-      "movl   %1,%%eax     \n"
-      "movl   %%eax,%%esp  \n"
-      "pushl  %%ebx        \n"
-      "pushl  %%ebx        \n"
-      "pushl  %%ebx        \n"
-      "movl   %%esp,%%eax  \n"
-      "movl   %%eax,%1     \n"
-      "movl   %%ecx,%%esp  \n"
-      "popa                \n"
-      :
-      : "b" (arg),"m" (newProcess->tss.esp)
+    "pusha               \n"
+    "movl   %%esp,%%ecx  \n"
+    "movl   %1,%%eax     \n"
+    "movl   %%eax,%%esp  \n"
+    "pushl  %%ebx        \n"
+    "pushl  %%ebx        \n"
+    "pushl  %%ebx        \n"
+    "movl   %%esp,%%eax  \n"
+    "movl   %%eax,%1     \n"
+    "movl   %%ecx,%%esp  \n"
+    "popa                \n"
+    :
+    : "b" (arg),"m" (newProcess->tss.esp)
   );
 
   /* Put new thread into the READY state */
   sched_setStatus(newProcess->id, READY);
 
   /* Return with the new process ID */
-  return ((uInt32) newProcess);
+  return ((uint32_t) newProcess);
 }
 
 /*****************************************************************************************
@@ -197,110 +200,118 @@ uInt32 execThread(void (*tproc)(void), uint32_t stack, char *arg) {
  *****************************************************************************************/
 void execFile(char *file, int argc, char **argv, int console) {
 
+  kTask_t newProcess = 0x0;
+
   int i = 0x0;
   int x = 0x0;
+
   uint32_t *tmp = 0x0;
 
-  fileDescriptor *tmpFd = 0x0;
   Elf32_Ehdr *binaryHeader = 0x0;
-  elfProgramHeader *programHeader = 0x0;
+
+  Elf32_Phdr *programHeader = 0x0;
 
   /* Get A New Task For This Proccess */
-  _current = schedNewTask();
-  assert(_current);
+  newProcess = schedNewTask();
+  assert(newProcess);
 
-  _current->gid = 0x0;
-  _current->uid = 0x0;
-  _current->term = tty_find(console);
+  newProcess->gid = 0x0;
+  newProcess->uid = 0x0;
+  newProcess->term = tty_find(console);
 
-  if (_current->term == 0x0)
+  if (newProcess->term == 0x0)
     kprintf("Error: invalid console\n");
 
   /* Set tty ownership */
-  _current->term->owner = _current->id;
+  newProcess->term->owner = newProcess->id;
 
   /* Now We Must Create A Virtual Space For This Proccess To Run In */
-  _current->tss.cr3 = (uInt32) vmm_createVirtualSpace(_current->id);
-  kprintf("_current->tss.cr3: 0x%X", _current->tss.cr3);
+  newProcess->tss.cr3 = (uint32_t) vmm_createVirtualSpace(newProcess->id);
+
+
   /* To Better Load This Application We Will Switch Over To Its VM Space */
   asm volatile(
-      "movl %0,%%eax          \n"
-      "movl %%eax,%%cr3       \n"
-      : : "d" ((uInt32 *)(_current->tss.cr3))
+    "movl %0,%%eax          \n"
+    "movl %%eax,%%cr3       \n"
+    : : "d" ((uint32_t *)(newProcess->tss.cr3))
   );
+
+
   /* Lets Find The File */
-  tmpFd = fopen(file, "r");
+  newProcess->imageFd = fopen(file, "r");
 
   /* If We Dont Find the File Return */
-  if (tmpFd == 0x0) {
+  if (newProcess->imageFd == 0x0) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
-    fclose(tmpFd);
+    fclose(newProcess->imageFd);
     return;
   }
-  if (tmpFd->perms == 0x0) {
+
+  if (newProcess->imageFd->perms == 0x0) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
-    fclose(tmpFd);
+    fclose(newProcess->imageFd);
     return;
   }
 
   /* Load ELF Header */
   binaryHeader = (Elf32_Ehdr *) kmalloc(sizeof(Elf32_Ehdr));
 
-  //kprintf(">a:%i:0x%X:0x%X<",sizeof(Elf32_Ehdr),binaryHeader,tmpFd);
-  fread(binaryHeader, sizeof(Elf32_Ehdr), 1, tmpFd);
+  fread(binaryHeader, sizeof(Elf32_Ehdr), 1, newProcess->imageFd);
 
   /* Check If App Is A Real Application */
   if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
-    fclose(tmpFd);
+    fclose(newProcess->imageFd);
     return;
-  } else if (binaryHeader->e_type != 2) {
+  }
+  else if (binaryHeader->e_type != 2) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
-    fclose(tmpFd);
+    fclose(newProcess->imageFd);
     return;
-  } else if (binaryHeader->e_entry == 0x300000) {
+  }
+  else if (binaryHeader->e_entry == 0x300000) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
-    fclose(tmpFd);
+    fclose(newProcess->imageFd);
     return;
   }
 
-  _current->td.abi = binaryHeader->e_ident[EI_OSABI];
+  newProcess->td.abi = binaryHeader->e_ident[EI_OSABI];
 
   /* Load The Program Header(s) */
   programHeader = (elfProgramHeader *) kmalloc(sizeof(elfProgramHeader) * binaryHeader->e_phnum);
-  fseek(tmpFd, binaryHeader->e_phoff, 0);
+  fseek(newProcess->imageFd, binaryHeader->e_phoff, 0);
 
   //kprintf(">c:%i:0x%X:0x%X<",sizeof(elfProgramHeader)*binaryHeader->e_phnum,programHeader,tmpFd);
-  fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->e_phnum), 1, tmpFd);
+  fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->e_phnum), 1, newProcess->imageFd);
   //kprintf(">d<");
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
   for (i = 0; i < binaryHeader->e_phnum; i++) {
-    if (programHeader[i].phType == 1) {
+    if (programHeader[i].p_type == 1) {
       /*
        Allocate Memory Im Going To Have To Make This Load Memory With Correct
        Settings so it helps us in the future
        */
-      for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
+      for (x = 0x0; x < (programHeader[i].p_memsz); x += 0x1000) {
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].phVaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(newProcess->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
           K_PANIC("Remap Page Failed");
 
-        memset((void *) ((programHeader[i].phVaddr & 0xFFFFF000) + x), 0x0, 0x1000);
+        memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
 
       }
-      _current->oInfo.vmStart = 0x80000000;
-      _current->td.vm_daddr = (u_long) (programHeader[i].phVaddr & 0xFFFFF000);
+
       /* Now Load Section To Memory */
-      fseek(tmpFd, programHeader[i].phOffset, 0);
-      fread((void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, tmpFd);
-      if ((programHeader[i].phFlags & 0x2) != 0x2) {
-        kprintf("pH: [0x%X]\n", programHeader[i].phMemsz);
-        for (x = 0x0; x < (programHeader[i].phMemsz); x += 0x1000) {
-          if ((vmm_setPageAttributes((programHeader[i].phVaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
+      fseek(newProcess->imageFd, programHeader[i].p_offset, 0);
+
+      fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, newProcess->imageFd);
+
+      if ((programHeader[i].p_flags & 0x2) != 0x2) {
+        for (x = 0x0; x < (programHeader[i].p_memsz); x += 0x1000) {
+          if ((vmm_setPageAttributes((programHeader[i].p_vaddr & 0xFFFFF000) + x, PAGE_PRESENT | PAGE_USER)) != 0x0)
             kpanic("Error: vmm_setPageAttributes failed, File: %s, Line: %i\n", __FILE__, __LINE__);
         }
       }
@@ -308,57 +319,58 @@ void execFile(char *file, int argc, char **argv, int console) {
   }
 
   /* Set Virtual Memory Start */
-  _current->oInfo.vmStart = 0x80000000;
-  _current->td.vm_daddr = (u_long) (programHeader[i].phVaddr & 0xFFFFF000);
+  newProcess->oInfo.vmStart = 0x80000000;
+  newProcess->td.vm_daddr = (u_long) (programHeader[i].p_vaddr & 0xFFFFF000);
 
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
   for (x = 0; x < 100; x++) {
-    vmm_remapPage(vmm_findFreePage(_current->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK);
+    vmm_remapPage(vmm_findFreePage(newProcess->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK);
   }
 
   /* Kernel Stack 0x2000 bytes long */
-  vmm_remapPage(vmm_findFreePage(_current->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
-  vmm_remapPage(vmm_findFreePage(_current->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
 
   /* Set All The Proper Information For The Task */
-  _current->tss.back_link = 0x0;
-  _current->tss.esp0 = 0x5BC000;
-  _current->tss.ss0 = 0x10;
-  _current->tss.esp1 = 0x0;
-  _current->tss.ss1 = 0x0;
-  _current->tss.esp2 = 0x0;
-  _current->tss.ss2 = 0x0;
-  _current->tss.eip = (long) binaryHeader->e_entry;
-  _current->tss.eflags = 0x206;
-  _current->tss.esp = STACK_ADDR - 16;
-  _current->tss.ebp = STACK_ADDR;
-  _current->tss.esi = 0x0;
-  _current->tss.edi = 0x0;
+  newProcess->tss.back_link = 0x0;
+  newProcess->tss.esp0 = 0x5BC000;
+  newProcess->tss.ss0 = 0x10;
+  newProcess->tss.esp1 = 0x0;
+  newProcess->tss.ss1 = 0x0;
+  newProcess->tss.esp2 = 0x0;
+  newProcess->tss.ss2 = 0x0;
+  newProcess->tss.eip = (long) binaryHeader->e_entry;
+  newProcess->tss.eflags = 0x206;
+  newProcess->tss.esp = STACK_ADDR - 16;
+  newProcess->tss.ebp = STACK_ADDR;
+  newProcess->tss.esi = 0x0;
+  newProcess->tss.edi = 0x0;
 
   /* Set these up to be ring 3 tasks */
-  _current->tss.es = 0x30 + 3;
-  _current->tss.cs = 0x28 + 3;
-  _current->tss.ss = 0x30 + 3;
-  _current->tss.ds = 0x30 + 3;
-  _current->tss.fs = 0x30 + 3;
-  _current->tss.gs = 0x50 + 3; //0x30 + 3;
+  newProcess->tss.es = 0x30 + 3;
+  newProcess->tss.cs = 0x28 + 3;
+  newProcess->tss.ss = 0x30 + 3;
+  newProcess->tss.ds = 0x30 + 3;
+  newProcess->tss.fs = 0x30 + 3;
+  newProcess->tss.gs = 0x50 + 3; //0x30 + 3;
 
-  _current->tss.ldt = 0x18;
-  _current->tss.trace_bitmap = 0x0000;
-  _current->tss.io_map = 0x8000;
+  newProcess->tss.ldt = 0x18;
+  newProcess->tss.trace_bitmap = 0x0000;
+  newProcess->tss.io_map = 0x8000;
 
-  sched_setStatus(_current->id, READY);
+  sched_setStatus(newProcess->id, READY);
 
   kfree(binaryHeader);
   kfree(programHeader);
-  fclose(tmpFd);
+  fclose(newProcess->imageFd);
 
-  tmp = (uInt32 *) _current->tss.esp0 - 5;
+  tmp = (uInt32 *) newProcess->tss.esp0 - 5;
+
   tmp[0] = binaryHeader->e_entry;
   tmp[3] = STACK_ADDR - 12;
 
-  tmp = (uint32_t *) _current->tss.esp;
+  tmp = (uint32_t *) newProcess->tss.esp;
 
   kprintf("argv: [0x%X]\n", argv);
   //*tmp++ = 0x0; // Stack EIP Return Addr
@@ -376,33 +388,27 @@ void execFile(char *file, int argc, char **argv, int console) {
 
   /* Switch Back To The Kernels VM Space */
   asm volatile(
-      "movl %0,%%eax          \n"
-      "movl %%eax,%%cr3       \n"
-      : : "d" ((uInt32 *)(kernelPageDirectory))
+    "movl %0,%%eax          \n"
+    "movl %%eax,%%cr3       \n"
+    : : "d" ((uint32_t *)(kernelPageDirectory))
   );
 
-  kprintf("execFile Return: %i\n", _current->id);
+  kprintf("execFile Return: %i\n", newProcess->id);
+
+  /* Put new thread into the READY state */
+  sched_setStatus(newProcess->id, READY);
+
   /* Finally Return */
   return;
 }
 
-/*****************************************************************************************
-
- Function: void sysExec();
- Description: This Is The System Call To Execute A New Task
-
- Notes:
-
- 2016-01-19 - Start Of Enhanced Exec
-
- 04-22-03 - It Now Loads Sections Not The Full File
-
- *****************************************************************************************/
 
 int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
+
   int i = 0x0;
   int x = 0x0;
   int argc = 0x0;
+
   uint32_t cr3 = 0x0;
 
   unsigned int *tmp = 0x0;
@@ -428,13 +434,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   struct i386_frame *iFrame = 0x0;
 
-  //Elf_Auxargs *auxargs = 0x0;
-
   asm("movl %%cr3, %0;" : "=r" (cr3));
 
   fd = fopen(file, "r");
 
-  /* If the file doesn't exist fail */
   if (fd == 0x0)
     return (-1);
 
@@ -466,12 +469,14 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
     kfree(binaryHeader);
     fclose(fd);
     return (-1);
-  } else if (binaryHeader->e_type != ET_EXEC) {
+  }
+  else if (binaryHeader->e_type != ET_EXEC) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
     fclose(fd);
     return (-1);
-  } else if (binaryHeader->e_entry == 0x300000) {
+  }
+  else if (binaryHeader->e_entry == 0x300000) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
     fclose(fd);
@@ -544,7 +549,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
           kprintf("setting text: 0x%X - 0x%X\n", seg_addr, seg_size);
           text_size = seg_size;
           text_addr = seg_addr;
-        } else {
+        }
+        else {
           kprintf("setting data: 0x%X - 0x%X\n", seg_addr, seg_size);
           data_size = seg_size;
           data_addr = seg_addr;
@@ -560,14 +566,14 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
          * Thjis is for stack space
          */
         _current->oInfo.vmStart = ((programHeader[i].p_vaddr & 0xFFFFF000) + 0xA900000);
-        break;
+      break;
       case PT_DYNAMIC:
         //newLoc = (char *)programHeader[i].phVaddr;
         //elfDynamicS = (elfDynamic *) programHeader[i].p_vaddr;
         ef->dynamic = (Elf32_Dyn *) programHeader[i].p_vaddr;
         //fseek( fd, programHeader[i].phOffset, 0 );
         //fread( (void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, fd );
-        break;
+      break;
       case PT_INTERP:
         kprintf("Malloc: %i\n", programHeader[i].p_filesz);
         interp = (char *) kmalloc(programHeader[i].p_filesz);
@@ -576,11 +582,11 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         kprintf("Interp: [%s]\n", interp);
         //ldAddr = ldEnable();
         ef->ld_addr = ldEnable();
-        break;
+      break;
       case PT_GNU_STACK:
-        break;
+      break;
       default:
-        break;
+      break;
     }
   }
 
@@ -618,7 +624,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
       //x++;
     }
     argv = argvNew;
-  } else {
+  }
+  else {
     argc = 1;
   }
 
@@ -720,13 +727,13 @@ static int elf_parse_dynamic(elf_file_t ef) {
     switch (dynp->d_tag) {
       case DT_NEEDED:
         asm("nop");
-        break;
+      break;
       case DT_INIT:
         asm("nop");
-        break;
+      break;
       case DT_FINI:
         asm("nop");
-        break;
+      break;
       case DT_HASH:
         asm("nop");
         /* From src/libexec/rtld-elf/rtld.c */
@@ -735,51 +742,51 @@ static int elf_parse_dynamic(elf_file_t ef) {
         ef->nchains = hashtab[1];
         ef->buckets = hashtab + 2;
         ef->chains = ef->buckets + ef->nbuckets;
-        break;
+      break;
       case DT_STRTAB:
         ef->strtab = (caddr_t) (ef->address + dynp->d_un.d_ptr);
-        break;
+      break;
       case DT_STRSZ:
         ef->strsz = dynp->d_un.d_val;
-        break;
+      break;
       case DT_SYMTAB:
         ef->symtab = (Elf32_Sym *) (ef->address + dynp->d_un.d_ptr);
-        break;
+      break;
       case DT_SYMENT:
         if (dynp->d_un.d_val != sizeof(Elf32_Sym))
           return (ENOEXEC);
-        break;
+      break;
       case DT_REL:
         ef->rel = (const Elf32_Rel *) (ef->address + dynp->d_un.d_ptr);
-        break;
+      break;
       case DT_RELSZ:
         ef->relsize = dynp->d_un.d_val;
-        break;
+      break;
       case DT_RELENT:
         if (dynp->d_un.d_val != sizeof(Elf32_Rel))
           return (ENOEXEC);
-        break;
+      break;
       case DT_JMPREL:
         ef->pltrel = (const Elf32_Rel *) (ef->address + dynp->d_un.d_ptr);
-        break;
+      break;
       case DT_PLTRELSZ:
         ef->pltrelsize = dynp->d_un.d_val;
-        break;
+      break;
       case DT_RELA:
         ef->rela = (const Elf32_Rela *) (ef->address + dynp->d_un.d_ptr);
-        break;
+      break;
       case DT_RELASZ:
         ef->relasize = dynp->d_un.d_val;
-        break;
+      break;
       case DT_RELAENT:
         if (dynp->d_un.d_val != sizeof(Elf32_Rela))
           return (ENOEXEC);
-        break;
+      break;
       case DT_PLTREL:
         plttype = dynp->d_un.d_val;
         if (plttype != DT_REL && plttype != DT_RELA)
           return (ENOEXEC);
-        break;
+      break;
       case DT_PLTGOT:
         ef->got = (Elf32_Addr *) (ef->address + dynp->d_un.d_ptr);
         tmp = (void *) dynp->d_un.d_ptr; //elfDynamicS[i].dynPtr;
@@ -789,10 +796,10 @@ static int elf_parse_dynamic(elf_file_t ef) {
           kprintf("[0x%X]", tmp);
         tmp[2] = (uInt32) ef->ld_addr;
         tmp[1] = (uInt32) ef;
-        break;
+      break;
       default:
         kprintf("t_tag: 0x%X>", dynp->d_tag);
-        break;
+      break;
     }
   }
   ef->pltrela = (const Elf32_Rela *) ef->pltrel;

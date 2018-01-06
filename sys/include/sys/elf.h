@@ -35,4 +35,43 @@
 #include <sys/elf32.h>
 #include <sys/elf64.h>
 
+typedef struct elf_file {
+  int preloaded; /* Was file pre-loaded */
+  caddr_t address; /* Relocation address */
+  Elf32_Dyn *dynamic; /* Symbol table etc. */
+  Elf32_Hashelt nbuckets; /* DT_HASH info */
+  Elf32_Hashelt nchains;
+  const Elf32_Hashelt *buckets;
+  const Elf32_Hashelt *chains;
+  caddr_t hash;
+  caddr_t strtab; /* DT_STRTAB */
+  int strsz; /* DT_STRSZ */
+  const Elf32_Sym *symtab; /* DT_SYMTAB */
+  Elf32_Addr *got; /* DT_PLTGOT */
+  const Elf32_Rel *pltrel; /* DT_JMPREL */
+  int pltrelsize; /* DT_PLTRELSZ */
+  const Elf32_Rela *pltrela; /* DT_JMPREL */
+  int pltrelasize; /* DT_PLTRELSZ */
+  const Elf32_Rel *rel; /* DT_REL */
+  int relsize; /* DT_RELSZ */
+  const Elf32_Rela *rela; /* DT_RELA */
+  int relasize; /* DT_RELASZ */
+  caddr_t modptr;
+  const Elf32_Sym *ddbsymtab; /* The symbol table we are using */
+  long ddbsymcnt; /* Number of symbols */
+  caddr_t ddbstrtab; /* String table */
+  long ddbstrcnt; /* number of bytes in string table */
+  caddr_t symbase; /* malloc'ed symbold base */
+  caddr_t strbase; /* malloc'ed string base */
+  caddr_t ctftab; /* CTF table */
+  long ctfcnt; /* number of bytes in CTF table */
+  caddr_t ctfoff; /* CTF offset table */
+  caddr_t typoff; /* Type offset table */
+  long typlen; /* Number of type entries. */
+  Elf32_Addr pcpu_start; /* Pre-relocation pcpu set start. */
+  Elf32_Addr pcpu_stop; /* Pre-relocation pcpu set stop. */
+  Elf32_Addr pcpu_base; /* Relocated pcpu set address. */
+  Elf32_Addr ld_addr; // Entry Point Of Linker (Load It Too)
+} *elf_file_t;
+
 #endif
