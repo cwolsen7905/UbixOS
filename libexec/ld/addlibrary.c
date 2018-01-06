@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "ld.h"
 
+#define DT_PLTGOT 3
+
 ldLibrary *ldAddLibrary(const char *lib) {
   int        i        = 0x0;
   int        x        = 0x0;
@@ -11,6 +13,8 @@ ldLibrary *ldAddLibrary(const char *lib) {
   FILE      *linkerFd = 0x0;
   char       tmpFile[1024];
   ldLibrary *tmpLib   = 0x0;
+  elfDynamic *dynp    = 0x0;
+  uInt32     *tmp     = 0x0;
 
   if ((tmpLib = (ldLibrary *)malloc(sizeof(ldLibrary))) == 0x0) {
     printf("malloc failed: tmpLib\n");
@@ -33,6 +37,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
       }
     sprintf(tmpLib->name,lib);
     }
+
   printf("Base: {0x%X}[%i]\n",tmpLib->output, __LINE__);
   if (tmpLib->linkerHeader == 0x0) {
     fseek(linkerFd,0x0,0x0);
@@ -53,10 +58,26 @@ ldLibrary *ldAddLibrary(const char *lib) {
     for (i=0;i<tmpLib->linkerHeader->ePhnum;i++) {
       switch (tmpLib->linkerProgramHeader[i].phType) {
         case PT_LOAD:
-        case PT_DYNAMIC:
-          newLoc = (char *)tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output;
+          newLoc = (char *)(tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
           fseek(linkerFd,tmpLib->linkerProgramHeader[i].phOffset,0);
           fread(newLoc,tmpLib->linkerProgramHeader[i].phFilesz,1,linkerFd);
+          break;
+        case PT_DYNAMIC:
+          dynp = (elfDynamic *)(tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
+          printf("dynp: 0x%X:0x%X:0x%X", dynp, tmpLib->linkerProgramHeader[i].phVaddr, tmpLib->output);
+          for (;dynp->dynVal != 0x0;dynp++) {
+           switch (dynp->dynVal) {
+             case DT_PLTGOT:
+                tmp = (void *)((uInt32)tmpLib->output + dynp->dynPtr);
+                tmp[1] = 0xDEAD;
+                tmp[2] = 0xBEEF;
+                break;
+             default:
+               printf("dV: %i", dynp->dynVal);
+                  break;
+           }
+           }
+          asm("nop");
           break;
         case PT_TLS:
             tmpLib->tlsindex = 1;
@@ -64,6 +85,7 @@ ldLibrary *ldAddLibrary(const char *lib) {
             tmpLib->tlsalign = tmpLib->linkerProgramHeader[i].phAlign;//ph->p_align;
             tmpLib->tlsinitsize = tmpLib->linkerProgramHeader[i].phFilesz;//ph->p_filesz;
             tmpLib->tlsinit = (void*)(tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
+            printf("TLS: 0x%X, 0x%X, 0x%X, 0x%X", tmpLib->tlssize, tmpLib->tlsinitsize, tmpLib->tlsinit, tmpLib->tlsinit - (uInt32)tmpLib->output);
 /*
           newLoc = (char *)tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output;
           fseek(linkerFd,tmpLib->linkerProgramHeader[i].phOffset,0);

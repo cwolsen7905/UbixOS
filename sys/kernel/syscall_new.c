@@ -115,8 +115,6 @@ if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
 
 if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
   kprintf("RET2");
-if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
-  kprintf("RET2.1");
     }
   }
 }
@@ -130,7 +128,6 @@ int invalidCall() {
       :
   );
 
-  kprintf( "Invalid System Call #[%i]\n", sys_call );
-  kpanic("PID: %i", _current->id);
+  kprintf( "Invalid System Call #[%i], PID: %i\n", sys_call, _current->id );
   return (0);
 }

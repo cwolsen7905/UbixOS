@@ -220,7 +220,8 @@ int countMemory() {
  Notes:
 
  ************************************************************************/
-uInt32 vmm_findFreePage(pidType pid) {
+uint32_t vmm_findFreePage(pidType pid) {
+
   int i = 0x0;
 
   /* Lets Look For A Free Page */
@@ -241,7 +242,6 @@ uInt32 vmm_findFreePage(pidType pid) {
       freePages--;
       if (systemVitals)
         systemVitals->freePages = freePages;
-//kprintf("vFFP: 0x%X\n", vmmMemoryMap[i].pageAddr);
 
       spinUnlock(&vmmSpinLock);
       return (vmmMemoryMap[i].pageAddr);

@@ -41,7 +41,7 @@
 
 struct spinLock {
     struct spinLock *next;
-    int locked;
+    uint32_t locked;
 };
 
 typedef struct spinLock *spinLock_t;

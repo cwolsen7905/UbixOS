@@ -382,6 +382,7 @@ struct syscall_entry systemCalls[] = {
     { 0, "No Call", sys_invalid, SYSCALL_VALID },                                  /* 347 - Invalid */
     { 0, "No Call", sys_invalid, SYSCALL_VALID },                                  /* 348 - Invalid */
     { 0, "No Call", sys_invalid, SYSCALL_VALID },                                  /* 349 - Invalid */
+    { 0, "No Call", sys_invalid, SYSCALL_VALID },                                  /* 350 - Invalid */
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);

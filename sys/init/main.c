@@ -145,6 +145,7 @@ int kmain(uInt32 rootdev) {
   kprintf("Thread Start!\n");
 
   execFile("sys:/bin/init", 0x0, 0x0, 0x0); /* OS Initializer    */
+  kprintf("File Start!\n");
   //execFile( "sys:/bin/login", 0x0, 0x0, 0x0 ); /* OS Initializer    */
 
   irqEnable(0x0);

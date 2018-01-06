@@ -28,6 +28,15 @@ __asm__("eprol:");
 
         handle_static_init(argc, argv, env);
 */
+/*
+asm(
+  "pushl %eax\n"
+  "movl $0xDEADBEEF,%eax\n"
+  "pushl %eax\n"
+  "movl (%eax),%eax\n"
+  "pushl %eax\n"
+);
+*/
         exit(main(argc, argv, env));
 }
 

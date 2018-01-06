@@ -74,24 +74,24 @@
 #define btoc(x)         (((vm_offset_t)(x)+PAGE_MASK)>>PAGE_SHIFT)
 
 
-int vmmClearVirtualPage(uInt32 pageAddr);
+int vmmClearVirtualPage(uint32_t pageAddr);
 
-void vmm_unmapPage(uInt32, int);
-void vmm_unmapPages(void *, uInt32);
-void *vmm_mapFromTask(pidType, void *, uInt32);
+void vmm_unmapPage(uint32_t, int);
+void vmm_unmapPages(void *, uint32_t);
+void *vmm_mapFromTask(pidType, void *, uint32_t);
 void *vmm_copyVirtualSpace(pidType);
 void *vmm_getFreePage(pidType);
-void *vmmGetFreeKernelPage(pidType pid, uInt16 count);
+void *vmmGetFreeKernelPage(pidType pid, uint16_t count);
 void *vmm_createVirtualSpace(pidType);
 void *vmm_getFreeVirtualPage(pidType, int, int);
 
 uint32_t vmm_getPhysicalAddr(uint32_t);
 uint32_t vmm_getRealAddr(uint32_t);
-int vmm_setPageAttributes(uInt32, uInt16);
-int vmm_remapPage(uInt32, uInt32, uInt16);
+int vmm_setPageAttributes(uint32_t, uint16_t);
+int vmm_remapPage(uint32_t, uint32_t, uint16_t, pidType);
 int vmm_pagingInit();
-void *vmm_getFreeMallocPage(uInt16 count);
-//void vmm_pageFault( uInt32, uInt32, uInt32 );
+void *vmm_getFreeMallocPage(uint16_t count);
+//void vmm_pageFault( uint32_t, uint32_t, uint32_t );
 void vmm_pageFault(struct trapframe *, uint32_t);
 void _vmm_pageFault();
 int mmap(struct thread *, struct sys_mmap_args *);
@@ -101,6 +101,6 @@ int munmap(struct thread *, struct munmap_args *);
 int vmm_cleanVirtualSpace(uint32_t);
 void *vmm_getFreeVirtualPage( pidType pid, int count, int type );
 
-extern uInt32 *kernelPageDirectory;
+extern uint32_t *kernelPageDirectory;
 
 #endif

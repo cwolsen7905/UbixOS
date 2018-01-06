@@ -202,7 +202,7 @@ int sysStartSDE() {
  :
  );
 
- kprintf("Invalid System Call #[%i]\n",sys_call);
+ kprintf("Invalid System Call #[%i].1\n",sys_call);
  kpanic("PID: %i, File: %s, Line: %i", _curent->id, _FILE_, _LINE_);
  return(0);
  }

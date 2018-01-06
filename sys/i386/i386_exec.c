@@ -54,45 +54,6 @@
 
 #define AUXARGS_ENTRY(pos, id, val) {*pos = id;pos++; *pos = val;pos++;}
 
-typedef struct elf_file {
-  int preloaded; /* Was file pre-loaded */
-  caddr_t address; /* Relocation address */
-  Elf32_Dyn *dynamic; /* Symbol table etc. */
-  Elf32_Hashelt nbuckets; /* DT_HASH info */
-  Elf32_Hashelt nchains;
-  const Elf32_Hashelt *buckets;
-  const Elf32_Hashelt *chains;
-  caddr_t hash;
-  caddr_t strtab; /* DT_STRTAB */
-  int strsz; /* DT_STRSZ */
-  const Elf32_Sym *symtab; /* DT_SYMTAB */
-  Elf32_Addr *got; /* DT_PLTGOT */
-  const Elf32_Rel *pltrel; /* DT_JMPREL */
-  int pltrelsize; /* DT_PLTRELSZ */
-  const Elf32_Rela *pltrela; /* DT_JMPREL */
-  int pltrelasize; /* DT_PLTRELSZ */
-  const Elf32_Rel *rel; /* DT_REL */
-  int relsize; /* DT_RELSZ */
-  const Elf32_Rela *rela; /* DT_RELA */
-  int relasize; /* DT_RELASZ */
-  caddr_t modptr;
-  const Elf32_Sym *ddbsymtab; /* The symbol table we are using */
-  long ddbsymcnt; /* Number of symbols */
-  caddr_t ddbstrtab; /* String table */
-  long ddbstrcnt; /* number of bytes in string table */
-  caddr_t symbase; /* malloc'ed symbold base */
-  caddr_t strbase; /* malloc'ed string base */
-  caddr_t ctftab; /* CTF table */
-  long ctfcnt; /* number of bytes in CTF table */
-  caddr_t ctfoff; /* CTF offset table */
-  caddr_t typoff; /* Type offset table */
-  long typlen; /* Number of type entries. */
-  Elf32_Addr pcpu_start; /* Pre-relocation pcpu set start. */
-  Elf32_Addr pcpu_stop; /* Pre-relocation pcpu set stop. */
-  Elf32_Addr pcpu_base; /* Relocated pcpu set address. */
-  Elf32_Addr ld_addr; // Entry Point Of Linker (Load It Too)
-} *elf_file_t;
-
 static int elf_parse_dynamic(elf_file_t ef);
 
 /*****************************************************************************************
@@ -200,7 +161,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
  *****************************************************************************************/
 void execFile(char *file, int argc, char **argv, int console) {
 
-  kTask_t newProcess = 0x0;
+  kTask_t *newProcess = 0x0;
 
   int i = 0x0;
   int x = 0x0;
@@ -214,6 +175,7 @@ void execFile(char *file, int argc, char **argv, int console) {
   /* Get A New Task For This Proccess */
   newProcess = schedNewTask();
   assert(newProcess);
+
 
   newProcess->gid = 0x0;
   newProcess->uid = 0x0;
@@ -281,11 +243,11 @@ void execFile(char *file, int argc, char **argv, int console) {
   newProcess->td.abi = binaryHeader->e_ident[EI_OSABI];
 
   /* Load The Program Header(s) */
-  programHeader = (elfProgramHeader *) kmalloc(sizeof(elfProgramHeader) * binaryHeader->e_phnum);
+  programHeader = (Elf_Phdr *) kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
   fseek(newProcess->imageFd, binaryHeader->e_phoff, 0);
 
-  //kprintf(">c:%i:0x%X:0x%X<",sizeof(elfProgramHeader)*binaryHeader->e_phnum,programHeader,tmpFd);
-  fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->e_phnum), 1, newProcess->imageFd);
+  //kprintf(">c:%i:0x%X:0x%X<",sizeof(Elf_Phdr)*binaryHeader->e_phnum,programHeader,tmpFd);
+  fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1, newProcess->imageFd);
   //kprintf(">d<");
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
@@ -297,7 +259,7 @@ void execFile(char *file, int argc, char **argv, int console) {
        */
       for (x = 0x0; x < (programHeader[i].p_memsz); x += 0x1000) {
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(newProcess->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(newProcess->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, newProcess->id) == 0x0)
           K_PANIC("Remap Page Failed");
 
         memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
@@ -325,12 +287,15 @@ void execFile(char *file, int argc, char **argv, int console) {
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
   for (x = 0; x < 100; x++) {
-    vmm_remapPage(vmm_findFreePage(newProcess->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK);
+    vmm_remapPage(vmm_findFreePage(newProcess->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id);
   }
 
   /* Kernel Stack 0x2000 bytes long */
-  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
-  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK);
+
+  kprintf("PID: %i\n",newProcess->id);
+  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+  kprintf("PID: %i\n",newProcess->id);
+  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
 
   /* Set All The Proper Information For The Task */
   newProcess->tss.back_link = 0x0;
@@ -380,8 +345,8 @@ void execFile(char *file, int argc, char **argv, int console) {
   *tmp++ = 0x0; // ARGV TERM
   *tmp++ = 0x0; // ENV
   *tmp++ = 0x0; // ENV TERM
-  *tmp++ = 0x0; // AUX 1.A
-  *tmp++ = 0x0; // AUX 1.B
+  *tmp++ = 0xDEAD; // AUX 1.A
+  *tmp++ = 0xBEEF; // AUX 1.B
   *tmp++ = 0x0; // AUX TERM
   *tmp++ = 0x0; // AUX TERM 
   *tmp++ = 0x1; // TERM
@@ -397,6 +362,8 @@ void execFile(char *file, int argc, char **argv, int console) {
 
   /* Put new thread into the READY state */
   sched_setStatus(newProcess->id, READY);
+
+  _current = newProcess;
 
   /* Finally Return */
   return;
@@ -493,7 +460,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   assert(programHeader);
 
   fseek(fd, binaryHeader->e_phoff, 0);
-  fread(programHeader, (sizeof(elfProgramHeader) * binaryHeader->e_phnum), 1, fd);
+  fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1, fd);
   /* Done Loading Program Header(s) */
 
   /* Load The Section Header(s) */
@@ -502,7 +469,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   assert(sectionHeader);
   fseek(fd, binaryHeader->e_shoff, 0);
-  fread(sectionHeader, sizeof(elfSectionHeader) * binaryHeader->e_shnum, 1, fd);
+  fread(sectionHeader, sizeof(Elf_Shdr) * binaryHeader->e_shnum, 1, fd);
   /* Done Loading Section Header(s) */
 
   ef = kmalloc(sizeof(struct elf_file));
@@ -523,7 +490,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
          */
         for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT) == 0x0) {
+          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0) {
             K_PANIC("Error: Remap Page Failed");
           } /*
            else {
@@ -604,31 +571,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
    _current->td.vm_daddr = (char *) seg_addr;
    */
 
-  //argv = &ap;
-  //if (argv[1] != 0x0) {
-  if (argv != 0x0) {
-//MrOlsen (2016-01-12) FIX: Not sure why argv[0] == 0
-    argc = ((int) argv[0] > 0) ? (int) argv[0] : 1;
-
-    kprintf("argc: %i", argc);
-    args = (char *) vmm_getFreeVirtualPage(_current->id, 1, VM_TASK);
-    kprintf("argc: %i, args 0x%X", argc, args);
-    memset(args, 0x0, 0x1000);
-    x = 0x0;
-    argvNew = (char **) kmalloc(sizeof(char *) * argc);
-    for (i = 0x0; i < argc; i++) {
-      strcpy(args + x, argv[i + 1]);
-      argvNew[i] = args + x;
-      x += strlen(argv[i + 1]) + 1;
-      //args[x] = '\0';
-      //x++;
-    }
-    argv = argvNew;
-  }
-  else {
-    argc = 1;
-  }
-
   iFrame = (struct i386_frame *) (_current->tss.esp0 - sizeof(struct i386_frame));
   /*
    iFrameNew = (struct i386_frame *) kmalloc( sizeof(struct i386_frame) );
@@ -643,43 +585,33 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   iFrame->ebp = 0x0;      //STACK_ADDR;
   iFrame->eip = binaryHeader->e_entry;
-  //iFrame->user_ebp = 0x0;
   iFrame->edx = 0x0;
   //iFrame->user_esp = ((uint32_t) STACK_ADDR) - ((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
   iFrame->user_esp = ((uint32_t) STACK_ADDR) - (128);      //(sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2));
 
   tmp = (void *) iFrame->user_esp; //MrOlsen 2017-11-14 iFrame->user_ebp;
 
-  kprintf("[0x%X][0x%X]", iFrame->user_esp, tmp);
-
-  //memset(tmp,0x0,((sizeof(uint32_t) * (argc + 8 + 1)) + (sizeof(Elf32_Auxinfo) * 2)));
   memset((char *) (STACK_ADDR - 128), 0x0, 128);
 
   tmp[0] = argc; // ARGC
 
-  /*
-   if ( argc == 1 ) {
-   *tmp++ = 0x0; //ARGV Pointers
-   }
-   else {
-   for ( i = 0; i < argc; i++ ) {
-   *tmp++ = (u_int) argv[i];
-   }
-   }
-   */
   tmp[1] = 0x0; // ARGV
   tmp[2] = 0x0; // ARGV Terminator
 
   tmp[3] = 0x0; // ENV 
   tmp[4] = 0x0; // ENV Terminator
 
-  tmp[5] = 0x0;
-  tmp[6] = 0x0;
+  tmp[5] = 0x1;
+  tmp[6] = 0x2;
 
-  tmp[7] = 0x0; // AUX VECTOR 8 Bytes
-  tmp[8] = 0x0; // Terminator
+  tmp[7] = 0x3; // AUX VECTOR 8 Bytes
+  tmp[8] = 0x4; // Terminator
 
-  tmp[9] = 0xDEADBEEF; // End Marker
+  tmp[9] = 0x5;
+  tmp[10] = 0x6;
+
+  tmp[11] = 0x7;
+  tmp[12] = 0x8;
 
   kfree(argvNew);
 
@@ -793,9 +725,9 @@ static int elf_parse_dynamic(elf_file_t ef) {
         if (tmp == 0x0)
           kpanic("tmp: NULL\n");
         else
-          kprintf("[0x%X]", tmp);
+          kprintf("PLT[0x%X:0x%X]", tmp, ef->ld_addr);
         tmp[2] = (uInt32) ef->ld_addr;
-        tmp[1] = (uInt32) ef;
+        tmp[1] = (uInt32) ef;//0x0;//0xBEEFEAD;//STACK_ADDR - 128;//_current->imageFd;//0xBEEFDEAD;//ef;
       break;
       default:
         kprintf("t_tag: 0x%X>", dynp->d_tag);

@@ -38,26 +38,26 @@
 typedef struct elf_file {
   int preloaded; /* Was file pre-loaded */
   caddr_t address; /* Relocation address */
-  Elf32_Dyn *dynamic; /* Symbol table etc. */
-  Elf32_Hashelt nbuckets; /* DT_HASH info */
-  Elf32_Hashelt nchains;
-  const Elf32_Hashelt *buckets;
-  const Elf32_Hashelt *chains;
+  Elf_Dyn *dynamic; /* Symbol table etc. */
+  Elf_Hashelt nbuckets; /* DT_HASH info */
+  Elf_Hashelt nchains;
+  const Elf_Hashelt *buckets;
+  const Elf_Hashelt *chains;
   caddr_t hash;
   caddr_t strtab; /* DT_STRTAB */
   int strsz; /* DT_STRSZ */
-  const Elf32_Sym *symtab; /* DT_SYMTAB */
-  Elf32_Addr *got; /* DT_PLTGOT */
-  const Elf32_Rel *pltrel; /* DT_JMPREL */
+  const Elf_Sym *symtab; /* DT_SYMTAB */
+  Elf_Addr *got; /* DT_PLTGOT */
+  const Elf_Rel *pltrel; /* DT_JMPREL */
   int pltrelsize; /* DT_PLTRELSZ */
-  const Elf32_Rela *pltrela; /* DT_JMPREL */
+  const Elf_Rela *pltrela; /* DT_JMPREL */
   int pltrelasize; /* DT_PLTRELSZ */
-  const Elf32_Rel *rel; /* DT_REL */
+  const Elf_Rel *rel; /* DT_REL */
   int relsize; /* DT_RELSZ */
-  const Elf32_Rela *rela; /* DT_RELA */
+  const Elf_Rela *rela; /* DT_RELA */
   int relasize; /* DT_RELASZ */
   caddr_t modptr;
-  const Elf32_Sym *ddbsymtab; /* The symbol table we are using */
+  const Elf_Sym *ddbsymtab; /* The symbol table we are using */
   long ddbsymcnt; /* Number of symbols */
   caddr_t ddbstrtab; /* String table */
   long ddbstrcnt; /* number of bytes in string table */
@@ -68,10 +68,11 @@ typedef struct elf_file {
   caddr_t ctfoff; /* CTF offset table */
   caddr_t typoff; /* Type offset table */
   long typlen; /* Number of type entries. */
-  Elf32_Addr pcpu_start; /* Pre-relocation pcpu set start. */
-  Elf32_Addr pcpu_stop; /* Pre-relocation pcpu set stop. */
-  Elf32_Addr pcpu_base; /* Relocated pcpu set address. */
-  Elf32_Addr ld_addr; // Entry Point Of Linker (Load It Too)
+  Elf_Addr pcpu_start; /* Pre-relocation pcpu set start. */
+  Elf_Addr pcpu_stop; /* Pre-relocation pcpu set stop. */
+  Elf_Addr pcpu_base; /* Relocated pcpu set address. */
+  Elf_Addr ld_addr; // Entry Point Of Linker (Load It Too)
+  uint32_t fd;
 } *elf_file_t;
 
 #endif

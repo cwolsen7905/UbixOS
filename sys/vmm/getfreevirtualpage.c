@@ -122,7 +122,7 @@ void *vmm_getFreeVirtualPage( pidType pid, int count, int type ) {
         kprintf( "COW PAGE NOT CLEANED!" );
       }
       else if ( (uInt32) pageTableSrc[y] == (uInt32) 0x0 ) {
-        if ( (vmm_remapPage( (uInt32) vmm_findFreePage( pid ), ((pdI * (1024 * 4096)) + (y * 4096)), PAGE_DEFAULT )) == 0x0 )
+        if ( (vmm_remapPage( (uInt32) vmm_findFreePage( pid ), ((pdI * (1024 * 4096)) + (y * 4096)), PAGE_DEFAULT, pid )) == 0x0 )
           kpanic( "vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, ((pdI * (1024 * 4096)) + (y * 4096)) );
         vmm_clearVirtualPage( (uInt32)( (pdI * (1024 * 4096)) + (y * 4096) ) );
       }

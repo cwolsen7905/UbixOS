@@ -59,7 +59,7 @@ void *vmm_getFreePage( pidType pid ) {
       /* Loop Through The Page Table Find An UnAllocated Page */
       if ( (uInt32) pageTableSrc[y] == (uInt32) 0x0 ) {
         /* Map A Physical Page To The Virtual Page */
-        if ( (vmm_remapPage( vmm_findFreePage( pid ), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT )) == 0x0 )
+        if ( (vmm_remapPage( vmm_findFreePage( pid ), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT, pid )) == 0x0 )
           kpanic( "vmmRemapPage: vmm_getFreePage\n" );
         /* Clear This Page So No Garbage Is There */
         vmm_clearVirtualPage( (uInt32)( (x * 0x400000) + (y * 0x1000) ) );

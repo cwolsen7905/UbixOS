@@ -98,13 +98,14 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   //if ((regs->tf_eflags & VM_MASK) || (3 & regs->tf_cs) == 3)
   //  return;
 
- // if ((regs->tf_cs & 3) == 3) {
+  if ((regs->tf_cs & 3) == 3) {
     esp = regs->tf_esp;
     ss = regs->tf_ss;
     kprintf("USER TASK!");
-  //}
-
-  ss = 0x30;
+  }
+  else {
+    ss = 0x10;
+  }
 
   kprintf("%s: %04lx(%i:%i)[0x%X]\n", str, err & 0xffff, regs->tf_trapno, regs->tf_err, regs->tf_ss);
   kprintf("CPU: %d\n", 0);
@@ -116,11 +117,15 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, KERNEL_STACK);
 
   stack = (unsigned long *)esp;
+
   for (i = 0; i < 16; i++) {
     if (i && ((i % 8) == 0))
       kprintf("\n       ");
     kprintf("%08lx ", get_seg_long(ss, stack++));
   }
+
+#ifdef _BALLS
+
   kprintf("\nCall Trace: ");
   stack = (unsigned long *)esp;
   i = 1;
@@ -153,6 +158,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   for (i = 0; i < 20; i++)
     kprintf("%02x ", 0xff & get_seg_byte(regs->tf_cs, (i+(char *)regs->tf_eip)));
   kprintf("\n");
+#endif
 }
 
 void trap(struct trapframe *frame) {
