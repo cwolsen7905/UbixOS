@@ -11,18 +11,19 @@ int sys_stat(char *path, struct stat *sb, int flags) {
 
   switch (flags) {
     case STAT_LSTAT:
-      namei(path, NULL, STAT_NO_FOLLOW, &inode);
-      sb.st_dev = inode->i_dev;
-      sb.st_ino = inode->i_ino;
-      sb.st_mode = inode->i_mode;
-      sb.st_nlink = inode->i_nlink;
-      sb.st_uid = inode->i_uid;
-      sb.st_gid = inode->i_gid;
-      sb.st_rdev = inode->i_rdev;
-      sb.st_size = inode->i_size;
-      sb.st_atime = inode->i_atime;
-      sb.st_mtime = inode->i_mtime;
-      sb.st_ctime = inode->i_ctime;
+      error = namei(path, NULL, STAT_NO_FOLLOW, &inode);
+      sb->st_dev = inode->i_dev;
+      sb->st_ino = inode->i_ino;
+      sb->st_mode = inode->i_mode;
+      sb->st_nlink = inode->i_nlink;
+      sb->st_uid = inode->i_uid;
+      sb->st_gid = inode->i_gid;
+      sb->st_rdev = inode->i_rdev;
+      sb->st_size = inode->i_size;
+      sb->st_atime = inode->i_atime;
+      sb->st_mtime = inode->i_mtime;
+      sb->st_ctime = inode->i_ctime;
+      kprintf("LSTAT(%i): st_ino 0x%X, st_mode: 0x%X, st_uid %i, st_gid %i, st_size: 0x%X", error, sb->st_ino, sb->st_mode, sb->st_uid, sb->st_gid, sb->st_size);
       break;
     default:
       kprintf("STAT ERROR: {%s}", path);

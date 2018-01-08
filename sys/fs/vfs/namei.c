@@ -96,6 +96,10 @@ static int dir_namei(const char * pathname, int * namelen, const char ** name, s
     base->i_count++;
   }
 
+  if (!base) {
+    kprintf("BASE == NULL");
+  }
+
   if ((c = *pathname) == '/') {
     iput(base);
     base = _current->root;
