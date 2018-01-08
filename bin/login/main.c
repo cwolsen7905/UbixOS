@@ -55,8 +55,11 @@ static char *pgets(char *string) {
   string[count] = '\0';
   return(string);
   }
+
+static char *argv_shell[2] = { "shell", NULL, }; // ARGV For Initial Proccess
+static char *envp_shell[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; //ENVP For Initial Proccess
   
-int main() {
+int main(int argc, char **argv, char **env) {
   FILE *fd;
   int shellPid = 0,i = 0x0;
   char userName[32];
@@ -133,7 +136,7 @@ int main() {
           fclose(fd);          
           //chdir(data[i].path);
           chdir("sys:/bin/");
-          execve(data[i].shell,0x0,0x0);
+          execve(data[i].shell,argv_shell,envp_shell);
           printf("Error: Problem Starting Shell\n");
           exit(-1);
           }

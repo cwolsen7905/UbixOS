@@ -34,6 +34,7 @@
 #include <sys/sysproto.h>
 
 #include <vfs/file.h>
+#include <vfs/stat.h>
 
 typedef  __mode_t        mode_t;
 typedef  __nlink_t       nlink_t;
@@ -96,11 +97,13 @@ struct file {
   fileDescriptor *fd;
   };
 
+#ifdef _BALLS
 /* TEMP */
 struct __timespec {
         __time_t tv_sec;        /* seconds */
         long    tv_nsec;        /* and nanoseconds */
 };
+
 
 struct stat {
         __dev_t   st_dev;               /* inode's device */
@@ -147,6 +150,7 @@ struct stat {
         unsigned int :(8 / 2) * (16 - (int)sizeof(struct __timespec));
 #endif
 };
+#endif
 
 
 int fcntl(struct thread *, struct fcntl_args *);

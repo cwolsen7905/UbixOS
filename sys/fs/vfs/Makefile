@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #  Objects
-OBJS = mount.o file.o vfs.o
+OBJS = mount.o file.o vfs.o stat.o namei.o inode.o
 
 all: $(OBJS)
 

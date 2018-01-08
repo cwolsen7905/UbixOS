@@ -218,9 +218,9 @@ int sys_sysctl( struct thread *td, struct sys_sysctl_args *args ) {
   if ( tmpCtl == 0x0 ) {
     kprintf( "Invalid CTL\n" );
     for ( i = 0x0; i < args->namelen; i++ )
-      kprintf( "(%i)", args->name[i] );
+      kprintf( "(%i)", (int)args->name[i] );
     kprintf( "\n" );
-    //endTask(_current->id);
+    td->td_retval[0] = -1;
     return (-1);
   }
 
@@ -229,7 +229,7 @@ int sys_sysctl( struct thread *td, struct sys_sysctl_args *args ) {
   else
     memcpy( args->oldp, tmpCtl->value, tmpCtl->val_len );
 
-  //td->td_retval[0] = 0x0;
+  td->td_retval[0] = 0x0;
 
   return (0x0);
 }

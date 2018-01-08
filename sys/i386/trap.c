@@ -183,6 +183,8 @@ void trap(struct trapframe *frame) {
 
   cr2 = rcr2();
   kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
+
+  //kpanic("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
   die_if_kernel("trapCode", frame, frame->tf_trapno);
   endTask( _current->id );
   sched_yield();

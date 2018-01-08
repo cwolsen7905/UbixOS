@@ -71,8 +71,6 @@ typedef struct elf_file {
   Elf_Addr pcpu_start; /* Pre-relocation pcpu set start. */
   Elf_Addr pcpu_stop; /* Pre-relocation pcpu set stop. */
   Elf_Addr pcpu_base; /* Relocated pcpu set address. */
-  Elf_Addr ld_addr; // Entry Point Of Linker (Load It Too)
-  uint32_t fd;
 } *elf_file_t;
 
 #endif

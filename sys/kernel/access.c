@@ -75,7 +75,18 @@ int sys_setGID( struct thread *td, struct sys_setGID_args *uap ) {
   return (-1);
 }
 
-/***
- END
- ***/
+int in_group_p(gid_t grp)
+{
+	int	i;
 
+	if (grp == _current->egid)
+		return 1;
+
+	for (i = 0; i < NGROUPS; i++) {
+		if (_current->groups[i] == NOGROUP)
+			break;
+		if (_current->groups[i] == grp)
+			return 1;
+	}
+	return 0;
+}

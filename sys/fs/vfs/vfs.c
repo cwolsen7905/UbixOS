@@ -161,7 +161,8 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
   if (nfp->fd == 0x0)
     td->td_retval[0] = -1;
   else
-    td->td_retval[0] = index;
+    td->td_retval[0] = nfp->fd;//MrOlsen 2018index;
+
   return (error);
   }
 

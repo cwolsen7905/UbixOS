@@ -24,6 +24,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/types.h>
 #include <vmm/vmm.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
@@ -515,53 +516,6 @@ void *vmm_getFreeMallocPage(uInt16 count) {
   }
   /* If No Free Page Was Found Return NULL */
   spinUnlock(&fkpSpinLock);
-  return (0x0);
-}
-
-int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
-  vm_offset_t addr = 0x0;
-  char *tmp = 0x0;
-  struct file *fd = 0x0;
-
-  addr = (vm_offset_t) uap->addr;
-
-  /*
-   #ifdef _VMM_DEBUG
-   */
-  if (uap->addr != 0x0) {
-    kprintf("Address hints are not supported yet.\n");
-  }
-  kprintf("uap->flags: [0x%X]\n", uap->flags);
-  kprintf("uap->addr:  [0x%X]\n", uap->addr);
-  kprintf("uap->len:   [0x%X]\n", uap->len);
-  kprintf("uap->prot:  [0x%X]\n", uap->prot);
-  kprintf("uap->fd:    [%i]\n", uap->fd);
-  kprintf("uap->pad:   [0x%X]\n", uap->pad);
-  kprintf("uap->pos:   [0x%X]\n", uap->pos);
-  /*
-   #endif
-   */
-
-  if (uap->fd == -1) {
-    //td->td_retval[0] = (int) vmm_getFreeVirtualPage( _current->id, uap->len / 0x1000, VM_TASK );
-    //td->td_retval[0] = (int)
-    return (vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
-  }
-  else {
-    kprintf("uap->flags: [0x%X]\n", uap->flags);
-    kprintf("uap->addr:  [0x%X]\n", uap->addr);
-    kprintf("uap->len:   [0x%X]\n", uap->len);
-    kprintf("uap->prot:  [0x%X]\n", uap->prot);
-    kprintf("uap->fd:    [%i]\n", uap->fd);
-    kprintf("uap->pad:   [0x%X]\n", uap->pad);
-    kprintf("uap->pos:   [0x%X]\n", uap->pos);
-    //K_PANIC("NOT YET\n");
-    getfd(td, &fd, uap->fd);
-    tmp = (char *) vmm_getFreeVirtualPage(_current->id, uap->len / 0x1000, VM_TASK);
-    fread(tmp, uap->len, 0x1, fd->fd);
-
-    td->td_retval[0] = (int) tmp;
-  }
   return (0x0);
 }
 

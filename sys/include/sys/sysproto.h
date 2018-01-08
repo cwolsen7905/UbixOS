@@ -308,7 +308,7 @@ struct sysctl_args {
 struct getpid_args {
     register_t dummy;
 };
-struct issetugid_args {
+struct sys_issetugid_args {
     register_t dummy;
 };
 struct fcntl_args {
@@ -374,6 +374,15 @@ struct sys_mmap_args {
     char pos_l_[PADL_( off_t )];
     off_t pos;
     char pos_r_[PADR_( off_t )];
+};
+
+struct sys_lstat_args {
+  char path_l_[PADL_(char *)];
+  char *path;
+  char path_r_[PADR_(char *)];
+  char sb_l_[PADL_( struct stat *)];
+  struct stat *sb;
+  char sb_r_[PADR_( struct stat *)];
 };
 
 struct obreak_args {
@@ -489,10 +498,14 @@ int sys_getcwd( struct thread *td, struct sys_getcwd_args * );
 int sys_mmap( struct thread *td, struct sys_mmap_args * );
 int sys_sysctl( struct thread *td, struct sys_sysctl_args * );
 
+int sys_issetugid(struct thread *td, struct sys_issetugid_args * );
+
 int setitimer( struct thread *td, struct setitimer_args *uap );
 int access( struct thread *td, struct access_args *uap );
 int fstatfs( struct thread *td, struct fstatfs_args *uap );
 int mprotect( struct thread *td, struct mprotect_args *uap );
+
+int sys_lstat(struct thread *td, struct sys_lstat_args * );
 
 #endif
 

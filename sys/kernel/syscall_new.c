@@ -61,7 +61,8 @@ void syscall( struct trapframe *frame ) {
   }
 
   if ( code > totalCalls ) {
-    kprintf( "Invalid Call: [%i:%i]\n", frame->tf_eax, totalCalls );
+    //kprintf( "Invalid Call: [%i:%i]\n", frame->tf_eax, totalCalls );
+    die_if_kernel("Invalid System Call", frame, frame->tf_eax);
     kpanic("PID: %i", _current->id);
   }
   else if ( (uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID ) {
