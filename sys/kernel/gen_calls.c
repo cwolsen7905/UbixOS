@@ -81,8 +81,7 @@ int sys_write( struct thread *td, struct sys_write_args *uap ) {
   if ( uap->fd == 2 ) {
     kprintf( "stderr: %s", uap->buf );
   }
-
-  if ( uap->fd == 1 ) {
+  else if ( uap->fd == 1 ) {
     /* This is Horrible! */
     in = (char *) uap->buf;
     buffer = kmalloc( 1024 );
@@ -103,10 +102,7 @@ int sys_write( struct thread *td, struct sys_write_args *uap ) {
   return (0x0);
 }
 
-int issetugid( register struct thread *td, struct issetugid_args *uap ) {
-#ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
-#endif
+int sys_issetugid( register struct thread *td, struct sys_issetugid_args *uap ) {
   td->td_retval[0] = 0;
   return (0);
 }
@@ -171,10 +167,18 @@ int mprotect( struct thread *td, struct mprotect_args *uap ) {
 
 int sys_invalid( struct thread *td, void *args ) {
   kprintf( "Invalid System Call #[%i], Pid: %i\n", td->frame->tf_eax, _current->id );
+ //td->td_retval[0] =0;
   return (0);
 }
 
 int sys_read( struct thread *td, struct sys_read_args *args ) {
+  char *buf = args->buf;
+  kprintf("ARGS->fd: %i, NBYTE: %i\n", args->fd, args->nbyte);
+  buf[0] = 'C';
+  buf[1] = 'A';
+  buf[2] = 'T';
+  buf[3] = '\0';
+  td->td_retval[0] = 3;
   kprintf( "DUMMY FUNC FIX ME! sys_read" );
   return (0);
 }

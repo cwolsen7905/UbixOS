@@ -30,6 +30,10 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 
   int boo = 0x0;
 
+static char *argv_init[2] = { "init", NULL, }; // ARGV For Initial Proccess
+static char *envp_init[7] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", "LD_DEBUG=all", NULL, }; //ENVP For Initial Proccess
+
+
 void execProgram(inputBuffer *data) {
   char file[1024];
   int cPid = 0x0;
@@ -43,7 +47,7 @@ printf("Forked: [%i]\n", cPid);
     sprintf(file, "%s%s", cwd, data->argv[1]);
  //   if (boo == 0)
       //execve(file,data->argv, 0x0);
-      execve(file,0x0, 0x0);
+      execve(file,argv_init, envp_init);
    /*
     else
       execn(file,&data->argv);

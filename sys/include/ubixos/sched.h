@@ -64,9 +64,14 @@ typedef struct taskStruct {
   tState state;
   uint32_t gid;
   uint32_t uid;
+  uint16_t euid, suid;
+  uint16_t egid, sgid;
   uInt16 usedMath;
   tty_term *term;
   struct thread td;
+  struct inode *pwd;
+  struct inode *root;
+  struct inode *exec;
 } kTask_t;
 
 int sched_init();

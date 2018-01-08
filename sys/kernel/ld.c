@@ -48,7 +48,7 @@ uint32_t ldEnable() {
   char *dynStr = 0x0;
   uint32_t *reMap = 0x0;
   fileDescriptor *ldFd = 0x0;
-  Elf32_Ehdr *binaryHeader = 0x0;
+  Elf_Ehdr *binaryHeader = 0x0;
   Elf_Phdr *programHeader = 0x0;
   Elf_Shdr *sectionHeader = 0x0;
   Elf_Sym *relSymTab = 0x0;
@@ -63,11 +63,13 @@ uint32_t ldEnable() {
 
   fseek(ldFd, 0x0, 0x0);
   binaryHeader = (Elf32_Ehdr *) kmalloc(sizeof(Elf32_Ehdr));
+
   assert(binaryHeader);
   fread(binaryHeader, sizeof(Elf32_Ehdr), 1, ldFd);
 
   programHeader = (Elf_Phdr *) kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
   assert(programHeader);
+
   fseek(ldFd, binaryHeader->e_phoff, 0);
   fread(programHeader, sizeof(Elf_Shdr), binaryHeader->e_phnum, ldFd);
 

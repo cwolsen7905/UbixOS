@@ -545,7 +545,8 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
   if (uap->fd == -1) {
     //td->td_retval[0] = (int) vmm_getFreeVirtualPage( _current->id, uap->len / 0x1000, VM_TASK );
     //td->td_retval[0] = (int)
-    return (vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
+    td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD);
+    return (0x0); //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
   }
   else {
     kprintf("uap->flags: [0x%X]\n", uap->flags);
