@@ -27,8 +27,8 @@
 
  *****************************************************************************************/
 
-#ifndef _SCHED_H
-#define _SCHED_H
+#ifndef _UBIXOS_SCHED_H
+#define _UBIXOS_SCHED_H
 
 #include <sys/types.h>
 #include <ubixos/tty.h>

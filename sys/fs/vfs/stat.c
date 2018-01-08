@@ -12,8 +12,20 @@ int sys_stat(char *path, struct stat *sb, int flags) {
   switch (flags) {
     case STAT_LSTAT:
       namei(path, NULL, STAT_NO_FOLLOW, &inode);
+      sb.st_dev = inode->i_dev;
+      sb.st_ino = inode->i_ino;
+      sb.st_mode = inode->i_mode;
+      sb.st_nlink = inode->i_nlink;
+      sb.st_uid = inode->i_uid;
+      sb.st_gid = inode->i_gid;
+      sb.st_rdev = inode->i_rdev;
+      sb.st_size = inode->i_size;
+      sb.st_atime = inode->i_atime;
+      sb.st_mtime = inode->i_mtime;
+      sb.st_ctime = inode->i_ctime;
       break;
     default:
+      kprintf("STAT ERROR: {%s}", path);
       error = -1;
      break;
   }
