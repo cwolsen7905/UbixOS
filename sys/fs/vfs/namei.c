@@ -1,6 +1,21 @@
 #include <ubixos/errno.h>
 #include <vfs/vfs.h>
 
+int follow_link(struct inode * dir, struct inode * inode, int flag, int mode, struct inode ** res_inode) {
+  if (!dir || !inode) {
+    iput(dir);
+    iput(inode);
+    *res_inode = NULL;
+    return -ENOENT;
+  }
+  if (!inode->i_op || !inode->i_op->follow_link) {
+    iput(dir);
+    *res_inode = inode;
+    return 0;
+  }
+  return inode->i_op->follow_link(dir, inode, flag, mode, res_inode);
+}
+
 int permission(struct inode * inode, int mask) {
   int mode = inode->i_mode;
 
@@ -10,7 +25,7 @@ int permission(struct inode * inode, int mask) {
     mode >>= 6;
   else if (in_group_p(inode->i_gid))
     mode >>= 3;
-  if (((mode & mask & 0007) == mask))// || suser())
+  if (((mode & mask & 0007) == mask)) // || suser())
     return 1;
   return 0;
 }
@@ -20,6 +35,7 @@ int lookup(struct inode * dir, const char * name, int len, struct inode ** resul
   int perm;
 
   *result = NULL;
+
   if (!dir)
     return -ENOENT;
   /* check permissions before traversing mount-points */
@@ -28,8 +44,7 @@ int lookup(struct inode * dir, const char * name, int len, struct inode ** resul
     if (dir == _current->root) {
       *result = dir;
       return 0;
-    }
-    else if ((sb = dir->i_sb) && (dir == sb->s_mounted)) {
+    } else if ((sb = dir->i_sb) && (dir == sb->s_mounted)) {
       sb = dir->i_sb;
       iput(dir);
       dir = sb->s_covered;
@@ -52,7 +67,6 @@ int lookup(struct inode * dir, const char * name, int len, struct inode ** resul
   }
   return dir->i_op->lookup(dir, name, len, result);
 }
-
 
 static int dir_namei(const char * pathname, int * namelen, const char ** name, struct inode * base, struct inode ** res_inode) {
   char c;
@@ -121,8 +135,7 @@ int namei(const char * pathname, struct inode * base, int follow_links, struct i
     error = follow_link(base, inode, 0, 0, &inode);
     if (error)
       return error;
-  }
-  else
+  } else
     iput(base);
 
   *res_inode = inode;

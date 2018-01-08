@@ -101,6 +101,17 @@ struct fileSystem *vfs_findFS(int);
 #include <fs/msdos_fs.h>
 #include <ufs/ufs.h>
 
+struct super_operations {
+  void (*read_inode) (struct inode *);
+  int (*notify_change) (int flags, struct inode *);
+  void (*write_inode) (struct inode *);
+  void (*put_inode) (struct inode *);
+  void (*put_super) (struct super_block *);
+  void (*write_super) (struct super_block *);
+  void (*statfs) (struct super_block *, struct statfs *);
+  int (*remount_fs) (struct super_block *, int *, char *);
+};
+
 struct super_block {
     __dev_t s_dev;
     unsigned long s_blocksize;
