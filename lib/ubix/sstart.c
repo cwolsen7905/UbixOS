@@ -41,7 +41,7 @@ asm(
 }
 
 
-#ifdef _BALLS
+#ifdef _IGNORE
 void _start1(unsigned int *ap, ...) {
   Elf32_Auxinfo *aux, *auxp;
   unsigned int *argcp;
