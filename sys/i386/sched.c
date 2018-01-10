@@ -31,6 +31,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/endtask.h>
+#include <ubixos/wait.h>
 #include <vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
@@ -54,6 +55,8 @@ kTask_t *_current = 0x0;
 kTask_t *_usedMath = 0x0;
 
 static struct spinLock schedulerSpinLock = SPIN_LOCK_INITIALIZER;
+
+int need_resched = 0;
 
 /************************************************************************
 
@@ -294,7 +297,88 @@ int sched_setStatus( pidType pid, tState state ) {
   return (0x0);
 }
 
-/***
- END
- ***/
+void add_wait_queue(struct wait_queue ** p, struct wait_queue * wait)
+{
+        unsigned long flags;
 
+        save_flags(flags);
+        cli();
+        if (!*p) {
+                wait->next = wait;
+                *p = wait;
+        } else {
+                wait->next = (*p)->next;
+                (*p)->next = wait;
+        }
+        restore_flags(flags);
+}
+
+void remove_wait_queue(struct wait_queue ** p, struct wait_queue * wait) {
+  unsigned long flags;
+  struct wait_queue * tmp;
+
+  save_flags(flags);
+  cli();
+  if ((*p == wait) &&
+      ((*p = wait->next) == wait)) {
+    *p = NULL;
+  } else {
+    tmp = wait;
+    while (tmp->next != wait) {
+      tmp = tmp->next;
+    }
+    tmp->next = wait->next;
+  }
+  wait->next = NULL;
+  restore_flags(flags);
+}
+
+void wake_up_interruptible(struct wait_queue **q) {
+  struct wait_queue *tmp;
+  kTask_t *p;
+
+  if (!q || !(tmp = *q))
+    return;
+  do {
+    if ((p = tmp->task) != NULL) {
+      if (p->state == INTERRUPTIBLE) {
+        p->state = RUNNING;
+        if (p->counter > _current->counter)
+          need_resched = 1;
+      }
+    }
+    if (!tmp->next) {
+      kprintf("wait_queue is bad (eip = %08lx)\n", ((unsigned long *) q)[-1]);
+      kprintf("        q = %p\n", q);
+      kprintf("       *q = %p\n", *q);
+      kprintf("      tmp = %p\n", tmp);
+      break;
+    }
+    tmp = tmp->next;
+  } while (tmp != *q);
+}
+
+void wake_up(struct wait_queue **q) {
+  struct wait_queue *tmp;
+  kTask_t * p;
+
+  if (!q || !(tmp = *q))
+    return;
+  do {
+    if ((p = tmp->task) != NULL) {
+      if ((p->state == UNINTERRUPTIBLE) || (p->state == INTERRUPTIBLE)) {
+        p->state = RUNNING;
+        if (p->counter > _current->counter)
+          need_resched = 1;
+      }
+    }
+    if (!tmp->next) {
+      kprintf("wait_queue is bad (eip = %08lx)\n", ((unsigned long *) q)[-1]);
+      kprintf("        q = %p\n", q);
+      kprintf("       *q = %p\n", *q);
+      kprintf("      tmp = %p\n", tmp);
+      break;
+    }
+    tmp = tmp->next;
+  } while (tmp != *q);
+}

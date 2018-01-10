@@ -58,7 +58,7 @@ iret /* Return from the interrupt                        */
 .text
 .code32
 
-_BALLS:
+_B4:
 _B3:
 nop
 
@@ -87,7 +87,7 @@ call vmm_pageFault
 /* call syscall */
 add $0x4,%esp
 cmpb $0x13,0x38(%esp)
-je _BALLS
+je _B4
 testl $0x2000,0x3c(%esp) /* Test If VM */
 jz _notVM
 jmp _isVM
