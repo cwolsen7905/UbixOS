@@ -1,3 +1,4 @@
+/*
 #ifndef BTREE_H
 #define BTREE_H
 
@@ -68,3 +69,4 @@ class bTree {
   friend class UbixFS;
 }; // bTree
 #endif // !BTREE_H
+*/

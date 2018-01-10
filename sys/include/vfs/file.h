@@ -53,26 +53,30 @@ typedef struct fileDescriptorStruct {
   struct fileDescriptorStruct *prev;
   struct fileDescriptorStruct *next;
   struct vfs_mountPoint       *mp;
-  uInt16                       status;
-  uInt16                       mode;
-  uInt32                       offset;
-  uInt32                       size;
-  uInt16                       length;
-  uInt32                       start;
+  uint16_t                     status;
+  uint16_t                     mode;
+  uint32_t                     offset;
+  uint32_t                     size;
+  uint16_t                     length;
+  uint32_t                     start;
   char                         fileName[512];
   char                        *buffer;
-  uInt32                       ino;
+  uint32_t                     ino;
   struct cacheNode            *cacheNode;
-  uInt32                       perms;
+  uint32_t                     perms;
   struct dmadat               *dmadat;
   int                          dsk_meta;
-  uInt32                       resid;
+  uint32_t                     resid;
+  union {
+      struct ufs1_dinode ufs1;
+      struct ufs2_dinode ufs2;
+  } inode;
   } fileDescriptor;
 
 
 typedef struct userFileDescriptorStruct {
   struct fileDescriptorStruct *fd;
-  uInt32                       fdSize;
+  uint32_t                     fdSize;
   } userFileDescriptor;
 
 extern fileDescriptor *fdTable;

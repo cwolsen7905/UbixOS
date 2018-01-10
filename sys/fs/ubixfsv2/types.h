@@ -1,3 +1,4 @@
+/*
 #ifndef TYPES_H
 #define TYPES_H
 
@@ -8,4 +9,4 @@ typedef int                 int32;
 typedef unsigned long long  uInt64;
 typedef signed long long    int64;
 
-#endif /* !TYPES_H */
+#endif *//* !TYPES_H */

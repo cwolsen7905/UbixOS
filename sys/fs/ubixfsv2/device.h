@@ -26,7 +26,7 @@
  $Id: device.h 54 2016-01-11 01:29:55Z reddawg $
 
 *****************************************************************************************/
-
+/*
 #ifndef _DEVICE_H
 #define _DEVICE_H
 
@@ -62,7 +62,7 @@ typedef struct device_t {
   };
 
 #endif
-
+*/
 /***
  $Log: device.h,v $
  Revision 1.1.1.1  2006/06/01 12:46:15  reddawg

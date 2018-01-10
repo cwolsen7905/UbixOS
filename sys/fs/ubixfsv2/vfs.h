@@ -1,4 +1,4 @@
-#ifndef VFS_H
+/*#ifndef VFS_H
 #define VFS_H
 
 #include <stdlib.h>
@@ -23,3 +23,4 @@ class DiskFS : public FileSystemAbstract {
 }; // DiskFS
 
 #endif // !VFS_H
+*/

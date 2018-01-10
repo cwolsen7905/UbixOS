@@ -26,7 +26,7 @@
  $Id: ramdrive.cpp 54 2016-01-11 01:29:55Z reddawg $
 
 *****************************************************************************************/
-
+/*
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -106,7 +106,7 @@ dev_ramDestroy(void) {
   
   return(0x0);
 } // dev_ramDestroy
-
+*/
 /***
  $Log: ramdrive.cpp,v $
  Revision 1.1.1.1  2006/06/01 12:46:15  reddawg

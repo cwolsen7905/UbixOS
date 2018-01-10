@@ -1,4 +1,4 @@
-#ifndef UBIXFS_H
+/*#ifndef UBIXFS_H
 #define UBIXFS_H
 
 #include <sys/types.h>
@@ -25,11 +25,11 @@
 #define UBIXFS_MAGIC3 0xC0C0C0C
 #define UBIXFS_INODE_MAGIC 0x3bbe0ad9
 
-/* befs magic numbers
+*//* befs magic numbers
 #define SUPER_BLOCK_MAGIC1 0x42465331 // BFS1
 #define SUPER_BLOCK_MAGIC2 0xdd121031
 #define SUPER_BLOCK_MAGIC3 0x15b6830e
- */
+ *//*
 #define UBIXFS_CLEAN 0x434C454E  // CLEN
 #define UBIXFS_DIRTY 0x44495254  // DIRT
 
@@ -161,3 +161,4 @@ class UbixFS : public vfs_abstract {
 }; // UbixFS
 
 #endif // !UBIXFS_H
+*/

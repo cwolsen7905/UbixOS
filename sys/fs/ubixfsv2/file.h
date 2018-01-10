@@ -1,3 +1,4 @@
+/*
 #ifndef FILE_H
 #define FILE_H
 
@@ -11,4 +12,4 @@ typedef struct fileDescriptor {
   size_t size;
 } fileDescriptor;
 
-#endif /* !FILE_H */
+#endif *//* !FILE_H */

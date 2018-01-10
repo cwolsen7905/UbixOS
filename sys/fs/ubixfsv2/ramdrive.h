@@ -26,7 +26,7 @@
  $Id: ramdrive.h 54 2016-01-11 01:29:55Z reddawg $
 
 *****************************************************************************************/
-
+/*
 #ifndef __RAMDRIVE_H_
 #define __RAMDRIVE_H_
 
@@ -36,6 +36,7 @@ int       dev_ramDestroy();
 device_t *dev_ramDrive();
 
 #endif
+*/
 
 /***
  $Log: ramdrive.h,v $

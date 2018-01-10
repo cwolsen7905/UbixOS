@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include "vfs.h"
 
 DiskFS::DiskFS(const char * filename) {
@@ -20,3 +20,4 @@ DiskFS::read(void * data, long offset, long size) {
   fread(data, size, 1, diskFile);
   return 0;
 } // DiskFS::read
+*/

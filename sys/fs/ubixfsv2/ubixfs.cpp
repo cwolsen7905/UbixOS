@@ -1,4 +1,4 @@
-#include <stddef.h>
+/*#include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
@@ -106,7 +106,7 @@ cout << "done" << endl;
   ubixfsInode * rootInode = static_cast<ubixfsInode *>(root->inode);
   assert(rootInode);
 
-  /* the bTree constructor now loads in the header */
+  //the bTree constructor now loads in the header
 
   rootInode->data.btPtr = new bTree(this, root);
   rootInode->data.btPtr->Info();
@@ -209,7 +209,7 @@ UbixFS::vfs_format(device_t * dev) {
     dev->write(dev, &sector, (batSect)+i, 1);
   } // for i
 
-  /* allocate part of the root dir */
+  // allocate part of the root dir
 
   // sanity checks
   assert(sb->blockSize);
@@ -225,7 +225,7 @@ UbixFS::vfs_format(device_t * dev) {
   bth->treeWidth = 0;
   bth->treeLeafCount = 0;
 
-  /* create the root dir inode here */
+  // create the root dir inode here
 
   ubixfsInode * inode = new ubixfsInode;
   assert(inode);
@@ -244,7 +244,7 @@ UbixFS::vfs_format(device_t * dev) {
   inode->parent.iAddr.start = 0;
   inode->parent.iAddr.len = 0;
 
-  /* this is part of the root dir structure (the bTreeHeader) */
+  // this is part of the root dir structure (the bTreeHeader)
   inode->blocks.direct[0].AG = 0;
   inode->blocks.direct[0].start = 1;
   inode->blocks.direct[0].len = 1;
@@ -267,11 +267,11 @@ UbixFS::vfs_format(device_t * dev) {
 
   inode->inodeSize = sb->inodeSize;
 
-  /*
+  *//*
    * next and prev are used in memory to hold pointers to the next/prev
    * inodes in this dir.  On disk they may have another value, but for
    * now they should be set to null.
-   */
+   *//*
 
   inode->next.offset = 0;
   inode->prev.offset = 0;
@@ -342,9 +342,9 @@ UbixFS::vfs_read(fileDescriptor * fd, void * data, off_t offset, size_t size) {
   
   while (size > 0) {
 
-    /*
+    *//*
      * place check here to see which set of blocks we're looking through
-     */
+     *//*
 
     // scan through direct blocks
     do {
@@ -422,11 +422,11 @@ UbixFS::vfs_write(fileDescriptor * fd, void * data, off_t offset, size_t size) {
   } 
   
   if (EORPos > maxRange) {
-    /* 
+    *//*
      * The offset+size is greater than the size of the file, so we need to
      * extend out the file. Scan through the direct blocks (FIX LATER)
      * to find out where we need to extend
-     */
+     *//*
     switch (whichBlocks) {
       case 0:
         while (i < NUM_DIRECT_BLOCKS && inode->blocks.direct[i].len != 0) ++i;
@@ -440,18 +440,18 @@ UbixFS::vfs_write(fileDescriptor * fd, void * data, off_t offset, size_t size) {
         assert(false);  // sanity check
     } // switch
 
-    /*
+    *//*
      * NOTE: it's possible that if we scan through to find where the
      * run goes, we might be able to extend the previous block extent.
      * This will require that we set up br.start to be where we'd like to
      * start looking through the free block list, and then modifying
      * getFreeBlock() to honour that.
-     */
+     *//*
 
     br.AG = inode->inodeNum.AG;        // request a sane allocation group
     br.start = 0;                      // getFreeBlock() will ignore this
 
-    /*
+    *//*
      * The length that we need is determined by how much extra slack we 
      * already have in the pre-allocated blocks.
      * e.g. (assumes 4k blocks)
@@ -473,7 +473,7 @@ UbixFS::vfs_write(fileDescriptor * fd, void * data, off_t offset, size_t size) {
      * ((3000 + 4000) - 4096 + (4095)) / 4096 == 1 (rounded down)
      * And then we expand it by a little extra so we don't have to keep 
      * looking for more blocks. Currently we use 32k of slack (or 8 blocks)
-     */
+     *//*
 
     br.len = ((EORPos - maxRange + (bSize-1)) / bSize);
 
@@ -509,9 +509,8 @@ UbixFS::vfs_write(fileDescriptor * fd, void * data, off_t offset, size_t size) {
 
   while (size > 0) {
 
-    /*
-     * place check here to see which set of blocks we're looking through
-     */
+    / place check here to see which set of blocks we're looking through
+
 
     // scan through direct blocks
     do {
@@ -576,10 +575,10 @@ UbixFS::vfs_stop(void) {
   superBlock = NULL; 
   root = NULL;
 
-  /* 
+  *//*
    * The device isn't null at this point, allowing for people to restart
    * the mount point. Or, alternatively, to blow things up.
-   */
+   *//*
   
   return 0;
 } // UbixFS::vfs_stop
@@ -628,22 +627,22 @@ UbixFS::getFreeBlock(blockRun ibr) {
   if (ibr.len > superBlock->numBlocks) return obr;
 
   if (ibr.len == 1) return getFreeBlock(ibr.AG);
-  /*
+  *//*
    * count is the block from the base of the list.
    * Since we're given a specific AG to look through, we start the count at
    * AG << AGShift, where AGShift is the shift value of the number of blocks
    * in an AG
-   */
+   *//*
 
   count = (ibr.AG << superBlock->AGShift);
 
-  /*
+  *//*
    * The freeBlockList is a bit map of the free/used blocks.
    * Used = on bit
    * Unused = off bit
    * There are 8 bits per byte (hopefully) and so we have to divide the count
    * by 8 to get our starting byte offset to look from
-   */
+   *//*
 
   ptr = freeBlockList + (count >> 3);
 
@@ -706,22 +705,22 @@ UbixFS::getFreeBlock(uInt32 AG) {
   // Are there any blocks available?
   if (superBlock->numBlocks == superBlock->usedBlocks) return br;
 
-  /* 
+  *//*
    * count is the block from the base of the list.
    * Since we're given a specific AG to look through, we start the count at
    * AG << AGShift, where AGShift is the shift value of the number of blocks
    * in an AG 
-   */
+   *//*
 
   count = (AG << superBlock->AGShift);
 
-  /*
+  *//*
    * The freeBlockList is a bit map of the free/used blocks. 
    * Used = on bit
    * Unused = off bit
    * There are 8 bits per byte (hopefully) and so we have to divide the count
    * by 8 to get our starting byte offset to look from
-   */
+   *//*
 
   ptr = freeBlockList + (count >> 3);
 
@@ -767,11 +766,11 @@ UbixFS::getNextAG(void) {
 
 } // UbixFS::getNextAG
 
-/*
+*//*
  * UbixFS::getFreeBlock(void)
  * upon success returns a free block based on the next AG after the lastUsedAG
  * failure returns -1
- */
+ *//*
 
 blockRun
 UbixFS::getFreeBlock(void) {
@@ -795,12 +794,12 @@ UbixFS::get8FreeBlocks(uInt32 AG) {
   // Are there any blocks available?
   if (superBlock->usedBlocks+8 > superBlock->numBlocks) return br;
 
-  /*
+  *//*
    * count is the block from the base of the list.
    * Since we're given a specific AG to look through, we start the count at
    * AG << AGShift, where AGShift is the shift value of the number of blocks
    * in an AG
-   */
+   *//*
 
   count = (AG << superBlock->AGShift);
 
@@ -842,11 +841,11 @@ UbixFS::mknod(const char *filename, ubixfsInode * parent, mode_t mode) {
 
   inode->magic1 = UBIXFS_INODE_MAGIC;
 
-  /* 
+  *//*
    * in retrospect.. I'm not sure why parent would be null.. only the
    * root directory would have a null parent, but that's manually allocated
    * in vfs_format()
-   */
+   *//*
 
   if (parent == NULL) {
     inode->inodeNum = getFreeBlock();
@@ -874,11 +873,11 @@ UbixFS::mknod(const char *filename, ubixfsInode * parent, mode_t mode) {
 
   // inode->type 
 
-  /*
+  *//*
    * next and prev are used in memory to hold pointers to the next/prev
    * inodes in this dir.  On disk they may have another value, but for
    * now they should be set to null.
-   */
+   *//*
 
   inode->next.offset = 0;
   inode->prev.offset = 0;
@@ -913,24 +912,24 @@ UbixFS::vfs_mkdir(const char * path, mode_t mode) {
 
   assert(path[nameStart] != '/');   // bad input: mkdir /a//
 
-  /*
+  *//*
    * we're guaranteed by the assert() above that there is 
    * at least one "/" before our location. If you remove the assert 
    * you might need to make sure nameStart stays above 0 in the following
    * while
-   */
+   *//*
 
   while (path[nameStart] != '/') --nameStart;
   ++nameStart;
   assert(len - nameStart > 0);
 
-  /* e.g.
+  *//* e.g.
    *   v--------------------- start
    *      v------------------ end
    *                  v------ nameStart
    *  /usr/local/data/dirname/  <--- ignores trailing /
    *  <---------23----------> len
-   */
+   *//*
 
   start = end = 1;   // skip leading /
   while (end < nameStart) {
@@ -949,13 +948,13 @@ UbixFS::vfs_mkdir(const char * path, mode_t mode) {
   strncpy(name, &path[nameStart], len - nameStart);
   inode = (ubixfsInode *)mknod(name, dir, mode | INODE_DIRECTORY);
 
-  /* 
+  *//*
    * keep in mind that the reason for passing in the name is because
    * we thought about allowing key names to be different from inode 
    * names. In retrospect, I don't think that's a good idea since a dir
    * listing will print the actual dir name instead of . and ..
    * Thus: the first parameter of btPtr->Insert() may go away.
-   */
+   *//*
 
   assert(dir->data.btPtr->Insert(inode->name, inode));
 
@@ -987,3 +986,4 @@ UbixFS::~UbixFS(void) {
   delete [] freeBlockList;
   return;
 }
+*/

@@ -1,4 +1,7 @@
 // http://www.cs.msstate.edu/~cs2314/global/BTreeAnimation/algorithm.html
+
+/*
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -37,7 +40,7 @@ bTree::bTree(UbixFS * filesystem, fileDescriptor * myfd) {
 } // bTree::bTree
 
 bTree::bTree(const char * key, ubixfsInode * inode) {
-/* once the FS and the bTree are interfaced, this should go away */
+// once the FS and the bTree are interfaced, this should go away
   root = NULL;
   tag = 0;
   header = new bTreeHeader;
@@ -114,9 +117,8 @@ bTree::Insert(const char * key, ubixfsInode * inode) {
 // cout << "Insert(" << key << ")" << endl;
 //Info(bnode);
   ++header->treeLeafCount;
-  /*
-   * Find the leaf node the inode goes into
-   */
+  //Find the leaf node the inode goes into
+
   assert(bnode->used);
 // cout << "---Inserting " << inode->name << " @ " << inode << endl; 
   while (bnode != NULL && !bnode->leaf) {
@@ -136,9 +138,6 @@ bTree::Insert(const char * key, ubixfsInode * inode) {
     }
   } // while
 
-  /*
-   *
-   */
 
 assert(bnode);
 if (bnode->leaf != true) cout << "leafnode!=true" << endl;
@@ -161,9 +160,7 @@ assert(inode);
 
 
   if (tmpInode == NULL) {
-    /*
-     * This is the first node in this leaf
-     */
+    // This is the first node in this leaf
     bnode->head[curSlot].iPtr = bnode->tail[curSlot].iPtr = inode;
     bnode->present[curSlot] = true;
 
@@ -185,9 +182,8 @@ assert(inode);
     } // else
 
   } else {
-    /*
-     * Add node to leaf page. Scan through to find where it goes.
-     */
+    // Add node to leaf page. Scan through to find where it goes.
+
     if (strcmp(key, bnode->head[curSlot].iPtr->name) < 0)
     {
 
@@ -405,11 +401,12 @@ bTree::insertNode(bNode * node, const char * key, bNode * headPtr) {
       if (strcmp(key, node->keys[curSlot]) < 0) break;
     } // for 
 
-    /*
+
+    *//*
      * note that there is one more item for everything but keys
      * So, make the shift count +1 and just subtract it from the key shift
      * later
-     */
+     *//*
     int shift = node->used - curSlot +1;
 
     memmove(&node->head[curSlot+1],
@@ -543,14 +540,15 @@ bTree::Print(void) {
 
 ubixfsInode *
 bTree::Find(const char * key) {
-/*
+
+*//*
   ubixfsInode * tmp = GetFirstNode();
   while (tmp!=NULL) {
     if (strcmp(tmp->name, key) == 0) return tmp;
     tmp = tmp->next.iPtr;
   }
   return NULL;
-*/
+*//*
   return treeSearch(root, key);
 } // bTree::Find
 
@@ -765,3 +763,5 @@ bTree::~bTree(void) {
   cout << "tree width: " << header->treeWidth << endl;
   cout << "tree leaf count: " << header->treeLeafCount << endl;
 } // bTree::~bTree
+
+*/
