@@ -32,6 +32,7 @@
 								<option id="gnu.c.compiler.option.include.paths.1993117043" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/sys/include}&quot;"/>
 								</option>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1135296794" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1313808258" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.base.907977434" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.base"/>

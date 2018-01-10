@@ -30,6 +30,8 @@
 #ifndef _SYS_ELF_H_
 #define _SYS_ELF_H_ 1
 
+#define __i386__ 1
+
 #include <sys/types.h>
 #include <i386/elf.h>
 #include <sys/elf32.h>
@@ -72,5 +74,17 @@ typedef struct elf_file {
   Elf_Addr pcpu_stop; /* Pre-relocation pcpu set stop. */
   Elf_Addr pcpu_base; /* Relocated pcpu set address. */
 } *elf_file_t;
+
+
+#include <ubixos/ubthread.h>
+
+#define elfExecutable 0x002
+#define elfLibrary    0x003
+
+char *elfGetShType( int );
+char *elfGetPhType( int );
+char *elfGetRelType( int );
+
+int elf_load_file( kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry );
 
 #endif

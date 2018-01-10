@@ -4,7 +4,8 @@
 
 static struct inode *first_inode = NULL;
 static struct wait_queue *inode_wait = NULL;
-static int nr_inodes = 0, nr_free_inodes = 0;
+static int nr_inodes = 0;
+static int nr_free_inodes = 0;
 
 static void write_inode(struct inode * inode);
 static void __wait_on_inode(struct inode * inode);
