@@ -34,7 +34,7 @@ int sys_stat(char *path, struct stat *sb, int flags) {
   fileDescriptor *fd =  fopen(path, "r");
 
   if (fd == 0) {
-    error -1;
+    error = -1;
   }
   else {
   sb->st_dev = 0xDEADBEEF;

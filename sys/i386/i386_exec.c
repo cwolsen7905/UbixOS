@@ -102,6 +102,8 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out) {
   *argv_out = argv_tmp;
   *args_out = args_tmp;
 
+  return(0);
+
 }
 
 static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
@@ -125,7 +127,7 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
 
   *envp_out = envp_tmp;
   *envs_out = envs_tmp;
-
+  return(0);
 }
 
 static int elf_parse_dynamic(elf_file_t ef);
