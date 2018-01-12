@@ -25,7 +25,7 @@
 
  $Id: tty.h 79 2016-01-11 16:21:27Z reddawg $
 
-*****************************************************************************************/
+ *****************************************************************************************/
 
 #ifndef _UBIXOS_TTY_H
 #define _UBIXOS_TTY_H
@@ -35,22 +35,21 @@
 #define TTY_MAX_TERMS 5
 
 typedef struct tty_termNode {
-  char    *tty_buffer;
-  char    *tty_pointer;
-  uInt8    tty_colour;
-  uInt16   tty_x;
-  uInt16   tty_y;
-  pidType  owner;
-  char     stdin[512];
-  int      stdinSize;
-  } tty_term;
+    char *tty_buffer;
+    char *tty_pointer;
+    uint8_t tty_colour;
+    uint16_t tty_x;
+    uint16_t tty_y;
+    pidType owner;
+    char stdin[512];
+    int stdinSize;
+} tty_term;
 
 int tty_init();
 int tty_change(uInt16);
 tty_term *tty_find(uInt16);
-int tty_print(char *,tty_term *);
+int tty_print(char *, tty_term *);
 
 extern tty_term *tty_foreground;
 
 #endif
-

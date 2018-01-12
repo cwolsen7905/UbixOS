@@ -31,65 +31,68 @@
 #define _UBIXOS_SCHED_H
 
 #include <sys/types.h>
+#include <vfs/vfs.h>
 #include <ubixos/tty.h>
-#include <vfs/file.h>
+
 #include <sys/tss.h>
 #include <sys/thread.h>
 #include <ubixos/wait.h>
 
-#define NOGROUP -1 
-#define NGROUPS 32
+#define NO_GROUP -1
+#define NR_GROUPS 32
 
 typedef enum {
   PLACEHOLDER = -2, DEAD = -1, NEW = 0, READY = 1, RUNNING = 2, IDLE = 3, FORK = 4, WAIT = 5, UNINTERRUPTIBLE = 6, INTERRUPTIBLE = 7
 } tState;
 
 struct osInfo {
-  uInt8 timer;
-  uInt8 v86Task;
-  bool v86If;
-  uInt32 vmStart;
-  uInt32 stdinSize;
-  uInt32 controlKeys;
-  char *stdin;
-  char cwd[1024]; /* current working dir */
+    uInt8 timer;
+    uInt8 v86Task;
+    bool v86If;
+    uInt32 vmStart;
+    uInt32 stdinSize;
+    uInt32 controlKeys;
+    char *stdin;
+    char cwd[1024]; /* current working dir */
 };
 
 typedef struct taskStruct {
-  pidType id;
-  char name[256];
-  struct taskStruct *prev;
-  struct taskStruct *next;
-  struct tssStruct tss;
-  struct i387Struct i387;
-  struct osInfo oInfo;
-  fileDescriptor *imageFd;
-  tState state;
-  uint32_t gid;
-  uint32_t uid;
-  uint16_t euid, suid;
-  uint16_t egid, sgid;
-  uInt16 usedMath;
-  tty_term *term;
-  struct thread td;
-  struct inode *pwd;
-  struct inode *root;
-  struct inode *exec;
-  uint32_t counter;
-  uint16_t groups[NGROUPS];
+    pidType id;
+    char name[256];
+    struct taskStruct *prev;
+    struct taskStruct *next;
+    struct tssStruct tss;
+    struct i387Struct i387;
+    struct osInfo oInfo;
+    //fileDescriptor *imageFd;
+    fileDescriptor *files[MAX_OFILES];
+    tState state;
+    uint32_t uid, gid;
+    uint16_t euid, suid;
+    uint16_t egid, sgid;
+    uInt16 usedMath;
+    tty_term *term;
+    struct thread td;
+    struct {
+        struct inode *pwd;
+        struct inode *root;
+        struct inode *exec;
+    } inodes;
+    uint32_t counter;
+    uint16_t groups[NR_GROUPS];
 } kTask_t;
 
 int sched_init();
-int sched_setStatus( pidType, tState );
-int sched_deleteTask( pidType );
-int sched_addDelTask( kTask_t * );
+int sched_setStatus(pidType, tState);
+int sched_deleteTask(pidType);
+int sched_addDelTask(kTask_t *);
 kTask_t *sched_getDelTask();
 void sched_yield();
 void sched();
 
-void schedEndTask( pidType pid );
+void schedEndTask(pidType pid);
 kTask_t *schedNewTask();
-kTask_t *schedFindTask( uInt32 id );
+kTask_t *schedFindTask(uInt32 id);
 
 extern kTask_t *_current;
 extern kTask_t *_usedMath;

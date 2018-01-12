@@ -28,7 +28,6 @@
  *****************************************************************************************/
 
 #include <vfs/vfs.h>
-#include <vfs/file.h>
 #include <ubixos/sched.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
@@ -43,15 +42,17 @@ static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
 
 fileDescriptor *fdTable = 0x0;
 
+fileDescriptor *vfs_fileTable = 0x0;
+
 int sys_fwrite( struct thread *td, struct sys_fwrite_args *uap ) {
   char *t = uap->buf;
 
-  kprintf( "uap->size: %i, FD: [0x%X], BUF: [0x%X][%c]\n", uap->nbytes, uap->fd, uap->buf, t[0] );
-
   if ( uap->fd == 0x0 )
     tty_print( (char *) uap->buf, _current->term );
-  else
+  else {
+    kprintf( "uap->size: %i, FD: [0x%X], BUF: [0x%X][%c]\n", uap->nbytes, uap->fd, uap->buf, t[0] );
     fwrite( uap->buf, uap->nbytes, 1, uap->fd->fd );
+  }
 
   td->td_retval[0] = 0x0;
 

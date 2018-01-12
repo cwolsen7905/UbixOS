@@ -25,7 +25,7 @@
 
  $Id: mount.h 79 2016-01-11 16:21:27Z reddawg $
 
-*****************************************************************************************/
+ *****************************************************************************************/
 
 #ifndef _MOUNT_H
 #define _MOUNT_H
@@ -35,46 +35,48 @@
 #define MFSNAMELEN      16              /* length of type name including null */
 #define MNAMELEN        88              /* size of on/from name bufs */
 
-typedef struct fsid { int32_t val[2]; } fsid_t;        /* filesystem id type */
+typedef struct fsid {
+    int32_t val[2];
+} fsid_t; /* filesystem id type */
 
 struct statfs {
-  uint32_t f_version;             /* structure version number */
-  uint32_t f_type;                /* type of filesystem */
-  u_int64_t f_flags;               /* copy of mount exported flags */
-  u_int64_t f_bsize;               /* filesystem fragment size */
-  u_int64_t f_iosize;              /* optimal transfer block size */
-  u_int64_t f_blocks;              /* total data blocks in filesystem */
-  u_int64_t f_bfree;               /* free blocks in filesystem */
-  int64_t  f_bavail;              /* free blocks avail to non-superuser */
-  u_int64_t f_files;               /* total file nodes in filesystem */
-  int64_t  f_ffree;               /* free nodes avail to non-superuser */
-  u_int64_t f_syncwrites;          /* count of sync writes since mount */
-  u_int64_t f_asyncwrites;         /* count of async writes since mount */
-  u_int64_t f_syncreads;           /* count of sync reads since mount */
-  u_int64_t f_asyncreads;          /* count of async reads since mount */
-  u_int64_t f_spare[10];           /* unused spare */
-  uint32_t f_namemax;             /* maximum filename length */
-  uid_t     f_owner;              /* user that mounted the filesystem */
-  fsid_t    f_fsid;               /* filesystem id */
-  char      f_charspare[80];          /* spare string space */
-  char      f_fstypename[MFSNAMELEN]; /* filesystem type name */
-  char      f_mntfromname[MNAMELEN];  /* mounted filesystem */
-  char      f_mntonname[MNAMELEN];    /* directory on which mounted */
-  };
+    uint32_t f_version; /* structure version number */
+    uint32_t f_type; /* type of filesystem */
+    u_int64_t f_flags; /* copy of mount exported flags */
+    u_int64_t f_bsize; /* filesystem fragment size */
+    u_int64_t f_iosize; /* optimal transfer block size */
+    u_int64_t f_blocks; /* total data blocks in filesystem */
+    u_int64_t f_bfree; /* free blocks in filesystem */
+    int64_t f_bavail; /* free blocks avail to non-superuser */
+    u_int64_t f_files; /* total file nodes in filesystem */
+    int64_t f_ffree; /* free nodes avail to non-superuser */
+    u_int64_t f_syncwrites; /* count of sync writes since mount */
+    u_int64_t f_asyncwrites; /* count of async writes since mount */
+    u_int64_t f_syncreads; /* count of sync reads since mount */
+    u_int64_t f_asyncreads; /* count of async reads since mount */
+    u_int64_t f_spare[10]; /* unused spare */
+    uint32_t f_namemax; /* maximum filename length */
+    uid_t f_owner; /* user that mounted the filesystem */
+    fsid_t f_fsid; /* filesystem id */
+    char f_charspare[80]; /* spare string space */
+    char f_fstypename[MFSNAMELEN]; /* filesystem type name */
+    char f_mntfromname[MNAMELEN]; /* mounted filesystem */
+    char f_mntonname[MNAMELEN]; /* directory on which mounted */
+};
 
 struct vfs_mountPoint {
-  struct vfs_mountPoint   *prev;
-  struct vfs_mountPoint   *next;
-  struct fileSystem       *fs;
-  struct device_node      *device;
-  struct ubixDiskLabel   *diskLabel;
-  void               *fsInfo;
-  int                partition;
-  char               mountPoint[1024];
-  char               perms;
-  };
+    struct vfs_mountPoint *prev;
+    struct vfs_mountPoint *next;
+    struct fileSystem *fs;
+    struct device_node *device;
+    struct ubixDiskLabel *diskLabel;
+    void *fsInfo;
+    int partition;
+    char mountPoint[1024];
+    char perms;
+};
 
-int vfs_mount(int major,int minor,int partition,int fsType,char *mountPoint,char *perms);
+int vfs_mount(int major, int minor, int partition, int fsType, char *mountPoint, char *perms);
 int vfs_addMount(struct vfs_mountPoint *mp);
 struct vfs_mountPoint *vfs_findMount(char *mountPoint);
 
