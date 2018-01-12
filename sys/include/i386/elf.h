@@ -184,15 +184,4 @@ __ElfType(Auxinfo);
 
 #endif /* __i386__, __amd64__ */
 
-#include <ubixos/ubthread.h>
-
-#define elfExecutable 0x002
-#define elfLibrary    0x003
-
-char *elfGetShType( int );
-char *elfGetPhType( int );
-char *elfGetRelType( int );
-
-int elf_load_file( kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry );
-
 #endif

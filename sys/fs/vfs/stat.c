@@ -35,7 +35,7 @@ int sys_stat(char *path, struct stat *sb, int flags) {
   kprintf("FD: 0x%X", fd);
 
   if (fd == 0) {
-    error -1;
+    error = -1;
   }
   else {
   sb->st_dev = 0xDEADBEEF;

@@ -102,6 +102,8 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out) {
   *argv_out = argv_tmp;
   *args_out = args_tmp;
 
+  return(0);
+
 }
 
 static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
@@ -125,7 +127,7 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
 
   *envp_out = envp_tmp;
   *envs_out = envs_tmp;
-
+  return(0);
 }
 
 static int elf_parse_dynamic(elf_file_t ef);
@@ -191,7 +193,10 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
   newProcess->tss.io_map = 0x8000;
   newProcess->oInfo.vmStart = 0x6400000;
 
-  newProcess->imageFd = 0x0;
+  if (newProcess->files[0] != 0x0)
+    kpanic("Problem With File Descriptors");
+
+  newProcess->files[0] = 0x0;
 
   /* Set up default stack for thread here filled with arg list 3 times */
   asm volatile(
@@ -274,43 +279,45 @@ void execFile(char *file, char **argv, char **envp, int console) {
   );
 
   /* Lets Find The File */
-  newProcess->imageFd = fopen(file, "r");
+  if (newProcess->files[0] != 0x0)
+    kpanic("Problem With File Descriptors");
+  newProcess->files[0] = fopen(file, "r");
 
   /* If We Dont Find the File Return */
-  if (newProcess->imageFd == 0x0) {
+  if (newProcess->files[0] == 0x0) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
-    fclose(newProcess->imageFd);
+    fclose(newProcess->files[0]);
     return;
   }
 
-  if (newProcess->imageFd->perms == 0x0) {
+  if (newProcess->files[0]->perms == 0x0) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
-    fclose(newProcess->imageFd);
+    fclose(newProcess->files[0]);
     return;
   }
 
   /* Load ELF Header */
   binaryHeader = (Elf_Ehdr *) kmalloc(sizeof(Elf_Ehdr));
 
-  fread(binaryHeader, sizeof(Elf_Ehdr), 1, newProcess->imageFd);
+  fread(binaryHeader, sizeof(Elf_Ehdr), 1, newProcess->files[0]);
 
   /* Check If App Is A Real Application */
   if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
-    fclose(newProcess->imageFd);
+    fclose(newProcess->files[0]);
     return;
   }
   else if (binaryHeader->e_type != 2) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
-    fclose(newProcess->imageFd);
+    fclose(newProcess->files[0]);
     return;
   }
   else if (binaryHeader->e_entry == 0x300000) {
     kprintf("Exec Format Error: Binary File Not Executable.\n");
     kfree(binaryHeader);
-    fclose(newProcess->imageFd);
+    fclose(newProcess->files[0]);
     return;
   }
 
@@ -318,9 +325,9 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Load The Program Header(s) */
   programHeader = (Elf_Phdr *) kmalloc(sizeof(Elf_Phdr) * binaryHeader->e_phnum);
-  fseek(newProcess->imageFd, binaryHeader->e_phoff, 0);
+  fseek(newProcess->files[0], binaryHeader->e_phoff, 0);
 
-  fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1, newProcess->imageFd);
+  fread(programHeader, (sizeof(Elf_Phdr) * binaryHeader->e_phnum), 1, newProcess->files[0]);
 
   /* Loop Through The Header And Load Sections Which Need To Be Loaded */
   for (i = 0; i < binaryHeader->e_phnum; i++) {
@@ -339,9 +346,9 @@ void execFile(char *file, char **argv, char **envp, int console) {
       }
 
       /* Now Load Section To Memory */
-      fseek(newProcess->imageFd, programHeader[i].p_offset, 0);
+      fseek(newProcess->files[0], programHeader[i].p_offset, 0);
 
-      fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, newProcess->imageFd);
+      fread((void *) programHeader[i].p_vaddr, programHeader[i].p_filesz, 1, newProcess->files[0]);
 
       if ((programHeader[i].p_flags & 0x2) != 0x2) {
         for (x = 0x0; x < (programHeader[i].p_memsz); x += 0x1000) {
@@ -398,7 +405,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   kfree(binaryHeader);
   kfree(programHeader);
-  fclose(newProcess->imageFd);
+  fclose(newProcess->files[0]);
 
   tmp = (uInt32 *) newProcess->tss.esp0 - 5;
 
@@ -505,7 +512,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   }
 
   /* Set Threads FD to open FD */
-  _current->imageFd = fd;
+  _current->files[0] = fd;
 
   /* Copy In ARGS & ENVS Before Cleaning Virtual Space */
   uint32_t *argv_out = 0x0;

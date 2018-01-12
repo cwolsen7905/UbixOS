@@ -25,10 +25,10 @@
 
  $Id: vfs.h 79 2016-01-11 16:21:27Z reddawg $
 
-*****************************************************************************************/
+ *****************************************************************************************/
 
-#ifndef _VFS_H
-#define _VFS_H
+#ifndef _VFS_VFS_H
+#define _VFS_VFS_H
 
 #include <sys/types.h>
 #include <vfs/file.h>
@@ -42,12 +42,13 @@
 #define MAY_WRITE 2
 #define MAY_READ 4
 
+#define MAX_OFILES 256
+
 #define maxFd   32
 #define fdAvail 1
 #define fdOpen  2
 #define fdRead  3
 #define fdEof   4
-
 
 #define fileRead    0x0001
 #define fileWrite   0x0002
@@ -55,24 +56,23 @@
 #define fileAppend  0x0008
 
 /*!
-  \brief filesSystem Structure
+ \brief filesSystem Structure
 
-  not sure if we should allow function to point to NULL
-*/
+ not sure if we should allow function to point to NULL
+ */
 struct fileSystem {
-  struct fileSystem *prev;
-  struct fileSystem *next;
-  int               (*vfsInitFS)(void *); /*!< pointer to inialization routine */
-  int               (*vfsRead)(void *,char *,long,long); /*!< pointer to read routine */
-  int               (*vfsWrite)(void *,char *,long,long); /*!< pointer to write routine */
-  int               (*vfsOpenFile)(void *,void *); /*!< pointer to openfile routine */
-  int               (*vfsUnlink)(char *,void *); /*!< pointer to unlink routine */
-  int               (*vfsMakeDir)(char *,void *); /*!< pointer to makedir routine */
-  int               (*vfsRemDir)(char *); /*!< pointer to remdir routine */
-  int               (*vfsSync)(void); /*!< pointer to sync routine */
-  int               vfsType; /*!< vfs type id */
-  };
-
+    struct fileSystem *prev;
+    struct fileSystem *next;
+    int (*vfsInitFS)(void *); /*!< pointer to inialization routine */
+    int (*vfsRead)(void *, char *, long, long); /*!< pointer to read routine */
+    int (*vfsWrite)(void *, char *, long, long); /*!< pointer to write routine */
+    int (*vfsOpenFile)(void *, void *); /*!< pointer to openfile routine */
+    int (*vfsUnlink)(char *, void *); /*!< pointer to unlink routine */
+    int (*vfsMakeDir)(char *, void *); /*!< pointer to makedir routine */
+    int (*vfsRemDir)(char *); /*!< pointer to remdir routine */
+    int (*vfsSync)(void); /*!< pointer to sync routine */
+    int vfsType; /*!< vfs type id */
+};
 
 struct inode_operations {
     struct file_operations * default_file_ops;
@@ -102,14 +102,14 @@ struct fileSystem *vfs_findFS(int);
 //#include <ufs/ufs.h>
 
 struct super_operations {
-  void (*read_inode) (struct inode *);
-  int (*notify_change) (int flags, struct inode *);
-  void (*write_inode) (struct inode *);
-  void (*put_inode) (struct inode *);
-  void (*put_super) (struct super_block *);
-  void (*write_super) (struct super_block *);
-  void (*statfs) (struct super_block *, struct statfs *);
-  int (*remount_fs) (struct super_block *, int *, char *);
+    void (*read_inode)(struct inode *);
+    int (*notify_change)(int flags, struct inode *);
+    void (*write_inode)(struct inode *);
+    void (*put_inode)(struct inode *);
+    void (*put_super)(struct super_block *);
+    void (*write_super)(struct super_block *);
+    void (*statfs)(struct super_block *, struct statfs *);
+    int (*remount_fs)(struct super_block *, int *, char *);
 };
 
 struct super_block {
@@ -176,6 +176,5 @@ struct inode {
 */
     } u;
 };
-
 
 #endif
