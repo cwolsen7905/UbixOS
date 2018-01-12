@@ -28,6 +28,7 @@
 
 #include <ubixfs/dirCache.h>
 #include <sys/thread.h>
+#include <vfs/inode.h>
 #include <vfs/mount.h>
 #include <ufs/ufs.h>
 
@@ -41,6 +42,8 @@ int getchar();
 #define SBLOCKSIZE      8192
 #define DEV_BSHIFT      9               /* log2(DEV_BSIZE) */
 #define DEV_BSIZE       (1<<DEV_BSHIFT)
+
+#define MAX_OFILES 256
 
 struct dmadat {
     char blkbuf[VBLKSIZE]; /* filesystem blocks */

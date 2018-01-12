@@ -31,12 +31,11 @@
 #define _UBIXOS_SCHED_H
 
 #include <sys/types.h>
-#include <vfs/vfs.h>
+#include <vfs/file.h>
 #include <ubixos/tty.h>
 
 #include <sys/tss.h>
 #include <sys/thread.h>
-#include <ubixos/wait.h>
 
 #define NO_GROUP -1
 #define NR_GROUPS 32

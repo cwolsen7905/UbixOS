@@ -27,8 +27,8 @@
 
  *****************************************************************************************/
 
-#include <vfs/vfs.h>
 #include <ubixos/sched.h>
+#include <vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
