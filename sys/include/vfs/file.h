@@ -28,6 +28,7 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 #include <ubixfs/dirCache.h>
 #include <sys/thread.h>
 #include <vfs/mount.h>
+#include <ufs/ufs.h>
 
 /* HACK */
 int getchar();
@@ -71,6 +72,7 @@ typedef struct fileDescriptorStruct {
       struct ufs1_dinode ufs1;
       struct ufs2_dinode ufs2;
   } inode;
+
   } fileDescriptor;
 
 

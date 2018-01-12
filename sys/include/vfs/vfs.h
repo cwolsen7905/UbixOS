@@ -99,7 +99,7 @@ struct fileSystem *vfs_findFS(int);
 
 #include <fs/pipe_fs.h>
 #include <fs/msdos_fs.h>
-#include <ufs/ufs.h>
+//#include <ufs/ufs.h>
 
 struct super_operations {
   void (*read_inode) (struct inode *);
@@ -128,8 +128,10 @@ struct super_block {
     struct wait_queue * s_wait;
     union {
         struct msdos_sb_info msdos_sb;
+/*
         struct fs ufs1_sb;
         struct fs ufs2_sb;
+*/
     } u;
 };
 
@@ -168,8 +170,10 @@ struct inode {
     union {
         struct pipe_inode_info pipe_i;
         struct msdos_inode_info msdos_i;
+/*
         struct ufs1_dinode ufs1_i;
         struct ufs2_dinode ufs2_i;
+*/
     } u;
 };
 

@@ -31,7 +31,6 @@
 #define _UFS_H
 
 #include <sys/types.h>
-#include <vfs/vfs.h>
 #include <sys/device.h>
 
 #define DT_REG        8
