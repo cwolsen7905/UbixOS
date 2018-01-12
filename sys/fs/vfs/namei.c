@@ -1,6 +1,7 @@
 #include <sys/types.h>
 #include <ubixos/errno.h>
 #include <vfs/vfs.h>
+#include <ubixos/sched.h>
 
 int follow_link(struct inode * dir, struct inode * inode, int flag, int mode, struct inode ** res_inode) {
 
@@ -49,11 +50,11 @@ int lookup(struct inode * dir, const char * name, int len, struct inode ** resul
   perm = permission(dir, MAY_EXEC);
 
   if (len == 2 && name[0] == '.' && name[1] == '.') {
+#ifdef _IGNORE
     if (dir == _current->root) {
       *result = dir;
       return 0;
     }
-
     else if ((sb = dir->i_sb) && (dir == sb->s_mounted)) {
       sb = dir->i_sb;
       iput(dir);
@@ -62,6 +63,7 @@ int lookup(struct inode * dir, const char * name, int len, struct inode ** resul
         return -ENOENT;
       dir->i_count++;
     }
+#endif
   }
 
   if (!dir->i_op || !dir->i_op->lookup) {
@@ -91,10 +93,12 @@ static int dir_namei(const char * pathname, int * namelen, const char ** name, s
 
   *res_inode = NULL;
 
+#ifdef _IGNORE
   if (!base) {
     base = _current->pwd;
     base->i_count++;
   }
+#endif
 
   if (!base) {
     kprintf("BASE == NULL");
@@ -102,7 +106,9 @@ static int dir_namei(const char * pathname, int * namelen, const char ** name, s
 
   if ((c = *pathname) == '/') {
     iput(base);
+#ifdef _IGNORE
     base = _current->root;
+#endif
     pathname++;
     base->i_count++;
   }

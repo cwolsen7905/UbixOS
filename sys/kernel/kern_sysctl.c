@@ -192,9 +192,9 @@ int __sysctl( struct thread *td, struct sysctl_args *uap ) {
   }
 
   if ( (uint32_t) uap->oldlenp < tmpCtl->val_len )
-    memcpy( uap->old, tmpCtl->value, (uInt32) uap->oldlenp );
+    memcpy( uap->oldp, tmpCtl->value, (uInt32) uap->oldlenp );
   else
-    memcpy( uap->old, tmpCtl->value, tmpCtl->val_len );
+    memcpy( uap->oldp, tmpCtl->value, tmpCtl->val_len );
 
   td->td_retval[0] = 0x0;
 

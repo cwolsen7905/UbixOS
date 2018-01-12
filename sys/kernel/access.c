@@ -82,8 +82,8 @@ int in_group_p(gid_t grp)
 	if (grp == _current->egid)
 		return 1;
 
-	for (i = 0; i < NGROUPS; i++) {
-		if (_current->groups[i] == NOGROUP)
+	for (i = 0; i < NR_GROUPS; i++) {
+		if (_current->groups[i] == NO_GROUP)
 			break;
 		if (_current->groups[i] == grp)
 			return 1;

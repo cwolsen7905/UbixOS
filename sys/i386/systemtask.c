@@ -106,8 +106,8 @@ void systemTask() {
      */
     tmpTask = sched_getDelTask();
     if ( tmpTask != 0x0 ) {
-      if ( tmpTask->imageFd != 0x0 )
-        fclose( tmpTask->imageFd );
+      if ( tmpTask->files[0] != 0x0 )
+        fclose( tmpTask->files[0] );
       vmm_freeProcessPages( tmpTask->id );
       kfree( tmpTask );
     }

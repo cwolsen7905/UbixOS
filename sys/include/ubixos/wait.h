@@ -2,8 +2,10 @@
 #define _UBIXOS_WAIT_H
 
 
+struct kTask_t;
+
 struct wait_queue {
-//  struct kTask_t *task;
+  struct kTask_t *task;
   struct wait_queue *next;
 };
 

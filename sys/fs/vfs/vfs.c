@@ -166,6 +166,42 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
   return (error);
   }
 
+int sys_openat(struct thread *td, struct sys_openat_args *args) {
+  int          error = 0x0;
+  int          index = 0x0;
+  struct file *nfp   = 0x0;
+
+  error = falloc(td,&nfp,&index);
+
+  if (error)
+     return(error);
+
+  strcpy(nfp->path, args->path);
+
+  nfp->fd = fopen(args->path,"r");
+
+  if (nfp->fd == 0x0) {
+    td->td_retval[0] = -1;
+  }
+  else {
+    for (index = 0; index < 256;index++) {
+      if (td->o_files[index] == 0x0) {
+        td->o_files[index] = nfp->fd;
+        td->td_retval[0] = index;//nfp->fd->ino;//MrOlsen 2018index;
+        break;
+      }
+      else {
+        td->td_retval[0] = -1;//nfp->fd->ino;//MrOlsen 2018index;
+      }
+    }
+  }
+
+  kprintf("path: %s:%i ", args->path, index);
+
+  return (error);
+  }
+
+
 /* HACK */
 int fstatfs(struct thread *td, struct fstatfs_args *args) {
   int error = 0x0;
