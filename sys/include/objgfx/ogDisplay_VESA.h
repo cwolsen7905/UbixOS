@@ -26,12 +26,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef OGDISPLAY_VESA_H
-#define OGDISPLAY_VESA_H
+#ifndef _OBJGFX_OGDISPLAY_VESA_H
+#define _OBJGFX_OGDISPLAY_VESA_H
 
 #include <sys/types.h>
-
-#include "objgfx30.h"
+#include <objgfx40/objgfx40.h>
 
 struct TMode_Rec {
     uInt16 ModeAttributes __attribute__((packed));
@@ -66,7 +65,7 @@ struct TMode_Rec {
     uInt8 DirectColourMode __attribute__((packed));
     // VESA 2.0 specific fields
     uInt32 physBasePtr __attribute__((packed));
-    void* OffScreenMemOffset __attribute__((packed));
+    void *OffScreenMemOffset __attribute__((packed));
     uInt16 OffScreenMemSize __attribute__((packed));
     uInt8 paddington[461] __attribute__((packed));
 };

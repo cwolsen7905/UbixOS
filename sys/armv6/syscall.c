@@ -29,9 +29,9 @@
 #include <ubixos/syscall.h>
 #include <ubixos/syscalls.h>
 #include <ubixos/sched.h>
-#include <ubixos/types.h>
+#include <sys/types.h>
 #include <ubixos/exec.h>
-#include <ubixos/elf.h>
+#include <sys/elf.h>
 #include <ubixos/endtask.h>
 #include <ubixos/time.h>
 #include <sys/video.h>
@@ -46,9 +46,9 @@
 #include <mpi/mpi.h>
 #include <vmm/vmm.h>
 
-long   fuword(const void *base);
+//long fuword(const void *base);
 
-void sdeTestThread();
+//void sdeTestThread();
 
 asm(
   ".globl _sysCallNew           \n"
@@ -71,189 +71,175 @@ asm(
   "  call InvalidSystemCall     \n"
   "doneNew:                     \n"
   "  pop %gs                    \n"
-  "  pop %fs                    \n" 
+  "  pop %fs                    \n"
   "  pop %es                    \n"
   "  pop %ds                    \n"
   "  pop %ss                    \n"
   "  popa                       \n"
   "  iret                       \n"
-  );
+);
 
-void InvalidSystemCall()
-{
-	kprintf("attempt was made to an invalid system call\n");
-	return;
+void InvalidSystemCall() {
+  kprintf("attempt was made to an invalid system call\n");
+  return;
 }
 
 typedef struct _UbixUser UbixUser;
-struct _UbixUser
-{
-	char *username;
-	char *password;
-	int uid;
-	int gid;
-	char *home;
-	char *shell;
+struct _UbixUser {
+  char *username;
+  char *password;
+  int uid;
+  int gid;
+  char *home;
+  char *shell;
 };
 
-void sysAuth(UbixUser *uu)
-{
-	kprintf("authenticating user %s\n", uu->username);
+void sysAuth(UbixUser *uu) {
+  kprintf("authenticating user %s\n", uu->username);
 
-	/* MrOlsen 2016-01-01 uh? 
-	if(uu->username == "root" && uu->password == "user")
-	{
-		uu->uid = 0;
-		uu->gid = 0;
-	}
-*/
-	uu->uid = -1;
-	uu->gid = -1;
-	return;
+  /* MrOlsen 2016-01-01 uh?
+   if(uu->username == "root" && uu->password == "user")
+   {
+   uu->uid = 0;
+   uu->gid = 0;
+   }
+   */
+  uu->uid = -1;
+  uu->gid = -1;
+  return;
 }
 
-void sysPasswd(char *passwd)
-{
-	kprintf("changing user password for user %d\n", _current->uid);
-	return;
+void sysPasswd(char *passwd) {
+  kprintf("changing user password for user %d\n", _current->uid);
+  return;
 }
 
-void sysAddModule()
-{
-	return;
+void sysAddModule() {
+  return;
 }
 
-void sysRmModule()
-{
-	return;
+void sysRmModule() {
+  return;
 }
 
-void sysGetpid(int *pid)
-{
-	if (pid)
-		*pid = _current->id;
-		return;
+void sysGetpid(int *pid) {
+  if (pid)
+    *pid = _current->id;
+  return;
 }
 
 void sysGetUid(int *uid) {
   if (uid)
     *uid = _current->uid;
   return;
-  }
+}
 
 void sysGetGid(int *gid) {
   if (gid)
     *gid = _current->gid;
   return;
-  }
+}
 
-void sysSetUid(int uid,int *status) {
+void sysSetUid(int uid, int *status) {
   if (_current->uid == 0x0) {
     _current->uid = uid;
     if (status)
       *status = 0x0;
-    }
+  }
   else {
     if (status)
       *status = 1;
-    }
-  return;
   }
+  return;
+}
 
-void sysSetGid(int gid,int *status) {
+void sysSetGid(int gid, int *status) {
   if (_current->gid == 0x0) {
     _current->gid = gid;
     if (status)
       *status = 0x0;
-    }
+  }
   else {
     if (status)
       *status = 1;
-    }
+  }
   return;
-  }  
-
-void sysExit(int status)
-{
-	endTask(_current->id);
 }
 
-void sysCheckPid(int pid,int *ptr)
-{
-	kTask_t *tmpTask = schedFindTask(pid);
-	if ((tmpTask != 0x0) && (ptr != 0x0))
-		*ptr = tmpTask->state;
-	else
-		*ptr = 0x0;
-	return;
+void sysExit(int status) {
+  endTask(_current->id);
+}
+
+void sysCheckPid(int pid, int *ptr) {
+  kTask_t *tmpTask = schedFindTask(pid);
+  if ((tmpTask != 0x0) && (ptr != 0x0))
+    *ptr = tmpTask->state;
+  else
+    *ptr = 0x0;
+  return;
 }
 
 /************************************************************************
 
-Function: void sysGetFreePage();
-Description: Allocs A Page To The Users VM Space
-Notes:
+ Function: void sysGetFreePage();
+ Description: Allocs A Page To The Users VM Space
+ Notes:
 
-************************************************************************/  
-void sysGetFreePage(long *ptr,int count,int type) {
+ ************************************************************************/
+void sysGetFreePage(long *ptr, int count, int type) {
   if (ptr) {
     if (type == 2)
-      *ptr = (long) vmmGetFreeVirtualPage(_current->id,count,VM_THRD);
+      *ptr = (long) vmmGetFreeVirtualPage(_current->id, count, VM_THRD);
     else
-      *ptr = (long) vmmGetFreeVirtualPage(_current->id,count,VM_TASK);
-    }
-  return;
+      *ptr = (long) vmmGetFreeVirtualPage(_current->id, count, VM_TASK);
   }
-
-void sysGetDrives(uInt32 *ptr)
-{
-	if (ptr)
-		*ptr = 0x0;//(uInt32)devices;
-	return;
+  return;
 }
 
-void sysGetUptime(uInt32 *ptr)
-{
-	if (ptr)
-		*ptr = systemVitals->sysTicks;
-	return;
+void sysGetDrives(uInt32 *ptr) {
+  if (ptr)
+    *ptr = 0x0; //(uInt32)devices;
+  return;
 }
 
-void sysGetTime(uInt32 *ptr)
-{
-	if (ptr)
-		*ptr = systemVitals->sysUptime + systemVitals->timeStart;
-	return;
+void sysGetUptime(uInt32 *ptr) {
+  if (ptr)
+    *ptr = systemVitals->sysTicks;
+  return;
 }
 
+void sysGetTime(uInt32 *ptr) {
+  if (ptr)
+    *ptr = systemVitals->sysUptime + systemVitals->timeStart;
+  return;
+}
 
-void sysGetCwd(char *data,int len)
-{
-	if (data)
-		sprintf(data,"%s", _current->oInfo.cwd);
-	return;
+void sysGetCwd(char *data, int len) {
+  if (data)
+    sprintf(data, "%s", _current->oInfo.cwd);
+  return;
 }
 
 void sysSchedYield() {
   sched_yield();
-  }
+}
 
 void sysStartSDE() {
   int i = 0x0;
-  for (i=0;i<1400;i++) {
+  for (i = 0; i < 1400; i++) {
     asm("hlt");
-    }
-  //execThread(sdeThread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
-  for (i=0;i<1400;i++) {
-    asm("hlt");
-    }
-  return;
   }
+  //execThread(sdeThread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
+  for (i = 0; i < 1400; i++) {
+    asm("hlt");
+  }
+  return;
+}
 
 void invalidCall(int sys_call) {
-  kprintf("Invalid System Call #[%i]\n",sys_call);
+  kprintf("Invalid System Call #[%i]\n", sys_call);
   return;
-  }
+}
 
 /***
  END

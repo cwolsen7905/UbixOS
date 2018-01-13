@@ -66,13 +66,13 @@ extern "C" void sdeThread() {
       switch (tmp->status) {
         case registerWindow:
           buf = (ogSurface *) tmp->buf;
-          buf->buffer = (void *) vmmMapFromTask(tmp->pid, buf->buffer, buf->bSize);
+          buf->buffer = (void *) vmm_mapFromTask(tmp->pid, buf->buffer, buf->bSize);
           if (buf->buffer == 0x0) {
             kprintf("Error: buf->buffer\n");
             while (1)
               ;
           }
-          buf->lineOfs = (uInt32 *) vmmMapFromTask(tmp->pid, buf->lineOfs, buf->lSize);
+          buf->lineOfs = (uInt32 *) vmm_mapFromTask(tmp->pid, buf->lineOfs, buf->lSize);
           if (buf->lineOfs == 0x0) {
             kprintf("Error: buf->lineOfs\n");
             while (1)

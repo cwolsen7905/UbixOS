@@ -33,8 +33,6 @@
 #include <lib/kprintf.h>
 #include <vmm/vmm.h>
 
-int kmain(uint32_t);
-
 #define KERNEL_STACK 0x2000
 
 static void trap_end_task(char *string, struct trapframe *regs, long error_code);

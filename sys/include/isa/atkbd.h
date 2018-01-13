@@ -26,65 +26,21 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ubixos/access.h>
+#ifndef _ISA_ATKBD_H
+#define _ISA_ATKBD_H
 
-/************************************************************************
+#define shiftKey      1
+#define controlKey    2
+#define altKey        4
+#define ledNumlock    2
+#define ledScrolllock 1
+#define ledCapslock   4
 
- Function: sys_setUID();
+int  atkbd_init();
+void atkbd_isr();
 
- Description: This will set the UID of the task
-
- Notes:
-
- 2016/01/17 - This is very basic and will set any UID if you're 0
- need to change later.
+void keyboardHandler();
+void setLED();
 
 
- ************************************************************************/
-int sys_setUID(struct thread *td, struct sys_setUID_args *args) {
-  if (_current->uid == 0x0) {
-    _current->uid = args->uid;
-    return (0);
-  }
-  return (-1);
-}
-
-int sys_getUID(struct thread *td, void *uap) {
-  return (_current->uid);
-}
-
-int sys_getEUID(struct thread *td, void *uap) {
-  return (_current->uid);
-}
-
-int sys_getGID(struct thread *td, void *uap) {
-  return (_current->gid);
-}
-
-int sys_setGID(struct thread *td, struct sys_setGID_args *uap) {
-
-  if (_current->gid == 0x0) {
-
-    _current->gid = uap->gid;
-
-    return (0);
-
-  }
-
-  return (-1);
-}
-
-int in_group_p(gid_t grp) {
-  int i;
-
-  if (grp == _current->egid)
-    return 1;
-
-  for (i = 0; i < NR_GROUPS; i++) {
-    if (_current->groups[i] == NO_GROUP)
-      break;
-    if (_current->groups[i] == grp)
-      return 1;
-  }
-  return 0;
-}
+#endif /* END _ISA_ATKBD_H */

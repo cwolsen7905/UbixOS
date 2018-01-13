@@ -76,7 +76,7 @@ void systemTask() {
           break;
         case 31337:
            kprintf("system: backdoor opened\n");
-           break;	
+           break;
         case 0x80:
            if (!strcmp(myMsg.data,"sdeStart")) {
              kprintf("Starting SDE\n");
@@ -98,21 +98,21 @@ void systemTask() {
       }
 
     /*
-     Here we get the next task from the delete task queue 
-     we first check to see if it has an fd attached for the binary and after that 
-     we free the pages for the process and then free the task 
+     Here we get the next task from the delete task queue
+     we first check to see if it has an fd attached for the binary and after that
+     we free the pages for the process and then free the task
     */
-    tmpTask = sched_getDelTask();    
+    tmpTask = sched_getDelTask();
     if (tmpTask != 0x0) {
-      if (tmpTask->imageFd != 0x0)
-        fclose(tmpTask->imageFd);
+      if (tmpTask->files[0] != 0x0)
+        fclose(tmpTask->files[0]);
       vmmFreeProcessPages(tmpTask->id);
       kfree(tmpTask);
       }
-    videoBuffer[0] = systemVitals->sysTicks;     
+    videoBuffer[0] = systemVitals->sysTicks;
     sched_yield();
-    }    
-  
+    }
+
   return;
   }
 

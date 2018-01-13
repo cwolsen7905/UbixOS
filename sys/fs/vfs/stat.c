@@ -37,6 +37,7 @@ int sys_stat(char *path, struct stat *sb, int flags) {
 
   //NOTE: Should we verify that the memory is writable?
   kprintf("SYS_STAT {%s}", path);
+
 /*
   switch (flags) {
     case STAT_LSTAT:
@@ -60,6 +61,7 @@ int sys_stat(char *path, struct stat *sb, int flags) {
      break;
   }
 */
+
   fileDescriptor *fd =  fopen(path, "rb");
   kprintf("FD: 0x%X", fd);
 
@@ -84,7 +86,6 @@ int sys_stat(char *path, struct stat *sb, int flags) {
 
   return(error);
 }
-
 
 /* Return stat of path do not follow if link return stat of link */
 int sys_lstat(struct thread *td, struct sys_lstat_args *args) {

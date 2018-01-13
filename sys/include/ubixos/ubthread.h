@@ -30,7 +30,6 @@
 #define _UBTHREAD_H
 
 #include <sys/types.h>
-#include <stdatomic.h>
 #include <ubixos/sched.h>
 #include <ubixos/time.h>
 
@@ -46,7 +45,7 @@ typedef struct ubthread_cond *ubthread_cond_t;
 typedef struct ubthread_mutex *ubthread_mutex_t;
 
 struct ubthread {
-    kTask_t *task;
+    struct taskStruct *task;
 };
 
 struct ubthread_cond {
@@ -75,12 +74,12 @@ struct ubthread_mutex_list {
     ubthread_mutex_t *mutex;
 };
 
-kTask_t *ubthread_self();
+struct taskStruct *ubthread_self();
 int ubthread_cond_init(ubthread_cond_t *cond, const uInt32 attr);
 int ubthread_mutex_init(ubthread_mutex_t *mutex, const uInt32 attr);
 int ubthread_cond_destroy(ubthread_cond_t *cond);
 int ubthread_mutex_destroy(ubthread_mutex_t *mutex);
-int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg);
+int ubthread_create(struct taskStruct **thread, const uInt32 *attr, void (*tproc)(void), void *arg);
 int ubthread_mutex_lock(ubthread_mutex_t *mutex);
 int ubthread_mutex_unlock(ubthread_mutex_t *mutex);
 int ubthread_cond_timedwait(ubthread_cond_t *cond, ubthread_mutex_t *mutex, const struct timespec *abstime);

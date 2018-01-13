@@ -40,7 +40,7 @@
  */
 void kpanic(const char *fmt, ...) {
   char buf[512];
-  vaList args;
+  va_list args;
 
   vaStart(args, fmt);
   vsprintf(buf, fmt, args);

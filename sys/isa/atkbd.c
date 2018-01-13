@@ -152,6 +152,7 @@ static unsigned int keyboardMap[255][8] = {
 
  ************************************************************************/
 int atkbd_init() {
+
   /* Insert the IDT vector for the keyboard handler */
   setVector(&atkbd_isr, mVec + 0x1, dPresent + dInt + dDpl0);
 

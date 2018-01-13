@@ -46,7 +46,11 @@
  #include "gpt.h"
  */
 
-#define	MAXTBLENTS	128
+#define	 MAXTBLENTS	 128
+
+#ifndef BOOTPROG
+#define BOOTPROG "Unknown"
+#endif
 
 static struct gpt_hdr hdr_primary, hdr_backup, *gpthdr;
 static u_int64_t hdr_primary_lba, hdr_backup_lba;

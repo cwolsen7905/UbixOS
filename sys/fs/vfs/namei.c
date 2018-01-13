@@ -78,6 +78,7 @@ int lookup(struct inode * dir, const char * name, int len, struct inode ** resul
   perm = permission(dir, MAY_EXEC);
 
   if (len == 2 && name[0] == '.' && name[1] == '.') {
+
 #ifdef _IGNORE
     if (dir == _current->root) {
       *result = dir;
@@ -92,6 +93,7 @@ int lookup(struct inode * dir, const char * name, int len, struct inode ** resul
       dir->i_count++;
     }
 #endif
+
   }
 
   if (!dir->i_op || !dir->i_op->lookup) {

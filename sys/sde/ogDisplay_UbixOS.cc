@@ -172,7 +172,7 @@ void ogDisplay_UbixOS::SetMode(uInt16 mode) {
 
   printOff = 0;
   for (i = 0x0; i < ((size) / 4096); i++) {
-    if ((vmm_remapPage(modeInfo->physBasePtr + (i * 0x1000), modeInfo->physBasePtr + (i * 0x1000), KERNEL_PAGE_DEFAULT)) == 0x0)
+    if ((vmm_remapPage(modeInfo->physBasePtr + (i * 0x1000), modeInfo->physBasePtr + (i * 0x1000), KERNEL_PAGE_DEFAULT, -2)) == 0x0)
       kpanic("Error: vmm_remapPage failed\n");
   } // for i
 

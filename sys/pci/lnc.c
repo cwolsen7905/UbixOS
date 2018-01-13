@@ -41,11 +41,13 @@
 
 struct lncInfo *lnc = 0x0;
 
-static struct spinLock lnc_intSpinLock = SPIN_LOCK_INITIALIZER;
+//static struct spinLock lnc_intSpinLock = SPIN_LOCK_INITIALIZER;
 
-static char const * const nicIdent[] = { "Unknown", "BICC", "NE2100", "DEPCA", "CNET98S" };
+static const char * const nicIdent[] = { "Unknown", "BICC", "NE2100", "DEPCA", "CNET98S" };
 
-static char const * const icIdent[] = { "Unknown", "LANCE", "C-LANCE", "PCnet-ISA", "PCnet-ISA+", "PCnet-ISA II", "PCnet-32 VL-Bus", "PCnet-PCI", "PCnet-PCI II", "PCnet-FAST", "PCnet-FAST+", "PCnet-Home", };
+static const char * const icIdent[] = { "Unknown", "LANCE", "C-LANCE", "PCnet-ISA", "PCnet-ISA+", "PCnet-ISA II", "PCnet-32 VL-Bus", "PCnet-PCI", "PCnet-PCI II", "PCnet-FAST", "PCnet-FAST+", "PCnet-Home", };
+
+struct nicBuffer *tmpBuf;
 
 void lnc_writeCSR(struct lncInfo *lnc, uint16_t port, uint16_t val) {
   outportWord(lnc->ioAddr + RAP, port);

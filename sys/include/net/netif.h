@@ -55,7 +55,7 @@ struct nicBuffer {
   char             *buffer;
 };
 
-struct nicBuffer *tmpBuf;
+extern struct nicBuffer *tmpBuf;
 
 #ifdef __cplusplus
 extern "C" {

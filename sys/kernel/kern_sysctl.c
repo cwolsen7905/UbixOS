@@ -190,19 +190,10 @@ int __sysctl(struct thread *td, struct sysctl_args *uap) {
     endTask(_current->id);
   }
 
-<<<<<<< HEAD
   if ((uint32_t) uap->oldlenp < tmpCtl->val_len)
-    memcpy(uap->old, tmpCtl->value, (uInt32) uap->oldlenp);
-=======
-  if ( (uint32_t) uap->oldlenp < tmpCtl->val_len )
-    memcpy( uap->oldp, tmpCtl->value, (uInt32) uap->oldlenp );
->>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
+    memcpy(uap->oldp, tmpCtl->value, (uInt32) uap->oldlenp);
   else
-<<<<<<< HEAD
-    memcpy(uap->old, tmpCtl->value, tmpCtl->val_len);
-=======
-    memcpy( uap->oldp, tmpCtl->value, tmpCtl->val_len );
->>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
+    memcpy(uap->oldp, tmpCtl->value, tmpCtl->val_len);
 
   td->td_retval[0] = 0x0;
 

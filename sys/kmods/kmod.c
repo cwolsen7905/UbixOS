@@ -138,9 +138,11 @@ uInt32 kmod_load(const char *kmod_file) {
         /* Tells us if the stack should be executable.  Failsafe to executable
          until we add checking */
       break;
+#ifdef _IGNORE
       case PT_PAX_FLAGS:
         /* Not sure... */
       break;
+#endif
       default:
         kprintf("Unhandled Header : %08x\n", programHeader[i].phType);
       break;

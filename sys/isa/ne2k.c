@@ -27,6 +27,7 @@
  */
 
 #include <isa/ne2k.h>
+#include <net/netif.h>
 #include <isa/8259.h>
 #include <sys/device.old.h>
 #include <sys/io.h>
@@ -294,7 +295,8 @@ static void getblock(struct device *dev, int page, size_t offset, size_t size, v
 
 static int dp_pkt2user(struct device *dev, int page, int length) {
   int last = 0x0;
-  struct nicBuffer *tmpBuf = 0x0;
+
+  struct nicBuffer *tBuf = 0x0;
 
   last = page + (length - 1) / DP_PAGESIZE;
 
@@ -302,8 +304,8 @@ static int dp_pkt2user(struct device *dev, int page, int length) {
     kprintf("FOOK STOP PAGE!!!");
   }
   else {
-    tmpBuf = ne2kAllocBuffer(length);
-    NICtoPC(dev, tmpBuf->buffer, length, page * DP_PAGESIZE + sizeof(dp_rcvhdr_t));
+    tBuf = ne2kAllocBuffer(length);
+    NICtoPC(dev, tBuf->buffer, length, page * DP_PAGESIZE + sizeof(dp_rcvhdr_t));
   }
   return (OK);
 }

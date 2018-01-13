@@ -104,19 +104,13 @@ void systemTask() {
      we free the pages for the process and then free the task
      */
     tmpTask = sched_getDelTask();
-<<<<<<< HEAD
+
     if (tmpTask != 0x0) {
-      if (tmpTask->imageFd != 0x0)
-        fclose(tmpTask->imageFd);
+      if (tmpTask->files[0] != 0x0)
+        fclose(tmpTask->files[0]);
       vmm_freeProcessPages(tmpTask->id);
       kfree(tmpTask);
-=======
-    if ( tmpTask != 0x0 ) {
-      if ( tmpTask->files[0] != 0x0 )
-        fclose( tmpTask->files[0] );
-      vmm_freeProcessPages( tmpTask->id );
-      kfree( tmpTask );
->>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
+
     }
     videoBuffer[0] = systemVitals->sysTicks;
     sched_yield();
@@ -124,8 +118,3 @@ void systemTask() {
 
   return;
 }
-
-/***
- END
- ***/
-
