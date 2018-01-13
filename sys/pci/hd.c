@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004, 2016 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: hd.c 130 2016-01-14 15:45:44Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <pci/hd.h>
 #include <sys/io.h>
@@ -96,7 +95,8 @@ int initHardDisk() {
       if (gptread(&freebsd_ufs_uuid, devInfo, secbuf) == -1) {
         kprintf("%s: unable to load GPT\n", "KERNEL");
         //return (-1);
-      } else {
+      }
+      else {
         devInfo2 = (struct device_interface *) kmalloc(sizeof(struct device_interface));
         hdd2 = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
         memcpy(devInfo2, devInfo, sizeof(struct device_interface));
@@ -121,7 +121,8 @@ int initHardDisk() {
         }
       }
 
-    } else {
+    }
+    else {
 
       for (i = 0x0; i < 0x4; i++) {
 
@@ -254,41 +255,41 @@ int hdInit(struct device_node *dev) {
   retVal = tmp[0x2F] & 0xFF;
 
   switch (retVal) {
-  case 0:
-    hdd->hdShift = 0;
-    hdd->hdMulti = 1;
+    case 0:
+      hdd->hdShift = 0;
+      hdd->hdMulti = 1;
     break;
-  case 2:
-    hdd->hdShift = 1;
-    hdd->hdMulti = retVal;
+    case 2:
+      hdd->hdShift = 1;
+      hdd->hdMulti = retVal;
     break;
-  case 4:
-    hdd->hdShift = 2;
-    hdd->hdMulti = retVal;
+    case 4:
+      hdd->hdShift = 2;
+      hdd->hdMulti = retVal;
     break;
-  case 8:
-    hdd->hdShift = 3;
-    hdd->hdMulti = retVal;
+    case 8:
+      hdd->hdShift = 3;
+      hdd->hdMulti = retVal;
     break;
-  case 16:
-    hdd->hdShift = 4;
-    hdd->hdMulti = retVal;
+    case 16:
+      hdd->hdShift = 4;
+      hdd->hdMulti = retVal;
     break;
-  case 32:
-    hdd->hdShift = 5;
-    hdd->hdMulti = retVal;
+    case 32:
+      hdd->hdShift = 5;
+      hdd->hdMulti = retVal;
     break;
-  case 64:
-    hdd->hdShift = 6;
-    hdd->hdMulti = retVal;
+    case 64:
+      hdd->hdShift = 6;
+      hdd->hdMulti = retVal;
     break;
-  case 128:
-    hdd->hdShift = 7;
-    hdd->hdMulti = retVal;
+    case 128:
+      hdd->hdShift = 7;
+      hdd->hdMulti = retVal;
     break;
-  default:
-    kprintf("Error BLOCK Mode Unavailable: [%x]\n", retVal);
-    return (1);
+    default:
+      kprintf("Error BLOCK Mode Unavailable: [%x]\n", retVal);
+      return (1);
   }
 
   if (hdd->ata_identify->command_set_enabled1 & ATA_IDENTIFY_COMMAND_SET_SUPPORTED1_48BIT_ENABLE) {
@@ -301,7 +302,8 @@ int hdInit(struct device_node *dev) {
     hdd->lba_low |= hdd->ata_identify->max_48bit_lba[2] << 16;
     hdd->lba_low |= hdd->ata_identify->max_48bit_lba[1] << 8;
     hdd->lba_low |= hdd->ata_identify->max_48bit_lba[0];
-  } else {
+  }
+  else {
     hdd->lba_high = 0;
     hdd->lba_low = hdd->ata_identify->total_num_sectors[3] << 24;
     hdd->lba_low |= hdd->ata_identify->total_num_sectors[2] << 16;
@@ -315,7 +317,8 @@ int hdInit(struct device_node *dev) {
     hdd->sector_size |= hdd->ata_identify->words_per_logical_sector[2] << 16;
     hdd->sector_size |= hdd->ata_identify->words_per_logical_sector[1] << 8;
     hdd->sector_size |= hdd->ata_identify->words_per_logical_sector[0];
-  } else {
+  }
+  else {
     // Default the sector size to 512 bytes
     hdd->sector_size = 512;
   }
@@ -347,7 +350,7 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
   if (hdd->lba_start == 0)
     startSector += hdd->parOffset;
   else
-  startSector += hdd->lba_start;
+    startSector += hdd->lba_start;
 
   if (hdd->hdEnable == 0x0) {
     kprintf("Invalid Drive\n");
@@ -356,7 +359,8 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
   if ((sectorCount >> hdd->hdShift) == 0x0) {
     hdd->hdCalc = sectorCount; /* hdd->hdMask; */
     transactionCount = 1;
-  } else {
+  }
+  else {
     hdd->hdCalc = hdd->hdMulti;
     transactionCount = sectorCount >> hdd->hdShift;
   }
@@ -411,8 +415,6 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
   startSector += hdd->parOffset;
   startSector += hdd->lba_start;
 
-
-
   if (hdd->hdEnable == 0x0) {
     kprintf("Invalid Drive\n");
     return (1);
@@ -420,7 +422,8 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
   if ((sectorCount >> hdd->hdShift) == 0x0) {
     hdd->hdCalc = sectorCount; /* hdd->hdMask); */
     transactionCount = 1;
-  } else {
+  }
+  else {
     hdd->hdCalc = hdd->hdMulti;
     transactionCount = sectorCount >> hdd->hdShift;
   }

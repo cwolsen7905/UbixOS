@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: syscall.c 183 2016-01-22 04:49:08Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <ubixos/syscall.h>
 /*
@@ -53,7 +52,7 @@
 //void sdeTestThread();
 
 int InvalidSystemCall() {
-  kprintf( "attempt was made to an invalid system call\n" );
+  kprintf("attempt was made to an invalid system call\n");
   return (0);
 }
 
@@ -67,8 +66,8 @@ struct _UbixUser {
   char *shell;
 };
 
-int sysAuth( UbixUser *uu ) {
-  kprintf( "authenticating user %s\n", uu->username );
+int sysAuth(UbixUser *uu) {
+  kprintf("authenticating user %s\n", uu->username);
 
   /* MrOlsen 2016-01-01 uh?
    if(uu->username == "root" && uu->password == "user")
@@ -82,8 +81,8 @@ int sysAuth( UbixUser *uu ) {
   return (0);
 }
 
-int sysPasswd( char *passwd ) {
-  kprintf( "changing user password for user %d\n", _current->uid );
+int sysPasswd(char *passwd) {
+  kprintf("changing user password for user %d\n", _current->uid);
   return (0);
 }
 
@@ -95,20 +94,20 @@ int sysRmModule() {
   return (0);
 }
 
-int sysGetpid( int *pid ) {
-  if ( pid )
+int sysGetpid(int *pid) {
+  if (pid)
     *pid = _current->id;
   return (0);
 }
 
-int sysExit( int status ) {
-  endTask( _current->id );
+int sysExit(int status) {
+  endTask(_current->id);
   return (0x0);
 }
 
-int sysCheckPid( int pid, int *ptr ) {
-  kTask_t *tmpTask = schedFindTask( pid );
-  if ( (tmpTask != 0x0) && (ptr != 0x0) )
+int sysCheckPid(int pid, int *ptr) {
+  kTask_t *tmpTask = schedFindTask(pid);
+  if ((tmpTask != 0x0) && (ptr != 0x0))
     *ptr = tmpTask->state;
   else
     *ptr = 0x0;
@@ -122,45 +121,45 @@ int sysCheckPid( int pid, int *ptr ) {
  Notes:
 
  ************************************************************************/
-int sysGetFreePage( struct thread *td, uint32_t *count) {
+int sysGetFreePage(struct thread *td, uint32_t *count) {
   //MrOlsen 2017-12-15 kprintf("sysGetFreePage - Count: %i\n", *count);
-  return((int) vmm_getFreeVirtualPage(_current->id, *count, VM_THRD));
+  return ((int) vmm_getFreeVirtualPage(_current->id, *count, VM_THRD));
   //return(vmm_getFreeVirtualPage(_current->id, *count, VM_TASK));
 }
 
-int sysGetFreePage_OLD( long *ptr, int count, int type ) {
-  if ( ptr ) {
-    if ( type == 2 )
-      *ptr = (long) vmm_getFreeVirtualPage( _current->id, count, VM_THRD );
+int sysGetFreePage_OLD(long *ptr, int count, int type) {
+  if (ptr) {
+    if (type == 2)
+      *ptr = (long) vmm_getFreeVirtualPage(_current->id, count, VM_THRD);
     else
-      *ptr = (long) vmm_getFreeVirtualPage( _current->id, count, VM_TASK );
+      *ptr = (long) vmm_getFreeVirtualPage(_current->id, count, VM_TASK);
   }
   return (0);
 }
 
-int sysGetDrives( uInt32 *ptr ) {
-  if ( ptr )
+int sysGetDrives(uInt32 *ptr) {
+  if (ptr)
     *ptr = 0x0; //(uInt32)devices;
   return (0);
 }
 
-int sysGetUptime( uInt32 *ptr ) {
-  if ( ptr )
+int sysGetUptime(uInt32 *ptr) {
+  if (ptr)
     *ptr = systemVitals->sysTicks;
   return (0);
 }
 
-int sysGetTime( uInt32 *ptr ) {
-  if ( ptr )
+int sysGetTime(uInt32 *ptr) {
+  if (ptr)
     *ptr = systemVitals->sysUptime + systemVitals->timeStart;
   return (0);
 }
 
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
-  char *buf = (char *)args->buf;
+  char *buf = (char *) args->buf;
   kprintf("GETCWD: [%s][0x%X]\n", _current->oInfo.cwd, args->buf);
-  if ( args->buf ) {
-    sprintf(buf, "%s", _current->oInfo.cwd );
+  if (args->buf) {
+    sprintf(buf, "%s", _current->oInfo.cwd);
     buf[strlen(_current->oInfo.cwd)] = '\0';
     //MrOlsen (2018-01-01) - Why is sprintf not null terminating
   }
@@ -176,11 +175,11 @@ int sys_sched_yield(struct thread *td, void *args) {
 
 int sysStartSDE() {
   int i = 0x0;
-  for ( i = 0; i < 1400; i++ ) {
+  for (i = 0; i < 1400; i++) {
     asm("hlt");
   }
   //execThread(sdeThread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
-  for ( i = 0; i < 1400; i++ ) {
+  for (i = 0; i < 1400; i++) {
     asm("hlt");
   }
   return (0);

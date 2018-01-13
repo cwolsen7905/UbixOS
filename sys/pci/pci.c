@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: pci.c 79 2016-01-11 16:21:27Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <pci/pci.h>
 #include <sys/io.h>
@@ -145,7 +144,7 @@ uint32_t pciProbe(int bus, int dev, int func) {
   cfg = kmalloc(sizeof(struct pciConfig));
   memset(cfg, 0x0, sizeof(struct pciConfig));
 
-  uint32_t *word = (uint32_t *)cfg;
+  uint32_t *word = (uint32_t *) cfg;
 
   for (i = 0; i < 4; i++) {
     word[i] = pciRead(bus, dev, func, 4 * i, 4);
@@ -175,13 +174,13 @@ uint32_t pciProbe(int bus, int dev, int func) {
   cfg->func = func;
 
   /*
-  if (cfg->vendorID == 0x1022)
-    pciWrite(bus, dev, func, 0x3C, 0x5,1);
-  */
+   if (cfg->vendorID == 0x1022)
+   pciWrite(bus, dev, func, 0x3C, 0x5,1);
+   */
 
-  switch(cfg->headerType & 0x7F) {
+  switch (cfg->headerType & 0x7F) {
     case 0x0: /* normal device */
-      for (i = 4;i<=16;i++) {
+      for (i = 4; i <= 16; i++) {
         word[i] = pciRead(bus, dev, func, 4 * i, 4);
       }
       if (cfg->vendorID == 0x1022) {
@@ -190,57 +189,56 @@ uint32_t pciProbe(int bus, int dev, int func) {
         kprintf("  * Status: %X  Command: %X  BIST/Type/Lat/CLS: %X/%X/%X/%X\n", cfg->status, cfg->command, cfg->bist, cfg->headerType, cfg->latencyTimer, cfg->cacheLineSize);
         kprintf("  * IRQ: 0x%X.0x%X, BAR[0]: 0x%X\n", cfg->intLine, cfg->intPin, cfg->bar[0]);
       }
-      break;
+    break;
     case 0x1:
       kprintf("  * PCI <-> PCI Bridge\n");
-      break;
+    break;
     case 0x2:
       kprintf("  * PCI <-> CardBus Bridge\n");
-      break;
+    break;
     default:
       kprintf("  * Unknown Header Type\n");
-      break;
+    break;
 
   }
-
 
   /*
-  switch (cfg->headerType & 0x7F) {
-    case 0: // normal device
-      for (i = 0; i < 6; i++) {
-        v = pciRead(bus, dev, func, i * 4 + 0x10, 4);
-        if (v) {
-          int v2;
-          pciWrite(bus, dev, func, i * 4 + 0x10, 0xffffffff, 4);
-          v2 = pciRead(bus, dev, func, i * 4 + 0x10, 4) & 0xfffffff0;
-          pciWrite(bus, dev, func, i * 4 + 0x10, v, 4);
-          v2 = 1 + ~v2;
-          if (v & 1) {
-            cfg->base[i] = v & 0xffff;
-            cfg->size[i] = v2 & 0xffff;
-          }
-          else {
-            cfg->base[i] = v;
-            cfg->size[i] = v2;
-          }
-        }
-        else {
-          cfg->base[i] = 0;
-          cfg->size[i] = 0;
-        }
-      }
-      v = pciRead(bus, dev, func, 0x3c, 1);
-      cfg->irq = (v == 0xff ? 0 : v);
-      v = pciRead(bus, dev, func, 0x40, 1);
-      cfg->irqLine = (v == 0xff ? 0 : v);
-    break;
-    case 1:
+   switch (cfg->headerType & 0x7F) {
+   case 0: // normal device
+   for (i = 0; i < 6; i++) {
+   v = pciRead(bus, dev, func, i * 4 + 0x10, 4);
+   if (v) {
+   int v2;
+   pciWrite(bus, dev, func, i * 4 + 0x10, 0xffffffff, 4);
+   v2 = pciRead(bus, dev, func, i * 4 + 0x10, 4) & 0xfffffff0;
+   pciWrite(bus, dev, func, i * 4 + 0x10, v, 4);
+   v2 = 1 + ~v2;
+   if (v & 1) {
+   cfg->base[i] = v & 0xffff;
+   cfg->size[i] = v2 & 0xffff;
+   }
+   else {
+   cfg->base[i] = v;
+   cfg->size[i] = v2;
+   }
+   }
+   else {
+   cfg->base[i] = 0;
+   cfg->size[i] = 0;
+   }
+   }
+   v = pciRead(bus, dev, func, 0x3c, 1);
+   cfg->irq = (v == 0xff ? 0 : v);
+   v = pciRead(bus, dev, func, 0x40, 1);
+   cfg->irqLine = (v == 0xff ? 0 : v);
+   break;
+   case 1:
 
 
-  }
-  */
+   }
+   */
 
-  return ((uint32_t)cfg);
+  return ((uint32_t) cfg);
 }
 
 int pci_init() {
@@ -251,9 +249,9 @@ int pci_init() {
   struct pciConfig *pcfg;
 
   for (bus = 0x0; bus < 0x2; bus++) {
-    for (dev = 0; dev < 32; dev++) { 
+    for (dev = 0; dev < 32; dev++) {
       for (func = 0; func < 8; func++) {
-        pcfg = (struct pciConfig *)pciProbe(bus, dev, func);
+        pcfg = (struct pciConfig *) pciProbe(bus, dev, func);
         if (pcfg != 0x0) {
           for (i = 0x0; i < countof(pciClasses); i++) {
             if (pcfg->classCode == pciClasses[i].baseClass && pcfg->subClass == pciClasses[i].subClass && pcfg->progIf == pciClasses[i].interface) {

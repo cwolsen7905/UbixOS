@@ -1,34 +1,33 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004, 2016 The UbixOS Project
- All rights reserved.
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: hd.h 102 2016-01-12 03:59:34Z reddawg $
-
- *****************************************************************************************/
-
-#ifndef _HD_H_
-#define _HD_H_
+#ifndef _PCI_HD_H_
+#define _PCI_HD_H_
 
 #include <sys/types.h>
 #include <ubixfs/ubixfs.h>
@@ -163,124 +162,124 @@
 #define ATA_WRITE_MULTIPLE_FUA_EXT     0xCE
 
 struct driveInfo {
-  struct driveDiskLabel *diskLabel;
-  struct ata_identify_data *ata_identify;
-  uint32_t lba_high;
-  uint32_t lba_low;
-  uint32_t sector_size;
-  char hdEnable;
-  char hdDev;
-  char hdFlags;
-  char hdShift;
-  long hdMask;
-  uint32_t hdMulti;
-  long hdPort;
-  long hdSize;
-  long hdCalc;
-  long parOffset;
-  int  part;
-  long lba_start;
-  long lba_end;
+    struct driveDiskLabel *diskLabel;
+    struct ata_identify_data *ata_identify;
+    uint32_t lba_high;
+    uint32_t lba_low;
+    uint32_t sector_size;
+    char hdEnable;
+    char hdDev;
+    char hdFlags;
+    char hdShift;
+    long hdMask;
+    uint32_t hdMulti;
+    long hdPort;
+    long hdSize;
+    long hdCalc;
+    long parOffset;
+    int part;
+    long lba_start;
+    long lba_end;
 };
 
 int initHardDisk();
-int hdWrite( struct driveInfo *hdd, void *, uInt32, uInt32 );
-int hdRead( struct driveInfo *hdd, void *, uInt32, uInt32 );
+int hdWrite(struct driveInfo *hdd, void *, uInt32, uInt32);
+int hdRead(struct driveInfo *hdd, void *, uInt32, uInt32);
 int hdReset();
 int hdIoctl();
 int hdStart();
 int hdStop();
 int hdStandby();
-int hdInit( struct device_node *dev );
+int hdInit(struct device_node *dev);
 
 struct dos_partition {
-  unsigned char dp_flag; /* bootstrap flags */
-  unsigned char dp_shd; /* starting head */
-  unsigned char dp_ssect; /* starting sector */
-  unsigned char dp_scyl; /* starting cylinder */
-  unsigned char dp_type; /* partition type */
-  unsigned char dp_ehd; /* end head */
-  unsigned char dp_esect; /* end sector */
-  unsigned char dp_ecyl; /* end cylinder */
-  uInt32 dp_start; /* absolute starting sector number */
-  uInt32 dp_size; /* partition size in sectors */
+    unsigned char dp_flag; /* bootstrap flags */
+    unsigned char dp_shd; /* starting head */
+    unsigned char dp_ssect; /* starting sector */
+    unsigned char dp_scyl; /* starting cylinder */
+    unsigned char dp_type; /* partition type */
+    unsigned char dp_ehd; /* end head */
+    unsigned char dp_esect; /* end sector */
+    unsigned char dp_ecyl; /* end cylinder */
+    uInt32 dp_start; /* absolute starting sector number */
+    uInt32 dp_size; /* partition size in sectors */
 };
 
 #define MAXPARTITIONS   8
 
 struct bsd_disklabel {
-  uint32_t d_magic; /* the magic number */
-  u_int16_t d_type; /* drive type */
-  u_int16_t d_subtype; /* controller/d_type specific */
-  char d_typename[16]; /* type name, e.g. "eagle" */
+    uint32_t d_magic; /* the magic number */
+    u_int16_t d_type; /* drive type */
+    u_int16_t d_subtype; /* controller/d_type specific */
+    char d_typename[16]; /* type name, e.g. "eagle" */
 
-  char d_packname[16]; /* pack identifier */
+    char d_packname[16]; /* pack identifier */
 
-  /* disk geometry: */
-  uint32_t d_secsize; /* # of bytes per sector */
-  uint32_t d_nsectors; /* # of data sectors per track */
-  uint32_t d_ntracks; /* # of tracks per cylinder */
-  uint32_t d_ncylinders; /* # of data cylinders per unit */
-  uint32_t d_secpercyl; /* # of data sectors per cylinder */
-  uint32_t d_secperunit; /* # of data sectors per unit */
+    /* disk geometry: */
+    uint32_t d_secsize; /* # of bytes per sector */
+    uint32_t d_nsectors; /* # of data sectors per track */
+    uint32_t d_ntracks; /* # of tracks per cylinder */
+    uint32_t d_ncylinders; /* # of data cylinders per unit */
+    uint32_t d_secpercyl; /* # of data sectors per cylinder */
+    uint32_t d_secperunit; /* # of data sectors per unit */
 
-  /*
-   * Spares (bad sector replacements) below are not counted in
-   * d_nsectors or d_secpercyl.  Spare sectors are assumed to
-   * be physical sectors which occupy space at the end of each
-   * track and/or cylinder.
-   */
-  u_int16_t d_sparespertrack; /* # of spare sectors per track */
-  u_int16_t d_sparespercyl; /* # of spare sectors per cylinder */
-  /*
-   * Alternate cylinders include maintenance, replacement, configuration
-   * description areas, etc.
-   */
-  uint32_t d_acylinders; /* # of alt. cylinders per unit */
+    /*
+     * Spares (bad sector replacements) below are not counted in
+     * d_nsectors or d_secpercyl.  Spare sectors are assumed to
+     * be physical sectors which occupy space at the end of each
+     * track and/or cylinder.
+     */
+    u_int16_t d_sparespertrack; /* # of spare sectors per track */
+    u_int16_t d_sparespercyl; /* # of spare sectors per cylinder */
+    /*
+     * Alternate cylinders include maintenance, replacement, configuration
+     * description areas, etc.
+     */
+    uint32_t d_acylinders; /* # of alt. cylinders per unit */
 
-  /* hardware characteristics: */
-  /*
-   * d_interleave, d_trackskew and d_cylskew describe perturbations
-   * in the media format used to compensate for a slow controller.
-   * Interleave is physical sector interleave, set up by the
-   * formatter or controller when formatting.  When interleaving is
-   * in use, logically adjacent sectors are not physically
-   * contiguous, but instead are separated by some number of
-   * sectors.  It is specified as the ratio of physical sectors
-   * traversed per logical sector.  Thus an interleave of 1:1
-   * implies contiguous layout, while 2:1 implies that logical
-   * sector 0 is separated by one sector from logical sector 1.
-   * d_trackskew is the offset of sector 0 on track N relative to
-   * sector 0 on track N-1 on the same cylinder.  Finally, d_cylskew
-   * is the offset of sector 0 on cylinder N relative to sector 0
-   * on cylinder N-1.
-   */
-  u_int16_t d_rpm; /* rotational speed */
-  u_int16_t d_interleave; /* hardware sector interleave */
-  u_int16_t d_trackskew; /* sector 0 skew, per track */
-  u_int16_t d_cylskew; /* sector 0 skew, per cylinder */
-  uint32_t d_headswitch; /* head switch time, usec */
-  uint32_t d_trkseek; /* track-to-track seek, usec */
-  uint32_t d_flags; /* generic flags */
+    /* hardware characteristics: */
+    /*
+     * d_interleave, d_trackskew and d_cylskew describe perturbations
+     * in the media format used to compensate for a slow controller.
+     * Interleave is physical sector interleave, set up by the
+     * formatter or controller when formatting.  When interleaving is
+     * in use, logically adjacent sectors are not physically
+     * contiguous, but instead are separated by some number of
+     * sectors.  It is specified as the ratio of physical sectors
+     * traversed per logical sector.  Thus an interleave of 1:1
+     * implies contiguous layout, while 2:1 implies that logical
+     * sector 0 is separated by one sector from logical sector 1.
+     * d_trackskew is the offset of sector 0 on track N relative to
+     * sector 0 on track N-1 on the same cylinder.  Finally, d_cylskew
+     * is the offset of sector 0 on cylinder N relative to sector 0
+     * on cylinder N-1.
+     */
+    u_int16_t d_rpm; /* rotational speed */
+    u_int16_t d_interleave; /* hardware sector interleave */
+    u_int16_t d_trackskew; /* sector 0 skew, per track */
+    u_int16_t d_cylskew; /* sector 0 skew, per cylinder */
+    uint32_t d_headswitch; /* head switch time, usec */
+    uint32_t d_trkseek; /* track-to-track seek, usec */
+    uint32_t d_flags; /* generic flags */
 #define NDDATA 5
-  uint32_t d_drivedata[NDDATA]; /* drive-type specific information */
+    uint32_t d_drivedata[NDDATA]; /* drive-type specific information */
 #define NSPARE 5
-  uint32_t d_spare[NSPARE]; /* reserved for future use */
-  uint32_t d_magic2; /* the magic number (again) */
-  u_int16_t d_checksum; /* xor of data incl. partitions */
+    uint32_t d_spare[NSPARE]; /* reserved for future use */
+    uint32_t d_magic2; /* the magic number (again) */
+    u_int16_t d_checksum; /* xor of data incl. partitions */
 
-  /* filesystem and partition information: */
-  u_int16_t d_npartitions; /* number of partitions in following */
-  uint32_t d_bbsize; /* size of boot area at sn0, bytes */
-  uint32_t d_sbsize; /* max size of fs superblock, bytes */
-  struct partition { /* the partition table */
-    uint32_t p_size; /* number of sectors in partition */
-    uint32_t p_offset; /* starting sector */
-    uint32_t p_fsize; /* filesystem basic fragment size */
-    u_int8_t p_fstype; /* filesystem type, see below */
-    u_int8_t p_frag; /* filesystem fragments per block */
-    u_int16_t p_cpg; /* filesystem cylinders per group */
-  } d_partitions[MAXPARTITIONS]; /* actually may be more */
+    /* filesystem and partition information: */
+    u_int16_t d_npartitions; /* number of partitions in following */
+    uint32_t d_bbsize; /* size of boot area at sn0, bytes */
+    uint32_t d_sbsize; /* max size of fs superblock, bytes */
+    struct partition { /* the partition table */
+        uint32_t p_size; /* number of sectors in partition */
+        uint32_t p_offset; /* starting sector */
+        uint32_t p_fsize; /* filesystem basic fragment size */
+        u_int8_t p_fstype; /* filesystem type, see below */
+        u_int8_t p_frag; /* filesystem fragments per block */
+        u_int16_t p_cpg; /* filesystem cylinders per group */
+    } d_partitions[MAXPARTITIONS]; /* actually may be more */
 };
 
 static const char *fstypenames[] = { "unused", "swap", "Version 6", "Version 7", "System V", "4.1BSD", "Eighth Edition", "4.2BSD", "MSDOS", "4.4LFS", "unknown", "HPFS", "ISO9660", "boot", "vinum", "raid", "?", "?", "?", "?", "jfs", NULL };
@@ -299,101 +298,101 @@ static const char *fstypenames[] = { "unused", "swap", "Version 6", "Version 7",
 #define ATA_IDENTIFY_WWN_LEN                  8
 
 struct ata_identify_data {
-  u_int16_t general_config_bits;                             // word  00
-  u_int16_t obsolete0;                                       // word  01 (num cylinders)
-  u_int16_t vendor_specific_config_bits;                     // word  02
-  u_int16_t obsolete1;                                       // word  03 (num heads)
-  u_int16_t retired1[2];                                     // words 04-05
-  u_int16_t obsolete2;                                       // word  06 (sectors / track)
-  u_int16_t reserved_for_compact_flash1[2];                  // words 07-08
-  u_int16_t retired0;                                        // word  09
-  u_int8_t serial_number[ATA_IDENTIFY_SERIAL_NUMBER_LEN];   // word 10-19
-  u_int16_t retired2[2];                                     // words 20-21
-  u_int16_t obsolete4;                                       // word  22
-  u_int8_t firmware_revision[ATA_IDENTIFY_FW_REVISION_LEN]; // words 23-26
-  u_int8_t model_number[ATA_IDENTIFY_MODEL_NUMBER_LEN];     // words 27-46
-  u_int16_t max_sectors_per_multiple;                        // word  47
-  u_int16_t reserved0;                                       // word  48
-  u_int16_t capabilities1;                                   // word  49
-  u_int16_t capabilities2;                                   // word  50
-  u_int16_t obsolete5[2];                                    // words 51-52
-  u_int16_t validity_bits;                                   // word  53
-  u_int16_t obsolete6[5];                                    // words 54-58 Used to be:
-  // current cylinders,
-  // current heads,
-  // current sectors/Track,
-  // current capacity
-  u_int16_t current_max_sectors_per_multiple;                // word  59
-  u_int8_t total_num_sectors[4];                            // words 60-61
-  u_int16_t obsolete7;                                       // word  62
-  u_int16_t multi_word_dma_mode;                             // word  63
-  u_int16_t pio_modes_supported;                             // word  64
-  u_int16_t min_multiword_dma_transfer_cycle;                // word  65
-  u_int16_t rec_min_multiword_dma_transfer_cycle;            // word  66
-  u_int16_t min_pio_transfer_no_flow_ctrl;                   // word  67
-  u_int16_t min_pio_transfer_with_flow_ctrl;                 // word  68
-  u_int16_t additional_supported;                            // word  69
-  u_int16_t reserved1;                                       // word  70
-  u_int16_t reserved2[4];                                    // words 71-74
-  u_int16_t queue_depth;                                     // word  75
-  u_int16_t serial_ata_capabilities;                         // word  76
-  u_int16_t serial_ata_reserved;                             // word  77
-  u_int16_t serial_ata_features_supported;                   // word  78
-  u_int16_t serial_ata_features_enabled;                     // word  79
-  u_int16_t major_version_number;                            // word  80
-  u_int16_t minor_version_number;                            // word  81
-  u_int16_t command_set_supported0;                          // word  82
-  u_int16_t command_set_supported1;                          // word  83
-  u_int16_t command_set_supported_extention;                 // word  84
-  u_int16_t command_set_enabled0;                            // word  85
-  u_int16_t command_set_enabled1;                            // word  86
-  u_int16_t command_set_default;                             // word  87
-  u_int16_t ultra_dma_mode;                                  // word  88
-  u_int16_t security_erase_completion_time;                  // word  89
-  u_int16_t enhanced_security_erase_time;                    // word  90
-  u_int16_t current_power_mgmt_value;                        // word  91
-  u_int16_t master_password_revision;                        // word  92
-  u_int16_t hardware_reset_result;                           // word  93
-  u_int16_t current_acoustic_management_value;               // word  94
-  u_int16_t stream_min_request_size;                         // word  95
-  u_int16_t stream_transfer_time;                            // word  96
-  u_int16_t stream_access_latency;                           // word  97
-  u_int16_t stream_performance_granularity[2];               // words 98-99
-  u_int8_t max_48bit_lba[ATA_IDENTIFY_48_LBA_LEN];          // words 100-103
-  u_int16_t streaming_transfer_time;                         // word  104
-  u_int16_t max_lba_range_entry_blocks;                      // word  105
-  u_int16_t physical_logical_sector_info;                    // word  106
-  u_int16_t acoustic_test_interseek_delay;                   // word  107
-  u_int8_t world_wide_name[ATA_IDENTIFY_WWN_LEN];           // words 108-111
-  u_int8_t reserved_for_wwn_extention[ATA_IDENTIFY_WWN_LEN];           // words 112-115
-  u_int16_t reserved4;                                       // word  116
-  u_int8_t words_per_logical_sector[4];                     // words 117-118
-  u_int16_t command_set_supported2;                          // word  119
-  u_int16_t reserved5[7];                                    // words 120-126
-  u_int16_t removable_media_status;                          // word  127
-  u_int16_t security_status;                                 // word  128
-  u_int16_t vendor_specific1[31];                            // words 129-159
-  u_int16_t cfa_power_mode1;                                 // word  160
-  u_int16_t reserved_for_compact_flash2[7];                  // words 161-167
-  u_int16_t device_nominal_form_factor;                      // word  168
-  u_int16_t data_set_management;                             // word  169
-  u_int16_t reserved_for_compact_flash3[6];                  // words 170-175
-  u_int16_t current_media_serial_number[ATA_IDENTIFY_MEDIA_SERIAL_NUMBER_LEN];                  //words 176-205
-  u_int16_t reserved6[3];                                    // words 206-208
-  u_int16_t logical_sector_alignment;                        // words 209
-  u_int16_t reserved7[7];                                    // words 210-216
-  u_int16_t nominal_media_rotation_rate;                     // word  217
-  u_int16_t reserved8[16];                                   // words 218-233
-  u_int16_t min_num_blocks_per_microcode;                    // word  234
-  u_int16_t max_num_blocks_per_microcode;                    // word  235
-  u_int16_t reserved9[19];                                   // words 236-254
-  u_int16_t integrity_word;                                  // word  255
+    u_int16_t general_config_bits;                             // word  00
+    u_int16_t obsolete0;                                       // word  01 (num cylinders)
+    u_int16_t vendor_specific_config_bits;                     // word  02
+    u_int16_t obsolete1;                                       // word  03 (num heads)
+    u_int16_t retired1[2];                                     // words 04-05
+    u_int16_t obsolete2;                                       // word  06 (sectors / track)
+    u_int16_t reserved_for_compact_flash1[2];                  // words 07-08
+    u_int16_t retired0;                                        // word  09
+    u_int8_t serial_number[ATA_IDENTIFY_SERIAL_NUMBER_LEN];   // word 10-19
+    u_int16_t retired2[2];                                     // words 20-21
+    u_int16_t obsolete4;                                       // word  22
+    u_int8_t firmware_revision[ATA_IDENTIFY_FW_REVISION_LEN]; // words 23-26
+    u_int8_t model_number[ATA_IDENTIFY_MODEL_NUMBER_LEN];     // words 27-46
+    u_int16_t max_sectors_per_multiple;                        // word  47
+    u_int16_t reserved0;                                       // word  48
+    u_int16_t capabilities1;                                   // word  49
+    u_int16_t capabilities2;                                   // word  50
+    u_int16_t obsolete5[2];                                    // words 51-52
+    u_int16_t validity_bits;                                   // word  53
+    u_int16_t obsolete6[5];                                    // words 54-58 Used to be:
+    // current cylinders,
+    // current heads,
+    // current sectors/Track,
+    // current capacity
+    u_int16_t current_max_sectors_per_multiple;                // word  59
+    u_int8_t total_num_sectors[4];                            // words 60-61
+    u_int16_t obsolete7;                                       // word  62
+    u_int16_t multi_word_dma_mode;                             // word  63
+    u_int16_t pio_modes_supported;                             // word  64
+    u_int16_t min_multiword_dma_transfer_cycle;                // word  65
+    u_int16_t rec_min_multiword_dma_transfer_cycle;            // word  66
+    u_int16_t min_pio_transfer_no_flow_ctrl;                   // word  67
+    u_int16_t min_pio_transfer_with_flow_ctrl;                 // word  68
+    u_int16_t additional_supported;                            // word  69
+    u_int16_t reserved1;                                       // word  70
+    u_int16_t reserved2[4];                                    // words 71-74
+    u_int16_t queue_depth;                                     // word  75
+    u_int16_t serial_ata_capabilities;                         // word  76
+    u_int16_t serial_ata_reserved;                             // word  77
+    u_int16_t serial_ata_features_supported;                   // word  78
+    u_int16_t serial_ata_features_enabled;                     // word  79
+    u_int16_t major_version_number;                            // word  80
+    u_int16_t minor_version_number;                            // word  81
+    u_int16_t command_set_supported0;                          // word  82
+    u_int16_t command_set_supported1;                          // word  83
+    u_int16_t command_set_supported_extention;                 // word  84
+    u_int16_t command_set_enabled0;                            // word  85
+    u_int16_t command_set_enabled1;                            // word  86
+    u_int16_t command_set_default;                             // word  87
+    u_int16_t ultra_dma_mode;                                  // word  88
+    u_int16_t security_erase_completion_time;                  // word  89
+    u_int16_t enhanced_security_erase_time;                    // word  90
+    u_int16_t current_power_mgmt_value;                        // word  91
+    u_int16_t master_password_revision;                        // word  92
+    u_int16_t hardware_reset_result;                           // word  93
+    u_int16_t current_acoustic_management_value;               // word  94
+    u_int16_t stream_min_request_size;                         // word  95
+    u_int16_t stream_transfer_time;                            // word  96
+    u_int16_t stream_access_latency;                           // word  97
+    u_int16_t stream_performance_granularity[2];               // words 98-99
+    u_int8_t max_48bit_lba[ATA_IDENTIFY_48_LBA_LEN];          // words 100-103
+    u_int16_t streaming_transfer_time;                         // word  104
+    u_int16_t max_lba_range_entry_blocks;                      // word  105
+    u_int16_t physical_logical_sector_info;                    // word  106
+    u_int16_t acoustic_test_interseek_delay;                   // word  107
+    u_int8_t world_wide_name[ATA_IDENTIFY_WWN_LEN];           // words 108-111
+    u_int8_t reserved_for_wwn_extention[ATA_IDENTIFY_WWN_LEN];           // words 112-115
+    u_int16_t reserved4;                                       // word  116
+    u_int8_t words_per_logical_sector[4];                     // words 117-118
+    u_int16_t command_set_supported2;                          // word  119
+    u_int16_t reserved5[7];                                    // words 120-126
+    u_int16_t removable_media_status;                          // word  127
+    u_int16_t security_status;                                 // word  128
+    u_int16_t vendor_specific1[31];                            // words 129-159
+    u_int16_t cfa_power_mode1;                                 // word  160
+    u_int16_t reserved_for_compact_flash2[7];                  // words 161-167
+    u_int16_t device_nominal_form_factor;                      // word  168
+    u_int16_t data_set_management;                             // word  169
+    u_int16_t reserved_for_compact_flash3[6];                  // words 170-175
+    u_int16_t current_media_serial_number[ATA_IDENTIFY_MEDIA_SERIAL_NUMBER_LEN];                  //words 176-205
+    u_int16_t reserved6[3];                                    // words 206-208
+    u_int16_t logical_sector_alignment;                        // words 209
+    u_int16_t reserved7[7];                                    // words 210-216
+    u_int16_t nominal_media_rotation_rate;                     // word  217
+    u_int16_t reserved8[16];                                   // words 218-233
+    u_int16_t min_num_blocks_per_microcode;                    // word  234
+    u_int16_t max_num_blocks_per_microcode;                    // word  235
+    u_int16_t reserved9[19];                                   // words 236-254
+    u_int16_t integrity_word;                                  // word  255
 };
 
 /*
  * A list of partition types, probably outdated.
  */
-static const char *const part_types[256] = {
+static const char * const part_types[256] = {
   [0x00] = "unused",
   [0x01] = "Primary DOS with 12 bit FAT",
   [0x02] = "XENIX / file system",
@@ -483,42 +482,6 @@ static const char *const part_types[256] = {
   [0xF4] = "SpeedStor large partition",
   [0xFB] = "VMware VMFS",
   [0xFE] = "SpeedStor >1024 cyl. or LANstep",
-  [0xFF] = "Xenix bad blocks table",
-};
+  [0xFF] = "Xenix bad blocks table", };
 
 #endif
-
-/***
- $Log: hd.h,v $
- Revision 1.2  2006/10/09 02:58:05  reddawg
- Fixing UFS
-
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:50  reddawg
- no message
-
- Revision 1.7  2004/08/15 00:33:02  reddawg
- Wow the ide driver works again
-
- Revision 1.6  2004/07/21 10:02:09  reddawg
- devfs: renamed functions
- device system: renamed functions
- fdc: fixed a few potential bugs and cleaned up some unused variables
- strol: fixed definition
- endtask: made it print out freepage debug info
- kmalloc: fixed a huge memory leak we had some unhandled descriptor insertion so some descriptors were lost
- ld: fixed a pointer conversion
- file: cleaned up a few unused variables
- sched: broke task deletion
- kprintf: fixed ogPrintf definition
-
- Revision 1.5  2004/05/21 15:05:07  reddawg
- Cleaned up
-
- END
- ***/

@@ -1,31 +1,33 @@
 /*-
- * Copyright (c) 2002-2004 The UbixOS Project
+ * Copyright (c) 2002-2018 The UbixOS Project.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
- * Redistributions of source code must retain the above copyright notice, this list of
- * conditions, the following disclaimer and the list of authors.  Redistributions in binary
- * form must reproduce the above copyright notice, this list of conditions, the following
- * disclaimer and the list of authors in the documentation and/or other materials provided
- * with the distribution. Neither the name of the UbixOS Project nor the names of its
- * contributors may be used to endorse or promote products derived from this software
- * without specific prior written permission.
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * THIS EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- * THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _LNC_H
-#define _LNC_H
+#ifndef _PCI_LNC_H
+#define _PCI_LNC_H
 
 #include <sys/types.h>
 
@@ -51,7 +53,6 @@
 #define MODE_32      1
 #define MODE_INVALID 3
 
-
 // CSR0
 #define CSR0         0x0000
 #define CSR0_STOP    0x0004
@@ -73,56 +74,55 @@ struct mds {
 };
 
 struct hostRingEntry_old {
-  struct mds *md;
-  union {
-    //struct mbuf *mbuf;
-    char *data;
-  } buff;
+    struct mds *md;
+    union {
+        //struct mbuf *mbuf;
+        char *data;
+    } buff;
 };
 
 struct hostRingEntry {
-  uint32_t addr;
-  uint16_t bcnt;
-  uint8_t  md[6];
-  uint32_t reserved;
+    uint32_t addr;
+    uint16_t bcnt;
+    uint8_t md[6];
+    uint32_t reserved;
 };
 
 struct arpcom {
-  //struct  ifnet ac_if;            /* network-visible interface */
-  uint8_t ac_enaddr[6]; /* ethernet hardware address */
-  int ac_multicnt; /* length of ac_multiaddrs list */
-  void *ac_netgraph; /* ng_ether(4) netgraph node info */
+    //struct  ifnet ac_if;            /* network-visible interface */
+    uint8_t ac_enaddr[6]; /* ethernet hardware address */
+    int ac_multicnt; /* length of ac_multiaddrs list */
+    void *ac_netgraph; /* ng_ether(4) netgraph node info */
 };
 
 struct nicInfo {
-  int ident; /* Type of card */
-  int ic; /* Type of ic, Am7990, Am79C960 etc. */
-  int memMode;
-  int iobase;
-  int mode; /* Mode setting at initialization */
+    int ident; /* Type of card */
+    int ic; /* Type of ic, Am7990, Am79C960 etc. */
+    int memMode;
+    int iobase;
+    int mode; /* Mode setting at initialization */
 };
 
 struct initBlock16 {
-  uint16_t mode;    // Mode register
-  uint8_t padr[6];  // Ethernet address
-  uint8_t ladrf[8]; // Logical address filter (multicast)
-  uint16_t rdra;    // Low order pointer to receive ring
-  uint16_t rlen;    // High order pointer and no. rings
-  uint16_t tdra;    // Low order pointer to transmit ring
-  uint16_t tlen;    // High order pointer and no rings
+    uint16_t mode;    // Mode register
+    uint8_t padr[6];  // Ethernet address
+    uint8_t ladrf[8]; // Logical address filter (multicast)
+    uint16_t rdra;    // Low order pointer to receive ring
+    uint16_t rlen;    // High order pointer and no. rings
+    uint16_t tdra;    // Low order pointer to transmit ring
+    uint16_t tlen;    // High order pointer and no rings
 };
 
 struct initBlock32 {
-  uint16_t mode;
-  uint8_t rlen;
-  uint8_t tlen;
-  uint8_t padr[6];
-  uint16_t res;
-  uint8_t ladrf[8];
-  uint32_t rdra;
-  uint32_t tdra;
+    uint16_t mode;
+    uint8_t rlen;
+    uint8_t tlen;
+    uint8_t padr[6];
+    uint16_t res;
+    uint8_t ladrf[8];
+    uint32_t rdra;
+    uint32_t tdra;
 };
-
 
 struct lncInfo {
     struct arpcom arpcom;
@@ -242,9 +242,7 @@ void lnc_txINT();
 #define Am79C973  0x2625
 #define Am79C978  0x2626
 
-
 extern struct lncInfo *lnc;
-
 
 int initLNC();
 int probe(struct lncInfo *lnc);

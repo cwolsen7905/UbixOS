@@ -26,7 +26,8 @@
  */
 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD: releng/10.2/sys/boot/arm/uboot/conf.c 235537 2012-05-17 10:11:18Z gber $");
+
+#ifdef _IGNORE
 
 #include <stand.h>
 #include "bootstrap.h"
@@ -38,57 +39,49 @@ __FBSDID("$FreeBSD: releng/10.2/sys/boot/arm/uboot/conf.c 235537 2012-05-17 10:1
 
 struct devsw *devsw[] = {
 #if defined(LOADER_DISK_SUPPORT) || defined(LOADER_CD9660_SUPPORT)
-	&uboot_storage,
+  &uboot_storage,
 #endif
 #if defined(LOADER_NET_SUPPORT)
-	&netdev,
+  &netdev,
 #endif
-	NULL
-};
+  NULL};
 
 struct fs_ops *file_system[] = {
 #if defined(LOADER_UFS_SUPPORT)
-	&ufs_fsops,
+  &ufs_fsops,
 #endif
 #if defined(LOADER_CD9660_SUPPORT)
-	&cd9660_fsops,
+  &cd9660_fsops,
 #endif
 #if defined(LOADER_EXT2FS_SUPPORT)
-	&ext2fs_fsops,
+  &ext2fs_fsops,
 #endif
 #if defined(LOADER_NANDFS_SUPPORT)
-	&nandfs_fsops,
+  &nandfs_fsops,
 #endif
 #if defined(LOADER_NFS_SUPPORT)
-	&nfs_fsops,
+  &nfs_fsops,
 #endif
 #if defined(LOADER_TFTP_SUPPORT)
-	&tftp_fsops,
+  &tftp_fsops,
 #endif
 #if defined(LOADER_GZIP_SUPPORT)
-	&gzipfs_fsops,
+  &gzipfs_fsops,
 #endif
 #if defined(LOADER_BZIP2_SUPPORT)
-	&bzipfs_fsops,
+  &bzipfs_fsops,
 #endif
-	NULL
-};
+  NULL};
 
 struct netif_driver *netif_drivers[] = {
 #if defined(LOADER_NET_SUPPORT)
-	&uboot_net,
+  &uboot_net,
 #endif
-	NULL,
-};
+  NULL,};
 
-struct file_format *file_formats[] = {
-	&uboot_elf,
-	NULL
-};
+struct file_format *file_formats[] = {&uboot_elf, NULL};
 
 extern struct console uboot_console;
 
-struct console *consoles[] = {
-	&uboot_console,
-	NULL
-};
+struct console *consoles[] = {&uboot_console, NULL};
+#endif

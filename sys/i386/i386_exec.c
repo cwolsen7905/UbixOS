@@ -1,27 +1,29 @@
 /*-
- * Copyright (c) 2002-2004, 2016, 2018 The UbixOS Project
+ * Copyright (c) 2002-2018 The UbixOS Project.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
- * Redistributions of source code must retain the above copyright notice, this list of
- * conditions, the following disclaimer and the list of authors.  Redistributions in binary
- * form must reproduce the above copyright notice, this list of conditions, the following
- * disclaimer and the list of authors in the documentation and/or other materials provided
- * with the distribution. Neither the name of the UbixOS Project nor the names of its
- * contributors may be used to endorse or promote products derived from this software
- * without specific prior written permission.
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- * THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <sys/types.h>
@@ -81,9 +83,9 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out) {
 
   int argc = argv_count(argv_in);
 
-  uint32_t *argv_tmp = (uint32_t *)kmalloc(sizeof(char *) * (argc + 2)); // + 1 For ARGC + 1 For NULL TERM
+  uint32_t *argv_tmp = (uint32_t *) kmalloc(sizeof(char *) * (argc + 2)); // + 1 For ARGC + 1 For NULL TERM
 
-  char *args_tmp = (char *)kmalloc(ARGV_PAGE);
+  char *args_tmp = (char *) kmalloc(ARGV_PAGE);
 
   argv_tmp[0] = argc;
 
@@ -91,7 +93,7 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out) {
 
   int i = 0x0;
 
-  for (i = 1; i <=argc; i++) {
+  for (i = 1; i <= argc; i++) {
     argv_tmp[i] = args_tmp + sp;
     strcpy(argv_tmp[i], argv_in[i - 1]);
     sp += strlen(argv_in[i - 1]) + 1;
@@ -102,7 +104,7 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out) {
   *argv_out = argv_tmp;
   *args_out = args_tmp;
 
-  return(0);
+  return (0);
 
 }
 
@@ -110,9 +112,9 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
 
   int envc = envp_count(envp_in);
 
-  uint32_t *envp_tmp = (uint32_t *)kmalloc(sizeof(char *) * (envc + 1)); // + 1 For NULL TERM
+  uint32_t *envp_tmp = (uint32_t *) kmalloc(sizeof(char *) * (envc + 1)); // + 1 For NULL TERM
 
-  char *envs_tmp = (char *)kmalloc(ENVP_PAGE);
+  char *envs_tmp = (char *) kmalloc(ENVP_PAGE);
 
   uint32_t sp = 0x0;
 
@@ -127,7 +129,7 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
 
   *envp_out = envp_tmp;
   *envs_out = envs_tmp;
-  return(0);
+  return (0);
 }
 
 static int elf_parse_dynamic(elf_file_t ef);
@@ -422,7 +424,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   for (i = 1; i <= argc; i++) {
     tmp[i] = STACK_ADDR - ARGV_PAGE + sp;
-    strcpy((char *)tmp[i], argv[i - 1]);
+    strcpy((char *) tmp[i], argv[i - 1]);
     sp += strlen(argv[i - 1]) + 1;
   }
   tmp[i++] = 0x0;
@@ -430,7 +432,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   sp = 0;
   for (int x = 0; x < envc; x++) {
     tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-    strcpy((char *)tmp[x + i], envp[x]);
+    strcpy((char *) tmp[x + i], envp[x]);
     sp += strlen(envp[x]) + 1;
   }
   tmp[i + x] = 0x0;
@@ -662,9 +664,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
       break;
       case PT_GNU_STACK:
         asm("nop");
-        break;
+      break;
       default:
-        break;
+      break;
     }
   }
 
@@ -696,9 +698,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   //iFrame->edx = 0x0;
 
-  iFrame->user_esp = (uint32_t)STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD;
+  iFrame->user_esp = (uint32_t) STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD;
 
-  tmp = (uint32_t *)iFrame->user_esp;
+  tmp = (uint32_t *) iFrame->user_esp;
 
   memset((char *) tmp, 0x0, ARGV_PAGE + ENVP_PAGE + ELF_AUX + (argc + 1) + (envc + 1) + STACK_PAD);
 
@@ -707,55 +709,55 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   uint32_t sp = 0x0;
 
   for (i = 1; i <= argc; i++) {
-    tmp[i] = (uint32_t)STACK_ADDR - ARGV_PAGE + sp;
-    strcpy((char *)tmp[i], (char *)argv_out[i]);
+    tmp[i] = (uint32_t) STACK_ADDR - ARGV_PAGE + sp;
+    strcpy((char *) tmp[i], (char *) argv_out[i]);
     sp += strlen(argv_out[i]) + 1;
   }
 
-  tmp[i++] = (char *)0x0;
+  tmp[i++] = (char *) 0x0;
 
   kfree(argv_out);
   kfree(args_out);
 
   sp = 0;
- 
+
   x = 0;
 
   for (x = 0; x < envc; x++) {
-    tmp[x + i] = (uint32_t)STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-    strcpy((char *)tmp[x + i], (char *)envp_out[x]);
+    tmp[x + i] = (uint32_t) STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
+    strcpy((char *) tmp[x + i], (char *) envp_out[x]);
     sp += strlen(envp_out[x]) + 1;
   }
 
-  tmp[i + x] = (char *)0x0;
+  tmp[i + x] = (char *) 0x0;
 
   kfree(envp_out);
   kfree(envs_out);
 
-  i = i+ x + 1;
+  i = i + x + 1;
 
   tmp[i++] = 2;
-  tmp[i++] = -1;// _current->imageFd;
-  kprintf("AT_EXECFD: [%i]", tmp[i-1]);
+  tmp[i++] = -1;  // _current->imageFd;
+  kprintf("AT_EXECFD: [%i]", tmp[i - 1]);
 
   tmp[i++] = 3;
   tmp[i++] = binaryHeader->e_phoff + 0x08048000;
-  kprintf("AT_PHDR: [0x%X]", tmp[i-1]);
+  kprintf("AT_PHDR: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 4;
   tmp[i++] = binaryHeader->e_phentsize;
-  kprintf("AT_PHENT: [0x%X]", tmp[i-1]);
-  
+  kprintf("AT_PHENT: [0x%X]", tmp[i - 1]);
+
   tmp[i++] = 5;
   tmp[i++] = binaryHeader->e_phnum;
-  kprintf("AT_PHNUM: [0x%X]", tmp[i-1]);
+  kprintf("AT_PHNUM: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 6;
   tmp[i++] = 0x1000;
 
   tmp[i++] = 7;
-  tmp[i++] = 0x0;//LD_START;
-  kprintf("AT_BASE: [0x%X]", tmp[i-1]);
+  tmp[i++] = 0x0;  //LD_START;
+  kprintf("AT_BASE: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 8;
   tmp[i++] = 0x0;
@@ -778,13 +780,11 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   tmp[i++] = 0;
   tmp[i++] = 0;
 
-
   /* Now That We Relocated The Binary We Can Unmap And Free Header Info */
   kfree(binaryHeader);
   kfree(programHeader);
   //irqEnable(0);
   //asm("sti");
-
 
   /*
    _current->tss.es = 0x30 + 3;
@@ -889,10 +889,10 @@ static int elf_parse_dynamic(elf_file_t ef) {
       case DT_PLTGOT:
         ef->got = (Elf_Addr *) (ef->address + dynp->d_un.d_ptr);
         /*
-        tmp = (void *) dynp->d_un.d_ptr; //elfDynamicS[i].dynPtr;
-        tmp[2] = (uInt32) ef->ld_addr;
-        tmp[1] = (uInt32) ef; //0x0;//0xBEEFEAD;//STACK_ADDR - 128;//_current->imageFd;//0xBEEFDEAD;//ef;
-        */
+         tmp = (void *) dynp->d_un.d_ptr; //elfDynamicS[i].dynPtr;
+         tmp[2] = (uInt32) ef->ld_addr;
+         tmp[1] = (uInt32) ef; //0x0;//0xBEEFEAD;//STACK_ADDR - 128;//_current->imageFd;//0xBEEFDEAD;//ef;
+         */
       break;
       default:
         asm("nop");
@@ -902,10 +902,10 @@ static int elf_parse_dynamic(elf_file_t ef) {
   }
 
   if (plttype == DT_RELA) {
-  ef->pltrela = (const Elf_Rela *) ef->pltrel;
-  ef->pltrel = NULL;
-  ef->pltrelasize = ef->pltrelsize;
-  ef->pltrelsize = 0;
+    ef->pltrela = (const Elf_Rela *) ef->pltrel;
+    ef->pltrel = NULL;
+    ef->pltrelasize = ef->pltrelsize;
+    ef->pltrelsize = 0;
   }
 
   ef->ddbsymtab = ef->symtab;

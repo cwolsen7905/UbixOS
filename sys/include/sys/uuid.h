@@ -43,12 +43,12 @@
  * A DCE 1.1 compatible source representation of UUIDs.
  */
 struct uuid {
-	uint32_t	time_low;
-	uint16_t	time_mid;
-	uint16_t	time_hi_and_version;
-	uint8_t		clock_seq_hi_and_reserved;
-	uint8_t		clock_seq_low;
-	uint8_t		node[_UUID_NODE_LEN];
+    uint32_t time_low;
+    uint16_t time_mid;
+    uint16_t time_hi_and_version;
+    uint8_t clock_seq_hi_and_reserved;
+    uint8_t clock_seq_low;
+    uint8_t node[_UUID_NODE_LEN];
 };
 
 #ifdef _KERNEL
@@ -78,7 +78,7 @@ void le_uuid_enc(void *buf, struct uuid const *uuid);
 typedef struct uuid uuid_t;
 
 //__BEGIN_DECLS
-int	uuidgen(struct uuid *, int);
+int uuidgen(struct uuid *, int);
 //__END_DECLS
 
 #endif	/* _KERNEL */

@@ -4,28 +4,26 @@
  *
  * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
  *
- * 1) Redistributions of source code must retain the above copyright notice,
- *    this list of conditions, the following disclaimer and the list of authors.
- * 2) Redistributions in binary form must reproduce the above copyright notice,
- *    this list of conditions, the following disclaimer and the list of authors
- *    in the documentation and/or other materials provided with the distribution.
- * 3) Neither the name of the UbixOS Project nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <i386/signal.h>
@@ -35,8 +33,6 @@
 #include <lib/kprintf.h>
 #include <vmm/vmm.h>
 
-int kmain(uint32_t);
-
 #define KERNEL_STACK 0x2000
 
 static void trap_end_task(char *string, struct trapframe *regs, long error_code);
@@ -45,17 +41,17 @@ static void trap_end_task(char *string, struct trapframe *regs, long error_code)
   trap_end_task(str, regs, error_code); \
 }
 
-TRAP_CODE( 0, SIGFPE,  "divide error", divide_error, _current)
-TRAP_CODE( 3, SIGTRAP, "int3", int3, _current)
-TRAP_CODE( 4, SIGSEGV, "overflow", overflow, _current)
-TRAP_CODE( 5, SIGSEGV, "bounds", bounds, _current)
-TRAP_CODE( 6, SIGILL,  "invalid operand", invalid_op, _current)
-TRAP_CODE( 7, SIGSEGV, "device not available", device_not_available, _current)
-TRAP_CODE( 8, SIGSEGV, "double fault", double_fault, _current)
+TRAP_CODE(0, SIGFPE, "divide error", divide_error, _current)
+TRAP_CODE(3, SIGTRAP, "int3", int3, _current)
+TRAP_CODE(4, SIGSEGV, "overflow", overflow, _current)
+TRAP_CODE(5, SIGSEGV, "bounds", bounds, _current)
+TRAP_CODE(6, SIGILL, "invalid operand", invalid_op, _current)
+TRAP_CODE(7, SIGSEGV, "device not available", device_not_available, _current)
+TRAP_CODE(8, SIGSEGV, "double fault", double_fault, _current)
 //TRAP_CODE( 9, SIGFPE,  "coprocessor segment overrun", coprocessor_segment_overrun, last_task_used_math)
 TRAP_CODE(10, SIGSEGV, "invalid TSS", invalid_TSS, _current)
-TRAP_CODE(11, SIGBUS,  "segment not present", segment_not_present, _current)
-TRAP_CODE(12, SIGBUS,  "stack segment", stack_segment, _current)
+TRAP_CODE(11, SIGBUS, "segment not present", segment_not_present, _current)
+TRAP_CODE(12, SIGBUS, "stack segment", stack_segment, _current)
 TRAP_CODE(15, SIGSEGV, "reserved", reserved, _current)
 TRAP_CODE(17, SIGSEGV, "alignment check", alignment_check, _current)
 
@@ -117,7 +113,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   store_TR(i);
   kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, KERNEL_STACK);
 
-  stack = (unsigned long *)esp;
+  stack = (unsigned long *) esp;
 
   for (i = 0; i < 16; i++) {
     if (i && ((i % 8) == 0))
@@ -141,23 +137,23 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   while (i < 12) {
     addr = get_seg_long(ss, stack++);
     /*
-		 * If the address is either in the text segment of the
-		 * kernel, or in the region which contains vmalloc'ed
-		 * memory, it *may* be the address of a calling
-		 * routine; if so, print it so that someone tracing
-		 * down the cause of the crash will be able to figure
-		 * out the call path that was taken.
-    */
+     * If the address is either in the text segment of the
+     * kernel, or in the region which contains vmalloc'ed
+     * memory, it *may* be the address of a calling
+     * routine; if so, print it so that someone tracing
+     * down the cause of the crash will be able to figure
+     * out the call path that was taken.
+     */
     if (((addr >= (unsigned long) &kmain) && (addr <= (unsigned long) &_etext)) || ((addr >= module_start) && (addr <= module_end))) {
-			if (i && ((i % 8) == 0))
-				kprintf("\n       ");
-			kprintf("[<%08lx>] ", addr);
-			i++;
-		}
-	}
+      if (i && ((i % 8) == 0))
+      kprintf("\n       ");
+      kprintf("[<%08lx>] ", addr);
+      i++;
+    }
+  }
 
   for (i = 0; i < 20; i++)
-    kprintf("%02x ", 0xff & get_seg_byte(regs->tf_cs, (i+(char *)regs->tf_eip)));
+  kprintf("%02x ", 0xff & get_seg_byte(regs->tf_cs, (i+(char *)regs->tf_eip)));
   kprintf("\n");
 #endif
 }
@@ -186,9 +182,8 @@ void trap(struct trapframe *frame) {
 
   //kpanic("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
   die_if_kernel("trapCode", frame, frame->tf_trapno);
-  endTask( _current->id );
+  endTask(_current->id);
   sched_yield();
-
 
   /*
    switch (trap_code) {

@@ -170,7 +170,7 @@ extern "C" {
 #define  EMEDIUMTYPE    124  /* Wrong medium type */
 
 #ifndef errno
-extern int errno;
+  extern int errno;
 #endif
 
 #ifdef __cplusplus
