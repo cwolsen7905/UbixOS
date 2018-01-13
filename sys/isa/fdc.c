@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: fdc.c 79 2016-01-11 16:21:27Z reddawg $
-
-*****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <isa/fdc.h>
 #include <isa/8259.h>
@@ -43,7 +42,7 @@
 static struct spinLock fdcSpinLock = SPIN_LOCK_INITIALIZER;
 
 static volatile bool done = FALSE;
-static drvGeom geometry = { dg144Heads,dg144Tracks,dg144Spt };
+static drvGeom geometry = { dg144Heads, dg144Tracks, dg144Spt };
 static bool diskChange = FALSE;
 static bool motor = FALSE;
 static volatile Int8 fdcTrack = 0xff;
@@ -56,24 +55,24 @@ unsigned long tbaddr = 0x80000L;
 
 int fdcInit2(struct device_node *dev) {
   dev->devInfo->size = (1024 * 1450);
-  return(0x0);
-  }
+  return (0x0);
+}
 
 int fdc_init() {
-  struct device_interface *devInfo = (struct device_interface *)kmalloc(sizeof(struct device_interface));
-  setVector(floppyIsr, mVec+6, (dInt+dPresent));
+  struct device_interface *devInfo = (struct device_interface *) kmalloc(sizeof(struct device_interface));
+  setVector(floppyIsr, mVec + 6, (dInt + dPresent));
   irqEnable(6);
   reset();
   devInfo->major = 0x0;
-  devInfo->init  = (void *)&fdcInit2;
-  devInfo->read  = fdcRead;
+  devInfo->init = (void *) &fdcInit2;
+  devInfo->read = fdcRead;
   devInfo->write = fdcWrite;
-  devInfo->reset = (void *)reset;
-  
-  device_add(0,'c',devInfo);
-  devfs_makeNode("fd0",'b',0x0,0x0);
-  return(0x0);
-  }
+  devInfo->reset = (void *) reset;
+
+  device_add(0, 'c', devInfo);
+  devfs_makeNode("fd0", 'b', 0x0, 0x0);
+  return (0x0);
+}
 
 asm(
   ".globl floppyIsr      \n"
@@ -86,195 +85,197 @@ asm(
   "  push %gs            \n"
   "  call floppyIsrhndlr \n"
   "  pop %gs             \n"
-  "  pop %fs             \n" 
+  "  pop %fs             \n"
   "  pop %es             \n"
   "  pop %ds             \n"
   "  pop %ss             \n"
   "  popa                \n"
   "  iret                \n"
-  );
+);
 
 void floppyIsrhndlr() {
   done = TRUE;
-  outportByte(0x20,0x20);
-  }
+  outportByte(0x20, 0x20);
+}
 
 void sendByte(int Int8) {
   volatile int msr;
   int tmo;
-  for (tmo=0;tmo<128;tmo++) {
+  for (tmo = 0; tmo < 128; tmo++) {
     msr = inportByte(fdcMsr);
     if ((msr & 0xc0) == 0x80) {
-      outportByte(fdcData,Int8);
+      outportByte(fdcData, Int8);
       return;
-      }
-    inportByte(0x80);
     }
+    inportByte(0x80);
   }
+}
 
 int getByte() {
   volatile int msr;
   int tmo;
-  for (tmo=0;tmo<128;tmo++) {
+  for (tmo = 0; tmo < 128; tmo++) {
     msr = inportByte(fdcMsr);
     if ((msr & 0xd0) == 0xd0) {
       return inportByte(fdcData);
-      }
-    inportByte(0x80);
     }
-  return(-1);
+    inportByte(0x80);
   }
+  return (-1);
+}
 
-bool fdcRw(int block,unsigned char *blockBuffer,bool read,unsigned long numSectors) {
-  int head = 0x0,track = 0x0,sector = 0x0,tries= 0x0, copyCount = 0x0;
-  unsigned char *p_tbaddr = (unsigned char *)0x80000;
+bool fdcRw(int block, unsigned char *blockBuffer, bool read, unsigned long numSectors) {
+  int head = 0x0, track = 0x0, sector = 0x0, tries = 0x0, copyCount = 0x0;
+  unsigned char *p_tbaddr = (unsigned char *) 0x80000;
   unsigned char *p_blockbuff = blockBuffer;
   //kprintf("Block: [%i]\n",block);
-  block2Hts(block,&head,&track,&sector);
+  block2Hts(block, &head, &track, &sector);
   motorOn();
   if (!read && blockBuffer) {
     /* copy data from data buffer into track buffer */
-    for (copyCount=0; copyCount<(numSectors*512); copyCount++) {
+    for (copyCount = 0; copyCount < (numSectors * 512); copyCount++) {
       *p_tbaddr = *p_blockbuff;
       p_blockbuff++;
       p_tbaddr++;
-      }
     }
-  for (tries = 0;tries < 3;tries++) {
+  }
+  for (tries = 0; tries < 3; tries++) {
     if (inportByte(fdcDir) & 0x80) {
       diskChange = TRUE;
-      seek(1);  /* clear "disk change" status */
+      seek(1); /* clear "disk change" status */
       recalibrate();
       motorOff();
       kprint("FDC: Disk change detected. Trying again.\n");
       return fdcRw(block, blockBuffer, read, numSectors);
-      }
+    }
     if (!seek(track)) {
       motorOff();
-      kprintf("FDC: Error seeking to track [%i]\n",block);
+      kprintf("FDC: Error seeking to track [%i]\n", block);
       return FALSE;
-      }
-    outportByte(fdcCcr,0);
+    }
+    outportByte(fdcCcr, 0);
     if (read) {
-      dmaXfer(2,tbaddr,numSectors*512,FALSE);
+      dmaXfer(2, tbaddr, numSectors * 512, FALSE);
       sendByte(cmdRead);
-      }
+    }
     else {
-      dmaXfer(2,tbaddr,numSectors*512,TRUE);
+      dmaXfer(2, tbaddr, numSectors * 512, TRUE);
       sendByte(cmdWrite);
-      }
+    }
     sendByte(head << 2);
     sendByte(track);
     sendByte(head);
     sendByte(sector);
-    sendByte(2);               /* 512 Int8s/sector */
+    sendByte(2); /* 512 Int8s/sector */
     sendByte(geometry.spt);
     if (geometry.spt == dg144Spt) {
-      sendByte(dg144Gap3rw);  /* gap 3 size for 1.44M read/write */
-      }
+      sendByte(dg144Gap3rw); /* gap 3 size for 1.44M read/write */
+    }
     else {
-      sendByte(dg168Gap3rw);  /* gap 3 size for 1.68M read/write */
-      }
-    sendByte(0xff);            /* DTL = unused */
+      sendByte(dg168Gap3rw); /* gap 3 size for 1.68M read/write */
+    }
+    sendByte(0xff); /* DTL = unused */
     if (!waitFdc(TRUE)) {
       kprint("Timed out, trying operation again after reset()\n");
       reset();
       return fdcRw(block, blockBuffer, read, numSectors);
-      }
-    if ((status[0] & 0xc0) == 0) break;   /* worked! outta here! */
-    recalibrate();  /* oops, try again... */
     }
+    if ((status[0] & 0xc0) == 0)
+      break; /* worked! outta here! */
+    recalibrate(); /* oops, try again... */
+  }
   motorOff();
   if (read && blockBuffer) {
     p_blockbuff = blockBuffer;
     p_tbaddr = (unsigned char *) 0x80000;
-    for (copyCount=0x0; copyCount<(numSectors*512); copyCount++) {
+    for (copyCount = 0x0; copyCount < (numSectors * 512); copyCount++) {
       *p_blockbuff = *p_tbaddr;
       p_blockbuff++;
       p_tbaddr++;
-      }
     }
-  return (tries != 3);
   }
+  return (tries != 3);
+}
 
-void block2Hts(int block,int *head,int *track,int *sector) {
+void block2Hts(int block, int *head, int *track, int *sector) {
   *head = (block % (geometry.spt * geometry.heads)) / (geometry.spt);
   *track = block / (geometry.spt * geometry.heads);
   *sector = block % geometry.spt + 1;
-  }
+}
 
 void motorOn(void) {
   if (motor == FALSE) {
-    outportByte(fdcDor,0x1c);
+    outportByte(fdcDor, 0x1c);
     motor = TRUE;
-    }
   }
+}
 
 void motorOff(void) {
   if (motor == TRUE) {
     //outportByte(fdcDor,0x0);
     //outportByte(fdcDor,0x0C);
     motor = FALSE;
-    }
   }
+}
 
 bool seek(int track) {
   if (fdcTrack == track) {
-    return(TRUE);
-    }
+    return (TRUE);
+  }
   sendByte(cmdSeek);
   sendByte(0);
   sendByte(track);
   if (!waitFdc(TRUE)) {
     kprintf("wait fdc failed\n");
-    return(FALSE);
-    }
+    return (FALSE);
+  }
   if ((sr0 != 0x20) || (fdcTrack != track)) {
-    return(FALSE);
-    }
+    return (FALSE);
+  }
   else {
-    return(TRUE);
-    }
+    return (TRUE);
   }
+}
 
-bool readBlock(int block,Int8 *blockBuffer, unsigned long numSectors) {
-  int result = 0x0,loop = 0x0;
+bool readBlock(int block, Int8 *blockBuffer, unsigned long numSectors) {
+  int result = 0x0, loop = 0x0;
   if (numSectors > 1) {
-    for (loop=0; loop<numSectors; loop++) {
-      result = fdcRw(block+loop, blockBuffer+(loop*512), TRUE, 1);
-      }
-    return result;
+    for (loop = 0; loop < numSectors; loop++) {
+      result = fdcRw(block + loop, blockBuffer + (loop * 512), TRUE, 1);
     }
-  return fdcRw(block,blockBuffer,TRUE,numSectors);
+    return result;
   }
+  return fdcRw(block, blockBuffer, TRUE, numSectors);
+}
 
-bool writeBlock(int block,Int8 *blockBuffer, unsigned long numSectors) {
-  return fdcRw(block,blockBuffer,FALSE, numSectors);
-  }
+bool writeBlock(int block, Int8 *blockBuffer, unsigned long numSectors) {
+  return fdcRw(block, blockBuffer, FALSE, numSectors);
+}
 
 bool waitFdc(bool sensei) {
   timeOut = 50000;
-  while (!done && timeOut);
+  while (!done && timeOut)
+    ;
   statSize = 0;
-  while ((statSize < 7) && (inportByte(fdcMsr) & (1<<4))) {
-    status[(int)statSize++] = getByte();
-    }
+  while ((statSize < 7) && (inportByte(fdcMsr) & (1 << 4))) {
+    status[(int) statSize++] = getByte();
+  }
   if (sensei) {
     sendByte(cmdSensei);
     sr0 = getByte();
     fdcTrack = getByte();
-    }
+  }
   done = FALSE;
   if (!timeOut) {
     if (inportByte(fdcDir) & 0x80) {
       diskChange = TRUE;
-      }
-    return(FALSE);
     }
-  else {
-    return(TRUE);
-    }
+    return (FALSE);
   }
+  else {
+    return (TRUE);
+  }
+}
 
 void recalibrate(void) {
   motorOn();
@@ -282,12 +283,12 @@ void recalibrate(void) {
   sendByte(0);
   waitFdc(TRUE);
   motorOff();
-  }
+}
 
 void reset(void) {
-  outportByte(fdcDor,0);
+  outportByte(fdcDor, 0);
   motor = FALSE;
-  outportByte(fdcDor,0x0c);
+  outportByte(fdcDor, 0x0c);
   done = TRUE;
   waitFdc(TRUE);
   sendByte(cmdSpecify);
@@ -297,18 +298,18 @@ void reset(void) {
   recalibrate();
   diskChange = FALSE;
   return;
-  }
+}
 
-void fdcRead(void *info,void *baseAddr,uInt32 startSector,uInt32 sectorCount) {
+void fdcRead(void *info, void *baseAddr, uInt32 startSector, uInt32 sectorCount) {
   spinLock(&fdcSpinLock);
-  readBlock(startSector,baseAddr,sectorCount);
+  readBlock(startSector, baseAddr, sectorCount);
   spinUnlock(&fdcSpinLock);
   return;
-  }
-void fdcWrite(void *info,void *baseAddr,uInt32 startSector,uInt32 sectorCount){
-  writeBlock(startSector,baseAddr,sectorCount);
+}
+void fdcWrite(void *info, void *baseAddr, uInt32 startSector, uInt32 sectorCount) {
+  writeBlock(startSector, baseAddr, sectorCount);
   return;
-  }
+}
 
 /***
 

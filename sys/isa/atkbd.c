@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: atkbd.c 159 2016-01-19 03:07:04Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <isa/atkbd.h>
 #include <isa/8259.h>
@@ -154,7 +153,7 @@ static unsigned int keyboardMap[255][8] = {
  ************************************************************************/
 int atkbd_init() {
   /* Insert the IDT vector for the keyboard handler */
-  setVector( &atkbd_isr, mVec + 0x1, dPresent + dInt + dDpl0 );
+  setVector(&atkbd_isr, mVec + 0x1, dPresent + dInt + dDpl0);
 
   /* Set the LEDS to their defaults */
   setLED();
@@ -163,13 +162,13 @@ int atkbd_init() {
   atkbd_scan();
 
   /* Turn on the keyboard vector */
-  irqEnable( 0x1 );
+  irqEnable(0x1);
 
   /* Print out information on keyboard */
-  kprintf( "atkbd0 - Address: [0x%X], Keyboard Buffer: [0x%X], Buffer Size [%i]\n", &atkbd_isr, &stdinBuffer, 512 );
+  kprintf("atkbd0 - Address: [0x%X], Keyboard Buffer: [0x%X], Buffer Size [%i]\n", &atkbd_isr, &stdinBuffer, 512);
 
   /* Return so we know everything went well */
-  return ( 0x0 );
+  return (0x0);
 }
 
 /*
@@ -177,106 +176,106 @@ int atkbd_init() {
  */
 
 asm(
-    ".globl atkbd_isr       \n"
-    "atkbd_isr:             \n"
-    "  pusha                \n" /* Save all registers           */
-    "  push %ss             \n"
-    "  push %ds             \n"
-    "  push %es             \n"
-    "  push %fs             \n"
-    "  push %gs             \n"
-    "  call keyboardHandler \n"
-    "  mov $0x20,%dx        \n"
-    "  mov $0x20,%ax        \n"
-    "  outb %al,%dx         \n"
-    "  pop %gs              \n"
-    "  pop %fs              \n"
-    "  pop %es              \n"
-    "  pop %ds              \n"
-    "  pop %ss              \n"
-    "  popa                 \n"
-    "  iret                 \n" /* Exit interrupt                           */
+  ".globl atkbd_isr       \n"
+  "atkbd_isr:             \n"
+  "  pusha                \n" /* Save all registers           */
+  "  push %ss             \n"
+  "  push %ds             \n"
+  "  push %es             \n"
+  "  push %fs             \n"
+  "  push %gs             \n"
+  "  call keyboardHandler \n"
+  "  mov $0x20,%dx        \n"
+  "  mov $0x20,%ax        \n"
+  "  outb %al,%dx         \n"
+  "  pop %gs              \n"
+  "  pop %fs              \n"
+  "  pop %es              \n"
+  "  pop %ds              \n"
+  "  pop %ss              \n"
+  "  popa                 \n"
+  "  iret                 \n" /* Exit interrupt                           */
 );
 
 static int atkbd_scan() {
   int code = 0x0;
   int val = 0x0;
 
-  code = inportByte( 0x60 );
-  val = inportByte( 0x61 );
+  code = inportByte(0x60);
+  val = inportByte(0x61);
 
-  outportByte( 0x61, val | 0x80 );
-  outportByte( 0x61, val );
+  outportByte(0x61, val | 0x80);
+  outportByte(0x61, val);
 
-  return ( code );
+  return (code);
 }
 
 void keyboardHandler() {
   int key = 0x0;
 
-  if ( spinTryLock( &atkbdSpinLock ) )
+  if (spinTryLock(&atkbdSpinLock))
     return;
 
   key = atkbd_scan();
 
-  if ( key > 255 )
+  if (key > 255)
     return;
 
   /* Control Key */
-  if ( key == 0x1D && !( controlKeys & controlKey ) ) {
+  if (key == 0x1D && !(controlKeys & controlKey)) {
     controlKeys |= controlKey;
   }
-  if ( key == 0x80 + 0x1D ) {
-    controlKeys &= ( 0xFF - controlKey );
+  if (key == 0x80 + 0x1D) {
+    controlKeys &= (0xFF - controlKey);
   }
   /* ALT Key */
-  if ( key == 0x38 && !( controlKeys & altKey ) ) {
+  if (key == 0x38 && !(controlKeys & altKey)) {
     controlKeys |= altKey;
   }
-  if ( key == 0x80 + 0x38 ) {
-    controlKeys &= ( 0xFF - altKey );
+  if (key == 0x80 + 0x38) {
+    controlKeys &= (0xFF - altKey);
   }
   /* Shift Key */
-  if ( ( key == 0x2A || key == 0x36 ) && !( controlKeys & shiftKey ) ) {
+  if ((key == 0x2A || key == 0x36) && !(controlKeys & shiftKey)) {
     controlKeys |= shiftKey;
   }
-  if ( ( key == 0x80 + 0x2A ) || ( key == 0x80 + 0x36 ) ) {
-    controlKeys &= ( 0xFF - shiftKey );
+  if ((key == 0x80 + 0x2A) || (key == 0x80 + 0x36)) {
+    controlKeys &= (0xFF - shiftKey);
   }
   /* Caps Lock */
-  if ( key == 0x3A ) {
+  if (key == 0x3A) {
     ledStatus ^= ledCapslock;
     setLED();
   }
   /* Num Lock */
-  if ( key == 0x45 ) {
+  if (key == 0x45) {
     ledStatus ^= ledNumlock;
     setLED();
   }
   /* Scroll Lock */
-  if ( key == 0x46 ) {
+  if (key == 0x46) {
     ledStatus ^= ledScrolllock;
     setLED();
   }
   /* Pick Which Key Map */
-  if ( controlKeys == 0 ) {
+  if (controlKeys == 0) {
     keyMap = 0;
   }
-  else if ( controlKeys == 1 ) {
+  else if (controlKeys == 1) {
     keyMap = 1;
   }
-  else if ( controlKeys == 2 ) {
+  else if (controlKeys == 2) {
     keyMap = 2;
   }
-  else if ( controlKeys == 4 ) {
+  else if (controlKeys == 4) {
     keyMap = 3;
   }
   /* If Key Is Not Null Add It To Handler */
-  if ( ( ( uInt )( keyboardMap[key][keyMap] ) > 0 ) && ( ( uInt32 )( keyboardMap[key][keyMap] ) < 0xFF ) ) {
-    switch ( (uInt32) keyboardMap[key][keyMap] ) {
+  if (((uInt) (keyboardMap[key][keyMap]) > 0) && ((uInt32) (keyboardMap[key][keyMap]) < 0xFF)) {
+    switch ((uInt32) keyboardMap[key][keyMap]) {
       case 8:
         backSpace();
-        if ( tty_foreground == 0x0 ) {
+        if (tty_foreground == 0x0) {
           stdinBuffer[stdinSize] = keyboardMap[key][keyMap];
           stdinSize++;
         }
@@ -284,21 +283,21 @@ void keyboardHandler() {
           tty_foreground->stdin[tty_foreground->stdinSize] = keyboardMap[key][keyMap];
           tty_foreground->stdinSize++;
         }
-        break;
+      break;
       case 0x3:
         //if (tty_foreground != 0x0)
         //  endTask(tty_foreground->owner);
         //K_PANIC( "CTRL-C pressed\n" );
-        kprintf( "FreePages: [0x%X]\n", systemVitals->freePages );
-        break;
+        kprintf("FreePages: [0x%X]\n", systemVitals->freePages);
+      break;
       case 0x9:
-        kprintf( "REBOOTING" );
-        while ( inportByte( 0x64 ) & 0x02 )
+        kprintf("REBOOTING");
+        while (inportByte(0x64) & 0x02)
           ;
-        outportByte( 0x64, 0xFE );
-        break;
+        outportByte(0x64, 0xFE);
+      break;
       default:
-        if ( tty_foreground == 0x0 ) {
+        if (tty_foreground == 0x0) {
           stdinBuffer[stdinSize] = keyboardMap[key][keyMap];
           stdinSize++;
         }
@@ -306,31 +305,31 @@ void keyboardHandler() {
           tty_foreground->stdin[tty_foreground->stdinSize] = keyboardMap[key][keyMap];
           tty_foreground->stdinSize++;
         }
-        break;
+      break;
     }
   }
   else {
-    switch ( ( keyboardMap[key][keyMap] >> 8 ) ) {
+    switch ((keyboardMap[key][keyMap] >> 8)) {
       case 0x30:
-        tty_change( keyboardMap[key][keyMap] & 0xFF );
+        tty_change(keyboardMap[key][keyMap] & 0xFF);
         //kprintf("Changing Consoles[0x%X:0x%X]\n",_current->id,_current);
-        break;
+      break;
       default:
-        break;
+      break;
     }
   }
 
   /* Return */
-  spinUnlock( &atkbdSpinLock );
+  spinUnlock(&atkbdSpinLock);
   return;
 }
 
 void setLED() {
-  outportByte( 0x60, 0xED );
-  while ( inportByte( 0x64 ) & 2 )
+  outportByte(0x60, 0xED);
+  while (inportByte(0x64) & 2)
     ;
-  outportByte( 0x60, ledStatus );
-  while ( inportByte( 0x64 ) & 2 )
+  outportByte(0x60, ledStatus);
+  while (inportByte(0x64) & 2)
     ;
 }
 
@@ -354,34 +353,34 @@ int getchar() {
    return(0x0);
    */
 
-  if ( tty_foreground == 0x0 ) {
-    if ( stdinSize == 0x0 ) {
+  if (tty_foreground == 0x0) {
+    if (stdinSize == 0x0) {
       //  spinUnlock(&atkbdSpinLock);
-      return ( 0x0 );
+      return (0x0);
     }
 
     retKey = stdinBuffer[0];
     stdinSize--;
 
-    for ( i = 0x0; i < stdinSize ; i++ ) {
+    for (i = 0x0; i < stdinSize; i++) {
       stdinBuffer[i] = stdinBuffer[i + 0x1];
     }
   }
   else {
-    if ( tty_foreground->stdinSize == 0x0 ) {
+    if (tty_foreground->stdinSize == 0x0) {
       //   spinUnlock(&atkbdSpinLock);
-      return ( 0x0 );
+      return (0x0);
     }
 
     retKey = tty_foreground->stdin[0];
     tty_foreground->stdinSize--;
 
-    for ( i = 0x0; i < tty_foreground->stdinSize ; i++ ) {
+    for (i = 0x0; i < tty_foreground->stdinSize; i++) {
       tty_foreground->stdin[i] = tty_foreground->stdin[i + 0x1];
     }
   }
   //spinUnlock(&atkbdSpinLock);
-  return ( retKey );
+  return (retKey);
 }
 
 /***

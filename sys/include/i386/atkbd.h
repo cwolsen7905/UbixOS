@@ -25,46 +25,45 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _FS_MSDOS_FS_H
-#define _FS_MSDOS_FS_H
 
-/*
- * MS-DOS file system in-core superblock data
- */
+#ifndef _ISA_ATKBD_H
+#define _ISA_ATKBD_H
 
-struct msdos_sb_info {
-    unsigned short cluster_size; /* sectors/cluster */
-    unsigned char fats, fat_bits; /* number of FATs, FAT bits (12 or 16) */
-    unsigned short fat_start, fat_length; /* FAT start & length (sec.) */
-    unsigned short dir_start, dir_entries; /* root dir start & entries */
-    unsigned short data_start; /* first data sector */
-    unsigned long clusters; /* number of clusters */
-    uid_t fs_uid;
-    gid_t fs_gid;
-    int quiet; /* fake successful chmods and chowns */
-    unsigned short fs_umask;
-    unsigned char name_check; /* r = relaxed, n = normal, s = strict */
-    unsigned char conversion; /* b = binary, t = text, a = auto */
-    struct wait_queue *fat_wait;
-    int fat_lock;
-    int prev_free; /* previously returned free cluster number */
-    int free_clusters; /* -1 if undefined */
-};
+#define shiftKey      1
+#define controlKey    2
+#define altKey        4
+#define ledNumlock    2
+#define ledScrolllock 1
+#define ledCapslock   4
 
-/*
- * MS-DOS file system inode data in memory
- */
+int atkbd_init();
+void atkbd_isr();
 
-struct msdos_inode_info {
-    int i_start; /* first cluster or 0 */
-    int i_attrs; /* unused attribute bits */
-    int i_busy; /* file is either deleted but still open, or
-     inconsistent (mkdir) */
-    struct inode *i_depend; /* pointer to inode that depends on the
-     current inode */
-    struct inode *i_old; /* pointer to the old inode this inode
-     depends on */
-    int i_binary; /* file contains non-text data */
-};
+void keyboardHandler();
+void setLED();
 
 #endif
+
+/***
+ $Log: atkbd.h,v $
+ Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
+ ubix2
+
+ Revision 1.2  2005/10/12 00:13:36  reddawg
+ Removed
+
+ Revision 1.1.1.1  2005/09/26 17:23:39  reddawg
+ no message
+
+ Revision 1.4  2004/07/29 21:32:16  reddawg
+ My quick lunchs breaks worth of updates....
+
+ Revision 1.3  2004/07/09 13:34:51  reddawg
+ keyboard: keyboardInit to atkbd_init
+ Adjusted initialization routines
+
+ Revision 1.2  2004/05/21 14:57:16  reddawg
+ Cleaned up
+
+ END
+ ***/

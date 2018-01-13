@@ -1,70 +1,75 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004 The UbixOS Project
- All rights reserved.
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: libcpp.cc 54 2016-01-11 01:29:55Z reddawg $
-
-*****************************************************************************************/
-
-extern "C" 
-{	
+extern "C" {
 #include <lib/kmalloc.h>
 #include <sys/video.h>
-void __pure_virtual() { while(1); }
+  void __pure_virtual() {
+    while (1)
+      ;
+  }
 
-void __cxa_pure_virtual() { while(1); }
+  void __cxa_pure_virtual() {
+    while (1)
+      ;
+  }
 
-/* Don't plan on exiting the kernel...so do nothing. */
-int __cxa_atexit(void (*func)(void *), void * arg, void * d) { return 0; }
+  /* Don't plan on exiting the kernel...so do nothing. */
+  int __cxa_atexit(void (*func)(void *), void * arg, void * d) {
+    return 0;
+  }
 
-void __dso_handle() { while(1); }
+  void __dso_handle() {
+    while (1)
+      ;
+  }
 }
 
 #include <lib/libcpp.h>
 
-void * operator new[](unsigned size)
-{
-    return kmalloc(size);
+void * operator new[](unsigned size) {
+  return kmalloc(size);
 }
 
-void operator delete[](void * ptr)
-{
-    kfree(ptr);
+void operator delete[](void * ptr) {
+  kfree(ptr);
 
-    return;
+  return;
 }
 
-void * operator new(unsigned size)
-{
-    void * ptr = kmalloc(size);
-    return ptr;
+void * operator new(unsigned size) {
+  void * ptr = kmalloc(size);
+  return ptr;
 }
 
-void operator delete(void * ptr)
-{
-    kfree(ptr);
-    return;
+void operator delete(void * ptr) {
+  kfree(ptr);
+  return;
 }
 
 /***

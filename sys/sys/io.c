@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002-2005, 2016 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: io.c 88 2016-01-12 00:11:29Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <sys/io.h>
 
@@ -36,12 +35,12 @@
  * \return returns unsigned char value
  *
  */
-unsigned char inportByte( unsigned int port ) {
+unsigned char inportByte(unsigned int port) {
   unsigned char retVal;
   asm volatile(
-      "inb %%dx,%%al"
-      : "=a" (retVal)
-      : "d" (port)
+    "inb %%dx,%%al"
+    : "=a" (retVal)
+    : "d" (port)
   );
   return (retVal);
 }
@@ -53,12 +52,12 @@ unsigned char inportByte( unsigned int port ) {
  * \return returns unsigned short value
  *
  */
-unsigned short inportWord( unsigned int port ) {
+unsigned short inportWord(unsigned int port) {
   unsigned short retVal;
   asm volatile(
-      "inw %%dx,%%ax"
-      : "=a" (retVal)
-      : "d" (port)
+    "inw %%dx,%%ax"
+    : "=a" (retVal)
+    : "d" (port)
   );
   return (retVal);
 }
@@ -70,11 +69,11 @@ unsigned short inportWord( unsigned int port ) {
  * \param value byte to output to port
  *
  */
-void outportByte( unsigned int port, unsigned char value ) {
+void outportByte(unsigned int port, unsigned char value) {
   asm volatile(
-      "outb %%al,%%dx"
-      :
-      : "d" (port), "a" (value)
+    "outb %%al,%%dx"
+    :
+    : "d" (port), "a" (value)
   );
 }
 
@@ -85,12 +84,12 @@ void outportByte( unsigned int port, unsigned char value ) {
  * \param value byte to output to port
  *
  */
-void outportByteP( unsigned int port, unsigned char value ) {
+void outportByteP(unsigned int port, unsigned char value) {
   asm volatile(
-      "outb %%al,%%dx\n"
-      "outb %%al,$0x80\n"
-      :
-      : "d" (port), "a" (value)
+    "outb %%al,%%dx\n"
+    "outb %%al,$0x80\n"
+    :
+    : "d" (port), "a" (value)
   );
 }
 
@@ -101,11 +100,11 @@ void outportByteP( unsigned int port, unsigned char value ) {
  * \param value word to output to port
  *
  */
-void outportWord( unsigned int port, unsigned short value ) {
+void outportWord(unsigned int port, unsigned short value) {
   asm volatile(
-      "outw %%ax,%%dx"
-      :
-      : "d" (port), "a" (value)
+    "outw %%ax,%%dx"
+    :
+    : "d" (port), "a" (value)
   );
 }
 
@@ -116,11 +115,11 @@ void outportWord( unsigned int port, unsigned short value ) {
  * \param value double word to output to port
  *
  */
-void outportDWord( unsigned int port, unsigned long value ) {
+void outportDWord(unsigned int port, unsigned long value) {
   asm volatile(
-      "outl %%eax,%%dx"
-      :
-      : "d" (port), "a" (value)
+    "outl %%eax,%%dx"
+    :
+    : "d" (port), "a" (value)
   );
 }
 
@@ -131,12 +130,12 @@ void outportDWord( unsigned int port, unsigned long value ) {
  * \return returns unsigned double word value
  *
  */
-unsigned long inportDWord( unsigned int port ) {
+unsigned long inportDWord(unsigned int port) {
   unsigned long retVal;
   asm volatile(
-      "inl %%dx,%%eax"
-      : "=a" (retVal)
-      : "d" (port)
+    "inl %%dx,%%eax"
+    : "=a" (retVal)
+    : "d" (port)
   );
   return (retVal);
 }

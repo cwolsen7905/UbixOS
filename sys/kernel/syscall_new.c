@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002-2004, 2016 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: syscall_new.c 172 2016-01-20 13:57:36Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <ubixos/syscalls.h>
 #include <ubixos/syscall.h>
@@ -40,7 +39,7 @@
 
 struct spinLock Master = SPIN_LOCK_INITIALIZER;
 
-void syscall( struct trapframe *frame ) {
+void syscall(struct trapframe *frame) {
   uint32_t code = 0x0;
   caddr_t params;
 
@@ -55,18 +54,18 @@ void syscall( struct trapframe *frame ) {
 
   code = frame->tf_eax;
 
-  if ( code == 198 ) {
-    memcpy( &code, params, sizeof(int) );
+  if (code == 198) {
+    memcpy(&code, params, sizeof(int));
     params += sizeof(quad_t);
   }
 
-  if ( code > totalCalls ) {
+  if (code > totalCalls) {
     //kprintf( "Invalid Call: [%i:%i]\n", frame->tf_eax, totalCalls );
     die_if_kernel("Invalid System Call", frame, frame->tf_eax);
     kpanic("PID: %i", _current->id);
   }
-  else if ( (uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID ) {
-    kprintf( "Invalid Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name );
+  else if ((uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID) {
+    kprintf("Invalid Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name);
     frame->tf_eax = -1;
     frame->tf_edx = 0x0;
   }
@@ -76,46 +75,46 @@ void syscall( struct trapframe *frame ) {
     td->td_retval[0] = 0;
     td->td_retval[1] = frame->tf_edx;
 
-    if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
-      kprintf( "Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name );
+    if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+      kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
 
     /*
      if ( td->abi == ELFOSABI_UBIXOS )
      error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
      */
 
-    if ( td->abi == ELFOSABI_FREEBSD )
-      error = (int) systemCalls[code].sc_entry( td, params );
+    if (td->abi == ELFOSABI_FREEBSD)
+      error = (int) systemCalls[code].sc_entry(td, params);
     else
-      error = (int) systemCalls[code].sc_entry( td, params );
+      error = (int) systemCalls[code].sc_entry(td, params);
 
-if ( systemCalls[code].sc_status == SYSCALL_DUMMY ) {
-  kprintf("RET(%i)1", code);
-return;
-}
+    if (systemCalls[code].sc_status == SYSCALL_DUMMY) {
+      kprintf("RET(%i)1", code);
+      return;
+    }
 
-    switch ( error ) {
+    switch (error) {
       case 0:
         frame->tf_eax = td->td_retval[0];
         frame->tf_edx = td->td_retval[1];
         frame->tf_eflags &= ~PSL_C;
-if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
-  kprintf("RET3");
-        break;
-/*
-      case ERESTART:
-        frame->tf_eip -= frame->tf_err;
-        break;
-*/
+        if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+          kprintf("RET3");
+      break;
+        /*
+         case ERESTART:
+         frame->tf_eip -= frame->tf_err;
+         break;
+         */
       case EJUSTRETURN:
-        break;
+      break;
       default:
         frame->tf_eax = error;
         frame->tf_eflags |= PSL_C;
-        break;
+      break;
 
-if ( systemCalls[code].sc_status == SYSCALL_DUMMY )
-  kprintf("RET2");
+        if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+          kprintf("RET2");
     }
   }
 }
@@ -124,11 +123,11 @@ int invalidCall() {
   int sys_call;
 
   asm(
-      "nop"
-      : "=a" (sys_call)
-      :
+    "nop"
+    : "=a" (sys_call)
+    :
   );
 
-  kprintf( "Invalid System Call #[%i], PID: %i\n", sys_call, _current->id );
+  kprintf("Invalid System Call #[%i], PID: %i\n", sys_call, _current->id);
   return (0);
 }

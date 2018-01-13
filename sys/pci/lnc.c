@@ -1,27 +1,29 @@
 /*-
- * Copyright (c) 2002, 2017 The UbixOS Project
+ * Copyright (c) 2002-2018 The UbixOS Project.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
  *
- * Redistributions of source code must retain the above copyright notice, this list of
- * conditions, the following disclaimer and the list of authors.  Redistributions in binary
- * form must reproduce the above copyright notice, this list of conditions, the following
- * disclaimer and the list of authors in the documentation and/or other materials provided
- * with the distribution. Neither the name of the UbixOS Project nor the names of its
- * contributors may be used to endorse or promote products derived from this software
- * without specific prior written permission.
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- * THIS EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- * THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- * OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include <pci/lnc.h>
@@ -95,7 +97,6 @@ int initLNC() {
 
   lnc->bufferSize = 1548;
   lnc->ioAddr = 0xD020;
-
 
   lnc->nic.ic = lnc_probe(lnc);
 
@@ -251,22 +252,22 @@ void lnc_INT() {
 
   //kprintf("\nINTR\n");
   //while ((csr0 = lnc_readCSR32(lnc, CSR0)) & INTR) {
-    //kprintf("CSR0: [0x%X]\n", csr0);
-    if (csr0 & ERR) {
-      kprintf("Error: [0x%X]\n", csr0);
-    }
-    if (csr0 & RINT) {
-      asm("nop");
-      //lnc_rxINT();
-    }
-    if (csr0 & TINT) {
-      asm("nop");
-       //kprintf("TINT");
-       //lnc_txINT();
-    }
- //   kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
+  //kprintf("CSR0: [0x%X]\n", csr0);
+  if (csr0 & ERR) {
+    kprintf("Error: [0x%X]\n", csr0);
+  }
+  if (csr0 & RINT) {
+    asm("nop");
+    //lnc_rxINT();
+  }
+  if (csr0 & TINT) {
+    asm("nop");
+    //kprintf("TINT");
+    //lnc_txINT();
+  }
+  //   kprintf("CSR0.1: [0x%X]\n", lnc_readCSR32(lnc, CSR0));
 //  }
-  lnc_writeCSR32(lnc, CSR0, 0x7940);//csr0);
+  lnc_writeCSR32(lnc, CSR0, 0x7940);       //csr0);
 //  kprintf("INT DONE");
 }
 
@@ -274,97 +275,95 @@ void lnc_thread() {
   int i = 0;
 
   if (tmpBuf == 0x0) {
-    tmpBuf = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
-    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+    tmpBuf = (struct nicBuffer *) kmalloc(sizeof(struct nicBuffer));
+    memset(tmpBuf, 0x0, sizeof(struct nicBuffer));
   }
   else {
-    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+    memset(tmpBuf, 0x0, sizeof(struct nicBuffer));
   }
-kprintf("STARTING THREAD LNC");
+  kprintf("STARTING THREAD LNC");
   while (1) {
-  while (lnc_driverOwnsRX(lnc)) {
-    //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
-    int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff ) - 4;
-/*
-    if (plen > 0)
-      kprintf("plen.0: [0x%X]", plen);
-*/
+    while (lnc_driverOwnsRX(lnc)) {
+      //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
+      int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff) - 4;
+      /*
+       if (plen > 0)
+       kprintf("plen.0: [0x%X]", plen);
+       */
 
-    tmpBuf->length = plen;
-    tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
+      tmpBuf->length = plen;
+      tmpBuf->buffer = (void *) (lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
 
- // kprintf("RINT2\n");
-    ethernetif_input(&lnc_netif);
-  //kprintf("RINT3\n");
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
-    lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
-    lnc_nextRxPtr(lnc);
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
-  }
+      // kprintf("RINT2\n");
+      ethernetif_input(&lnc_netif);
+      //kprintf("RINT3\n");
+      //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+      lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
+      //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+      lnc_nextRxPtr(lnc);
+      //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+    }
 //  kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
 
-  sched_yield();
+    sched_yield();
   }
 }
-
 
 void lnc_rxINT() {
   int i = 0;
 
   if (tmpBuf == 0x0) {
-    tmpBuf = (struct nicBuffer *)kmalloc(sizeof(struct nicBuffer));
-    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+    tmpBuf = (struct nicBuffer *) kmalloc(sizeof(struct nicBuffer));
+    memset(tmpBuf, 0x0, sizeof(struct nicBuffer));
   }
   else {
-    memset(tmpBuf,0x0,sizeof(struct nicBuffer));
+    memset(tmpBuf, 0x0, sizeof(struct nicBuffer));
   }
 
   while (lnc_driverOwnsRX(lnc)) {
     //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
-    int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff ) - 4;
-/*
-    if (plen > 0)
-      kprintf("plen.0: [0x%X]", plen);
-*/
+    int plen = (lnc->rxRing[lnc->rxPtr].md[2] & 0x0fff) - 4;
+    /*
+     if (plen > 0)
+     kprintf("plen.0: [0x%X]", plen);
+     */
 
     tmpBuf->length = plen;
-    tmpBuf->buffer = (void *)(lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
+    tmpBuf->buffer = (void *) (lnc->rxBuffer + (lnc->rxPtr * lnc->bufferSize)); //(char *)kmalloc(length);
 
- // kprintf("RINT2\n");
+    // kprintf("RINT2\n");
     //ethernetif_input(netif_default);
-  //kprintf("RINT3\n");
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+    //kprintf("RINT3\n");
+    //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
     lnc->rxRing[lnc->rxPtr].md[1] = 0x80;
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+    //kprintf("RINT-LOOP[%i][0x%X][0x%X]", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
     lnc_nextRxPtr(lnc);
-  //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
+    //kprintf("RINT-LOOP[%i][0x%X][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1],plen);
   }
- // kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
+  // kprintf("RINT-DONE[%i][0x%X]\n", lnc->rxPtr,lnc->rxRing[lnc->rxPtr].md[1]);
 //while(1);
-  
+
 }
 
 void lnc_txINT() {
   uint16_t status = 0x0;
 
-
   kprintf("TINT\n");
-  status = lnc->txRing[lnc->txPtr].md[1] + (lnc->txRing[lnc->txPtr].md[1] << 16); 
+  status = lnc->txRing[lnc->txPtr].md[1] + (lnc->txRing[lnc->txPtr].md[1] << 16);
   kprintf("Status: [0x%X]\n", status);
 
   while (!lnc_driverOwnsTX(lnc)) {
-    status = lnc->txRing[lnc->txPtr].md[1] + (lnc->txRing[lnc->txPtr].md[1] << 16); 
-     kprintf("md[1]: 0x%X(%i)[0x%X]\n", lnc->txRing[lnc->txPtr].md[1], lnc->txPtr, status);
-     lnc->txRing[lnc->txPtr].md[1] = 0x0;
-     lnc_nextTxPtr(lnc);
+    status = lnc->txRing[lnc->txPtr].md[1] + (lnc->txRing[lnc->txPtr].md[1] << 16);
+    kprintf("md[1]: 0x%X(%i)[0x%X]\n", lnc->txRing[lnc->txPtr].md[1], lnc->txPtr, status);
+    lnc->txRing[lnc->txPtr].md[1] = 0x0;
+    lnc_nextTxPtr(lnc);
   }
   kprintf("TINT-DONE\n");
 }
 
 void lncInt() {
   while (1) {
-  kprintf("Finished!!!\n");
+    kprintf("Finished!!!\n");
   }
   outportByte(0x20, 0x20);
   return;
@@ -525,7 +524,7 @@ int lnc_nextTxPtr(struct lncInfo *lnc) {
 
   lnc->txPtr = ret;
 
-  return(0);
+  return (0);
 }
 
 int lnc_nextRxPtr(struct lncInfo *lnc) {
@@ -537,9 +536,8 @@ int lnc_nextRxPtr(struct lncInfo *lnc) {
 
   lnc->rxPtr = ret;
 
-  return(0);
+  return (0);
 }
-
 
 int lnc_sendPacket(struct lncInfo *lnc, void *packet, size_t len, uint8_t *dest) {
   //kprintf("SEND PACKET1![%i]\n", lnc->txPtr);

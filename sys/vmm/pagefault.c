@@ -1,31 +1,30 @@
-/*****************************************************************************************
- Copyright (c) 2002 The UbixOS Project
- All rights reserved.
-
- Redistribution and use in source and binary forms, with or without modification, are
- permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this list of
- conditions, the following disclaimer and the list of authors.  Redistributions in binary
- form must reproduce the above copyright notice, this list of conditions, the following
- disclaimer and the list of authors in the documentation and/or other materials provided
- with the distribution. Neither the name of the UbixOS Project nor the names of its
- contributors may be used to endorse or promote products derived from this software
- without specific prior written permission.
-
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY
- EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
- OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
- $Id: pagefault.c 230 2016-01-24 01:36:51Z reddawg $
-
- *****************************************************************************************/
+/*-
+ * Copyright (c) 2002-2018 The UbixOS Project.
+ * All rights reserved.
+ *
+ * This was developed by Christopher W. Olsen for the UbixOS Project.
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted
+ * provided that the following conditions are met:
+ *
+ * 1) Redistributions of source code must retain the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors.
+ * 2) Redistributions in binary form must reproduce the above copyright notice, this list of
+ *    conditions, the following disclaimer and the list of authors in the documentation and/or
+ *    other materials provided with the distribution.
+ * 3) Neither the name of the UbixOS Project nor the names of its contributors may be used to
+ *    endorse or promote products derived from this software without specific prior written
+ *    permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+ * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include <vmm/vmm.h>
 #include <ubixos/sched.h>
@@ -62,7 +61,7 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   uint32_t memAddr = cr2;
 
 //MrOlsen 2017-12-15 - 
-kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
+  kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
 
   /* Try to aquire lock otherwise spin till we do */
   spinLock(&pageFaultSpinLock);
@@ -87,7 +86,8 @@ kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err
     kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X], Not A Valid Page Table\n", memAddr, esp, _current->id, eip);
     spinUnlock(&pageFaultSpinLock);
     endTask(_current->id);
-  } else {
+  }
+  else {
     /* Set pageTable To Point To Virtual Address Of Page Table */
     pageTable = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
 
@@ -108,17 +108,20 @@ kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err
       pageTable[pageTableIndex] = (uInt32) (vmm_getPhysicalAddr((uInt32) dst) | (memAddr & 0xFFF));
       /* Unlink From Memory Map Allocated Page */
       vmm_unmapPage((uInt32) dst, 1);
-    } else if (pageTable[pageTableIndex] != 0x0) {
+    }
+    else if (pageTable[pageTableIndex] != 0x0) {
       kprintf("Security failed pagetable not user permission\n");
       kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
       kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
       kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n", memAddr, esp, _current->id, eip);
       spinUnlock(&pageFaultSpinLock);
       endTask(_current->id);
-    } else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
-kprintf("THIS IS BAD");
+    }
+    else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
+      kprintf("THIS IS BAD");
       pageTable[pageTableIndex] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
-    } else {
+    }
+    else {
       spinUnlock(&pageFaultSpinLock);
       /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
       kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
@@ -130,13 +133,13 @@ kprintf("THIS IS BAD");
     }
   }
   asm volatile(
-      "movl %cr3,%eax\n"
-      "movl %eax,%cr3\n"
+    "movl %cr3,%eax\n"
+    "movl %eax,%cr3\n"
   );
 
   /* Release the spin lock */
   spinUnlock(&pageFaultSpinLock);
-kprintf("CR2-RET");
+  kprintf("CR2-RET");
   return;
 }
 
