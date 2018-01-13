@@ -27,25 +27,23 @@
 
 *****************************************************************************************/
 
-#ifndef _SEM_H
-#define _SEM_H
+#ifndef _UBIXOS_SEM_H
+#define _UBIXOS_SEM_H
+
+#include <sys/types.h>
+
+typedef uint32_t semID_t;
+struct timespec;
+
+int sem_close(semID_t id);
+int sem_post(semID_t id);
+int sem_wait(semID_t id);
+int sem_trywait(semID_t id);
+int sem_timedwait(semID_t id, const struct timespec);
+int sem_init(semID_t *id, unsigned int value);
+int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value);
+int sem_unlink(const char *name);
+int sem_getvalue(semID_t id, int *val);
+int sem_destroy(semID_t id);
 
 #endif
-
-/***
- $Log: sem.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:14  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:55  reddawg
- no message
-
- Revision 1.1  2004/07/20 18:58:24  reddawg
- Few fixes
-
- END
- ***/
-

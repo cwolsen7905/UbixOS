@@ -28,8 +28,45 @@
 *****************************************************************************************/
 
 #include <ubixos/sem.h>
+#include <ubixos/time.h>
 
-/***
- END
- ***/
+int sem_close(semID_t id) {
+  return(0);
+}
+
+int sem_post(semID_t id) {
+  return(0);
+}
+
+int sem_wait(semID_t id) {
+  return(0);
+}
+
+int sem_trywait(semID_t id) {
+  return(0);
+}
+
+int sem_timedwait(semID_t id, const struct timespec) {
+  return(0);
+}
+
+int sem_init(semID_t *id, unsigned int value) {
+  return(0);
+}
+
+int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value) {
+  return(0);
+}
+
+int sem_unlink(const char *name) {
+  return(0);
+}
+
+int sem_getvalue(semID_t id, int *val) {
+  return(0);
+}
+
+int sem_destroy(semID_t id) {
+  return(0);
+}
 
