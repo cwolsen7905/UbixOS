@@ -29,7 +29,8 @@
 #ifndef _UBIXOS_WAIT_H
 #define _UBIXOS_WAIT_H
 
-#include <ubixos/sched.h>
+
+struct kTask_t;
 
 struct wait_queue {
     struct kTask_t *task;

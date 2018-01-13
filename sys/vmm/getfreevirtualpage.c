@@ -59,12 +59,20 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   if (_current->oInfo.vmStart <= 0x100000)
     kpanic("Invalid vmStart\n");
 
+  kprintf("type: %i ", type);
+  type = 0;
+
   /* Get Our Starting Address */
   if (type == VM_THRD) {
     start_page = (uint32_t) (_current->td.vm_daddr + ctob(_current->td.vm_dsize));
   }
+<<<<<<< HEAD
   else if (type == VM_TASK) {
     //kprintf("vmStart");
+=======
+  else if ( type == VM_TASK ) {
+    kprintf("vmStart");
+>>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
     start_page = _current->oInfo.vmStart;
   }
   else
@@ -81,8 +89,13 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   /*
    * Lets Start Allocating Pages
    */
+<<<<<<< HEAD
 
   for (counter = 0; counter < count; counter++) {
+=======
+  kprintf("Count: %i ", count);
+  for ( counter = 0; counter < count; counter++ ) {
+>>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
     /* Locate Initial Page Table */
     pdI = ((start_page + (counter * 0x1000)) / 0x400000);
 

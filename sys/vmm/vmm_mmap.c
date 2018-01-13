@@ -172,13 +172,13 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     return (0x0); //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
   }
   else {
-    kprintf("uap->flags: [0x%X]\n", uap->flags);
+    //kprintf("uap->flags: [0x%X]\n", uap->flags);
     kprintf("uap->addr:  [0x%X]\n", uap->addr);
     kprintf("uap->len:   [0x%X]\n", uap->len);
-    kprintf("uap->prot:  [0x%X]\n", uap->prot);
+    //kprintf("uap->prot:  [0x%X]\n", uap->prot);
     kprintf("uap->fd:    [%i]\n", uap->fd);
-    kprintf("uap->pad:   [0x%X]\n", uap->pad);
-    kprintf("uap->pos:   [0x%X]\n", uap->pos);
+    //kprintf("uap->pad:   [0x%X]\n", uap->pad);
+    //kprintf("uap->pos:   [0x%X]\n", uap->pos);
     //K_PANIC("NOT YET\n");
     getfd(td, &fd, uap->fd);
     tmp = (char *) vmm_getFreeVirtualPage(_current->id, round_page(uap->len) / 0x1000, VM_TASK);

@@ -26,8 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vfs/vfs.h>
 #include <ubixos/sched.h>
+#include <vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>

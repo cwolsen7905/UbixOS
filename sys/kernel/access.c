@@ -80,6 +80,7 @@ int in_group_p(gid_t grp) {
   if (grp == _current->egid)
     return 1;
 
+<<<<<<< HEAD
   for (i = 0; i < NGROUPS; i++) {
     if (_current->groups[i] == NOGROUP)
       break;
@@ -87,4 +88,13 @@ int in_group_p(gid_t grp) {
       return 1;
   }
   return 0;
+=======
+	for (i = 0; i < NR_GROUPS; i++) {
+		if (_current->groups[i] == NO_GROUP)
+			break;
+		if (_current->groups[i] == grp)
+			return 1;
+	}
+	return 0;
+>>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
 }

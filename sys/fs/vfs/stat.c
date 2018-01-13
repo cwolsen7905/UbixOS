@@ -27,8 +27,9 @@
  */
 
 #include <ubixos/errno.h>
+#include <sys/sysproto.h>
 #include <vfs/stat.h>
-#include <vfs/vfs.h>
+#include <vfs/file.h>
 
 int sys_stat(char *path, struct stat *sb, int flags) {
   int error = 0;
@@ -59,7 +60,8 @@ int sys_stat(char *path, struct stat *sb, int flags) {
      break;
   }
 */
-  fileDescriptor *fd =  fopen(path, "r");
+  fileDescriptor *fd =  fopen(path, "rb");
+  kprintf("FD: 0x%X", fd);
 
   if (fd == 0) {
     error = -1;
@@ -67,15 +69,15 @@ int sys_stat(char *path, struct stat *sb, int flags) {
   else {
   sb->st_dev = 0xDEADBEEF;
   sb->st_ino = fd->ino;
-  sb->st_mode = fd->inode.ufs2->di_mode;
-  sb->st_nlink = fd->inode.ufs2->di_nlink;
-  sb->st_uid = fd->inode.ufs2->di_uid;
-  sb->st_gid = fd->inode.ufs2->di_gid;
+  sb->st_mode = fd->inode.u.ufs2_i.di_mode;
+  sb->st_nlink = fd->inode.u.ufs2_i.di_nlink;
+  sb->st_uid = fd->inode.u.ufs2_i.di_uid;
+  sb->st_gid = fd->inode.u.ufs2_i.di_gid;
   sb->st_rdev = 0xBEEFDEAD;
-  sb->st_size = fd->inode.ufs2->di_size;
-  sb->st_atime = fd->inode.ufs2->di_atime;
-  sb->st_mtime = fd->inode.ufs2->di_mtime;
-  sb->st_ctime = fd->inode.ufs2->di_ctime;
+  sb->st_size = fd->inode.u.ufs2_i.di_size;
+  sb->st_atime = fd->inode.u.ufs2_i.di_atime;
+  sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
+  sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
   kprintf("LSTAT(%i): st_ino 0x%X, st_mode: 0x%X, st_uid %i, st_gid %i, st_size: 0x%X", error, sb->st_ino, sb->st_mode, sb->st_uid, sb->st_gid, sb->st_size);
   fclose(fd);
   }

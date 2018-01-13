@@ -466,6 +466,14 @@ struct read_args {
     char nbyte_r_[PADR_(size_t)];
 };
 
+struct sys_openat_args {
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
+        char flag_l_[PADL_(int)]; int flag; char flag_r_[PADR_(int)];
+        char mode_l_[PADL_(__mode_t)]; __mode_t mode; char mode_r_[PADR_(__mode_t)];
+};
+
+
 //Func Defs
 int sys_invalid(struct thread *, void *);
 int sys_exit(struct thread *, struct sys_exit_args *);
@@ -505,6 +513,7 @@ int fstatfs(struct thread *td, struct fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
 
 int sys_lstat(struct thread *td, struct sys_lstat_args *);
+int sys_openat(struct thread *td, struct sys_openat_args *);
 
 #endif
 

@@ -220,7 +220,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 186 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 187 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 188 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 189 - Invalid */
+  { ARG_COUNT(sys_lstat_args), "LSTAT", (sys_call_t *) sys_lstat, SYSCALL_VALID }, /* 189 - sys_fstat */
   { ARG_COUNT(sys_lstat_args), "LSTAT", (sys_call_t *) sys_lstat, SYSCALL_VALID }, /* 190 - sys_lstat */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 191 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 192 - Invalid */
@@ -530,7 +530,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 357 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
+  { ARG_COUNT(sys_openat_args), "SYS_openat", sys_openat, SYSCALL_VALID }, /* 499 - sys_openat */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */

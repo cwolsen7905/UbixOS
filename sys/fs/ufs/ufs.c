@@ -137,11 +137,11 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte, fileDescriptor *fd) 
 #else
     if (fs->fs_magic == FS_UFS1_MAGIC) {
       dp1 = ((struct ufs1_dinode *) blkbuf)[n];
-      memcpy(fd->inode.ufs1, dp1, sizeof(struct ufs1_dinode));
+      memcpy(&fd->inode.u.ufs1_i, &dp1, sizeof(struct ufs1_dinode));
     }
     else{
       dp2 = ((struct ufs2_dinode *) blkbuf)[n];
-      memcpy(fd->inode.ufs2, dp2, sizeof(struct ufs2_dinode));
+      memcpy(&fd->inode.u.ufs2_i, &dp2, sizeof(struct ufs2_dinode));
     }
 #endif
     inomap = inode;
@@ -260,7 +260,7 @@ static ino_t lookup(const char *path, fileDescriptor *fd) {
       break;
     path = s;
   }
-
+  return ino;
   return dt == DT_REG ? ino : 0;
 }
 
