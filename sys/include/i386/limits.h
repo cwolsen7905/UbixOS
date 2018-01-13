@@ -26,72 +26,9 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <string.h>
+#ifndef _I386_LIMITS_H
+#define _I386_LIMITS_H
 
-#define wsize   sizeof(uInt)
-#define wmask   (wsize - 1)
-#define VAL     c0
-#define WIDEVAL c
+#define __LONG_BIT      32
 
-void *memset(void *dst0, int c0, size_t length) {
-  size_t t;
-  uInt c;
-  uInt8 *dst;
-
-  dst = dst0;
-
-  if (length < 3 * wsize) {
-    while (length != 0) {
-      *dst++ = VAL;
-      --length;
-    }
-    return (dst0);
-  }
-
-  if ((c = (uInt8) c0) != 0) { /* Fill the word. */
-    c = (c << 8) | c; /* u_int is 16 bits. */
-    c = (c << 16) | c; /* u_int is 32 bits. */
-  }
-
-  /* Align destination by filling in bytes. */
-  if ((t = (long) dst & wmask) != 0) {
-    t = wsize - t;
-    length -= t;
-    do {
-      *dst++ = VAL;
-    } while (--t != 0);
-  }
-
-  /* Fill words.  Length was >= 2*words so we know t >= 1 here. */
-  t = length / wsize;
-  do {
-    *(u_int *) dst = WIDEVAL;
-    dst += wsize;
-  } while (--t != 0);
-
-  /* Mop up trailing bytes, if any. */
-  t = length & wmask;
-  if (t != 0)
-    do {
-      *dst++ = VAL;
-    } while (--t != 0);
-  return (dst0);
-}
-
-/***
- $Log: memset.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:16  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:12  reddawg
- no message
-
- Revision 1.1  2004/07/28 16:20:10  reddawg
- forgot this file
-
- END
- ***/
-
+#endif /* END _I386_LIMITS_H */

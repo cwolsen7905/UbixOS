@@ -25,16 +25,12 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
- .globl strlen
-strlen:
-        pushl   %edi
-        movl    8(%esp),%edi            /* string address */
-        cld                             /* set search forward */
-        xorl    %eax,%eax               /* set search for null terminator */
-        movl    $-1,%ecx                /* set search for lots of characters */
-        repne                           /* search! */
-        scasb
-        notl    %ecx                    /* get length by taking complement */
-        leal    -1(%ecx),%eax           /* and subtracting one */
-        popl    %edi
-        ret
+
+#ifndef _SYS_LIMITS_H
+#define _SYS_LIMITS_H
+
+#include <i386/limits.h>
+
+#define       LONG_BIT        __LONG_BIT
+
+#endif /* END _SYS_LIMITS_H */

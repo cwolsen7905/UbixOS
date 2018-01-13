@@ -26,47 +26,54 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- .globl strcpy
-strcpy:
-        movl    4(%esp),%ecx            /* dst address */
-        movl    8(%esp),%edx            /* src address */
-        pushl   %ecx                    /* push dst address */
+ #include <i386/asmacros.h>
 
-        .align 2,0x90
-L1:     movb    (%edx),%al              /* unroll loop, but not too much */
-        movb    %al,(%ecx)
-        testb   %al,%al
-        je      L2
-        movb    1(%edx),%al
-        movb    %al,1(%ecx)
-        testb   %al,%al
-        je      L2
-        movb    2(%edx),%al
-        movb    %al,2(%ecx)
-        testb   %al,%al
-        je      L2
-        movb    3(%edx),%al
-        movb    %al,3(%ecx)
-        testb   %al,%al
-        je      L2
-        movb    4(%edx),%al
-        movb    %al,4(%ecx)
-        testb   %al,%al
-        je      L2
-        movb    5(%edx),%al
-        movb    %al,5(%ecx)
-        testb   %al,%al
-        je      L2
-        movb    6(%edx),%al
-        movb    %al,6(%ecx)
-        testb   %al,%al
-        je      L2
-        movb    7(%edx),%al
-        movb    %al,7(%ecx)
-        addl    $8,%edx
-        addl    $8,%ecx
-        testb   %al,%al
-        jne     L1
-L2:     popl    %eax                    /* pop dst address */
+
+ENTRY(memset)
+        pushl   %edi
+        pushl   %ebx
+        movl    12(%esp),%edi
+        movzbl  16(%esp),%eax           /* unsigned char, zero extend */
+        movl    20(%esp),%ecx
+        pushl   %edi                    /* push address of buffer */
+
+        cld                             /* set fill direction forward */
+
+        /*
+         * if the string is too short, it's really not worth the overhead
+         * of aligning to word boundries, etc.  So we jump to a plain
+         * unaligned set.
+         */
+        cmpl    $0x0f,%ecx
+        jle     L1
+
+        movb    %al,%ah                 /* copy char to all bytes in word */
+        movl    %eax,%edx
+        sall    $16,%eax
+        orl     %edx,%eax
+
+        movl    %edi,%edx               /* compute misalignment */
+        negl    %edx
+        andl    $3,%edx
+        movl    %ecx,%ebx
+        subl    %edx,%ebx
+
+        movl    %edx,%ecx               /* set until word aligned */
+        rep
+        stosb
+
+        movl    %ebx,%ecx
+        shrl    $2,%ecx                 /* set by words */
+        rep
+        stosl
+
+        movl    %ebx,%ecx               /* set remainder by bytes */
+        andl    $3,%ecx
+L1:     rep
+        stosb
+
+        popl    %eax                    /* pop address of buffer */
+        popl    %ebx
+        popl    %edi
         ret
-
+END(memset)

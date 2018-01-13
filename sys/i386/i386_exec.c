@@ -36,7 +36,6 @@
 #include <vmm/vmm.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <lib/string.h>
 #include <vfs/file.h>
 #include <assert.h>
 #include <string.h>

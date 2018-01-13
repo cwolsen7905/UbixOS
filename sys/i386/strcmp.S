@@ -26,5 +26,73 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define 	MEMCOPY
-#include "bcopy.c"
+ #include <i386/asmacros.h>
+
+ENTRY(strcmp)
+        movl    0x04(%esp),%eax
+        movl    0x08(%esp),%edx
+        jmp     L2                      /* Jump into the loop! */
+
+        .align  2,0x90
+L1:     incl    %eax
+        incl    %edx
+L2:     movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        jne     L3
+        incl    %eax
+        incl    %edx
+        movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        jne     L3
+        incl    %eax
+        incl    %edx
+        movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        jne     L3
+        incl    %eax
+        incl    %edx
+        movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        jne     L3
+        incl    %eax
+        incl    %edx
+        movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        jne     L3
+        incl    %eax
+        incl    %edx
+        movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        jne     L3
+        incl    %eax
+        incl    %edx
+        movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        jne     L3
+        incl    %eax
+        incl    %edx
+        movb    (%eax),%cl
+        testb   %cl,%cl
+        je      L3
+        cmpb    %cl,(%edx)
+        je      L1
+        .align 2, 0x90
+L3:     movzbl  (%eax),%eax             /* unsigned comparison */
+        movzbl  (%edx),%edx
+        subl    %edx,%eax
+        ret
+END(strcmp)

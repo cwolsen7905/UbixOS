@@ -26,74 +26,53 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <lib/string.h>
+#include <string.h>
 #include <sys/types.h>
 
 char *strtok_r(char *s, const char *delim, char **last) {
-  char *spanp;
+  char *spanp, *tok;
   int c, sc;
-  char *tok;
 
-  if ((s == NULL) && ((s = *last) == NULL)) {
+  if (s == NULL && (s = *last) == NULL)
     return (NULL);
-  }
 
+  /*
+   * Skip (span) leading delimiters (s += strspn(s, delim), sort of).
+   */
   cont: c = *s++;
   for (spanp = (char *) delim; (sc = *spanp++) != 0;) {
-    if (c == sc) {
+    if (c == sc)
       goto cont;
-    }
   }
-  if (c == 0) {
+
+  if (c == 0) { /* no non-delimiter characters */
     *last = NULL;
     return (NULL);
   }
   tok = s - 1;
 
+  /*
+   * Scan token (scan for delimiters: s += strcspn(s, delim), sort of).
+   * Note that delim must have one NUL; we stop if we see that, too.
+   */
   for (;;) {
     c = *s++;
     spanp = (char *) delim;
     do {
       if ((sc = *spanp++) == c) {
-        if (c == 0) {
+        if (c == 0)
           s = NULL;
-        }
-        else {
-          char *w = s - 1;
-          *w = '\0';
-        }
+        else
+          s[-1] = '\0';
         *last = s;
         return (tok);
       }
     } while (sc != 0);
   }
+  /* NOTREACHED */
 }
 
 char *strtok(char *s, const char *delim) {
   static char *last;
   return (strtok_r(s, delim, &last));
 }
-
-/***
- $Log: strtok.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:16  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:13  reddawg
- no message
-
- Revision 1.2  2004/05/19 03:46:32  reddawg
- A Few Quick Hacks To Make Things Work
-
- Revision 1.1.1.1  2004/04/15 12:07:11  reddawg
- UbixOS v1.0
-
- Revision 1.2  2004/04/13 16:36:33  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
- END
- ***/
-
