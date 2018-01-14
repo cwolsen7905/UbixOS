@@ -31,7 +31,7 @@
 #include <vmm/vmm.h>
 #include <lib/kmalloc.h>
 #include <lib/bioscall.h>
-#include <lib/string.h>
+#include <string.h>
 #include <sys/video.h>
 #include <assert.h>
 

@@ -33,7 +33,7 @@
 #include <ubixos/spinlock.h>
 #include <sys/trap.h>
 #include <sys/elf.h>
-#include <lib/string.h>
+#include <string.h>
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
 

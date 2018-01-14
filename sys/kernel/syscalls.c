@@ -104,7 +104,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  70 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  71 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  72 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  73 - Invalid */
+  { ARG_COUNT(sys_munmap_args), "MUNMAP", sys_munmap, SYSCALL_VALID }, /*  73 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  74 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  75 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  76 - Invalid */
@@ -220,7 +220,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 186 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 187 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 188 - Invalid */
-  { ARG_COUNT(sys_lstat_args), "LSTAT", (sys_call_t *) sys_lstat, SYSCALL_VALID }, /* 189 - sys_fstat */
+  { ARG_COUNT(sys_fstat_args), "FSTAT", (sys_call_t *) sys_fstat, SYSCALL_VALID }, /* 189 - sys_fstat */
   { ARG_COUNT(sys_lstat_args), "LSTAT", (sys_call_t *) sys_lstat, SYSCALL_VALID }, /* 190 - sys_lstat */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 191 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 192 - Invalid */
@@ -428,88 +428,88 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 384 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 385 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 386 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 387 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 388 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 389 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 390 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 391 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 392 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 393 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 394 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 395 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 396 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 397 - Invalid */
+{ ARG_COUNT(sys_fstatfs_args), "fstatfs", (sys_call_t *) sys_fstatfs, SYSCALL_VALID }, /* 397 fstatfs */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 398 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 399 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 400 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 357 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 357 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 357 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 357 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 357 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 357 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 401 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 402 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 403 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 404 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 405 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 306 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 307 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 308 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 409 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 410 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 411 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 412 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 413 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 414 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 415 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 416 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 417 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 418 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 419 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 410 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 421 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 422 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 423 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 424 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 425 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 426 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 427 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 428 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 429 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 430 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 431 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 432 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 433 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 434 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 435 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 436 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 437 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 438 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 439 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 440 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 441 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 442 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 443 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 444 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 445 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 446 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 447 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 448 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 449 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 450 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 451 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 452 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 453 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 454 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 455 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 456 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 457 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 458 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 459 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 460 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 461 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 462 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 463 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 464 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 465 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 466 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 467 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 468 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 469 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 470 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 471 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 472 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 473 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 474 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 475 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 476 - Invalid */
   { ARG_COUNT(sys_mmap_args), "MMAP", (sys_call_t *) sys_mmap, SYSCALL_VALID }, /* 477 - sys_mmap */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 358 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 478 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */

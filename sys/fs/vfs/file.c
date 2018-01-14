@@ -32,7 +32,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <lib/kmalloc.h>
-#include <lib/string.h>
+#include <string.h>
 #include <vmm/paging.h>
 #include <lib/kprintf.h>
 #include <assert.h>
@@ -211,15 +211,28 @@ int sys_fclose( struct thread *td, struct sys_fclose_args *args ) {
 size_t fread( void *ptr, size_t size, size_t nmemb, fileDescriptor *fd ) {
   size_t i = 0x0;
 
+
+  asm("nop");
+  asm("nop");
   if ( fd == 0x0 )
     return (0x0);
+  asm("nop");
+  asm("nop");
 
   if ( nmemb == 0x0 )
     nmemb = 1; //Temp Fix
+  asm("nop");
+  asm("nop");
 
   assert( fd );
+  asm("nop");
+  asm("nop");
   assert( fd->mp );
+  asm("nop");
+  asm("nop");
   assert( fd->mp->fs );
+  asm("nop");
+  asm("nop");
 
   i = fd->mp->fs->vfsRead( fd, ptr, fd->offset, size * nmemb );
 

@@ -34,8 +34,8 @@
 
   int boo = 0x0;
 
-static char *argv_init[2] = { "init", NULL, }; // ARGV For Initial Proccess
-static char *envp_init[7] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", "LD_DEBUG=all", NULL, }; //ENVP For Initial Proccess
+static char *argv_init[2] = { "/bin/cat", NULL, }; // ARGV For Initial Proccess
+static char *envp_init[8] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", "LD_DEBUG=all", "LD_LIBRARY_PATH=/lib", NULL, }; //ENVP For Initial Proccess
 
 
 void execProgram(inputBuffer *data) {

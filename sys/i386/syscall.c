@@ -39,7 +39,7 @@
 #include <sys/trap.h>
 #include <vfs/file.h>
 #include <ubixfs/ubixfs.h>
-#include <lib/string.h>
+#include <string.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/vitals.h>

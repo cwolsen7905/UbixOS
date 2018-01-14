@@ -4,7 +4,7 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/kpanic.h>
-#include <lib/string.h>
+#include <string.h>
 #include <sys/buf.h>
 
 

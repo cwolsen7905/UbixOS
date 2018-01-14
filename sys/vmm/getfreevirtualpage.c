@@ -60,19 +60,13 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     kpanic("Invalid vmStart\n");
 
   kprintf("type: %i ", type);
-  type = 0;
 
   /* Get Our Starting Address */
   if (type == VM_THRD) {
     start_page = (uint32_t) (_current->td.vm_daddr + ctob(_current->td.vm_dsize));
   }
-<<<<<<< HEAD
   else if (type == VM_TASK) {
     //kprintf("vmStart");
-=======
-  else if ( type == VM_TASK ) {
-    kprintf("vmStart");
->>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
     start_page = _current->oInfo.vmStart;
   }
   else
@@ -89,23 +83,27 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   /*
    * Lets Start Allocating Pages
    */
-<<<<<<< HEAD
-
-  for (counter = 0; counter < count; counter++) {
-=======
-  kprintf("Count: %i ", count);
   for ( counter = 0; counter < count; counter++ ) {
->>>>>>> branch 'master' of http://Git.BrainChurts.com:8080/git/MrOlsen/UbixOS.git
     /* Locate Initial Page Table */
     pdI = ((start_page + (counter * 0x1000)) / 0x400000);
 
+      //kprintf("PAGE IS");
     /* If Page Directory Is Not Yet Allocated Allocate It */
     if ((pageDir[pdI] & PAGE_PRESENT) != PAGE_PRESENT) {
+      //kprintf("PAGE NOT %i,", __LINE__);
       pageDir[pdI] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
+      //kprintf("PAGE NOT %i,", __LINE__);
 
-      /* Also Add It To Virtual Space So We Can Make Changes Later */
-      pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (4096 * 767));
-      pageTableSrc[pdI] = pageDir[pdI];
+      //kprintf("PAGE NOT %i,", __LINE__);
+
+    /* Also Add It To Virtual Space So We Can Make Changes Later */
+    pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PD_INDEX( PT_BASE_ADDR ) * 0x1000)); /* Table that maps that 4b */
+    pageTableSrc[pdI] = (pageDir[pdI] & 0xFFFFF000) | PAGE_DEFAULT; /* Is This Why Page Needs To Be User As Well? */
+    pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
+
+
+
+      //kprintf("PAGE NOT %i,", __LINE__);
 
       /* Reload Page Directory */
       asm(
@@ -113,17 +111,21 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
         "movl %eax,%cr3\n"
       );
 
+      //kprintf("PAGE NOT %i,", __LINE__);
       pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pdI));
 
+      //kprintf("PAGE NOT %i,", __LINE__);
       /* Initialize The New Page Table To Prevent Dirty Bits */
       for (y = 0x0; y < PD_ENTRIES; y++) {
         pageTableSrc[y] = (uInt32) 0x0;
       }
+      //kprintf("PAGE NOT %i,", __LINE__);
 
     }
     else {
       pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pdI));
     }
+//kprintf("HERE?");
 
     ptI = ((start_page - (pdI * 0x400000)) / 0x1000);
 

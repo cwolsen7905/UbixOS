@@ -31,7 +31,7 @@
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <lib/string.h>
+#include <string.h>
 #include <sys/device.h>
 
 /************************************************************************

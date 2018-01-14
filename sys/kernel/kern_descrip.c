@@ -107,7 +107,7 @@ int getdtablesize(struct thread *td, struct getdtablesize_args *uap) {
 }
 
 /* HACK */
-int fstat(struct thread *td, struct fstat_args *uap) {
+int fstat(struct thread *td, struct sys_fstat_args *uap) {
   struct file *fp = 0x0;
 
 #ifdef DEBUG

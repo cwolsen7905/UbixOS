@@ -43,10 +43,13 @@
  * language name.
  */
 #define CNAME(csym)             csym
+#define ALIGN_TEXT      .p2align 4,0x90 /* 16-byte alignment, nop filled */
 
 #define GEN_ENTRY(name)         ALIGN_TEXT; .globl CNAME(name); \
                                 .type CNAME(name),@function; CNAME(name):
 
 #define ENTRY(name)             GEN_ENTRY(name) ; 9: ; MCOUNT
+#define MCOUNT                  nop
+#define END(name)               .size name, . - name
 
 #endif /* END _I386_ASMACROS_H_ */

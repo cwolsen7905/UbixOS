@@ -260,7 +260,7 @@ struct access_args {
     char flags_r_[PADR_(int)];
 };
 
-struct fstatfs_args {
+struct sys_fstatfs_args {
     char fd_l_[PADL_(int)];
     int fd;
     char fd_r_[PADR_(int)];
@@ -352,27 +352,12 @@ struct close_args {
 };
 
 struct sys_mmap_args {
-    char addr_l_[PADL_(caddr_t)];
-    caddr_t addr;
-    char addr_r_[PADR_(caddr_t)];
-    char len_l_[PADL_(size_t)];
-    size_t len;
-    char len_r_[PADR_(size_t)];
-    char prot_l_[PADL_(int)];
-    int prot;
-    char prot_r_[PADR_(int)];
-    char flags_l_[PADL_(int)];
-    int flags;
-    char flags_r_[PADR_(int)];
-    char fd_l_[PADL_(int)];
-    int fd;
-    char fd_r_[PADR_(int)];
-    char pad_l_[PADL_(int)];
-    int pad;
-    char pad_r_[PADR_(int)];
-    char pos_l_[PADL_(off_t)];
-    off_t pos;
-    char pos_r_[PADR_(off_t)];
+        char addr_l_[PADL_(caddr_t)]; caddr_t addr; char addr_r_[PADR_(caddr_t)];
+        char len_l_[PADL_(size_t)]; size_t len; char len_r_[PADR_(size_t)];
+        char prot_l_[PADL_(int)]; int prot; char prot_r_[PADR_(int)];
+        char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+        char pos_l_[PADL_(off_t)]; off_t pos; char pos_r_[PADR_(off_t)];
 };
 
 struct sys_lstat_args {
@@ -406,7 +391,7 @@ struct getdtablesize_args {
     register_t dummy;
 };
 
-struct munmap_args {
+struct sys_munmap_args {
     char addr_l_[PADL_(void *)];
     void * addr;
     char addr_r_[PADR_(void *)];
@@ -434,7 +419,7 @@ struct gettimeofday_args {
     struct timezone * tzp;
     char tzp_r_[PADR_(struct timezone *)];
 };
-struct fstat_args {
+struct sys_fstat_args {
     char fd_l_[PADL_(int)];
     int fd;
     char fd_r_[PADR_(int)];
@@ -503,16 +488,19 @@ int sys_sched_yield(struct thread *td, void *);
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *);
 
 int sys_mmap(struct thread *td, struct sys_mmap_args *);
+int sys_munmap(struct thread *td, struct sys_munmap_args *);
 int sys_sysctl(struct thread *td, struct sys_sysctl_args *);
 
 int sys_issetugid(struct thread *td, struct sys_issetugid_args *);
 
 int setitimer(struct thread *td, struct setitimer_args *uap);
 int access(struct thread *td, struct access_args *uap);
-int fstatfs(struct thread *td, struct fstatfs_args *uap);
+int fstatfs(struct thread *td, struct sys_fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
 
+int sys_fstatfs(struct thread *td, struct sys_fstatfs_args *);
 int sys_lstat(struct thread *td, struct sys_lstat_args *);
+int sys_fstat(struct thread *td, struct sys_fstat_args *);
 int sys_openat(struct thread *td, struct sys_openat_args *);
 
 #endif

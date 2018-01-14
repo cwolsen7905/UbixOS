@@ -27,6 +27,7 @@
  */
 
 #include <sys/limits.h>
+#include <sys/types.h>
 
 /* Magic numbers for the algorithm */
 #if LONG_BIT == 32

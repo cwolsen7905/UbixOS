@@ -35,7 +35,7 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/kpanic.h>
-#include <lib/string.h>
+#include <string.h>
 
 #define VBLKSHIFT        12
 #define VBLKSIZE         (1 << VBLKSHIFT)

@@ -34,7 +34,7 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/exec.h>
 #include <lib/kmalloc.h>
-#include <lib/string.h>
+#include <string.h>
 #include <lib/kprintf.h>
 #include <assert.h>
 

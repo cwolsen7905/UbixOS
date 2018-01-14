@@ -1,5 +1,3 @@
-# $FreeBSD: releng/11.1/libexec/rtld-elf/Makefile 319016 2017-05-28 00:13:44Z rgrimes $
-
 # Use the following command to build local debug version of dynamic
 # linker:
 # make DEBUG_FLAGS=-g DEBUG=-DDEBUG WITHOUT_TESTS=yes all

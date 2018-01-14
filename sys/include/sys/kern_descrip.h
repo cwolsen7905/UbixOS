@@ -150,7 +150,7 @@ int fcntl(struct thread *, struct fcntl_args *);
 int close(struct thread *, struct close_args *);
 int falloc(struct thread *, struct file **, int *);
 int getdtablesize(struct thread *, struct getdtablesize_args *);
-int fstat(struct thread *, struct fstat_args *);
+int fstat(struct thread *, struct sys_fstat_args *);
 int ioctl(struct thread *, struct ioctl_args *);
 int getfd(struct thread *td, struct file **fp, int fd);
 

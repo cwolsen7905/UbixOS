@@ -563,12 +563,6 @@ int obreak(struct thread *td, struct obreak_args *uap) {
   return (0x0);
 }
 
-int munmap(struct thread *td, struct munmap_args *uap) {
-  /* HACK */
-  kprintf("munmap");
-  return (0x0);
-}
-
 int vmm_cleanVirtualSpace(uint32_t addr) {
   int x = 0x0;
   int y = 0x0;

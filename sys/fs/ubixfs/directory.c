@@ -32,7 +32,7 @@
 #include <vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <lib/string.h>
+#include <string.h>
 
 static dirList_t dirList = 0x0;
 

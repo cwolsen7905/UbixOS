@@ -37,6 +37,8 @@
 #define NULL 0x0
 #endif
 
+typedef        __uintfptr_t    uintfptr_t;
+
 typedef char *caddr_t;
 
 /* unsigned integrals */

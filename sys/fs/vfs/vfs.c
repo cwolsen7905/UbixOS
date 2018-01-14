@@ -30,7 +30,7 @@
 #include <ubixos/vitals.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <lib/string.h>
+#include <string.h>
 #include <sys/kern_descrip.h>
 
 /************************************************************************
@@ -185,7 +185,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   else {
     for (index = 0; index < 256;index++) {
       if (td->o_files[index] == 0x0) {
-        td->o_files[index] = nfp->fd;
+        td->o_files[index] = nfp;//->fd;
         td->td_retval[0] = index;//nfp->fd->ino;//MrOlsen 2018index;
         break;
       }
@@ -201,16 +201,6 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   }
 
 
-/* HACK */
-int fstatfs(struct thread *td, struct fstatfs_args *args) {
-  int error = 0x0;
-  args->buf->f_mntonname[0] = '/';
-  args->buf->f_mntonname[1] = '\0';
-  args->buf->f_flags = 0x0;
-  return(error);
-  }
-
 /***
  END
  ***/
-

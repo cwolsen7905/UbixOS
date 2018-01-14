@@ -152,23 +152,37 @@ int freebsd6_mmap(struct thread *td, struct freebsd6_mmap_args *uap) {
   return (0x0);
 }
 
+int sys_munmap(struct thread *td, struct sys_munmap_args *uap) {
+  //TEMP
+  td->td_retval[0] = 0;
+  return(0);
+};
+
 int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
   vm_offset_t addr = 0x0;
   char *tmp = 0x0;
   struct file *fd = 0x0;
+  int x;
 
   addr = (vm_offset_t) uap->addr;
 
-  if (uap->addr != 0x0) {
-    kprintf("Address hints are not supported yet.\n");
-    td->td_retval[0] = 0x0;
-    return (-1);
-  }
 
   if (uap->fd == -1) {
+    if (uap->addr != 0x0) {
+      for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
+      vmm_unmapPage(((uint32_t)uap->addr & 0xFFFFF000) + x, 1);
+        /* Make readonly and read/write !!! */
+        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0)
+          K_PANIC("Remap Page Failed");
+
+      }
+      tmp = uap->addr;
+      td->td_retval[0] = (uint32_t)tmp;
+      return (0x0);
+    }
     //td->td_retval[0] = (int) vmm_getFreeVirtualPage( _current->id, uap->len / 0x1000, VM_TASK );
     //td->td_retval[0] = (int)
-    td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD);
+    td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
     return (0x0); //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
   }
   else {
@@ -181,10 +195,25 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     //kprintf("uap->pos:   [0x%X]\n", uap->pos);
     //K_PANIC("NOT YET\n");
     getfd(td, &fd, uap->fd);
+    if (uap->addr == 0x0)
     tmp = (char *) vmm_getFreeVirtualPage(_current->id, round_page(uap->len) / 0x1000, VM_TASK);
-    fread(tmp, uap->len, 0x1, fd->fd);
+    else {
+      for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
+      vmm_unmapPage(((uint32_t)uap->addr & 0xFFFFF000) + x, 1);
+        /* Make readonly and read/write !!! */
+        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0)
+          K_PANIC("Remap Page Failed");
 
-    td->td_retval[0] = (int) tmp;
+      }
+      tmp = uap->addr;
+
+ }
+    fseek(fd->fd, uap->pos, 0x0);
+    kprintf("FREAD: %i", fread(tmp, uap->len, 0x1, fd->fd));
+    td->td_retval[0] = (uint32_t) tmp;
+    //MrOlsen kprintf("tmp: %i. ", td->td_retval[0]);
+    if (td->td_retval[0] == (caddr_t)-1)
+      kpanic("BALLS");
   }
   return (0x0);
 }

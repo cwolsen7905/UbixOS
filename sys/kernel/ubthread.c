@@ -37,6 +37,7 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/kpanic.h>
+#include <sys/stdatomic.h>
 
 struct ubthread_cond_list *conds = 0x0;
 struct ubthread_mutex_list *mutex = 0x0;

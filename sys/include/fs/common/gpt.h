@@ -31,7 +31,7 @@
 
 #include <sys/uuid.h>
 #include <sys/device.h>
-#include <lib/string.h>
+#include <string.h>
 
 #define bcopy(src, dst, len)    memcpy((dst), (src), (len))
 #define bzero(buf, size)        memset((buf), 0, (size))

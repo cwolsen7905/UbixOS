@@ -57,13 +57,6 @@ typedef uInt32 in_addr_t;
  }
  */
 
-void bcopy(const void *src, void *dest, int len) {
-  memcpy(dest, src, len);
-}
-
-void bzero(void *data, int n) {
-  memset(data, 0, n);
-}
 
 #ifdef _INET_ATON
 int inet_aton(cp, addr)

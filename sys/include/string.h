@@ -39,7 +39,7 @@ int strncmp(const char * a, const char * b, size_t c);
 void *memset(void * dst, int c, size_t length);
 int strlen(const char * string);
 int memcmp(const void * dst, const void * src, size_t length);
-void strncpy(char * dest, const char * src, size_t size);
+char    *strncpy(char * __restrict, const char * __restrict, size_t);
 char *strtok(char *str, const char *sep);
 char *strtok_r(char *str, const char *sep, char **last);
 char *strstr(const char *s, char *find);

@@ -28,7 +28,7 @@
 
 #include <mpi/mpi.h>
 #include <lib/kmalloc.h>
-#include <lib/string.h>
+#include <string.h>
 #include <ubixos/spinlock.h>
 
 static mpi_mbox_t *mboxList = 0x0;

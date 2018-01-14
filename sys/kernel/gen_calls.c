@@ -35,6 +35,7 @@
 #include <lib/kmalloc.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/video.h>
 
 /* Exit Syscall */
 int sys_exit( struct thread *td, struct sys_exit_args *args ) {
@@ -78,7 +79,13 @@ int sys_write( struct thread *td, struct sys_write_args *uap ) {
 #endif
 
   if ( uap->fd == 2 ) {
-    kprintf( "stderr: %s", uap->buf );
+    printColor += 1;
+    buffer = kmalloc( 1024 );
+    memcpy( buffer, uap->buf, uap->nbyte );
+    //kprintf( "stderr: [%s]", buffer );
+    kprint(buffer);
+    kfree( buffer );
+    printColor = defaultColor;
   }
   else if ( uap->fd == 1 ) {
     /* This is Horrible! */

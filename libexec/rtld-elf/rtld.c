@@ -5022,8 +5022,7 @@ check_object_provided_version(Obj_Entry *refobj, const Obj_Entry *depobj,
     }
     for (;;) {
 	if (vd->vd_version != VER_DEF_CURRENT) {
-	    _rtld_error("%s: Unsupported version %d of Elf_Verdef entry",
-		depobj->path, vd->vd_version);
+	    _rtld_error("%s: Unsupported version %d:%d of Elf_Verdef entry", depobj->path, vd->vd_version, VER_DEF_CURRENT);
 	    return (-1);
 	}
 	if (vna->vna_hash == vd->vd_hash) {
@@ -5066,8 +5065,7 @@ rtld_verify_object_versions(Obj_Entry *obj)
     vn = obj->verneed;
     while (vn != NULL) {
 	if (vn->vn_version != VER_NEED_CURRENT) {
-	    _rtld_error("%s: Unsupported version %d of Elf_Verneed entry",
-		obj->path, vn->vn_version);
+	    _rtld_error("%s: Unsupported version %d of Elf_Verneed entry", obj->path, vn->vn_version);
 	    return (-1);
 	}
 	vna = (const Elf_Vernaux *) ((char *)vn + vn->vn_aux);
@@ -5087,8 +5085,7 @@ rtld_verify_object_versions(Obj_Entry *obj)
     vd = obj->verdef;
     while (vd != NULL) {
 	if (vd->vd_version != VER_DEF_CURRENT) {
-	    _rtld_error("%s: Unsupported version %d of Elf_Verdef entry",
-		obj->path, vd->vd_version);
+	    _rtld_error("%s: Unsupported version %d:%d of Elf_Verdef entry", obj->path, vd->vd_version, VER_DEF_CURRENT);
 	    return (-1);
 	}
 	vernum = VER_DEF_IDX(vd->vd_ndx);

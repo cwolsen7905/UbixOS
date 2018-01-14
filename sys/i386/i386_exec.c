@@ -39,6 +39,7 @@
 #include <vfs/file.h>
 #include <assert.h>
 #include <string.h>
+#include <sys/kern_descrip.h>
 
 #define ENVP_PAGE 0x100
 #define ARGV_PAGE 0x100
@@ -603,10 +604,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
           /* Make readonly and read/write !!! */
           if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0) {
             K_PANIC("Error: Remap Page Failed");
-          } /*
+          } 
            else {
-           kprintf("rP[0x%X]", (programHeader[i].phVaddr & 0xFFFFF000) + x);
-           } */
+           kprintf("rP[0x%X]", (programHeader[i].p_vaddr & 0xFFFFF000) + x);
+           } 
 
           memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
 
@@ -707,8 +708,13 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   uint32_t sp = 0x0;
 
+  char *EXECP = 0x0;
+
   for (i = 1; i <= argc; i++) {
     tmp[i] = (uint32_t) STACK_ADDR - ARGV_PAGE + sp;
+    if (i == 1) {
+      EXECP = tmp[i];
+    }
     strcpy((char *) tmp[i], (char *) argv_out[i]);
     sp += strlen(argv_out[i]) + 1;
   }
@@ -735,9 +741,19 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   i = i + x + 1;
 
+  struct file *tFP = 0x0;
+  int *tFD = 0x0;
+
+  fseek(_current->files[0], 0x0, 0x0); // Reset File Position
+  falloc(&_current->td, &tFP, &tFD);
+
+  tFP->fd = _current->files[0];
+
+
   tmp[i++] = 2;
-  tmp[i++] = -1;  // _current->imageFd;
-  kprintf("AT_EXECFD: [%i]", tmp[i - 1]);
+  tmp[i++] = -1;// tFD;  // _current->imageFd;
+  _current->td.o_files[4] = _current->files[0];
+  kprintf("AT_EXECFD: [%i:%i]", tmp[i - 1], tFD);
 
   tmp[i++] = 3;
   tmp[i++] = binaryHeader->e_phoff + 0x08048000;
@@ -775,6 +791,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   tmp[i++] = 14;
   tmp[i++] = 0x0;
+
+  tmp[i++] = 15;
+  tmp[i++] = EXECP;
 
   tmp[i++] = 0;
   tmp[i++] = 0;
