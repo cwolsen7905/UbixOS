@@ -47,7 +47,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
   Elf32_Ehdr *binaryHeader = 0x0;
   Elf32_Phdr *programHeader = 0x0;
 
-  fileDescriptor *exec_fd = 0x0;
+  fileDescriptor_t *exec_fd = 0x0;
 
   exec_fd = fopen(file, "r");
 

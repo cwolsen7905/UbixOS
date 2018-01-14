@@ -369,6 +369,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
   for (x = 0; x < 100; x++) {
     vmm_remapPage(vmm_findFreePage(newProcess->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+    bzero(STACK_ADDR - (x * 0x1000), 0x1000);
   }
 
   /* Kernel Stack 0x2000 bytes long */
@@ -408,6 +409,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   kfree(binaryHeader);
   kfree(programHeader);
   fclose(newProcess->files[0]);
+  newProcess->files[0] = 0x0;
 
   tmp = (uInt32 *) newProcess->tss.esp0 - 5;
 
@@ -430,25 +432,13 @@ void execFile(char *file, char **argv, char **envp, int console) {
   tmp[i++] = 0x0;
 
   sp = 0;
+
   for (int x = 0; x < envc; x++) {
     tmp[x + i] = STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
     strcpy((char *) tmp[x + i], envp[x]);
     sp += strlen(envp[x]) + 1;
   }
   tmp[i + x] = 0x0;
-
-  //*tmp++ = 0x1; // ARGC
-  //*tmp++ = 0x100; // ARGV
-  //*tmp++ = 0x0; // ARGV TERM
-  //*tmp++ = 0x0; // ENV
-  //*tmp++ = 0x0; // ENV TERM
-  /*
-   *tmp++ = 0xDEAD; // AUX 1.A
-   *tmp++ = 0xBEEF; // AUX 1.B
-   *tmp++ = 0x0; // AUX TERM
-   *tmp++ = 0x0; // AUX TERM
-   *tmp++ = 0x1; // TERM
-   */
 
   /* Switch Back To The Kernels VM Space */
   asm volatile(
@@ -486,7 +476,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   char *interp = 0x0;
   uint32_t ldAddr = 0x0;
 
-  fileDescriptor *fd = 0x0;
+  fileDescriptor_t *fd = 0x0;
 
   Elf_Ehdr *binaryHeader = 0x0;
   Elf_Phdr *programHeader = 0x0;
@@ -771,7 +761,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   tmp[i++] = 0x1000;
 
   tmp[i++] = 7;
-  tmp[i++] = 0x0;  //LD_START;
+  tmp[i++] = 0x0;//LD_START;
   kprintf("AT_BASE: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 8;

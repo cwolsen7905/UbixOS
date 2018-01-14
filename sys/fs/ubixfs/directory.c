@@ -62,7 +62,7 @@ ubixFSLoadDir(char *data) {
   }
 
 int 
-addDirEntry(struct directoryEntry *dir,fileDescriptor *fd) {
+addDirEntry(struct directoryEntry *dir,fileDescriptor_t *fd) {
   uInt32 i = 0x0;
   uInt32 entries = 0x0;
   struct directoryEntry *tmp = 0x0;
@@ -90,7 +90,7 @@ addDirEntry(struct directoryEntry *dir,fileDescriptor *fd) {
   }
 
 int 
-ubixFSmkDir(char *directory,fileDescriptor *fd) {
+ubixFSmkDir(char *directory,fileDescriptor_t *fd) {
   int block = 0x0;
 
   struct directoryEntry *dir   = 0x0;

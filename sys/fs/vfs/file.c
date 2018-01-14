@@ -39,9 +39,9 @@
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
 
-fileDescriptor *fdTable = 0x0;
+fileDescriptor_t *fdTable = 0x0;
 
-fileDescriptor *vfs_fileTable = 0x0;
+fileDescriptor_t *vfs_fileTable = 0x0;
 
 int sys_fwrite( struct thread *td, struct sys_fwrite_args *uap ) {
   char *t = uap->buf;
@@ -208,7 +208,7 @@ int sys_fclose( struct thread *td, struct sys_fclose_args *args ) {
 
 /* KERNEL */
 
-size_t fread( void *ptr, size_t size, size_t nmemb, fileDescriptor *fd ) {
+size_t fread( void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd ) {
   size_t i = 0x0;
 
 
@@ -243,7 +243,7 @@ size_t fread( void *ptr, size_t size, size_t nmemb, fileDescriptor *fd ) {
   return (i);
 }
 
-size_t fwrite( void *ptr, int size, int nmemb, fileDescriptor *fd ) {
+size_t fwrite( void *ptr, int size, int nmemb, fileDescriptor_t *fd ) {
   if ( fd != 0x0 ) {
     fd->mp->fs->vfsWrite( fd, ptr, fd->offset, size * nmemb );
     fd->offset += size * nmemb;
@@ -251,19 +251,19 @@ size_t fwrite( void *ptr, int size, int nmemb, fileDescriptor *fd ) {
   return (0x0);
 }
 
-int fseek( fileDescriptor *tmpFd, long offset, int whence ) {
+int fseek( fileDescriptor_t *tmpFd, long offset, int whence ) {
   tmpFd->offset = offset + whence;
   return (tmpFd->offset);
 }
 
 /************************************************************************
 
- Function: int feof(fileDescriptor *fd)
+ Function: int feof(fileDescriptor_t *fd)
  Description: Check A File Descriptor For EOF And Return Result
  Notes:
 
  ************************************************************************/
-int feof( fileDescriptor *fd ) {
+int feof( fileDescriptor_t *fd ) {
   if ( fd->status == fdEof ) {
     return (-1);
   }
@@ -272,12 +272,12 @@ int feof( fileDescriptor *fd ) {
 
 /************************************************************************
 
- Function: int fputc(int ch,fileDescriptor *fd)
+ Function: int fputc(int ch,fileDescriptor_t *fd)
  Description: This Will Write Character To FD
  Notes:
 
  ************************************************************************/
-int fputc( int ch, fileDescriptor *fd ) {
+int fputc( int ch, fileDescriptor_t *fd ) {
   if ( fd != 0x0 ) {
     ch = fd->mp->fs->vfsWrite( fd, (char *) ch, fd->offset, 1 );
     fd->offset++;
@@ -289,12 +289,12 @@ int fputc( int ch, fileDescriptor *fd ) {
 
 /************************************************************************
 
- Function: int fgetc(fileDescriptor *fd)
+ Function: int fgetc(fileDescriptor_T *fd)
  Description: This Will Return The Next Character In A FD Stream
  Notes:
 
  ************************************************************************/
-int fgetc( fileDescriptor *fd ) {
+int fgetc( fileDescriptor_t *fd ) {
   int ch = 0x0;
   /* If Found Return Next Char */
   if ( fd != 0x0 ) {
@@ -309,7 +309,7 @@ int fgetc( fileDescriptor *fd ) {
 
 /************************************************************************
 
- Function: fileDescriptor *fopen(const char *file,cont char *flags)
+ Function: fileDescriptor_t *fopen(const char *file,cont char *flags)
  Description: This Will Open A File And Return A File Descriptor
  Notes:
 
@@ -317,15 +317,15 @@ int fgetc( fileDescriptor *fd ) {
 
  ************************************************************************/
 
-fileDescriptor *fopen( const char *file, const char *flags ) {
+fileDescriptor_t *fopen( const char *file, const char *flags ) {
   int i = 0x0;
   char *path = 0x0;
   char *mountPoint = 0x0;
   char fileName[1024];
-  fileDescriptor *tmpFd = 0x0;
+  fileDescriptor_t *tmpFd = 0x0;
 
   /* Allocate Memory For File Descriptor */
-  if ( (tmpFd = (fileDescriptor *) kmalloc( sizeof(fileDescriptor) )) == 0x0 ) {
+  if ( (tmpFd = (fileDescriptor_t *) kmalloc( sizeof(fileDescriptor_t) )) == 0x0 ) {
     kprintf( "Error: tmpFd == NULL, File: %s, Line: %i\n", __FILE__, __LINE__ );
     return (NULL);
   }
@@ -435,13 +435,13 @@ fileDescriptor *fopen( const char *file, const char *flags ) {
 
 /************************************************************************
 
- Function: int fclose(fileDescriptor *fd);
+ Function: int fclose(fileDescriptor_t *fd);
  Description: This Will Close And Free A File Descriptor
  Notes:
 
  ************************************************************************/
-int fclose( fileDescriptor *fd ) {
-  fileDescriptor *tmpFd = 0x0;
+int fclose( fileDescriptor_t *fd ) {
+  fileDescriptor_t *tmpFd = 0x0;
   assert( fd );
 
   spinLock( &fdTable_lock );
@@ -479,7 +479,7 @@ int fclose( fileDescriptor *fd ) {
 
  ************************************************************************/
 void sysMkDir( const char *path ) {
-  fileDescriptor *tmpFD = 0x0;
+  fileDescriptor_t *tmpFD = 0x0;
   char tmpDir[1024];
   char rootPath[256];
   char *dir = 0x0; //UBU*mountPoint = 0x0;

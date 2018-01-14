@@ -63,7 +63,7 @@ int sys_stat(char *path, struct stat *sb, int flags) {
   }
 */
 
-  fileDescriptor *fd =  fopen(path, "rb");
+  fileDescriptor_t *fd =  fopen(path, "rb");
   //MrOlsen kprintf("FD=0x%X", fd);
 
   if (fd == 0) {
@@ -93,7 +93,7 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
   int error = 0;
 
   struct file *fdd = 0x0;
-  fileDescriptor *fd = 0x0;
+  fileDescriptor_t *fd = 0x0;
 
   getfd(td, &fdd, args->fd);
 

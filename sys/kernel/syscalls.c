@@ -36,9 +36,9 @@ struct syscall_entry systemCalls[] = {
   { ARG_COUNT(sys_fork_args), "fork", (sys_call_t *) sys_fork, SYSCALL_VALID },    // 2 - fork
   { ARG_COUNT(sys_read_args), "read", (sys_call_t *) sys_read, SYSCALL_VALID },    // 3 - read
   { ARG_COUNT(sys_write_args), "write", (sys_call_t *) sys_write, SYSCALL_VALID }, // 4 - write
-  { ARG_COUNT(sys_open_args), "open", (sys_call_t *) sys_open, SYSCALL_DUMMY },    // 5 - open
+  { ARG_COUNT(sys_open_args), "open", (sys_call_t *) sys_open, SYSCALL_VALID },    // 5 - open
   { ARG_COUNT(sys_close_args), "close", (sys_call_t *) sys_close, SYSCALL_VALID }, // 6 - close
-  { ARG_COUNT(sys_wait4_args), "wiat4", (sys_call_t *) sys_wait4, SYSCALL_DUMMY },
+  { ARG_COUNT(sys_wait4_args), "wiat4", (sys_call_t *) sys_wait4, SYSCALL_VALID }, // 7 - wait4
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },

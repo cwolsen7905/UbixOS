@@ -96,7 +96,7 @@ void vmm_pageFault(struct trapframe *, uint32_t);
 void _vmm_pageFault();
 int mmap(struct thread *, struct sys_mmap_args *);
 int obreak(struct thread *, struct obreak_args *);
-int munmap(struct thread *, struct munmap_args *);
+int munmap(struct thread *, struct sys_munmap_args *);
 
 int vmm_cleanVirtualSpace(uint32_t);
 void *vmm_getFreeVirtualPage(pidType pid, int count, int type);

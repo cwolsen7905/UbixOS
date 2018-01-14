@@ -39,10 +39,10 @@
 #include <assert.h>
 
 /* Static defines */
-static int ubixfs_loadData(fileDescriptor *fd,char *data,uInt32 size,uInt32 batIndex);
+static int ubixfs_loadData(fileDescriptor_t *fd,char *data,uInt32 size,uInt32 batIndex);
 
   
-static int openFileUbixFS(const char *file, fileDescriptor *fd) {
+static int openFileUbixFS(const char *file, fileDescriptor_t *fd) {
   //int x = 0;
 /* mji  struct directoryEntry *dirEntry = (struct directoryEntry *)kmalloc(0x4000); */
   struct cacheNode * cacheNode = NULL;
@@ -114,7 +114,7 @@ kprintf("Ouch! in filewrite!\n");
 
   }
 
-int writeFileByte(int ch, fileDescriptor *fd, long offset) {
+int writeFileByte(int ch, fileDescriptor_t *fd, long offset) {
 
   int blockCount = 0x0,batIndex = 0x0,batIndexPrev = 0x0;
   uInt32 i = 0x0;
@@ -190,7 +190,7 @@ int writeFileByte(int ch, fileDescriptor *fd, long offset) {
 /* Verified Functions */
 
     
-int readUbixFS(fileDescriptor *fd,char *data,uInt32 offset,long size) {
+int readUbixFS(fileDescriptor_t *fd,char *data,uInt32 offset,long size) {
   int i = 0x0;
   char *buffer = 0x0;
   struct ubixFSInfo *fsInfo = NULL;
@@ -223,12 +223,12 @@ int readUbixFS(fileDescriptor *fd,char *data,uInt32 offset,long size) {
 
 /************************************************************************
 
-Function: int writeUbixFS(fileDescriptor *fd,char *data,long offset,long size)
+Function: int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size)
 Description: Write Data Into File
 Notes:
 
 ************************************************************************/
-int writeUbixFS(fileDescriptor *fd,char *data,long offset,long size) {
+int writeUbixFS(fileDescriptor_t *fd,char *data,long offset,long size) {
   uInt32 blockOffset    = 0x0;
   uInt32 blockIndex;
   uInt32 blockIndexPrev;
@@ -328,7 +328,7 @@ void ubixFSUnlink(char *path,struct vfs_mountPoint *mp) {
 /*****************************************************************************************
 
 Function: static
-          int ubixfs_loadData(fileDescriptor *fd,char *data,uInt32 size,uInt32 batIndex)
+          int ubixfs_loadData(fileDescriptor_t *fd,char *data,uInt32 size,uInt32 batIndex)
 
 Description: This will load the node data in from the disk
 
@@ -337,7 +337,7 @@ Notes:
                actual file size
 
 *****************************************************************************************/    
-static int ubixfs_loadData(fileDescriptor *fd,char *data,uInt32 size,uInt32 batIndex) {
+static int ubixfs_loadData(fileDescriptor_t *fd,char *data,uInt32 size,uInt32 batIndex) {
   uInt32 i = 0x0;
 
   struct ubixFSInfo *fsInfo = NULL;

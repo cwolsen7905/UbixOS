@@ -8,7 +8,7 @@
 #include <sys/buf.h>
 
 
-int ffs_read(fileDescriptor *fd,char *data,uInt32 offset,long size) {
+int ffs_read(fileDescriptor_t *fd,char *data,uInt32 offset,long size) {
   struct fs  *fs;
 
   fs = (struct fs *)fd->dmadat->sbbuf;

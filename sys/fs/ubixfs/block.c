@@ -76,7 +76,7 @@ void syncBat(struct vfs_mountPoint *mp) {
   mp->device->devInfo->write(mp->device->devInfo->info,fsInfo->blockAllocationTable,mp->diskLabel->partitions[mp->partition].pOffset,mp->diskLabel->partitions[mp->partition].pBatSize);
   }
 
-int freeBlocks(int block,fileDescriptor *fd) {
+int freeBlocks(int block,fileDescriptor_t *fd) {
   int i = block;
   
   struct ubixFSInfo *fsInfo = fd->mp->fsInfo;
@@ -93,7 +93,7 @@ int freeBlocks(int block,fileDescriptor *fd) {
   return(i);
   }
   
-int getFreeBlocks(int count,fileDescriptor *fd) {
+int getFreeBlocks(int count,fileDescriptor_t *fd) {
   uInt32 i = 0x0;
   uInt32 x = 0x0;
   

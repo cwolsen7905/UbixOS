@@ -58,8 +58,8 @@ struct dmadat {
 };
 
 typedef struct fileDescriptor {
-    //struct fileDescriptorStruct *prev;
-    //struct fileDescriptorStruct *next;
+    struct fileDescriptor *prev;
+    struct fileDescriptor *next;
     struct vfs_mountPoint *mp;
     uint32_t ino;
     uint16_t status;
@@ -76,7 +76,6 @@ typedef struct fileDescriptor {
     int dsk_meta;
     uint32_t resid;
     struct inode inode;
-    uint32_t size; //Temp for sys_fopen once thats gone i can remove
 } fileDescriptor_t;
 
 typedef struct userFileDescriptorStruct {

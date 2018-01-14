@@ -34,7 +34,7 @@
 #include <vfs/vfs.h>
 #include <sys/device.h>
 
-int ffs_read(fileDescriptor *,char *,uInt32,long);
+int ffs_read(fileDescriptor_t *,char *,uint32_t,long);
 
 #endif
 

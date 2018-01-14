@@ -35,17 +35,17 @@ timerInt:
   mov $0x20,%ax           
   outb %al,%dx
   movl systemVitals,%ecx   /* Put Location Of System Vitals Into ECX   */
-  incl 4(%ecx)             /* Increment sysTicks our 1000ms counter    */                    
-  movl 4(%ecx),%eax        /* Increment our sysUptime by 1S if 1000MS  */
+  incl (%ecx)             /* Increment sysTicks our 1000ms counter    */                    
+  movl (%ecx),%eax        /* Increment our sysUptime by 1S if 1000MS  */
   movl $200,%ebx           /* Have Passed                              */
   xor %edx,%edx           
   div %ebx               
   test %edx,%edx          
   jnz next                
-  incl 8(%ecx)            
+  incl 4(%ecx)            
 next:                     
-  movl 4(%ecx),%eax        /* Test If quantum Has Passed If So Then    */
-  movl 12(%ecx),%ebx       /* We Can CALL sched                        */
+  movl (%ecx),%eax        /* Test If quantum Has Passed If So Then    */
+  movl 8(%ecx),%ebx       /* We Can CALL sched                        */
   xor %edx,%edx           
   div %ebx                
   test %edx,%edx          

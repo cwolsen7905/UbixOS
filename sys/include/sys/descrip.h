@@ -89,18 +89,20 @@ typedef __nlink_t nlink_t;
 #define FFLAGS(oflags)  ((oflags) + 1)
 #define OFLAGS(fflags)  ((fflags) - 1)
 
+struct fileOps;
+struct file;
+
 /* Function Protos */
 typedef int fo_rdwr_t(struct file *fp, struct uio *uio, struct ucred *active_cred, int flags, struct thread *td);
 typedef int fo_stat_t(struct file *fp, struct stat *sb, struct ucred *active_cred, struct thread *td);
 typedef int fo_close_t(struct file *fp, struct thread *td);
 
-struct fileOps;
 
 struct file {
     uint32_t f_flag;
     uint16_t f_type;
     struct fileOps *f_ops;
-    fileDescriptor *fd;
+    fileDescriptor_t *fd;
 };
 
 struct fileOps {

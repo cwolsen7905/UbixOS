@@ -63,7 +63,7 @@ typedef struct taskStruct {
     struct i387Struct i387;
     struct osInfo oInfo;
     //fileDescriptor *imageFd;
-    fileDescriptor *files[MAX_OFILES];
+    fileDescriptor_t *files[MAX_OFILES];
     tState state;
     uint32_t uid, gid;
     uint16_t euid, suid;

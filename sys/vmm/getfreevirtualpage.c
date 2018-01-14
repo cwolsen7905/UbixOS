@@ -59,7 +59,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   if (_current->oInfo.vmStart <= 0x100000)
     kpanic("Invalid vmStart\n");
 
-  kprintf("type: %i ", type);
+ //MrOlsen kprintf("type: %i ", type);
 
   /* Get Our Starting Address */
   if (type == VM_THRD) {

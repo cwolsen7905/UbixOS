@@ -40,8 +40,6 @@ int main(int argc,char **argv, char **envp) {
   int i=0x0;
   mpi_message_t myMsg;
 
-
-
   /* Create a mailbox for this task */
   /*
   if (mpi_createMbox("init") != 0x0) {

@@ -148,7 +148,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   if (error)
      return(error);
 
-  strcpy(nfp->path, args->path);
+  //strcpy(nfp->path, args->path);
 
   nfp->fd = fopen(args->path,"r");
 
@@ -168,7 +168,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     }
   }
 
-  kprintf("path: %s:%i ", args->path, index);
+  //kprintf("path: %s:%i ", args->path, index);
 
   return (error);
   }

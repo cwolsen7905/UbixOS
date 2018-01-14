@@ -49,7 +49,7 @@
     (((x) % (fs)->fs_ipg) / (ipervblk) * DBPERVBLK))
 #define INO_TO_VBO(ipervblk, x) ((x) % ipervblk)
 
-static int dskread(void *buf, uint64_t block, size_t count, fileDescriptor *fd) {
+static int dskread(void *buf, uint64_t block, size_t count, fileDescriptor_t *fd) {
   fd->mp->device->devInfo->read(fd->mp->device->devInfo->info, buf, block, count);
   return (0x0);
 }
@@ -74,7 +74,7 @@ static int sblock_try[] = SBLOCKSEARCH;
 #define DIP(field) fs->fs_magic == FS_UFS1_MAGIC ? dp1.field : dp2.field
 #endif
 
-static ssize_t fsread(ino_t inode, void *buf, size_t nbyte, fileDescriptor *fd) {
+static ssize_t fsread(ino_t inode, void *buf, size_t nbyte, fileDescriptor_t *fd) {
 #ifndef UFS2_ONLY
   static struct ufs1_dinode dp1;
 #endif
@@ -209,7 +209,7 @@ static ssize_t fsread(ino_t inode, void *buf, size_t nbyte, fileDescriptor *fd) 
   return nbyte;
 }
 
-static __inline int fsfind(const char *name, ino_t * ino, fileDescriptor *fd) {
+static __inline int fsfind(const char *name, ino_t * ino, fileDescriptor_t *fd) {
   char buf[DEV_BSIZE];
   struct dirent *d;
   char *s;
@@ -229,7 +229,7 @@ static __inline int fsfind(const char *name, ino_t * ino, fileDescriptor *fd) {
   return 0;
 }
 
-static ino_t lookup(const char *path, fileDescriptor *fd) {
+static ino_t lookup(const char *path, fileDescriptor_t *fd) {
   char name[MAXNAMLEN + 1];
   const char *s;
   ino_t ino;
@@ -264,7 +264,7 @@ static ino_t lookup(const char *path, fileDescriptor *fd) {
   return dt == DT_REG ? ino : 0;
 }
 
-static int ufs_openFile(const char *file, fileDescriptor *fd) {
+static int ufs_openFile(const char *file, fileDescriptor_t *fd) {
   char tmp[2];
   int ino = 0;
   fd->dmadat = (struct dmadat *) kmalloc(sizeof(struct dmadat));
@@ -283,11 +283,11 @@ static int ufs_openFile(const char *file, fileDescriptor *fd) {
   return (0x1);
 }
 
-int ufs_readFile(fileDescriptor *fd, char *data, uInt32 offset, long size) {
+int ufs_readFile(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
   return (fsread(fd->ino, data, size, fd));
 }
 
-int ufs_writeFile(fileDescriptor *fd, char *data, uInt32 offset, long size) {
+int ufs_writeFile(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
   kprintf("Writing :)\n");
   return (0x0);
 }

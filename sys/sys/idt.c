@@ -187,7 +187,28 @@ void intNull() {
    */
 }
 
-void _int0() {
+asm volatile(
+  ".globl _int0  \n"
+  "_int0:        \n"
+  "  pushl $0x0  \n"
+  "  pushl $0x6  \n"
+  "  pushal      \n" /* Save all registers */
+  "  push %ds    \n"
+  "  push %es    \n"
+  "  push %fs    \n"
+  "  push %gs    \n"
+  "  push %esp   \n"
+  "  call __int0 \n"
+  "  pop %gs     \n"
+  "  pop %fs     \n"
+  "  pop %es     \n"
+  "  pop %ds     \n"
+  "  popal       \n"
+  "  iret        \n" /* Exit interrupt */
+);
+
+void __int0(struct trapframe *frame) {
+  die_if_kernel("Divid-by-Zer0", frame, 0);
   kpanic("int0: Divide-by-Zero [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();

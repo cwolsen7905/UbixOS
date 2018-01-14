@@ -131,21 +131,21 @@ struct ubixFSInfo {
 /* ubixFSInfo */
 
 int readFile(char *file);
-int writeFileByte(int ch, fileDescriptor *fd, long offset);
-//int openFileUbixFS(char *file,fileDescriptor *fd);
-int getFreeBlocks(int count, fileDescriptor *fd);
+int writeFileByte(int ch, fileDescriptor_t *fd, long offset);
+//int openFileUbixFS(char *file,fileDescriptor_t *fd);
+int getFreeBlocks(int count, fileDescriptor_t *fd);
 //extern struct ubixDiskLabel *diskLabel;
 
 //Good Functions
 //void initUbixFS(struct mountPoints *mp);
 
-int readUbixFS(fileDescriptor *fd, char *data, uInt32, long size);
-int writeUbixFS(fileDescriptor *fd, char *data, long offset, long size);
+int readUbixFS(fileDescriptor_t *fd, char *data, uInt32, long size);
+int writeUbixFS(fileDescriptor_t *fd, char *data, long offset, long size);
 void syncBat(struct vfs_mountPoint *mp);
-int freeBlocks(int block, fileDescriptor *fd);
-int addDirEntry(struct directoryEntry *dir, fileDescriptor *fd);
+int freeBlocks(int block, fileDescriptor_t *fd);
+int addDirEntry(struct directoryEntry *dir, fileDescriptor_t *fd);
 void ubixFSUnlink(char *path, struct vfs_mountPoint *mp);
-int ubixFSmkDir(char *dir, fileDescriptor *fd);
+int ubixFSmkDir(char *dir, fileDescriptor_t *fd);
 
 int ubixfs_init();
 int ubixfs_initialize();

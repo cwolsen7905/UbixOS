@@ -66,7 +66,7 @@ static void devfs_initialize(struct vfs_mountPoint *mp) {
 
  This format will be changing down the road
  */
-static int devfs_open(char *file, fileDescriptor *fd) {
+static int devfs_open(char *file, fileDescriptor_t *fd) {
   struct devfs_info *fsInfo = fd->mp->fsInfo;
   struct devfs_devices *tmpDev = 0x0;
   struct device_node *device = 0x0;
@@ -105,11 +105,11 @@ static int devfs_open(char *file, fileDescriptor *fd) {
 }
 
 /**
- Function: int readDevFS(fileDescriptor *fd,char *data,long offset,long size)
+ Function: int readDevFS(fileDescriptor_t *fd,char *data,long offset,long size)
  Description: Read File Into Data
  Notes:
  */
-static int devfs_read(fileDescriptor *fd, char *data, long offset, long size) {
+static int devfs_read(fileDescriptor_t *fd, char *data, long offset, long size) {
   int i = 0x0, x = 0x0;
   uInt32 sectors = 0x0;
   uInt16 diff = 0x0;
@@ -150,12 +150,12 @@ static int devfs_read(fileDescriptor *fd, char *data, long offset, long size) {
 
 /************************************************************************
 
- Function: int writeDevFS(fileDescriptor *fd,char *data,long offset,long size)
+ Function: int writeDevFS(fileDescriptor_t *fd,char *data,long offset,long size)
  Description: Write Data Into File
  Notes:
 
  ************************************************************************/
-static int devfs_write(fileDescriptor *fd, char *data, long offset, long size) {
+static int devfs_write(fileDescriptor_t *fd, char *data, long offset, long size) {
   int i = 0x0, x = 0x0;
   struct device_node *device = 0x0;
   struct devfs_devices *tmpDev = (void *) fd->start;

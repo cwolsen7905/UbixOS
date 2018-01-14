@@ -177,23 +177,25 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
 
       }
       tmp = uap->addr;
+      bzero(tmp, uap->len);
       td->td_retval[0] = (uint32_t)tmp;
       return (0x0);
     }
     //td->td_retval[0] = (int) vmm_getFreeVirtualPage( _current->id, uap->len / 0x1000, VM_TASK );
     //td->td_retval[0] = (int)
     td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
+    bzero(td->td_retval[0], uap->len);
+    kprintf("mm: 0x%X\n", uap->len);
     return (0x0); //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
   }
   else {
     //kprintf("uap->flags: [0x%X]\n", uap->flags);
-    kprintf("uap->addr:  [0x%X]\n", uap->addr);
-    kprintf("uap->len:   [0x%X]\n", uap->len);
-    //kprintf("uap->prot:  [0x%X]\n", uap->prot);
+    kprintf("uap->addr:  [0x%X]", uap->addr);
+    kprintf("uap->len:   [0x%X]", uap->len);
+    //kprintf("uap->prot:  [0x%X]", uap->prot);
     kprintf("uap->fd:    [%i]\n", uap->fd);
-    //kprintf("uap->pad:   [0x%X]\n", uap->pad);
-    //kprintf("uap->pos:   [0x%X]\n", uap->pos);
-    //K_PANIC("NOT YET\n");
+    //kprintf("uap->pad:   [0x%X]", uap->pad);
+    //kprintf("uap->pos:   [0x%X]", uap->pos);
     getfd(td, &fd, uap->fd);
     if (uap->addr == 0x0)
     tmp = (char *) vmm_getFreeVirtualPage(_current->id, round_page(uap->len) / 0x1000, VM_TASK);
@@ -209,16 +211,10 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
 
  }
     fseek(fd->fd, uap->pos, 0x0);
-    kprintf("FREAD: %i", fread(tmp, uap->len, 0x1, fd->fd));
+    kprintf("FREAD: 0x%X\n", fread(tmp, uap->len, 0x1, fd->fd));
     td->td_retval[0] = (uint32_t) tmp;
-    //MrOlsen kprintf("tmp: %i. ", td->td_retval[0]);
     if (td->td_retval[0] == (caddr_t)-1)
       kpanic("BALLS");
   }
   return (0x0);
 }
-
-/***
- END
- ***/
-

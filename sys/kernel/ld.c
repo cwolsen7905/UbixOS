@@ -46,12 +46,14 @@ uint32_t ldEnable() {
   char *shStr = 0x0;
   char *dynStr = 0x0;
   uint32_t *reMap = 0x0;
-  fileDescriptor *ldFd = 0x0;
+  fileDescriptor_t *ldFd = 0x0;
   Elf_Ehdr *binaryHeader = 0x0;
   Elf_Phdr *programHeader = 0x0;
   Elf_Shdr *sectionHeader = 0x0;
   Elf_Sym *relSymTab = 0x0;
   Elf_Rel *elfRel = 0x0;
+  Elf_Rela *elfRela = 0x0;
+  Elf_Addr addr;
 
   /* Open our dynamic linker */
   ldFd = fopen("sys:/libexec/ld.so", "rb");
@@ -155,6 +157,9 @@ uint32_t ldEnable() {
         fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
         fread(relSymTab, sectionHeader[i].sh_size, 1, ldFd);
         sym = i;
+      break;
+      default:
+        kprintf("INvalid: %i]", sectionHeader[i].sh_type);
       break;
     }
   }
