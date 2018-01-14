@@ -44,7 +44,7 @@
 #define ENVP_PAGE 0x100
 #define ARGV_PAGE 0x100
 #define ELF_AUX 0x100
-#define STACK_PAD 16
+#define STACK_PAD 0x1000
 
 #define ENOEXEC -1
 
@@ -688,7 +688,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   //iFrame->edx = 0x0;
 
-  iFrame->user_esp = (uint32_t) STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD;
+  iFrame->user_esp = (uint32_t) (STACK_ADDR - ARGV_PAGE - ENVP_PAGE - ELF_AUX - (argc + 1) - (envc + 1) - STACK_PAD) & 0xFFFFF000;
 
   tmp = (uint32_t *) iFrame->user_esp;
 
