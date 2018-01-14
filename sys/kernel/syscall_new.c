@@ -60,7 +60,6 @@ void syscall(struct trapframe *frame) {
   }
 
   if (code > totalCalls) {
-    //kprintf( "Invalid Call: [%i:%i]\n", frame->tf_eax, totalCalls );
     die_if_kernel("Invalid System Call", frame, frame->tf_eax);
     kpanic("PID: %i", _current->id);
   }
@@ -70,8 +69,6 @@ void syscall(struct trapframe *frame) {
     frame->tf_edx = 0x0;
   }
   else {
-    //memcpy( args, params, 8 * sizeof(int) );
-
     td->td_retval[0] = 0;
     td->td_retval[1] = frame->tf_edx;
 

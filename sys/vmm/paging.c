@@ -33,9 +33,9 @@
 #include <ubixos/kpanic.h>
 #include <ubixos/sched.h>
 #include <ubixos/spinlock.h>
-#include <sys/kern_descrip.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/descrip.h>
 
 uint32_t *kernelPageDirectory = 0x0; // Pointer To Kernel Page Directory
 

@@ -39,7 +39,7 @@
 #include <vfs/file.h>
 #include <assert.h>
 #include <string.h>
-#include <sys/kern_descrip.h>
+#include <sys/descrip.h>
 
 #define ENVP_PAGE 0x100
 #define ARGV_PAGE 0x100

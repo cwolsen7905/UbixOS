@@ -29,9 +29,9 @@
 #include <sys/pipe.h>
 #include <sys/sysproto.h>
 #include <sys/thread.h>
-#include <sys/kern_descrip.h>
 #include <lib/kprintf.h>
 #include <assert.h>
+#include <sys/descrip.h>
 
 /**
  HACK

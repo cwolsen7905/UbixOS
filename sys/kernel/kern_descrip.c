@@ -26,13 +26,15 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/kern_descrip.h>
+#include <sys/descrip.h>
 #include <sys/sysproto.h>
 #include <sys/thread.h>
 #include <lib/kprintf.h>
 #include <ubixos/endtask.h>
 #include <lib/kmalloc.h>
 #include <assert.h>
+
+static struct file *kern_files = 0x0;
 
 int fcntl(struct thread *td, struct fcntl_args *uap) {
   struct file *fp = 0x0;
@@ -63,26 +65,46 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
 }
 
 int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
+
   struct file *fp = 0x0;
   int i = 0;
 
-#ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
-#endif
-
   fp = (struct file *) kmalloc(sizeof(struct file));
+
   /* First 5 Descriptors Are Reserved */
-  for (i = 5; i < 1024; i++) {
+  for (i = 5; i < MAX_FILES; i++) {
     if (td->o_files[i] == 0x0) {
       td->o_files[i] = (void *) fp;
       if (resultfd)
         *resultfd = i;
       if (resultfp)
         *resultfp = fp;
-      break;
+      goto allocated;
     }
   }
+
+  kfree(fp);
+
+  *resultfp = 0x0;
+  *resultfd = 0x0;
+
+  allocated:
+
   return (0x0);
+}
+
+int fdestroy(struct thread *td, struct file *fp, int fd) {
+  int error = 0;
+
+  if (td->o_files[fd] != fp) {
+    error = -1;
+  }
+  else {
+    kfree(td->o_files[fd]);
+    td->o_files[fd] = 0x0;
+  }
+
+  return (error);
 }
 
 int close(struct thread *td, struct close_args *uap) {

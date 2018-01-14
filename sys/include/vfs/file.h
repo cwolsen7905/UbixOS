@@ -57,9 +57,9 @@ struct dmadat {
     char secbuf[DEV_BSIZE]; /* for MBR/disklabel */
 };
 
-typedef struct fileDescriptorStruct {
-    struct fileDescriptorStruct *prev;
-    struct fileDescriptorStruct *next;
+typedef struct fileDescriptor {
+    //struct fileDescriptorStruct *prev;
+    //struct fileDescriptorStruct *next;
     struct vfs_mountPoint *mp;
     uint32_t ino;
     uint16_t status;
@@ -76,17 +76,18 @@ typedef struct fileDescriptorStruct {
     int dsk_meta;
     uint32_t resid;
     struct inode inode;
-} fileDescriptor;
+    uint32_t size; //Temp for sys_fopen once thats gone i can remove
+} fileDescriptor_t;
 
 typedef struct userFileDescriptorStruct {
-    struct fileDescriptorStruct *fd;
+    struct fileDescriptor *fd;
     uint32_t fdSize;
 } userFileDescriptor;
 
-extern fileDescriptor *fdTable;
+extern fileDescriptor_t *fdTable;
 
-fileDescriptor *fopen(const char *, const char *);
-int fclose(fileDescriptor *);
+fileDescriptor_t *fopen(const char *, const char *);
+int fclose(fileDescriptor_t *);
 
 /* UBU */
 struct sys_fwrite_args {
@@ -97,11 +98,11 @@ struct sys_fwrite_args {
 };
 
 int unlink(const char *path);
-int feof(fileDescriptor *fd);
-int fgetc(fileDescriptor *fd);
-size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor *fd);
-size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor *fd);
-int fseek(fileDescriptor *, long, int);
+int feof(fileDescriptor_t *fd);
+int fgetc(fileDescriptor_t *fd);
+size_t fread(void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd);
+size_t fwrite(void *ptr, int size, int nmemb, fileDescriptor_t *fd);
+int fseek(fileDescriptor_t *, long, int);
 
 int sysFseek(userFileDescriptor *, long, int);
 

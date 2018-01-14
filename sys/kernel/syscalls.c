@@ -31,14 +31,14 @@
 
 /* System Calls List */
 struct syscall_entry systemCalls[] = {
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { ARG_COUNT(sys_exit_args), "exit", (sys_call_t *) sys_exit, 2 },
-  { ARG_COUNT(sys_fork_args), "fork", (sys_call_t *) sys_fork, SYSCALL_VALID },
-  { ARG_COUNT(sys_read_args), "read", (sys_call_t *) sys_read, SYSCALL_VALID },
-  { ARG_COUNT(sys_write_args), "write", (sys_call_t *) sys_write, SYSCALL_VALID },
-  { ARG_COUNT(sys_open_args), "open", (sys_call_t *) sys_open, SYSCALL_DUMMY },
-  { ARG_COUNT(sys_close_args), "close", (sys_call_t *) sys_close, SYSCALL_VALID },
-  { ARG_COUNT(sys_wait4_args), "wiat4", (sys_call_t *) sys_wait4, 1 },
+  { 0, "No Call", sys_invalid, SYSCALL_VALID },                                    // 0 - syscall
+  { ARG_COUNT(sys_exit_args), "exit", (sys_call_t *) sys_exit, SYSCALL_VALID },    // 1 - exit
+  { ARG_COUNT(sys_fork_args), "fork", (sys_call_t *) sys_fork, SYSCALL_VALID },    // 2 - fork
+  { ARG_COUNT(sys_read_args), "read", (sys_call_t *) sys_read, SYSCALL_VALID },    // 3 - read
+  { ARG_COUNT(sys_write_args), "write", (sys_call_t *) sys_write, SYSCALL_VALID }, // 4 - write
+  { ARG_COUNT(sys_open_args), "open", (sys_call_t *) sys_open, SYSCALL_DUMMY },    // 5 - open
+  { ARG_COUNT(sys_close_args), "close", (sys_call_t *) sys_close, SYSCALL_VALID }, // 6 - close
+  { ARG_COUNT(sys_wait4_args), "wiat4", (sys_call_t *) sys_wait4, SYSCALL_DUMMY },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
@@ -428,7 +428,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 384 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 385 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 386 - Invalid */
-{ ARG_COUNT(sys_fstatfs_args), "fstatfs", (sys_call_t *) sys_fstatfs, SYSCALL_VALID }, /* 397 fstatfs */
+    { ARG_COUNT(sys_fstatfs_args), "fstatfs", (sys_call_t *) sys_fstatfs, SYSCALL_VALID }, /* 397 fstatfs */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 398 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 399 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 400 - Invalid */
@@ -544,8 +544,3 @@ struct syscall_entry systemCalls[] = {
 };
 
 int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);
-
-/***
- END
- ***/
-

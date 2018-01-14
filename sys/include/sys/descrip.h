@@ -35,6 +35,9 @@
 #include <vfs/file.h>
 #include <vfs/stat.h>
 
+/* Limits */
+#define MAX_FILES 256
+
 typedef __mode_t mode_t;
 typedef __nlink_t nlink_t;
 
@@ -86,10 +89,25 @@ typedef __nlink_t nlink_t;
 #define FFLAGS(oflags)  ((oflags) + 1)
 #define OFLAGS(fflags)  ((fflags) - 1)
 
+/* Function Protos */
+typedef int fo_rdwr_t(struct file *fp, struct uio *uio, struct ucred *active_cred, int flags, struct thread *td);
+typedef int fo_stat_t(struct file *fp, struct stat *sb, struct ucred *active_cred, struct thread *td);
+typedef int fo_close_t(struct file *fp, struct thread *td);
+
+struct fileOps;
+
 struct file {
-    int f_flag;
-    char path[1024];
+    uint32_t f_flag;
+    uint16_t f_type;
+    struct fileOps *f_ops;
     fileDescriptor *fd;
+};
+
+struct fileOps {
+    fo_rdwr_t *read;
+    fo_rdwr_t *write;
+    fo_stat_t *stat;
+    fo_close_t *close;
 };
 
 #ifdef _BALLS

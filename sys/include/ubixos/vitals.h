@@ -26,36 +26,33 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _VITALS_H
-#define _VITALS_H
+#ifndef _UBIXOS_VITALS_H
+#define _UBIXOS_VITALS_H
 
-//#include <ubixos/types.h>
-#include <ubixos/ubthread.h>
-//#include <vfs/mount.h>
+#include <sys/types.h>
+#include <ubixos/spinlock.h>
 #include <vfs/vfs.h>
 
 typedef struct vitalsStruct {
-  uInt32                 openFiles;
-  uInt32                 sysTicks;
-  uInt32                 sysUptime;
-  uInt32                 quantum;
-  uInt32                 dQuantum;
-  uInt32                 freePages;
-  struct fileSystem     *fileSystems;
-  struct vfs_mountPoint *mountPoints;
-  uInt32                 timeStart;
-  void                  *screen;
-  void                  *font;
-  char                  *packet;
-  uInt32                 packetLength;
-  } vitalsNode;
+    uint32_t openFiles;
+    uint32_t lastFD;
+    uint32_t sysTicks;
+    uint32_t sysUptime;
+    uint32_t quantum;
+    uint32_t dQuantum;
+    uint32_t freePages;
+    struct fileSystem *fileSystems;
+    struct vfs_mountPoint *mountPoints;
+    uint32_t timeStart;
+    void *screen;
+    void *font;
+    char *packet;
+    uint32_t packetLength;
+} vitalsNode;
 
 extern vitalsNode *systemVitals;
+extern spinLock_t vitals_lock;
 
 int vitals_init();
 
 #endif
-
-/***
- END
- ***/

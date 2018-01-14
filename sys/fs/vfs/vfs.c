@@ -31,7 +31,7 @@
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>
-#include <sys/kern_descrip.h>
+#include <sys/descrip.h>
 
 /************************************************************************
 
@@ -92,7 +92,7 @@ void *vfsSync) {
   struct fileSystem *tmpFs = 0x0;
 
   if (vfsFindFS(newFS.vfsType) != 0x0) {
-    kprintf("FS Is already Registered\n"); 
+    kprintf("FS Is already Registered\n");
     return(0x1);
     }
 
@@ -106,7 +106,7 @@ void *vfsSync) {
 
   /* Set Up FS Defaults */
 
-/* 2004 7-16-2004 mji 
+/* 2004 7-16-2004 mji
  * Old method:
  * tmpFs->vfsType       = newFS.vfsType;
  * tmpFs->vfsInitFS     = newFS.vfsInitFS;
@@ -120,7 +120,7 @@ void *vfsSync) {
  */
  /* new method: */
 
-  memcpy(tmpFs, &newFS, sizeof(struct fileSystem)); 
+  memcpy(tmpFs, &newFS, sizeof(struct fileSystem));
   if (!systemVitals->fileSystems) {
     tmpFs->prev               = 0x0;
     tmpFs->next               = 0x0;
@@ -136,34 +136,7 @@ void *vfsSync) {
   return(0x0);
   }
 
-/*!
- * \brief entry point for open syscall
- *
- * \param *td pointer to callers thread
- * \param *uap pointer to user space arguements for call
- *
- * \return index to file descriptor
- */
-int sys_open(struct thread *td, struct sys_open_args *args) {
-  int          error = 0x0;
-  int          index = 0x0;
-  struct file *nfp   = 0x0;
 
-  error = falloc(td,&nfp,&index);
-
-  if (error)
-     return(error);
-
-  strcpy(nfp->path, args->path);
-
-  nfp->fd = fopen(args->path,"r");
-  if (nfp->fd == 0x0)
-    td->td_retval[0] = -1;
-  else
-    td->td_retval[0] = nfp->fd;//MrOlsen 2018index;
-
-  return (error);
-  }
 
 int sys_openat(struct thread *td, struct sys_openat_args *args) {
   int          error = 0x0;

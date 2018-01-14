@@ -33,6 +33,7 @@
 #include <string.h>
 
 vitalsNode *systemVitals = 0x0;
+spinLock_t vitals_lock;
 
 /************************************************************************
 
@@ -45,6 +46,9 @@ vitalsNode *systemVitals = 0x0;
 
  ************************************************************************/
 int vitals_init() {
+  /* Initialize Vitals SpinLock */
+  spinLockInit(&vitals_lock);
+
   /* Initialize Memory For The System Vitals Node */
   systemVitals = (vitalsNode *) kmalloc(sizeof(vitalsNode));
 

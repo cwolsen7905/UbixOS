@@ -28,13 +28,13 @@
 
 #include <sys/gen_calls.h>
 #include <sys/thread.h>
-#include <sys/kern_descrip.h>
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/descrip.h>
 #include <sys/video.h>
 
 /* Exit Syscall */
@@ -68,44 +68,6 @@ int getgid( struct thread *td, struct getgid_args *uap ) {
 #endif
   td->td_retval[0] = _current->gid;
   return (0);
-}
-
-int sys_write( struct thread *td, struct sys_write_args *uap ) {
-  char *buffer = 0x0;
-  char *in = 0x0;
-
-#ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
-#endif
-
-  if ( uap->fd == 2 ) {
-    printColor += 1;
-    buffer = kmalloc( 1024 );
-    memcpy( buffer, uap->buf, uap->nbyte );
-    //kprintf( "stderr: [%s]", buffer );
-    kprint(buffer);
-    kfree( buffer );
-    printColor = defaultColor;
-  }
-  else if ( uap->fd == 1 ) {
-    /* This is Horrible! */
-    in = (char *) uap->buf;
-    buffer = kmalloc( 1024 );
-    memcpy( buffer, uap->buf, uap->nbyte );
-    kprintf( "%s", buffer );
-    kfree( buffer );
-    td->td_retval[0] = uap->nbyte;
-  }
-  else {
-    kprintf( "[%i]", uap->nbyte );
-    buffer = kmalloc( uap->nbyte );
-    memcpy( buffer, uap->buf, uap->nbyte );
-    //kprint(buffer);
-    kfree( buffer );
-    kprintf( "(%i) %s", uap->fd, uap->buf );
-    td->td_retval[0] = uap->nbyte;
-  }
-  return (0x0);
 }
 
 int sys_issetugid( register struct thread *td, struct sys_issetugid_args *uap ) {
@@ -177,18 +139,6 @@ int sys_invalid( struct thread *td, void *args ) {
   return (0);
 }
 
-int sys_read( struct thread *td, struct sys_read_args *args ) {
-  char *buf = args->buf;
-  kprintf("ARGS->fd: %i, NBYTE: %i\n", args->fd, args->nbyte);
-  buf[0] = 'C';
-  buf[1] = 'A';
-  buf[2] = 'T';
-  buf[3] = '\0';
-  td->td_retval[0] = 3;
-  kprintf( "DUMMY FUNC FIX ME! sys_read" );
-  return (0);
-}
-
 int sys_wait4( struct thread *td, struct sys_wait4_args *args ) {
   //kprintf("DUMMY FUNC FIX ME! sys_wait4");
   kTask_t *tmpTask = schedFindTask( args->pid );
@@ -196,12 +146,3 @@ int sys_wait4( struct thread *td, struct sys_wait4_args *args ) {
     return (tmpTask->state);
   return (0);
 }
-
-int sys_close( struct thread *td, struct sys_close_args *args ) {
-  kprintf( "DUMMY FUNC FIX ME! sys_close" );
-  return (0);
-}
-
-/***
- END
- ***/

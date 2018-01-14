@@ -37,10 +37,10 @@
 #include <vmm/vmm.h>
 #include <sys/gdt.h>
 #include <sys/idt.h>
-#include <sys/kern_descrip.h>
 #include <isa/8259.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/descrip.h>
 
 #include <ubixos/spinlock.h>
 

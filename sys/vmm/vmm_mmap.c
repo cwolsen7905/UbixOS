@@ -29,10 +29,10 @@
 #include <vmm/vmm.h>
 #include <sys/types.h>
 #include <lib/kprintf.h>
+#include <sys/descrip.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/sched.h>
-#include <sys/kern_descrip.h>
 
 /* MrOlsen (2016-01-15) TEMP: Put These somewhere else */
 typedef __uint32_t        __vm_size_t; typedef __vm_size_t
