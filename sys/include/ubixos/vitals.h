@@ -34,12 +34,12 @@
 #include <vfs/vfs.h>
 
 typedef struct vitalsStruct {
+    uint32_t sysTicks;  // 0 - Do Not Change Order
+    uint32_t sysUptime; // 4 - Do Not Change Order
+    uint32_t quantum;   // 8 - Do Not Change Order
+    uint32_t dQuantum;  // 12 - Do Not Change Order
     uint32_t openFiles;
     uint32_t lastFD;
-    uint32_t sysTicks;
-    uint32_t sysUptime;
-    uint32_t quantum;
-    uint32_t dQuantum;
     uint32_t freePages;
     struct fileSystem *fileSystems;
     struct vfs_mountPoint *mountPoints;
