@@ -131,14 +131,14 @@ void sched() {
     ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
     ubixGDT[4].descriptor.access = '\x89';
 
+    /* Not Sure Why I Was Doing This? I Am Commenting Out For Now To See What HAppens */
+    /*
     // memAddr = STACK_ADDR; //(uint32_t) & (_current->tss);
     ubixGDT[10].descriptor.baseLow = (STACK_ADDR & 0xFFFF);
     ubixGDT[10].descriptor.baseMed = ((STACK_ADDR >> 16) & 0xFF);
     ubixGDT[10].descriptor.baseHigh = (STACK_ADDR >> 24);
-    /*
-     ubixGDT[10].descriptor.access = '\x89';
+     //ubixGDT[10].descriptor.access = '\x89';
      */
-
     spinUnlock(&schedulerSpinLock);
 
     asm("sti");
