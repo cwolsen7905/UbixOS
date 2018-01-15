@@ -147,6 +147,9 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
       counter++;
 
     }
+    if (count < count) {
+      kprintf("Need More Pages!");
+    }
   }
 
   if (type == VM_THRD) {
