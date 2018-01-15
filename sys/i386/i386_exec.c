@@ -826,6 +826,26 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
    */
 
+  /* Build LDT For GS and FS */
+  if (vmm_remapPage(vmm_findFreePage(_current->id), 0x400000, PAGE_DEFAULT, _current->id) == 0x0) {
+    K_PANIC("Error: Remap Page Failed");
+  }
+
+  union descriptorTableUnion *taskLDT = 0x400000;
+  struct gdtDescriptor *tmpDesc;
+
+  tmpDesc = taskLDT[1];
+
+  tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
+  tmpDesc->baseLow = (data_addr & 0xFFFF);
+  tmpDesc->baseMed = ((data_addr >> 16) & 0xFF);
+  tmpDesc->access = ((dData + dWrite + dBig + dBiglim) + dPresent) >> 8;
+  tmpDesc->limitHigh = (0xFFFFF >> 16);
+  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim) & 0xFF) >> 4;
+  tmpDesc->baseHigh = data_addr >> 24;
+
+  _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
+
   return (0x0);
 }
 
