@@ -61,7 +61,7 @@
  0 - 0x00 - Dummy Entry
  1 - 0x08 - Ring 0 CS
  2 - 0x10 - Ring 0 DS
- 3 - 0x18 - Dummy LDT
+ 3 - 0x18 - LDT
  4 - 0x20 - Scheduler TSS
  5 - 0x28 - Ring 3 CS
  6 - 0x30 - Ring 3 DS
@@ -77,7 +77,7 @@ ubixDescriptorTable(ubixGDT, 11) {
 { .dummy = 0},
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
-ubixStandardDescriptor(0x0000, 0xFFFFF, (dLdt)),
+ubixStandardDescriptor(0x400000, 0xFFFFF, (dLdt)),
 ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim + dDpl3)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
