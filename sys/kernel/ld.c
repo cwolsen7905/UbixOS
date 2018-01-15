@@ -104,8 +104,8 @@ uint32_t ldEnable() {
       break;
       case PT_DYNAMIC:
         /* Now Load Section To Memory */
-        fseek(ldFd, programHeader[i].p_offset, 0x0);
-        fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
+        //fseek(ldFd, programHeader[i].p_offset, 0x0);
+        //fread(newLoc, programHeader[i].p_filesz, 1, ldFd);
       break;
       case PT_GNU_STACK:
         /* Tells us if the stack should be executable.  Failsafe to executable
@@ -119,17 +119,17 @@ uint32_t ldEnable() {
 
   for (i = 0x0; i < binaryHeader->e_shnum; i++) {
     switch (sectionHeader[i].sh_type) {
-      case 3:
+      case SHT_STRTAB:
         if (!strcmp((shStr + sectionHeader[i].sh_name), ".dynstr")) {
           dynStr = (char *) kmalloc(sectionHeader[i].sh_size);
-          fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-          fread(dynStr, sectionHeader[i].sh_size, 1, ldFd);
+          //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+          //fread(dynStr, sectionHeader[i].sh_size, 1, ldFd);
         }
       break;
-      case 9:
+      case SHT_REL:
         elfRel = (Elf_Rel *) kmalloc(sectionHeader[i].sh_size);
-        fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
-        fread(elfRel, sectionHeader[i].sh_size, 1, ldFd);
+        //fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
+        //fread(elfRel, sectionHeader[i].sh_size, 1, ldFd);
 
         for (x = 0x0; x < sectionHeader[i].sh_size / sizeof(Elf_Rel); x++) {
           rel = ELF32_R_SYM(elfRel[x].r_info);
@@ -144,6 +144,8 @@ uint32_t ldEnable() {
             case R_386_RELATIVE:
               *reMap += (uint32_t) LD_START;
             break;
+            case R_386_NONE:
+            break;
             default:
               kprintf("[0x%X][0x%X](%i)[%s]\n", elfRel[x].r_offset, elfRel[x].r_info, rel, elfGetRelType(ELF32_R_TYPE(elfRel[x].r_info)));
               kprintf("relTab [%s][0x%X][0x%X]\n", dynStr + relSymTab[rel].st_name, relSymTab[rel].st_value, relSymTab[rel].st_name);
@@ -152,12 +154,24 @@ uint32_t ldEnable() {
         }
         kfree(elfRel);
       break;
-      case 11:
+      case SHT_DYNSYM:
         relSymTab = (Elf_Sym *) kmalloc(sectionHeader[i].sh_size);
         fseek(ldFd, sectionHeader[i].sh_offset, 0x0);
         fread(relSymTab, sectionHeader[i].sh_size, 1, ldFd);
         sym = i;
       break;
+      case SHT_PROGBITS:
+        //kprintf("PROGBITS");
+        break;
+      case SHT_HASH:
+        //kprintf("HASH");
+        break;
+      case SHT_DYNAMIC:
+        //kprintf("DYNAMIC");
+        break;
+      case SHT_SYMTAB:
+        //kprintf("SYMTAB");
+        break;
       default:
         kprintf("INvalid: %i]", sectionHeader[i].sh_type);
       break;

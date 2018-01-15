@@ -144,7 +144,7 @@ int commands(inputBuffer *data) {
   else if (memcmp(data->args->arg,"id",2) == 0x0) {
     printf("UID: %i, GID: %i\n",getuid(),getgid());
     }
-  else if (!strcmp(argv[1],"reboot")) {
+  else if (argv[1] != 0x0 && !strcmp(argv[1],"reboot")) {
     cmdMsg.header  = 1000;
     cmdMsg.data[0] = '\0';
     mpi_postMessage("system",0x1,&cmdMsg);

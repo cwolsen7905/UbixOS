@@ -50,12 +50,26 @@ next:
   div %ebx                
   test %edx,%edx          
   jnz done                
+/*
+push %ds
+push %es
+push %fs
+push %gs
+mov $0x10,%eax
+mov %eax, %ds
+mov %eax, %es
+mov %eax, %fs
+cld
+*/
+/* push %esp */
   call sched              
+/* add $0x4,%esp */ /* Remove Stack Pointer From Stack */
+/*
+pop %gs
+pop %fs
+pop %es
+pop %ds
+*/
 done:                     
   popa                      /* Restore Registers                        */
   iret                    
-
-/***
- END
- ***/
-

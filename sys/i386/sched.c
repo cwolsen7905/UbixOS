@@ -141,6 +141,12 @@ void sched() {
      */
     spinUnlock(&schedulerSpinLock);
 
+    if (_current->id == 600) {
+      kprintf("EIP: 0x%X", _current->tss.eip);
+      kprintf("esp0: 0x%X", _current->tss.esp0);
+      kprintf("user_esp: 0x%X", _current->tss.esp);
+    }
+
     asm("sti");
     asm("ljmp $0x20,$0\n");
   }

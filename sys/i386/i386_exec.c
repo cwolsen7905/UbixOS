@@ -367,7 +367,8 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
-  for (x = 1; x <= 100; x++) {
+  //x = 0 because GS= stack address not address -1 fix!
+  for (x = 0; x <= 100; x++) {
     vmm_remapPage(vmm_findFreePage(newProcess->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id);
     bzero(STACK_ADDR - (x * 0x1000), 0x1000);
   }
@@ -388,7 +389,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   newProcess->tss.eip = (long) binaryHeader->e_entry;
   newProcess->tss.eflags = 0x206;
   newProcess->tss.esp = STACK_ADDR;
-  newProcess->tss.ebp = STACK_ADDR;
+  newProcess->tss.ebp = 0x0;//STACK_ADDR;
   newProcess->tss.esi = 0x0;
   newProcess->tss.edi = 0x0;
 
@@ -447,12 +448,12 @@ void execFile(char *file, char **argv, char **envp, int console) {
     : : "d" ((uint32_t *)(kernelPageDirectory))
   );
 
-  kprintf("execFile Return: %i\n", newProcess->id);
+  kprintf("execFile Return: 0x%X - %i\n",  newProcess->tss.eip, newProcess->id);
 
   /* Put new thread into the READY state */
   sched_setStatus(newProcess->id, READY);
 
-  _current = newProcess;
+  //_current = newProcess;
 
   /* Finally Return */
   return;
@@ -764,7 +765,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   tmp[i++] = 0x1000;
 
   tmp[i++] = 7;
-  tmp[i++] = 0x0;//LD_START;
+  tmp[i++] = LD_START;
   kprintf("AT_BASE: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 8;

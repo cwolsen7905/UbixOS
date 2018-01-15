@@ -35,11 +35,17 @@
 
 #define KERNEL_STACK 0x2000
 
+void die_if_kernel(char *str, struct trapframe *regs, long err);
+
 static void trap_end_task(char *string, struct trapframe *regs, long error_code);
 
 #define TRAP_CODE(trap_nr, signr, str, trap_name, tsk) void do_##trap_name(struct trapframe *regs, long error_code) { \
-  trap_end_task(str, regs, error_code); \
+  die_if_kernel(str, regs, error_code); \
 }
+
+/*
+  trap_end_task(str, regs, error_code); \ 
+*/
 
 TRAP_CODE(0, SIGFPE, "divide error", divide_error, _current)
 TRAP_CODE(3, SIGTRAP, "int3", int3, _current)
@@ -56,7 +62,7 @@ TRAP_CODE(15, SIGSEGV, "reserved", reserved, _current)
 TRAP_CODE(17, SIGSEGV, "alignment check", alignment_check, _current)
 
 static void trap_end_task(char *string, struct trapframe *regs, long error_code) {
-  kprintf("S");
+  kprintf("S: %s[0x%X]", string, error_code);
 }
 
 #define FIRST_TSS_ENTRY 6

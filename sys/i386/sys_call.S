@@ -38,9 +38,9 @@ _ast:
 
 _astRet:
 
-_sysCall:
-push $0x2
-sub $0x4,%esp
+_sysCall_MrOlsen:
+//MrOlsen 2018-01-14 push $0x2
+//MrOlsen 2018-01-14 sub $0x4,%esp
 pusha
 push %ds
 push %es
@@ -62,6 +62,7 @@ jmp _isVM
 _notVM:
 testb $0x3,0x38(%esp) /* See If We're In User CS (GDT Entry 5) */
 jz _popFS
+jmp _popFS /* TMP BECAUSE ABOVE ISN'T RIGHT */
 cli
 mov %fs:0x0,%eax
 testl $0x10800,0x80(%eax) /* Document This */
@@ -80,9 +81,29 @@ pop %fs
 pop %es
 pop %ds
 popa
-add $0x8,%esp
+//MrOlsen 2018-01-14 add $0x8,%esp
 iret
 
-/***
- END
- ***/
+_sysCall:
+push $0x0
+push $0x80
+pusha
+push %ds
+push %es
+push %fs
+push %gs
+mov $0x10,%eax
+mov %eax, %ds
+mov %eax, %es
+mov %eax, %fs
+cld
+push %esp
+call syscall
+add $0x4,%esp /* Remove Stack Pointer From Stack */
+pop %gs
+pop %fs
+pop %es
+pop %ds
+popa
+add $0x8,%esp //Back Out Error Code & trap_no
+iret

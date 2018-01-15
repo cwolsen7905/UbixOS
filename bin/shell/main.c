@@ -41,9 +41,11 @@ char *cwc = 0x0;
 int main(int argc, char **argv, char **env) {
   unsigned int *segbase = 0x0;
 
+  /*
   __asm __volatile("movl %%gs:0, %0" : "=r" (segbase));
 
   printf("Segbase: 0x%X - 0x%X\n", segbase, &segbase);
+  */
 
   for (int i=0;i < argc; i++)
     printf("ARGV[%i]: %s\n", i, argv[i]);

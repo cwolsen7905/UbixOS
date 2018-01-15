@@ -127,6 +127,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     }
 //kprintf("HERE?");
 
+    keepMapping:
     ptI = ((start_page - (pdI * 0x400000)) / 0x1000);
 
     for (y = ptI; y < 1024 && counter < count; y++) {
@@ -144,11 +145,16 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
         kprintf("-> y: %i, ptI: 0x%X, pdI: 0x%X pTS: 0x%X ??\n", y, ptI, pdI, pageTableSrc[y]);
         K_PANIC("UHM HOW DO WE HAVE AN ALLOCATED PAGE HERE!!\n");
       }
+
+      kprintf("[0x%X:%i:%i:%i]", ((pdI * (1024 * 4096)) + (y * 4096)), y, counter, count);
       counter++;
 
     }
-    if (count < count) {
+    if (counter < count) {
       kprintf("Need More Pages!");
+      start_page += (0x1000 * counter);
+      pdI = ((start_page + (counter * 0x1000)) / 0x400000);
+      goto keepMapping;
     }
   }
 
