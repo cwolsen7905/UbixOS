@@ -367,7 +367,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
-  for (x = 0; x < 100; x++) {
+  for (x = 1; x <= 100; x++) {
     vmm_remapPage(vmm_findFreePage(newProcess->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id);
     bzero(STACK_ADDR - (x * 0x1000), 0x1000);
   }
@@ -387,7 +387,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   newProcess->tss.ss2 = 0x0;
   newProcess->tss.eip = (long) binaryHeader->e_entry;
   newProcess->tss.eflags = 0x206;
-  newProcess->tss.esp = STACK_ADDR - 16;
+  newProcess->tss.esp = STACK_ADDR;
   newProcess->tss.ebp = STACK_ADDR;
   newProcess->tss.esi = 0x0;
   newProcess->tss.edi = 0x0;
@@ -411,7 +411,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   fclose(newProcess->files[0]);
   newProcess->files[0] = 0x0;
 
-  tmp = (uInt32 *) newProcess->tss.esp0 - 5;
+  tmp = (uint32_t *) newProcess->tss.esp0 - 5;
 
   tmp[0] = binaryHeader->e_entry;
   tmp[3] = STACK_ADDR - 12;
@@ -524,6 +524,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   //MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
   vmm_cleanVirtualSpace((uint32_t) 0x8048000);
 
+  /* Clear Stack */
+  bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
+
   /* Load ELF Header */
   if ((binaryHeader = (Elf_Ehdr *) kmalloc(sizeof(Elf_Ehdr))) == 0x0)
     K_PANIC("MALLOC FAILED");
@@ -594,10 +597,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
           /* Make readonly and read/write !!! */
           if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0) {
             K_PANIC("Error: Remap Page Failed");
-          } 
+          }
            else {
            kprintf("rP[0x%X]", (programHeader[i].p_vaddr & 0xFFFFF000) + x);
-           } 
+           }
 
           memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
 
@@ -692,7 +695,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   tmp = (uint32_t *) iFrame->user_esp;
 
-  memset((char *) tmp, 0x0, ARGV_PAGE + ENVP_PAGE + ELF_AUX + (argc + 1) + (envc + 1) + STACK_PAD);
+//  memset((char *) tmp, 0x0, ARGV_PAGE + ENVP_PAGE + ELF_AUX + (argc + 1) + (envc + 1) + STACK_PAD);
 
   tmp[0] = argc;
 
