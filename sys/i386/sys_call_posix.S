@@ -28,48 +28,30 @@
 
 #define FAKE_MCOUNT(caller)     pushl caller ; call __mcount ; popl %ecx
 
-.globl _sysCall_new
+.globl _sys_call_posix
 .text
 .code32
-_sysCall_new:
-pushl $2 /* sizeof "int 0x80" RET EIP */
-subl $4,%esp /* skip over tf_trapno */
-pushal
-pushl %ds
-pushl %es
-pushl %fs
-pushl %gs
 
-/* switch to kernel segments */
-movl $0x10,%eax
-movl %eax,%ds
-movl %eax,%es
-movl %eax,%fs
+_sys_call_posix:
+push $0x0
+push $0x80
+pusha
+push %ds
+push %es
+push %fs
+push %gs
+mov $0x10,%eax
+mov %eax, %ds
+mov %eax, %es
+mov %eax, %fs
 cld
 push %esp
-//FAKE_MCOUNT(TF_EIP(%esp))
-call syscall
-//MEXITCOUNT
-
-//jmp     doreti
-popl %gs
-popl %fs
-popl %es
-popl %ds
-popal
-addl $4,%esp
+call sys_call_posix
+add $0x4,%esp /* Remove Stack Pointer From Stack */
+pop %gs
+pop %fs
+pop %es
+pop %ds
+popa
+add $0x8,%esp //Back Out Error Code & trap_no
 iret
-
-/*
-invalidSysCall:
-push %eax
-call invalidCall
-pop %eax
-movl $-1,%eax
-iret
-*/
-
-/***
- END
- ***/
-

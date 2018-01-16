@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-.globl _sysCall
+.globl _sys_call
 .text
 .code32
 
@@ -84,7 +84,7 @@ popa
 //MrOlsen 2018-01-14 add $0x8,%esp
 iret
 
-_sysCall:
+_sys_call:
 push $0x0
 push $0x80
 pusha
@@ -98,7 +98,7 @@ mov %eax, %es
 mov %eax, %fs
 cld
 push %esp
-call syscall
+call sys_call
 add $0x4,%esp /* Remove Stack Pointer From Stack */
 pop %gs
 pop %fs
