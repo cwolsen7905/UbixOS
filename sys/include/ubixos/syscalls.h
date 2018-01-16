@@ -56,18 +56,6 @@ struct syscall_entry {
 
 /*
  *
- * Revamped Calls To C Function Style
- *
- */
-
-/*
- * Delete
- */
-
-int sysFwrite();
-
-/*
- *
  * Old Style Calls Need Updates
  *
  */
@@ -103,9 +91,6 @@ int sysMpiPostMessage();
 int sysMpiFetchMessage();
 int sysMpiSpam();
 
-/* MrOlsen (2016-01-11) TEMP: */
-int freebsd6_mmap();
-
 typedef int (*functionPTR)();
 
 extern int totalCalls_old;
@@ -115,7 +100,3 @@ extern int totalCalls;
 extern struct syscall_entry systemCalls[];
 
 #endif
-
-/***
- END
- ***/

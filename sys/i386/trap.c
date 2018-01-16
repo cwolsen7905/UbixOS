@@ -43,10 +43,6 @@ static void trap_end_task(char *string, struct trapframe *regs, long error_code)
   die_if_kernel(str, regs, error_code); \
 }
 
-/*
-  trap_end_task(str, regs, error_code); \ 
-*/
-
 TRAP_CODE(0, SIGFPE, "divide error", divide_error, _current)
 TRAP_CODE(3, SIGTRAP, "int3", int3, _current)
 TRAP_CODE(4, SIGSEGV, "overflow", overflow, _current)
@@ -61,25 +57,21 @@ TRAP_CODE(12, SIGBUS, "stack segment", stack_segment, _current)
 TRAP_CODE(15, SIGSEGV, "reserved", reserved, _current)
 TRAP_CODE(17, SIGSEGV, "alignment check", alignment_check, _current)
 
-static void trap_end_task(char *string, struct trapframe *regs, long error_code) {
-  kprintf("S: %s[0x%X]", string, error_code);
-}
-
 #define FIRST_TSS_ENTRY 6
 #define VM_MASK 0x00020000
 
 #define store_TR(n) \
-__asm__("str %%ax\n\t" \
-        "subl %2,%%eax\n\t" \
-        "shrl $4,%%eax" \
-        :"=a" (n) \
-        :"0" (0),"i" (FIRST_TSS_ENTRY<<3))
+  __asm__("str %%ax\n\t" \
+          "subl %2,%%eax\n\t" \
+          "shrl $4,%%eax" \
+          :"=a" (n) \
+          :"0" (0),"i" (FIRST_TSS_ENTRY<<3))
 
 #define get_seg_long(seg,addr) ({ \
-register unsigned long __res; \
-__asm__("push %%fs;mov %%ax,%%fs;movl %%fs:%2,%%eax;pop %%fs" \
-	:"=a" (__res):"0" (seg),"m" (*(addr))); \
-__res;})
+  register unsigned long __res; \
+  __asm__("push %%fs;mov %%ax,%%fs;movl %%fs:%2,%%eax;pop %%fs" \
+	          :"=a" (__res):"0" (seg),"m" (*(addr))); \
+          __res;})
 
 #define get_seg_byte(seg,addr) ({ \
 register char __res; \
@@ -127,41 +119,6 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
     kprintf("%08lx ", get_seg_long(ss, stack++));
   }
 
-#ifdef _IGNORE
-
-  kprintf("\nCall Trace: ");
-  stack = (unsigned long *)esp;
-  i = 1;
-
-#define VMALLOC_OFFSET (8*1024*1024)
-#define MODULE_RANGE (8*1024*1024)
-
-  module_start = ((numPages + VMALLOC_OFFSET) & ~(VMALLOC_OFFSET-1));
-  module_end = module_start + MODULE_RANGE;
-
-  //while (((long) stack & 4095) != 0) {
-  while (i < 12) {
-    addr = get_seg_long(ss, stack++);
-    /*
-     * If the address is either in the text segment of the
-     * kernel, or in the region which contains vmalloc'ed
-     * memory, it *may* be the address of a calling
-     * routine; if so, print it so that someone tracing
-     * down the cause of the crash will be able to figure
-     * out the call path that was taken.
-     */
-    if (((addr >= (unsigned long) &kmain) && (addr <= (unsigned long) &_etext)) || ((addr >= module_start) && (addr <= module_end))) {
-      if (i && ((i % 8) == 0))
-      kprintf("\n       ");
-      kprintf("[<%08lx>] ", addr);
-      i++;
-    }
-  }
-
-  for (i = 0; i < 20; i++)
-  kprintf("%02x ", 0xff & get_seg_byte(regs->tf_cs, (i+(char *)regs->tf_eip)));
-  kprintf("\n");
-#endif
 }
 
 void trap(struct trapframe *frame) {
@@ -186,24 +143,7 @@ void trap(struct trapframe *frame) {
   cr2 = rcr2();
   kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
 
-  //kpanic("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
   die_if_kernel("trapCode", frame, frame->tf_trapno);
   endTask(_current->id);
   sched_yield();
-
-  /*
-   switch (trap_code) {
-   case 0xC:
-   cr2 = rcr2();
-   kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
-   asm("sti"); // Turn Back On Ints!
-   vmm_pageFault(frame, cr2);
-   kprintf("Called page Fault\n");
-   default:
-   break;
-   }
-
-   kprintf("GOTTA RETURN!\n");
-   while(1);
-   */
 }

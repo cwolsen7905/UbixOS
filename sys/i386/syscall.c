@@ -27,9 +27,6 @@
  */
 
 #include <ubixos/syscall.h>
-/*
- #include <ubixos/syscalls.h>
- */
 #include <ubixos/sched.h>
 #include <ubixos/exec.h>
 #include <sys/elf.h>
@@ -184,30 +181,3 @@ int sysStartSDE() {
   }
   return (0);
 }
-
-/*
- int invalidCallINT(int sys_call) {
- kprintf("Invalid Sys Call: [%i]\n",sys_call);
- return(0);
- }
-
-
- int invalidCall() {
- int sys_call;
-
- asm(
- "nop"
- : "=a" (sys_call)
- :
- );
-
- kprintf("Invalid System Call #[%i].1\n",sys_call);
- kpanic("PID: %i, File: %s, Line: %i", _curent->id, _FILE_, _LINE_);
- return(0);
- }
- */
-
-/***
- END
- ***/
-

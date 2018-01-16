@@ -44,8 +44,9 @@
 static unsigned char *videoBuffer = (unsigned char *) 0xB8000;
 
 void systemTask() {
+
   mpi_message_t myMsg;
-  uInt32 counter = 0x0;
+  uint32_t counter = 0x0;
   int i = 0x0;
   int *x = 0x0;
   kTask_t *tmpTask = 0x0;
