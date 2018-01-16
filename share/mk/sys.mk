@@ -1,7 +1,7 @@
 #	from: @(#)sys.mk	8.2 (Berkeley) 3/21/94
 # $FreeBSD: releng/11.1/share/mk/sys.mk 320297 2017-06-23 20:25:58Z bdrewery $
 
-unix		?=	We run FreeBSD, not UNIX.
+unix		?=	We run UbixOS, not UNIX.
 .FreeBSD	?=	true
 
 .if !defined(%POSIX)

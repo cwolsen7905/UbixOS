@@ -1,0 +1,6 @@
+# $FreeBSD: releng/11.1/bin/sh/tests/expansion/cmdsubst22.0 315169 2017-03-12 18:38:03Z jilles $
+
+set -T
+trapped=''
+trap "trapped=x$trapped" TERM
+[ "x$(:; kill $$)y" = xy ] && [ "$trapped" = x ]
