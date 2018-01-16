@@ -38,10 +38,29 @@
 #define _SIG_BIT(sig)   (1 << (_SIG_IDX(sig) & 31))
 #define _SIG_VALID(sig) ((sig) <= _SIG_MAXSIG && (sig) > 0)
 
+// Flags for sigprocmask:
+#define SIG_BLOCK       1       /* block specified signal set */
+#define SIG_UNBLOCK     2       /* unblock specified signal set */
+#define SIG_SETMASK     3       /* set specified signal set */
+
 typedef struct __sigset {
         __uint32_t __bits[_SIG_WORDS];
   } __sigset_t;
 
 typedef __sigset_t sigset_t;
+
+// Signal vector "template" used in sigaction call.
+struct sigaction {
+        union {
+                void    (*__sa_handler)(int);
+                void    (*__sa_sigaction)(int, struct __siginfo *, void *);
+        } __sigaction_u;                /* signal handler */
+        int     sa_flags;               /* see signal options below */
+        sigset_t sa_mask;               /* signal mask to apply */
+};
+
+#define sa_handler      __sigaction_u.__sa_handler
+#define sa_sigaction    __sigaction_u.__sa_sigaction
+
 
 #endif /* END _SYS_SIGNAL_H */

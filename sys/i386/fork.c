@@ -50,6 +50,12 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   /* Set CWD */
   memcpy(newProcess->oInfo.cwd, _current->oInfo.cwd, 1024);
 
+  /* Set PPID */
+  newProcess->ppid = _current->id;
+
+  /* Set PGRP */
+  newProcess->pgrp = _current->pgrp;
+
   /* Set Up Task State */
   newProcess->tss.eip = td->frame->tf_eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
@@ -101,7 +107,8 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
 
   /* Return Id of Proccess */
   kprintf("Returning! [%i][0x%X]\n", _current->id, newProcess->tss.cr3);
-  return (newProcess->id);
+  td->td_retval[0] = newProcess->id;
+  return (0);
 
 }
 

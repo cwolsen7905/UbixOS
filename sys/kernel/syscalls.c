@@ -51,30 +51,30 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { ARG_COUNT(sys_getpid_args), "getpid", sys_getpid, SYSCALL_VALID }, // 20 - getpid
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { ARG_COUNT(sys_setUID_args), "Set UID", (sys_call_t *) sys_setUID, SYSCALL_VALID },
+  { ARG_COUNT(sys_setUID_args), "Set UID", (sys_call_t *) sys_setUID, SYSCALL_VALID }, // 23 - setUID
   { 0, "Get UID", sys_getUID, SYSCALL_VALID },
+  { ARG_COUNT(sys_geteuid_args), "geteuid", sys_geteuid, SYSCALL_VALID }, // 25 - getuid
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 31
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 32
+  { ARG_COUNT(sys_access_args), "access", sys_access, SYSCALL_VALID }, // 33 - access
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { ARG_COUNT(sys_getppid_args), "getpid", sys_getpid, SYSCALL_VALID }, // 39 - getppid
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { ARG_COUNT(sys_getegid_args), "getegid", sys_getegid, SYSCALL_VALID }, // 43 - getegid
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
@@ -85,12 +85,12 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { ARG_COUNT(sys_ioctl_args), "ioctl", sys_ioctl, SYSCALL_VALID }, // 54 - ioctl
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { ARG_COUNT(sys_execve_args), "Exec VE", (sys_call_t *) sys_execve, SYSCALL_DUMMY },
+  { ARG_COUNT(sys_execve_args), "execve", (sys_call_t *) sys_execve, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  60 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  61 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  62 - Invalid */
@@ -112,8 +112,8 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  78 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  79 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  80 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  81 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  82 - Invalid */
+  { ARG_COUNT(sys_getpgrp_args), "getpgrp", sys_getpgrp, SYSCALL_VALID }, //  81 - getpgrp
+  { ARG_COUNT(sys_setpgid_args), "setpgid", sys_setpgid, SYSCALL_VALID }, //  82 - setpgid 
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  83 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  84 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  85 - Invalid */
@@ -196,7 +196,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 162 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 163 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 164 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 165 - Invalid */
+  { ARG_COUNT(sys_sysarch_args), "sysarch", sys_sysarch, SYSCALL_VALID }, /* 165 - sysarch */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 166 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 167 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 168 - Invalid */
@@ -219,7 +219,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 185 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 186 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 187 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 188 - Invalid */
+  { ARG_COUNT(sys_stat_args), "FSTAT", (sys_call_t *) sys_stat, SYSCALL_VALID }, /* 188 - sys_stat */
   { ARG_COUNT(sys_fstat_args), "FSTAT", (sys_call_t *) sys_fstat, SYSCALL_VALID }, /* 189 - sys_fstat */
   { ARG_COUNT(sys_lstat_args), "LSTAT", (sys_call_t *) sys_lstat, SYSCALL_VALID }, /* 190 - sys_lstat */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 191 - Invalid */
@@ -371,7 +371,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 337 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 338 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 339 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 340 - Invalid */
+  { ARG_COUNT(sys_sigprocmask_args), "sigprocmask", sys_sigprocmask, SYSCALL_VALID }, // 340 - sigprocmask
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 341 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 342 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 343 - Invalid */
@@ -447,7 +447,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 413 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 414 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 415 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 416 - Invalid */
+  { ARG_COUNT(sys_sigaction_args), "sigaction", sys_sigaction, SYSCALL_VALID }, // 416 - sigaction
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 417 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 418 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 419 - Invalid */

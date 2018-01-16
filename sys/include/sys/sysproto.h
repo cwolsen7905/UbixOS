@@ -360,6 +360,11 @@ struct sys_mmap_args {
         char pos_l_[PADL_(off_t)]; off_t pos; char pos_r_[PADR_(off_t)];
 };
 
+struct sys_stat_args {
+        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
+        char ub_l_[PADL_(struct stat *)]; struct stat * ub; char ub_r_[PADR_(struct stat *)];
+};
+
 struct sys_lstat_args {
     char path_l_[PADL_(char *)];
     char *path;
@@ -458,6 +463,58 @@ struct sys_openat_args {
         char mode_l_[PADL_(__mode_t)]; __mode_t mode; char mode_r_[PADR_(__mode_t)];
 };
 
+struct sys_sysarch_args {
+        char op_l_[PADL_(int)]; int op; char op_r_[PADR_(int)];
+        char parms_l_[PADL_(char *)]; char * parms; char parms_r_[PADR_(char *)];
+};
+
+struct sys_getpid_args {
+        register_t dummy;
+};
+
+struct sys_ioctl_args {
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+        char com_l_[PADL_(u_long)]; u_long com; char com_r_[PADR_(u_long)];
+        char data_l_[PADL_(caddr_t)]; caddr_t data; char data_r_[PADR_(caddr_t)];
+};
+
+struct sys_geteuid_args {
+        register_t dummy;
+};
+
+struct sys_getppid_args {
+        register_t dummy;
+};
+
+struct sys_getegid_args {
+        register_t dummy;
+};
+
+struct sys_sigprocmask_args {
+        char how_l_[PADL_(int)]; int how; char how_r_[PADR_(int)];
+        char set_l_[PADL_(const sigset_t *)]; const sigset_t * set; char set_r_[PADR_(const sigset_t *)];
+        char oset_l_[PADL_(sigset_t *)]; sigset_t * oset; char oset_r_[PADR_(sigset_t *)];
+};
+
+struct sys_sigaction_args {
+        char sig_l_[PADL_(int)]; int sig; char sig_r_[PADR_(int)];
+        char act_l_[PADL_(const struct sigaction *)]; const struct sigaction * act; char act_r_[PADR_(const struct sigaction *)];
+        char oact_l_[PADL_(struct sigaction *)]; struct sigaction * oact; char oact_r_[PADR_(struct sigaction *)];
+};
+
+struct sys_getpgrp_args {
+        register_t dummy;
+};
+struct sys_setpgid_args {
+        char pid_l_[PADL_(int)]; int pid; char pid_r_[PADR_(int)];
+        char pgid_l_[PADL_(int)]; int pgid; char pgid_r_[PADR_(int)];
+};
+
+struct sys_access_args {
+        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
+        char amode_l_[PADL_(int)]; int amode; char amode_r_[PADR_(int)];
+};
+
 
 //Func Defs
 int sys_invalid(struct thread *, void *);
@@ -499,10 +556,31 @@ int fstatfs(struct thread *td, struct sys_fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
 
 int sys_fstatfs(struct thread *td, struct sys_fstatfs_args *);
+int sys_stat(struct thread *td, struct sys_stat_args *);
 int sys_lstat(struct thread *td, struct sys_lstat_args *);
 int sys_fstat(struct thread *td, struct sys_fstat_args *);
 int sys_openat(struct thread *td, struct sys_openat_args *);
 
+int sys_sysarch(struct thread *td, struct sys_sysarch_args *);
+int sys_getpid(struct thread *td, struct sys_getpid_args *);
+int sys_ioctl(struct thread *td, struct sys_ioctl_args *);
+
+int sys_geteuid(struct thread *td, struct sys_geteuid_args *);
+
+int sys_getegid(struct thread *td, struct sys_getegid_args *);
+
+int sys_getppid(struct thread *td, struct sys_getppid_args *);
+
+int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *);
+int sys_setpgrp(struct thread *td, struct sys_setpgid_args *);
+
+int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *);
+int sys_sigaction(struct thread *td, struct sys_sigaction_args *);
+
+int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *);
+int sys_setpgid(struct thread *td, struct sys_setpgid_args *);
+
+int sys_access(struct thread *td, struct sys_access_args *);
 #endif
 
 /***

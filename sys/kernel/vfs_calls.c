@@ -26,6 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <ubixos/sched.h>
 #include <sys/thread.h>
 #include <sys/sysproto.h>
 #include <sys/descrip.h>
@@ -77,7 +78,9 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
 }
 
 int sys_read(struct thread *td, struct sys_read_args *args) {
-  char *buf = args->buf;
+  int x = 0;
+  char c = 0x0;
+  volatile char *buf = args->buf;
 
   struct file *fd = 0x0;
 
@@ -87,13 +90,33 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
     td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
   }
   else {
-    kprintf("ARGS->fd: %i, NBYTE: %i\n", args->fd, args->nbyte);
-    buf[0] = 'C';
-    buf[1] = 'A';
-    buf[2] = 'T';
-    buf[3] = '\0';
-    td->td_retval[0] = 3;
-    kprintf("DUMMY FUNC FIX ME! sys_read");
+   if ( _current->term == tty_foreground )
+     c = getchar();
+
+    for (x = 0; x < args->nbyte && c != '\n';) {
+      if ( _current->term == tty_foreground ) {
+
+        if ( c != 0x0 )
+          buf[x++] = c;
+
+        if ( c == '\n') {
+          buf[x++] = c;
+          break;
+        }
+
+        sched_yield();
+        c = getchar();
+      }
+      else {
+        sched_yield();
+      }
+    }
+    if ( c == '\n')
+      buf[x++] = '\n';
+
+    kprintf("READ: %i", x);
+
+    td->td_retval[0] = x;
   }
   return (0);
 }
@@ -127,4 +150,10 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     td->td_retval[0] = uap->nbyte;
   }
   return (0x0);
+}
+
+int sys_access(struct thread *td, struct sys_access_args *args) {
+  kprintf("%s:%i", args->path, args->amode);
+  td->td_retval[0] = 0;
+  return(0);
 }

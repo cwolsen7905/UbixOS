@@ -166,7 +166,6 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
 
   addr = (vm_offset_t) uap->addr;
 
-
   if (uap->fd == -1) {
     if (uap->addr != 0x0) {
       for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
@@ -177,24 +176,21 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
 
       }
       tmp = uap->addr;
-      kprintf("mm1: 0x%X\n", uap->len);
       bzero(tmp, uap->len);
       td->td_retval[0] = (uint32_t)tmp;
       return (0x0);
     }
-    //td->td_retval[0] = (int) vmm_getFreeVirtualPage( _current->id, uap->len / 0x1000, VM_TASK );
-    //td->td_retval[0] = (int)
+
     td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
-    kprintf("mm2: 0x%X-0x%X\n", td->td_retval[0], round_page(uap->len) / 0x1000);
     //bzero(td->td_retval[0], uap->len);
     return (0x0); //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
   }
   else {
     //kprintf("uap->flags: [0x%X]\n", uap->flags);
-    kprintf("uap->addr:  [0x%X]", uap->addr);
-    kprintf("uap->len:   [0x%X]", uap->len);
+    //MrOlsenkprintf("uap->addr:  [0x%X]", uap->addr);
+    //MrOlsenkprintf("uap->len:   [0x%X]", uap->len);
     //kprintf("uap->prot:  [0x%X]", uap->prot);
-    kprintf("uap->fd:    [%i]\n", uap->fd);
+    //MrOlsenkprintf("uap->fd:    [%i]\n", uap->fd);
     //kprintf("uap->pad:   [0x%X]", uap->pad);
     //kprintf("uap->pos:   [0x%X]", uap->pos);
     getfd(td, &fd, uap->fd);
@@ -212,7 +208,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
 
  }
     fseek(fd->fd, uap->pos, 0x0);
-    kprintf("FREAD: 0x%X\n", fread(tmp, uap->len, 0x1, fd->fd));
+    fread(tmp, uap->len, 0x1, fd->fd);
     td->td_retval[0] = (uint32_t) tmp;
     if (td->td_retval[0] == (caddr_t)-1)
       kpanic("BALLS");

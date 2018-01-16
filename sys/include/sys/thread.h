@@ -31,6 +31,7 @@
 
 #include <sys/types.h>
 #include <sys/trap.h>
+#include <sys/signal.h>
 
 #define O_FILES 64
 
@@ -43,6 +44,8 @@ struct thread {
     u_long vm_tsize;
     struct trapframe *frame;
     int abi;
+    sigset_t sigmask;
+    struct  sigaction sigact[128];
 };
 
 #endif /* END _SYS_THREAD_H */

@@ -33,7 +33,7 @@
 #include <lib/kprintf.h>
 #include <sys/descrip.h>
 
-int sys_stat(char *path, struct stat *sb, int flags) {
+int _sys_stat(char *path, struct stat *sb, int flags) {
   int error = 0;
   //struct inode *inode;
 
@@ -182,7 +182,11 @@ sprintf(args->buf->f_mntonname,"/");
 
 /* Return stat of path do not follow if link return stat of link */
 int sys_lstat(struct thread *td, struct sys_lstat_args *args) {
-  td->td_retval[0] = sys_stat(args->path, args->sb, STAT_LSTAT);
+  td->td_retval[0] = _sys_stat(args->path, args->sb, STAT_LSTAT);
   return(0x0);
 }
 
+int sys_stat(struct thread *td, struct sys_stat_args *args) {
+  td->td_retval[0] = _sys_stat(args->path, args->ub, STAT_LSTAT);
+  return(0x0);
+}

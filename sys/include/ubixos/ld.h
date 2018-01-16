@@ -31,7 +31,7 @@
 
 #include <sys/types.h>
 
-#define LD_START 0x1000000
+#define LD_START 0xAAA00000 //0x1000000
 
 uInt32 ldEnable();
 

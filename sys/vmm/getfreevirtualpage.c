@@ -87,6 +87,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     /* Locate Initial Page Table */
     pdI = ((start_page + (counter * 0x1000)) / 0x400000);
 
+    keepMapping:
       //kprintf("PAGE IS");
     /* If Page Directory Is Not Yet Allocated Allocate It */
     if ((pageDir[pdI] & PAGE_PRESENT) != PAGE_PRESENT) {
@@ -127,7 +128,6 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     }
 //kprintf("HERE?");
 
-    keepMapping:
     ptI = ((start_page - (pdI * 0x400000)) / 0x1000);
 
     for (y = ptI; y < 1024 && counter < count; y++) {
@@ -146,12 +146,12 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
         K_PANIC("UHM HOW DO WE HAVE AN ALLOCATED PAGE HERE!!\n");
       }
 
-      kprintf("[0x%X:%i:%i:%i]", ((pdI * (1024 * 4096)) + (y * 4096)), y, counter, count);
+      //kprintf("[0x%X:%i:%i:%i]", ((pdI * (1024 * 4096)) + (y * 4096)), y, counter, count);
       counter++;
 
     }
     if (counter < count) {
-      kprintf("Need More Pages!");
+      //kprintf("Need More Pages!");
       start_page += (0x1000 * counter);
       pdI = ((start_page + (counter * 0x1000)) / 0x400000);
       goto keepMapping;
@@ -163,7 +163,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     //kprintf( "vm_dsize: [0x%X]][0x%X]\n", ctob( _current->td.vm_dsize ), _current->td.vm_dsize );
   }
   else if (type == VM_TASK)
-    _current->oInfo.vmStart += count * 0x1000;
+    _current->oInfo.vmStart += (count * 0x1000);
 
   /*
    * MMAP Return

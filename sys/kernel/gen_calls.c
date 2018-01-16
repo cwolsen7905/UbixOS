@@ -28,6 +28,7 @@
 
 #include <sys/gen_calls.h>
 #include <sys/thread.h>
+#include <sys/gdt.h>
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
 #include <lib/kprintf.h>
@@ -36,6 +37,7 @@
 #include <assert.h>
 #include <sys/descrip.h>
 #include <sys/video.h>
+#include <sys/signal.h>
 
 /* Exit Syscall */
 int sys_exit( struct thread *td, struct sys_exit_args *args ) {
@@ -134,8 +136,8 @@ int mprotect( struct thread *td, struct mprotect_args *uap ) {
 }
 
 int sys_invalid( struct thread *td, void *args ) {
-  kprintf( "Invalid System Call #[%i], Pid: %i\n", td->frame->tf_eax, _current->id );
- //td->td_retval[0] =0;
+  kprintf( "ISC[%i:%i]", td->frame->tf_eax, _current->id );
+  td->td_retval[0] = -1;
   return (0);
 }
 
@@ -145,4 +147,137 @@ int sys_wait4( struct thread *td, struct sys_wait4_args *args ) {
   if ( tmpTask != 0x0 )
     return (tmpTask->state);
   return (0);
+}
+
+int sys_sysarch( struct thread *td, struct sys_sysarch_args *args ) {
+  void **segbase = 0x0;
+  uint32_t base_addr = 0x0;
+  if (args->op == 10) {
+  kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
+   segbase = args->parms;
+   kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
+   base_addr = (uint32_t)segbase[0];
+  struct gdtDescriptor *tmpDesc = 0x0;
+
+  tmpDesc = 0x400000 + sizeof(struct gdtDescriptor);//taskLDT[1];
+
+  tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
+  tmpDesc->baseLow = (base_addr & 0xFFFF);
+  tmpDesc->baseMed = ((base_addr >> 16) & 0xFF);
+  tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+  tmpDesc->limitHigh = (0xFFFFF >> 16);
+  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+  tmpDesc->baseHigh = base_addr >> 24;
+
+  td->td_retval[0] = 0;
+  }
+  else {
+  kprintf("sysarch(%i,NULL)", args->op);
+  td->td_retval[0] = -1;
+  }
+  return(0);
+}
+
+int sys_getpid(struct thread *td, struct sys_getpid_args *args) {
+  td->td_retval[0] = _current->id;
+  return(0);
+}
+int sys_geteuid(struct thread *td, struct sys_geteuid_args *args) {
+  td->td_retval[0] = _current->uid;
+  return(0);
+}
+
+int sys_getegid(struct thread *td, struct sys_getegid_args *args) {
+  td->td_retval[0] = _current->gid;
+  return(0);
+}
+
+int sys_getppid(struct thread *td, struct sys_getppid_args *args) {
+  td->td_retval[0] = _current->ppid;
+  return(0);
+}
+
+int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args) {
+  td->td_retval[0] = -1;
+
+  if (args->oset != 0x0) {
+    memcpy(args->oset, &td->sigmask, sizeof(sigset_t));
+    td->td_retval[0] = 0x0;
+  }
+
+  if (args->set != 0x0) {
+    if (args->how == SIG_SETMASK) {
+      if (args->set != 0x0) {
+        memcpy(&td->sigmask, args->set,  sizeof(sigset_t));
+        td->td_retval[0] = 0;
+      }
+      else {
+        td->td_retval[0] = -1;
+      }
+    }
+    else if (args->how == SIG_BLOCK) {
+      if (args->set != 0x0) {
+        td->sigmask.__bits[0] &= args->set->__bits[0];
+        td->sigmask.__bits[1] &= args->set->__bits[1];
+        td->sigmask.__bits[2] &= args->set->__bits[2];
+        td->sigmask.__bits[3] &= args->set->__bits[3];
+        td->td_retval[0] = 0;
+      }
+      else {
+        td->td_retval[0] = -1;
+      }
+    }
+    else if (args->how == SIG_UNBLOCK) {
+      if (args->set != 0x0) {
+        td->sigmask.__bits[0] |= args->set->__bits[0];
+        td->sigmask.__bits[1] |= args->set->__bits[1];
+        td->sigmask.__bits[2] |= args->set->__bits[2];
+        td->sigmask.__bits[3] |= args->set->__bits[3];
+        td->td_retval[0] = 0;
+      }
+      else {
+        td->td_retval[0] = -1;
+      }
+    }
+    else {
+      kprintf("SPM: 0x%X", args->how);
+      td->td_retval[0] = -1;
+    }
+  }
+
+  return(0);
+}
+
+
+int sys_sigaction(struct thread *td, struct sys_sigaction_args *args) {
+  td->td_retval[0] = -1;
+
+  if (args->oact != 0x0) {
+    memcpy(args->oact, &td->sigact[args->sig], sizeof(struct sigaction));
+    td->td_retval[0] = 0;
+  }
+
+  if (args->act != 0x0) {
+    //kprintf("SA: %i", args->sig);
+    memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
+    td->td_retval[0] = 0;
+  }
+  return(0);
+}
+
+int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *args) {
+  td->td_retval[0] = _current->pgrp;
+  return(0);
+}
+
+int sys_setpgid(struct thread *td, struct sys_setpgid_args *args) {
+  kTask_t *tmpTask = schedFindTask(args->pid);
+  if (tmpTask == 0x0) {
+    td->td_retval[0] = -1;
+  }
+  else {
+    tmpTask->pgrp = args->pgid;
+    td->td_retval[0] = 0x0;
+  }
+  return(0);
 }

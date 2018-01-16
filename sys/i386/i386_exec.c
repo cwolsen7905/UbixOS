@@ -399,13 +399,13 @@ void execFile(char *file, char **argv, char **envp, int console) {
   newProcess->tss.ss = 0x30 + 3;
   newProcess->tss.ds = 0x30 + 3;
   newProcess->tss.fs = 0x30 + 3;
-  newProcess->tss.gs = 0x50 + 3; //0x30 + 3;
+  newProcess->tss.gs = 0x8 + 3 + 4;//0x50 + 3; //0x30 + 3;
 
   newProcess->tss.ldt = 0x18;
   newProcess->tss.trace_bitmap = 0x0000;
   newProcess->tss.io_map = 0x8000;
 
-  sched_setStatus(newProcess->id, READY);
+  //sched_setStatus(newProcess->id, READY);
 
   kfree(binaryHeader);
   kfree(programHeader);
@@ -441,6 +441,27 @@ void execFile(char *file, char **argv, char **envp, int console) {
   }
   tmp[i + x] = 0x0;
 
+  /* Build LDT For GS and FS */
+  if (vmm_remapPage(vmm_findFreePage(newProcess->id), 0x400000, PAGE_DEFAULT, newProcess->id) == 0x0) {
+    K_PANIC("Error: Remap Page Failed");
+  }
+
+  struct gdtDescriptor *taskLDT = 0x400000;
+
+  struct gdtDescriptor *tmpDesc = 0x0;
+
+  tmpDesc = 0x400000 + sizeof(struct gdtDescriptor);//taskLDT[1];
+  uint32_t data_addr = 0x0;
+
+  tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
+  tmpDesc->baseLow = (data_addr & 0xFFFF);
+  tmpDesc->baseMed = ((data_addr >> 16) & 0xFF);
+  tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+  tmpDesc->limitHigh = (0xFFFFF >> 16);
+  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+  tmpDesc->baseHigh = data_addr >> 24;
+
+
   /* Switch Back To The Kernels VM Space */
   asm volatile(
     "movl %0,%%eax          \n"
@@ -463,6 +484,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   int i = 0x0;
   int x = 0x0;
+
+  kprintf("EXEVE: %s(%i)", file, _current->id);
+  if (_current->id == 10)
+    asm("nop");
 
   int argc = argv_count(argv);
   int envc = envp_count(envp);
@@ -600,7 +625,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
             K_PANIC("Error: Remap Page Failed");
           }
            else {
-           kprintf("rP[0x%X]", (programHeader[i].p_vaddr & 0xFFFFF000) + x);
+           //MrOlsen 2018-01-15 kprintf("rP[0x%X]", (programHeader[i].p_vaddr & 0xFFFFF000) + x);
            }
 
           memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
@@ -786,8 +811,14 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   tmp[i++] = 14;
   tmp[i++] = 0x0;
 
-  tmp[i++] = 15;
+  tmp[i++] = 15; //EXEC PATH
   tmp[i++] = EXECP;
+
+  tmp[i++] = 19; //NCPUS
+  tmp[i++] = 0x1;
+ 
+  tmp[i++] = 23; //STACKPROT
+  tmp[i++] = 0x3;
 
   tmp[i++] = 0;
   tmp[i++] = 0;
@@ -831,17 +862,18 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
     K_PANIC("Error: Remap Page Failed");
   }
 
-  union descriptorTableUnion *taskLDT = 0x400000;
-  struct gdtDescriptor *tmpDesc;
+  struct gdtDescriptor *taskLDT = 0x400000;
 
-  tmpDesc = taskLDT[1];
+  struct gdtDescriptor *tmpDesc = 0x0;
+
+  tmpDesc = 0x400000 + sizeof(struct gdtDescriptor);//taskLDT[1];
 
   tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
   tmpDesc->baseLow = (data_addr & 0xFFFF);
   tmpDesc->baseMed = ((data_addr >> 16) & 0xFF);
-  tmpDesc->access = ((dData + dWrite + dBig + dBiglim) + dPresent) >> 8;
+  tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
   tmpDesc->limitHigh = (0xFFFFF >> 16);
-  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim) & 0xFF) >> 4;
+  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
   tmpDesc->baseHigh = data_addr >> 24;
 
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT

@@ -78,6 +78,8 @@ typedef struct taskStruct {
     } inodes;
     uint32_t counter;
     uint16_t groups[NR_GROUPS];
+    pidType ppid;
+    uint32_t pgrp;
 } kTask_t;
 
 int sched_init();

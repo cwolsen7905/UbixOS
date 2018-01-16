@@ -45,6 +45,7 @@ int main(int argc, char **argv, char **env) {
   __asm __volatile("movl %%gs:0, %0" : "=r" (segbase));
 
   printf("Segbase: 0x%X - 0x%X\n", segbase, &segbase);
+  printf("Segbase[0]: 0x%X\n", segbase[0]);
   */
 
   for (int i=0;i < argc; i++)
