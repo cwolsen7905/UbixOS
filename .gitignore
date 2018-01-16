@@ -2,3 +2,4 @@
 t
 t.c
 *.o
+.depen*
