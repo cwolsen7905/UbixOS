@@ -1,0 +1,5 @@
+# $FreeBSD: releng/11.1/bin/sh/tests/builtins/locale2.0 318279 2017-05-14 20:17:50Z jilles $
+
+$SH -c 'LC_ALL=C true; kill -INT $$; echo continued'
+r=$?
+[ "$r" -gt 128 ] && [ "$(kill -l "$r")" = INT ]

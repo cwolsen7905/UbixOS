@@ -1,49 +1,71 @@
-# $Id: Makefile 115 2016-01-14 02:55:19Z reddawg $
-# Application Makefile (C) 2002-2004 The UbixOS Project
+#	@(#)Makefile	8.4 (Berkeley) 5/5/95
+# $FreeBSD: releng/11.1/bin/sh/Makefile 319184 2017-05-30 04:15:40Z ngie $
 
-# Include Global 'Source' Options
-Makefile.incl
-Makefile.incl
+.include <src.opts.mk>
 
-#Linker
-LD = ld
+PACKAGE=runtime
+PROG=	sh
+INSTALLFLAGS= -S
+SHSRCS=	alias.c arith_yacc.c arith_yylex.c cd.c echo.c error.c eval.c \
+	exec.c expand.c \
+	histedit.c input.c jobs.c kill.c mail.c main.c memalloc.c miscbltin.c \
+	mystring.c options.c output.c parser.c printf.c redir.c show.c \
+	test.c trap.c var.c
+GENSRCS= builtins.c nodes.c syntax.c
+GENHDRS= builtins.h nodes.h syntax.h token.h
+SRCS= ${SHSRCS} ${GENSRCS} ${GENHDRS}
 
-#Binary File Name
-BINARY = sh 
+# MLINKS for Shell built in commands for which there are no userland
+# utilities of the same name are handled with the associated manpage,
+# builtin.1 in share/man/man1/.
 
-#Delete Program
-REMOVE = rm -f
+LIBADD=	edit
 
-#Objects
-OBJS = sh1.o
+CFLAGS+=-DSHELL -I. -I${.CURDIR}
+# for debug:
+# DEBUG_FLAGS+= -g -DDEBUG=2 -fno-inline
+WARNS?=	2
+WFORMAT=0
 
-INCLUDES = -I../../include.new
+.PATH:	${.CURDIR}/bltin \
+	${.CURDIR:H}/kill \
+	${.CURDIR:H}/test \
+	${SRCTOP}/usr.bin/printf
 
-LIBRARIES = ../../lib/libc/libc.so
+CLEANFILES+= mknodes mknodes.o \
+	mksyntax mksyntax.o
+CLEANFILES+= ${GENSRCS} ${GENHDRS}
 
-STARTUP = ../../lib/csu/*.o
+build-tools: mknodes mksyntax
 
-# Link The Binary
-$(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o ${BUILD_DIR}/bin/$@ $(STARTUP) $(LIBRARIES) $(OBJS)
-	#strip $(BINARY)
+.ORDER: builtins.c builtins.h
+builtins.h: .NOMETA
+builtins.c builtins.h: mkbuiltins builtins.def
+	sh ${.CURDIR}/mkbuiltins ${.CURDIR}
 
-# Compile the source files
-.cc.o:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
+# XXX this is just to stop the default .c rule being used, so that the
+# intermediate object has a fixed name.
+# XXX we have a default .c rule, but no default .o rule.
+mknodes.o mksyntax.o: ${BUILD_TOOLS_META}
+	${CC} ${CFLAGS} ${LDFLAGS} ${.IMPSRC} ${LDLIBS} -o ${.TARGET}
+mknodes: mknodes.o ${BUILD_TOOLS_META}
+mksyntax: mksyntax.o ${BUILD_TOOLS_META}
 
-.cc.s:
-	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
-.c.o:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -c -o $@ $<
- 
-.c.s:
-	$(CC)  -Wall -O $(CFLAGS) $(INCLUDES) -S -o $@ $<
- 
-.S.o:
-	$(CC)  -Wall $(CLFAGS) $(INCLUDES) -c -o $@ $<
- 
-# Clean Up The junk
-clean:
-	$(REMOVE) $(OBJS) ${BUILD_DIR}/bin/$(BINARY)
+.ORDER: nodes.c nodes.h
+nodes.h: .NOMETA
+nodes.c nodes.h: mknodes nodetypes nodes.c.pat
+	${BTOOLSPATH:U.}/mknodes ${.CURDIR}/nodetypes ${.CURDIR}/nodes.c.pat
+
+.ORDER: syntax.c syntax.h
+syntax.h: .NOMETA
+syntax.c syntax.h: mksyntax
+	${BTOOLSPATH:U.}/mksyntax
+
+token.h: mktokens
+	sh ${.CURDIR}/mktokens
+
+.if ${MK_TESTS} != "no"
+SUBDIR+=    tests
+.endif
+
+.include <ubix.prog.mk>
