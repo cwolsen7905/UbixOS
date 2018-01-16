@@ -40,13 +40,13 @@
 #include <sys/signal.h>
 
 /* Exit Syscall */
-int sys_exit( struct thread *td, struct sys_exit_args *args ) {
-  endTask( _current->id );
+int sys_exit(struct thread *td, struct sys_exit_args *args) {
+  endTask(_current->id);
   return (0x0);
 }
 
 /* return the process id */
-int getpid( struct thread *td, struct getpid_args *uap ) {
+int getpid(struct thread *td, struct getpid_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
@@ -55,7 +55,7 @@ int getpid( struct thread *td, struct getpid_args *uap ) {
 }
 
 /* return the process user id */
-int getuid( struct thread *td, struct getuid_args *uap ) {
+int getuid(struct thread *td, struct getuid_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
@@ -64,7 +64,7 @@ int getuid( struct thread *td, struct getuid_args *uap ) {
 }
 
 /* return the process group id */
-int getgid( struct thread *td, struct getgid_args *uap ) {
+int getgid(struct thread *td, struct getgid_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
@@ -72,29 +72,29 @@ int getgid( struct thread *td, struct getgid_args *uap ) {
   return (0);
 }
 
-int sys_issetugid( register struct thread *td, struct sys_issetugid_args *uap ) {
+int sys_issetugid(register struct thread *td, struct sys_issetugid_args *uap) {
   td->td_retval[0] = 0;
   return (0);
 }
 
-int readlink( struct thread *td, struct readlink_args *uap ) {
+int readlink(struct thread *td, struct readlink_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
-  kprintf( "readlink: [%s:%i]\n", uap->path, uap->count );
+  kprintf("readlink: [%s:%i]\n", uap->path, uap->count);
   td->td_retval[0] = -1;
   td->td_retval[1] = 0x0;
   return (0x0);
 }
 
-int gettimeofday_new( struct thread *td, struct gettimeofday_args *uap ) {
+int gettimeofday_new(struct thread *td, struct gettimeofday_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
   return (0x0);
 }
 
-int read( struct thread *td, struct read_args *uap ) {
+int read(struct thread *td, struct read_args *uap) {
   int error = 0x0;
   size_t count = 0x0;
   struct file *fd = 0x0;
@@ -103,13 +103,13 @@ int read( struct thread *td, struct read_args *uap ) {
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
 
-  error = getfd( td, &fd, uap->fd );
+  error = getfd(td, &fd, uap->fd);
 
-  if ( error )
+  if (error)
     return (error);
 
-  count = fread( uap->buf, uap->nbyte, 0x1, fd->fd );
-  kprintf( "count: %i\n", count );
+  count = fread(uap->buf, uap->nbyte, 0x1, fd->fd);
+  kprintf("count: %i\n", count);
   td->td_retval[0] = count;
 
   return (error);
@@ -118,95 +118,93 @@ int read( struct thread *td, struct read_args *uap ) {
 /*!
  * \brief place holder for now functionality to be added later
  */
-int setitimer( struct thread *td, struct setitimer_args *uap ) {
+int setitimer(struct thread *td, struct setitimer_args *uap) {
   int error = 0x0;
 
   return (error);
 }
 
-int access( struct thread *td, struct access_args *uap ) {
+int access(struct thread *td, struct access_args *uap) {
   int error = 0x0;
-  kprintf( "name: [%s]\n", uap->path );
+  kprintf("name: [%s]\n", uap->path);
   return (error);
 }
 
-int mprotect( struct thread *td, struct mprotect_args *uap ) {
+int mprotect(struct thread *td, struct mprotect_args *uap) {
   int error = 0x0;
   return (error);
 }
 
-int sys_invalid( struct thread *td, void *args ) {
-  kprintf( "ISC[%i:%i]", td->frame->tf_eax, _current->id );
+int sys_invalid(struct thread *td, void *args) {
+  kprintf("ISC[%i:%i]", td->frame->tf_eax, _current->id);
   td->td_retval[0] = -1;
   return (0);
 }
 
-int sys_wait4( struct thread *td, struct sys_wait4_args *args ) {
+int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
   int error = 0;
   kprintf("wait4: %i", args->pid);
   //kprintf("DUMMY FUNC FIX ME! sys_wait4");
-  kTask_t *tmpTask = schedFindTask( args->pid );
+  kTask_t *tmpTask = schedFindTask(args->pid);
 
-  if ( tmpTask != 0x0 ) {
+  if (tmpTask != 0x0) {
     while (tmpTask != 0x0) {
       sched_yield();
-      tmpTask = schedFindTask( args->pid );
-   }
-   td->td_retval[0] = args->pid;
-  }
-  else {
+      tmpTask = schedFindTask(args->pid);
+    }
+    td->td_retval[0] = args->pid;
+  } else {
     td->td_retval[0] = -1;
     error = -1;
   }
   return (error);
 }
 
-int sys_sysarch( struct thread *td, struct sys_sysarch_args *args ) {
+int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
   void **segbase = 0x0;
   uint32_t base_addr = 0x0;
   if (args->op == 10) {
-  kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
-   segbase = args->parms;
-   kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
-   base_addr = (uint32_t)segbase[0];
-  struct gdtDescriptor *tmpDesc = 0x0;
+    kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
+    segbase = args->parms;
+    kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
+    base_addr = (uint32_t) segbase[0];
+    struct gdtDescriptor *tmpDesc = 0x0;
 
-  tmpDesc = 0x400000 + sizeof(struct gdtDescriptor);//taskLDT[1];
+    tmpDesc = 0x400000 + sizeof(struct gdtDescriptor); //taskLDT[1];
 
-  tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
-  tmpDesc->baseLow = (base_addr & 0xFFFF);
-  tmpDesc->baseMed = ((base_addr >> 16) & 0xFF);
-  tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-  tmpDesc->limitHigh = (0xFFFFF >> 16);
-  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-  tmpDesc->baseHigh = base_addr >> 24;
+    tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
+    tmpDesc->baseLow = (base_addr & 0xFFFF);
+    tmpDesc->baseMed = ((base_addr >> 16) & 0xFF);
+    tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+    tmpDesc->limitHigh = (0xFFFFF >> 16);
+    tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+    tmpDesc->baseHigh = base_addr >> 24;
 
-  td->td_retval[0] = 0;
+    td->td_retval[0] = 0;
+  } else {
+    kprintf("sysarch(%i,NULL)", args->op);
+    td->td_retval[0] = -1;
   }
-  else {
-  kprintf("sysarch(%i,NULL)", args->op);
-  td->td_retval[0] = -1;
-  }
-  return(0);
+  return (0);
 }
 
 int sys_getpid(struct thread *td, struct sys_getpid_args *args) {
   td->td_retval[0] = _current->id;
-  return(0);
+  return (0);
 }
 int sys_geteuid(struct thread *td, struct sys_geteuid_args *args) {
   td->td_retval[0] = _current->uid;
-  return(0);
+  return (0);
 }
 
 int sys_getegid(struct thread *td, struct sys_getegid_args *args) {
   td->td_retval[0] = _current->gid;
-  return(0);
+  return (0);
 }
 
 int sys_getppid(struct thread *td, struct sys_getppid_args *args) {
   td->td_retval[0] = _current->ppid;
-  return(0);
+  return (0);
 }
 
 int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args) {
@@ -220,46 +218,39 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args) {
   if (args->set != 0x0) {
     if (args->how == SIG_SETMASK) {
       if (args->set != 0x0) {
-        memcpy(&td->sigmask, args->set,  sizeof(sigset_t));
+        memcpy(&td->sigmask, args->set, sizeof(sigset_t));
         td->td_retval[0] = 0;
-      }
-      else {
+      } else {
         td->td_retval[0] = -1;
       }
-    }
-    else if (args->how == SIG_BLOCK) {
+    } else if (args->how == SIG_BLOCK) {
       if (args->set != 0x0) {
         td->sigmask.__bits[0] &= args->set->__bits[0];
         td->sigmask.__bits[1] &= args->set->__bits[1];
         td->sigmask.__bits[2] &= args->set->__bits[2];
         td->sigmask.__bits[3] &= args->set->__bits[3];
         td->td_retval[0] = 0;
-      }
-      else {
+      } else {
         td->td_retval[0] = -1;
       }
-    }
-    else if (args->how == SIG_UNBLOCK) {
+    } else if (args->how == SIG_UNBLOCK) {
       if (args->set != 0x0) {
         td->sigmask.__bits[0] |= args->set->__bits[0];
         td->sigmask.__bits[1] |= args->set->__bits[1];
         td->sigmask.__bits[2] |= args->set->__bits[2];
         td->sigmask.__bits[3] |= args->set->__bits[3];
         td->td_retval[0] = 0;
-      }
-      else {
+      } else {
         td->td_retval[0] = -1;
       }
-    }
-    else {
+    } else {
       kprintf("SPM: 0x%X", args->how);
       td->td_retval[0] = -1;
     }
   }
 
-  return(0);
+  return (0);
 }
-
 
 int sys_sigaction(struct thread *td, struct sys_sigaction_args *args) {
   td->td_retval[0] = -1;
@@ -274,22 +265,45 @@ int sys_sigaction(struct thread *td, struct sys_sigaction_args *args) {
     memcpy(&td->sigact[args->sig], args->act, sizeof(struct sigaction));
     td->td_retval[0] = 0;
   }
-  return(0);
+  return (0);
 }
 
 int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *args) {
   td->td_retval[0] = _current->pgrp;
-  return(0);
+  return (0);
 }
 
 int sys_setpgid(struct thread *td, struct sys_setpgid_args *args) {
-  kTask_t *tmpTask = schedFindTask(args->pid);
-  if (tmpTask == 0x0) {
-    td->td_retval[0] = -1;
+  pidType pid = 0x0;
+  pidType pgrp = 0x0;
+
+  if (args->pid == 0x0 || args->pid == _current->id) {
+    if (args->pgid == 0x0 || args->pgid == _current->id) {
+      td->td_retval[0] = 0x0;
+      _current->pgrp = _current->id;
+    } else {
+      td->td_retval[0] = -1;
+    }
+  } else {
+    kTask_t *tmpTask = schedFindTask(pid);
+
+    if (tmpTask == 0x0) {
+      td->td_retval[0] = -1;
+    } else {
+
+      /* Get The PRGP We Want To Set */
+      pgrp = (args->pgid == 0) ? tmpTask->pgrp : args->pgid;
+
+      if (pgrp != _current->pgrp || pgrp != tmpTask->id) {
+        td->td_retval[0] = -1;
+      } else {
+        td->td_retval[0] = 0x0;
+        tmpTask->pgrp = pgrp;
+      }
+
+    }
+
   }
-  else {
-    tmpTask->pgrp = args->pgid;
-    td->td_retval[0] = 0x0;
-  }
-  return(0);
+
+  return (0);
 }

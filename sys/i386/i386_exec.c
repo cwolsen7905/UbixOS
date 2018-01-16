@@ -262,6 +262,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   newProcess->gid = 0x0;
   newProcess->uid = 0x0;
+  newProcess->pgrp = newProcess->id;
   newProcess->term = tty_find(console);
 
   if (newProcess->term == 0x0)
@@ -819,7 +820,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   tmp[i++] = 19; //NCPUS
   tmp[i++] = 0x1;
- 
+
   tmp[i++] = 23; //STACKPROT
   tmp[i++] = 0x3;
 
@@ -880,6 +881,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   tmpDesc->baseHigh = data_addr >> 24;
 
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
+  _current->pgrp = _current->id;
 
   return (0x0);
 }
