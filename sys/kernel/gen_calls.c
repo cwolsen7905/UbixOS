@@ -149,7 +149,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
     int children = _current->children;
 
     while (_current->children == children)
-      sched_yeild();
+      sched_yield();
 
     td->td_retval[0] = _current->last_exit;
   } else {
