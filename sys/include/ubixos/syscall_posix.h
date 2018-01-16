@@ -29,7 +29,9 @@
 #ifndef _UBIXOS_SYSCALL_POXIX_H
 #define _UBIXOS_SYSCALL_POSIX_H
 
+#include <sys/trap.h>
+
 void _sys_call_posix();
-void sys_call_posix(struct trapframe *frame)
+void sys_call_posix(struct trapframe *frame);
 
 #endif

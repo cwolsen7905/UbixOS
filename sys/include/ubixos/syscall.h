@@ -29,10 +29,10 @@
 #ifndef _UBIXOS_SYSCALL_H
 #define _UBIXOS_SYSCALL_H
 
-#include <sys/types.h>
+#include <sys/trap.h>
 
 void _sys_call();
-void sys_call(struct trapframe *frame)
+void sys_call(struct trapframe *frame);
 int invalidCall();
 void invalidCallINT(int);
 

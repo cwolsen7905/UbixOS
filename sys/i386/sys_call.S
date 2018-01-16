@@ -52,7 +52,7 @@ mov %eax,%es
 mov %eax,%fs
 cld
 push %esp
-call syscall
+call sys_call
 add $0x4,%esp
 cmpb $0x13,0x38(%esp)
 je _B4

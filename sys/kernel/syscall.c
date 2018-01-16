@@ -44,6 +44,10 @@
 #include <mpi/mpi.h>
 #include <vmm/vmm.h>
 
+void sys_call(struct trapframe *frame) {
+  asm("nop");
+}
+
 //long fuword( const void *base );
 
 //void sdeTestThread();
