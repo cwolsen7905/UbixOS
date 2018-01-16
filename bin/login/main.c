@@ -146,7 +146,7 @@ int main(int argc, char **argv, char **env) {
           exit(-1);
           }
         else {
-          while (pidStatus(shellPid) > 0) {
+          while (pidStatus(shellPid) == shellPid) {
             sched_yield();
             }
           goto login;

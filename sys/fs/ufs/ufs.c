@@ -225,7 +225,7 @@ static __inline int fsfind(const char *name, ino_t * ino, fileDescriptor_t *fd) 
       }
       s += d->d_reclen;
     }
-
+  *ino = 0x0;
   return 0;
 }
 

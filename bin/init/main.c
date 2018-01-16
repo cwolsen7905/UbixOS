@@ -97,7 +97,7 @@ int main(int argc,char **argv, char **envp) {
     exit(0x0);
   }
 
-  while (pidStatus(i) > 0x0) {
+  while (pidStatus(i) != i) {
     /*
     fetchAgain:
     if (mpi_fetchMessage("init",&myMsg) == 0x0) {

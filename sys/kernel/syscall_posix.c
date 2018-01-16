@@ -103,26 +103,13 @@ void sys_call_posix(struct trapframe *frame) {
         if (systemCalls[code].sc_status == SYSCALL_DUMMY)
           kprintf("RET3");
       break;
-        /*
-         case ERESTART:
-         frame->tf_eip -= frame->tf_err;
-         break;
-         */
-      case EJUSTRETURN:
-      break;
       default:
-        frame->tf_eax = error;
+        frame->tf_eax = td->td_retval[0];
+        frame->tf_edx = td->td_retval[1];
         frame->tf_eflags |= PSL_C;
       break;
-
-        if (systemCalls[code].sc_status == SYSCALL_DUMMY)
-          kprintf("RET2");
     }
   }
-  /*
-   if (_current->id == 6)
-   kprintf("SYSCALL-EXIT");
-   */
 }
 
 int invalidCall() {

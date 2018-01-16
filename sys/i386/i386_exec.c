@@ -469,6 +469,8 @@ void execFile(char *file, char **argv, char **envp, int console) {
     : : "d" ((uint32_t *)(kernelPageDirectory))
   );
 
+  sprintf(newProcess->oInfo.cwd, "/");
+
   kprintf("execFile Return: 0x%X - %i\n",  newProcess->tss.eip, newProcess->id);
 
   /* Put new thread into the READY state */
@@ -518,6 +520,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   asm("movl %%cr3, %0;" : "=r" (cr3));
 
   fd = fopen(file, "r");
+  kprintf("fd: 0x%X", fd);
 
   if (fd == 0x0)
     return (-1);

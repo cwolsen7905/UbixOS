@@ -142,11 +142,23 @@ int sys_invalid( struct thread *td, void *args ) {
 }
 
 int sys_wait4( struct thread *td, struct sys_wait4_args *args ) {
+  int error = 0;
+  kprintf("wait4: %i", args->pid);
   //kprintf("DUMMY FUNC FIX ME! sys_wait4");
   kTask_t *tmpTask = schedFindTask( args->pid );
-  if ( tmpTask != 0x0 )
-    return (tmpTask->state);
-  return (0);
+
+  if ( tmpTask != 0x0 ) {
+    while (tmpTask != 0x0) {
+      sched_yield();
+      tmpTask = schedFindTask( args->pid );
+   }
+   td->td_retval[0] = args->pid;
+  }
+  else {
+    td->td_retval[0] = -1;
+    error = -1;
+  }
+  return (error);
 }
 
 int sys_sysarch( struct thread *td, struct sys_sysarch_args *args ) {

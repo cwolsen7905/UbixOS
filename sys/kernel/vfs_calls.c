@@ -80,6 +80,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
 int sys_read(struct thread *td, struct sys_read_args *args) {
   int x = 0;
   char c = 0x0;
+  char bf[2];
   volatile char *buf = args->buf;
 
   struct file *fd = 0x0;
@@ -90,14 +91,18 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
     td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
   }
   else {
+   bf[1] = '\0';
    if ( _current->term == tty_foreground )
      c = getchar();
 
     for (x = 0; x < args->nbyte && c != '\n';) {
       if ( _current->term == tty_foreground ) {
 
-        if ( c != 0x0 )
+        if ( c != 0x0 ) {
           buf[x++] = c;
+          bf[0] = c;
+          kprint(bf);
+        }
 
         if ( c == '\n') {
           buf[x++] = c;
