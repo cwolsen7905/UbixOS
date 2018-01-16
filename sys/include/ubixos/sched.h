@@ -80,6 +80,9 @@ typedef struct taskStruct {
     uint16_t groups[NR_GROUPS];
     pidType ppid;
     uint32_t pgrp;
+    uint32_t children; // Hack for WAIT
+    uint32_t last_exit; // Hack For WAIT
+    struct taskStruct *parent;
 } kTask_t;
 
 int sched_init();

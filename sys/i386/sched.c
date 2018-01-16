@@ -105,6 +105,10 @@ void sched() {
     }
     else if (tmpTask->state == DEAD) {
       delTask = tmpTask;
+      if (delTask->parent != 0x0) {
+        delTask->parent->children -= 1;
+        delTask->parent->last_exit = delTask->id;
+      }
       tmpTask = tmpTask->next;
       sched_deleteTask(delTask->id);
       sched_addDelTask(delTask);

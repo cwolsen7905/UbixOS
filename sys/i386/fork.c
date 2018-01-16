@@ -105,6 +105,9 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   while (newProcess->state == FORK)
     sched_yield();
 
+  newProcess->parent = _current;
+  _current->children++;
+
   /* Return Id of Proccess */
   kprintf("Returning! [%i][0x%X]\n", _current->id, newProcess->tss.cr3);
   td->td_retval[0] = newProcess->id;
