@@ -26,14 +26,10 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _UBIXOS_SYSCALL_H
-#define _UBIXOS_SYSCALL_H
+#ifndef _UBIXOS_SYSCALL_POXIX_H
+#define _UBIXOS_SYSCALL_POSIX_H
 
-#include <sys/types.h>
-
-void _sys_call();
-void sys_call(struct trapframe *frame)
-int invalidCall();
-void invalidCallINT(int);
+void _sys_call_posix();
+void sys_call_posix(struct trapframe *frame)
 
 #endif

@@ -26,6 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <ubixos/syscall.h>
+#include <ubixos/syscall_posix.h>
 #include <sys/idt.h>
 #include <sys/gdt.h>
 #include <sys/io.h>
@@ -34,7 +36,6 @@
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <vmm/vmm.h>
-#include <ubixos/syscall.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/endtask.h>
 #include <string.h>
@@ -98,8 +99,8 @@ int idt_init() {
   setVector(_int12, 12, dPresent + dInt + dDpl0);
   setTaskVector(13, dPresent + dTask + dDpl0, 0x38);
   setVector(_vmm_pageFault, 14, dPresent + dInt + dDpl0);
-  setVector(_sysCall, 0x80, dPresent + dTrap + dDpl3);
-  setVector(_sysCall_new, 0x81, dPresent + dTrap + dDpl3);
+  setVector(_sys_call_posix, 0x80, dPresent + dTrap + dDpl3);
+  setVector(_sys_call, 0x81, dPresent + dTrap + dDpl3);
   //setVector(_sysCallNew, 0x90, dPresent + dTrap + dDpl3);
   setVector(timerInt, 0x68, (dInt + dPresent + dDpl0));
 

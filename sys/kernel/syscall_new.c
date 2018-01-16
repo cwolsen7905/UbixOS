@@ -39,14 +39,14 @@
 
 struct spinLock Master = SPIN_LOCK_INITIALIZER;
 
-void syscall(struct trapframe *frame) {
+void sys_call_posix(struct trapframe *frame) {
   uint32_t code = 0x0;
   caddr_t params;
 
   /*
-  if (_current->id == 6)
-    kprintf("SYSCALL: 0x%X.", frame->tf_eip);
-  */
+   if (_current->id == 6)
+   kprintf("SYSCALL: 0x%X.", frame->tf_eip);
+   */
 
   struct thread *td = &_current->td;
 
@@ -120,9 +120,9 @@ void syscall(struct trapframe *frame) {
     }
   }
   /*
-  if (_current->id == 6)
-    kprintf("SYSCALL-EXIT");
-  */
+   if (_current->id == 6)
+   kprintf("SYSCALL-EXIT");
+   */
 }
 
 int invalidCall() {

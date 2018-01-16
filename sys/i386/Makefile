@@ -6,7 +6,7 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 #  Objects
-OBJS = support.o strcpy.o strcmp.o strncmp.o memset.o memcmp.o schedyield.o kpanic.o timer.o spinlock.o i386_exec.o sys_call_new.o sys_call.o syscall.o bioscall.o fork.o systemtask.o sched.o cpu.o trap.o 
+OBJS = support.o strcpy.o strcmp.o strncmp.o memset.o memcmp.o schedyield.o kpanic.o timer.o spinlock.o i386_exec.o sys_call_new.o sys_call.o bioscall.o fork.o systemtask.o sched.o cpu.o trap.o 
 # ap-boot.o smp.o vitals.o(obsolete)
 
 all: $(OBJS)
