@@ -1,3 +1,5 @@
+/*	$NetBSD: read.h,v 1.9 2016/02/24 17:13:22 christos Exp $	*/
+
 /*-
  * Copyright (c) 2001 The NetBSD Foundation, Inc.
  * All rights reserved.
@@ -13,13 +15,6 @@
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *        This product includes software developed by the NetBSD
- *        Foundation, Inc. and its contributors.
- * 4. Neither the name of The NetBSD Foundation nor the names of its
- *    contributors may be used to endorse or promote products derived
- *    from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE NETBSD FOUNDATION, INC. AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -33,8 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- *	$NetBSD: read.h,v 1.4 2004/02/27 14:52:18 christos Exp $
- * $FreeBSD: src/lib/libedit/read.h,v 1.1.2.1 2005/10/09 03:44:01 delphij Exp $
+ * $FreeBSD: releng/11.1/lib/libedit/read.h 313981 2017-02-20 03:33:59Z pfg $
  */
 
 /*
@@ -43,12 +37,12 @@
 #ifndef	_h_el_read
 #define	_h_el_read
 
-typedef int (*el_rfunc_t)(EditLine *, char *);
+typedef int (*el_rfunc_t)(EditLine *, wchar_t *);
 
 typedef struct el_read_t {
 	el_rfunc_t	read_char;	/* Function to read a character */
 } el_read_t;
- 
+
 protected int		read_init(EditLine *);
 protected void		read_prepare(EditLine *);
 protected void		read_finish(EditLine *);

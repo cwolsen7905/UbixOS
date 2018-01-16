@@ -13,7 +13,7 @@ SRCCONF?=	/etc/src.conf
     !target(_srcconf_included_)
 
 # Validate that the user didn't try setting an env-only variable in
-# their src.conf. This benefits from already including bsd.mkopt.mk.
+# their src.conf. This benefits from already including ubix.mkopt.mk.
 .for var in ${__ENV_ONLY_OPTIONS}
 __presrcconf_${var}:=	${MK_${var}:U-}${WITHOUT_${var}:Uno:Dyes}${WITH_${var}:Uno:Dyes}
 .endfor
@@ -34,6 +34,6 @@ __postrcconf_${var}:=	${MK_${var}:U-}${WITHOUT_${var}:Uno:Dyes}${WITH_${var}:Uno
 .endif # SRCCONF
 .endif
 
-# tempting, but bsd.compiler.mk causes problems this early
-# probably need to remove dependence on bsd.own.mk 
+# tempting, but ubix.compiler.mk causes problems this early
+# probably need to remove dependence on ubix.own.mk 
 #.include "src.opts.mk"

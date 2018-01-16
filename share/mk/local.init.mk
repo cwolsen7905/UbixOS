@@ -1,7 +1,7 @@
 # $FreeBSD: releng/11.1/share/mk/local.init.mk 294349 2016-01-19 22:41:44Z bdrewery $
 
 .if ${.MAKE.MODE:Mmeta*} != ""
-.if !empty(SUBDIR) && !defined(LIB) && !defined(PROG) && ${.MAKE.MAKEFILES:M*bsd.prog.mk} == ""
+.if !empty(SUBDIR) && !defined(LIB) && !defined(PROG) && ${.MAKE.MAKEFILES:M*ubix.prog.mk} == ""
 .if ${.MAKE.MODE:Mleaf*} != ""
 # we only want leaf dirs to build in meta mode... and we are not one
 .MAKE.MODE = normal

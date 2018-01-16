@@ -50,9 +50,9 @@ _PREMK_LIBDIR:=	${LIBDIR}
 # we can afford to use cookies to prevent some targets
 # re-running needlessly but only when using filemon.
 # Targets that should support the meta mode cookie handling should just be
-# added to META_TARGETS.  If bsd.sys.mk cannot be included then ${META_DEPS}
+# added to META_TARGETS.  If ubix.sys.mk cannot be included then ${META_DEPS}
 # should be added as a target dependency as well.  Otherwise the target
-# is added to in bsd.sys.mk since it comes last.
+# is added to in ubix.sys.mk since it comes last.
 .if ${.MAKE.MODE:Mnofilemon} == ""
 # Prepend .OBJDIR if not already there.
 _META_COOKIE_COND=	"${.TARGET:M${.OBJDIR}/*}" == ""

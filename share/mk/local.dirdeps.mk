@@ -22,7 +22,7 @@ M_dep_qual_fixes += C;($m),[^/.,]*$$;\1;
 #.info M_dep_qual_fixes=${M_dep_qual_fixes}
 
 # Cheat for including src.libnames.mk
-__<bsd.init.mk>__:
+__<ubix.init.mk>__:
 # Pull in _INTERNALLIBS
 .include <src.libnames.mk>
 
@@ -109,7 +109,7 @@ _PROGS_DPADD+=	${DPADD${s}${_prog}}
 _PROGS_SRCS+=	${SRCS${s}${_prog}}
 .endif
 .endfor	# .for s in . _
-# Add in assumed source (bsd.prog.mk)
+# Add in assumed source (ubix.prog.mk)
 .if !target(${_prog})
 .if defined(PROG_CXX)
 _PROGS_SRCS+=	${_prog}.cc
