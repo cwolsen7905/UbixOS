@@ -352,17 +352,33 @@ struct close_args {
 };
 
 struct sys_mmap_args {
-        char addr_l_[PADL_(caddr_t)]; caddr_t addr; char addr_r_[PADR_(caddr_t)];
-        char len_l_[PADL_(size_t)]; size_t len; char len_r_[PADR_(size_t)];
-        char prot_l_[PADL_(int)]; int prot; char prot_r_[PADR_(int)];
-        char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-        char pos_l_[PADL_(off_t)]; off_t pos; char pos_r_[PADR_(off_t)];
+    char addr_l_[PADL_(caddr_t)];
+    caddr_t addr;
+    char addr_r_[PADR_(caddr_t)];
+    char len_l_[PADL_(size_t)];
+    size_t len;
+    char len_r_[PADR_(size_t)];
+    char prot_l_[PADL_(int)];
+    int prot;
+    char prot_r_[PADR_(int)];
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char pos_l_[PADL_(off_t)];
+    off_t pos;
+    char pos_r_[PADR_(off_t)];
 };
 
 struct sys_stat_args {
-        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
-        char ub_l_[PADL_(struct stat *)]; struct stat * ub; char ub_r_[PADR_(struct stat *)];
+    char path_l_[PADL_(char *)];
+    char * path;
+    char path_r_[PADR_(char *)];
+    char ub_l_[PADL_(struct stat *)];
+    struct stat * ub;
+    char ub_r_[PADR_(struct stat *)];
 };
 
 struct sys_lstat_args {
@@ -457,109 +473,194 @@ struct read_args {
 };
 
 struct sys_openat_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
-        char flag_l_[PADL_(int)]; int flag; char flag_r_[PADR_(int)];
-        char mode_l_[PADL_(__mode_t)]; __mode_t mode; char mode_r_[PADR_(__mode_t)];
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char path_l_[PADL_(char *)];
+    char * path;
+    char path_r_[PADR_(char *)];
+    char flag_l_[PADL_(int)];
+    int flag;
+    char flag_r_[PADR_(int)];
+    char mode_l_[PADL_(__mode_t)];
+    __mode_t mode;
+    char mode_r_[PADR_(__mode_t)];
 };
 
 struct sys_sysarch_args {
-        char op_l_[PADL_(int)]; int op; char op_r_[PADR_(int)];
-        char parms_l_[PADL_(char *)]; char * parms; char parms_r_[PADR_(char *)];
+    char op_l_[PADL_(int)];
+    int op;
+    char op_r_[PADR_(int)];
+    char parms_l_[PADL_(char *)];
+    char * parms;
+    char parms_r_[PADR_(char *)];
 };
 
 struct sys_getpid_args {
-        register_t dummy;
+    register_t dummy;
 };
 
 struct sys_ioctl_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-        char com_l_[PADL_(u_long)]; u_long com; char com_r_[PADR_(u_long)];
-        char data_l_[PADL_(caddr_t)]; caddr_t data; char data_r_[PADR_(caddr_t)];
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char com_l_[PADL_(u_long)];
+    u_long com;
+    char com_r_[PADR_(u_long)];
+    char data_l_[PADL_(caddr_t)];
+    caddr_t data;
+    char data_r_[PADR_(caddr_t)];
 };
 
 struct sys_geteuid_args {
-        register_t dummy;
+    register_t dummy;
 };
 
 struct sys_getppid_args {
-        register_t dummy;
+    register_t dummy;
 };
 
 struct sys_getegid_args {
-        register_t dummy;
+    register_t dummy;
 };
 
 struct sys_sigprocmask_args {
-        char how_l_[PADL_(int)]; int how; char how_r_[PADR_(int)];
-        char set_l_[PADL_(const sigset_t *)]; const sigset_t * set; char set_r_[PADR_(const sigset_t *)];
-        char oset_l_[PADL_(sigset_t *)]; sigset_t * oset; char oset_r_[PADR_(sigset_t *)];
+    char how_l_[PADL_(int)];
+    int how;
+    char how_r_[PADR_(int)];
+    char set_l_[PADL_(const sigset_t *)];
+    const sigset_t * set;
+    char set_r_[PADR_(const sigset_t *)];
+    char oset_l_[PADL_(sigset_t *)];
+    sigset_t * oset;
+    char oset_r_[PADR_(sigset_t *)];
 };
 
 struct sys_sigaction_args {
-        char sig_l_[PADL_(int)]; int sig; char sig_r_[PADR_(int)];
-        char act_l_[PADL_(const struct sigaction *)]; const struct sigaction * act; char act_r_[PADR_(const struct sigaction *)];
-        char oact_l_[PADL_(struct sigaction *)]; struct sigaction * oact; char oact_r_[PADR_(struct sigaction *)];
+    char sig_l_[PADL_(int)];
+    int sig;
+    char sig_r_[PADR_(int)];
+    char act_l_[PADL_(const struct sigaction *)];
+    const struct sigaction * act;
+    char act_r_[PADR_(const struct sigaction *)];
+    char oact_l_[PADL_(struct sigaction *)];
+    struct sigaction * oact;
+    char oact_r_[PADR_(struct sigaction *)];
 };
 
 struct sys_getpgrp_args {
-        register_t dummy;
+    register_t dummy;
 };
 struct sys_setpgid_args {
-        char pid_l_[PADL_(int)]; int pid; char pid_r_[PADR_(int)];
-        char pgid_l_[PADL_(int)]; int pgid; char pgid_r_[PADR_(int)];
+    char pid_l_[PADL_(int)];
+    int pid;
+    char pid_r_[PADR_(int)];
+    char pgid_l_[PADL_(int)];
+    int pgid;
+    char pgid_r_[PADR_(int)];
 };
 
 struct sys_access_args {
-        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
-        char amode_l_[PADL_(int)]; int amode; char amode_r_[PADR_(int)];
+    char path_l_[PADL_(char *)];
+    char * path;
+    char path_r_[PADR_(char *)];
+    char amode_l_[PADL_(int)];
+    int amode;
+    char amode_r_[PADR_(int)];
 };
 
 struct sys_statfs_args {
-        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
-        char buf_l_[PADL_(struct statfs *)]; struct statfs * buf; char buf_r_[PADR_(struct statfs *)];
+    char path_l_[PADL_(char *)];
+    char * path;
+    char path_r_[PADR_(char *)];
+    char buf_l_[PADL_(struct statfs *)];
+    struct statfs * buf;
+    char buf_r_[PADR_(struct statfs *)];
 };
 
 struct sys_fstatat_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
-        char buf_l_[PADL_(struct stat *)]; struct stat * buf; char buf_r_[PADR_(struct stat *)];
-        char flag_l_[PADL_(int)]; int flag; char flag_r_[PADR_(int)];
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char path_l_[PADL_(char *)];
+    char * path;
+    char path_r_[PADR_(char *)];
+    char buf_l_[PADL_(struct stat *)];
+    struct stat * buf;
+    char buf_r_[PADR_(struct stat *)];
+    char flag_l_[PADL_(int)];
+    int flag;
+    char flag_r_[PADR_(int)];
 };
 
 struct sys_fchdir_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
 };
 
 struct sys_getdirentries_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-        char buf_l_[PADL_(char *)]; char * buf; char buf_r_[PADR_(char *)];
-        char count_l_[PADL_(u_int)]; u_int count; char count_r_[PADR_(u_int)];
-        char basep_l_[PADL_(long *)]; long * basep; char basep_r_[PADR_(long *)];
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char buf_l_[PADL_(char *)];
+    char * buf;
+    char buf_r_[PADR_(char *)];
+    char count_l_[PADL_(u_int)];
+    u_int count;
+    char count_r_[PADR_(u_int)];
+    char basep_l_[PADL_(long *)];
+    long * basep;
+    char basep_r_[PADR_(long *)];
 };
 
 struct sys_socket_args {
-        char domain_l_[PADL_(int)]; int domain; char domain_r_[PADR_(int)];
-        char type_l_[PADL_(int)]; int type; char type_r_[PADR_(int)];
-        char protocol_l_[PADL_(int)]; int protocol; char protocol_r_[PADR_(int)];
+    char domain_l_[PADL_(int)];
+    int domain;
+    char domain_r_[PADR_(int)];
+    char type_l_[PADL_(int)];
+    int type;
+    char type_r_[PADR_(int)];
+    char protocol_l_[PADL_(int)];
+    int protocol;
+    char protocol_r_[PADR_(int)];
 };
 
 struct sys_setsockopt_args {
-        char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
-        char level_l_[PADL_(int)]; int level; char level_r_[PADR_(int)];
-        char name_l_[PADL_(int)]; int name; char name_r_[PADR_(int)];
-        char val_l_[PADL_(caddr_t)]; caddr_t val; char val_r_[PADR_(caddr_t)];
-        char valsize_l_[PADL_(int)]; int valsize; char valsize_r_[PADR_(int)];
+    char s_l_[PADL_(int)];
+    int s;
+    char s_r_[PADR_(int)];
+    char level_l_[PADL_(int)];
+    int level;
+    char level_r_[PADR_(int)];
+    char name_l_[PADL_(int)];
+    int name;
+    char name_r_[PADR_(int)];
+    char val_l_[PADL_(caddr_t)];
+    caddr_t val;
+    char val_r_[PADR_(caddr_t)];
+    char valsize_l_[PADL_(int)];
+    int valsize;
+    char valsize_r_[PADR_(int)];
 };
 
 struct sys_select_args {
-        char nd_l_[PADL_(int)]; int nd; char nd_r_[PADR_(int)];
-        char in_l_[PADL_(fd_set *)]; fd_set * in; char in_r_[PADR_(fd_set *)];
-        char ou_l_[PADL_(fd_set *)]; fd_set * ou; char ou_r_[PADR_(fd_set *)];
-        char ex_l_[PADL_(fd_set *)]; fd_set * ex; char ex_r_[PADR_(fd_set *)];
-        char tv_l_[PADL_(struct timeval *)]; struct timeval * tv; char tv_r_[PADR_(struct timeval *)];
+    char nd_l_[PADL_(int)];
+    int nd;
+    char nd_r_[PADR_(int)];
+    char in_l_[PADL_(fd_set *)];
+    fd_set * in;
+    char in_r_[PADR_(fd_set *)];
+    char ou_l_[PADL_(fd_set *)];
+    fd_set * ou;
+    char ou_r_[PADR_(fd_set *)];
+    char ex_l_[PADL_(fd_set *)];
+    fd_set * ex;
+    char ex_r_[PADR_(fd_set *)];
+    char tv_l_[PADL_(struct timeval *)];
+    struct timeval * tv;
+    char tv_r_[PADR_(struct timeval *)];
 };
-
 
 //Func Defs
 int sys_invalid(struct thread *, void *);
@@ -634,5 +735,5 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *);
 
 int sys_socket(struct thread *td, struct sys_socket_args *);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *);
-int sys_select(sutrct thread *td, struct sys_select_args *);
+int sys_select(struct thread *td, struct sys_select_args *);
 #endif

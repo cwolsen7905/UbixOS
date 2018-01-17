@@ -30,8 +30,7 @@
 #define _SYS_TYPES_H_
 
 #include <sys/_types.h>
-
-#define NULL 0x0
+#include <sys/select.h>
 
 #ifndef NULL
 #define NULL 0x0
