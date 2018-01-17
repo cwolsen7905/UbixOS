@@ -326,3 +326,9 @@ int sys_setpgid(struct thread *td, struct sys_setpgid_args *args) {
 
   return (0);
 }
+
+int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *args) {
+  gettimeofday(args->tp, args->tzp);
+  td->td_retval[0] = 0;
+  return (0);
+}

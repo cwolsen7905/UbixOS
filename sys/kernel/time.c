@@ -103,8 +103,8 @@ uInt32 timeMake(struct timeStruct *time) {
 }
 
 int gettimeofday(struct timeval *tp, struct timezone *tzp) {
-  //tp->tv_sec  = systemVitals->timeStart + systemVitals->sysUptime;
-  tp->tv_sec = 0x0; //systemVitals->sysUptime;
+  tp->tv_sec  = systemVitals->timeStart + systemVitals->sysUptime;
+  //tp->tv_sec = 0x0; //systemVitals->sysUptime;
   tp->tv_usec = 0x0;
   return (0x0);
 }

@@ -662,6 +662,21 @@ struct sys_select_args {
     char tv_r_[PADR_(struct timeval *)];
 };
 
+struct sys_gettimeofday_args {
+        char tp_l_[PADL_(struct timeval *)]; struct timeval * tp; char tp_r_[PADR_(struct timeval *)];
+        char tzp_l_[PADL_(struct timezone *)]; struct timezone * tzp; char tzp_r_[PADR_(struct timezone *)];
+};
+
+
+struct sys_sendto_args {
+        char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
+        char buf_l_[PADL_(caddr_t)]; caddr_t buf; char buf_r_[PADR_(caddr_t)];
+        char len_l_[PADL_(size_t)]; size_t len; char len_r_[PADR_(size_t)];
+        char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
+        char to_l_[PADL_(caddr_t)]; caddr_t to; char to_r_[PADR_(caddr_t)];
+        char tolen_l_[PADL_(int)]; int tolen; char tolen_r_[PADR_(int)];
+};
+
 //Func Defs
 int sys_invalid(struct thread *, void *);
 int sys_exit(struct thread *, struct sys_exit_args *);
@@ -736,4 +751,7 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *);
 int sys_socket(struct thread *td, struct sys_socket_args *);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *);
 int sys_select(struct thread *td, struct sys_select_args *);
+
+int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *);
+int sys_sendto(struct thread *td, struct sys_sendto_args *);
 #endif

@@ -147,7 +147,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 113 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 114 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 115 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 116 - Invalid */
+  { ARG_COUNT(sys_gettimeofday_args), "gettimeofday", sys_gettimeofday, SYSCALL_VALID }, // 116 - gettimeofday 
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 117 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 118 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 119 - Invalid */
@@ -164,7 +164,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 130 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 131 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 132 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 133 - Invalid */
+  { ARG_COUNT(sys_sendto_args), "sendto", sys_sendto, SYSCALL_VALID }, // 133 - sendto
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 134 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 135 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 136 - Invalid */
