@@ -55,8 +55,9 @@ err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
   ubthread_cond_init(&(newSem->cond), NULL);
   ubthread_mutex_init(&(newSem->mutex), NULL);
 
-  if (*sem != 0)
+  if (*sem != 0) {
     kpanic("UH OH!");
+  }
 
   *sem = newSem;
 
@@ -67,6 +68,7 @@ err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
 void sys_sem_free(struct sys_sem **sem) {
   if ((sem != NULL) && (*sem != SYS_SEM_NULL)) {
     sys_sem_free_internal(*sem);
+    *sem = 0x0;
   }
 }
 
@@ -191,6 +193,7 @@ void sys_mbox_free(struct sys_mbox **mb) {
     sys_sem_free_internal(mbox->lock);
     mbox->full = mbox->empty = mbox->lock = NULL;
     kfree(mbox);
+    *mb = 0x0;
   }
   //kfree(mbox->queue);
   //mbox->queue = NULL;
@@ -489,17 +492,10 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
   int fd = 0x0;
   struct file *nfp = 0x0;
 
-  /*
   error = falloc(td, &nfp, &fd);
 
   if (error)
     return (error);
-   */
-
-  //MrOlsen
-  fd = lwip_socket(args->domain, args->type, args->protocol);
-
-  nfp = (struct file *) td->o_files[fd];
 
   nfp->socket = lwip_socket(args->domain, args->type, args->protocol);
   nfp->fd_type = 2;

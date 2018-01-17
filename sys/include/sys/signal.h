@@ -43,12 +43,6 @@
 #define SIG_UNBLOCK     2       /* unblock specified signal set */
 #define SIG_SETMASK     3       /* set specified signal set */
 
-typedef struct __sigset {
-        __uint32_t __bits[_SIG_WORDS];
-  } __sigset_t;
-
-typedef __sigset_t sigset_t;
-
 // Signal vector "template" used in sigaction call.
 struct sigaction {
         union {

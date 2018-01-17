@@ -257,21 +257,21 @@ int sys_select(struct thread *td, struct sys_select_args *args) {
     error = -1;
 
   if (args->in != 0x0) {
-    for (i = 0; i < args->nd; i++) {
+    for (i = 0; i < MAX_FILES; i++) {
       if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_rfds))
         FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->in);
     }
   }
 
   if (args->ou != 0x0) {
-    for (i = 0; i < args->nd; i++) {
+    for (i = 0; i < MAX_FILES; i++) {
       if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds))
         FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ou);
     }
   }
 
   if (args->ex != 0x0) {
-    for (i = 0; i < args->nd; i++) {
+    for (i = 0; i < MAX_FILES; i++) {
       if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_efds))
         FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ex);
     }
