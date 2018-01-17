@@ -49,15 +49,15 @@ static struct sys_sem *sys_sem_new_internal(uint8_t count) {
 err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
   sys_sem_t *newSem = 0x0;
 
+  if (*sem != 0) {
+    kpanic("UH OH!");
+  }
+
   newSem = kmalloc(sizeof(struct sys_sem));
   newSem->signaled = count;
 
   ubthread_cond_init(&(newSem->cond), NULL);
   ubthread_mutex_init(&(newSem->mutex), NULL);
-
-  if (*sem != 0) {
-    kpanic("UH OH!");
-  }
 
   *sem = newSem;
 
@@ -180,6 +180,7 @@ err_t sys_mbox_new(struct sys_mbox **mb, int size) {
   //}
 
   *mb = mbox;
+
   return (ERR_OK);
 }
 
