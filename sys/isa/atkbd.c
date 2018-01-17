@@ -52,8 +52,8 @@ static uInt32 controlKeys = 0x0;
 static struct spinLock atkbdSpinLock = SPIN_LOCK_INITIALIZER;
 
 static unsigned int keyboardMap[255][8] = {
-/*           Ascii,  Shift,   Ctrl,    Alt,    Num,   Caps, Shift Caps, Shift Num */
-{ 0, 0, 0, 0, 0, 0, 0, 0 },
+/*           Ascii, Shift, Ctrl, Alt, Num, Caps, Shift Caps, Shift Num */
+{     0,     0,    0,   0,   0,    0,          0,         0 },
 /* ESC */{ 0x1B, 0x1B, 0x1B, 0x1B, 0x1B, 0x1B, 0x1B, 0x1B },
 /* 1,! */{ 0x31, 0x21, 0, 0, 0x31, 0x31, 0x21, 0x21 },
 /* 2,@ */{ 0x32, 0x40, 0, 0, 0x32, 0x32, 0x40, 0x40 },
@@ -71,7 +71,7 @@ static unsigned int keyboardMap[255][8] = {
 /*  15 */{ 0x09, 0, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x71, 0x51, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x77, 0x57, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x65, 0x45, 0, 0, 0, 0, 0, 0 },
+/* e,E */{ 0x65, 0x45, 0x05, 0, 0, 0, 0, 0 },
 /*     */{ 0x72, 0x52, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x74, 0x54, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x79, 0x59, 0, 0, 0, 0, 0, 0 },
@@ -83,12 +83,12 @@ static unsigned int keyboardMap[255][8] = {
 /*     */{ 0x5D, 0x7D, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x0A, 0, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0, 0, 0, 0, 0, 0, 0, 0 },
-/* a,A */{ 0x61, 0x41, 0x41, 0, 0, 0, 0, 0 },
+/* a,A */{ 0x61, 0x41, 0x01, 0, 0, 0, 0, 0 },
 /*     */{ 0x73, 0x53, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x64, 0x44, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x66, 0x46, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x67, 0x47, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x68, 0x48, 0, 0, 0, 0, 0, 0 },
+/* d,D */{ 0x64, 0x44, 0x04, 0, 0, 0, 0, 0 },
+/* f,F */{ 0x66, 0x46, 0x06, 0, 0, 0, 0, 0 },
+/* g,G */{ 0x67, 0x47, 0x07, 0, 0, 0, 0, 0 },
+/* h,H */{ 0x68, 0x48, 0x08, 0, 0, 0, 0, 0 },
 /*     */{ 0x6A, 0x4A, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x6B, 0x4B, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x6C, 0x4C, 0, 0, 0, 0, 0, 0 },
@@ -98,10 +98,10 @@ static unsigned int keyboardMap[255][8] = {
 /*     */{ 0x2A, 0x0, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x5C, 0x3C, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x7A, 0x5A, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x78, 0x58, 0, 0, 0, 0, 0, 0 },
-/* c,C */{ 0x63, 0x43, 0x3, 0x9, 0, 0, 0, 0 },
+/* x,X */{ 0x78, 0x58, 0x18, 0, 0, 0, 0, 0 },
+/* c,C */{ 0x63, 0x43, 0x03, 0x9, 0, 0, 0, 0 },
 /*     */{ 0x76, 0x56, 0, 0, 0, 0, 0, 0 },
-/*     */{ 0x62, 0x42, 0, 0, 0, 0, 0, 0 },
+/* b,B */{ 0x62, 0x42, 0x02, 0, 0, 0, 0, 0 },
 /*     */{ 0x6E, 0x4E, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x6D, 0x4D, 0, 0, 0, 0, 0, 0 },
 /*     */{ 0x2C, 0x3C, 0, 0, 0, 0, 0, 0 },
@@ -179,13 +179,16 @@ int atkbd_init() {
 asm(
   ".globl atkbd_isr       \n"
   "atkbd_isr:             \n"
+  "push $0x80\n"
+  "push $0x80\n"
   "  pusha                \n" /* Save all registers           */
-  "  push %ss             \n"
   "  push %ds             \n"
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
+  "  push %esp            \n"
   "  call keyboardHandler \n"
+  "  add $0x4,%esp\n"
   "  mov $0x20,%dx        \n"
   "  mov $0x20,%ax        \n"
   "  outb %al,%dx         \n"
@@ -193,8 +196,8 @@ asm(
   "  pop %fs              \n"
   "  pop %es              \n"
   "  pop %ds              \n"
-  "  pop %ss              \n"
   "  popa                 \n"
+  "  add $0x8,%esp\n"
   "  iret                 \n" /* Exit interrupt                           */
 );
 
@@ -211,7 +214,7 @@ static int atkbd_scan() {
   return (code);
 }
 
-void keyboardHandler() {
+void keyboardHandler(struct trapframe *frame) {
   int key = 0x0;
 
   if (spinTryLock(&atkbdSpinLock))
@@ -221,6 +224,7 @@ void keyboardHandler() {
 
   if (key > 255)
     return;
+
 
   /* Control Key */
   if (key == 0x1D && !(controlKeys & controlKey)) {
@@ -297,6 +301,10 @@ void keyboardHandler() {
         while (inportByte(0x64) & 0x02)
           ;
         outportByte(0x64, 0xFE);
+      break;
+      case 0x18:
+          if (tty_foreground->owner == _current->id)
+            die_if_kernel("CTRL-X", frame, frame->tf_eax);
       break;
       default:
         if (tty_foreground == 0x0) {
