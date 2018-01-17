@@ -575,7 +575,7 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
   /*
    #ifdef DEBUG
    */
-  kprintf("CVS: [0x%X]\n", addr);
+  //MrOlsen 2018kprintf("CVS: [0x%X]\n", addr);
   /*
    #endif
    */

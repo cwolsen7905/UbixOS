@@ -383,7 +383,6 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
   }
   /* Search For The File */
   if ( tmpFd->mp->fs->vfsOpenFile( tmpFd->fileName, tmpFd ) == 0x1 ) {
-    kprintf("fopen1");
     /* If The File Is Found Then Set Up The Descriptor */
 
     /* in order to save resources we will allocate the buffer later when it is needed */
@@ -423,7 +422,6 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (tmpFd);
   }
   else {
-    kprintf("fopen2");
     kfree( tmpFd->buffer );
     kfree( tmpFd );
     spinUnlock( &fdTable_lock );

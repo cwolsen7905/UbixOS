@@ -119,7 +119,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
     if ( c == '\n')
       buf[x++] = '\n';
 
-    kprintf("READ: %i", x);
+   //MROlsen 2018 kprintf("READ: %i", x);
 
     td->td_retval[0] = x;
   }

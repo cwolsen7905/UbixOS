@@ -38,6 +38,7 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <sys/signal.h>
+#include <ubixos/errno.h>
 
 /* Exit Syscall */
 int sys_exit(struct thread *td, struct sys_exit_args *args) {
@@ -145,13 +146,21 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
   int error = 0;
   kprintf("wait4: %i", args->pid);
 
+
   if (args->pid == -1) {
+    if (_current->children <= 0) {
+    td->td_retval[0] = ECHILD;
+    return(-1);
+    }
+
     int children = _current->children;
 
     while (_current->children == children)
       sched_yield();
 
     td->td_retval[0] = _current->last_exit;
+    td->td_retval[1] = 0x8;
+     return(0x0);
   } else {
 
   kTask_t *tmpTask = schedFindTask(args->pid);

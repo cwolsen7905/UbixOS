@@ -472,7 +472,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   sprintf(newProcess->oInfo.cwd, "/");
 
-  kprintf("execFile Return: 0x%X - %i\n",  newProcess->tss.eip, newProcess->id);
+  //MrOlsen 2018 kprintf("execFile Return: 0x%X - %i\n",  newProcess->tss.eip, newProcess->id);
 
   /* Put new thread into the READY state */
   sched_setStatus(newProcess->id, READY);
@@ -487,10 +487,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   int i = 0x0;
   int x = 0x0;
-
-  kprintf("EXEVE: %s(%i)", file, _current->id);
-  if (_current->id == 10)
-    asm("nop");
 
   int argc = argv_count(argv);
   int envc = envp_count(envp);
@@ -521,7 +517,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   asm("movl %%cr3, %0;" : "=r" (cr3));
 
   fd = fopen(file, "r");
-  kprintf("fd: 0x%X", fd);
 
   if (fd == 0x0)
     return (-1);
@@ -540,7 +535,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   uint32_t *argv_out = 0x0;
   char *args_out = 0x0;
 
-  kprintf("ARGV: 0x%X\n", &argv_out);
+  //MrOlsen 2018kprintf("ARGV: 0x%X\n", &argv_out);
 
   args_copyin(argv, &argv_out, &args_out);
 
@@ -648,12 +643,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         }
 
         if ((programHeader[i].p_flags & PF_X) && text_size < seg_size) {
-          kprintf("setting text: 0x%X - 0x%X\n", seg_addr, seg_size);
+          //MrOlsen 2018kprintf("setting text: 0x%X - 0x%X\n", seg_addr, seg_size);
           text_size = seg_size;
           text_addr = seg_addr;
         }
         else {
-          kprintf("setting data: 0x%X - 0x%X\n", seg_addr, seg_size);
+          //MrOlsen 2018kprintf("setting data: 0x%X - 0x%X\n", seg_addr, seg_size);
           data_size = seg_size;
           data_addr = seg_addr;
           /*
@@ -698,7 +693,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   _current->td.vm_dsize = data_size >> PAGE_SHIFT;
   _current->td.vm_daddr = data_addr;
 
-  kprintf("Done Looping\n");
+  //MrOlsen 2018kprintf("Done Looping\n");
 
   ef->preloaded = 1;
   ef->address = 0x0;
@@ -712,11 +707,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   if (ldAddr != 0x0) {
     iFrame->eip = ldAddr;
-    kprintf("DYN");
   }
   else {
     iFrame->eip = binaryHeader->e_entry;
-    kprintf("STATIC");
   }
 
   //iFrame->edx = 0x0;
@@ -776,26 +769,26 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   tmp[i++] = 2;
   tmp[i++] = -1;// tFD;  // _current->imageFd;
   _current->td.o_files[4] = _current->files[0];
-  kprintf("AT_EXECFD: [%i:%i]", tmp[i - 1], tFD);
+  //MrOlsen 2018kprintf("AT_EXECFD: [%i:%i]", tmp[i - 1], tFD);
 
   tmp[i++] = 3;
   tmp[i++] = binaryHeader->e_phoff + 0x08048000;
-  kprintf("AT_PHDR: [0x%X]", tmp[i - 1]);
+  //MrOlsen 2018kprintf("AT_PHDR: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 4;
   tmp[i++] = binaryHeader->e_phentsize;
-  kprintf("AT_PHENT: [0x%X]", tmp[i - 1]);
+  //MrOlsen 2018kprintf("AT_PHENT: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 5;
   tmp[i++] = binaryHeader->e_phnum;
-  kprintf("AT_PHNUM: [0x%X]", tmp[i - 1]);
+  //MrOlsen 2018kprintf("AT_PHNUM: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 6;
   tmp[i++] = 0x1000;
 
   tmp[i++] = 7;
   tmp[i++] = LD_START;
-  kprintf("AT_BASE: [0x%X]", tmp[i - 1]);
+  //MrOlsen 2018kprintf("AT_BASE: [0x%X]", tmp[i - 1]);
 
   tmp[i++] = 8;
   tmp[i++] = 0x0;

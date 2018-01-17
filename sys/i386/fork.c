@@ -94,7 +94,7 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
+  //MrOlsen 2018 kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
 
   newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
   //kprintf( "Copied Mem Space!\n" );
@@ -109,7 +109,7 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   _current->children++;
 
   /* Return Id of Proccess */
-  kprintf("Returning! [%i][0x%X]\n", _current->id, newProcess->tss.cr3);
+  //MrOlsen 2018kprintf("Returning! [%i][0x%X]\n", _current->id, newProcess->tss.cr3);
   td->td_retval[0] = newProcess->id;
   return (0);
 
@@ -174,7 +174,7 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
   /* Create A Copy Of The VM Space For New Task */
-  kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr);
+  //MrOlsen 2018kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i:0x%X]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, esi, eip, newProcess->id, _current->id, newProcess->td.vm_daddr);
   newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
   //kprintf( "Copied Mem Space!\n" );
 
@@ -184,7 +184,7 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
   while (tmpProcPtr->state == FORK)
     sched_yield();
   /* Return Id of Proccess */
-  kprintf("Returning! [%i]", _current->id);
+  //MrOlsen 2018kprintf("Returning! [%i]", _current->id);
   return (newProcess->id);
 }
 
