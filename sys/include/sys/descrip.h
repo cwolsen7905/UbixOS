@@ -103,6 +103,8 @@ struct file {
     uint16_t f_type;
     struct fileOps *f_ops;
     fileDescriptor_t *fd;
+    int fd_type;
+    int socket;
 };
 
 struct fileOps {

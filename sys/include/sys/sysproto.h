@@ -515,6 +515,51 @@ struct sys_access_args {
         char amode_l_[PADL_(int)]; int amode; char amode_r_[PADR_(int)];
 };
 
+struct sys_statfs_args {
+        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
+        char buf_l_[PADL_(struct statfs *)]; struct statfs * buf; char buf_r_[PADR_(struct statfs *)];
+};
+
+struct sys_fstatat_args {
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+        char path_l_[PADL_(char *)]; char * path; char path_r_[PADR_(char *)];
+        char buf_l_[PADL_(struct stat *)]; struct stat * buf; char buf_r_[PADR_(struct stat *)];
+        char flag_l_[PADL_(int)]; int flag; char flag_r_[PADR_(int)];
+};
+
+struct sys_fchdir_args {
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+};
+
+struct sys_getdirentries_args {
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+        char buf_l_[PADL_(char *)]; char * buf; char buf_r_[PADR_(char *)];
+        char count_l_[PADL_(u_int)]; u_int count; char count_r_[PADR_(u_int)];
+        char basep_l_[PADL_(long *)]; long * basep; char basep_r_[PADR_(long *)];
+};
+
+struct sys_socket_args {
+        char domain_l_[PADL_(int)]; int domain; char domain_r_[PADR_(int)];
+        char type_l_[PADL_(int)]; int type; char type_r_[PADR_(int)];
+        char protocol_l_[PADL_(int)]; int protocol; char protocol_r_[PADR_(int)];
+};
+
+struct sys_setsockopt_args {
+        char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
+        char level_l_[PADL_(int)]; int level; char level_r_[PADR_(int)];
+        char name_l_[PADL_(int)]; int name; char name_r_[PADR_(int)];
+        char val_l_[PADL_(caddr_t)]; caddr_t val; char val_r_[PADR_(caddr_t)];
+        char valsize_l_[PADL_(int)]; int valsize; char valsize_r_[PADR_(int)];
+};
+
+struct sys_select_args {
+        char nd_l_[PADL_(int)]; int nd; char nd_r_[PADR_(int)];
+        char in_l_[PADL_(fd_set *)]; fd_set * in; char in_r_[PADR_(fd_set *)];
+        char ou_l_[PADL_(fd_set *)]; fd_set * ou; char ou_r_[PADR_(fd_set *)];
+        char ex_l_[PADL_(fd_set *)]; fd_set * ex; char ex_r_[PADR_(fd_set *)];
+        char tv_l_[PADL_(struct timeval *)]; struct timeval * tv; char tv_r_[PADR_(struct timeval *)];
+};
+
 
 //Func Defs
 int sys_invalid(struct thread *, void *);
@@ -555,10 +600,12 @@ int access(struct thread *td, struct access_args *uap);
 int fstatfs(struct thread *td, struct sys_fstatfs_args *uap);
 int mprotect(struct thread *td, struct mprotect_args *uap);
 
+int sys_statfs(struct thread *td, struct sys_statfs_args *args);
 int sys_fstatfs(struct thread *td, struct sys_fstatfs_args *);
 int sys_stat(struct thread *td, struct sys_stat_args *);
 int sys_lstat(struct thread *td, struct sys_lstat_args *);
 int sys_fstat(struct thread *td, struct sys_fstat_args *);
+int sys_fstatat(struct thread *td, struct sys_fstatat_args *);
 int sys_openat(struct thread *td, struct sys_openat_args *);
 
 int sys_sysarch(struct thread *td, struct sys_sysarch_args *);
@@ -581,9 +628,11 @@ int sys_getpgrp(struct thread *td, struct sys_getpgrp_args *);
 int sys_setpgid(struct thread *td, struct sys_setpgid_args *);
 
 int sys_access(struct thread *td, struct sys_access_args *);
+int sys_fchdir(struct thread *td, struct sys_fchdir_args *);
+
+int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *);
+
+int sys_socket(struct thread *td, struct sys_socket_args *);
+int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *);
+int sys_select(sutrct thread *td, struct sys_select_args *);
 #endif
-
-/***
- END
- ***/
-

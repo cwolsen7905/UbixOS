@@ -4,6 +4,8 @@
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <sys/sysproto.h>
+#include <sys/descrip.h>
 
 #include "net/debug.h"
 #include "net/sys.h"
@@ -479,4 +481,82 @@ unsigned long sys_unix_now() {
 
 uint32_t sys_now() {
   return (sys_unix_now());
+}
+
+
+int sys_socket(struct thread *td, struct sys_socket_args *args) {
+  int error = 0x0;
+  int fd = 0x0;
+  struct file *nfp = 0x0;
+
+  error = falloc(td, &nfp, &fd);
+
+  if (error)
+    return (error);
+
+  nfp->socket = lwip_socket(args->domain, args->type, args->protocol);
+  nfp->fd_type = 2;
+  kprintf("socket(%i:%i): 0x%X:0x%X:0x%X", nfp->socket, fd, args->domain, args->type, args->protocol);
+
+  if (nfp->fd == 0x0  && nfp->socket) {
+    fdestroy(td, nfp, fd);
+
+    td->td_retval[0] = -1;
+    error = -1;
+  }
+  else {
+    td->td_retval[0] = fd;//nfp->fd; //MrOlsen 2018index;
+  }
+
+  return (error);
+}
+
+int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
+  struct file *fd = 0x0;
+  getfd(td, &fd, args->s);
+
+  td->td_retval[0] = lwip_setsockopt(fd->socket, args->level, args->name, args->val, args->valsize);
+  kprintf("SSO: %i:%i:%i", args->s, fd->socket, td->td_retval[0]);
+  td->td_retval[0] = 0;
+
+  return(0);
+}
+
+int sys_select(struct thread *td, struct sys_select_args *args) {
+  int error = 0;
+  int i     = 0;
+
+  fd_set rfds;
+  fd_set wfds;
+  fd_set efds;
+
+  FD_ZERO(&rfds);
+  FD_ZERO(&wfds);
+  FD_ZERO(&efds);
+
+  if (args->in != 0x0) {
+    for (i = 0;i < args->nd;i++)  {
+      rfds[i] = (struct file *)td->o_files[args->in[0]].socket;
+    } 
+  }
+
+  if (args->ou != 0x0) {
+    rfds = (fd_set *)kmalloc(sizeof(fd_set) * args->nd);
+    for (i = 0;i < args->nd;i++)  {
+      rfds[i] = (struct file *)td->o_files[args->ou[0]].socket;
+    } 
+  }
+
+  if (args->ex != 0x0) {
+    rfds = (fd_set *)kmalloc(sizeof(fd_set) * args->nd);
+    for (i = 0;i < args->nd;i++)  {
+      rfds[i] = (struct file *)td->o_files[args->ex[0]].socket;
+    } 
+  }
+  
+
+  if ((td->td_retval[0] = lwip_select(nd,&rfds,&wfds,&efds,args->timeval)) == -1) 
+    error = -1;
+
+  return(error);
 }

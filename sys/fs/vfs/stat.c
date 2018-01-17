@@ -121,6 +121,55 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
   return(error);
 }
 
+int sys_fstatat(struct thread *td, struct sys_fstatat_args *args) {
+  int error = 0;
+
+  struct file *fdd = 0x0;
+  fileDescriptor_t *fd = 0x0;
+  struct stat *sb = 0x0;
+  int uP = 0x0;
+
+  //kprintf("FSTATAT(%i:%s:%s)", args->fd, args->path, args->flag);
+
+  if (strlen(args->path) > 0) {
+    fd = fopen(args->path,"rb");
+    uP = 1;
+  }
+  else {
+    getfd(td, &fdd, args->fd);
+    if (fdd == 0 || fdd->fd == 0x0) {
+    error = -1;
+    }
+    else {
+    fd = fdd->fd;
+    }
+  }
+
+  if (fd == 0x0) {
+    error = -1;
+  }
+  else {
+  sb = args->buf;
+  sb->st_dev = 0xDEADBEEF;
+  sb->st_ino = fd->ino;
+  sb->st_mode = fd->inode.u.ufs2_i.di_mode;
+  sb->st_nlink = fd->inode.u.ufs2_i.di_nlink;
+  sb->st_uid = fd->inode.u.ufs2_i.di_uid;
+  sb->st_gid = fd->inode.u.ufs2_i.di_gid;
+  sb->st_rdev = 0xBEEFDEAD;
+  sb->st_size = fd->inode.u.ufs2_i.di_size;
+  sb->st_atime = fd->inode.u.ufs2_i.di_atime;
+  sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
+  sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
+  //kprintf("FSTAT(%i:%s:%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X:0x%X", args->fd, args->path, args->flag, sb->st_ino, sb->st_mode, sb->st_uid, sb->st_gid, sb->st_size, fd->size);
+  if (uP == 1)
+    fclose(fd);
+  }
+
+  td->td_retval[0] = error;
+  return(error);
+}
+
 int sys_fstatfs(struct thread *td, struct sys_fstatfs_args *args) {
   int error = 0;
 
@@ -179,6 +228,67 @@ sprintf(args->buf->f_mntonname,"/");
 
   
 }
+
+int sys_statfs(struct thread *td, struct sys_statfs_args *args) {
+  int error = 0;
+  fileDescriptor_t *fd = 0x0;
+
+  fd = fopen(args->path, "rb");
+
+  if (fd == 0) {
+    error = -1;
+  }
+  else {
+  /*
+  args->buf->st_dev = 0xDEADBEEF;
+  args->buf->st_ino = fd->fd->ino;
+  args->buf->st_mode = fd->fd->inode.u.ufs2_i.di_mode;
+  args->buf->st_nlink = fd->fd->inode.u.ufs2_i.di_nlink;
+  args->buf->st_uid = fd->fd->inode.u.ufs2_i.di_uid;
+  args->buf->st_gid = fd->fd->inode.u.ufs2_i.di_gid;
+  args->buf->st_rdev = 0xBEEFDEAD;
+  args->buf->st_size = fd->fd->inode.u.ufs2_i.di_size;
+  args->buf->st_atime = fd->fd->inode.u.ufs2_i.di_atime;
+  args->buf->st_mtime = fd->fd->inode.u.ufs2_i.di_mtime;
+  args->buf->st_ctime = fd->fd->inode.u.ufs2_i.di_ctime;
+  //MrOlsen kprintf("LSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X", error, args->buf->st_ino, args->buf->st_mode, args->buf->st_uid, args->buf->st_gid, args->buf->st_size);
+  //fclose(fd);
+  */
+
+//kprintf("sFS: %s", args->path);
+
+args->buf->f_version=0x20030518;
+args->buf->f_type=0x35;
+args->buf->f_flags=0x1000;
+args->buf->f_bsize=0x1000;
+args->buf->f_iosize=0x8000;
+args->buf->f_blocks=0x7bf9d;
+args->buf->f_bfree=0x73c0c;
+args->buf->f_bavail=0x69d5c;
+args->buf->f_files=0x3fffe;
+args->buf->f_ffree=0x3d3f0;
+args->buf->f_syncwrites=0x75232;
+args->buf->f_asyncwrites=0x2b804;
+args->buf->f_syncreads=0x2edea;
+args->buf->f_asyncreads=0x6182;
+args->buf->f_namemax=0xFF;
+args->buf->f_owner=0x0;
+args->buf->f_fsid.val[0]=0x5A31F4F0;
+args->buf->f_fsid.val[1]=0x65E7C98F;
+//args->buf->f_charspare= {""};
+sprintf(args->buf->f_fstypename, "ufs");
+sprintf(args->buf->f_mntfromname, "/dev/ada0s1a");
+sprintf(args->buf->f_mntonname,"/");
+
+
+  }
+
+  td->td_retval[0] = error;
+  return(error);
+
+
+}
+
 
 /* Return stat of path do not follow if link return stat of link */
 int sys_lstat(struct thread *td, struct sys_lstat_args *args) {

@@ -76,6 +76,7 @@ typedef struct fileDescriptor {
     int dsk_meta;
     uint32_t resid;
     struct inode inode;
+    int fd_type;
 } fileDescriptor_t;
 
 typedef struct userFileDescriptorStruct {

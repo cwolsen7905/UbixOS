@@ -32,6 +32,7 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <string.h>
+#include <ufs/ufs.h>
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
   int error = 0x0;
@@ -43,7 +44,8 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
   if (error)
     return (error);
 
-  nfp->fd = fopen(args->path, "r");
+  kprintf("sO: 0x%X:%s", args->mode, args->path);
+  nfp->fd = fopen(args->path, "rb");
 
   if (nfp->fd == 0x0) {
     fdestroy(td, nfp, fd);
@@ -60,7 +62,6 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
 
 int sys_close(struct thread *td, struct sys_close_args *args) {
   struct file *fd = 0x0;
-
   getfd(td, &fd, args->fd);
 
   if (fd == 0x0) {
@@ -119,6 +120,9 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
     if ( c == '\n')
       buf[x++] = '\n';
 
+          bf[0] = '\n';
+          kprint(bf);
+
    //MROlsen 2018 kprintf("READ: %i", x);
 
     td->td_retval[0] = x;
@@ -160,5 +164,35 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 int sys_access(struct thread *td, struct sys_access_args *args) {
   kprintf("%s:%i", args->path, args->amode);
   td->td_retval[0] = 0;
+  return(0);
+}
+
+int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
+  //kprintf("GDE: [%i:%i:0x%X]", args->fd, args->count, args->basep);
+  struct file *fd = 0x0;
+  getfd(td, &fd, args->fd);
+
+  char buf[DEV_BSIZE];
+  struct dirent *d;
+  char *s;
+  ssize_t n;
+
+  //fd->offset = 0;
+  td->td_retval[0] = fread(args->buf, args->count, 1, fd->fd);
+  //n = fsread(fd->fd->ino, args->buf, DEV_BSIZE, fd->fd);
+  //td->td_retval[0] = n;
+
+  /*
+  while ((n = fsread(*ino, buf, DEV_BSIZE, fd)) > 0)
+    for (s = buf; s < buf + DEV_BSIZE;) {
+      d = (void *) s;
+      if (!strcmp(name, d->d_name)) {
+        *ino = d->d_fileno;
+        return d->d_type;
+      }
+      s += d->d_reclen;
+    }
+*/
+  
   return(0);
 }

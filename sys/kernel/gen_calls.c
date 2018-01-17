@@ -144,7 +144,7 @@ int sys_invalid(struct thread *td, void *args) {
 
 int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
   int error = 0;
-  kprintf("wait4: %i", args->pid);
+  //MrOlsen 2018kprintf("wait4: %i", args->pid);
 
 
   if (args->pid == -1) {

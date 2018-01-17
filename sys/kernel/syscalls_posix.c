@@ -43,8 +43,8 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { ARG_COUNT(sys_chdir_args), "Change Dir", (sys_call_t *) sys_chdir, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { ARG_COUNT(sys_chdir_args), "Change Dir", (sys_call_t *) sys_chdir, SYSCALL_VALID }, // 12 - chdir
+  { ARG_COUNT(sys_fchdir_args), "fchdir", sys_fchdir, SYSCALL_VALID },                  // 13 - fchdir
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
   { 0, "No Call", sys_invalid, SYSCALL_VALID },
@@ -124,11 +124,11 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  90 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  91 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  92 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  93 - Invalid */
+  { ARG_COUNT(sys_select_args), "select", sys_select, SYSCALL_VALID }, // 93 - select
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  94 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  95 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  96 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  97 - Invalid */
+  { ARG_COUNT(sys_socket_args), "socket", sys_socket, SYSCALL_VALID }, //  97 - socket
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  98 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  99 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 100 - Invalid */
@@ -136,7 +136,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 102 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 103 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 104 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 105 - Invalid */
+  { ARG_COUNT(sys_setsockopt_args), "setsockopt", sys_setsockopt, SYSCALL_VALID }, // 105 setsockopt
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 106 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 107 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 108 - Invalid */
@@ -227,7 +227,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 193 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 194 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 195 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 196 - Invalid */
+  { ARG_COUNT(sys_getdirentries_args), "getdirentries", sys_getdirentries, SYSCALL_VALID }, // 196 - getdirentries
   { ARG_COUNT(sys_mmap_args), "MMAP", (sys_call_t *) sys_mmap, SYSCALL_VALID }, /* 197 - sys_mmap */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 198 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 199 - Invalid */
@@ -427,8 +427,8 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 383 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 384 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 385 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 386 - Invalid */
-    { ARG_COUNT(sys_fstatfs_args), "fstatfs", (sys_call_t *) sys_fstatfs, SYSCALL_VALID }, /* 397 fstatfs */
+    { ARG_COUNT(sys_statfs_args), "statfs", (sys_call_t *) sys_statfs, SYSCALL_VALID }, // 396 statfs
+    { ARG_COUNT(sys_fstatfs_args), "fstatfs", (sys_call_t *) sys_fstatfs, SYSCALL_VALID }, // 397 fstatfs
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 398 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 399 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 400 - Invalid */
@@ -524,7 +524,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 352 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 353 - Invalid */
+  { ARG_COUNT(sys_fstatat_args), "fstatat", sys_fstatat, SYSCALL_VALID }, // 493 - fstatat
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 354 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 355 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 356 - Invalid */

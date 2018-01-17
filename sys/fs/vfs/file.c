@@ -36,6 +36,7 @@
 #include <vmm/paging.h>
 #include <lib/kprintf.h>
 #include <assert.h>
+#include <sys/descrip.h>
 
 static struct spinLock fdTable_lock = SPIN_LOCK_INITIALIZER;
 
@@ -138,6 +139,29 @@ int sys_chdir( struct thread *td, struct sys_chdir_args *args ) {
     sprintf( _current->oInfo.cwd, args->path );
   }
   return (0);
+}
+
+int sys_fchdir( struct thread *td, struct sys_fchdir_args *args ) {
+  int error = 0;
+  struct file *fdd = 0x0;
+  fileDescriptor_t *fd = 0x0;
+
+  getfd(td, &fdd, args->fd);
+
+  fd = fdd->fd;
+
+  if (fdd == 0 || fdd->fd == 0x0) {
+    error = -1;
+  }
+else {
+  if ( strstr( fd->fileName, ":" ) == 0x0 ) {
+    sprintf( _current->oInfo.cwd, "%s%s", _current->oInfo.cwd, fd->fileName );
+  }
+  else {
+    sprintf( _current->oInfo.cwd, fd->fileName );
+  }
+}
+  return (error);
 }
 
 int sysUnlink( const char *path, int *retVal ) {
@@ -330,7 +354,10 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (NULL);
   }
 
-  strcpy( fileName, file );
+  if (file[0] == "." && file[1] == '\0')
+    strcpy(fileName, _current->oInfo.cwd);
+  else
+    strcpy( fileName, file );
 
   if ( strstr( fileName, ":" ) ) {
     mountPoint = (char *) strtok( (char *) &fileName, ":" );
