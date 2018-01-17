@@ -224,6 +224,7 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
 
 int sys_select(struct thread *td, struct sys_select_args *args) {
   int error = 0x0;
+  /*
   int i = 0x0;
 
   fd_set sock_rfds;
@@ -276,6 +277,10 @@ int sys_select(struct thread *td, struct sys_select_args *args) {
     }
   }
 
+   */
+
+  if ((td->td_retval[0] = lwip_select(args->nd, args->in, args->ou, args->ex, args->tv)) == -1)
+    error = -1;
 
   return (error);
 }

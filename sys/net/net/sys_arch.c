@@ -489,10 +489,17 @@ int sys_socket(struct thread *td, struct sys_socket_args *args) {
   int fd = 0x0;
   struct file *nfp = 0x0;
 
+  /*
   error = falloc(td, &nfp, &fd);
 
   if (error)
     return (error);
+   */
+
+  //MrOlsen
+  fd = lwip_socket(args->domain, args->type, args->protocol);
+
+  nfp = (struct file *) td->o_files[fd];
 
   nfp->socket = lwip_socket(args->domain, args->type, args->protocol);
   nfp->fd_type = 2;
