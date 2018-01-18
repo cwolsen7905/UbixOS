@@ -369,17 +369,19 @@ void execFile(char *file, char **argv, char **envp, int console) {
   /* Set Up Stack Space */
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
   //x = 0 because GS= stack address not address -1 fix!
-  for (x = 0; x <= 100; x++) {
-    vmm_remapPage(vmm_findFreePage(newProcess->id), STACK_ADDR - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id);
-    bzero(STACK_ADDR - (x * 0x1000), 0x1000);
+  for (x = 1; x <= 100; x++) {
+    vmm_remapPage(vmm_findFreePage(newProcess->id), (STACK_ADDR+1) - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+    bzero((STACK_ADDR+1) - (x * 0x1000), 0x1000);
   }
 
   /* Kernel Stack 0x2000 bytes long */
 
   //vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
   //vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+  /*
   for (x = 0; x < 2; x++)
     vmm_remapPage(vmm_findFreePage(newProcess->id), 0xFFFFF000 - (PAGE_SIZE * x), KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+  */
 
   /* Set All The Proper Information For The Task */
   newProcess->tss.back_link = 0x0;

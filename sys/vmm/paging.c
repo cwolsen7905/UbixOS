@@ -108,6 +108,11 @@ int vmm_pagingInit() {
     kernelPageDirectory[i] = (uint32_t) ((uint32_t) (pageTable) | KERNEL_PAGE_DEFAULT | PAGE_GLOBAL);
   } /* end for */
 
+  kernelPageDirectory[1023] = (uint32_t) ((uint32_t) (pageTable) | KERNEL_PAGE_DEFAULT);
+  pageTable = (uint32_t *) (kernelPageDirectory[1023] & 0xFFFFF000);
+  pageTable[1023] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  pageTable[1022] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
+
   /*
    * Map Page Tables Into VM Space
    * The First Page Table (4MB) Maps To All Page Directories
@@ -152,10 +157,6 @@ int vmm_pagingInit() {
   if ((pageTable = (uint32_t *) vmm_findFreePage(sysID)) == 0x0)
     K_PANIC("ERROR: vmm_findFreePage Failed");
 
-  kernelPageDirectory[1023] = (uint32_t) ((uint32_t) (pageTable) | KERNEL_PAGE_DEFAULT);
-  pageTable = (uint32_t *) (kernelPageDirectory[PD_INDEX(PD_BASE_ADDR)] & 0xFFFFF000);
-  pageTable[1023] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
-  pageTable[1022] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
 
   /* Now Lets Turn On Paging With This Initial Page Table */
   asm volatile(
@@ -583,24 +584,21 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
   kprintf("PDE*PS: 0x%X", (PD_ENTRIES * PAGE_SIZE));
 
   for (x = (addr / (PD_ENTRIES * PAGE_SIZE)); x < PD_INDEX(VMM_USER_END); x++) {
-      kprintf("X: 0x%X", x);
+    //kprintf("X: 0x%X,0x%X]", x, pageDir[x]);
     if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT) {
-
       kprintf("X: 0x%X", x);
       pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
       kprintf("X: 0x%X", x);
-      kprintf("pTS: 0x%X\n", pageTableSrc);
+      kprintf("pTS: 0x%X(0x%X)\n", pageTableSrc,pageDir[x]);
 
       for (y = 0; y < PAGE_SIZE; y++) {
-        kprintf("pTS[%x:%i]: 0x%X", x, y, pageTableSrc[y]);
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
-
+          kprintf("pTS[%i:%i]: 0x%X", x, y, pageTableSrc[y]);
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
             kprintf("[aCC.E: %i(0x%X)]", y, pageTableSrc[y]);
             adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
             kprintf("[aCC.X: %i(0x%X)]", y, pageTableSrc[y]);
             pageTableSrc[y] = 0x0;
-
           }
           else if ((pageTableSrc[y] & PAGE_STACK) == PAGE_STACK) {
             //TODO: We need to fix this so we can clean the stack!

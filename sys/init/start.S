@@ -63,12 +63,14 @@ _start:
   ltr   %ax
   ljmp  $0x08,$start_next
 start_next:
-  push 8(%edx)
+  call vmm_init
+  pushl %esp
+  mov  %esp,%ebp
+  mov  $0xFFFFFFFF,%eax
+  mov  %eax, %esp
+  pushl $0xDEAD; // Stack
+  pushl $0xBEEF; // Marker
+  subl  $0xE,%esp;
   call kmain
-
 .data
 .comm kStack,0x2000
-
-/***
- END
- ***/
