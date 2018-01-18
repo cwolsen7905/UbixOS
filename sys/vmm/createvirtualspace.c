@@ -78,6 +78,22 @@ void *vmm_createVirtualSpace(pid_t pid) {
     newPageDirectory[x] = parentPageDirectory[x];
   }
 
+  /* Allocate Stack Pages */
+  newPageTable = (uint32_t *) vmm_getFreePage(pid);
+  bzero(newPageTable, PAGE_SIZE);
+
+  newPageDirectory[1023] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT);
+
+  parentPageTable = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1023));
+  newPageTable[1023] = parentPageTable[1023] | PAGE_COW;
+  adjustCowCounter(((uint32_t) parentPageTable[1023] & 0xFFFFF000), 2);
+  newPageTable[1022] = parentPageTable[1022] | PAGE_COW;
+  adjustCowCounter(((uint32_t) parentPageTable[1022] & 0xFFFFF000), 2);
+
+
+  vmm_unmapPage((uint32_t) newPageTable, 1); 
+
+
   /*
    * Allocate A New Page For The The First Page Table Where We Will Map The
    * Lower Region

@@ -86,7 +86,7 @@ ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3
 ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss)),
 ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
-ubixStandardDescriptor(0xC800000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
+ubixStandardDescriptor(0xBFC00000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
 };
 
 struct {

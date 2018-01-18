@@ -44,13 +44,5 @@ int vmm_init() {
   if (vmm_pagingInit() != 0x0)
     K_PANIC("Couldn't Initialize paging system");
 
-  asm(
-    "mov $0xFFFFFFFF, %esp\n"
-    "push $0xDEAD\n" // STACK MARKER
-    "push $0xBEEF\n"// STACK MARKER
-    "mov $0x0, %eax\n"
-    "jmp $0x4(%ebp)\n"
-  );
-  /* NEVER REACHED */
   return (0x0);
 }

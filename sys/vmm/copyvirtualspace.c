@@ -82,8 +82,42 @@ void *vmm_copyVirtualSpace(pidType pid) {
 
   /* Map The Kernel Stack Region */
   for (x = PD_INDEX(VMM_KERN_STACK_START); x <= PD_INDEX(VMM_KERN_STACK_END); x++) {
-    if ((parentPageDirectory[x] & PAGE_PRESENT) == PAGE_PRESENT)
-      newPageDirectory[x] = parentPageDirectory[x] | PAGE_COW;
+    if ((parentPageDirectory[x] & PAGE_PRESENT) == PAGE_PRESENT) {
+      /* Set Parent To Propper Page Table */
+      parentPageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
+
+      /* Allocate A New Page Table */
+      if ((newPageTable = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
+        kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+
+      bzero(newPageTable, PAGE_SIZE);
+
+      for (i = 0; i < PT_ENTRIES; i++) {
+        if ((parentPageTable[i] & PAGE_PRESENT) == PAGE_PRESENT) {
+
+            /* Alloc A New Page For This Stack Page */
+            if ((newStackPage = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
+              kpanic("Error: newStackPage == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+
+            /* Set Pointer To Parents Stack Page */
+            parentStackPage = (uint32_t *) (((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
+
+            /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
+            //kprintf("SP(%i[0x%X]:%i[0x%X]): 0x%X, 0x%X", x, (PAGE_SIZE * PD_ENTRIES) * x, i, i * PAGE_SIZE, newStackPage, parentStackPage);
+            memcpy(newStackPage, parentStackPage, PAGE_SIZE);
+
+            /* Insert New Stack Into Page Table */
+            newPageTable[i] = (vmm_getPhysicalAddr((uint32_t) newStackPage) | PAGE_DEFAULT | PAGE_STACK);
+
+            /* Unmap From Kernel Space */
+            vmm_unmapPage((uint32_t) newStackPage, 1);
+        }
+      }
+      /* Put New Page Table Into New Page Directory */
+      newPageDirectory[x] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | PAGE_DEFAULT);
+      /* Unmap Page From Kernel Space But Keep It Marked As Not Avail */
+      vmm_unmapPage((uint32_t) newPageTable, 1);
+    }
   }
 
   /*

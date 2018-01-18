@@ -44,8 +44,6 @@
 
 #include <ubixos/spinlock.h>
 
-#define STACK_ADDR 0xC800000
-
 static kTask_t *taskList = 0x0;
 static kTask_t *delList = 0x0;
 static uint32_t nextID = 1;

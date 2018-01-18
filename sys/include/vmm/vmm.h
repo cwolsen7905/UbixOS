@@ -36,7 +36,7 @@
 extern "C" {
 #endif
 
-#define STACK_ADDR 0xC800000 // Default App Stack Address
+#define STACK_ADDR 0xBFFFFFFF//0xC800000 // Default App Stack Address
 
 #define memAvail     1
 #define memNotavail  2
