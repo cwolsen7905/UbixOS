@@ -50,7 +50,7 @@ void *vmm_getFreePage(pidType pid) {
   spinLock(&vmmGFPlock);
 
   /* Lets Search For A Free Page */
-  for (x = 768; x < 1024; x++) {
+  for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++) {
 
     /* Set Page Table Address */
     pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * x));

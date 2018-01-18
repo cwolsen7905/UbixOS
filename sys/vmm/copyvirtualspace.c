@@ -27,6 +27,7 @@
  */
 
 #include <vmm/vmm.h>
+#include <vmm/paging.h>
 #include <sys/kern_sysctl.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
@@ -80,8 +81,10 @@ void *vmm_copyVirtualSpace(pidType pid) {
     newPageDirectory[x] = parentPageDirectory[x];
 
   /* Map The Kernel Stack Region */
-  for (x = PD_INDEX(VMM_KERN_STACK_START); x <= PD_INDEX(VMM_KERN_STACK_END); x++)
-    newPageDirectory[x] = parentPageDirectory[x] | PAGE_COW;
+  for (x = PD_INDEX(VMM_KERN_STACK_START); x <= PD_INDEX(VMM_KERN_STACK_END); x++) {
+    if ((parentPageDirectory[x] & PAGE_PRESENT) == PAGE_PRESENT)
+      newPageDirectory[x] = parentPageDirectory[x] | PAGE_COW;
+  }
 
   /*
    * Now For The Fun Stuff For Page Tables 2-767 We Must Map These And Set
@@ -119,9 +122,10 @@ void *vmm_copyVirtualSpace(pidType pid) {
               kpanic("Error: newStackPage == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
             /* Set Pointer To Parents Stack Page */
-            parentStackPage = (uint32_t *) ((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i);
+            parentStackPage = (uint32_t *) (((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
 
             /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
+            //kprintf("SP(%i[0x%X]:%i[0x%X]): 0x%X, 0x%X", x, (PAGE_SIZE * PD_ENTRIES) * x, i, i * PAGE_SIZE, newStackPage, parentStackPage);
             memcpy(newStackPage, parentStackPage, PAGE_SIZE);
 
             /* Insert New Stack Into Page Table */
@@ -180,7 +184,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
 
   /* Set Address Of Parents Page Table */
   /*
-  parentPageTable = (uint32_t *) PT_BASE_ADDR;
+  parentPageTable = (uint32_t) PT_BASE_ADDR;
    */
 
   /* Map The First 1MB Worth Of Pages */

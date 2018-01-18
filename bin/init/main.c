@@ -88,6 +88,7 @@ int main(int argc,char **argv, char **envp) {
   i = fork();
 
     printf("FORKED: %i!\n", i);
+while(1);
 
   if (0 == i) {
     printf("Starting Login Daemon.\n");
@@ -96,6 +97,7 @@ int main(int argc,char **argv, char **envp) {
     printf("Error Starting System\n");
     exit(0x0);
   }
+
 
   while (pidStatus(i) != i) {
     /*

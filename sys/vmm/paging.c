@@ -583,15 +583,16 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
   kprintf("PDE*PS: 0x%X", (PD_ENTRIES * PAGE_SIZE));
 
   for (x = (addr / (PD_ENTRIES * PAGE_SIZE)); x < PD_INDEX(VMM_USER_END); x++) {
-
+      kprintf("X: 0x%X", x);
     if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT) {
 
+      kprintf("X: 0x%X", x);
       pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
       kprintf("X: 0x%X", x);
       kprintf("pTS: 0x%X\n", pageTableSrc);
 
       for (y = 0; y < PAGE_SIZE; y++) {
-        kprintf("pTS[%i]: 0x%X", y, pageTableSrc[y]);
+        kprintf("pTS[%x:%i]: 0x%X", x, y, pageTableSrc[y]);
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
 
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
@@ -612,6 +613,7 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
           }
         }
       }
+      kprintf("ENDY:%i", y);
     }
   }
 
