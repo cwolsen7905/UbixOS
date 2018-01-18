@@ -41,7 +41,7 @@
 #include <string.h>
 #include <sys/trap.h>
 
-#define FP_TO_LINEAR(seg, off) ((void*) ((((uInt16) (seg)) << 4) + ((uInt16) (off))))
+#define FP_TO_LINEAR(seg, off) ((void*) ((((uint16_t) (seg)) << 4) + ((uint16_t) (off))))
 
 static ubixDescriptorTable(ubixIDT, 256) {};
 
@@ -180,12 +180,6 @@ void setTaskVector(uInt8 interrupt, uInt16 controlMajor, uInt8 selector) {
 /* Null Intterupt Descriptor */
 void intNull() {
   kprintf("Invalid Interrupt[%i]\n", _current->id);
-  /*
-   kpanic("Invalid Interrupt[%i]\n",_current->id);
-   while (1);
-   endTask(_current->id);
-   sched_yield();
-   */
 }
 
 asm volatile(
@@ -266,9 +260,7 @@ asm volatile(
 );
 
 void __int6(struct trapframe *frame) {
-  die_if_kernel("invalid_op", frame, 6);
-  //kprintf("tf_gs: 0x%X, tf_fs: 0x%X, tf_es: 0x%X, tf_ds: 0x%X\n", frame->tf_gs, frame->tf_fs, frame->tf_es, frame->tf_ds);
-  //kpanic( "int6: Invalid opcode! [%i:0x%X:0x%X]\n", _current->id, _current->tss.eip, frame->tf_eip );
+  die_if_kernel("invalid_opcode", frame, 6);
   endTask(_current->id);
   sched_yield();
 }
@@ -317,9 +309,9 @@ void _int12() {
 }
 
 void _int13() {
-  uInt8 *ip = 0x0;
-  uInt16 *stack = 0x0, *ivt = 0x0;
-  uInt32 *stack32 = 0x0;
+  uint8_t *ip = 0x0;
+  uint16_t *stack = 0x0, *ivt = 0x0;
+  uint32_t *stack32 = 0x0;
   bool isOperand32 = FALSE, isAddress32 = FALSE;
   struct tssStruct *gpfTSS = (struct tssStruct *) 0x4200;
 
@@ -505,7 +497,3 @@ asm(
   "  popl %eax               \n"
   "  iret                    \n"
 );
-
-/***
- END
- ***/

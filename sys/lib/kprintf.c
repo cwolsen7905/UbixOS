@@ -66,7 +66,7 @@ u_quad_t __qdivrem(u_quad_t uq, u_quad_t vq, u_quad_t *arq) {
    */
   if (vq == 0) {
     /* divide by zero. */
-    static volatile const unsigned int zero = 0;
+    static const volatile unsigned int zero = 0;
 
     tmp.ul[H] = tmp.ul[L] = 1 / zero;
     if (arq)
@@ -309,7 +309,7 @@ int sprintf(char *buf, const char *fmt, ...) {
  *              ("%*D", len, ptr, " " -> XX XX XX XX ...
  */
 
-int kvprintf(char const *fmt, void (*func)(int, void*), void *arg, int radix, va_list ap) {
+int kvprintf(const char *fmt, void (*func)(int, void*), void *arg, int radix, va_list ap) {
 #define PCHAR(c) {int cc=(c); if (func) (*func)(cc,arg); else *d++ = cc; retval++; }
   char nbuf[MAXNBUF];
   char *d;
@@ -653,6 +653,7 @@ int kvprintf(char const *fmt, void (*func)(int, void*), void *arg, int radix, va
     }
   }
 #undef PCHAR
+  return (0);
 }
 
 static char *ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper) {

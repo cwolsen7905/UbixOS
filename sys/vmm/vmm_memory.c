@@ -38,7 +38,7 @@
 //MrOlsen (2016-01-11) NOTE: Need to Seperate Out CPU Specific Stuff Over Time
 #include <i386/cpu.h>
 
-static uInt32 freePages = 0;
+static uint32_t freePages = 0;
 static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
 static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
@@ -69,7 +69,7 @@ int vmm_memMapInit() {
     vmmMemoryMap[i].cowCounter = 0x0;
     vmmMemoryMap[i].status = memNotavail;
     vmmMemoryMap[i].pid = vmmID;
-    vmmMemoryMap[i].pageAddr = i * 4096;
+    vmmMemoryMap[i].pageAddr = i * PAGE_SIZE;
   }
 
   /* Calculate Start Of Free Memory */
@@ -127,6 +127,7 @@ int countMemory() {
 
   /* Save The State Of Register CR0 */
   cr0 = rcr0();
+
   /*
    asm volatile (
    "movl %%cr0, %%ebx\n"
@@ -206,7 +207,7 @@ int countMemory() {
   asm("nop");
 
   /* Return Amount Of Memory In Pages */
-  return ((memKb * 1024 * 1024) / 4096);
+  return ((memKb * 1024 * 1024) / PAGE_SIZE);
 }
 
 /************************************************************************
@@ -261,7 +262,8 @@ uint32_t vmm_findFreePage(pidType pid) {
  Notes:
 
  ************************************************************************/
-int freePage(uInt32 pageAddr) {
+int freePage(uint32_t pageAddr) {
+
   int pageIndex = 0x0;
   assert((pageAddr & 0xFFF) == 0x0);
   spinLock(&vmmSpinLock);
@@ -271,18 +273,23 @@ int freePage(uInt32 pageAddr) {
 
   /* Check If Page COW Is Greater Then 0 If It Is Dec It If Not Free It */
   if (vmmMemoryMap[pageIndex].cowCounter == 0) {
+
     /* Set Page As Avail So It Can Be Used Again */
     vmmMemoryMap[pageIndex].status = memAvail;
     vmmMemoryMap[pageIndex].cowCounter = 0x0;
     vmmMemoryMap[pageIndex].pid = -2;
     freePages++;
     systemVitals->freePages = freePages;
+
   }
   else {
+
     /* Adjust The COW Counter */
-    adjustCowCounter(((uInt32) vmmMemoryMap[pageIndex].pageAddr), -1);
+    adjustCowCounter(((uint32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
+
   }
   spinUnlock(&vmmSpinLock);
+
   /* Return */
   return (0);
 }
@@ -306,13 +313,18 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
   /* Adjust COW Counter */
   vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
 
-  if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter == 0) {
+  if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter <= 0) {
+
+    if (vmmMemoryMap[vmmMemoryMapIndex].cowCounter < 0)
+      kprintf("ERROR: Why is COW less than 0");
+
     vmmMemoryMap[vmmMemoryMapIndex].cowCounter = 0x0;
     vmmMemoryMap[vmmMemoryMapIndex].pid = vmmID;
     vmmMemoryMap[vmmMemoryMapIndex].status = memAvail;
     freePages++;
     systemVitals->freePages = freePages;
   }
+
   spinUnlock(&vmmCowSpinLock);
   /* Return */
   return (0);
@@ -320,7 +332,7 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
 
 /************************************************************************
 
- Function: void vmmFreeProcessPages(pid_t pid);
+ Function: void vmm_freeProcessPages(pid_t pid);
 
  Description: This Function Will Free Up Memory For The Exiting Process
 
@@ -329,21 +341,30 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
  08/04/02 - Added Checking For COW Pages First
 
  ************************************************************************/
+
+/* TODO: This can be greatly immproved for performance but it gets the job done */
 void vmm_freeProcessPages(pidType pid) {
   int i = 0, x = 0;
-  uInt32 *tmpPageTable = 0x0;
-  uInt32 *tmpPageDir = (uInt32 *) PD_BASE_ADDR;
+  uint32_t *tmpPageTable = 0x0;
+  uint32_t *tmpPageDir = (uInt32 *) PD_BASE_ADDR;
+
   spinLock(&vmmSpinLock);
+
   /* Check Page Directory For An Avail Page Table */
-  for (i = 0; i <= 0x300; i++) {
+  //NOTE: Thie cleans all memory space up to kernel space
+  for (i = 0; i < (PAGE_SIZE - (PAGE_SIZE / 4)); i++) {
+
     if (tmpPageDir[i] != 0) {
+
       /* Set Up Page Table Pointer */
-      tmpPageTable = (uInt32 *) (PT_BASE_ADDR + (i * 0x1000));
+      tmpPageTable = (uint32_t *) (PT_BASE_ADDR + (i * PAGE_SIZE));
+
       /* Check The Page Table For COW Pages */
       for (x = 0; x < PD_ENTRIES; x++) {
+
         /* If The Page Is COW Adjust COW Counter */
-        if (((uInt32) tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
-          adjustCowCounter(((uInt32) tmpPageTable[x] & 0xFFFFF000), -1);
+        if (((uint32_t) tmpPageTable[x] & PAGE_COW) == PAGE_COW) {
+          adjustCowCounter(((uint32_t) tmpPageTable[x] & 0xFFFFF000), -1);
         }
       }
     }
@@ -362,6 +383,7 @@ void vmm_freeProcessPages(pidType pid) {
       }
     }
   }
+
   /* Return */
   spinUnlock(&vmmSpinLock);
   return;

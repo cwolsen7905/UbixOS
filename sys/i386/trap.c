@@ -37,8 +37,6 @@
 
 void die_if_kernel(char *str, struct trapframe *regs, long err);
 
-static void trap_end_task(char *string, struct trapframe *regs, long error_code);
-
 #define TRAP_CODE(trap_nr, signr, str, trap_name, tsk) void do_##trap_name(struct trapframe *regs, long error_code) { \
   die_if_kernel(str, regs, error_code); \
 }

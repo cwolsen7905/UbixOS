@@ -60,7 +60,7 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   uint32_t eip = frame->tf_eip;
   uint32_t memAddr = cr2;
 
-//MrOlsen 2017-12-15 - 
+//MrOlsen 2017-12-15 -
   kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
 
   /* Try to aquire lock otherwise spin till we do */
@@ -142,86 +142,3 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   kprintf("CR2-RET");
   return;
 }
-
-/***
- $Log: pagefault.c,v $
- Revision 1.6  2006/12/05 14:10:21  reddawg
- Workign Distro
-
- Revision 1.5  2006/12/01 05:12:35  reddawg
- We're almost there... :)
-
- Revision 1.4  2006/11/21 13:25:49  reddawg
- A handful of changes ;)
-
- Revision 1.3  2006/11/06 19:10:12  reddawg
- Lots Of Updates... Still having issues with brk();
-
- Revision 1.2  2006/10/31 20:44:19  reddawg
- Lots of changes
-
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:38  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:52  reddawg
- no message
-
- Revision 1.14  2004/08/25 22:02:41  reddawg
- task switching - We now are using software switching to be consistant with the rest of the world because all of this open source freaks gave me a hard time about something I liked. There doesn't seem to be any gain in performance but it is working fine and flawlessly
-
- Revision 1.13  2004/08/24 05:24:37  reddawg
- TCA Is A BONER!!!!
-
- Revision 1.12  2004/08/14 11:23:03  reddawg
- Changes
-
- Revision 1.11  2004/07/28 15:05:43  reddawg
- Major:
- Pages now have strict security enforcement.
- Many null dereferences have been resolved.
- When apps loaded permissions set for pages rw and ro
-
- Revision 1.10  2004/07/28 00:22:56  reddawg
- bah
-
- Revision 1.9  2004/07/28 00:17:05  reddawg
- Major:
- Disconnected page 0x0 from the system... Unfortunately this broke many things
- all of which have been fixed. This was good because nothing deferences NULL
- any more.
-
- Things affected:
- malloc,kmalloc,getfreepage,getfreevirtualpage,pagefault,fork,exec,ld,ld.so,exec,file
-
- Revision 1.8  2004/07/27 07:09:38  reddawg
- Put in a test for 0x0
-
- Revision 1.7  2004/07/26 19:15:49  reddawg
- test code, fixes and the like
-
- Revision 1.6  2004/07/24 23:04:44  reddawg
- Changes... mark let me know if you fault at pid 185 when you type stress
-
- Revision 1.5  2004/07/24 20:00:51  reddawg
- Lots of changes to the vmm subsystem.... Page faults have been adjust to now be blocking on a per thread basis not system wide. This has resulted in no more deadlocks.. also the addition of per thread locking has removed segfaults as a result of COW in which two tasks fault the same COW page and try to modify it.
-
- Revision 1.4  2004/07/24 17:47:28  reddawg
- vmm_pageFault: deadlock resolved thanks to a propper solution suggested by geist
-
- Revision 1.3  2004/07/19 02:05:26  reddawg
- vmmPageFault: had a potential memory leak here for one page it was still using sysID on certain COW scenarios
-
- Revision 1.2  2004/06/10 22:23:56  reddawg
- Volatiles
-
- Revision 1.1.1.1  2004/04/15 12:06:52  reddawg
- UbixOS v1.0
-
- Revision 1.4  2004/04/13 16:36:34  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
- END
- ***/

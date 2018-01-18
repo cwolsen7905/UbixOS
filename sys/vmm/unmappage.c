@@ -45,9 +45,9 @@
  To Create A New Virtual Space So Now It Has A Flag
 
  ************************************************************************/
-void vmm_unmapPage(uInt32 pageAddr, int flags) {
+void vmm_unmapPage(uint32_t pageAddr, int flags) {
   int pageDirectoryIndex = 0, pageTableIndex = 0;
-  uInt32 *pageTable = 0x0;
+  uint32_t *pageTable = 0x0;
 
   /* Get The Index To The Page Directory */
   pageDirectoryIndex = (pageAddr >> 22);
@@ -56,22 +56,25 @@ void vmm_unmapPage(uInt32 pageAddr, int flags) {
   pageTableIndex = ((pageAddr >> 12) & 0x3FF);
 
   /* Set pageTable To The Virtual Address Of Table */
-  pageTable = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+  pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+
   /* Free The Physical Page If Flags Is 0 */
   if (flags == 0) {
 
-    /*
-     * This is temp i think its still an issue clearVirtualPage(pageAddr);
-     * freePage((uInt32)(pageTable[pageTableIndex] & 0xFFFFF000));
-     */
+    // FIXME This is temp i think its still an issue clearVirtualPage(pageAddr);
+    //freePage((uInt32)(pageTable[pageTableIndex] & 0xFFFFF000));
+
   }
+
   /* Unmap The Page */
   pageTable[pageTableIndex] = 0x0;
+
   /* Rehash The Page Directory */
   asm volatile(
     "movl %cr3,%eax\n"
     "movl %eax,%cr3\n"
   );
+
   /* Return */
   return;
 }

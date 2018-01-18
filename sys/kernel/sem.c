@@ -27,6 +27,8 @@
  */
 
 #include <ubixos/sem.h>
+#include <sys/types.h>
+#include <ubixos/errno.h>
 #include <ubixos/time.h>
 
 int sem_close(semID_t id) {
@@ -49,8 +51,22 @@ int sem_timedwait(semID_t id, const struct timespec) {
   return(0);
 }
 
-int sem_init(semID_t *id, unsigned int value) {
-  return(0);
+err_t sys_init(sys_sem_t **sem, uint8_t count) {
+  sys_sem_t *newSem = 0x0;
+
+  if (*sem != 0) {
+    kpanic("UH OH!");
+  }
+
+  newSem = kmalloc(sizeof(struct sys_sem));
+  newSem->signaled = count;
+
+  ubthread_cond_init(&(newSem->cond), NULL);
+  ubthread_mutex_init(&(newSem->mutex), NULL);
+
+  *sem = newSem;
+
+  return (ERR_OK);
 }
 
 int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value) {
@@ -65,7 +81,18 @@ int sem_getvalue(semID_t id, int *val) {
   return(0);
 }
 
-int sem_destroy(semID_t id) {
-  return(0);
+err_t sem_destroy(sys_sem_t **sem) {
+  if (*sem == NULL)
+    return (EINVAL);
+
+  sys_sem_t *d_sem = *sem;
+
+  ubthread_cond_destroy(&(d_sem->cond));
+  ubthread_mutex_destroy(&(d_sem->mutex));
+
+  kfree(sem);
+  *sem = 0x0;
+
+  return (ERR_OK);
 }
 

@@ -14,6 +14,7 @@
 #include <net/arch/sys_arch.h>
 
 #include <ubixos/spinlock.h>
+#include <ubixos/sem.h>
 
 /* Get Definitions For These */
 #define ERR_NOT_READY 0
@@ -33,6 +34,7 @@ void sys_init() {
   gettimeofday(&starttime, &tz);
 }
 
+#ifdef _IGNORE
 static struct sys_sem *sys_sem_new_internal(uint8_t count) {
   struct sys_sem *sem;
 
@@ -44,9 +46,13 @@ static struct sys_sem *sys_sem_new_internal(uint8_t count) {
   }
   return sem;
 }
+#endif
 
 /* Create a new semaphore */
 err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
+  return (sem_init(sem, count));
+
+#ifdef __IGNORE
   sys_sem_t *newSem = 0x0;
 
   if (*sem != 0) {
@@ -62,14 +68,21 @@ err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
   *sem = newSem;
 
   return (ERR_OK);
+#endif
 }
 
 /* Deallocate semaphore */
 void sys_sem_free(struct sys_sem **sem) {
+  sem_destroy(sem);
+
+#ifdef _IGNORE
   if ((sem != NULL) && (*sem != SYS_SEM_NULL)) {
     sys_sem_free_internal(*sem);
     *sem = 0x0;
   }
+#endif
+
+
 }
 
 /* Signal semaphore */
@@ -87,12 +100,6 @@ void sys_sem_signal(struct sys_sem **s) {
 
   ubthread_cond_broadcast(&(sem->cond));
   ubthread_mutex_unlock(&(sem->mutex));
-}
-
-static void sys_sem_free_internal(struct sys_sem *sem) {
-  ubthread_cond_destroy(&(sem->cond));
-  ubthread_mutex_destroy(&(sem->mutex));
-  kfree(sem);
 }
 
 uint32_t sys_arch_sem_wait(struct sys_sem **s, uint32_t timeout) {

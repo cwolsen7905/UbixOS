@@ -30,7 +30,7 @@
 
 /************************************************************************
 
- Function: void *vmmCreateVirtualSpace(pid_t);
+ Function: void *vmm_createVirtualSpace(pid_t);
  Description: Creates A Virtual Space For A New Task
  Notes:
 

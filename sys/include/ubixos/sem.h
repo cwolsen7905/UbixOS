@@ -30,6 +30,15 @@
 #define _UBIXOS_SEM_H
 
 #include <sys/types.h>
+#include <ubixos/ubthread.h>
+
+struct sys_sem {
+    uint32_t signaled;
+    ubthread_cond_t cond;
+    ubthread_mutex_t mutex;
+};
+
+typedef struct sys_sem sys_sem_t;
 
 typedef uint32_t semID_t;
 struct timespec;
@@ -39,10 +48,10 @@ int sem_post(semID_t id);
 int sem_wait(semID_t id);
 int sem_trywait(semID_t id);
 int sem_timedwait(semID_t id, const struct timespec);
-int sem_init(semID_t *id, unsigned int value);
+err_t sem_init(sys_sem_t **, uint8_t);
 int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value);
 int sem_unlink(const char *name);
 int sem_getvalue(semID_t id, int *val);
-int sem_destroy(semID_t id);
+err_t sem_destroy(sys_sem_t **);
 
 #endif /* END _UBIXOS_SEM_H */

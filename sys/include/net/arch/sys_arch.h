@@ -12,14 +12,6 @@ struct sys_timeouts {
   struct sys_timeout *next;
 };
 
-struct sys_sem {
-  uint32_t   signaled;
-  ubthread_cond_t cond;
-  ubthread_mutex_t mutex;
-};
-
-typedef struct sys_sem sys_sem_t;
-
 struct sys_mutex {
   ubthread_mutex_t mutex;
 };

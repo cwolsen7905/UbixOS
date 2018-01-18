@@ -42,7 +42,7 @@ static struct spinLock deviceSpinLock = SPIN_LOCK_INITIALIZER;
 
  Description: This will add a device to the system
 
- Notes: 
+ Notes:
 
  05/19/2004 - Improving Upon the spec
 
@@ -76,7 +76,7 @@ int device_add(int minor, char type, struct device_interface *devInfo) {
 
  Description: This will find a device based on major minor
 
- Notes: 
+ Notes:
 
  05/19/2004 - Improving Upon the spec
 
@@ -135,7 +135,3 @@ int device_remove(struct device_node *deviceToDelete) {
   spinUnlock(&deviceSpinLock);
   return 0x0;
 }
-
-/***
- END
- ***/

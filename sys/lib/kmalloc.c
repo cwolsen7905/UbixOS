@@ -37,11 +37,11 @@
 
 /*
  Set up three descriptor tables:
- 
- kernDesc      - The inuse descriptor table 
+
+ kernDesc      - The inuse descriptor table
  freeKernDesc  - The free descriptor table (descriptors with memory backing just not in use)
  emptyKernDesc - The empty descriptor table (descriptors with out a memory backing)
- 
+
  */
 static struct memDescriptor *usedKernDesc = 0x0;
 static struct memDescriptor *freeKernDesc = 0x0;
@@ -179,6 +179,7 @@ static int insertFreeDesc(struct memDescriptor *freeDesc) {
  03/05/03 - We Have A Problem It Seems The First Block Is Limit 0x0
 
  ************************************************************************/
+#ifdef _IGNORE
 static void mergeMemBlocks() {
   struct memDescriptor *tmpDesc1 = 0x0;
   struct memDescriptor *tmpDesc2 = 0x0;
@@ -228,6 +229,7 @@ static void mergeMemBlocks() {
   }
   return;
 }
+#endif
 
 /************************************************************************
 

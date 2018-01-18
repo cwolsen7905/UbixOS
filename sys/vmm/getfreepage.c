@@ -54,14 +54,19 @@ void *vmm_getFreePage(pidType pid) {
 
     /* Set Page Table Address */
     pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * x));
+
     for (y = 0x0; y < 1024; y++) {
+
       /* Loop Through The Page Table Find An UnAllocated Page */
       if ((uInt32) pageTableSrc[y] == (uInt32) 0x0) {
+
         /* Map A Physical Page To The Virtual Page */
         if ((vmm_remapPage(vmm_findFreePage(pid), ((x * 0x400000) + (y * 0x1000)), KERNEL_PAGE_DEFAULT, pid)) == 0x0)
           kpanic("vmmRemapPage: vmm_getFreePage\n");
+
         /* Clear This Page So No Garbage Is There */
         vmm_clearVirtualPage((uInt32) ((x * 0x400000) + (y * 0x1000)));
+
         /* Return The Address Of The Newly Allocate Page */
         spinUnlock(&vmmGFPlock);
         return ((void *) ((x * 0x400000) + (y * 0x1000)));
@@ -71,10 +76,6 @@ void *vmm_getFreePage(pidType pid) {
 
   /* If No Free Page Was Found Return NULL */
   spinUnlock(&vmmGFPlock);
+
   return (0x0);
 }
-
-/***
- END
- ***/
-

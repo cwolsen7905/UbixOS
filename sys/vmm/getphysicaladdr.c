@@ -29,16 +29,15 @@
 #include <vmm/vmm.h>
 
 /*!
-
- Function: void *vmmGetPhysicalAddr();
+ Function: void *vmm_getPhysicalAddr();
  Description: Returns The Physical Address Of The Virtual Page
  Notes:
-
  */
 
-uint32_t vmm_getPhysicalAddr(uInt32 pageAddr) {
+/* returns the real address of page is page aligned */
+uint32_t vmm_getPhysicalAddr(uint32_t pageAddr) {
   int pageDirectoryIndex = 0x0, pageTableIndex = 0x0;
-  uInt32 *pageTable = 0x0;
+  uint32_t *pageTable = 0x0;
 
   //Calculate The Page Directory Index
   pageDirectoryIndex = (pageAddr >> 22);
@@ -47,11 +46,13 @@ uint32_t vmm_getPhysicalAddr(uInt32 pageAddr) {
   pageTableIndex = ((pageAddr >> 12) & 0x3FF);
 
   /* Set pageTable To The Virtual Address Of Table */
-  pageTable = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+  pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+
   /* Return The Physical Address Of The Page */
-  return ((uInt32) (pageTable[pageTableIndex] & 0xFFFFF000));
+  return ((uint32_t) (pageTable[pageTableIndex] & 0xFFFFF000));
 }
 
+/* Returns the real address not page aligned */
 uint32_t vmm_getRealAddr(uint32_t addr) {
   int pageDirectoryIndex = 0x0, pageTableIndex = 0x0;
   uint32_t *pageTable = 0x0;
@@ -67,7 +68,3 @@ uint32_t vmm_getRealAddr(uint32_t addr) {
   /* Return The Physical Address Of The Page */
   return ((uint32_t) (pageTable[pageTableIndex] & 0xFFFFF000) + (addr & 0xFFF));
 }
-
-/***
- END
- ***/

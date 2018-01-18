@@ -580,22 +580,29 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
    #endif
    */
 
-  for (x = (addr / (1024 * 4096)); x < PD_INDEX(VMM_USER_END); x++) {
+  for (x = (addr / (PD_ENTRIES * PAGE_SIZE)); x < PD_INDEX(VMM_USER_END); x++) {
+
     if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT) {
-      pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (0x1000 * x));
-      for (y = 0; y < 1024; y++) {
+
+      pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
+
+      for (y = 0; y < PAGE_SIZE; y++) {
+
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
+
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-            //kprintf( "COW: 0x%X", (x * 0x400000) + (y * 0x1000) );
+
+            adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
             pageTableSrc[y] = 0x0;
+
           }
           else if ((pageTableSrc[y] & PAGE_STACK) == PAGE_STACK) {
+            //TODO: We need to fix this so we can clean the stack!
             //kprintf("Page Stack!: 0x%X", (x * 0x400000) + (y * 0x1000));
             // pageTableSrc[y] = 0x0;
             //MrOlsen (2016-01-18) NOTE: WHat should I Do Here? kprintf( "STACK: (%i:%i)", x, y );
           }
           else {
-            //MrOlsen 2017-12-15 -  kprintf( "Page Regular!: 0x%X", (x * 0x400000) + (y * 0x1000) );
             pageTableSrc[y] = 0x0;
           }
         }
@@ -610,8 +617,3 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
 
   return (0x0);
 }
-
-/***
- END
- ***/
-

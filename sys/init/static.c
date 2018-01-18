@@ -26,18 +26,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <lib/kprintf.h>
-
-/**
- * \brief Sets up the ctors
- */
-
+// XXX Set up the ctors
 int static_constructors(void) {
   extern void (*__ctor_list)();
   void (**l_ctor)() = &__ctor_list;
   int l_ctorCount = *(int *) l_ctor;
 
-//  kprintf("Calling static constructors\n");
   l_ctor++;
   while (l_ctorCount) {
     (*l_ctor)();
@@ -46,7 +40,3 @@ int static_constructors(void) {
   }
   return (0x0);
 }
-
-/***
- END
- ***/

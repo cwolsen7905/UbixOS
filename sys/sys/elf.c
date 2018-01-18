@@ -27,7 +27,3 @@
  */
 
 #include <sys/elf.h>
-
-/***
- END
- ***/

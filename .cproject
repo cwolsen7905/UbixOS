@@ -45,7 +45,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="sys/fs/ubixfsv2/|lib/libc/|bin/|lib/|include/|include_old/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="sys/fs/ubixfsv2/|lib/libc/|bin/|lib/|include/|include_old/|contrib/|doc/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

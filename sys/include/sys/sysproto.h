@@ -736,4 +736,5 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *);
 int sys_socket(struct thread *td, struct sys_socket_args *);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *);
 int sys_select(struct thread *td, struct sys_select_args *);
+
 #endif

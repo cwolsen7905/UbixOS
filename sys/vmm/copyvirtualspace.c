@@ -36,7 +36,7 @@ static struct spinLock cvsSpinLock = SPIN_LOCK_INITIALIZER;
 
 /************************************************************************
 
- Function: void *vmmCopyVirtualSpace(pidType pid);
+ Function: void *vmm_copyVirtualSpace(pidType pid);
 
  Description: Creates A Copy Of A Virtual Space And Set All NON Kernel
  Space To COW For A Fork This Will Also Alter The Parents
@@ -115,11 +115,6 @@ void *vmm_copyVirtualSpace(pidType pid) {
 
             /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
             memcpy(newStackPage, parentStackPage, PAGE_SIZE);
-            /*
-             for (s = 0x0; s < PD_ENTRIES; s++) {
-             newStackPage[s] = parentStackPage[s];
-             }
-             */
 
             /* Insert New Stack Into Page Table */
             newPageTable[i] = (vmm_getPhysicalAddr((uint32_t) newStackPage) | PAGE_DEFAULT | PAGE_STACK);
@@ -208,7 +203,6 @@ void *vmm_copyVirtualSpace(pidType pid) {
   newPageDirectory[PD_INDEX(PD_BASE_ADDR)] = (uint32_t) (vmm_getPhysicalAddr((uint32_t) newPageTable) | PAGE_DEFAULT);
 
   newPageTable[0] = (uint32_t) ((uint32_t) (newPageDirectoryAddress) | PAGE_DEFAULT);
-  //MrOlsen (2017-12-15) - kprintf( "PD3: %i - 0x%X - 0x%X\n", PD_INDEX( PD_BASE_ADDR ), newPageDirectoryAddress, newPageTable[0] );
 
   vmm_unmapPage((uint32_t) newPageTable, 1);
 

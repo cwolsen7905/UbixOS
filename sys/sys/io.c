@@ -139,7 +139,3 @@ unsigned long inportDWord(unsigned int port) {
   );
   return (retVal);
 }
-
-/***
- END
- ***/

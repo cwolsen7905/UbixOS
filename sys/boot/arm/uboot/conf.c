@@ -25,9 +25,9 @@
  *
  */
 
+#ifdef _IGNORE
 #include <sys/cdefs.h>
 
-#ifdef _IGNORE
 
 #include <stand.h>
 #include "bootstrap.h"

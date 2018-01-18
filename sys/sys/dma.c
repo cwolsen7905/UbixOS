@@ -39,7 +39,7 @@ static uInt8 addrPort[8] = { 0x00, 0x02, 0x04, 0x06, 0xC0, 0xC4, 0xC8, 0xCC };
 static uInt8 pagePort[8] = { 0x87, 0x83, 0x81, 0x82, 0x8F, 0x8B, 0x89, 0x8A };
 static uInt8 countPort[8] = { 0x01, 0x03, 0x05, 0x07, 0xC2, 0xC6, 0xCA, 0xCE };
 
-void dmaXfer(uInt8 channel, uInt32 address, uInt length, uInt8 read) {
+void dmaXfer(uint8_t channel, uint32_t address, uInt length, uint8_t read) {
   unsigned char page = 0, mode = 0;
   unsigned int offset = 0;
   if (read) {
@@ -67,7 +67,3 @@ void _dmaXfer(uInt8 dmaChannel, uInt8 page, uInt offset, uInt length, uInt8 mode
   outportByte(maskReg[dmaChannel], dmaChannel);
   //asm("sti");
 }
-
-/***
- END
- ***/

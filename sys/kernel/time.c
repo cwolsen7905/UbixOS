@@ -84,32 +84,36 @@ int time_init() {
   return (0x0);
 }
 
-uInt32 timeMake(struct timeStruct *time) {
-  uInt32 res;
+uint32_t timeMake(struct timeStruct *time) {
+  uint32_t res;
   int year;
 
   year = (time->year + 100) - 70;
+
   /* magic offsets (y+1) needed to get leapyears right.*/
   res = YEAR * year + DAY * ((year + 1) / 4);
+
   res += month[time->mon];
+
   /* and (y+2) here. If it wasn't a leap-year, we have to adjust */
   if (time->mon > 1 && ((year + 2) % 4))
     res -= DAY;
+
   res += DAY * (time->day - 1);
   res += HOUR * time->hour;
   res += MINUTE * time->min;
   res += time->sec;
+
   return (res);
 }
 
 int gettimeofday(struct timeval *tp, struct timezone *tzp) {
-  //tp->tv_sec  = systemVitals->timeStart + systemVitals->sysUptime;
-  tp->tv_sec = 0x0; //systemVitals->sysUptime;
+  tp->tv_sec = systemVitals->timeStart + systemVitals->sysUptime;
+  //tp->tv_sec = 0x0; //systemVitals->sysUptime;
   tp->tv_usec = 0x0;
+
+  tzp->tz_minuteswest = (-5 * 60);
+  tzp->tz_dsttime = 0x0;
+
   return (0x0);
 }
-
-/***
- END
- ***/
-

@@ -113,7 +113,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  79 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  80 - Invalid */
   { ARG_COUNT(sys_getpgrp_args), "getpgrp", sys_getpgrp, SYSCALL_VALID }, //  81 - getpgrp
-  { ARG_COUNT(sys_setpgid_args), "setpgid", sys_setpgid, SYSCALL_VALID }, //  82 - setpgid 
+  { ARG_COUNT(sys_setpgid_args), "setpgid", sys_setpgid, SYSCALL_VALID }, //  82 - setpgid
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  83 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  84 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  85 - Invalid */
@@ -196,7 +196,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 162 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 163 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 164 - Invalid */
-  { ARG_COUNT(sys_sysarch_args), "sysarch", sys_sysarch, SYSCALL_VALID }, /* 165 - sysarch */
+  { ARG_COUNT(sys_sysarch_args), "sysarch", sys_sysarch, SYSCALL_VALID }, // 165 - sysarch
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 166 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 167 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 168 - Invalid */
@@ -212,7 +212,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 178 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 179 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 180 - Invalid */
-  { ARG_COUNT(sys_setGID_args), "Set GID", (sys_call_t *) sys_setGID, SYSCALL_VALID }, /* 181 - Invalid */
+  { ARG_COUNT(sys_setGID_args), "Set GID", (sys_call_t *) sys_setGID, SYSCALL_VALID }, // 181 - getgid
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 182 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 183 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 184 - Invalid */

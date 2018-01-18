@@ -31,15 +31,15 @@
 
 /************************************************************************
 
- Function: void vmmSetPageAttributes(uInt32 pageAddr,int attributes;
+ Function: void vmm_setPageAttributes(uInt32 pageAddr,int attributes;
  Description: This Function Will Set The Page Attributes Such As
  A Read Only Page, Stack Page, COW Page, ETC.
  Notes:
 
  ************************************************************************/
-int vmm_setPageAttributes(uInt32 memAddr, uInt16 attributes) {
-  uInt16 directoryIndex = 0x0, tableIndex = 0x0;
-  uInt32 *pageTable = 0x0;
+int vmm_setPageAttributes(uint32_t memAddr, uint16_t attributes) {
+  uint16_t directoryIndex = 0x0, tableIndex = 0x0;
+  uint32_t *pageTable = 0x0;
 
   /* Calculate The Page Directory Index */
   directoryIndex = (memAddr >> 22);
@@ -48,7 +48,7 @@ int vmm_setPageAttributes(uInt32 memAddr, uInt16 attributes) {
   tableIndex = ((memAddr >> 12) & 0x3FF);
 
   /* Set Table Pointer */
-  if ((pageTable = (uInt32 *) (PT_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
+  if ((pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * directoryIndex))) == 0x0)
     kpanic("Error: pageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
   /* Set Attribute If Page Is Mapped */
@@ -65,36 +65,3 @@ int vmm_setPageAttributes(uInt32 memAddr, uInt16 attributes) {
   /* Return */
   return (0x0);
 }
-
-/***
- $Log: setpageattributes.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:38  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:53  reddawg
- no message
-
- Revision 1.4  2004/07/28 15:05:43  reddawg
- Major:
- Pages now have strict security enforcement.
- Many null dereferences have been resolved.
- When apps loaded permissions set for pages rw and ro
-
- Revision 1.3  2004/07/20 22:29:55  reddawg
- assert: remade assert
-
- Revision 1.2  2004/06/10 22:23:56  reddawg
- Volatiles
-
- Revision 1.1.1.1  2004/04/15 12:06:53  reddawg
- UbixOS v1.0
-
- Revision 1.6  2004/04/13 16:36:34  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
- END
- ***/
-

@@ -70,6 +70,7 @@ char *strtok_r(char *s, const char *delim, char **last) {
     } while (sc != 0);
   }
   /* NOTREACHED */
+  return (NULL);
 }
 
 char *strtok(char *s, const char *delim) {
