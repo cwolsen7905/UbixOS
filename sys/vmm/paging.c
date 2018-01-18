@@ -148,6 +148,15 @@ int vmm_pagingInit() {
    pageTable[256] = (uint32_t)( (uint32_t)( kernelPageDirectory ) | PAGE_DEFAULT );
    */
 
+  /* Allocate New Stack Space */
+  if ((pageTable = (uint32_t *) vmm_findFreePage(sysID)) == 0x0)
+    K_PANIC("ERROR: vmm_findFreePage Failed");
+
+  kernelPageDirectory[1023] = (uint32_t) ((uint32_t) (pageTable) | KERNEL_PAGE_DEFAULT);
+  pageTable = (uint32_t *) (kernelPageDirectory[PD_INDEX(PD_BASE_ADDR)] & 0xFFFFF000);
+  pageTable[1023] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
+  pageTable[1022] = (vmm_findFreePage(sysID) | KERNEL_PAGE_DEFAULT | PAGE_STACK);
+
   /* Now Lets Turn On Paging With This Initial Page Table */
   asm volatile(
     "movl %0,%%eax          \n"
