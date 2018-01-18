@@ -242,8 +242,8 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid) {
       "mov  %eax,%cr3  \n"
       "pop  %eax       \n"
     );
-
     memset(pageTable, 0x0, 0x1000);
+
 
   }
 
