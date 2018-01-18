@@ -97,7 +97,7 @@ int vmm_pagingInit() {
 
   kprintf("PD: %i\n", PD_INDEX(VMM_KERN_START));
 
-  for (i = PD_INDEX(VMM_KERN_START); i < PD_ENTRIES; i++) {
+  for (i = PD_INDEX(VMM_KERN_START); i <= PD_INDEX(VMM_KERN_END); i++) {
     if ((pageTable = (uint32_t *) vmm_findFreePage( sysID)) == 0x0)
       K_PANIC("Error: vmm_findFreePage Failed");
 
