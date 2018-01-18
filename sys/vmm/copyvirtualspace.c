@@ -71,24 +71,28 @@ void *vmm_copyVirtualSpace(pidType pid) {
   /* First Set Up A Flushed Page Directory */
   bzero(newPageDirectory, PAGE_SIZE);
 
-  /* Map The Top 1GB Region Of The VM Space - This Is The Kernel Space*/
-  for (x = 768; x < PD_ENTRIES; x++)
+  /* Map Kernel Code Region Entries 0 & 1 */
+  newPageDirectory[0] = parentPageDirectory[0];
+  newPageDirectory[1] = parentPageDirectory[1];
+
+  /* Map The Kernel Memory Region Entry 770 Address 0xC0800000 */
+  for (x = PD_INDEX(VMM_KERN_START); x < PD_ENTRIES; x++)
     newPageDirectory[x] = parentPageDirectory[x];
 
   /*
-   * Now For The Fun Stuff For Page Tables 1-766 We Must Map These And Set
+   * Now For The Fun Stuff For Page Tables 2-767 We Must Map These And Set
    * The Permissions On Every Mapped Pages To COW This Will Conserve Memory
    * Because The Two VM Spaces Will Be Sharing Pages Unless an EXECVE Happens
    *
    * We start at the 4MB boundary as the first 4MB is special
    */
 
-  for (x = 0x1; x <= PD_INDEX(VMM_USER_END); x++) {
+  for (x = PD_INDEX(VMM_USER_START); x <= PD_INDEX(VMM_USER_END); x++) {
 
     /* If Page Table Exists Map It */
     if ((parentPageDirectory[x] & PAGE_PRESENT) == PAGE_PRESENT) {
 
-      /* Set Parent  To Propper Page Table */
+      /* Set Parent To Propper Page Table */
       parentPageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
 
       /* Allocate A New Page Table */
@@ -155,33 +159,44 @@ void *vmm_copyVirtualSpace(pidType pid) {
    * Allocate A New Page For The The First Page Table Where We Will Map The
    * Lower Region First 4MB
    */
+  /*
   if ((newPageTable = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
     kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+   */
 
   /* Flush The Page From Garbage In Memory */
+  /*
   bzero(newPageTable, PAGE_SIZE);
+   */
 
   /* Map This Into The Page Directory */
+  /*
   newPageDirectory[0] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | PAGE_DEFAULT);
+   */
 
   /* Set Address Of Parents Page Table */
+  /*
   parentPageTable = (uint32_t *) PT_BASE_ADDR;
+   */
 
   /* Map The First 1MB Worth Of Pages */
+  /*
   for (x = 0; x < (PD_ENTRIES / 4); x++) {
     newPageTable[x] = parentPageTable[x];
   }
+   */
 
   /* Map The Next 3MB Worth Of Pages But Make Them COW */
+  /*
   for (x = (PD_ENTRIES / 4); x < PD_ENTRIES; x++) {
 
-    /* If Page Is Avaiable Map It */
+   // If Page Is Avaiable Map It
     if ((parentPageTable[x] & 0xFFFFF000) != 0x0) {
 
-      /* Set Pages To COW */
+   // Set Pages To COW
       newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | (PAGE_DEFAULT | PAGE_COW));
 
-      /* Increment The COW Counter For This Page */
+   // Increment The COW Counter For This Page
       if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
         adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 1);
       }
@@ -191,6 +206,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
       }
     }
   }
+   */
 
   /*
    *

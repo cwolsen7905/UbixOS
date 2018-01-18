@@ -50,11 +50,15 @@ extern "C" {
 #define VMM_MMAP_ADDR_PMODE  VMM_KERN_START /* (PD_BASE_ADDR + PAGE_SIZE) */
 #define VMM_MMAP_ADDR_RMODE  0x101000
 
-#define VMM_KERN_END   0xFFFFFFFF
 #define VMM_KERN_START 0xC0800000
+#define VMM_KERN_END   0xFFFFFFFF
 
+#define VMM_USER_START 0x00800000
 #define VMM_USER_END   0xBFFFFFFF
-#define VMM_USER_START 0x00000000
+
+#define VMM_PAGE_DIRS  0xC0000000
+#define VMM_PAGE_DIR   0xC0400000
+
 
   struct freebsd6_mmap_args {
       char addr_l_[PADL_(caddr_t)];
