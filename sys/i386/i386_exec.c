@@ -376,12 +376,14 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Kernel Stack 0x2000 bytes long */
 
-  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
-  vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+  //vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BC000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+  //vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+  for (x = 0; x < 2; x++)
+    vmm_remapPage(vmm_findFreePage(newProcess->id), 0xFFFFF000 - (PAGE_SIZE * x), KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
 
   /* Set All The Proper Information For The Task */
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = 0x5BC000;
+  newProcess->tss.esp0 = 0xFFFFFFFF; //0x5BC000;
   newProcess->tss.ss0 = 0x10;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;

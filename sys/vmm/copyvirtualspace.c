@@ -76,8 +76,12 @@ void *vmm_copyVirtualSpace(pidType pid) {
   newPageDirectory[1] = parentPageDirectory[1];
 
   /* Map The Kernel Memory Region Entry 770 Address 0xC0800000 */
-  for (x = PD_INDEX(VMM_KERN_START); x < PD_ENTRIES; x++)
+  for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
     newPageDirectory[x] = parentPageDirectory[x];
+
+  /* Map The Kernel Stack Region */
+  for (x = PD_INDEX(VMM_KERN_STACK_START); x <= PD_INDEX(VMM_KERN_STACK_END); x++)
+    newPageDirectory[x] = parentPageDirectory[x] | PAGE_COW;
 
   /*
    * Now For The Fun Stuff For Page Tables 2-767 We Must Map These And Set
@@ -115,7 +119,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
               kpanic("Error: newStackPage == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
             /* Set Pointer To Parents Stack Page */
-            parentStackPage = (uint32_t *) (((PD_ENTRIES * PAGE_SIZE) * x) + (PAGE_SIZE * i));
+            parentStackPage = (uint32_t *) ((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i);
 
             /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
             memcpy(newStackPage, parentStackPage, PAGE_SIZE);
@@ -139,7 +143,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
             else {
               /* Add Two If This Is The First Time Setting To COW */
               adjustCowCounter(((uint32_t) parentPageTable[i] & 0xFFFFF000), 2);
-              parentPageTable[i] = newPageTable[i];
+              parentPageTable[i] |= PAGE_COW; // newPageTable[i];
             }
           }
         }
