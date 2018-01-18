@@ -571,23 +571,24 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
   uint32_t *pageDir = 0x0;
 
   pageDir = (uint32_t *) PD_BASE_ADDR;
-kprintf ("PDE*PS: 0x%X", (PD_ENTRIES * PAGE_SIZE));
+  kprintf("PDE*PS: 0x%X", (PD_ENTRIES * PAGE_SIZE));
 
   for (x = (addr / (PD_ENTRIES * PAGE_SIZE)); x < PD_INDEX(VMM_USER_END); x++) {
 
     if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT) {
 
       pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
-kprintf("\nx: 0x%X, PAGE_SIZE: 0x%X, pTS: 0x%X\n", x, PAGE_SIZE, pageTableSrc);
+      kprintf("X: 0x%X", x);
+      kprintf("pTS: 0x%X\n", pageTableSrc);
 
       for (y = 0; y < PAGE_SIZE; y++) {
-kprintf("pTS[%i]: 0x%X", y, pageTableSrc[y]);
+        kprintf("pTS[%i]: 0x%X", y, pageTableSrc[y]);
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
 
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-kprintf("[aCC.E: %i(0x%X)]", y,  pageTableSrc[y]);
+            kprintf("[aCC.E: %i(0x%X)]", y, pageTableSrc[y]);
             adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
-kprintf("[aCC.X: %i(0x%X)]", y,  pageTableSrc[y]);
+            kprintf("[aCC.X: %i(0x%X)]", y, pageTableSrc[y]);
             pageTableSrc[y] = 0x0;
 
           }
@@ -605,7 +606,8 @@ kprintf("[aCC.X: %i(0x%X)]", y,  pageTableSrc[y]);
     }
   }
 
-while(1) asm("nop");
+  while (1)
+    asm("nop");
 
   asm(
     "movl %cr3,%eax\n"
