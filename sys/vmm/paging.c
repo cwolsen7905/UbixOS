@@ -579,12 +579,10 @@ kprintf ("PDE*PS: 0x%X", (PD_ENTRIES * PAGE_SIZE));
 
       pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
 kprintf("\nx: 0x%X, PAGE_SIZE: 0x%X, pTS: 0x%X\n", x, PAGE_SIZE, pageTableSrc);
-//while(1) asm("nop");
 
       for (y = 0; y < PAGE_SIZE; y++) {
-
+kprintf("pTS[%i]: 0x%X", y, pageTableSrc[y]);
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
-kprintf("pTS[0]: 0x%X", pageTableSrc[0]);
 
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
 kprintf("[aCC.E: %i(0x%X)]", y,  pageTableSrc[y]);
