@@ -43,6 +43,52 @@
 #define SIG_UNBLOCK     2       /* unblock specified signal set */
 #define SIG_SETMASK     3       /* set specified signal set */
 
+union sigval {
+        /* Members as suggested by Annex C of POSIX 1003.1b. */
+        int     sival_int;
+        void    *sival_ptr;
+        /* 6.0 compatibility */
+        int     sigval_int;
+        void    *sigval_ptr;
+};
+
+typedef struct __siginfo {
+        int     si_signo;               /* signal number */
+        int     si_errno;               /* errno association */
+        /*
+         * Cause of signal, one of the SI_ macros or signal-specific
+         * values, i.e. one of the FPE_... values for SIGFPE.  This
+         * value is equivalent to the second argument to an old-style
+         * FreeBSD signal handler.
+         */
+        int     si_code;                /* signal code */
+        __pid_t si_pid;                 /* sending process */
+        __uid_t si_uid;                 /* sender's ruid */
+        int     si_status;              /* exit value */
+        void    *si_addr;               /* faulting instruction */
+        union sigval si_value;          /* signal value */
+        union   {
+                struct {
+                        int     _trapno;/* machine specific trap code */
+                } _fault;
+                struct {
+                        int     _timerid;
+                        int     _overrun;
+                } _timer;
+                struct {
+                        int     _mqd;
+                } _mesgq;
+                struct {
+                        long    _band;          /* band event for SIGPOLL */
+                } _poll;                        /* was this ever used ? */
+                struct {
+                        long    __spare1__;
+                        int     __spare2__[7];
+                } __spare__;
+        } _reason;
+} siginfo_t;
+
+
 // Signal vector "template" used in sigaction call.
 struct sigaction {
         union {
@@ -55,6 +101,5 @@ struct sigaction {
 
 #define sa_handler      __sigaction_u.__sa_handler
 #define sa_sigaction    __sigaction_u.__sa_sigaction
-
 
 #endif /* END _SYS_SIGNAL_H */

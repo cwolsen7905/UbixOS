@@ -116,6 +116,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
       kprintf("\n       ");
     kprintf("%08lx ", get_seg_long(ss, stack++));
   }
+  while(1) asm("nop");
 
 }
 

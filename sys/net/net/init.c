@@ -30,6 +30,7 @@
 #include <sys/types.h>
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
+#include <ubixos/sem.h>
 
 #include <net/sys.h>
 #include <net/mem.h>

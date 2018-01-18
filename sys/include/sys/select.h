@@ -31,6 +31,8 @@
 
 #include <sys/cdefs.h>
 #include <sys/_types.h>
+#include <sys/_timespec.h>
+#include <sys/_timeval.h>
 
 #include <sys/_sigset.h>
 

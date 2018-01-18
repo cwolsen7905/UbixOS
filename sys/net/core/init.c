@@ -31,6 +31,8 @@
 
 #include "net/opt.h"
 
+#include <ubixos/sem.h>
+
 #include "net/init.h"
 #include "net/stats.h"
 #include "net/sys.h"

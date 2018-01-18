@@ -171,4 +171,10 @@ typedef unsigned int qshift_t;
 /* Combine two `digits' to make a single two-digit number. */
 #define COMBINE(a, b) (((u_long)(a) << HALF_BITS) | (b))
 
+
+#ifndef _MODE_T_DECLARED
+typedef __mode_t        mode_t;         /* permissions */
+#define _MODE_T_DECLARED
+#endif
+
 #endif /* END _SYS_TYPES_H */

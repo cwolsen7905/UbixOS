@@ -195,10 +195,15 @@ void sys_mbox_free(struct sys_mbox **mb) {
   if ((mb != NULL) && (*mb != SYS_MBOX_NULL)) {
     struct sys_mbox *mbox = *mb;
     sys_arch_sem_wait(&mbox->lock, 0);
-
+/*
     sys_sem_free_internal(mbox->full);
     sys_sem_free_internal(mbox->empty);
     sys_sem_free_internal(mbox->lock);
+*/
+  sem_destroy(mbox->full);
+  sem_destroy(mbox->empty);
+  sem_destroy(mbox->lock);
+
     mbox->full = mbox->empty = mbox->lock = NULL;
     kfree(mbox);
     *mb = 0x0;

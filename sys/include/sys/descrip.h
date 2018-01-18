@@ -115,12 +115,6 @@ struct fileOps {
 };
 
 #ifdef _BALLS
-/* TEMP */
-struct __timespec {
-  __time_t tv_sec; /* seconds */
-  long tv_nsec; /* and nanoseconds */
-};
-
 struct stat {
   __dev_t st_dev; /* inode's device */
   ino_t st_ino; /* inode's number */

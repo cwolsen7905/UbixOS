@@ -26,10 +26,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _TIME_H
-#define _TIME_H
+#ifndef _UBIXOS_TIME_H
+#define _UBIXOS_TIME_H
 
 #include <sys/types.h>
+#include <sys/_timespec.h>
 #include <sys/io.h>
 
 typedef long suseconds_t;
@@ -41,15 +42,6 @@ typedef long suseconds_t;
 #define DAY (24*HOUR)
 #define YEAR (365*DAY)
 
-#ifndef _TIME_T_DECLARED
-typedef __time_t time_t;
-#define _TIME_T_DECLARED
-#endif
-
-struct timespec {
-    time_t tv_sec; /* seconds */
-    long tv_nsec; /* and nanoseconds */
-};
 
 struct timeStruct {
     int sec;
@@ -63,11 +55,6 @@ struct timeStruct {
 struct timezone {
     int tz_minuteswest; /* minutes west of Greenwich */
     int tz_dsttime; /* type of dst correction */
-};
-
-struct timeval {
-    long tv_sec; /* seconds (XXX should be time_t) */
-    suseconds_t tv_usec; /* and microseconds */
 };
 
 int gettimeofday(struct timeval *tp, struct timezone *tzp);

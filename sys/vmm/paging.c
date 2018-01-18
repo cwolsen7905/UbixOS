@@ -571,28 +571,25 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
   uint32_t *pageDir = 0x0;
 
   pageDir = (uint32_t *) PD_BASE_ADDR;
-
-  /*
-   #ifdef DEBUG
-   */
-  //MrOlsen 2018kprintf("CVS: [0x%X]\n", addr);
-  /*
-   #endif
-   */
+kprintf ("PDE*PS: 0x%X", (PD_ENTRIES * PAGE_SIZE));
 
   for (x = (addr / (PD_ENTRIES * PAGE_SIZE)); x < PD_INDEX(VMM_USER_END); x++) {
 
     if ((pageDir[x] & PAGE_PRESENT) == PAGE_PRESENT) {
 
       pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
+kprintf("\nx: 0x%X, PAGE_SIZE: 0x%X, pTS: 0x%X\n", x, PAGE_SIZE, pageTableSrc);
+//while(1) asm("nop");
 
       for (y = 0; y < PAGE_SIZE; y++) {
 
         if ((pageTableSrc[y] & PAGE_PRESENT) == PAGE_PRESENT) {
+kprintf("pTS[0]: 0x%X", pageTableSrc[0]);
 
           if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
-
+kprintf("[aCC.E: %i(0x%X)]", y,  pageTableSrc[y]);
             adjustCowCounter(((uint32_t) pageTableSrc[y] & 0xFFFFF000), -1);
+kprintf("[aCC.X: %i(0x%X)]", y,  pageTableSrc[y]);
             pageTableSrc[y] = 0x0;
 
           }
@@ -609,6 +606,8 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
       }
     }
   }
+
+while(1) asm("nop");
 
   asm(
     "movl %cr3,%eax\n"

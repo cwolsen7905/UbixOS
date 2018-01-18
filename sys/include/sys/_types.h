@@ -75,6 +75,9 @@ typedef __int32_t        __ptrdiff_t;
  typedef __int64_t       __int_least64_t;
  typedef int ___wchar_t;
 
+typedef       long            __suseconds_t;  /* microseconds (signed) */
+typedef	__int32_t	__pid_t;	/* process [group] */
+
 #if !defined(__clang__) || !defined(__cplusplus)
 typedef __uint_least16_t  __char16_t;
  typedef __uint_least32_t  __char32_t;

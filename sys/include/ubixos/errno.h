@@ -33,6 +33,7 @@
 extern "C" {
 #endif
 
+#define  ENOERR           0  /* No Error */
 #define  EPERM            1  /* Operation not permitted */
 #define  ENOENT           2  /* No such file or directory */
 #define  ESRCH            3  /* No such process */
@@ -163,6 +164,10 @@ extern "C" {
 
 #ifndef errno
   extern int errno;
+#endif
+
+#ifndef err_t
+typedef int err_t;
 #endif
 
 #ifdef __cplusplus

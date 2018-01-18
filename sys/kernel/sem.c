@@ -30,6 +30,8 @@
 #include <sys/types.h>
 #include <ubixos/errno.h>
 #include <ubixos/time.h>
+#include <ubixos/kpanic.h>
+#include <lib/kmalloc.h>
 
 int sem_close(semID_t id) {
   return(0);
@@ -47,11 +49,11 @@ int sem_trywait(semID_t id) {
   return(0);
 }
 
-int sem_timedwait(semID_t id, const struct timespec) {
+int sem_timedwait(semID_t id, const struct timespec *ts) {
   return(0);
 }
 
-err_t sys_init(sys_sem_t **sem, uint8_t count) {
+err_t sem_init(sys_sem_t **sem, uint8_t count) {
   sys_sem_t *newSem = 0x0;
 
   if (*sem != 0) {
@@ -66,7 +68,7 @@ err_t sys_init(sys_sem_t **sem, uint8_t count) {
 
   *sem = newSem;
 
-  return (ERR_OK);
+  return (ENOERR);
 }
 
 int sem_open(semID_t *id, const char *name, int oflag, mode_t mode, unsigned int value) {
@@ -93,6 +95,6 @@ err_t sem_destroy(sys_sem_t **sem) {
   kfree(sem);
   *sem = 0x0;
 
-  return (ERR_OK);
+  return (ENOERR);
 }
 

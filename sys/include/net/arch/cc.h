@@ -8,8 +8,11 @@
 #define PACK_STRUCT_BEGIN
 #define PACK_STRUCT_END
 
+#define LWIP_ERR_T int
+/*
 #ifdef LWIP_ERR_T
 typedef uint8_t err_t;
 #endif
+*/
 
 #endif

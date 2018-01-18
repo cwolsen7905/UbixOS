@@ -33,10 +33,6 @@
 #include <ubixos/sched.h>
 #include <ubixos/time.h>
 
-#ifndef ETIMEDOUT
-#define ETIMEDOUT -1
-#endif
-
 #define LOCKED     1
 #define UNLOCKED   0
 
