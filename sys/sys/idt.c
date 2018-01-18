@@ -66,10 +66,10 @@ int idt_init() {
   struct tssStruct *gpfTSS = (struct tssStruct *) 0x4200;
 
   /* Set up default vector table for all possible 256 interrupts */
-
+  /*
   for (i = 0x0; i < 256; i++) {
     setVector(intNull, i, dPresent + dTrap + dDpl3);
-  }
+   }*/
 
   /* Load the IDT into the system */
   asm volatile(
