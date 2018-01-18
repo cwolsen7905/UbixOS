@@ -56,7 +56,7 @@ err_t sys_sem_new(sys_sem_t **sem, uint8_t count) {
   sys_sem_t *newSem = 0x0;
 
   if (*sem != 0) {
-    kpanic("UH OH!");
+    kprintf("UH OH!");
   }
 
   newSem = kmalloc(sizeof(struct sys_sem));
@@ -531,4 +531,14 @@ int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *args) {
   td->td_retval[0] = 0;
 
   return(0);
+}
+
+int sys_sendto(struct thread *td, struct sys_sendto_args *args) {
+  struct file *fd = 0x0;
+  getfd(td, &fd, args->s);
+
+  lwip_sendto(fd->socket, args->buf, args->len, args->flags, args->to, args->tolen);
+  td->td_retval[0] = 0x0;
+  
+  return (0);
 }
