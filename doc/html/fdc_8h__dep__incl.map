@@ -1,4 +1,0 @@
-base referer
-rect $init_8h.html 239,5 447,32
-rect $fdc_8c.html 279,56 407,83
-rect $main_8c.html 496,5 640,32

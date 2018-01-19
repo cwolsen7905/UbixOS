@@ -486,7 +486,7 @@ void *vmm_getFreeMallocPage(uInt16 count) {
 
   spinLock(&fkpSpinLock);
   /* Lets Search For A Free Page */
-  for (x = 960; x < 1024; x++) {
+  for (x = PT_INDEX(VMM_KERN_START); x <= PT_INDEX(VMM_KERN_END); x++) {
     /* Set Page Table Address */
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (0x1000 * x));
     for (y = 0; y < 1024; y++) {

@@ -53,7 +53,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
 
   spinLock(&fvpSpinLock);
 
-  pageDir = (uInt32 *) PD_BASE_ADDR;
+  pageDir = (uint32_t *) PD_BASE_ADDR;
 
   /* Lets Search For A Free Page */
   if (_current->oInfo.vmStart <= 0x100000)
@@ -71,8 +71,6 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   }
   else
     K_PANIC("Invalid Type");
-
-  //kprintf( "Entering MMAP: Type: %i, Returning %i Pages At Address: 0x%X\n", type, count, start_page );
 
   /*
    *
@@ -102,10 +100,6 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     pageTableSrc[pdI] = (pageDir[pdI] & 0xFFFFF000) | PAGE_DEFAULT; /* Is This Why Page Needs To Be User As Well? */
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
 
-
-
-      //kprintf("PAGE NOT %i,", __LINE__);
-
       /* Reload Page Directory */
       asm(
         "movl %cr3,%eax\n"
@@ -126,7 +120,6 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     else {
       pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pdI));
     }
-//kprintf("HERE?");
 
     ptI = ((start_page - (pdI * 0x400000)) / 0x1000);
 

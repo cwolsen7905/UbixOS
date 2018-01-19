@@ -42,8 +42,8 @@
 #define PT_INDEX(v_addr)  ((v_addr >> 12) & 0x03FF)             // Calc Page Table Offset
 #define PD_BASE_ADDR2     ((PAGE_SIZE << 0xA) + VMM_KERN_START) // Find Out What This Was For
 
-#define PD_BASE_ADDR      0xC0400000 //Page Directory Base Address
-#define PT_BASE_ADDR      0xC0000000 // Page Table Base Address
+#define PD_BASE_ADDR      0xC0400000 // Page Directory Addressable Base Address
+#define PT_BASE_ADDR      0xC0000000 // Page Table Addressable Base Address
 
 #define PD_ENTRIES        (PAGE_SIZE/4) //Return Page Directory Entries
 #define PT_ENTRIES        (PAGE_SIZE/4) //Return Page Table Entries

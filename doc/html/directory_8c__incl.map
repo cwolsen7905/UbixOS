@@ -1,8 +1,0 @@
-base referer
-rect $ubixfs_8h.html 391,5 511,32
-rect $types_8h.html 561,157 681,184
-rect $file_8h.html 252,107 332,133
-rect $mount_8h.html 400,157 501,184
-rect $kmalloc_8h.html 397,208 504,235
-rect $kprintf_8h.html 243,259 341,285
-rect $lib_2string_8h.html 245,309 339,336

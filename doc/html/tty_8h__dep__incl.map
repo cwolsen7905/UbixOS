@@ -1,9 +1,0 @@
-base referer
-rect $init_8h.html 537,12 745,39
-rect $sched_8h.html 260,107 487,133
-rect $atkbd_8c.html 568,75 715,101
-rect $fork_8c.html 564,151 719,177
-rect $systemtask_8c.html 539,201 744,228
-rect $kpanic_8c.html 287,259 460,285
-rect $tty_8c.html 300,309 447,336
-rect $video_8c.html 300,360 447,387

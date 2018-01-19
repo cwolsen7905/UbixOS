@@ -1,7 +1,0 @@
-base referer
-rect $kprintf_8h.html 217,5 316,32
-rect $video_8h.html 217,56 316,83
-rect $kpanic_8h.html 203,107 331,133
-rect $stdarg_8h.html 228,157 305,184
-rect $types_8h.html 380,31 500,57
-rect $__types_8h.html 551,31 655,57

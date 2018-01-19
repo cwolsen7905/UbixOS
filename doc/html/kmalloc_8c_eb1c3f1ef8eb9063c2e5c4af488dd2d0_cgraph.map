@@ -1,7 +1,0 @@
-base referer
-rect $kpanic_8h.html#db9a182aa071791a306163d50d653deb 176,56 243,83
-rect $8259_8h.html#2b9ec30943ddb0a2ef3bd7ccfd2026c0 291,5 381,32
-rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 303,56 369,83
-rect $stdarg_8h.html#621577c2df0ad5faa281223c56eeb7a5 300,107 372,133
-rect $vsprintf_8c.html#c2f4c669c6f6aa6caa5ab8adb1b07dd0 433,81 508,108
-rect $vsprintf_8c.html#3fa7c8ef8597579301cb4b5c59bc6d9a 431,132 511,159

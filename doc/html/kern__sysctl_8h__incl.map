@@ -1,6 +1,0 @@
-base referer
-rect $sysproto_8h.html 295,5 412,32
-rect $thread_8h.html 463,56 567,83
-rect $signal_8h.html 464,5 566,32
-rect $types_8h.html 618,31 738,57
-rect $__types_8h.html 788,31 892,57

@@ -1,7 +1,0 @@
-base referer
-rect $sched_8h.html 295,120 417,147
-rect $file_8h.html 480,208 560,235
-rect $types_8h.html 623,107 743,133
-rect $tty_8h.html 471,56 569,83
-rect $tss_8h.html 480,107 560,133
-rect $thread_8h.html 468,157 572,184

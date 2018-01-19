@@ -1,8 +1,0 @@
-base referer
-rect $spinlock_8h.html 240,31 379,58
-rect $sched_8h.html 248,132 371,159
-rect $types_8h.html 583,132 703,159
-rect $tty_8h.html 431,107 529,134
-rect $file_8h.html 440,158 520,184
-rect $tss_8h.html 440,208 520,235
-rect $thread_8h.html 428,259 532,286

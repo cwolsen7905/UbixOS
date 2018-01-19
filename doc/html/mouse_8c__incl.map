@@ -1,9 +1,0 @@
-base referer
-rect $mouse_8h.html 208,5 312,32
-rect $8259_8h.html 214,107 307,133
-rect $types_8h.html 362,132 482,159
-rect $idt_8h.html 222,208 299,235
-rect $gdt_8h.html 380,259 463,285
-rect $io_8h.html 224,259 296,285
-rect $kprintf_8h.html 211,56 310,83
-rect $__types_8h.html 532,132 636,159

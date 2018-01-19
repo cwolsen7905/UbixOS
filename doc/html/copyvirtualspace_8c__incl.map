@@ -1,6 +1,0 @@
-base referer
-rect $vmm_8h.html 309,5 416,32
-rect $kern__sysctl_8h.html 295,56 431,83
-rect $spinlock_8h.html 293,107 432,133
-rect $kpanic_8h.html 299,157 427,184
-rect $string_8h.html 327,208 399,235

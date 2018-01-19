@@ -1,4 +1,0 @@
-base referer
-rect $kpanic_8c.html 239,6 412,32
-rect $kprintf_8c.html 252,56 399,83
-rect $vsprintf_8c.html 248,107 403,134

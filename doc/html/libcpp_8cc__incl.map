@@ -1,6 +1,0 @@
-base referer
-rect $kmalloc_8h.html 209,6 316,32
-rect $video_8h.html 213,56 312,83
-rect $libcpp_8h.html 215,107 311,134
-rect $types_8h.html 367,56 487,83
-rect $__types_8h.html 537,56 641,83

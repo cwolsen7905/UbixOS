@@ -1,9 +1,0 @@
-base referer
-rect $types_8h.html 761,208 881,235
-rect $sysproto_8h.html 407,107 524,133
-rect $thread_8h.html 591,132 695,159
-rect $kern__sig_8h.html 240,157 357,184
-rect $kprintf_8h.html 416,208 515,235
-rect $endtask_8h.html 575,259 711,285
-rect $kmalloc_8h.html 412,309 519,336
-rect $assert_8h.html 261,360 336,387

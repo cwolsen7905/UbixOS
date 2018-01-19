@@ -1,8 +1,0 @@
-base referer
-rect $file_8h.html 261,107 445,133
-rect $vfs_8h.html 496,19 680,45
-rect $block_8c.html 505,95 671,121
-rect $directory_8c.html 495,145 681,172
-rect $main_8c.html 281,208 425,235
-rect $sched_8c.html 268,259 439,285
-rect $mount_8c.html 277,309 429,336

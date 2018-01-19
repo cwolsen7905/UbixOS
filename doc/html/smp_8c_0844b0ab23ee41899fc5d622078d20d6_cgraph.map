@@ -1,9 +1,0 @@
-base referer
-rect $smp_8c.html#0f6e384fb3ad325aa2406af715ff341d 193,31 260,57
-rect $spinlock_8h.html#2cd9a4502680fb8e7f0fe6b029e558b1 187,81 267,108
-rect $spinlock_8h.html#dd996cbbb3b9826dd9c8cf02b66a4c65 179,132 275,159
-rect $sched_8h.html#08933fe6d593a1c78b9080359f15a0b7 323,56 424,83
-rect $spinlock_8h.html#8f9173fadeddafa01754d6cbcc630198 608,107 707,133
-rect $sched_8h.html#549a0c1cc47933fa045b200690965cbd 473,56 535,83
-rect $sched_8h.html#e969273d772018d111e1f0344eb550f8 584,5 731,32
-rect $sched_8h.html#086cc0adc0b6a3860ceeeb5bc5ea94ea 588,56 727,83

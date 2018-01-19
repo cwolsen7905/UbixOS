@@ -1,8 +1,0 @@
-base referer
-rect $file_8h.html#dfedd6c658c329d13d5a90a7462f5979 159,5 215,32
-rect $atkbd_8c.html#9e32494b8c0797b73c41a50c698f0c04 157,56 216,83
-rect $sched_8h.html#08933fe6d593a1c78b9080359f15a0b7 136,107 237,133
-rect $sched_8h.html#549a0c1cc47933fa045b200690965cbd 287,107 348,133
-rect $sched_8h.html#e969273d772018d111e1f0344eb550f8 397,56 544,83
-rect $sched_8h.html#086cc0adc0b6a3860ceeeb5bc5ea94ea 401,107 540,133
-rect $spinlock_8h.html#8f9173fadeddafa01754d6cbcc630198 421,157 520,184

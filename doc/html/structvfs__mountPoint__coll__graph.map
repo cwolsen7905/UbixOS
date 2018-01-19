@@ -1,7 +1,0 @@
-base referer
-rect $structubixDiskLabel.html 76,374 207,518
-rect $structubixDiskLabel_1_1ubixPartitions.html 5,54 221,214
-rect $structdevice__node.html 257,366 364,526
-rect $structdevice__resource.html 245,94 376,174
-rect $structdevice__interface.html 400,6 533,262
-rect $structfileSystem.html 443,326 557,566

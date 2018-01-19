@@ -1,5 +1,0 @@
-base referer
-rect $init_8h.html 310,6 518,32
-rect $kern__sysctl_8c.html 311,56 516,83
-rect $copyvirtualspace_8c.html 295,107 532,134
-rect $main_8c.html 582,6 726,32

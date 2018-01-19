@@ -1,5 +1,0 @@
-base referer
-rect $paging_8h.html 267,81 387,108
-rect $types_8h.html 759,81 879,108
-rect $sysproto_8h.html 436,56 553,83
-rect $thread_8h.html 604,81 708,108

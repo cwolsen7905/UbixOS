@@ -1,7 +1,0 @@
-base referer
-rect $lists_8h.html#ddb302e5cc32ff6fd65b02523e648764 168,6 264,32
-rect $lists_8h.html#5f388b13396e1961b2a85720edf33712 165,56 267,83
-rect $lists_8h.html#f4e720b926108dabb1a08d09798e76d0 147,107 285,134
-rect $kmalloc_8h.html#150eab2ac4ce4553e21ca10e7f441762 333,208 408,235
-rect $kprint_8h.html#b2761bdf0cca73ad0fb5880895210cd8 456,208 523,235
-rect $kmod_8h.html#c9997cda5e69bc2c1fce8c8c343b3d4f 168,259 264,286

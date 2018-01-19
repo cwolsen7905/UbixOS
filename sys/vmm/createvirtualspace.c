@@ -52,13 +52,15 @@
 
  ************************************************************************/
 void *vmm_createVirtualSpace(pid_t pid) {
+
   void *newPageDirectoryAddress = 0x0;
   uint32_t *parentPageDirectory = 0x0, *newPageDirectory = 0x0;
   uint32_t *parentPageTable = 0x0, *newPageTable = 0x0;
+
   int x = 0;
 
   /* Set Address Of Parent Page Directory */
-  parentPageDirectory = (uint32_t *) PD_BASE_ADDR;
+  parentPageDirectory = (uint32_t *) PD_BASE_ADDR; /* PD_BASE_ADDR is the addressable Page Directory */
 
   /* Allocate A New Page For The New Page Directory */
   newPageDirectory = (uint32_t *) vmm_getFreePage(pid);
@@ -91,7 +93,7 @@ void *vmm_createVirtualSpace(pid_t pid) {
   adjustCowCounter(((uint32_t) parentPageTable[1022] & 0xFFFFF000), 2);
 
 
-  vmm_unmapPage((uint32_t) newPageTable, 1); 
+  vmm_unmapPage((uint32_t) newPageTable, 1);
 
 
   /*

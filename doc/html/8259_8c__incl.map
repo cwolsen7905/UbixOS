@@ -1,6 +1,0 @@
-base referer
-rect $8259_8h.html 200,6 294,32
-rect $io_8h.html 211,56 283,83
-rect $kprintf_8h.html 198,107 296,134
-rect $types_8h.html 346,56 466,83
-rect $__types_8h.html 516,56 620,83

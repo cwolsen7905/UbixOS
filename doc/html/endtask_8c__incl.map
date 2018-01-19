@@ -1,7 +1,0 @@
-base referer
-rect $types_8h.html 412,158 532,184
-rect $sched_8h.html 239,56 362,83
-rect $vitals_8h.html 240,107 360,134
-rect $vmm_8h.html 247,158 354,184
-rect $kprintf_8h.html 251,208 350,235
-rect $8259_8h.html 254,259 347,286
