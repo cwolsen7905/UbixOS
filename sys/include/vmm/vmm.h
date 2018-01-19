@@ -26,8 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _VMM_VMM_H_
-#define _VMM_VMM_H_
+#ifndef _VMM_VMM_H
+#define _VMM_VMM_H
 
 #include <sys/types.h>
 #include <vmm/paging.h>
@@ -61,6 +61,8 @@ extern "C" {
 
 #define VMM_PAGE_DIRS  0xC0000000
 #define VMM_PAGE_DIR   0xC0400000
+
+  extern struct spinLock pdSpinLock;
 
 
   struct freebsd6_mmap_args {
@@ -110,6 +112,8 @@ extern "C" {
   int freePage(uInt32 pageAddr);
   int adjustCowCounter(uInt32 baseAddr, int adjustment);
   void vmm_freeProcessPages(pidType pid);
+
+  int vmm_allocPageTable(uint32_t, pidType);
 
 #ifdef __cplusplus
 }
