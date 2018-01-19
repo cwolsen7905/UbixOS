@@ -91,7 +91,7 @@ void *vmm_createVirtualSpace(pid_t pid) {
   adjustCowCounter(((uint32_t) parentPageTable[1022] & 0xFFFFF000), 2);
 
 
-  vmm_unmapPage((uint32_t) newPageTable, 1); 
+  vmm_unmapPage((uint32_t) newPageTable, 1);
 
 
   /*
