@@ -224,6 +224,8 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid) {
   destPageDirectoryIndex = PD_INDEX(dest);
 
   if ((pageDir[destPageDirectoryIndex] & PAGE_PRESENT) != PAGE_PRESENT) {
+    if (destPageDirectoryIndex == 0x21)
+      kpanic("v_rP");
     //kprintf("Page Not Present: 0x%X, Source: 0x%X, Dest: 0x%X, dPDI: 0x%X\n", dest, source, dest, destPageDirectoryIndex);
     /* If Page Table Is Non Existant Then Set It Up */
     /* UBU Why does the page table need to be user writable? */
@@ -303,7 +305,10 @@ void *vmm_getFreeKernelPage(pidType pid, uint16_t count) {
   spinLock(&fkpSpinLock);
 
   /* Lets Search For A Free Page */
-  for (x = 768; x < 1024; x++) {
+  for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++) {
+
+    if (x == 0x21)
+      kpanic("gFKP");
 
     /* Set Page Table Address */
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (4096 * x));
@@ -401,7 +406,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
       K_PANIC("Returned NULL");
   }
   for (x = (_current->oInfo.vmStart / (1024 * 4096)); x < 1024; x++) {
-
+kapnic("v_mFT");
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (4096 * x));
 
     for (y = 0; y < 1024; y++) {
@@ -483,12 +488,37 @@ void *vmm_getFreeMallocPage(uInt16 count) {
   uInt16 x = 0x0, y = 0x0;
   int c = 0x0;
   uint32_t *pageTableSrc = 0x0;
+  uint32_t *pageDirectory = 0x0;
+
+  pageDirectory = (uint32_t *) PD_BASE_ADDR;
 
   spinLock(&fkpSpinLock);
+
   /* Lets Search For A Free Page */
-  for (x = 960; x < 1024; x++) {
+  for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++) {
+
+    if ((pageDirectory[x] & PAGE_PRESENT) != PAGE_PRESENT) { /* If Page Directory Is Not Yet Allocated Allocate It */
+
+      pageDirectory[x] = (uint32_t) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
+
+      /* Also Add It To Virtual Space So We Can Make Changes Later */
+      pageTable = (uint32_t *) (PT_BASE_ADDR + (PD_INDEX( PT_BASE_ADDR ) * 0x1000)); /* Table that maps that 4MB */
+
+      pageTableSrc[x] = (pageDirectory[x] & 0xFFFFF000) | PAGE_DEFAULT;
+      pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
+
+      /* Reload Page Directory */
+      asm(
+        "movl %cr3,%eax\n"
+        "movl %eax,%cr3\n"
+      );
+
+      bzero(pageTableSrc, PAGE_SIZE);
+    }
+
     /* Set Page Table Address */
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (0x1000 * x));
+
     for (y = 0; y < 1024; y++) {
       /* Loop Through The Page Table Find An UnAllocated Page */
       if ((uint32_t) pageTableSrc[y] == (uint32_t) 0x0) {

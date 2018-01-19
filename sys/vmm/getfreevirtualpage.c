@@ -102,6 +102,9 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
     pageTableSrc[pdI] = (pageDir[pdI] & 0xFFFFF000) | PAGE_DEFAULT; /* Is This Why Page Needs To Be User As Well? */
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
 
+     if (pdI == 0x21)
+       kprintf("GOT YOU: %i", _current->id);
+
 
 
       //kprintf("PAGE NOT %i,", __LINE__);

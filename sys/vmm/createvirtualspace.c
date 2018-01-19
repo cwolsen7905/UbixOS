@@ -148,8 +148,11 @@ void *vmm_createVirtualSpace(pid_t pid) {
   /* Flush The Page From Garbage In Memory */
   bzero(newPageTable, PAGE_SIZE);
 
-  for (x = 0; x < PD_ENTRIES; x++)
+  for (x = 0; x < PD_ENTRIES; x++) {
+    if (x == 0x21)
+      kprintf("[0x%X]", newPageDirectory[x]);
     newPageTable[x] = newPageDirectory[x];
+  }
 
   /* Unmap Page From Virtual Space */
   vmm_unmapPage((uint32_t) newPageTable, 1);
