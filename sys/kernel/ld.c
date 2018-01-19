@@ -93,7 +93,7 @@ uint32_t ldEnable() {
          */
         for (x = 0; x < (programHeader[i].p_memsz); x += 0x1000) {
           /* make r/w or ro */
-          if ((vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT, _current->id)) == 0x0)
+          if ((vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), PAGE_DEFAULT, _current->id, 0)) == 0x0)
             K_PANIC("vmmRemapPage: ld");
           memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + LD_START), 0x0, 0x1000);
         }

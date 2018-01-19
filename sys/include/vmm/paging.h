@@ -88,7 +88,7 @@ void *vmm_getFreeVirtualPage(pidType, int, int);
 uint32_t vmm_getPhysicalAddr(uint32_t);
 uint32_t vmm_getRealAddr(uint32_t);
 int vmm_setPageAttributes(uint32_t, uint16_t);
-int vmm_remapPage(uint32_t, uint32_t, uint16_t, pidType);
+int vmm_remapPage(uint32_t, uint32_t, uint16_t, pidType, int haveLock);
 int vmm_pagingInit();
 void *vmm_getFreeMallocPage(uint16_t count);
 //void vmm_pageFault( uint32_t, uint32_t, uint32_t );

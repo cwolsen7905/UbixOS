@@ -200,6 +200,11 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   newProcess->files[0] = 0x0;
 
+  /* Build LDT For GS and FS */
+  if (vmm_remapPage(vmm_findFreePage(newProcess->id), VMM_USER_START, PAGE_DEFAULT, newProcess->id, 0) == 0x0) {
+    K_PANIC("Error: Remap Page Failed");
+  }
+
   /* Set up default stack for thread here filled with arg list 3 times */
   asm volatile(
     "pusha               \n"
@@ -341,7 +346,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
        */
       for (x = 0x0; x < (programHeader[i].p_memsz); x += 0x1000) {
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(newProcess->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, newProcess->id) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(newProcess->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, newProcess->id, 0) == 0x0)
           K_PANIC("Remap Page Failed");
 
         memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x), 0x0, 0x1000);
@@ -370,7 +375,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
   //x = 0 because GS= stack address not address -1 fix!
   for (x = 1; x <= 100; x++) {
-    vmm_remapPage(vmm_findFreePage(newProcess->id), (STACK_ADDR+1) - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+    vmm_remapPage(vmm_findFreePage(newProcess->id), (STACK_ADDR+1) - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
     bzero((STACK_ADDR+1) - (x * 0x1000), 0x1000);
   }
 
@@ -380,7 +385,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
   //vmm_remapPage(vmm_findFreePage(newProcess->id), 0x5BB000, KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
   /*
   for (x = 0; x < 2; x++)
-    vmm_remapPage(vmm_findFreePage(newProcess->id), 0xFFFFF000 - (PAGE_SIZE * x), KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id);
+    vmm_remapPage(vmm_findFreePage(newProcess->id), 0xFFFFF000 - (PAGE_SIZE * x), KERNEL_PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
   */
 
   /* Set All The Proper Information For The Task */
@@ -447,15 +452,15 @@ void execFile(char *file, char **argv, char **envp, int console) {
   tmp[i + x] = 0x0;
 
   /* Build LDT For GS and FS */
-  if (vmm_remapPage(vmm_findFreePage(newProcess->id), 0x400000, PAGE_DEFAULT, newProcess->id) == 0x0) {
+  if (vmm_remapPage(vmm_findFreePage(newProcess->id), VMM_USER_START, PAGE_DEFAULT, newProcess->id, 0) == 0x0) {
     K_PANIC("Error: Remap Page Failed");
   }
 
-  struct gdtDescriptor *taskLDT = 0x400000;
+  struct gdtDescriptor *taskLDT = VMM_USER_START;
 
   struct gdtDescriptor *tmpDesc = 0x0;
 
-  tmpDesc = 0x400000 + sizeof(struct gdtDescriptor);//taskLDT[1];
+  tmpDesc = VMM_USER_START + sizeof(struct gdtDescriptor);//taskLDT[1];
   uint32_t data_addr = 0x0;
 
   tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
@@ -551,10 +556,15 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   //! Clean the virtual of COW pages left over from the fork
   //vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
   //MrOlsen 2017-12-15 - FIX! - This should be done before it was causing a lot of problems why did I free space after loading binary????
-  vmm_cleanVirtualSpace((uint32_t) 0x8048000);
+  //vmm_cleanVirtualSpace((uint32_t) 0x8048000);
+  vmm_cleanVirtualSpace((uint32_t) VMM_USER_START);
 
   /* Clear Stack */
-  bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
+  //bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
+  for (x = 1; x <= 100; x++) {
+    vmm_remapPage(vmm_findFreePage(_current->id), (STACK_ADDR+1) - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
+    bzero((STACK_ADDR+1) - (x * 0x1000), 0x1000);
+  }
 
   /* Load ELF Header */
   if ((binaryHeader = (Elf_Ehdr *) kmalloc(sizeof(Elf_Ehdr))) == 0x0)
@@ -624,7 +634,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
          */
         for (x = 0x0; x < (round_page(programHeader[i].p_memsz)); x += 0x1000) {
           /* Make readonly and read/write !!! */
-          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0) {
+          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0) {
             K_PANIC("Error: Remap Page Failed");
           }
            else {
@@ -859,15 +869,15 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
    */
 
   /* Build LDT For GS and FS */
-  if (vmm_remapPage(vmm_findFreePage(_current->id), 0x400000, PAGE_DEFAULT, _current->id) == 0x0) {
+  if (vmm_remapPage(vmm_findFreePage(_current->id), VMM_USER_START, PAGE_DEFAULT, _current->id, 0) == 0x0) {
     K_PANIC("Error: Remap Page Failed");
   }
 
-  struct gdtDescriptor *taskLDT = 0x400000;
+  struct gdtDescriptor *taskLDT = VMM_USER_START;
 
   struct gdtDescriptor *tmpDesc = 0x0;
 
-  tmpDesc = 0x400000 + sizeof(struct gdtDescriptor);//taskLDT[1];
+  tmpDesc = VMM_USER_START + sizeof(struct gdtDescriptor);//taskLDT[1];
 
   tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
   tmpDesc->baseLow = (data_addr & 0xFFFF);
@@ -879,6 +889,8 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
   _current->pgrp = _current->id;
+
+  kprintf("DONE YET?");
 
   return (0x0);
 }

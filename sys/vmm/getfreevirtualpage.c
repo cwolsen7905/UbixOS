@@ -117,7 +117,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
       }
 
       else if ((uint32_t) pageTable[y] == (uint32_t) 0x0) {
-      if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)), PAGE_DEFAULT, pid)) == 0x0)
+      if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) == 0x0)
         kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)));
 
       vmm_clearVirtualPage((uInt32) ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)));

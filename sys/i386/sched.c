@@ -89,7 +89,7 @@ void sched() {
   if (spinTryLock(&schedulerSpinLock))
     return;
 
-  tmpTask = _current->next;
+  tmpTask = ((_current == 0) ? 0 : _current->next);
   //outportByte(0xE9,_current->id + '0');
   schedStart:
 

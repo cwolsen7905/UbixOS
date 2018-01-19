@@ -93,7 +93,7 @@ int elf_load_file(kTask_t *p, const char *file, uint32_t *addr, uint32_t *entry)
         for (x = 0x0; x < (programHeader[i].p_memsz + 0xFFF); x += 0x1000) {
 
           /* Make readonly and read/write */
-          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + real_base_addr), PAGE_DEFAULT, _current->id) == 0x0)
+          if (vmm_remapPage(vmm_findFreePage(_current->id), ((programHeader[i].p_vaddr & 0xFFFFF000) + x + real_base_addr), PAGE_DEFAULT, _current->id, 0x0) == 0x0)
             K_PANIC("Error: Remap Page Failed");
 
           memset((void *) ((programHeader[i].p_vaddr & 0xFFFFF000) + x + real_base_addr), 0x0, 0x1000);

@@ -128,18 +128,20 @@ void trap(struct trapframe *frame) {
 
   trap_code = frame->tf_trapno;
 
+  cr2 = rcr2();
+  kprintf("CR2: 0x%X", cr2);
+
   if ((frame->tf_eflags & PSL_I) == 0) {
     if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
       die_if_kernel("TEST", frame, 0x100);
       //     kpanic( "INT OFF! USER" );
     }
     else {
-      die_if_kernel("TEST", frame, 0x100);
+      die_if_kernel("TEST", frame, 0x200);
 //      kpanic( "INT OFF! KERN[0x%X]", trap_code );
     }
   }
 
-  cr2 = rcr2();
   kprintf("trap_code: %i(0x%X), EIP: 0x%X, CR2: 0x%X\n", frame->tf_trapno, frame->tf_trapno, frame->tf_eip, cr2);
   if (frame->tf_trapno == 0xc) {
     vmm_pageFault(frame, cr2);
