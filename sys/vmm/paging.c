@@ -406,7 +406,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
       K_PANIC("Returned NULL");
   }
   for (x = (_current->oInfo.vmStart / (1024 * 4096)); x < 1024; x++) {
-kapnic("v_mFT");
+    kpanic("v_mFT");
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (4096 * x));
 
     for (y = 0; y < 1024; y++) {
@@ -502,10 +502,10 @@ void *vmm_getFreeMallocPage(uInt16 count) {
       pageDirectory[x] = (uint32_t) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
 
       /* Also Add It To Virtual Space So We Can Make Changes Later */
-      pageTable = (uint32_t *) (PT_BASE_ADDR + (PD_INDEX( PT_BASE_ADDR ) * 0x1000)); /* Table that maps that 4MB */
+      pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PD_INDEX( PT_BASE_ADDR ) * 0x1000)); /* Table that maps that 4MB */
 
       pageTableSrc[x] = (pageDirectory[x] & 0xFFFFF000) | PAGE_DEFAULT;
-      pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
+      pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (x * 0x1000));
 
       /* Reload Page Directory */
       asm(

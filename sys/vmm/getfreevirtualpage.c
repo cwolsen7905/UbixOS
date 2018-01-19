@@ -86,13 +86,10 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
 
     if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) { /* If Page Directory Is Not Yet Allocated Allocate It */
 
-<<<<<<< HEAD
      if (pdI == 0x21)
        kprintf("GOT YOU: %i", _current->id);
 
-=======
       pageDirectory[pdI] = (uint32_t) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
->>>>>>> 178e47e730a76fc6339a993efae2ed0480e6f652
 
       /* Also Add It To Virtual Space So We Can Make Changes Later */
       pageTable = (uint32_t *) (PT_BASE_ADDR + (PD_INDEX( PT_BASE_ADDR ) * 0x1000)); /* Table that maps that 4MB */
@@ -109,7 +106,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
       bzero(pageTable, PAGE_SIZE);
     }
     else {
-      pageTable = (uint32_y *) (PT_BASE_ADDR + (0x1000 * pdI));
+      pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * pdI));
     }
 
     ptI = ((start_page - (pdI * 0x400000)) / 0x1000);
@@ -127,7 +124,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
         vmm_clearVirtualPage((uInt32) ((pdI * (1024 * 4096)) + (y * 4096)));
       }
       else {
-        kprintf("-> y: %i, ptI: 0x%X, pdI: 0x%X pTS: 0x%X ??\n", y, ptI, pdI, pageTableSrc[y]);
+        kprintf("-> y: %i, ptI: 0x%X, pdI: 0x%X pTS: 0x%X ??\n", y, ptI, pdI, pageTable[y]);
         K_PANIC("UHM HOW DO WE HAVE AN ALLOCATED PAGE HERE!!\n");
       }
 
