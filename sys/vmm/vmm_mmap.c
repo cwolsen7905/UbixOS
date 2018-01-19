@@ -138,7 +138,7 @@ int freebsd6_mmap(struct thread *td, struct freebsd6_mmap_args *uap) {
      cap_maxprot = VM_PROT_ALL;
      */
     for (i = addr; i < (addr + size); i += 0x1000) {
-      if (vmm_remapPage(vmm_findFreePage(_current->id), i, PAGE_DEFAULT, _current->id) == 0x0)
+      if (vmm_remapPage(vmm_findFreePage(_current->id), i, PAGE_DEFAULT, _current->id, 0) == 0x0)
         K_PANIC("remap Failed");
     }
     kprintf("td->vm_dsize should be adjust but isn't");
@@ -171,7 +171,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
       for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
       vmm_unmapPage(((uint32_t)uap->addr & 0xFFFFF000) + x, 1);
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
           K_PANIC("Remap Page Failed");
 
       }
@@ -182,7 +182,8 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     }
 
     td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_TASK);
-    //bzero(td->td_retval[0], uap->len);
+    kprintf("uap->len: 0x%X, add: 0x%X, count: 0x%X", uap->len, td->td_retval[0], round_page(uap->len) / 0x1000);
+    bzero(td->td_retval[0], uap->len);
     return (0x0); //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
   }
   else {
@@ -200,7 +201,7 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
       for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
       vmm_unmapPage(((uint32_t)uap->addr & 0xFFFFF000) + x, 1);
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
           K_PANIC("Remap Page Failed");
 
       }

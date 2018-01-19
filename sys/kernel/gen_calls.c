@@ -39,6 +39,7 @@
 #include <sys/video.h>
 #include <sys/signal.h>
 #include <ubixos/errno.h>
+#include <vmm/vmm.h>
 
 /* Exit Syscall */
 int sys_exit(struct thread *td, struct sys_exit_args *args) {
@@ -189,7 +190,7 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
     base_addr = (uint32_t) segbase[0];
     struct gdtDescriptor *tmpDesc = 0x0;
 
-    tmpDesc = 0x400000 + sizeof(struct gdtDescriptor); //taskLDT[1];
+    tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor); //taskLDT[1];
 
     tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
     tmpDesc->baseLow = (base_addr & 0xFFFF);

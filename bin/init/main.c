@@ -84,10 +84,12 @@ int main(int argc,char **argv, char **envp) {
     sched_yield();
     } 
 */
+
   startup:
+  printf("FORKING!");
   i = fork();
 
-    printf("FORKED: %i!\n", i);
+  printf("FORKED: %i!\n", i);
 
   if (0 == i) {
     printf("Starting Login Daemon.\n");

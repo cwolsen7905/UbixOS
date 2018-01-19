@@ -55,6 +55,7 @@ struct trapframe {
     int tf_ss;
 };
 
+void die_if_kernel(char *str, struct trapframe *regs, long err);
 void trap( struct trapframe * );
 
 #endif /* END _SYS_TRAP_H */

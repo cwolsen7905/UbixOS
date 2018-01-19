@@ -48,9 +48,15 @@
 void vmm_unmapPage(uint32_t pageAddr, int flags) {
   int pageDirectoryIndex = 0, pageTableIndex = 0;
   uint32_t *pageTable = 0x0;
+  uint32_t *pageDirectory = 0x0;
+
+  pageDirectory = PD_BASE_ADDR;
 
   /* Get The Index To The Page Directory */
   pageDirectoryIndex = (pageAddr >> 22);
+
+  if ((pageDirectory[pageDirectoryIndex] & PAGE_PRESENT) != PAGE_PRESENT)
+    return;
 
   //Calculate The Page Table Index
   pageTableIndex = ((pageAddr >> 12) & 0x3FF);
@@ -110,32 +116,3 @@ void vmm_unmapPages(void *ptr, uint32_t size) {
   }
   return;
 }
-
-/***
- $Log: unmappage.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:38  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:54  reddawg
- no message
-
- Revision 1.4  2004/07/26 19:15:49  reddawg
- test code, fixes and the like
-
- Revision 1.3  2004/06/15 12:35:05  reddawg
- Cleaned Up
-
- Revision 1.2  2004/06/10 22:23:56  reddawg
- Volatiles
-
- Revision 1.1.1.1  2004/04/15 12:06:53  reddawg
- UbixOS v1.0
-
- Revision 1.7  2004/04/13 16:36:34  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
- END
- ***/

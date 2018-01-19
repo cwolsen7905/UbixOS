@@ -47,128 +47,85 @@ static struct spinLock fvpSpinLock = SPIN_LOCK_INITIALIZER;
  ************************************************************************/
 void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   int y = 0, counter = 0, pdI = 0x0, ptI = 0x0;
-  uint32_t *pageTableSrc = 0x0;
-  uint32_t *pageDir = 0x0;
+
+  uint32_t *pageDirectory = 0x0;
+  uint32_t *pageTable = 0x0;
+
   uint32_t start_page = 0x0;
+  uint32_t map_from = 0x0;
 
   spinLock(&fvpSpinLock);
 
-  pageDir = (uint32_t *) PD_BASE_ADDR;
+  pageDirectory = (uint32_t *) PD_BASE_ADDR;
 
   /* Lets Search For A Free Page */
   if (_current->oInfo.vmStart <= 0x100000)
     kpanic("Invalid vmStart\n");
-
- //MrOlsen kprintf("type: %i ", type);
 
   /* Get Our Starting Address */
   if (type == VM_THRD) {
     start_page = (uint32_t) (_current->td.vm_daddr + ctob(_current->td.vm_dsize));
   }
   else if (type == VM_TASK) {
-    //kprintf("vmStart");
     start_page = _current->oInfo.vmStart;
   }
   else
     K_PANIC("Invalid Type");
 
-  /*
-   *
-   * I Need To Write Some Function For Space That Is Returned Maybe A Malloc Type Map
-   *
-   */
+  /* Locate Initial Page Table */
+  pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
 
-  /*
-   * Lets Start Allocating Pages
-   */
-  for ( counter = 0; counter < count; counter++ ) {
-    /* Locate Initial Page Table */
-    pdI = ((start_page + (counter * 0x1000)) / 0x400000);
+  keepMapping:
+  if (pdI > PD_INDEX(VMM_USER_END))
+    goto doneMapping;
 
-    keepMapping:
-      //kprintf("PAGE IS");
-    /* If Page Directory Is Not Yet Allocated Allocate It */
-    if ((pageDir[pdI] & PAGE_PRESENT) != PAGE_PRESENT) {
-      //kprintf("PAGE NOT %i,", __LINE__);
-      pageDir[pdI] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
-      //kprintf("PAGE NOT %i,", __LINE__);
+  if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) /* If Page Directory Is Not Yet Allocated Allocate It */
+    vmm_allocPageTable(pdI, pid);
 
-      //kprintf("PAGE NOT %i,", __LINE__);
+  pageTable = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
 
-    /* Also Add It To Virtual Space So We Can Make Changes Later */
-    pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PD_INDEX( PT_BASE_ADDR ) * 0x1000)); /* Table that maps that 4b */
-    pageTableSrc[pdI] = (pageDir[pdI] & 0xFFFFF000) | PAGE_DEFAULT; /* Is This Why Page Needs To Be User As Well? */
-    pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
+  ptI = ((start_page - (pdI * (PD_ENTRIES * PAGE_SIZE))) / PAGE_SIZE);
 
-      /* Reload Page Directory */
-      asm(
-        "movl %cr3,%eax\n"
-        "movl %eax,%cr3\n"
-      );
+  for (y = ptI; y < PT_ENTRIES && counter < count; y++, counter++) {
 
-      //kprintf("PAGE NOT %i,", __LINE__);
-      pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pdI));
-
-      //kprintf("PAGE NOT %i,", __LINE__);
-      /* Initialize The New Page Table To Prevent Dirty Bits */
-      for (y = 0x0; y < PD_ENTRIES; y++) {
-        pageTableSrc[y] = (uInt32) 0x0;
-      }
-      //kprintf("PAGE NOT %i,", __LINE__);
-
-    }
-    else {
-      pageTableSrc = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pdI));
-    }
-
-    ptI = ((start_page - (pdI * 0x400000)) / 0x1000);
-
-    for (y = ptI; y < 1024 && counter < count; y++) {
-
-      /* Loop Through The Page Table Find An UnAllocated Page */
-      if ((pageTableSrc[y] & PAGE_COW) == PAGE_COW) {
+    /* Loop Through The Page Table Find An UnAllocated Page */
+    if ((pageTable[y] & PAGE_PRESENT) == PAGE_PRESENT) {
+      if ((pageTable[y] & PAGE_COW) == PAGE_COW)
         kprintf("COW PAGE NOT CLEANED!");
-      }
-      else if ((uInt32) pageTableSrc[y] == (uInt32) 0x0) {
-        if ((vmm_remapPage((uInt32) vmm_findFreePage(pid), ((pdI * (1024 * 4096)) + (y * 4096)), PAGE_DEFAULT, pid)) == 0x0)
-          kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, ((pdI * (1024 * 4096)) + (y * 4096)));
-        vmm_clearVirtualPage((uInt32) ((pdI * (1024 * 4096)) + (y * 4096)));
-      }
-      else {
-        kprintf("-> y: %i, ptI: 0x%X, pdI: 0x%X pTS: 0x%X ??\n", y, ptI, pdI, pageTableSrc[y]);
-        K_PANIC("UHM HOW DO WE HAVE AN ALLOCATED PAGE HERE!!\n");
-      }
 
-      //kprintf("[0x%X:%i:%i:%i]", ((pdI * (1024 * 4096)) + (y * 4096)), y, counter, count);
-      counter++;
-
-    }
-    if (counter < count) {
-      //kprintf("Need More Pages!");
-      start_page += (0x1000 * counter);
-      pdI = ((start_page + (counter * 0x1000)) / 0x400000);
+      start_page += (PAGE_SIZE * counter);
+      pdI = ((start_page + ((counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE)));
+      map_from = 0x0;
+      counter = 0;
       goto keepMapping;
     }
+
+    if (map_from == 0x0)
+      map_from = start_page;
   }
 
-  if (type == VM_THRD) {
-    _current->td.vm_dsize += btoc(count * 0x1000);
-    //kprintf( "vm_dsize: [0x%X]][0x%X]\n", ctob( _current->td.vm_dsize ), _current->td.vm_dsize );
+  if (counter < count) {
+    start_page += (PAGE_SIZE * counter);
+    pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
+    goto keepMapping;
   }
+
+  gotPages:
+  if (type == VM_THRD)
+    _current->td.vm_dsize += btoc(count * PAGE_SIZE);
   else if (type == VM_TASK)
-    _current->oInfo.vmStart += (count * 0x1000);
+    _current->oInfo.vmStart = map_from + (count * PAGE_SIZE);
 
-  /*
-   * MMAP Return
-   */
+ //_current->oInfo.vmStart += (count * PAGE_SIZE);
 
-  //kprintf( "mmap: [0x%x]\n", start_page );
-  /* If No Free Page Was Found Return NULL */
+  for (counter = 0; count < count; counter++) {
+    if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), map_from + (counter * PAGE_SIZE), PAGE_DEFAULT, pid, 0)) == 0x0)
+      kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
+
+    vmm_clearVirtualPage((uint32_t) (map_from + (counter * PAGE_SIZE)));
+  }
+
+  doneMapping:
   spinUnlock(&fvpSpinLock);
-  return (start_page);
+  return (map_from);
 }
-
-/***
- END
- ***/
-

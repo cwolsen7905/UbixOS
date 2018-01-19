@@ -57,6 +57,7 @@ void *vmm_copyVirtualSpace(pidType pid) {
   uint32_t *parentStackPage = 0x0, *newStackPage = 0x0;
   uint16_t x = 0, i = 0, s = 0;
 
+
   spinLock(&cvsSpinLock);
 
   /* Set Address Of Parent Page Directory */

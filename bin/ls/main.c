@@ -69,7 +69,6 @@ int main(int argc,char **argv) {
 
   printf("Segbase: 0x%X - 0x%X\n", segbase, &segbase);
 
-
   printf("argc: %i - %i\n", argc, argv[0]);
   exit(0);
 

@@ -27,7 +27,10 @@
  */
 
 #include <vmm/vmm.h>
+#include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>
+
+struct spinLock pdSpinLock = SPIN_LOCK_INITIALIZER;
 
 /*!
  Function: int vmm_init()
