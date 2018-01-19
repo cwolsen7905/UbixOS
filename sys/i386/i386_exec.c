@@ -200,11 +200,6 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   newProcess->files[0] = 0x0;
 
-  /* Build LDT For GS and FS */
-  if (vmm_remapPage(vmm_findFreePage(newProcess->id), VMM_USER_START, PAGE_DEFAULT, newProcess->id, 0) == 0x0) {
-    K_PANIC("Error: Remap Page Failed");
-  }
-
   /* Set up default stack for thread here filled with arg list 3 times */
   asm volatile(
     "pusha               \n"
@@ -452,15 +447,17 @@ void execFile(char *file, char **argv, char **envp, int console) {
   tmp[i + x] = 0x0;
 
   /* Build LDT For GS and FS */
-  if (vmm_remapPage(vmm_findFreePage(newProcess->id), VMM_USER_START, PAGE_DEFAULT, newProcess->id, 0) == 0x0) {
+  vmm_unmapPage(VMM_USER_LDT, 1);
+
+  if (vmm_remapPage(vmm_findFreePage(newProcess->id), VMM_USER_LDT, PAGE_DEFAULT, newProcess->id, 0) == 0x0) {
     K_PANIC("Error: Remap Page Failed");
   }
 
-  struct gdtDescriptor *taskLDT = VMM_USER_START;
+  struct gdtDescriptor *taskLDT = VMM_USER_LDT;
 
   struct gdtDescriptor *tmpDesc = 0x0;
 
-  tmpDesc = VMM_USER_START + sizeof(struct gdtDescriptor);//taskLDT[1];
+  tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor);//taskLDT[1];
   uint32_t data_addr = 0x0;
 
   tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
@@ -869,15 +866,18 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
    */
 
   /* Build LDT For GS and FS */
-  if (vmm_remapPage(vmm_findFreePage(_current->id), VMM_USER_START, PAGE_DEFAULT, _current->id, 0) == 0x0) {
+  vmm_unmapPage(VMM_USER_LDT, 1); // Can I Free This?
+  if (vmm_remapPage(vmm_findFreePage(_current->id), VMM_USER_LDT, PAGE_DEFAULT, _current->id, 0) == 0x0) {
     K_PANIC("Error: Remap Page Failed");
   }
 
-  struct gdtDescriptor *taskLDT = VMM_USER_START;
+  struct gdtDescriptor *taskLDT = VMM_USER_LDT;
 
   struct gdtDescriptor *tmpDesc = 0x0;
 
-  tmpDesc = VMM_USER_START + sizeof(struct gdtDescriptor);//taskLDT[1];
+  tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor);//taskLDT[1];
+ 
+  //data_addr = 0x0; //TEMP
 
   tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
   tmpDesc->baseLow = (data_addr & 0xFFFF);
@@ -890,7 +890,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
   _current->pgrp = _current->id;
 
-  kprintf("DONE YET?");
+  kprintf("DONE YET[0x%X]?", data_addr);
 
   return (0x0);
 }

@@ -35,8 +35,6 @@
 
 #define KERNEL_STACK 0x2000
 
-void die_if_kernel(char *str, struct trapframe *regs, long err);
-
 #define TRAP_CODE(trap_nr, signr, str, trap_name, tsk) void do_##trap_name(struct trapframe *regs, long error_code) { \
   die_if_kernel(str, regs, error_code); \
 }

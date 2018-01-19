@@ -79,7 +79,7 @@ ubixDescriptorTable(ubixGDT, 11) {
 { .dummy = 0},
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim)),
-ubixStandardDescriptor(VMM_USER_START, 0xFFFFF, (dLdt)),
+ubixStandardDescriptor(VMM_USER_LDT, 0xFFFFF, (dLdt)),
 ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim + dDpl3)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),

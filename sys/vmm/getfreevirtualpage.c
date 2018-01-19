@@ -52,6 +52,7 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   uint32_t *pageTable = 0x0;
 
   uint32_t start_page = 0x0;
+  uint32_t map_from = 0x0;
 
   spinLock(&fvpSpinLock);
 
@@ -71,51 +72,35 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   else
     K_PANIC("Invalid Type");
 
+  /* Locate Initial Page Table */
+  pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
 
-    /* Locate Initial Page Table */
-    pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
+  keepMapping:
 
-    keepMapping:
+  if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) /* If Page Directory Is Not Yet Allocated Allocate It */
+    vmm_allocPageTable(pdI, pid);
 
-    if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) { /* If Page Directory Is Not Yet Allocated Allocate It */
+  pageTable = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
 
-
-      /* Map A Page Directory Into The Page Table */
-      pageDirectory[pdI] = (uint32_t) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
-
-      /* Also Add It To Virtual Space So We Can Make Changes Later */
-      pageTable = (uint32_t *) (PT_BASE_ADDR + (PD_INDEX( PT_BASE_ADDR ) * PAGE_SIZE)); /* Table that maps that 4MB */
-
-      pageTable[pdI] = (pageDirectory[pdI] & 0xFFFFF000) | PAGE_DEFAULT;
-
-      /* Reload Page Directory */
-      asm(
-        "movl %cr3,%eax\n"
-        "movl %eax,%cr3\n"
-      );
-
-      pageTable = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
-      bzero(pageTable, PAGE_SIZE);
-    }
-    else {
-      pageTable = (uint32_t *) (PT_BASE_ADDR + (0x1000 * pdI));
-    }
-
-    ptI = ((start_page - (pdI * (PD_ENTRIES * PAGE_SIZE))) / PAGE_SIZE);
+  ptI = ((start_page - (pdI * (PD_ENTRIES * PAGE_SIZE))) / PAGE_SIZE);
 
   for (y = ptI; y < PT_ENTRIES && counter < count; y++, counter++) {
 
-      /* Loop Through The Page Table Find An UnAllocated Page */
+    /* Loop Through The Page Table Find An UnAllocated Page */
     if ((pageTable[y] & PAGE_PRESENT) == PAGE_PRESENT) {
       if ((pageTable[y] & PAGE_COW) == PAGE_COW)
         kprintf("COW PAGE NOT CLEANED!");
 
       start_page += (PAGE_SIZE * counter);
-      pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
+      pdI = ((start_page + ((counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE)));
+      map_from = 0x0;
       counter = 0;
       goto keepMapping;
-      }
+    }
+    if (map_from == 0x0)
+      map_from = start_page;
 
+      /*
       else if ((uint32_t) pageTable[y] == (uint32_t) 0x0) {
       if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) == 0x0)
         kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)));
@@ -126,22 +111,29 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
         kprintf("-> y: %i, ptI: 0x%X, pdI: 0x%X pTS: 0x%X ??\n", y, ptI, pdI, pageTable[y]);
         K_PANIC("UHM HOW DO WE HAVE AN ALLOCATED PAGE HERE!!\n");
       }
-    }
-    if (counter < count) {
+      */
+  }
+
+  if (counter < count) {
     start_page += (PAGE_SIZE * counter);
     pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
-      goto keepMapping;
-    }
-
-
+    goto keepMapping;
+  }
 
   gotPages:
-  if (type == VM_THRD) {
+  if (type == VM_THRD)
     _current->td.vm_dsize += btoc(count * PAGE_SIZE);
-  }
   else if (type == VM_TASK)
-    _current->oInfo.vmStart += (count * PAGE_SIZE);
+    _current->oInfo.vmStart = map_from + (count * PAGE_SIZE);
 
+ //_current->oInfo.vmStart += (count * PAGE_SIZE);
+
+  for (counter = 0; count < count;counter ++) {
+    if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) == 0x0)
+      kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)));
+    
+    vmm_clearVirtualPage((uInt32) ((pdI * (PD_ENTRIES * PAGE_SIZE)) + (y * PAGE_SIZE)));
+  }
 
   spinUnlock(&fvpSpinLock);
   return (start_page);
