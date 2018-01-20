@@ -26,36 +26,89 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <ubixos/syscalls.h>
 #include <ubixos/syscall.h>
 #include <ubixos/sched.h>
-#include <ubixos/exec.h>
-#include <sys/elf.h>
 #include <ubixos/endtask.h>
-#include <ubixos/time.h>
-#include <sys/video.h>
+#include <ubixos/spinlock.h>
 #include <sys/trap.h>
-#include <vfs/file.h>
-#include <ubixfs/ubixfs.h>
+#include <sys/elf.h>
 #include <string.h>
 #include <lib/kprintf.h>
-#include <lib/kmalloc.h>
-#include <ubixos/vitals.h>
+#include <ubixos/kpanic.h>
 /* #include <sde/sde.h> */
-#include <mpi/mpi.h>
 #include <vmm/vmm.h>
 
 void sys_call(struct trapframe *frame) {
-  asm("nop");
+  uint32_t code = 0x0;
+  caddr_t params;
+
+  struct thread *td = &_current->td;
+
+  td->frame = frame;
+
+  int error = 0x0;
+
+  params = (caddr_t) frame->tf_esp + sizeof(int);
+
+  code = frame->tf_eax;
+
+  if (code > totalCalls) {
+    die_if_kernel("Invalid System Call", frame, frame->tf_eax);
+    kpanic("PID: %i", _current->id);
+  }
+  else if ((uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID) {
+    kprintf("Invalid Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name);
+    frame->tf_eax = -1;
+    frame->tf_edx = 0x0;
+  }
+  else {
+    td->td_retval[0] = 0;
+    td->td_retval[1] = frame->tf_edx;
+
+    if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+      kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
+
+    if (td->abi == ELFOSABI_UBIXOS)
+     error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
+    else if (td->abi == ELFOSABI_FREEBSD)
+      error = (int) systemCalls[code].sc_entry(td, params);
+    else
+      error = (int) systemCalls[code].sc_entry(td, params);
+
+    if (systemCalls[code].sc_status == SYSCALL_DUMMY) {
+      kprintf("DUMMY CALL: (%i)\n", code);
+      return;
+    }
+
+    switch (error) {
+      case 0:
+        frame->tf_eax = td->td_retval[0];
+        frame->tf_edx = td->td_retval[1];
+        frame->tf_eflags &= ~PSL_C;
+      break;
+      default:
+        frame->tf_eax = td->td_retval[0];
+        frame->tf_edx = td->td_retval[1];
+        frame->tf_eflags |= PSL_C;
+      break;
+    }
+  }
 }
 
-//long fuword( const void *base );
+int invalidCall() {
+  int sys_call;
 
-//void sdeTestThread();
+  asm(
+    "nop"
+    : "=a" (sys_call)
+    :
+  );
 
-int InvalidSystemCall() {
-  kprintf("attempt was made to an invalid system call\n");
+  kprintf("Invalid System Call #[%i], PID: %i\n", sys_call, _current->id);
   return (0);
 }
+
 
 typedef struct _UbixUser UbixUser;
 struct _UbixUser {
@@ -123,20 +176,10 @@ int sysCheckPid(int pid, int *ptr) {
 
  ************************************************************************/
 int sysGetFreePage(struct thread *td, uint32_t *count) {
-  //MrOlsen 2017-12-15 kprintf("sysGetFreePage - Count: %i\n", *count);
+
   td->td_retval[0] = vmm_getFreeVirtualPage(_current->id, *count, VM_THRD);
   return(0);
   //return(vmm_getFreeVirtualPage(_current->id, *count, VM_TASK));
-}
-
-int sysGetFreePage_OLD(long *ptr, int count, int type) {
-  if (ptr) {
-    if (type == 2)
-      *ptr = (long) vmm_getFreeVirtualPage(_current->id, count, VM_THRD);
-    else
-      *ptr = (long) vmm_getFreeVirtualPage(_current->id, count, VM_TASK);
-  }
-  return (0);
 }
 
 int sysGetDrives(uInt32 *ptr) {

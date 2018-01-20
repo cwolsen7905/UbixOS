@@ -6,7 +6,7 @@ include ../../Makefile.incl
 include ../Makefile.incl
 
 #  Objects
-OBJS = system.o message.o
+OBJS = system.o message.o mpi_syscalls.o
 
 all: $(OBJS)
 

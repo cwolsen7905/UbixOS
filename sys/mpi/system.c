@@ -30,6 +30,8 @@
 #include <lib/kmalloc.h>
 #include <string.h>
 #include <ubixos/spinlock.h>
+#include <sys/sysproto.h>
+
 
 static mpi_mbox_t *mboxList = 0x0;
 static struct spinLock mpiSpinLock = SPIN_LOCK_INITIALIZER;
@@ -69,14 +71,14 @@ int mpi_createMbox(char *name) {
   mpi_mbox_t *mbox = 0x0;
 
   spinLock(&mpiSpinLock);
-  if (mpi_findMbox(name) != 0x0) {
+if (mpi_findMbox(name) != 0x0) {
     spinUnlock(&mpiSpinLock);
     return (-1);
   }
 
   mbox = (mpi_mbox_t *) kmalloc(sizeof(mpi_mbox_t));
 
-  sprintf(mbox->name, name);
+sprintf(mbox->name, name);
   mbox->pid = _current->id;
 
   if (mboxList == 0x0) {
@@ -90,6 +92,7 @@ int mpi_createMbox(char *name) {
     mboxList->prev = mbox;
     mboxList = mbox;
   }
+
 
   spinUnlock(&mpiSpinLock);
   return (0x0);

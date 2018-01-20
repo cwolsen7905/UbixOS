@@ -33,7 +33,7 @@
 #include <vfs/file.h>
 #include <ubixos/syscall.h>
 
-#define SYSCALLS_MAX 495
+#define SYSCALLS_MAX 1024
 
 #define  PSL_C           0x00000001      /* carry bit */
 #define  EJUSTRETURN     (-2)            /* don't modify regs, just return */

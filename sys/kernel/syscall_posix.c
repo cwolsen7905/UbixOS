@@ -64,11 +64,11 @@ void sys_call_posix(struct trapframe *frame) {
     params += sizeof(quad_t);
   }
 
-  if (code > totalCalls) {
+  if (code > totalCalls_posix) {
     die_if_kernel("Invalid System Call", frame, frame->tf_eax);
     kpanic("PID: %i", _current->id);
   }
-  else if ((uint32_t) systemCalls[code].sc_status == SYSCALL_INVALID) {
+  else if ((uint32_t) systemCalls_posix[code].sc_status == SYSCALL_INVALID) {
     kprintf("Invalid Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name);
     frame->tf_eax = -1;
     frame->tf_edx = 0x0;
@@ -77,7 +77,7 @@ void sys_call_posix(struct trapframe *frame) {
     td->td_retval[0] = 0;
     td->td_retval[1] = frame->tf_edx;
 
-    if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+    if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
       kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
 
     /*
@@ -86,11 +86,11 @@ void sys_call_posix(struct trapframe *frame) {
      */
 
     if (td->abi == ELFOSABI_FREEBSD)
-      error = (int) systemCalls[code].sc_entry(td, params);
+      error = (int) systemCalls_posix[code].sc_entry(td, params);
     else
-      error = (int) systemCalls[code].sc_entry(td, params);
+      error = (int) systemCalls_posix[code].sc_entry(td, params);
 
-    if (systemCalls[code].sc_status == SYSCALL_DUMMY) {
+    if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY) {
       kprintf("RET(%i)1", code);
       return;
     }
@@ -100,7 +100,7 @@ void sys_call_posix(struct trapframe *frame) {
         frame->tf_eax = td->td_retval[0];
         frame->tf_edx = td->td_retval[1];
         frame->tf_eflags &= ~PSL_C;
-        if (systemCalls[code].sc_status == SYSCALL_DUMMY)
+        if (systemCalls_posix[code].sc_status == SYSCALL_DUMMY)
           kprintf("RET3");
       break;
       default:

@@ -65,12 +65,6 @@ int idt_init() {
   struct tssStruct *sfTSS = (struct tssStruct *) 0x6200;
   struct tssStruct *gpfTSS = (struct tssStruct *) 0x4200;
 
-  /* Set up default vector table for all possible 256 interrupts */
-  /*
-  for (i = 0x0; i < 256; i++) {
-    setVector(intNull, i, dPresent + dTrap + dDpl3);
-   }*/
-
   /* Load the IDT into the system */
   asm volatile(
     "cli                      \n"
@@ -101,7 +95,6 @@ int idt_init() {
   setVector(_vmm_pageFault, 14, dPresent + dInt + dDpl0);
   setVector(_sys_call_posix, 0x80, dPresent + dTrap + dDpl3);
   setVector(_sys_call, 0x81, dPresent + dTrap + dDpl3);
-  //setVector(_sysCallNew, 0x90, dPresent + dTrap + dDpl3);
   setVector(timerInt, 0x68, (dInt + dPresent + dDpl0));
 
   gpfTSS->back_link = 0x0;

@@ -27,10 +27,10 @@
  */
 
 #include <ubixos/syscalls.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 
 /* System Calls List */
-struct syscall_entry systemCalls[] = {
+struct syscall_entry systemCalls_posix[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },                                    // 0 - syscall
   { ARG_COUNT(sys_exit_args), "exit", (sys_call_t *) sys_exit, SYSCALL_VALID },    // 1 - exit
   { ARG_COUNT(sys_fork_args), "fork", (sys_call_t *) sys_fork, SYSCALL_VALID },    // 2 - fork
@@ -147,7 +147,7 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 113 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 114 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 115 - Invalid */
-  { ARG_COUNT(sys_gettimeofday_args), "gettimeofday", sys_gettimeofday, SYSCALL_VALID }, // 116 - gettimeofday 
+  { ARG_COUNT(sys_gettimeofday_args), "gettimeofday", sys_gettimeofday, SYSCALL_VALID }, // 116 - gettimeofday
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 117 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 118 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 119 - Invalid */
@@ -543,4 +543,4 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
 };
 
-int totalCalls = sizeof(systemCalls) / sizeof(struct syscall_entry);
+int totalCalls_posix = sizeof(systemCalls_posix) / sizeof(struct syscall_entry);

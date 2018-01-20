@@ -35,7 +35,7 @@
 #include <ubixos/sched.h>
 
 /* MrOlsen (2016-01-15) TEMP: Put These somewhere else */
-typedef __uint32_t        __vm_size_t; typedef __vm_size_t
+typedef __uint32_t          __vm_size_t; typedef __vm_size_t
 vm_size_t;
 #define        EINVAL          22              /* Invalid argument */
 #define MAP_ALIGNED(n)   ((n) << MAP_ALIGNMENT_SHIFT)
@@ -155,8 +155,9 @@ int freebsd6_mmap(struct thread *td, struct freebsd6_mmap_args *uap) {
 int sys_munmap(struct thread *td, struct sys_munmap_args *uap) {
   //TEMP
   td->td_retval[0] = 0;
-  return(0);
-};
+  return (0);
+}
+;
 
 int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
   vm_offset_t addr = 0x0;
@@ -171,13 +172,13 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
       for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
         vmm_unmapPage(((uint32_t) uap->addr & 0xFFFFF000) + x, VMM_FREE);
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t) uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
           K_PANIC("Remap Page Failed");
 
       }
       tmp = uap->addr;
       bzero(tmp, uap->len);
-      td->td_retval[0] = (uint32_t)tmp;
+      td->td_retval[0] = (uint32_t) tmp;
       return (0x0);
     }
 
@@ -186,32 +187,34 @@ int sys_mmap(struct thread *td, struct sys_mmap_args *uap) {
     return (0x0); //vmm_getFreeVirtualPage(_current->id, round_page( uap->len ) / 0x1000, VM_THRD));
   }
   else {
-    //kprintf("uap->flags: [0x%X]\n", uap->flags);
-    //MrOlsenkprintf("uap->addr:  [0x%X]", uap->addr);
-    //MrOlsenkprintf("uap->len:   [0x%X]", uap->len);
-    //kprintf("uap->prot:  [0x%X]", uap->prot);
-    //MrOlsenkprintf("uap->fd:    [%i]\n", uap->fd);
-    //kprintf("uap->pad:   [0x%X]", uap->pad);
-    //kprintf("uap->pos:   [0x%X]", uap->pos);
+
     getfd(td, &fd, uap->fd);
+
     if (uap->addr == 0x0)
-    tmp = (char *) vmm_getFreeVirtualPage(_current->id, round_page(uap->len) / 0x1000, VM_TASK);
+      tmp = (char *) vmm_getFreeVirtualPage(_current->id, round_page(uap->len) / 0x1000, VM_TASK);
     else {
+
       for (x = 0x0; x < round_page(uap->len); x += 0x1000) {
-      vmm_unmapPage(((uint32_t)uap->addr & 0xFFFFF000) + x, 1);
+
+        vmm_unmapPage(((uint32_t) uap->addr & 0xFFFFF000) + x, 1);
+
         /* Make readonly and read/write !!! */
-        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t)uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
+        if (vmm_remapPage(vmm_findFreePage(_current->id), (((uint32_t) uap->addr & 0xFFFFF000) + x), PAGE_DEFAULT, _current->id, 0) == 0x0)
           K_PANIC("Remap Page Failed");
 
       }
+
       tmp = uap->addr;
 
- }
+    }
+
     fseek(fd->fd, uap->pos, 0x0);
     fread(tmp, uap->len, 0x1, fd->fd);
+
     td->td_retval[0] = (uint32_t) tmp;
-    if (td->td_retval[0] == (caddr_t)-1)
-      kpanic("BALLS");
+
+    if (td->td_retval[0] == (caddr_t) -1)
+      kpanic("MMAP_FAILED");
   }
   return (0x0);
 }
