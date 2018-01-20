@@ -43,29 +43,11 @@
 
  ************************************************************************/
 void endTask(pidType pid) {
-  //kTask_t *tmpTask = 0x0;
 
-  /* Don't mess with scheduler structures from outside the scheduler! */
-  /* Just set status to dead, and let the scheduler clean up itself */
   sched_setStatus(pid, DEAD);
-  //tmpTask = schedFindTask(pid);
-  //if (sched_deleteTask(pid) != 0x0)
-  //  kpanic("sched_deleteTask: Failed\n");
-  //kprintf("Ending Task: (%i:0x%X)\n",tmpTask->id,tmpTask);
-  //sched_addDelTask(tmpTask);
-  //tmpTask->state = DEAD;
-
-  //tmpTask->term->owner = tmpTask->parentPid;
-
-  if (pid == _current->id)
-    while (1)
-      sched_yield();
   sched_yield();
 
-  return;
+  while (1)
+    asm("hlt");
+
 }
-
-/***
- END
- ***/
-

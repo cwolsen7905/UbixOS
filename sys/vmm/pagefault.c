@@ -61,13 +61,13 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   uint32_t memAddr = cr2;
 
 //MrOlsen 2017-12-15 -
-  kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X\n", cr2, frame->tf_eip, frame->tf_err);
+  kprintf("CR2: [0x%X], EIP: 0x%X, ERR: 0x%X, PID: %i\n", cr2, frame->tf_eip, frame->tf_err, _current->id);
 
   /* Try to aquire lock otherwise spin till we do */
   spinLock(&pageFaultSpinLock);
 
   /* Set page dir pointer to the address of the visable page directory */
-  pageDir = (uInt32 *) PD_BASE_ADDR;
+  pageDir = (uint32_t *) PD_BASE_ADDR;
 
   /* UBU - This is a temp panic for 0x0 read write later on I will handle this differently */
   if (memAddr == 0x0) {
@@ -76,10 +76,10 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   }
 
   /* Calculate The Page Directory Index */
-  pageDirectoryIndex = (memAddr >> 22);
+  pageDirectoryIndex = PD_INDEX(memAddr);
 
   /* Calculate The Page Table Index     */
-  pageTableIndex = ((memAddr >> 12) & 0x3FF);
+  pageTableIndex = PT_INDEX(memAddr);
 
   /* UBU - This is a temporary routine for handling access to a page of a non existant page table */
   if (pageDir[pageDirectoryIndex] == 0x0) {
@@ -89,10 +89,10 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
   }
   else {
     /* Set pageTable To Point To Virtual Address Of Page Table */
-    pageTable = (uInt32 *) (PT_BASE_ADDR + (0x1000 * pageDirectoryIndex));
+    pageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * pageDirectoryIndex));
 
     /* Test if this is a COW on page */
-    if (((uInt32) pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW) {
+    if (((uint32_t) pageTable[pageTableIndex] & PAGE_COW) == PAGE_COW) {
       /* Set Src To Base Address Of Page To Copy */
       src = (uInt32 *) (memAddr & 0xFFFFF000);
       /* Allocate A Free Page For Destination */
@@ -113,7 +113,7 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
       kprintf("Security failed pagetable not user permission\n");
       kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
       kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
-      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n", memAddr, esp, _current->id, eip);
+      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", memAddr, esp, _current->id, eip);
       die_if_kernel("SEGFAULT", frame, 0xC);
       kpanic("SIT HERE FOR NOW");
       spinUnlock(&pageFaultSpinLock);
@@ -128,11 +128,10 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
       /* Need To Create A Routine For Attempting To Access Non Mapped Memory */
       kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
       kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
-      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped\n", memAddr, esp, _current->id, eip);
+      kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped!\n", memAddr, esp, _current->id, eip);
       die_if_kernel("SEGFAULT", frame, 0xC);
       kpanic("SIT HERE FOR NOW");
       kprintf("Out Of Stack Space: [0x%X]\n", memAddr & 0xFF0000);
-      spinUnlock(&pageFaultSpinLock);
       endTask(_current->id);
     }
   }

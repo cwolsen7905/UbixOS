@@ -230,6 +230,7 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
   destPageDirectoryIndex = PD_INDEX(dest);
 
   if ((pageDir[destPageDirectoryIndex] & PAGE_PRESENT) != PAGE_PRESENT) {
+    //kprintf("[NpdI:0x%X]", destPageDirectoryIndex);
     vmm_allocPageTable(destPageDirectoryIndex, pid);
   }
 
@@ -262,6 +263,7 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
   pageTable[destPageTableIndex] = (uint32_t) (source | perms);
 
   /* Reload The Page Table; */
+  rmDone:
   asm volatile(
     "push %eax     \n"
     "movl %cr3,%eax\n"
@@ -269,7 +271,9 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
     "pop  %eax     \n"
   );
 
-  rmDone:
+if (dest == 0x1294b000)
+  kprintf("WOOT: 0x%X, 0x%X", PD_INDEX(dest), PT_INDEX(dest));
+
   /* Return */
   if (haveLock == 0x0) {
   if (dest >= VMM_USER_START && dest <= VMM_USER_END)
@@ -489,7 +493,7 @@ void *vmm_getFreeMallocPage(uInt16 count) {
   for (x = PT_INDEX(VMM_KERN_START); x <= PT_INDEX(VMM_KERN_END); x++) {
 
     if ((pageDirectory[x] & PAGE_PRESENT) != PAGE_PRESENT) /* If Page Directory Is Not Yet Allocated Allocate It */
-      vmm_allocatePageTable(x, sysID);
+      vmm_allocPageTable(x, sysID);
 
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * x));
 

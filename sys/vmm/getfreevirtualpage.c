@@ -1,4 +1,4 @@
-/*-
+ /*-
  * Copyright (c) 2002-2018 The UbixOS Project.
  * All rights reserved.
  *
@@ -72,19 +72,24 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
   else
     K_PANIC("Invalid Type");
 
+
   /* Locate Initial Page Table */
-  pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
-
   keepMapping:
-  if (pdI > PD_INDEX(VMM_USER_END))
+  pdI = PD_INDEX(start_page);
+
+  if (pdI > PD_INDEX(VMM_USER_END)) {
+    map_from = 0x0;
     goto doneMapping;
+  }
 
-  if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) /* If Page Directory Is Not Yet Allocated Allocate It */
+  /* If Page Directory Is Not Yet Allocated Allocate It */
+  if ((pageDirectory[pdI] & PAGE_PRESENT) != PAGE_PRESENT) {
     vmm_allocPageTable(pdI, pid);
+  }
 
-  pageTable = (uint32_t *) (PT_BASE_ADDR + (pdI * 0x1000));
+  pageTable = (uint32_t *) (PT_BASE_ADDR + (pdI * PAGE_SIZE));
 
-  ptI = ((start_page - (pdI * (PD_ENTRIES * PAGE_SIZE))) / PAGE_SIZE);
+  ptI = PT_INDEX(start_page);
 
   for (y = ptI; y < PT_ENTRIES && counter < count; y++, counter++) {
 
@@ -94,7 +99,6 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
         kprintf("COW PAGE NOT CLEANED!");
 
       start_page += (PAGE_SIZE * counter);
-      pdI = ((start_page + ((counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE)));
       map_from = 0x0;
       counter = 0;
       goto keepMapping;
@@ -106,7 +110,6 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
 
   if (counter < count) {
     start_page += (PAGE_SIZE * counter);
-    pdI = ((start_page + (counter * PAGE_SIZE)) / (PD_ENTRIES * PAGE_SIZE));
     goto keepMapping;
   }
 
@@ -118,11 +121,11 @@ void *vmm_getFreeVirtualPage(pidType pid, int count, int type) {
 
  //_current->oInfo.vmStart += (count * PAGE_SIZE);
 
-  for (counter = 0; count < count; counter++) {
-    if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), map_from + (counter * PAGE_SIZE), PAGE_DEFAULT, pid, 0)) == 0x0)
+  for (counter = 0; counter < count; counter++) {
+    if ((vmm_remapPage((uint32_t) vmm_findFreePage(pid), (map_from + (counter * PAGE_SIZE)), PAGE_DEFAULT, pid, 0)) == 0x0)
       kpanic("vmmRemapPage: getFreeVirtualPage-1: (%i)[0x%X]\n", type, map_from + (counter * PAGE_SIZE));
 
-    vmm_clearVirtualPage((uint32_t) (map_from + (counter * PAGE_SIZE)));
+    bzero((map_from + (counter * PAGE_SIZE)), PAGE_SIZE);
   }
 
   doneMapping:

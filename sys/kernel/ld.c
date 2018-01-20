@@ -56,7 +56,8 @@ uint32_t ldEnable() {
   Elf_Addr addr;
 
   /* Open our dynamic linker */
-  ldFd = fopen("sys:/libexec/ld.so", "rb");
+  //ldFd = fopen("sys:/libexec/ld.so", "rb");
+  ldFd = fopen("sys:/libexec/ld-elf.so.1", "rb");
 
   if (ldFd == 0x0) {
     kprintf("Can not open ld.so\n");

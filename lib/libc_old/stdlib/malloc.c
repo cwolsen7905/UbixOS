@@ -66,6 +66,8 @@ static void *getEmptyDesc() {
   if ( ( emptyKernDesc = (struct memDescriptor *) getPage( 0x4 ) ) == 0x0 )
     return ( 0x0 );
 
+  printf("getPage(0x%X): 0x%X", 0x4, emptyKernDesc);
+
   /* zero out the memory so we know there is no garbage */
   memset( emptyKernDesc, 0x0, 0x4000 );
 

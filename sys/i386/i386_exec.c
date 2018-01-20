@@ -453,20 +453,18 @@ void execFile(char *file, char **argv, char **envp, int console) {
     K_PANIC("Error: Remap Page Failed");
   }
 
-  struct gdtDescriptor *taskLDT = VMM_USER_LDT;
+  struct gdtDescriptor *taskLDT = 0x0;
 
-  struct gdtDescriptor *tmpDesc = 0x0;
-
-  tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor);//taskLDT[1];
+  taskLDT = VMM_USER_LDT + sizeof(struct gdtDescriptor);
   uint32_t data_addr = 0x0;
 
-  tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
-  tmpDesc->baseLow = (data_addr & 0xFFFF);
-  tmpDesc->baseMed = ((data_addr >> 16) & 0xFF);
-  tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-  tmpDesc->limitHigh = (0xFFFFF >> 16);
-  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-  tmpDesc->baseHigh = data_addr >> 24;
+  taskLDT->limitLow = (0xFFFFF & 0xFFFF);
+  taskLDT->baseLow = (data_addr & 0xFFFF);
+  taskLDT->baseMed = ((data_addr >> 16) & 0xFF);
+  taskLDT->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+  taskLDT->limitHigh = (0xFFFFF >> 16);
+  taskLDT->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+  taskLDT->baseHigh = data_addr >> 24;
 
 
   /* Switch Back To The Kernels VM Space */
@@ -871,21 +869,19 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
     K_PANIC("Error: Remap Page Failed");
   }
 
-  struct gdtDescriptor *taskLDT = VMM_USER_LDT;
+  struct gdtDescriptor *taskLDT = 0x0;
 
-  struct gdtDescriptor *tmpDesc = 0x0;
-
-  tmpDesc = VMM_USER_LDT + sizeof(struct gdtDescriptor);//taskLDT[1];
+  taskLDT = VMM_USER_LDT + sizeof(struct gdtDescriptor);//taskLDT[1];
  
   //data_addr = 0x0; //TEMP
 
-  tmpDesc->limitLow = (0xFFFFF & 0xFFFF);
-  tmpDesc->baseLow = (data_addr & 0xFFFF);
-  tmpDesc->baseMed = ((data_addr >> 16) & 0xFF);
-  tmpDesc->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
-  tmpDesc->limitHigh = (0xFFFFF >> 16);
-  tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
-  tmpDesc->baseHigh = data_addr >> 24;
+  taskLDT->limitLow = (0xFFFFF & 0xFFFF);
+  taskLDT->baseLow = (data_addr & 0xFFFF);
+  taskLDT->baseMed = ((data_addr >> 16) & 0xFF);
+  taskLDT->access = ((dData + dWrite + dBig + dBiglim + dDpl3) + dPresent) >> 8;
+  taskLDT->limitHigh = (0xFFFFF >> 16);
+  taskLDT->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
+  taskLDT->baseHigh = data_addr >> 24;
 
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
   _current->pgrp = _current->id;

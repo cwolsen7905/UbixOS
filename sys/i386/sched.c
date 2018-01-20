@@ -150,7 +150,10 @@ void sched() {
     }
 
     asm("sti");
-    asm("ljmp $0x20,$0\n");
+    asm(
+      "lgdtl (loadGDT)\n"
+      "ljmp $0x20,$0\n"
+    );
   }
   else {
     spinUnlock(&schedulerSpinLock);

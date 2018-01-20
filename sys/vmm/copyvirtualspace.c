@@ -104,7 +104,6 @@ void *vmm_copyVirtualSpace(pidType pid) {
             parentStackPage = (uint32_t *) (((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
 
             /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
-            //kprintf("SP(%i[0x%X]:%i[0x%X]): 0x%X, 0x%X", x, (PAGE_SIZE * PD_ENTRIES) * x, i, i * PAGE_SIZE, newStackPage, parentStackPage);
             memcpy(newStackPage, parentStackPage, PAGE_SIZE);
 
             /* Insert New Stack Into Page Table */
@@ -160,7 +159,6 @@ void *vmm_copyVirtualSpace(pidType pid) {
             parentStackPage = (uint32_t *) (((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
 
             /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
-            //kprintf("SP(%i[0x%X]:%i[0x%X]): 0x%X, 0x%X", x, (PAGE_SIZE * PD_ENTRIES) * x, i, i * PAGE_SIZE, newStackPage, parentStackPage);
             memcpy(newStackPage, parentStackPage, PAGE_SIZE);
 
             /* Insert New Stack Into Page Table */
