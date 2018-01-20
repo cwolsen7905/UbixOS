@@ -31,6 +31,7 @@
 #include <ubixos/sched.h>
 #include <ubixos/endtask.h>
 #include <ubixos/spinlock.h>
+#include <ubixos/vitals.h>
 #include <sys/trap.h>
 #include <sys/elf.h>
 #include <string.h>
@@ -68,10 +69,10 @@ void sys_call(struct trapframe *frame) {
 
     if (systemCalls[code].sc_status == SYSCALL_DUMMY)
       kprintf("Syscall->abi: [%i], PID: [%i], Code: %i, Call: %s\n", td->abi, _current->id, frame->tf_eax, systemCalls[code].sc_name);
-
+/*
     if (td->abi == ELFOSABI_UBIXOS)
      error = (int) systemCalls[code].sc_entry( frame->tf_ebx, frame->tf_ecx, frame->tf_edx );
-    else if (td->abi == ELFOSABI_FREEBSD)
+    else */if (td->abi == ELFOSABI_FREEBSD)
       error = (int) systemCalls[code].sc_entry(td, params);
     else
       error = (int) systemCalls[code].sc_entry(td, params);

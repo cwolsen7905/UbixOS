@@ -93,10 +93,10 @@ int sysMpiSpam();
 
 typedef int (*functionPTR)();
 
-extern int totalCalls_old;
-extern functionPTR systemCalls_Old[];
-
 extern int totalCalls;
 extern struct syscall_entry systemCalls[];
+
+extern int totalCalls_posix;
+extern struct syscall_entry systemCalls_posix[];
 
 #endif

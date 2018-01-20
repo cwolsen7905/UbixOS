@@ -38,39 +38,3 @@ asm(
   "int $0x80\n"
   "ret\n"
   );
-
-
-
-
-void *getPage_old(int count) {
-  asm volatile(
-    "movl $88, %eax\n"
-    "int  $0x80     \n"
-    "ret\n"
-//    : : "i" (0x80),"a" (7),"b" (&pageAddr),"c" (count)
-    );
-//  return((void *)pageAddr);
-  }
-  
-/***
- $Log: getpage.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:09  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:03  reddawg
- no message
-
- Revision 1.5  2004/08/02 18:50:13  reddawg
- Updates to make some variable volatile to make work with gcc 3.3. However there are still some issues but we have not caused new issues with gcc 2.95
-
- Revision 1.4  2004/08/01 20:14:18  reddawg
- Fixens
-
- Revision 1.3  2004/08/01 19:59:19  reddawg
- *** empty log message ***
-
- END
- ***/

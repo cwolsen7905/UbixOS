@@ -29,7 +29,7 @@
 #ifndef _SYS_KERN_SYSCTL_H
 #define _SYS_KERN_SYSCTL_H
 
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 
 #define CTL_MAXNAME     24      /* largest number of components supported */

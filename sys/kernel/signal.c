@@ -27,7 +27,7 @@
  */
 
 #include <sys/signal.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <lib/kprintf.h>
 #include <assert.h>

@@ -30,7 +30,7 @@
 #define _VMM_PAGING_H_
 
 #include <sys/types.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 
 #define PAGE_SHIFT      12              // Page Shift

@@ -27,7 +27,7 @@
  */
 
 #include <sys/kern_sysctl.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <ubixos/endtask.h>
 #include <ubixos/kpanic.h>

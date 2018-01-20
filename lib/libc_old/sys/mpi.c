@@ -28,8 +28,9 @@
 *****************************************************************************************/
 
 #include <sys/mpi.h>
+#include <sys/types.h>
 
-int mpi_createMbox(char *name) { 
+int mpi_createMbox_old(char *name) { 
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"
@@ -49,7 +50,7 @@ int mpi_destroyMbox(char *name) {
   return(status);
   }
 
-int mpi_postMessage(char *name,uInt32 type,mpi_message_t *msg) {
+int mpi_postMessage_old(char *name,uInt32 type,mpi_message_t *msg) {
   asm volatile(
     "int %0\n"
     : : "i" (0x81),"a" (52),"b" (name),"c" (&type),"d" (msg)
@@ -57,7 +58,7 @@ int mpi_postMessage(char *name,uInt32 type,mpi_message_t *msg) {
   return(type);
   }
 
-int mpi_fetchMessage(char *name,mpi_message_t *msg) {
+int mpi_fetchMessage_old(char *name,mpi_message_t *msg) {
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"
@@ -74,30 +75,3 @@ int mpi_spam(uInt32 type,void *data) {
     );
   return(status);
   }
-
-/***
- $Log: mpi.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:09  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:36  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:04  reddawg
- no message
-
- Revision 1.4  2004/08/14 11:23:02  reddawg
- Changes
-
- Revision 1.3  2004/08/02 18:50:13  reddawg
- Updates to make some variable volatile to make work with gcc 3.3. However there are still some issues but we have not caused new issues with gcc 2.95
-
- Revision 1.2  2004/05/26 15:39:22  reddawg
- mpi: brought mpiDestroyMbox(char *name) in to the userland
-
- Revision 1.1  2004/05/25 15:43:27  reddawg
- Added Userland MPI access
-
- END
- ***/
-

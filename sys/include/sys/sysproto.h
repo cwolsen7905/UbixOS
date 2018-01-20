@@ -45,31 +45,44 @@ typedef int register_t;
 
 //Protos
 struct sys_mpiCreateMbox_args {
-    char status_l_[PADL_(int)];
+    char name_l_[PADL_(char *)];
     char *name;
-    char status_r_[PADR_(int)];
+    char name_r_[PADR_(char *)];
 };
 
-struct sys_fork_args {
-    char status_l_[PADL_(int)];
-    int status;
-    char status_r_[PADR_(int)];
+struct sys_mpiDestroyMbox_args {
+    char name_l_[PADL_(char *)];
+    char *name;
+    char name_r_[PADR_(char *)];
 };
 
-struct sys_read_args {
-    char fd_l_[PADL_(int)];
-    int fd;
-    char fd_r_[PADR_(int)];
-    char buf_l_[PADL_(const void *)];
-    const void * buf;
-    char buf_r_[PADR_(const void *)];
-    char nbyte_l_[PADL_(size_t)];
-    size_t nbyte;
-    char nbyte_r_[PADR_(size_t)];
+struct sys_mpiFetchMessage_args {
+    char name_l_[PADL_(char *)];
+    char *name;
+    char name_r_[PADR_(char *)];
+    char msg_l_[PADL_(const void *)];
+    const void * msg;
+    char msg_r_[PADR_(const void *)];
+};
+
+struct sys_mpiPostMessage_args {
+    char name_l_[PADL_(char *)];
+    char *name;
+    char name_r_[PADR_(char *)];
+    char type_l_[PADL_(uint32_t)];
+    uint32_t type;
+    char type_r_[PADR_(uint32_t)];
+    char msg_l_[PADL_(const void *)];
+    const void *msg;
+    char msg_r_[PADR_(const void *)];
 };
 
 
 //Func Defs
+int sys_invalid(struct thread *, void *);
 int sys_mpiCreateMbox(struct thread *, struct sys_mpiCreateMbox_args *);
+int sys_mpiDestroyMbox(struct thread *, struct sys_mpiDestroyMbox_args *);
+int sys_mpiFetchMessage(struct thread *, struct sys_mpiFetchMessage_args *);
+int sys_mpiPostMessage(struct thread *, struct sys_mpiPostMessage_args *);
 
 #endif

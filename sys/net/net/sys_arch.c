@@ -4,7 +4,7 @@
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/descrip.h>
 
 #include "net/debug.h"

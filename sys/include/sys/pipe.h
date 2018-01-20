@@ -30,7 +30,7 @@
 #define _SYS_PIPE_H
 
 #include <sys/thread.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 
 int pipe(struct thread *, struct pipe_args *);
 

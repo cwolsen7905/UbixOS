@@ -6,7 +6,7 @@ include ../../../Makefile.incl
 include ../../Makefile.incl
 
 #Objects
-OBJS = mpi.o startsde.o mmap.o error.o getuptime.o gettime.o getdrives.o setuid.o setgid.o getuid.o getgid.o exec.o getpid.o fork.o pidstatus.o getpage.o sched.o auth.o execve.o
+OBJS = mpi.o startsde.o mmap.o error.o getuptime.o gettime.o getdrives.o setuid.o setgid.o getuid.o getgid.o exec.o getpid.o fork.o pidstatus.o getpage.o sched.o auth.o execve.o mpi_creatembox.o mpi_postmessage.o mpi_fetchmessage.o
 
 #Output
 OUTPUT = sys.so

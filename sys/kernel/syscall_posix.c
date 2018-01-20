@@ -112,7 +112,7 @@ void sys_call_posix(struct trapframe *frame) {
   }
 }
 
-int invalidCall() {
+int invalidCall_posix() {
   int sys_call;
 
   asm(

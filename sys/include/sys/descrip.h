@@ -30,7 +30,7 @@
 #define _KERN_DESCRIP_H
 
 #include <sys/thread.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 
 #include <vfs/file.h>
 #include <vfs/stat.h>

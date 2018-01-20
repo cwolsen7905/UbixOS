@@ -27,7 +27,7 @@
  */
 
 #include <sys/descrip.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <lib/kprintf.h>
 #include <ubixos/endtask.h>

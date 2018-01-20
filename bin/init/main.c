@@ -42,12 +42,10 @@ int main(int argc,char **argv, char **envp) {
 
 
   /* Create a mailbox for this task */
-  /*
   if (mpi_createMbox("init") != 0x0) {
     printf("Error: Failed to creating mail box: init\n");
     exit(0x1);
-    }
-  */
+  }
 
   /* Make sure we have superuser permissions if not exit */
   if ((getuid() != 0x0) || (getgid() != 0x0)) {
@@ -60,27 +58,31 @@ int main(int argc,char **argv, char **envp) {
   /* Start TTYD */
   i = fork();
 
+  printf("Forked: %i", i);
+
   if (0x0 == i) {
-    printf("Error: Could not start TTYD\n");
+    printf("Starting TTYD\n");
     execve("sys:/bin/ttyd", argv_login, envp_login);
     printf("Error: Could not start TTYD\n");
     exit(0x0);
   }
     
 
-/*
+  #ifdef _IGNORE
   i = fork();
   if (0x0 == i) {
     printf("Starting Ubix Registry (ubistry)\n");
-    exec("sys:/ubistry",0x0);
+    exec("sys:/bin/ubistry",0x0);
     printf("Error: Error Starting ubistry\n");
     exit(0x0);
-    }
+  }
 
+  /*
   while (pidStatus(i) > 0x0) {
     sched_yield();
-    } 
-*/
+  } 
+  */
+  #endif
 
   startup:
   i = fork();

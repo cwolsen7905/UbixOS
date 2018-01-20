@@ -29,7 +29,7 @@
 #ifndef _SYSCALLS_NEW_H
 #define _SYSCALLS_NEW_H
 
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 
 int sysExit();
 int read();

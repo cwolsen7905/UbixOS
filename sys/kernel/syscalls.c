@@ -81,11 +81,10 @@ struct syscall_entry systemCalls[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 1 -
-  { ARG_COUNT(struct sys_mpiCreateMbox_args)
-, "mpiCrateMbox", sys_mpiCreateMbox, SYSCALL_VALID},  // 50 - mpiCreateMbox
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 51 - mpiDestroyMbox
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 52 - mpiPostMessage
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 53 - mpiFetchMessage
+  { ARG_COUNT(sys_mpiCreateMbox_args), "mpiCrateMbox", sys_mpiCreateMbox, SYSCALL_VALID},  // 50 - mpiCreateMbox
+  { ARG_COUNT(sys_mpiDestroyMbox_args), "mpiDestroyMbox", sys_mpiDestroyMbox, SYSCALL_VALID },  // 51 - mpiDestroyMbox
+  { ARG_COUNT(sys_mpiPostMessage_args), "mpiPostMessage", sys_mpiPostMessage, SYSCALL_VALID },  // 52 - mpiPostMessage
+  { ARG_COUNT(sys_mpiFetchMessage_args), "mpiFetchMEssage", sys_mpiFetchMessage, SYSCALL_VALID },  // 53 - mpiFetchMessage
   { 0, "No Call", sys_invalid, SYSCALL_VALID },  // 54 - mpiSpam
   };
 

@@ -146,7 +146,7 @@ int kmain(uInt32 rootdev) {
   if (sysTask == 0x0)
     kprintf("OS: Unable to allocate memory\n");
 
-  execThread(systemTask, (uInt32) sysTask + 0x2000, 0x0);
+  execThread(systemTask, (uint32_t) sysTask + 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
   execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
@@ -162,7 +162,3 @@ int kmain(uInt32 rootdev) {
   /* Return to start however we should never get this far */
   return (0x0);
 }
-
-/***
- END
- ***/

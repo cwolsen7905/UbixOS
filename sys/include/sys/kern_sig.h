@@ -30,7 +30,7 @@
 #define _KERN_SIG_H
 
 #include <sys/thread.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 
 int sigaction(struct thread *,struct sigaction_args *);
 int sigprocmask(struct thread *, struct sigprocmask_args *);

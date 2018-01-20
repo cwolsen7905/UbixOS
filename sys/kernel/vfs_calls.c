@@ -28,7 +28,7 @@
 
 #include <ubixos/sched.h>
 #include <sys/thread.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <string.h>

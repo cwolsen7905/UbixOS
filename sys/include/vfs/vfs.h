@@ -31,7 +31,7 @@
 #include <sys/types.h>
 #include <vfs/file.h>
 #include <vfs/mount.h>
-#include <sys/sysproto.h>
+#include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <net/net.h>
 #include <ubixos/wait.h>

@@ -31,27 +31,10 @@
 
 int main(int argc, char **argv) {
   mpi_message_t myMsg;
+  char mbox[256] = "system\0";
 
   printf("Initializing TTYD\n");
   printf("mpi_post: [%i]\n", mpi_postMessage("system", 0x1, &myMsg));
 
   return (0x0);
 }
-
-/***
- $Log: main.c,v $
- Revision 1.1.1.1  2006/06/01 12:46:09  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:28  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:14:03  reddawg
- no message
-
- Revision 1.1  2004/08/14 11:28:59  reddawg
- ttyd
-
- END
- ***/
-
