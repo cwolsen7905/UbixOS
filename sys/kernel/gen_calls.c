@@ -154,22 +154,21 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
 
     int children = _current->children;
 
+    sched_setStatus(_current->id, WAIT);
     while (_current->children == children) {
-      schedSetStatus(_current->id, WAIT);
       sched_yield();
     }
 
     td->td_retval[0] = _current->last_exit;
     td->td_retval[1] = 0x8;
-    return (0x0);
   }
   else {
 
     kTask_t *tmpTask = schedFindTask(args->pid);
 
     if (tmpTask != 0x0) {
+      sched_setStatus(_current->id, WAIT);
       while (tmpTask != 0x0) {
-        schedSetStatus(_current->id, WAIT);
         sched_yield();
         tmpTask = schedFindTask(args->pid);
       }
@@ -180,6 +179,7 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
       error = -1;
     }
   }
+  kprintf("w4: %i", td->td_retval[0]);
   return (error);
 }
 

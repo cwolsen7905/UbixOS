@@ -227,7 +227,7 @@ int sys_fclose( struct thread *td, struct sys_fclose_args *args ) {
   }
 
   /* Return */
-  return (fclose( args->FILE ));
+  return (fclose( args->FILE->fd ));
 }
 
 /* KERNEL */
@@ -261,8 +261,6 @@ size_t fread( void *ptr, size_t size, size_t nmemb, fileDescriptor_t *fd ) {
   i = fd->mp->fs->vfsRead( fd, ptr, fd->offset, size * nmemb );
 
   fd->offset += size * nmemb;
-
-  //kprintf("fread: %i:%i",i,size *nmemb);
 
   return (i);
 }
@@ -354,7 +352,7 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (NULL);
   }
 
-  if (file[0] == "." && file[1] == '\0')
+  if (file[0] == '.' && file[1] == '\0')
     strcpy(fileName, _current->oInfo.cwd);
   else
     strcpy( fileName, file );
@@ -373,10 +371,12 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     sprintf( tmpFd->fileName, "/%s", path );
 
   /* Find our mount point or set default to sys */
-  if ( mountPoint == 0x0 )
+  if ( mountPoint == 0x0 ) {
     tmpFd->mp = vfs_findMount( "sys" );
-  else
+  }
+  else {
     tmpFd->mp = vfs_findMount( mountPoint );
+  }
 
   if ( tmpFd->mp == 0x0 ) {
     kprintf( "Mount Point Bad\n" );
@@ -420,7 +420,7 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
       kfree( tmpFd );
       kprintf( "Error: tmpFd->buffer == NULL, File: %s, Line: %i\n", __FILE__, __LINE__ );
       spinUnlock( &fdTable_lock );
-      return 0x1;
+      return(0x0);
     }
     /* Set Its Status To Open */
     tmpFd->status = fdOpen;
@@ -567,8 +567,3 @@ int unlink( const char *node ) {
   mp->fs->vfsUnlink( path, mp );
   return (0x0);
 }
-
-/***
- END
- ***/
-

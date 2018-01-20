@@ -94,14 +94,14 @@ static int args_copyin(char **argv_in, char **argv_out, char **args_out) {
   int i = 0x0;
 
   for (i = 1; i <= argc; i++) {
-    argv_tmp[i] = args_tmp + sp;
-    strcpy(argv_tmp[i], argv_in[i - 1]);
+    argv_tmp[i] = (uint32_t)(args_tmp + sp);
+    strcpy((char *)argv_tmp[i], argv_in[i - 1]);
     sp += strlen(argv_in[i - 1]) + 1;
   }
 
   argv_tmp[i++] = 0x0;
 
-  *argv_out = argv_tmp;
+  *argv_out = (char *)argv_tmp;
   *args_out = args_tmp;
 
   return (0);
@@ -121,13 +121,13 @@ static int envs_copyin(char **envp_in, char **envp_out, char **envs_out) {
   int i = 0x0;
 
   for (i = 0; i < envc; i++) {
-    envp_tmp[i] = envs_tmp + sp;
-    strcpy(envp_tmp[i], envp_in[i]);
+    envp_tmp[i] = (uint32_t)(envs_tmp + sp);
+    strcpy((char *)envp_tmp[i], envp_in[i]);
     sp += strlen(envp_in[i]) + 1;
   }
   envp_tmp[i++] = 0x0;
 
-  *envp_out = envp_tmp;
+  *envp_out = (char *)envp_tmp;
   *envs_out = envs_tmp;
   return (0);
 }
@@ -370,8 +370,8 @@ void execFile(char *file, char **argv, char **envp, int console) {
   //MrOlsen (2016-01-14) FIX: is the stack start supposed to be addressable xhcnage x= 1 to x=0
   //x = 0 because GS= stack address not address -1 fix!
   for (x = 1; x <= 100; x++) {
-    vmm_remapPage(vmm_findFreePage(newProcess->id), (STACK_ADDR+1) - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
-    bzero((STACK_ADDR+1) - (x * 0x1000), 0x1000);
+    vmm_remapPage(vmm_findFreePage(newProcess->id), (STACK_ADDR+1) - (x * PAGE_SIZE), PAGE_DEFAULT | PAGE_STACK, newProcess->id, 0);
+    bzero((void *)((STACK_ADDR+1) - (x * PAGE_SIZE)), PAGE_SIZE);
   }
 
   /* Kernel Stack 0x2000 bytes long */
@@ -455,7 +455,7 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   struct gdtDescriptor *taskLDT = 0x0;
 
-  taskLDT = VMM_USER_LDT + sizeof(struct gdtDescriptor);
+  taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
   uint32_t data_addr = 0x0;
 
   taskLDT->limitLow = (0xFFFFF & 0xFFFF);
@@ -539,14 +539,12 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   uint32_t *argv_out = 0x0;
   char *args_out = 0x0;
 
-  //MrOlsen 2018kprintf("ARGV: 0x%X\n", &argv_out);
-
-  args_copyin(argv, &argv_out, &args_out);
+  args_copyin(argv, (char **)&argv_out, &args_out);
 
   uint32_t *envp_out = 0x0;
   char *envs_out = 0x0;
 
-  envs_copyin(envp, &envp_out, &envs_out);
+  envs_copyin(envp, (char **)&envp_out, &envs_out);
 
   //! Clean the virtual of COW pages left over from the fork
   //vmm_cleanVirtualSpace( (uint32_t) _current->td.vm_daddr + (_current->td.vm_dsize << PAGE_SHIFT) );
@@ -558,7 +556,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   //bzero(STACK_ADDR - (100 * PAGE_SIZE), (PAGE_SIZE * 100));
   for (x = 1; x <= 100; x++) {
     vmm_remapPage(vmm_findFreePage(_current->id), (STACK_ADDR+1) - (x * 0x1000), PAGE_DEFAULT | PAGE_STACK, _current->id, 0);
-    bzero((STACK_ADDR+1) - (x * 0x1000), 0x1000);
+    bzero((void *)((STACK_ADDR+1) - (x * 0x1000)), 0x1000);
   }
 
   /* Load ELF Header */
@@ -686,7 +684,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         fseek(fd, programHeader[i].p_offset, 0);
         fread((void *) interp, programHeader[i].p_filesz, 1, fd);
         kprintf("Interp: [%s]\n", interp);
-        ldAddr = ldEnable();
+        ldAddr = ldEnable(interp);
         //ef->ld_addr = ldEnable();
       break;
       case PT_GNU_STACK:
@@ -738,13 +736,13 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   for (i = 1; i <= argc; i++) {
     tmp[i] = (uint32_t) STACK_ADDR - ARGV_PAGE + sp;
     if (i == 1) {
-      EXECP = tmp[i];
+      EXECP = (char *)tmp[i];
     }
-    strcpy((char *) tmp[i], (char *) argv_out[i]);
-    sp += strlen(argv_out[i]) + 1;
+    strcpy((char *)tmp[i], (const char *)argv_out[i]);
+    sp += strlen((const char *)argv_out[i]) + 1;
   }
 
-  tmp[i++] = (char *) 0x0;
+  tmp[i++] = 0x0;
 
   kfree(argv_out);
   kfree(args_out);
@@ -755,11 +753,11 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   for (x = 0; x < envc; x++) {
     tmp[x + i] = (uint32_t) STACK_ADDR - ARGV_PAGE - ENVP_PAGE + sp;
-    strcpy((char *) tmp[x + i], (char *) envp_out[x]);
-    sp += strlen(envp_out[x]) + 1;
+    strcpy((char *) tmp[x + i], (const char *)envp_out[x]);
+    sp += strlen((const char *)envp_out[x]) + 1;
   }
 
-  tmp[i + x] = (char *) 0x0;
+  tmp[i + x] = 0x0;
 
   kfree(envp_out);
   kfree(envs_out);
@@ -767,7 +765,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   i = i + x + 1;
 
   struct file *tFP = 0x0;
-  int *tFD = 0x0;
+  int tFD = 0x0;
 
   fseek(_current->files[0], 0x0, 0x0); // Reset File Position
   falloc(&_current->td, &tFP, &tFD);
@@ -818,7 +816,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   tmp[i++] = 0x0;
 
   tmp[i++] = 15; //EXEC PATH
-  tmp[i++] = EXECP;
+  tmp[i++] = (uint32_t)EXECP;
 
   tmp[i++] = 19; //NCPUS
   tmp[i++] = 0x1;
@@ -871,7 +869,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   struct gdtDescriptor *taskLDT = 0x0;
 
-  taskLDT = VMM_USER_LDT + sizeof(struct gdtDescriptor);//taskLDT[1];
+  taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
  
   //data_addr = 0x0; //TEMP
 
@@ -894,7 +892,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 static int elf_parse_dynamic(elf_file_t ef) {
   Elf32_Dyn *dynp;
   int plttype = DT_REL;
-  uint32_t *tmp;
 
   for (dynp = ef->dynamic; dynp->d_tag != 0x0; dynp++) {
     switch (dynp->d_tag) {

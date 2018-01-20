@@ -43,10 +43,8 @@
 
  ************************************************************************/
 void endTask(pidType pid) {
-
   sched_setStatus(pid, DEAD);
   sched_yield();
-
   while (1)
     asm("hlt");
 

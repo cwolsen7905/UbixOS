@@ -60,8 +60,6 @@ static struct {
 
  ************************************************************************/
 int idt_init() {
-  int i = 0x0;
-
   struct tssStruct *sfTSS = (struct tssStruct *) 0x6200;
   struct tssStruct *gpfTSS = (struct tssStruct *) 0x4200;
 
@@ -175,7 +173,7 @@ void intNull() {
   kprintf("Invalid Interrupt[%i]\n", _current->id);
 }
 
-asm volatile(
+asm(
   ".globl _int0  \n"
   "_int0:        \n"
   "  pushl $0x0  \n"
@@ -232,7 +230,7 @@ void _int5() {
   sched_yield();
 }
 
-asm volatile(
+asm(
   ".globl _int6       \n"
   "_int6:             \n"
   "  pushl $0x0            \n"

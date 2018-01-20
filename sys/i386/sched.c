@@ -98,16 +98,17 @@ void sched() {
       tmpTask->state = READY;
 
     if (tmpTask->state == READY) {
-      _current->state = READY;
+      _current->state = (_current->state == DEAD) ? DEAD : READY;
       _current = tmpTask;
       break;
     }
     else if (tmpTask->state == DEAD) {
+      kprintf("DEAD: %i", tmpTask->id);
       delTask = tmpTask;
       if (delTask->parent != 0x0) {
         delTask->parent->children -= 1;
         delTask->parent->last_exit = delTask->id;
-        schedSetStatus(delTask->parent->id, READY);
+        delTask->parent->state = READY;
       }
 
       tmpTask = tmpTask->next;
@@ -123,7 +124,7 @@ void sched() {
     goto schedStart;
   }
 
-  if (_current->state == READY) {
+  if (_current->state == READY || _current->state == RUNNING) {
 
     if (_current->oInfo.v86Task == 0x1)
       irqDisable(0x0);

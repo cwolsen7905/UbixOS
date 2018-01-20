@@ -56,6 +56,7 @@ int main(int argc,char **argv, char **envp) {
   printf("Initializing UbixOS\n");
 
   /* Start TTYD */
+  #ifdef _IGNORE
   i = fork();
 
   printf("Forked: %i", i);
@@ -66,7 +67,7 @@ int main(int argc,char **argv, char **envp) {
     printf("Error: Could not start TTYD\n");
     exit(0x0);
   }
-    
+  #endif
 
   #ifdef _IGNORE
   i = fork();

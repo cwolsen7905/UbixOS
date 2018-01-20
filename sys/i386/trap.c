@@ -32,6 +32,7 @@
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
 #include <vmm/vmm.h>
+#include <ubixos/endtask.h>
 
 #define KERNEL_STACK 0x2000
 
@@ -79,8 +80,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   int i;
   unsigned long esp;
   unsigned short ss;
-  unsigned long *stack, addr, module_start, module_end;
-  char *_etext = 0x300a0;
+  unsigned long *stack;
 
   esp = (unsigned long) &regs->tf_esp;
 
@@ -104,10 +104,10 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   kprintf("cs:  0x%X ds: 0x%X  es:  0x%X fs: 0x%X gs: 0x%X ss: 0x%X\n", regs->tf_cs, regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
   kprintf("cr0: 0x%X, cr2: 0x%X, cr3: 0x%X, cr4: 0x%X\n", rcr0(), rcr2(), rcr3(), rcr4());
 
+  /*
   struct gdtDescriptor *taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
   uint32_t data_addr = 0x0;
 
-  /*
   data_addr += taskLDT->baseLow;
   data_addr += taskLDT->baseMed << 16;
   data_addr += taskLDT->baseHigh << 24;
@@ -133,8 +133,6 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
 void trap(struct trapframe *frame) {
   u_int trap_code;
   u_int cr2 = 0;
-
-  struct thread *td = &_current->td;
 
   trap_code = frame->tf_trapno;
 

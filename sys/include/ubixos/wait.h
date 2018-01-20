@@ -29,11 +29,10 @@
 #ifndef _UBIXOS_WAIT_H
 #define _UBIXOS_WAIT_H
 
-
-struct kTask_t;
+struct taskStruct;
 
 struct wait_queue {
-    struct kTask_t *task;
+    struct taskStruct *task;
     struct wait_queue *next;
 };
 

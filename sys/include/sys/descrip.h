@@ -91,12 +91,21 @@ typedef __nlink_t nlink_t;
 
 struct fileOps;
 struct file;
+struct uio;  //TMP
+struct ucred; //TMP
 
 /* Function Protos */
 typedef int fo_rdwr_t(struct file *fp, struct uio *uio, struct ucred *active_cred, int flags, struct thread *td);
 typedef int fo_stat_t(struct file *fp, struct stat *sb, struct ucred *active_cred, struct thread *td);
 typedef int fo_close_t(struct file *fp, struct thread *td);
 
+struct ucred {
+  char pad;
+};
+
+struct uio {
+  char pad;
+};
 
 struct file {
     uint32_t f_flag;

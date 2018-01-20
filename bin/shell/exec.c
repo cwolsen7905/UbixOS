@@ -45,7 +45,7 @@ void execProgram(inputBuffer *data) {
 
   if (!cPid) {
     sprintf(file, "%s%s", cwd, data->argv[1]);
-    execve(file,argv_init, envp_init);
+    execve(file, argv_init, envp_init);
     printf("%s: Command Not Found.\n",data->argv[1]);
     exit(-1);
     }
