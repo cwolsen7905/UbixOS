@@ -352,6 +352,7 @@ void vmm_freeProcessPages(pidType pid) {
 
   /* Check Page Directory For An Avail Page Table */
   //NOTE: Thie cleans all memory space up to kernel space
+#ifdef _IGNORE
   for (i = 0; i < (PAGE_SIZE - (PAGE_SIZE / 4)); i++) {
 
     if (tmpPageDir[i] != 0) {
@@ -369,6 +370,7 @@ void vmm_freeProcessPages(pidType pid) {
       }
     }
   }
+#endif
 
   /* Loop Through Pages To Find Pages Owned By Process */
   for (i = 0; i < numPages; i++) {
@@ -381,6 +383,8 @@ void vmm_freeProcessPages(pidType pid) {
         freePages++;
         systemVitals->freePages = freePages;
       }
+      else
+        vmmMemoryMap[i].cowCounter--;
     }
   }
 
