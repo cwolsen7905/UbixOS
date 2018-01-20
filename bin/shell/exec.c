@@ -32,31 +32,20 @@
 #include <unistd.h>
 #include "shell.h"
 
-  int boo = 0x0;
-
 static char *argv_init[2] = { "/bin/sh", NULL, }; // ARGV For Initial Proccess
-//static char *envp_init[12] = { "HOST=MrOlsen.uBixOS.com", "TERM=xterm", "SHELL=/bin/sh", "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "LOGNAME=root", "GROUP=admin", "LD_DEBUG=all", "LD_LIBRARY_PATH=/lib", NULL, }; //ENVP For Initial Proccess
-static char *envp_init[11] = { "HOST=MrOlsen.uBixOS.com", "TERM=xterm", "SHELL=/bin/sh", "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "LOGNAME=root", "GROUP=admin", "LD_LIBRARY_PATH=/lib", NULL, }; //ENVP For Initial Proccess
+//static char *envp_init[12] = { "HOST=MrOlsen.uBixOS.com", "TERM=xterm", "SHELL=/bin/sh", "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "LOGNAME=root", "GROUP=admin", "LD_DEBUG=all", "LD_LIBRARY_PATH=/lib:/usr/lib", NULL, }; //ENVP For Initial Proccess
+static char *envp_init[11] = { "HOST=MrOlsen.uBixOS.com", "TERM=xterm", "SHELL=/bin/sh", "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "LOGNAME=root", "GROUP=admin", "LD_LIBRARY_PATH=/lib:/usr/lib", NULL, }; //ENVP For Initial Proccess
 
 
 void execProgram(inputBuffer *data) {
   char file[1024];
   int cPid = 0x0;
 
-  //printf("Executing App\n");
-
   cPid = fork();
-printf("Forked: [%i]\n", cPid);
 
   if (!cPid) {
     sprintf(file, "%s%s", cwd, data->argv[1]);
- //   if (boo == 0)
-      //execve(file,data->argv, 0x0);
-      execve(file,argv_init, envp_init);
-   /*
-    else
-      execn(file,&data->argv);
-*/
+    execve(file,argv_init, envp_init);
     printf("%s: Command Not Found.\n",data->argv[1]);
     exit(-1);
     }
@@ -65,7 +54,5 @@ printf("Forked: [%i]\n", cPid);
       while (pidStatus(cPid) > 0)
         sched_yield();
       }
-    if (cPid > 4)
-      boo = 1;
     }  
   }

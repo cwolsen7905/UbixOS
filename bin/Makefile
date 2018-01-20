@@ -70,6 +70,9 @@ stat-bin: stat
 mount-bin: mount
 	(cd mount;make)
 
+sh-bin: sh
+	(cd sh;make)
+
 clean:
 	(cd cp;make clean)
 	(cd fdisk;make clean)

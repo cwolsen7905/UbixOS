@@ -37,7 +37,7 @@
 #include <string.h>
 #include <assert.h>
 
-uint32_t ldEnable() {
+uint32_t ldEnable(const char *interp) {
   int i = 0x0;
   int x = 0x0;
   int rel = 0x0;
@@ -56,11 +56,12 @@ uint32_t ldEnable() {
   Elf_Addr addr;
 
   /* Open our dynamic linker */
-  //ldFd = fopen("sys:/libexec/ld.so", "rb");
-  ldFd = fopen("sys:/libexec/ld-elf.so.1", "rb");
+  ldFd = fopen(interp, "rb");
 
   if (ldFd == 0x0) {
-    kprintf("Can not open ld.so\n");
+    ldFd = fopen("sys:/libexec/ld.so", "rb");
+    if (ldFd == 0x0)
+      return(0x0);
   }
 
   fseek(ldFd, 0x0, 0x0);
@@ -174,7 +175,7 @@ uint32_t ldEnable() {
         //kprintf("SYMTAB");
         break;
       default:
-        kprintf("INvalid: %i]", sectionHeader[i].sh_type);
+        //kprintf("Invalid: %i]", sectionHeader[i].sh_type);
       break;
     }
   }

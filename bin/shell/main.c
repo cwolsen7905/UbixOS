@@ -41,16 +41,6 @@ char *cwc = 0x0;
 int main(int argc, char **argv, char **env) {
   unsigned int *segbase = 0x0;
 
-  /*
-  __asm __volatile("movl %%gs:0, %0" : "=r" (segbase));
-
-  printf("Segbase: 0x%X - 0x%X\n", segbase, &segbase);
-  printf("Segbase[0]: 0x%X\n", segbase[0]);
-  */
-
-  for (int i=0;i < argc; i++)
-    printf("ARGV[%i]: %s\n", i, argv[i]);
-
   char *buffer = (char *) malloc( 512 );
   inputBuffer *inBuf = (inputBuffer *) malloc( sizeof(inputBuffer) );
 
@@ -78,13 +68,9 @@ int main(int argc, char **argv, char **env) {
 
     parseInput( inBuf, buffer );
 
-printf( "m-arg: [%i]\n", inBuf->args->arg );
-
     if ( inBuf->args->arg != 0x0 ) {
-
-//      execProgram( inBuf );
-       if (!commands(inBuf))
-       execProgram(inBuf);
+      if (!commands(inBuf))
+        execProgram(inBuf);
     }
 
     freeArgs( inBuf );

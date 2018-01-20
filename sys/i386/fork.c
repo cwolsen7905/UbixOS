@@ -94,10 +94,10 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->td.vm_dsize = _current->td.vm_dsize;
   newProcess->td.vm_daddr = _current->td.vm_daddr;
 
-  kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
+  //kprintf("Copying Mem Space! [0x%X:0x%X:0x%X:0x%X:0x%X:%i:%i]\n", newProcess->tss.esp0, newProcess->tss.esp, newProcess->tss.ebp, td->frame->tf_esi, td->frame->tf_eip, newProcess->id, _current->id);
 
   newProcess->tss.cr3 = (uInt32) vmm_copyVirtualSpace(newProcess->id);
-  kprintf( "Copied Mem Space! [0x%X]\n", newProcess->tss.cr3 );
+  //kprintf( "Copied Mem Space! [0x%X]\n", newProcess->tss.cr3 );
 
   newProcess->state = FORK;
   /* Fix gcc optimization problems */
