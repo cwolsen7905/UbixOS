@@ -75,7 +75,23 @@ void *vmm_copyVirtualSpace(pidType pid) {
 
   /* Map Kernel Code Region Entries 0 & 1 */
   newPageDirectory[0] = parentPageDirectory[0];
-  newPageDirectory[1] = parentPageDirectory[1];
+  //XXX: We Dont Need This - newPageDirectory[1] = parentPageDirectory[1];
+
+  if ((newPageTable = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
+    kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+
+  parentPageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * 1));
+
+  for (x = 0;x < PT_ENTRIES;x++) 
+    newPageTable[x] = parentPageTable[x];
+
+  newPageDirectory[1] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT);
+
+  vmm_unmapPage((uint32_t) newPageTable, 1);
+
+  newPageTable = 0x0;
+
+  
 
   /* Map The Kernel Memory Region Entry 770 Address 0xC0800000 */
   for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)

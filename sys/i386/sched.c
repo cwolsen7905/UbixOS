@@ -151,7 +151,6 @@ void sched() {
 
     asm("sti");
     asm(
-      "lgdtl (loadGDT)\n"
       "ljmp $0x20,$0\n"
     );
   }

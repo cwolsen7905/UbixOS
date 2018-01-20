@@ -107,12 +107,14 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   struct gdtDescriptor *taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
   uint32_t data_addr = 0x0;
 
+  /*
   data_addr += taskLDT->baseLow;
   data_addr += taskLDT->baseMed << 16;
   data_addr += taskLDT->baseHigh << 24;
 
   kprintf("LDT: 0x%X", data_addr);
   while (1) asm("nop");
+  */
   
   store_TR(i);
   kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, KERNEL_STACK);

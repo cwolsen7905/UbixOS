@@ -81,6 +81,7 @@ int vmm_pagingInit() {
 
   kernelPageDirectory[0] = (uint32_t) ((uint32_t) (pageTable) | PAGE_DEFAULT);
 
+
   /*
    * Map the first 1MB of Memory to the kernel MM space because our kernel starts
    * at 0x30000
@@ -91,6 +92,15 @@ int vmm_pagingInit() {
   for (i = 0x0; i < (PD_ENTRIES / 0x4); i++) {
     pageTable[i] = (uint32_t) ((i * 0x1000) | KERNEL_PAGE_DEFAULT);  //MrOlsen 2018-01-14 PAGE_DEFAULT
   } /* end for */
+
+  /* Allocate a page for the first 4MB of memory */
+  if ((pageTable = (uint32_t *) vmm_findFreePage( sysID)) == 0x0)
+    K_PANIC("Error: vmm_findFreePage Failed");
+
+  /* Make Sure The Page Table Is Clean */
+  memset(pageTable, 0x0, 0x1000);
+
+  kernelPageDirectory[1] = (uint32_t) ((uint32_t) (pageTable) | PAGE_DEFAULT);
 
   /*
    * Create page tables for the top 1GB of VM space. This space is set aside

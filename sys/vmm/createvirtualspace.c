@@ -73,7 +73,20 @@ void *vmm_createVirtualSpace(pid_t pid) {
 
   /* Map The Lower 8MB Kernel Code Space */
   newPageDirectory[0] = parentPageDirectory[0];
-  newPageDirectory[1] = parentPageDirectory[1];
+  //XXX: We Dont Need This - newPageDirectory[1] = parentPageDirectory[1];
+
+  newPageTable = (uint32_t *) vmm_getFreePage(pid);
+  bzero(newPageTable, PAGE_SIZE);
+
+  parentPageTable = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1));
+
+  for (x = 0; x < PT_ENTRIES; x++) {
+    newPageTable[x] = parentPageTable[x];
+  }
+
+  newPageDirectory[1] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT);
+
+  vmm_unmapPage((uint32_t) newPageTable, 1);
 
   /* Map The Top Kernel (APPROX 1GB) Region Of The VM Space */
   for (x = PD_INDEX(VMM_KERN_START); x < PD_ENTRIES; x++) {
