@@ -78,10 +78,28 @@ void *vmm_createVirtualSpace(pid_t pid) {
   newPageTable = (uint32_t *) vmm_getFreePage(pid);
   bzero(newPageTable, PAGE_SIZE);
 
-  parentPageTable = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1));
+  parentPageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * 1));
 
   for (x = 0; x < PT_ENTRIES; x++) {
-    newPageTable[x] = parentPageTable[x];
+    if (((parentPageTable[x]) & PAGE_PRESENT) == PAGE_PRESENT) {
+
+      /* Set Page To COW In Parent And Child Space */
+      newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | (KERNEL_PAGE_DEFAULT | PAGE_COW));
+
+      /* Increment The COW Counter For This Page */
+      if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
+        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 1);
+      }
+      else {
+        /* Add Two If This Is The First Time Setting To COW */
+        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 2);
+        parentPageTable[x] |= PAGE_COW; // newPageTable[i];
+      }
+
+    }
+    else
+      newPageTable[x] = parentPageTable[x];
+
   }
 
   newPageDirectory[1] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT);
@@ -99,15 +117,13 @@ void *vmm_createVirtualSpace(pid_t pid) {
 
   newPageDirectory[1023] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT);
 
-  parentPageTable = (uint32_t *)(PT_BASE_ADDR + (PAGE_SIZE * 1023));
+  parentPageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * 1023));
   newPageTable[1023] = parentPageTable[1023] | PAGE_COW;
   adjustCowCounter(((uint32_t) parentPageTable[1023] & 0xFFFFF000), 2);
   newPageTable[1022] = parentPageTable[1022] | PAGE_COW;
   adjustCowCounter(((uint32_t) parentPageTable[1022] & 0xFFFFF000), 2);
 
-
   vmm_unmapPage((uint32_t) newPageTable, 1);
-
 
   /*
    * Allocate A New Page For The The First Page Table Where We Will Map The
@@ -115,26 +131,21 @@ void *vmm_createVirtualSpace(pid_t pid) {
    */
 
   //newPageTable = (uint32_t *) vmm_getFreePage(pid);
-
   /* Flush The Page From Garbage In Memory */
   //bzero(newPageTable, PAGE_SIZE);
-
   /* Map This Into The Page Directory */
   //newPageDirectory[0] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT); //MrOlsen 2018-01-14 PAGE_DEFAULT
-
   /* Set Address Of Parents Page Table */
   //parentPageTable = (uint32_t *) PT_BASE_ADDR;
-
   /* Map The First 1MB Worth Of Pages */
   /*
-  for (x = 0; x < (PD_ENTRIES / 4); x++) {
-    newPageTable[x] = parentPageTable[x];
-  }
+   for (x = 0; x < (PD_ENTRIES / 4); x++) {
+   newPageTable[x] = parentPageTable[x];
+   }
    */
 
   /* Unmap Page From Virtual Space */
   //vmm_unmapPage((uint32_t) newPageTable, 1);
-
   /*
    *
    * Map Page Directory Into VM Space
@@ -143,7 +154,7 @@ void *vmm_createVirtualSpace(pid_t pid) {
    */
   newPageTable = (uint32_t *) vmm_getFreePage(pid);
 
-  newPageDirectory[PD_INDEX(PD_BASE_ADDR)] = (uint32_t) (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT );  //MrOlsen 2018-01-14 PAGE_DEFAULT
+  newPageDirectory[PD_INDEX(PD_BASE_ADDR)] = (uint32_t) (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT);  //MrOlsen 2018-01-14 PAGE_DEFAULT
 
   newPageTable[0] = (uint32_t) ((uint32_t) (newPageDirectoryAddress) | KERNEL_PAGE_DEFAULT); //MrOlsen 2018-01-14 PAGE_DEFAULT
 

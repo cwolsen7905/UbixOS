@@ -43,6 +43,7 @@ static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
 static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
 int numPages = 0x0;
+
 mMap *vmmMemoryMap = (mMap *) VMM_MMAP_ADDR_RMODE;
 
 /************************************************************************
@@ -266,7 +267,6 @@ int freePage(uint32_t pageAddr) {
 
   int pageIndex = 0x0;
   assert((pageAddr & 0xFFF) == 0x0);
-  spinLock(&vmmSpinLock);
 
   /* Find The Page Index To The Memory Map */
   pageIndex = (pageAddr / 4096);
@@ -275,20 +275,19 @@ int freePage(uint32_t pageAddr) {
   if (vmmMemoryMap[pageIndex].cowCounter == 0) {
 
     /* Set Page As Avail So It Can Be Used Again */
+    spinLock(&vmmSpinLock);
     vmmMemoryMap[pageIndex].status = memAvail;
     vmmMemoryMap[pageIndex].cowCounter = 0x0;
     vmmMemoryMap[pageIndex].pid = -2;
     freePages++;
     systemVitals->freePages = freePages;
+    spinUnlock(&vmmSpinLock);
 
   }
   else {
-
     /* Adjust The COW Counter */
     adjustCowCounter(((uint32_t) vmmMemoryMap[pageIndex].pageAddr), -1);
-
   }
-  spinUnlock(&vmmSpinLock);
 
   /* Return */
   return (0);
@@ -307,9 +306,12 @@ int freePage(uint32_t pageAddr) {
 
  ************************************************************************/
 int adjustCowCounter(uInt32 baseAddr, int adjustment) {
-  int vmmMemoryMapIndex = (baseAddr / 4096);
+
+  int vmmMemoryMapIndex = (baseAddr / PAGE_SIZE);
+
   assert((baseAddr & 0xFFF) == 0x0);
-  spinLock(&vmmCowSpinLock);
+
+  spinLock(&vmmSpinLock);
   /* Adjust COW Counter */
   vmmMemoryMap[vmmMemoryMapIndex].cowCounter += adjustment;
 
@@ -325,7 +327,7 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
     systemVitals->freePages = freePages;
   }
 
-  spinUnlock(&vmmCowSpinLock);
+  spinUnlock(&vmmSpinLock);
   /* Return */
   return (0);
 }
@@ -383,8 +385,11 @@ void vmm_freeProcessPages(pidType pid) {
         freePages++;
         systemVitals->freePages = freePages;
       }
-      else
-        vmmMemoryMap[i].cowCounter--;
+      else {
+        spinUnlock(&vmmSpinLock);
+        adjustCowCounter((i * PAGE_SIZE), -1);
+        spinLock(&vmmSpinLock);
+      }
     }
   }
 
@@ -392,87 +397,3 @@ void vmm_freeProcessPages(pidType pid) {
   spinUnlock(&vmmSpinLock);
   return;
 }
-
-/***
- $Log: vmm_memory.c,v $
- Revision 1.1  2006/12/01 18:46:19  reddawg
- renaming files
-
- Revision 1.2  2006/12/01 05:12:35  reddawg
- We're almost there... :)
-
- Revision 1.1.1.1  2006/06/01 12:46:13  reddawg
- ubix2
-
- Revision 1.5  2006/06/01 12:42:09  reddawg
- Getting back to the basics
-
- Revision 1.4  2006/06/01 04:15:32  reddawg
- Woot
-
- Revision 1.3  2006/06/01 03:58:33  reddawg
- wondering about this stuff here
-
- Revision 1.2  2005/10/12 00:13:38  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:51  reddawg
- no message
-
- Revision 1.15  2004/09/11 23:39:31  reddawg
- ok time for bed
-
- Revision 1.14  2004/09/11 16:39:19  apwillia
- Fix order in adjustCowCounter to prevent potential race condition
-
- Revision 1.13  2004/08/14 11:23:03  reddawg
- Changes
-
- Revision 1.12  2004/08/01 20:51:33  reddawg
- adjustCowCounter: we no longer need to debug unhandled adjustments they are normal situations now
-
- Revision 1.11  2004/07/28 00:17:05  reddawg
- Major:
- Disconnected page 0x0 from the system... Unfortunately this broke many things
- all of which have been fixed. This was good because nothing deferences NULL
- any more.
-
- Things affected:
- malloc,kmalloc,getfreepage,getfreevirtualpage,pagefault,fork,exec,ld,ld.so,exec,file
-
- Revision 1.10  2004/07/26 19:15:49  reddawg
- test code, fixes and the like
-
- Revision 1.9  2004/07/24 23:04:44  reddawg
- Changes... mark let me know if you fault at pid 185 when you type stress
-
- Revision 1.8  2004/07/24 17:47:28  reddawg
- vmm_pageFault: deadlock resolved thanks to a propper solution suggested by geist
-
- Revision 1.7  2004/07/19 02:04:32  reddawg
- memory.c: added spinlocks to vmm_findFreePage and vmmFreePage to prevent two tasks from possibly allocating the same page
-
- Revision 1.6  2004/06/14 12:20:54  reddawg
- notes: many bugs repaired and ld works 100% now.
-
- Revision 1.5  2004/05/21 15:34:23  reddawg
- Fixed a couple of typo
-
- Revision 1.4  2004/05/21 14:50:10  reddawg
- Cleaned up
-
- Revision 1.3  2004/05/19 17:28:28  reddawg
- Added the correct endTask Procedure
-
- Revision 1.2  2004/04/30 14:16:04  reddawg
- Fixed all the datatypes to be consistant uInt8,uInt16,uInt32,Int8,Int16,Int32
-
- Revision 1.1.1.1  2004/04/15 12:06:52  reddawg
- UbixOS v1.0
-
- Revision 1.27  2004/04/13 16:36:34  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
-
- END
- ***/

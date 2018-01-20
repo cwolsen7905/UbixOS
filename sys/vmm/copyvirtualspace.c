@@ -57,7 +57,6 @@ void *vmm_copyVirtualSpace(pidType pid) {
   uint32_t *parentStackPage = 0x0, *newStackPage = 0x0;
   uint16_t x = 0, i = 0, s = 0;
 
-
   spinLock(&cvsSpinLock);
 
   /* Set Address Of Parent Page Directory */
@@ -82,16 +81,32 @@ void *vmm_copyVirtualSpace(pidType pid) {
 
   parentPageTable = (uint32_t *) (PT_BASE_ADDR + (PAGE_SIZE * 1));
 
-  for (x = 0;x < PT_ENTRIES;x++) 
-    newPageTable[x] = parentPageTable[x];
+  for (x = 0; x < PT_ENTRIES; x++) {
+    if (((parentPageTable[x]) & PAGE_PRESENT) == PAGE_PRESENT) {
+
+      /* Set Page To COW In Parent And Child Space */
+      newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | (KERNEL_PAGE_DEFAULT | PAGE_COW));
+
+      /* Increment The COW Counter For This Page */
+      if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
+        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 1);
+      }
+      else {
+        /* Add Two If This Is The First Time Setting To COW */
+        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 2);
+        parentPageTable[x] |= PAGE_COW; // newPageTable[i];
+      }
+
+    }
+    else
+      newPageTable[x] = parentPageTable[x];
+  }
 
   newPageDirectory[1] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | KERNEL_PAGE_DEFAULT);
 
   vmm_unmapPage((uint32_t) newPageTable, 1);
 
   newPageTable = 0x0;
-
-  
 
   /* Map The Kernel Memory Region Entry 770 Address 0xC0800000 */
   for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++)
@@ -112,21 +127,21 @@ void *vmm_copyVirtualSpace(pidType pid) {
       for (i = 0; i < PT_ENTRIES; i++) {
         if ((parentPageTable[i] & PAGE_PRESENT) == PAGE_PRESENT) {
 
-            /* Alloc A New Page For This Stack Page */
-            if ((newStackPage = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
-              kpanic("Error: newStackPage == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+          /* Alloc A New Page For This Stack Page */
+          if ((newStackPage = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
+            kpanic("Error: newStackPage == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
 
-            /* Set Pointer To Parents Stack Page */
-            parentStackPage = (uint32_t *) (((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
+          /* Set Pointer To Parents Stack Page */
+          parentStackPage = (uint32_t *) (((PAGE_SIZE * PD_ENTRIES) * x) + (PAGE_SIZE * i));
 
-            /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
-            memcpy(newStackPage, parentStackPage, PAGE_SIZE);
+          /* Copy The Stack Byte For Byte (I Should Find A Faster Way) */
+          memcpy(newStackPage, parentStackPage, PAGE_SIZE);
 
-            /* Insert New Stack Into Page Table */
-            newPageTable[i] = (vmm_getPhysicalAddr((uint32_t) newStackPage) | PAGE_DEFAULT | PAGE_STACK);
+          /* Insert New Stack Into Page Table */
+          newPageTable[i] = (vmm_getPhysicalAddr((uint32_t) newStackPage) | PAGE_DEFAULT | PAGE_STACK);
 
-            /* Unmap From Kernel Space */
-            vmm_unmapPage((uint32_t) newStackPage, 1);
+          /* Unmap From Kernel Space */
+          vmm_unmapPage((uint32_t) newStackPage, 1);
         }
       }
       /* Put New Page Table Into New Page Directory */
@@ -217,52 +232,52 @@ void *vmm_copyVirtualSpace(pidType pid) {
    * Lower Region First 4MB
    */
   /*
-  if ((newPageTable = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
-    kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
+   if ((newPageTable = (uint32_t *) vmm_getFreeKernelPage(pid, 1)) == 0x0)
+   kpanic("Error: newPageTable == NULL, File: %s, Line: %i\n", __FILE__, __LINE__);
    */
 
   /* Flush The Page From Garbage In Memory */
   /*
-  bzero(newPageTable, PAGE_SIZE);
+   bzero(newPageTable, PAGE_SIZE);
    */
 
   /* Map This Into The Page Directory */
   /*
-  newPageDirectory[0] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | PAGE_DEFAULT);
+   newPageDirectory[0] = (vmm_getPhysicalAddr((uint32_t) newPageTable) | PAGE_DEFAULT);
    */
 
   /* Set Address Of Parents Page Table */
   /*
-  parentPageTable = (uint32_t) PT_BASE_ADDR;
+   parentPageTable = (uint32_t) PT_BASE_ADDR;
    */
 
   /* Map The First 1MB Worth Of Pages */
   /*
-  for (x = 0; x < (PD_ENTRIES / 4); x++) {
-    newPageTable[x] = parentPageTable[x];
-  }
+   for (x = 0; x < (PD_ENTRIES / 4); x++) {
+   newPageTable[x] = parentPageTable[x];
+   }
    */
 
   /* Map The Next 3MB Worth Of Pages But Make Them COW */
   /*
-  for (x = (PD_ENTRIES / 4); x < PD_ENTRIES; x++) {
+   for (x = (PD_ENTRIES / 4); x < PD_ENTRIES; x++) {
 
    // If Page Is Avaiable Map It
-    if ((parentPageTable[x] & 0xFFFFF000) != 0x0) {
+   if ((parentPageTable[x] & 0xFFFFF000) != 0x0) {
 
    // Set Pages To COW
-      newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | (PAGE_DEFAULT | PAGE_COW));
+   newPageTable[x] = (((uint32_t) parentPageTable[x] & 0xFFFFF000) | (PAGE_DEFAULT | PAGE_COW));
 
    // Increment The COW Counter For This Page
-      if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
-        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 1);
-      }
-      else {
-        adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 2);
-        parentPageTable[x] = newPageTable[x];
-      }
-    }
-  }
+   if (((uint32_t) parentPageTable[x] & PAGE_COW) == PAGE_COW) {
+   adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 1);
+   }
+   else {
+   adjustCowCounter(((uint32_t) parentPageTable[x] & 0xFFFFF000), 2);
+   parentPageTable[x] = newPageTable[x];
+   }
+   }
+   }
    */
 
   /*

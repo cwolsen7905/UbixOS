@@ -76,8 +76,6 @@
 
 int vmmClearVirtualPage(uint32_t pageAddr);
 
-void vmm_unmapPage(uint32_t, int);
-void vmm_unmapPages(void *, uint32_t);
 void *vmm_mapFromTask(pidType, void *, uint32_t);
 void *vmm_copyVirtualSpace(pidType);
 void *vmm_getFreePage(pidType);

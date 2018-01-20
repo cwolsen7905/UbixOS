@@ -107,6 +107,10 @@ extern "C" {
       int cowCounter;
   } mMap;
 
+  typedef enum {
+    VMM_FREE = 0, VMM_KEEP = 1
+  } unmapFlags_t;
+
   extern int numPages;
   extern mMap *vmmMemoryMap;
 
@@ -114,11 +118,13 @@ extern "C" {
   int vmm_memMapInit();
   int countMemory();
   uint32_t vmm_findFreePage(pidType pid);
-  int freePage(uInt32 pageAddr);
-  int adjustCowCounter(uInt32 baseAddr, int adjustment);
+  int freePage(uint32_t pageAddr);
+  int adjustCowCounter(uint32_t baseAddr, int adjustment);
   void vmm_freeProcessPages(pidType pid);
 
   int vmm_allocPageTable(uint32_t, pidType);
+  void vmm_unmapPage(uint32_t, unmapFlags_t);
+  void vmm_unmapPages(void *, uint32_t, unmapFlags_t);
 
 #ifdef __cplusplus
 }
