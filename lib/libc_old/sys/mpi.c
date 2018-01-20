@@ -33,7 +33,7 @@ int mpi_createMbox(char *name) {
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"
-    : : "i" (0x80),"a" (50),"b" (&status),"c" (name)
+    : : "i" (0x81),"a" (50),"b" (&status),"c" (name)
     );
 
   return(status);
@@ -43,7 +43,7 @@ int mpi_destroyMbox(char *name) {
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"
-    : : "i" (0x80),"a" (51),"b" (&status),"c" (name)
+    : : "i" (0x81),"a" (51),"b" (&status),"c" (name)
     );
 
   return(status);
@@ -52,7 +52,7 @@ int mpi_destroyMbox(char *name) {
 int mpi_postMessage(char *name,uInt32 type,mpi_message_t *msg) {
   asm volatile(
     "int %0\n"
-    : : "i" (0x80),"a" (52),"b" (name),"c" (&type),"d" (msg)
+    : : "i" (0x81),"a" (52),"b" (name),"c" (&type),"d" (msg)
     );
   return(type);
   }
@@ -61,7 +61,7 @@ int mpi_fetchMessage(char *name,mpi_message_t *msg) {
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"
-    : : "i" (0x80),"a" (53),"b" (name),"c" (msg),"d" (&status)
+    : : "i" (0x81),"a" (53),"b" (name),"c" (msg),"d" (&status)
     );
   return(status);
   }
@@ -70,7 +70,7 @@ int mpi_spam(uInt32 type,void *data) {
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"
-    : : "i" (0x80),"a" (54),"b" (type),"c" (data),"d" (&status)
+    : : "i" (0x81),"a" (54),"b" (type),"c" (data),"d" (&status)
     );
   return(status);
   }

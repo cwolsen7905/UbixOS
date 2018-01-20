@@ -62,7 +62,7 @@ int main(int argc,char **argv, char **envp) {
 
   if (0x0 == i) {
     printf("Error: Could not start TTYD\n");
-    execve("sys:/bin/ttyd",0x0,0x0);
+    execve("sys:/bin/ttyd", argv_login, envp_login);
     printf("Error: Could not start TTYD\n");
     exit(0x0);
   }
@@ -83,14 +83,10 @@ int main(int argc,char **argv, char **envp) {
 */
 
   startup:
-  printf("FORKING!");
   i = fork();
-
-  printf("FORKED: %i!\n", i);
 
   if (0 == i) {
     printf("Starting Login Daemon.\n");
-    printf("ARGV[0] %s - 0x%X\n", argv_login[0], &argv_login[0]);
     execve("sys:/bin/login", argv_login, envp_login);
     printf("Error Starting System\n");
     exit(0x0);

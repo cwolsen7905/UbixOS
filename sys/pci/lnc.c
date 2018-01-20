@@ -283,7 +283,7 @@ void lnc_thread() {
   else {
     memset(tmpBuf, 0x0, sizeof(struct nicBuffer));
   }
-  kprintf("STARTING THREAD LNC");
+
   while (1) {
     while (lnc_driverOwnsRX(lnc)) {
       //uint16_t plen = 0 + (uint16_t)lnc->rxRing[lnc->rxPtr].md[2];
