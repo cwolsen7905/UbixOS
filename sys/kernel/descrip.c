@@ -176,48 +176,55 @@ int getfd(struct thread *td, struct file **fp, int fd) {
 
 int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
   switch (args->com) {
-  case TIOCGETA:
-    if (args->fd == 0 || args->fd == 1) {
-      struct termios *t = (struct termios *) args->data;
+    case TIOCGETA:
+      if (args->fd == 0 || args->fd == 1) {
+        struct termios *t = (struct termios *) args->data;
 
-      t->c_iflag = 0x2B02;
-      t->c_oflag = 0x3;
-      t->c_cflag = 0x4B00;
-      t->c_lflag = 0x5CB;
+        t->c_iflag = 0x2B02;
+        t->c_oflag = 0x3;
+        t->c_cflag = 0x4B00;
+        t->c_lflag = 0x5CB;
 
-      t->c_cc[0] = 4;
-      t->c_cc[1] = 255;
-      t->c_cc[2] = 255;
-      t->c_cc[3] = 127;
-      t->c_cc[4] = 23;
-      t->c_cc[5] = 21;
-      t->c_cc[6] = 18;
-      t->c_cc[7] = 8;
-      t->c_cc[8] = 3;
-      t->c_cc[9] = 28;
-      t->c_cc[10] = 26;
-      t->c_cc[11] = 25;
-      t->c_cc[12] = 17;
-      t->c_cc[13] = 19;
-      t->c_cc[14] = 22;
-      t->c_cc[15] = 15;
-      t->c_cc[16] = 1;
-      t->c_cc[17] = 0;
-      t->c_cc[18] = 20;
-      t->c_cc[19] = 255;
+        t->c_cc[0] = 4;
+        t->c_cc[1] = 255;
+        t->c_cc[2] = 255;
+        t->c_cc[3] = 127;
+        t->c_cc[4] = 23;
+        t->c_cc[5] = 21;
+        t->c_cc[6] = 18;
+        t->c_cc[7] = 8;
+        t->c_cc[8] = 3;
+        t->c_cc[9] = 28;
+        t->c_cc[10] = 26;
+        t->c_cc[11] = 25;
+        t->c_cc[12] = 17;
+        t->c_cc[13] = 19;
+        t->c_cc[14] = 22;
+        t->c_cc[15] = 15;
+        t->c_cc[16] = 1;
+        t->c_cc[17] = 0;
+        t->c_cc[18] = 20;
+        t->c_cc[19] = 255;
 
-      t->c_ispeed = 0x9600;
-      t->c_ospeed = 0x9600;
+        t->c_ispeed = 0x9600;
+        t->c_ospeed = 0x9600;
 
-      td->td_retval[0] = 0;
-    } else {
-      td->td_retval[0] = -1;
-    }
+        td->td_retval[0] = 0;
+      }
+      else {
+        td->td_retval[0] = -1;
+      }
     break;
-  default:
-    kprintf("ioFD:%i:%i!", args->fd, args->com);
+    case TIOCGWINSZ:
+      struct winsize *win = struct winsize *) args->data;
+      win.ws_row = 50;
+      win.ws_col = 80;
+    break;
+    default:
+      kprintf("ioFD:%i:0x%X!", args->fd, args->com);
     break;
   }
+
   td->td_retval[0] = 0x0;
   return (0x0);
 }

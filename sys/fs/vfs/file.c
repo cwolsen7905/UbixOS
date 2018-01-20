@@ -352,7 +352,8 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (NULL);
   }
 
-  if (file[0] == '.' && file[1] == '\0')
+  //if (file[0] == "." && file[1] == '\0')
+  if (strcmp(file, ".") == 0) 
     strcpy(fileName, _current->oInfo.cwd);
   else
     strcpy( fileName, file );
@@ -382,6 +383,8 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     kprintf( "Mount Point Bad\n" );
     return (0x0);
   }
+
+  kprintf("[fO: %s]", file);
 
   /* This Will Set Up The Descriptor Modes */
   tmpFd->mode = 0;

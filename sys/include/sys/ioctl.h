@@ -44,4 +44,12 @@ struct termios {
         speed_t         c_ospeed;       /* output speed */
 };
 
+struct winsize {
+        unsigned short  ws_row;         /* rows, in characters */
+        unsigned short  ws_col;         /* columns, in characters */
+        unsigned short  ws_xpixel;      /* horizontal size, pixels */
+        unsigned short  ws_ypixel;      /* vertical size, pixels */
+};
+
 #define       TIOCGETA        _IOR('t', 19, struct termios) /* get termios struct */
+#define       TIOCGWINSZ      _IOR('t', 104, struct winsize)  /* get window size */

@@ -43,6 +43,7 @@
 
 /* Exit Syscall */
 int sys_exit(struct thread *td, struct sys_exit_args *args) {
+  kprintf("exit(%i)", args->status);
   endTask(_current->id);
   return (0x0);
 }
