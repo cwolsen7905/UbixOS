@@ -145,37 +145,40 @@ int sys_invalid(struct thread *td, void *args) {
 
 int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
   int error = 0;
-  //MrOlsen 2018kprintf("wait4: %i", args->pid);
-
 
   if (args->pid == -1) {
     if (_current->children <= 0) {
-    td->td_retval[0] = ECHILD;
-    return(-1);
+      td->td_retval[0] = ECHILD;
+      return (-1);
     }
 
     int children = _current->children;
 
-    while (_current->children == children)
+    while (_current->children == children) {
+      schedSetStatus(_current->id, WAIT);
       sched_yield();
+    }
 
     td->td_retval[0] = _current->last_exit;
     td->td_retval[1] = 0x8;
-     return(0x0);
-  } else {
-
-  kTask_t *tmpTask = schedFindTask(args->pid);
-
-  if (tmpTask != 0x0) {
-    while (tmpTask != 0x0) {
-      sched_yield();
-      tmpTask = schedFindTask(args->pid);
-    }
-    td->td_retval[0] = args->pid;
-  } else {
-    td->td_retval[0] = -1;
-    error = -1;
+    return (0x0);
   }
+  else {
+
+    kTask_t *tmpTask = schedFindTask(args->pid);
+
+    if (tmpTask != 0x0) {
+      while (tmpTask != 0x0) {
+        schedSetStatus(_current->id, WAIT);
+        sched_yield();
+        tmpTask = schedFindTask(args->pid);
+      }
+      td->td_retval[0] = args->pid;
+    }
+    else {
+      td->td_retval[0] = -1;
+      error = -1;
+    }
   }
   return (error);
 }
@@ -199,17 +202,18 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
     tmpDesc->limitHigh = (0xFFFFF >> 16);
     tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
     tmpDesc->baseHigh = base_addr >> 24;
-/*
-    asm(
+    /*
+     asm(
      "push %eax\n"
      "lgdtl (loadGDT)\n"
      "mov $0xF,%eax\n"
      "mov %eax,%gs\n"
      "pop %eax\n"
-    );
-*/
+     );
+     */
     td->td_retval[0] = 0;
-  } else {
+  }
+  else {
     kprintf("sysarch(%i,NULL)", args->op);
     td->td_retval[0] = -1;
   }
@@ -248,30 +252,36 @@ int sys_sigprocmask(struct thread *td, struct sys_sigprocmask_args *args) {
       if (args->set != 0x0) {
         memcpy(&td->sigmask, args->set, sizeof(sigset_t));
         td->td_retval[0] = 0;
-      } else {
+      }
+      else {
         td->td_retval[0] = -1;
       }
-    } else if (args->how == SIG_BLOCK) {
+    }
+    else if (args->how == SIG_BLOCK) {
       if (args->set != 0x0) {
         td->sigmask.__bits[0] &= args->set->__bits[0];
         td->sigmask.__bits[1] &= args->set->__bits[1];
         td->sigmask.__bits[2] &= args->set->__bits[2];
         td->sigmask.__bits[3] &= args->set->__bits[3];
         td->td_retval[0] = 0;
-      } else {
+      }
+      else {
         td->td_retval[0] = -1;
       }
-    } else if (args->how == SIG_UNBLOCK) {
+    }
+    else if (args->how == SIG_UNBLOCK) {
       if (args->set != 0x0) {
         td->sigmask.__bits[0] |= args->set->__bits[0];
         td->sigmask.__bits[1] |= args->set->__bits[1];
         td->sigmask.__bits[2] |= args->set->__bits[2];
         td->sigmask.__bits[3] |= args->set->__bits[3];
         td->td_retval[0] = 0;
-      } else {
+      }
+      else {
         td->td_retval[0] = -1;
       }
-    } else {
+    }
+    else {
       kprintf("SPM: 0x%X", args->how);
       td->td_retval[0] = -1;
     }
@@ -309,22 +319,26 @@ int sys_setpgid(struct thread *td, struct sys_setpgid_args *args) {
     if (args->pgid == 0x0 || args->pgid == _current->id) {
       td->td_retval[0] = 0x0;
       _current->pgrp = _current->id;
-    } else {
+    }
+    else {
       td->td_retval[0] = -1;
     }
-  } else {
+  }
+  else {
     kTask_t *tmpTask = schedFindTask(pid);
 
     if (tmpTask == 0x0) {
       td->td_retval[0] = -1;
-    } else {
+    }
+    else {
 
       /* Get The PRGP We Want To Set */
       pgrp = (args->pgid == 0) ? tmpTask->pgrp : args->pgid;
 
       if (pgrp != _current->pgrp || pgrp != tmpTask->id) {
         td->td_retval[0] = -1;
-      } else {
+      }
+      else {
         td->td_retval[0] = 0x0;
         tmpTask->pgrp = pgrp;
       }

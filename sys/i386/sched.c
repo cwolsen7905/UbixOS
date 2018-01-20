@@ -90,15 +90,16 @@ void sched() {
     return;
 
   tmpTask = ((_current == 0) ? 0 : _current->next);
-  //outportByte(0xE9,_current->id + '0');
   schedStart:
 
   /* Yield the next task from the current prio queue */
   for (; tmpTask != 0x0; tmpTask = tmpTask->next) {
-    if (tmpTask->state > 0x0) {
+    if (tmpTask->state == FORK)
+      tmpTask->state = READY;
+
+    if (tmpTask->state == READY) {
+      _current->state = READY;
       _current = tmpTask;
-      if (_current->state == FORK)
-        _current->state = READY;
       break;
     }
     else if (tmpTask->state == DEAD) {
@@ -106,7 +107,9 @@ void sched() {
       if (delTask->parent != 0x0) {
         delTask->parent->children -= 1;
         delTask->parent->last_exit = delTask->id;
+        schedSetStatus(delTask->parent->id, READY);
       }
+
       tmpTask = tmpTask->next;
       sched_deleteTask(delTask->id);
       sched_addDelTask(delTask);
@@ -120,7 +123,7 @@ void sched() {
     goto schedStart;
   }
 
-  if (_current->state > 0x0) {
+  if (_current->state == READY) {
 
     if (_current->oInfo.v86Task == 0x1)
       irqDisable(0x0);
@@ -133,26 +136,12 @@ void sched() {
     ubixGDT[4].descriptor.baseHigh = (memAddr >> 24);
     ubixGDT[4].descriptor.access = '\x89';
 
-    /* Not Sure Why I Was Doing This? I Am Commenting Out For Now To See What HAppens */
-    /*
-    // memAddr = STACK_ADDR; //(uint32_t) & (_current->tss);
-    ubixGDT[10].descriptor.baseLow = (STACK_ADDR & 0xFFFF);
-    ubixGDT[10].descriptor.baseMed = ((STACK_ADDR >> 16) & 0xFF);
-    ubixGDT[10].descriptor.baseHigh = (STACK_ADDR >> 24);
-     //ubixGDT[10].descriptor.access = '\x89';
-     */
+    _current->state = RUNNING;
+
     spinUnlock(&schedulerSpinLock);
 
-    if (_current->id == 600) {
-      kprintf("EIP: 0x%X", _current->tss.eip);
-      kprintf("esp0: 0x%X", _current->tss.esp0);
-      kprintf("user_esp: 0x%X", _current->tss.esp);
-    }
-
     asm("sti");
-    asm(
-      "ljmp $0x20,$0\n"
-    );
+    asm("ljmp $0x20,$0");
   }
   else {
     spinUnlock(&schedulerSpinLock);
