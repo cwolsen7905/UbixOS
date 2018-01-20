@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
   mpi_message_t myMsg;
 
   printf("Initializing TTYD\n");
+  return(0x0);
   printf("mpi_post: [%i]\n", mpi_postMessage("system", 0x1, &myMsg));
 
   return (0x0);
