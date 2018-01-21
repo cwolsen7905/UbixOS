@@ -25,30 +25,29 @@
 /* this should be _IORW, but stdio got there first */
 #define _IOWR(g,n,t)    _IOC(IOC_INOUT, (g), (n), sizeof(t))
 
-
 #define IOCPARM_IVAL(x) ((int)(intptr_t)(void *)*(caddr_t *)(void *)(x))
 
 #define NCCS 20
 
-typedef unsigned int        tcflag_t;
-typedef unsigned char       cc_t;
-typedef unsigned int        speed_t;
+typedef unsigned int tcflag_t;
+typedef unsigned char cc_t;
+typedef unsigned int speed_t;
 
 struct termios {
-        tcflag_t        c_iflag;        /* input flags */
-        tcflag_t        c_oflag;        /* output flags */
-        tcflag_t        c_cflag;        /* control flags */
-        tcflag_t        c_lflag;        /* local flags */
-        cc_t            c_cc[NCCS];     /* control chars */
-        speed_t         c_ispeed;       /* input speed */
-        speed_t         c_ospeed;       /* output speed */
+    tcflag_t c_iflag; /* input flags */
+    tcflag_t c_oflag; /* output flags */
+    tcflag_t c_cflag; /* control flags */
+    tcflag_t c_lflag; /* local flags */
+    cc_t c_cc[NCCS]; /* control chars */
+    speed_t c_ispeed; /* input speed */
+    speed_t c_ospeed; /* output speed */
 };
 
 struct winsize {
-        unsigned short  ws_row;         /* rows, in characters */
-        unsigned short  ws_col;         /* columns, in characters */
-        unsigned short  ws_xpixel;      /* horizontal size, pixels */
-        unsigned short  ws_ypixel;      /* vertical size, pixels */
+    unsigned short ws_row; /* rows, in characters */
+    unsigned short ws_col; /* columns, in characters */
+    unsigned short ws_xpixel; /* horizontal size, pixels */
+    unsigned short ws_ypixel; /* vertical size, pixels */
 };
 
 #define       TIOCGETA        _IOR('t', 19, struct termios) /* get termios struct */

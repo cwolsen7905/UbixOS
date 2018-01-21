@@ -52,15 +52,15 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
 
   fp = (struct file *) td->o_files[uap->fd];
   switch (uap->cmd) {
-  case 3:
-    td->td_retval[0] = fp->f_flag;
+    case 3:
+      td->td_retval[0] = fp->f_flag;
     break;
-  case 4:
-    fp->f_flag &= ~FCNTLFLAGS;
-    fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
+    case 4:
+      fp->f_flag &= ~FCNTLFLAGS;
+      fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
     break;
-  default:
-    kprintf("ERROR DEFAULT");
+    default:
+      kprintf("ERROR DEFAULT");
   }
 
   return (0x0);
@@ -100,7 +100,8 @@ int fdestroy(struct thread *td, struct file *fp, int fd) {
 
   if (td->o_files[fd] != fp) {
     error = -1;
-  } else {
+  }
+  else {
     kfree(td->o_files[fd]);
     td->o_files[fd] = 0x0;
   }
@@ -216,9 +217,9 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
       }
     break;
     case TIOCGWINSZ:
-      struct winsize *win = struct winsize *) args->data;
-      win.ws_row = 50;
-      win.ws_col = 80;
+      struct winsize *win = (struct winsize *) args->data;
+      win->ws_row = 50;
+      win->ws_col = 80;
     break;
     default:
       kprintf("ioFD:%i:0x%X!", args->fd, args->com);
@@ -232,57 +233,57 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
 int sys_select(struct thread *td, struct sys_select_args *args) {
   int error = 0x0;
   /*
-  int i = 0x0;
+   int i = 0x0;
 
-  fd_set sock_rfds;
-  fd_set sock_wfds;
-  fd_set sock_efds;
+   fd_set sock_rfds;
+   fd_set sock_wfds;
+   fd_set sock_efds;
 
-  FD_ZERO(&sock_rfds);
-  FD_ZERO(&sock_wfds);
-  FD_ZERO(&sock_efds);
+   FD_ZERO(&sock_rfds);
+   FD_ZERO(&sock_wfds);
+   FD_ZERO(&sock_efds);
 
-  if (args->in != 0x0) {
-    for (i = 0; i < args->nd; i++) {
-      FD_SET(((struct file * ) td->o_files[args->in[0]]).socket, &sock_rfds);
-    }
-  }
+   if (args->in != 0x0) {
+   for (i = 0; i < args->nd; i++) {
+   FD_SET(((struct file * ) td->o_files[args->in[0]]).socket, &sock_rfds);
+   }
+   }
 
-  if (args->ou != 0x0) {
-    for (i = 0; i < args->nd; i++) {
-      FD_SET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds);
-    }
-  }
+   if (args->ou != 0x0) {
+   for (i = 0; i < args->nd; i++) {
+   FD_SET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds);
+   }
+   }
 
-  if (args->ex != 0x0) {
-    for (i = 0; i < args->nd; i++) {
-    FD_SET(((struct file * ) td->o_files[args->ex[0]]).socket, &sock_efds);
-    }
-  }
+   if (args->ex != 0x0) {
+   for (i = 0; i < args->nd; i++) {
+   FD_SET(((struct file * ) td->o_files[args->ex[0]]).socket, &sock_efds);
+   }
+   }
 
-  if ((td->td_retval[0] = lwip_select(args->nd, &sock_rfds, &sock_wfds, &sock_efds, args->tv)) == -1)
-    error = -1;
+   if ((td->td_retval[0] = lwip_select(args->nd, &sock_rfds, &sock_wfds, &sock_efds, args->tv)) == -1)
+   error = -1;
 
-  if (args->in != 0x0) {
-    for (i = 0; i < MAX_FILES; i++) {
-      if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_rfds))
-        FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->in);
-    }
-  }
+   if (args->in != 0x0) {
+   for (i = 0; i < MAX_FILES; i++) {
+   if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_rfds))
+   FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->in);
+   }
+   }
 
-  if (args->ou != 0x0) {
-    for (i = 0; i < MAX_FILES; i++) {
-      if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds))
-        FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ou);
-    }
-  }
+   if (args->ou != 0x0) {
+   for (i = 0; i < MAX_FILES; i++) {
+   if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_wfds))
+   FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ou);
+   }
+   }
 
-  if (args->ex != 0x0) {
-    for (i = 0; i < MAX_FILES; i++) {
-      if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_efds))
-        FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ex);
-    }
-  }
+   if (args->ex != 0x0) {
+   for (i = 0; i < MAX_FILES; i++) {
+   if (!FD_ISSET(((struct file * ) td->o_files[args->ou[0]]).socket, &sock_efds))
+   FD_CLR(((struct file * ) td->o_files[args->ou[0]]).socket, args->ex);
+   }
+   }
 
    */
 
