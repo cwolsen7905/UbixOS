@@ -203,10 +203,17 @@ int sysGetTime(uInt32 *ptr) {
 
 int sys_getcwd(struct thread *td, struct sys_getcwd_args *args) {
   char *buf = (char *) args->buf;
-  //kprintf("GETCWD: [%s][0x%X]\n", _current->oInfo.cwd, args->buf);
+  char *cwd = _current->oInfo.cwd; 
+
+  while (cwd[0] != '/')
+    cwd++;
+
   if (args->buf) {
-    sprintf(buf, "%s", _current->oInfo.cwd);
-    buf[strlen(_current->oInfo.cwd)] = '\0';
+    sprintf(buf, "%s", cwd);
+    buf[strlen(cwd)] = '\0';
+ 
+    //sprintf(buf, "%s", _current->oInfo.cwd);
+    //buf[strlen(_current->oInfo.cwd)] = '\0';
     //MrOlsen (2018-01-01) - Why is sprintf not null terminating
   }
  // kprintf("GETCWD: [%s][0x%X]\n", _current->oInfo.cwd, args->buf);

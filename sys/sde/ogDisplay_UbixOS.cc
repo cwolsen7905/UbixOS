@@ -32,10 +32,11 @@
 
 extern "C" {
 #include <lib/bioscall.h>
+#include <vmm/vmm.h>
 #include <vmm/paging.h>
 #include <lib/kprintf.h>
 #include <sys/io.h>
-#include <lib/string.h>
+#include <string.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 }
@@ -47,9 +48,9 @@ extern "C" {
  */
 
 void initVESAMode(uInt16 mode) {
-  //kprintf("Pre-initVESAMode\n");
+  kprintf("Pre-initVESAMode\n");
   biosCall(0x10, 0x4F02, mode, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0);
-  //kprintf("Post-initVESAMode\n");
+  kprintf("Post-initVESAMode\n");
   return;
 }
 
@@ -172,7 +173,7 @@ void ogDisplay_UbixOS::SetMode(uInt16 mode) {
 
   printOff = 0;
   for (i = 0x0; i < ((size) / 4096); i++) {
-    if ((vmm_remapPage(modeInfo->physBasePtr + (i * 0x1000), modeInfo->physBasePtr + (i * 0x1000), KERNEL_PAGE_DEFAULT, -2)) == 0x0)
+    if ((vmm_remapPage(modeInfo->physBasePtr + (i * 0x1000), modeInfo->physBasePtr + (i * 0x1000), KERNEL_PAGE_DEFAULT, -2, 0)) == 0x0)
       kpanic("Error: vmm_remapPage failed\n");
   } // for i
 

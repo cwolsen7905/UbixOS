@@ -168,7 +168,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
   newProcess->tss.eip = (unsigned int) tproc;
   newProcess->tss.eflags = 0x206;
   newProcess->tss.esp = stack;
-  newProcess->tss.ebp = stack;
+  newProcess->tss.ebp = 0x0;//stack;
   newProcess->tss.esi = 0x0;
   newProcess->tss.edi = 0x0;
 
@@ -199,6 +199,8 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
     kpanic("Problem With File Descriptors");
 
   newProcess->files[0] = 0x0;
+
+  kprintf("EIP: 0x%X", tproc);
 
   /* Set up default stack for thread here filled with arg list 3 times */
   asm volatile(
@@ -883,8 +885,6 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   _current->tss.gs = 0xF; //Select 0x8 + Ring 3 + LDT
   _current->pgrp = _current->id;
-
-  kprintf("DONE YET[0x%X]?", data_addr);
 
   return (0x0);
 }

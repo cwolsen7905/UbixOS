@@ -114,8 +114,8 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
       kprintf("pageDir: [0x%X]\n", pageDir[pageDirectoryIndex]);
       kprintf("pageTable: [0x%X:0x%X:0x%X:0x%X]\n", pageTable[pageTableIndex], pageTableIndex, pageDirectoryIndex, eip);
       kprintf("Segfault At Address: [0x%X][0x%X][%i][0x%X] Non Mapped.\n", memAddr, esp, _current->id, eip);
-      die_if_kernel("SEGFAULT", frame, 0xC);
       kpanic("SIT HERE FOR NOW");
+      die_if_kernel("SEGFAULT", frame, 0xC);
       spinUnlock(&pageFaultSpinLock);
       endTask(_current->id);
     }

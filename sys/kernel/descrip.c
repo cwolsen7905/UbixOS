@@ -217,6 +217,7 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
       }
     break;
     case TIOCGWINSZ:
+      asm("nop");
       struct winsize *win = (struct winsize *) args->data;
       win->ws_row = 50;
       win->ws_col = 80;

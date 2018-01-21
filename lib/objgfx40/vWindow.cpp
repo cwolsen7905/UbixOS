@@ -1,6 +1,7 @@
 extern "C" {
   #include <stdio.h>
-  }
+}
+
 #include <objgfx40/vWindow.h>
 
 vWindow::vWindow(void) {

@@ -28,10 +28,12 @@
 
 extern "C" {
 #include <ubixos/sched.h>
-#include <vmm/vmm.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/vitals.h>
+#include <vmm/vmm.h>
+#include <vmm/paging.h>
+#include <lib/bioscall.h>
 }
 
 #include <sde/sde.h>
@@ -49,10 +51,12 @@ extern "C" void sdeThread() {
   font->SetFGColor(255, 255, 255, 255);
   font->SetBGColor(0, 0, 0, 255);
 
+
   printOff = 0x1;
 
   screen->ogCreate(800, 600, OG_PIXFMT_16BPP);
   screen->ogClear(screen->ogPack(122, 140, 163));
+
 
   systemVitals->screen = screen;
   systemVitals->font = font;
@@ -70,7 +74,7 @@ extern "C" void sdeThread() {
           if (buf->buffer == 0x0) {
             kprintf("Error: buf->buffer\n");
             while (1)
-              ;
+              asm("nop");
           }
           buf->lineOfs = (uInt32 *) vmm_mapFromTask(tmp->pid, buf->lineOfs, buf->lSize);
           if (buf->lineOfs == 0x0) {
@@ -102,9 +106,9 @@ extern "C" void sdeThread() {
           else {
             windows = 0x0;
           }
-          vmm_unmapPages(buf->buffer, buf->bSize);
-          vmm_unmapPages(buf->lineOfs, buf->lSize);
-          //  kfree(tmp->buf);
+          vmm_unmapPages(buf->buffer, buf->bSize, VMM_KEEP);
+          vmm_unmapPages(buf->lineOfs, buf->lSize, VMM_KEEP);
+          //kfree(tmp->buf);
           kfree(tmp);
           tmp = 0x0;
         break;
@@ -112,11 +116,5 @@ extern "C" void sdeThread() {
         break;
       }
     }
-    //sched_yield();
   }
 }
-
-/***
- END
- ***/
-

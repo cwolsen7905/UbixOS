@@ -29,6 +29,10 @@
 #ifndef _UBIXOS_SCHED_H
 #define _UBIXOS_SCHED_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <sys/types.h>
 #include <vfs/file.h>
 #include <ubixos/tty.h>
@@ -99,5 +103,10 @@ kTask_t *schedFindTask(uInt32 id);
 
 extern kTask_t *_current;
 extern kTask_t *_usedMath;
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif

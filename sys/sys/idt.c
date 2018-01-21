@@ -256,23 +256,30 @@ void __int6(struct trapframe *frame) {
   sched_yield();
 }
 
-void _int8() {
-  struct tssStruct *sfTSS = (struct tssStruct *) 0x6200;
-  kpanic("int8: Double Fault! [%i]\n", _current->id);
-  sfTSS->cr3 = (unsigned int) kernelPageDirectory;
-  sfTSS->eip = (unsigned int) &_int8;
-  sfTSS->eflags = 0x206;
-  sfTSS->esp = 0x1C000;
-  sfTSS->ebp = 0x1C000;
-  sfTSS->es = 0x10;
-  sfTSS->cs = 0x08;
-  sfTSS->ss = 0x10;
-  sfTSS->ds = 0x10;
-  sfTSS->fs = 0x10;
-  sfTSS->gs = 0x10;
-  sfTSS->io_map = 0x8000;
-  while (1)
-    asm("nop");
+
+asm(
+  ".globl _int8       \n"
+  "_int8:             \n"
+//  "  pushl $0x8            \n"
+  "  pushal               \n" /* Save all registers           */
+  "  push %ds             \n"
+  "  push %es             \n"
+  "  push %fs             \n"
+  "  push %gs             \n"
+  "  push %esp            \n"
+  "  call __int8          \n"
+  "  pop %gs              \n"
+  "  pop %fs              \n"
+  "  pop %es              \n"
+  "  pop %ds              \n"
+  "  popal                \n"
+  "  iret                 \n" /* Exit interrupt                           */
+);
+
+void __int8(struct trapframe *frame) {
+  die_if_kernel("INT8 Double Fault", frame, 8);
+  endTask(_current->id);
+  sched_yield();
 }
 
 void _int9() {

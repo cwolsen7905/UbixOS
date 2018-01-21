@@ -15,9 +15,9 @@ extern "C" {
 extern "C" {
   #include <math.h>
   #include <lib/kmalloc.h>
-  #include <lib/string.h>
+  #include <string.h>
   #include <vfs/vfs.h>
-  #include <vfs/file.h>
+  //#include <vfs/file.h>
   }
 
 #define abs(a)     (((a) < 0) ? -(a) : (a))
@@ -2208,9 +2208,9 @@ ogSurface::ogCopyLineTo(uInt32 dx, uInt32 dy, const void * src, uInt32 size) {
    * use this method unless YOU KNOW WHAT YOU'RE DOING!!!!!!!!!
    */
    
-  memcpy( (uInt8*)buffer+lineOfs[dy]+dx*bytesPerPix,         // dest
-          src,                                               // src
-          size);                                             // size
+  memcpy( (uint8_t *)buffer + lineOfs[dy] + (dx*bytesPerPix), // dest
+          src,                                                // src
+          size);                                              // size
   
   return;
 } // ogSurface::ogCopyLineTo
@@ -2784,8 +2784,7 @@ ogSurface::ogGetLastError(void) {
   return tmp;
 } // ogSurface::ogGetLastError
 
-void
-ogSurface::ogGetPalette(ogRGBA8 _pal[256]) {
+void ogSurface::ogGetPalette(ogRGBA8 _pal[256]) {
   memcpy(_pal, pal, sizeof(_pal));
   return; 
 } // ogSurface::ogGetPalette

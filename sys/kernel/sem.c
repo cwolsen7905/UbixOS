@@ -57,7 +57,8 @@ err_t sem_init(sys_sem_t **sem, uint8_t count) {
   sys_sem_t *newSem = 0x0;
 
   if (*sem != 0) {
-    kpanic("UH OH!");
+    //kpanic("UH OH!");
+    kprintf("UH OH!");
   }
 
   newSem = kmalloc(sizeof(struct sys_sem));

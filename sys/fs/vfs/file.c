@@ -132,6 +132,7 @@ int sys_fseek( struct thread *td, struct sys_fseek_args *args ) {
 }
 
 int sys_chdir( struct thread *td, struct sys_chdir_args *args ) {
+  kprintf("chdir: [%s][%s]", _current->oInfo.cwd, args->path);
   if ( strstr( args->path, ":" ) == 0x0 ) {
     sprintf( _current->oInfo.cwd, "%s%s", _current->oInfo.cwd, args->path );
   }
@@ -352,11 +353,14 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (NULL);
   }
 
-  //if (file[0] == "." && file[1] == '\0')
-  if (strcmp(file, ".") == 0) 
+  path = file;
+
+  if (path[0] == "." && path[1] == '\0')
     strcpy(fileName, _current->oInfo.cwd);
   else
     strcpy( fileName, file );
+
+  path = 0x0;
 
   if ( strstr( fileName, ":" ) ) {
     mountPoint = (char *) strtok( (char *) &fileName, ":" );

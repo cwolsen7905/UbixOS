@@ -29,7 +29,9 @@
 #ifndef OGDISPLAY_UBIXOS_H
 #define OGDISPLAY_UBIXOS_H
 
+extern "C" {
 #include <sys/types.h>
+}
 
 #include <objgfx40/objgfx40.h>
 

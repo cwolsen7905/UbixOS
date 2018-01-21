@@ -35,19 +35,21 @@
 #include <lib/kmalloc.h>
 #include <assert.h>
 #include <string.h>
+#include <ubixos/errno.h>
 
 static struct sysctl_entry *ctls = 0x0;
 
 static struct sysctl_entry *sysctl_find(int *, int);
+static struct sysctl_entry *sysctl_findMib(char *name, int namelen);
 
 /* This is a cheat for now */
 static void def_ctls() {
   int name[CTL_MAXNAME], name_len;
-  uInt32 page_val = 0x1000;
+  uint32_t page_val = 0x1000;
   name[0] = 6;
   name[1] = 7;
   name_len = 2;
-  sysctl_add(name, name_len, "page_size", &page_val, sizeof(uInt32));
+  sysctl_add(name, name_len, "pagesizes", &page_val, sizeof(uint32_t));
 
   /* Clock Rate */
   name[0] = 1;
@@ -78,6 +80,11 @@ static void def_ctls() {
   name[1] = 3;
   page_val = 0x1;
   sysctl_add(name, name_len, "hw.ncpu", &page_val, sizeof(uint32_t));
+
+  name[0] = 9;
+  name[1] = 20;
+  page_val = 0x4000;
+  sysctl_add(name, name_len, "p1003_1b.pagesize", &page_val, sizeof(uint32_t));
 }
 
 int sysctl_init() {
@@ -212,10 +219,18 @@ int sys_sysctl(struct thread *td, struct sys_sysctl_args *args) {
     endTask(_current->id);
   }
 
+  if (args->namelen == 2 && args->name[0] == 0 && args->name[1] == 3) {
+    kprintf("name_to_mib: %s", args->newp);
+   // tmpCtl = sysctl_findMib(args->newp, args->namelen);
+td->td_retval[0] = ENOENT;
+return(-1);
+  }
+  else {
   tmpCtl = sysctl_find(args->name, args->namelen);
+  }
 
   if (tmpCtl == 0x0) {
-    kprintf("Invalid CTL\n");
+    kprintf("Invalid CTL: ");
     for (i = 0x0; i < args->namelen; i++)
       kprintf("(%i)", (int) args->name[i]);
     kprintf("\n");
@@ -253,6 +268,35 @@ static struct sysctl_entry *sysctl_find(int *name, int namelen) {
   }
   return (0x0);
 }
+
+
+static struct sysctl_entry *sysctl_findMib(char *name, int namelen) {
+  int i = 0x0;
+  struct sysctl_entry *tmpCtl = 0x0;
+  struct sysctl_entry *lCtl = ctls;
+
+  char *mib = (char *) strtok( (char *) name, "." );
+
+
+  kprintf("FMIB: %s", mib);
+  /* Loop Name Len */
+  for (i = 0x0; i < namelen; i++) {
+  for (tmpCtl = lCtl; tmpCtl != 0x0; tmpCtl = tmpCtl->next) {
+    if (strcmp(mib, tmpCtl->name) == 0x0) {
+       kprintf("ctlName: [%s], ctlId: [%i]",tmpCtl->name,tmpCtl->id);
+        if ((i + 1) == namelen) {
+          return (tmpCtl);
+        }
+        mib = strtok( NULL, "\n" );
+        kprintf("SMIB: %s", mib);
+        lCtl = tmpCtl->children;
+        break;
+    }
+  }
+  }
+  return (0x0);
+}
+
 
 int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) {
   struct sysctl_entry *tmpCtl = 0x0;

@@ -281,16 +281,14 @@ int vmm_remapPage(uint32_t source, uint32_t dest, uint16_t perms, pidType pid, i
     "pop  %eax     \n"
   );
 
-if (dest == 0x1294b000)
-  kprintf("WOOT: 0x%X, 0x%X", PD_INDEX(dest), PT_INDEX(dest));
-
   /* Return */
   if (haveLock == 0x0) {
-  if (dest >= VMM_USER_START && dest <= VMM_USER_END)
-    spinUnlock(&rmpSpinLock);
-  else
-    spinUnlock(&pdSpinLock);
+    if (dest >= VMM_USER_START && dest <= VMM_USER_END)
+      spinUnlock(&rmpSpinLock);
+    else
+      spinUnlock(&pdSpinLock);
   }
+
   return (source);
 }
 

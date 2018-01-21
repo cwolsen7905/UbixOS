@@ -5,7 +5,7 @@ ENTRY(_start)
 SEARCH_DIR("libgcc");
 SECTIONS
 {
-        . = 0x30000 + SIZEOF_HEADERS;
+        . = 0x20000 + SIZEOF_HEADERS;
 
         .interp : { *(.interp) }
         .hash : { *(.hash) }
@@ -67,7 +67,10 @@ SECTIONS
         
         /* unintialized data (in same segment as writable data) */
         __bss_start = .;
-        .bss : { *(.bss) }
+        .bss : { 
+        *(COMMON)
+        *(.bss) 
+        }
 
         . = ALIGN(0x1000);
         _end = . ;

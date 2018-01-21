@@ -77,7 +77,7 @@ int sysFseek();
 int sysMkDir();
 int sysRmDir();
 
-int sysSDE();
+//int sysSDE();
 int sysGetDrives();
 int sysGetCwd();
 int sysChDir();

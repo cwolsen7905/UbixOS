@@ -4,7 +4,7 @@
 extern "C" {
 #ifdef __UBIXOS_KERNEL__
   #include <vfs/file.h>
-  #include <lib/string.h>
+  #include <string.h>
 #else
   #include <string.h>
   #include <stdlib.h>
@@ -12,7 +12,8 @@ extern "C" {
 #endif
   }
 
-using namespace std;
+//using namespace std;
+
 typedef
   struct {
     char  ID[3];

@@ -9,7 +9,9 @@ include ../Makefile.incl
 OBJS = null.o
 
 #Kernel Parts
-KPARTS = ../${_ARCH}/*.o ../fs/ubixfs/*.o ../init/*.o ../sys/*.o ../vmm/*.o ../lib/*.o ../kernel/*.o ../isa/*.o ../fs/vfs/*.o ../pci/*.o ../fs/devfs/*.o ../mpi/*.o ../fs/ufs/*.o ../fs/common/*.o ../net/net/*.o ../net/netif/*.o ../net/api/*.o ../net/core/*.o ../net/core/ipv4/*.o ../net/core/ipv6/*.o
+KPARTS = ../${_ARCH}/*.o ../init/*.o ../sys/*.o ../vmm/*.o ../lib/*.o ../kernel/*.o ../isa/*.o ../fs/vfs/*.o ../pci/*.o ../fs/devfs/*.o ../mpi/*.o ../fs/ufs/*.o ../fs/common/*.o ../net/net/*.o ../net/netif/*.o ../net/api/*.o ../net/core/*.o ../net/core/ipv4/*.o ../sde/*.o
+# ../net/core/ipv6/*.o 
+# ../fs/ubixfs/*.o
 # ../sde/*.o ../graphics/*.o ../ld/*.o  -Ttext 0x30000 -Tdata 0x34000 ../ubixfs/*.o
 
 # Link the kernel statically with fixed text+data address @1M

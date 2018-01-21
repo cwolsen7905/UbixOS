@@ -39,6 +39,8 @@
 #include <net/netif.h>
 #include <ubixos/spinlock.h>
 
+struct netif lnc_netif;
+
 struct lncInfo *lnc = 0x0;
 
 //static struct spinLock lnc_intSpinLock = SPIN_LOCK_INITIALIZER;

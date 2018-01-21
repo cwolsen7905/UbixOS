@@ -27,27 +27,30 @@
  */
 
 extern "C" {
+
 #include <lib/kmalloc.h>
 #include <sys/video.h>
-  void __pure_virtual() {
-    while (1)
-      ;
-  }
 
-  void __cxa_pure_virtual() {
-    while (1)
-      ;
-  }
+void __pure_virtual() {
+  while (1)
+   asm("nop");
+}
 
-  /* Don't plan on exiting the kernel...so do nothing. */
-  int __cxa_atexit(void (*func)(void *), void * arg, void * d) {
-    return 0;
-  }
+void __cxa_pure_virtual() {
+  while (1)
+    asm("nop");
+}
 
-  void __dso_handle() {
-    while (1)
-      ;
-  }
+/* Don't plan on exiting the kernel...so do nothing. */
+int __cxa_atexit(void (*func)(void *), void * arg, void * d) {
+  return 0;
+}
+
+void __dso_handle() {
+  while (1)
+    asm("nop");
+}
+
 }
 
 #include <lib/libcpp.h>
@@ -71,35 +74,3 @@ void operator delete(void * ptr) {
   kfree(ptr);
   return;
 }
-
-/***
- $Log: libcpp.cc,v $
- Revision 1.1.1.1  2006/06/01 12:46:16  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:24:12  reddawg
- no message
-
- Revision 1.5  2004/09/08 22:04:10  apwillia
- Added calling of static constructors, commented out tty_printf in kprintf (due to deadlock)
-
- Revision 1.4  2004/07/20 22:58:33  reddawg
- retiring to the laptop for the night must sync in work to resume from there
-
- Revision 1.3  2004/07/02 12:28:24  reddawg
- Changes for new libc, someone please test that the kernel still works
-
- Revision 1.2  2004/05/19 04:07:43  reddawg
- kmalloc(size,pid) no more it is no kmalloc(size); the way it should of been
-
- Revision 1.1.1.1  2004/04/15 12:07:10  reddawg
- UbixOS v1.0
-
- Revision 1.2  2004/04/13 16:36:33  reddawg
- Changed our copyright, it is all now under a BSD-Style license
-
- END
- ***/

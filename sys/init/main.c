@@ -36,6 +36,7 @@
 #include <vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
+#include <sde/sde.h>
 
 #define B_ADAPTORSHIFT          24
 #define B_ADAPTORMASK           0x0f
@@ -145,12 +146,24 @@ int kmain(uInt32 rootdev) {
 
   if (sysTask == 0x0)
     kprintf("OS: Unable to allocate memory\n");
+  else
+    kprintf("OS Stack: 0x%X\n", sysTask);
 
   execThread(systemTask, (uint32_t) sysTask + 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
-  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
-  kprintf("File Start!\n");
+  //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+  //kprintf("File Start!\n");
+
+  sysTask = kmalloc(0x2000);
+
+  if (sysTask == 0x0)
+    kprintf("OS: Unable to allocate memory\n");
+  else
+    kprintf("SDE Stack: 0x%X\n", sysTask);
+
+  execThread(sdeThread, sysTask + 0x2000,0x0);
+  kprintf("SDE Thread Start!\n");
 
   irqEnable(0x0);
 

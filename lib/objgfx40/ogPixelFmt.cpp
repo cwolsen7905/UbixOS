@@ -1,10 +1,13 @@
 #include <objgfx40/ogPixelFmt.h>
 #include <objgfx40/objgfx40.h>
+
+extern "C" {
 #ifdef __UBIXOS_KERNEL__
-#include <ubixos/types.h>
+#include <sys/types.h>
 #else
 #include <sys/types.h>
 #endif
+}
 
 ogPixelFmt::ogPixelFmt(void) : BPP(0),
                                redFieldPosition(0), greenFieldPosition(0),

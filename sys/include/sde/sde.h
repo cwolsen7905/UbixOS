@@ -25,8 +25,12 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef _SDE_H_
-#define _SDE_H_
+#ifndef _SDE_SDE_H
+#define _SDE_SDE_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #include <sys/types.h>
 
@@ -35,14 +39,8 @@
 #define drawWindow       3
 #define killWindow       4
 
-#ifdef __cplusplus
-extern "C"
-#endif
 void sdeThread();
 
-#ifdef __cplusplus
-extern "C"
-#endif
 void sysSDE(uInt32 cmd, void *ptr);
 
 struct sdeWindows {
@@ -50,10 +48,13 @@ struct sdeWindows {
     struct sdeWindows *prev;
     void *buf;
     pidType pid;
-    uInt8 status;
+    uint8_t status;
 };
 
 extern struct sdeWindows *windows;
 
+#ifdef __cplusplus
+}
 #endif
 
+#endif

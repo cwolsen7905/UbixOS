@@ -103,7 +103,6 @@ void sched() {
       break;
     }
     else if (tmpTask->state == DEAD) {
-      kprintf("DEAD: %i", tmpTask->id);
       delTask = tmpTask;
       if (delTask->parent != 0x0) {
         delTask->parent->children -= 1;

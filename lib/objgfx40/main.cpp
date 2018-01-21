@@ -17,7 +17,7 @@ $Id: main.cpp 89 2016-01-12 00:20:40Z reddawg $
 #include <stdio.h>
 #include <time.h>
 
-using namespace std;
+//using namespace std;
 
 void
 testPixCon(void) {

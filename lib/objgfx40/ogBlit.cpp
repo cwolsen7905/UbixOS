@@ -6,7 +6,7 @@ extern "C" {
 #include <objgfx40/objgfx40.h>
 #include <objgfx40/ogBlit.h>
 
-using namespace std;
+//using namespace std;
 
 static bool
 fileExists(const char *file)

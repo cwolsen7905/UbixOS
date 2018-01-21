@@ -2,7 +2,8 @@ extern "C" {
   #include <string.h>
   #include <stdio.h>
   #include <stdlib.h>
-  }
+}
+
 #include <objgfx40/objgfx40.h>
 #include <objgfx40/ogSprite.h>
 

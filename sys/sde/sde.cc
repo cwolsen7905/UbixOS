@@ -29,13 +29,14 @@
 extern "C" {
 #include <sys/types.h>
 #include <sys/video.h>
-#include <vmm/paging.h>
-#include <lib/string.h>
+//#include <vmm/paging.h>
+#include <ubixos/sched.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include <ubixos/sched.h>
-#include <sde/sde.h>
+#include <string.h>
 }
+
+#include <sde/sde.h>
 #include <objgfx40/objgfx40.h>
 
 struct sdeWindows *windows = 0x0;
@@ -53,7 +54,6 @@ extern "C" void sysSDE(uInt32 cmd, void *ptr) {
   if (tmp != 0x0) {
     while (tmp->status != windowReady)
       asm("hlt");
-    //sched_yield();
   }
   else if (tmp == 0x0 && cmd != registerWindow) {
     kprintf("Invalid Window\n");
@@ -64,7 +64,7 @@ extern "C" void sysSDE(uInt32 cmd, void *ptr) {
     case drawWindow:
       tmp->status = drawWindow;
       while (tmp->status != windowReady) {
-        //sched();
+        asm("nop");
         //asm("hlt");
       }
     break;
