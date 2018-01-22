@@ -144,8 +144,8 @@ int kmain(uInt32 rootdev) {
   execThread(systemTask, 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
-  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
-  kprintf("File Start!\n");
+  //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+  //kprintf("File Start!\n");
 
   kprintf("SDE Thread Start! [0x%X]\n", &sdeThread);
   execThread(&sdeThread, 0x2000,0x0);

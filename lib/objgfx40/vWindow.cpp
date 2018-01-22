@@ -25,7 +25,7 @@ vWindow::vSDECommand(uInt32 command) {
   asm(
       "int %0"
      :
-     : "i" (0x80),"a" (40),"b" (command),"c" (realWindow)
+     : "i" (0x81),"a" (40),"b" (command),"c" (realWindow)
      );
   return;
 } // vWindow::vSDECommand

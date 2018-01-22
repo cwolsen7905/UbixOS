@@ -154,10 +154,10 @@ class ogEdgeTable {
       return;
     }
     void AdvanceAET(void);
-    void BuildGET(uInt32 numPoints, ogPoint2d * polyPoints);
-    void BuildGET_G(uInt32 numPoints, ogPoint2d * polyPoints, ogRGBA8 * colours);
+    void BuildGET(uint32_t numPoints, ogPoint2d * polyPoints);
+    void BuildGET_G(uint32_t numPoints, ogPoint2d * polyPoints, ogRGBA8 * colours);
     void MoveXSortedToAET(int32 yToMove);
-    void ScanOutAET(ogSurface & destObject, int32 yToScan, uInt32 colour);
+    void ScanOutAET(ogSurface & destObject, int32 yToScan, uint32_t colour);
     void ScanOutAET_G(ogSurface & destObject, int32 yToScan);
     void XSortAET(void);
     ~ogEdgeTable(void);
@@ -193,7 +193,7 @@ void ogEdgeTable::AdvanceAET(void) {
   return;
 } // ogEdgeTable::AdvanceAET
 
-void ogEdgeTable::BuildGET(uInt32 numPoints, ogPoint2d * polyPoints) {
+void ogEdgeTable::BuildGET(uint32_t numPoints, ogPoint2d * polyPoints) {
   int32 i, x1, y1, x2, y2, deltaX, deltaY, width, tmp;
   ogEdgeState * newEdgePtr;
   ogEdgeState * followingEdge;
@@ -269,7 +269,7 @@ void ogEdgeTable::BuildGET(uInt32 numPoints, ogPoint2d * polyPoints) {
   return;
 } // ogEdgeTable::BuildGET
 
-void ogEdgeTable::BuildGET_G(uInt32 numPoints, ogPoint2d * polyPoints, ogRGBA8 * colours) {
+void ogEdgeTable::BuildGET_G(uint32_t numPoints, ogPoint2d * polyPoints, ogRGBA8 * colours) {
 
   int32 i, x1, y1, x2, y2, deltaX, deltaY, width, tmp;
   ogEdgeState * newEdgePtr;
@@ -400,7 +400,7 @@ void ogEdgeTable::MoveXSortedToAET(int32 yToMove) {
   return;
 } // ogEdgeTable::MoveXSortedToAET
 
-void ogEdgeTable::ScanOutAET(ogSurface & destObject, int32 yToScan, uInt32 colour) {
+void ogEdgeTable::ScanOutAET(ogSurface & destObject, int32 yToScan, uint32_t colour) {
   ogEdgeState * currentEdge;
   int32 leftX;
 
@@ -605,7 +605,7 @@ ogSurface::ogSurface(void) {
   return;
 } // ogSurface::ogSurface
 
-void ogSurface::AARawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 colour) {
+void ogSurface::AARawLine(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t colour) {
   /*
    * aaRawLine
    *
@@ -614,11 +614,11 @@ void ogSurface::AARawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 col
    * draws an unclipped anti-aliased line from (x1,y1) to (x2,y2) using colour
    *
    */
-  uInt32 erradj, erracc;
-  uInt32 erracctmp, intshift, wgt, wgtCompMask;
+  uint32_t erradj, erracc;
+  uint32_t erracctmp, intshift, wgt, wgtCompMask;
   int32 dx, dy, tmp, xDir, i;
   uInt8 r, g, b, a;
-  uInt32 alphas[32];
+  uint32_t alphas[32];
   bool oldBlending;
 
   if (y1 > y2) {
@@ -657,7 +657,7 @@ void ogSurface::AARawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 col
     a = 255;
 
   for (i = 0; i < 32; i++) {
-    alphas[i] = static_cast<uInt32>(INTENSITIES[i] * a + 0.5f);
+    alphas[i] = static_cast<uint32_t>(INTENSITIES[i] * a + 0.5f);
   } // for
 
   oldBlending = ogSetBlending(true);
@@ -752,8 +752,8 @@ void ogSurface::AARawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 col
   return;
 } // ogSurface::AARawLine
 
-uInt32 ogSurface::RawGetPixel(uInt32 x, uInt32 y) {
-  uInt32 result;
+uint32_t ogSurface::RawGetPixel(uint32_t x, uint32_t y) {
+  uint32_t result;
   switch (bytesPerPix) {
     case 4:
       __asm__ __volatile__(
@@ -812,8 +812,8 @@ uInt32 ogSurface::RawGetPixel(uInt32 x, uInt32 y) {
   return result;
 } // ogSurface::RawGetPixel
 
-void ogSurface::RawSetPixel(uInt32 x, uInt32 y, uInt32 colour) {
-  uInt32 newR, newG, newB, inverseA;
+void ogSurface::RawSetPixel(uint32_t x, uint32_t y, uint32_t colour) {
+  uint32_t newR, newG, newB, inverseA;
   uInt8 sR, sG, sB, sA;
   uInt8 dR, dG, dB;
 
@@ -893,10 +893,10 @@ void ogSurface::RawSetPixel(uInt32 x, uInt32 y, uInt32 colour) {
   return;
 } // ogSurface::RawSetPixel
 
-void ogSurface::RawSetPixel(uInt32 x, uInt32 y, uInt8 r, uInt8 g, uInt8 b, uInt8 a) {
-  uInt32 newR, newG, newB, inverseA;
+void ogSurface::RawSetPixel(uint32_t x, uint32_t y, uInt8 r, uInt8 g, uInt8 b, uInt8 a) {
+  uint32_t newR, newG, newB, inverseA;
   uInt8 dR, dG, dB;
-  uInt32 colour;
+  uint32_t colour;
 
   do {
     if (ogIsBlending()) {
@@ -991,7 +991,7 @@ bool ogSurface::ClipLine(int32& x1, int32& y1, int32& x2, int32& y2) {
 
   int32 tx1, ty1, tx2, ty2;
   int32 OutCode;
-  uInt32 AndResult, OrResult;
+  uint32_t AndResult, OrResult;
   AndResult = 15;
   OrResult = 0;
   OutCode = 0;
@@ -1071,7 +1071,7 @@ bool ogSurface::ClipLine(int32& x1, int32& y1, int32& x2, int32& y2) {
     ty2 = maxY;
   } // elseif
 
-  if (((uInt32) tx1 > maxX) || ((uInt32) tx2 > maxX))
+  if (((uint32_t) tx1 > maxX) || ((uint32_t) tx2 > maxX))
     return false;
 
   x1 = tx1;
@@ -1085,7 +1085,7 @@ bool ogSurface::ClipLine(int32& x1, int32& y1, int32& x2, int32& y2) {
 // wu's double step line algorithm blatently borrowed from:
 // http://www.edepot.com/linewu.html
 
-void ogSurface::RawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 colour) {
+void ogSurface::RawLine(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t colour) {
   int32 dy = y2 - y1;
   int32 dx = x2 - x1;
   int32 stepx, stepy;
@@ -1373,7 +1373,7 @@ void ogSurface::RawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 colou
 
 #if 0
 void
-ogSurface::RawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 colour) {
+ogSurface::RawLine(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t colour) {
   /*
    *  ogSurface::RawLine()
    *
@@ -1689,8 +1689,8 @@ ogSurface::RawLine(uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2, uInt32 colour) {
 } // ogSurface::RawLine
 #endif
 
-bool ogSurface::ogAlias(ogSurface& src, uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2) {
-  uInt32 tmp;
+bool ogSurface::ogAlias(ogSurface& src, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) {
+  uint32_t tmp;
 
   if (dataState == ogOwner) {
     ogSetLastError(ogAlreadyOwner);
@@ -1719,7 +1719,7 @@ bool ogSurface::ogAlias(ogSurface& src, uInt32 x1, uInt32 y1, uInt32 x2, uInt32 
 
   owner = &src;
   buffer = ((unsigned char *) (src.buffer) + x1 * (src.bytesPerPix));
-  lineOfs = ((uInt32 *) src.lineOfs) + y1;
+  lineOfs = ((uint32_t *) src.lineOfs) + y1;
   attributes = src.attributes;
 
   pal = src.pal;
@@ -1745,9 +1745,9 @@ bool ogSurface::ogAlias(ogSurface& src, uInt32 x1, uInt32 y1, uInt32 x2, uInt32 
   return true;
 } // ogSurface::ogAlias
 
-void ogSurface::ogArc(int32 xCenter, int32 yCenter, uInt32 radius, uInt32 sAngle, uInt32 eAngle, uInt32 colour) {
+void ogSurface::ogArc(int32 xCenter, int32 yCenter, uint32_t radius, uint32_t sAngle, uint32_t eAngle, uint32_t colour) {
   int32 p;
-  uInt32 x, y, tmp;
+  uint32_t x, y, tmp;
   double alpha;
 
   if (radius == 0) {
@@ -1817,10 +1817,10 @@ static int32 calculate(float mu, int32 p0, int32 p1, int32 p2, int32 p3) {
   return (int32) (0.5f + (1.0 / 6.0) * (mu3 * (-p0 + 3.0 * p1 - 3.0 * p2 + p3) + mu2 * (3.0 * p0 - 6.0 * p1 + 3.0 * p2) + mu * (-3.0 * p0 + 3.0 * p2) + (p0 + 4.0 * p1 + p2)));
 } // calculate
 
-void ogSurface::ogBSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, uInt32 colour) {
+void ogSurface::ogBSpline(uint32_t numPoints, ogPoint2d* points, uint32_t segments, uint32_t colour) {
   float mu, mudelta;
   int32 x1, y1, x2, y2;
-  uInt32 n, h;
+  uint32_t n, h;
 
   if (points == NULL)
     return;
@@ -1848,7 +1848,7 @@ void ogSurface::ogBSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, 
   return;
 } // ogSurface::ogBSpline
 
-void ogSurface::ogCircle(int32 xCenter, int32 yCenter, uInt32 radius, uInt32 colour) {
+void ogSurface::ogCircle(int32 xCenter, int32 yCenter, uint32_t radius, uint32_t colour) {
   int32 x, y, d;
 
   x = 0;
@@ -1873,9 +1873,9 @@ void ogSurface::ogCircle(int32 xCenter, int32 yCenter, uInt32 radius, uInt32 col
   return;
 } // ogSurface::ogCircle
 
-void ogSurface::ogClear(uInt32 colour) {
-  uInt32 height = 0;
-  uInt32 xx, yy;
+void ogSurface::ogClear(uint32_t colour) {
+  uint32_t height = 0;
+  uint32_t xx, yy;
   uInt8 r, g, b, a;
   if (!ogAvail())
     return;
@@ -2035,9 +2035,9 @@ bool ogSurface::ogClone(ogSurface& src) {
 } // ogSurface::ogClone
 
 void ogSurface::ogCopy(ogSurface& src) {
-  uInt32 pixMap[256];
-  uInt32 count, xCount, yCount;
-  uInt32 xx, yy;
+  uint32_t pixMap[256];
+  uint32_t count, xCount, yCount;
+  uint32_t xx, yy;
   uInt8 r, g, b, a;
   void * srcPtr;
 
@@ -2121,7 +2121,7 @@ void ogSurface::ogCopy(ogSurface& src) {
 } // ogSurface::ogCopy
 
 void ogSurface::ogCopyBuf(int32 dX1, int32 dY1, ogSurface& src, int32 sX1, int32 sY1, int32 sX2, int32 sY2) {
-  uInt32 pixMap[256];
+  uint32_t pixMap[256];
   int32 xx, yy, count, xCount, yCount;
   uInt8 r, g, b, a;
   void *srcPtr;
@@ -2137,7 +2137,7 @@ void ogSurface::ogCopyBuf(int32 dX1, int32 dY1, ogSurface& src, int32 sX1, int32
     return;
 
   // if any of the source buffer is out of bounds then do nothing
-  if (((uInt32) sX1 > src.maxX) || ((uInt32) sX2 > src.maxX) || ((uInt32) sY1 > src.maxY) || ((uInt32) sY2 > src.maxY))
+  if (((uint32_t) sX1 > src.maxX) || ((uint32_t) sX2 > src.maxX) || ((uint32_t) sY1 > src.maxY) || ((uint32_t) sY2 > src.maxY))
     return;
 
   if (sX1 > sX2) {
@@ -2241,7 +2241,7 @@ void ogSurface::ogCopyBuf(int32 dX1, int32 dY1, ogSurface& src, int32 sX1, int32
   } // else
 } // ogSurface::ogCopyBuf
 
-void ogSurface::ogCopyLineTo(uInt32 dx, uInt32 dy, const void * src, uInt32 size) {
+void ogSurface::ogCopyLineTo(uint32_t dx, uint32_t dy, const void * src, uint32_t size) {
   /*
    * CopyLineTo()
    *
@@ -2270,7 +2270,7 @@ void ogSurface::ogCopyLineTo(uInt32 dx, uInt32 dy, const void * src, uInt32 size
   return;
 } // ogSurface::ogCopyLineTo
 
-void ogSurface::ogCopyLineFrom(uInt32 sx, uInt32 sy, void * dst, uInt32 size) {
+void ogSurface::ogCopyLineFrom(uint32_t sx, uint32_t sy, void * dst, uint32_t size) {
   /*
    * CopyLineFrom()
    *
@@ -2311,7 +2311,7 @@ void ogSurface::ogCopyPalette(ogSurface& src) {
   return;
 } // ogSurface::ogCopyPalette
 
-bool ogSurface::ogCreate(uInt32 _xRes, uInt32 _yRes, ogPixelFmt _pixFormat) {
+bool ogSurface::ogCreate(uint32_t _xRes, uint32_t _yRes, ogPixelFmt _pixFormat) {
   /*
    *  ogSurface::ogCreate()
    *  Allocates memory for a buffer of size _xRes by _yRes with
@@ -2319,13 +2319,13 @@ bool ogSurface::ogCreate(uInt32 _xRes, uInt32 _yRes, ogPixelFmt _pixFormat) {
    *  for pal and lineOfs.
    */
   void * newBuffer = NULL;
-  uInt32 * newLineOfs = NULL;
+  uint32_t * newLineOfs = NULL;
   ogRGBA8 * newPal = NULL;
   ogAttributes* newAttributes = NULL;
 
-  uInt32 newBSize;
-  uInt32 newLSize;
-  uInt32 yy;
+  uint32_t newBSize;
+  uint32_t newLSize;
+  uint32_t yy;
 
   bool status = false;
 
@@ -2342,14 +2342,14 @@ bool ogSurface::ogCreate(uInt32 _xRes, uInt32 _yRes, ogPixelFmt _pixFormat) {
   } // switch
 
   newBSize = _xRes * _yRes * ((_pixFormat.BPP + 7) >> 3);
-  newLSize = _yRes * sizeof(uInt32);  // number of scan lines * sizeof(uInt32)
+  newLSize = _yRes * sizeof(uint32_t);  // number of scan lines * sizeof(uint32_t)
 
 #ifdef __UBIXOS_KERNEL__
   newBuffer = kmalloc(newBSize);
 #else
   newBuffer = malloc(newBSize);
 #endif
-  newLineOfs = new uInt32[_yRes];
+  newLineOfs = new uint32_t[_yRes];
   newPal = new ogRGBA8[256];
   newAttributes = new ogAttributes();
 
@@ -2454,10 +2454,10 @@ bool ogSurface::ogCreate(uInt32 _xRes, uInt32 _yRes, ogPixelFmt _pixFormat) {
   return status;
 } // ogSurface::ogCreate
 
-void ogSurface::ogCubicBezierCurve(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, int32 x4, int32 y4, uInt32 segments, uInt32 colour) {
+void ogSurface::ogCubicBezierCurve(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, int32 x4, int32 y4, uint32_t segments, uint32_t colour) {
   float tX1, tY1, tX2, tY2, tX3, tY3, mu, mu2, mu3, mudelta;
   int32 xStart, yStart, xEnd, yEnd;
-  uInt32 n;
+  uint32_t n;
   if (segments < 1)
     return;
   if (segments > 128)
@@ -2488,7 +2488,7 @@ void ogSurface::ogCubicBezierCurve(int32 x1, int32 y1, int32 x2, int32 y2, int32
   return;
 } // ogSurface::ogCubicBezierCurve
 
-void ogSurface::ogCurve(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, uInt32 segments, uInt32 colour) {
+void ogSurface::ogCurve(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, uint32_t segments, uint32_t colour) {
   int64 ex, ey, fx, fy;
   int64 t1, t2;
 
@@ -2516,7 +2516,7 @@ void ogSurface::ogCurve(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 
 
 } // ogSurface::ogCurve
 
-void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uInt32 radius, uInt32 colour) {
+void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uint32_t radius, uint32_t colour) {
   int32 x, y, d;
   x = 0;
   y = radius;
@@ -2548,17 +2548,17 @@ void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uInt32 radius, uInt32
  !- * isn't drawn. For each scan line, the pixel closest to the scanned
  !- * line without being to the left of the scanned line is chosen
  !- */
-!-static void index_forward(int32 & index, uInt32 numPoints) {
+!-static void index_forward(int32 & index, uint32_t numPoints) {
   !- index = (index + 1) % numPoints;
   !- return;
   !-} // index_forward
 !-
-!-static void index_backward(int32 & index, uInt32 numPoints) {
+!-static void index_backward(int32 & index, uint32_t numPoints) {
   !- index = (index - 1 + numPoints) % numPoints;
   !- return;
   !-} // index_forward
 !-
-!-static void index_move(int32 & index, uInt32 numPoints, int32 direction) {
+!-static void index_move(int32 & index, uint32_t numPoints, int32 direction) {
   !- if (direction > 0)
   !- index_forward(index, numPoints);
   !-
@@ -2568,7 +2568,7 @@ void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uInt32 radius, uInt32
   !-} // index_move
 !-
 !-static void scanEdge(int32 x1, int32 y1, int32 x2, int32 y2,
-  !- uInt32 & eIdx, int32 * xList) {
+  !- uint32_t & eIdx, int32 * xList) {
   !- int32 y, deltaX, deltaY;
   !- float inverseSlope;
   !-
@@ -2590,14 +2590,14 @@ void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uInt32 radius, uInt32
   !-} // scanEdge
 !-
 !-void
-!-ogSurface::FillConvexPolygon(uInt32 numPoints, ogPoint2d* polyPoints, uInt32 colour) {
+!-ogSurface::FillConvexPolygon(uint32_t numPoints, ogPoint2d* polyPoints, uint32_t colour) {
   !- int32 i, minIndexL, maxIndex, minIndexR, temp;
   !- int32 minPointY, maxPointY, leftEdgeDir;
   !- int32 topIsFlat, nextIndex, curIndex, prevIndex;
   !- int32 deltaXN, deltaYN, deltaXP, deltaYP;
   !- ogHLineList workingHLineList;
-  !- uInt32 edgePointIdx;
-  !- uInt32 vetexIdx;
+  !- uint32_t edgePointIdx;
+  !- uint32_t vetexIdx;
   !-
   !- if (numPoints<2) return;
   !- minIndexL = maxIndex = 0;
@@ -2728,7 +2728,7 @@ void ogSurface::ogFillCircle(int32 xCenter, int32 yCenter, uInt32 radius, uInt32
   !-} // ogSurface::FillConvexPolygon
 #endif
 
-void ogSurface::ogFillGouraudPolygon(uInt32 numPoints, ogPoint2d* polyPoints, ogRGBA8 * colours) {
+void ogSurface::ogFillGouraudPolygon(uint32_t numPoints, ogPoint2d* polyPoints, ogRGBA8 * colours) {
 
   ogEdgeTable * edges;
   int32 currentY = ~0;
@@ -2760,7 +2760,7 @@ void ogSurface::ogFillGouraudPolygon(uInt32 numPoints, ogPoint2d* polyPoints, og
   return;
 } // ogSurface::ogFillGouraudPolygon
 
-void ogSurface::ogFillPolygon(uInt32 numPoints, ogPoint2d* polyPoints, uInt32 colour) {
+void ogSurface::ogFillPolygon(uint32_t numPoints, ogPoint2d* polyPoints, uint32_t colour) {
   ogEdgeTable * edges;
   int32 currentY = ~0;
 
@@ -2793,7 +2793,7 @@ void ogSurface::ogFillPolygon(uInt32 numPoints, ogPoint2d* polyPoints, uInt32 co
   return;
 } // ogSurface::ogFillPolygon
 
-void ogSurface::ogFillRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 colour) {
+void ogSurface::ogFillRect(int32 x1, int32 y1, int32 x2, int32 y2, uint32_t colour) {
   int32 yy, tmp;
 
   if (x2 < x1) {
@@ -2818,7 +2818,7 @@ void ogSurface::ogFillRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 colour
     ogHLine(x1, x2, yy, colour);
 } // ogSurface::ogFillRect
 
-void ogSurface::ogFillTriangle(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, uInt32 colour) {
+void ogSurface::ogFillTriangle(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, uint32_t colour) {
   ogPoint2d points[3];
   points[0].x = x1;
   points[0].y = y1;
@@ -2832,7 +2832,7 @@ void ogSurface::ogFillTriangle(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3,
   return;
 } // ogSurface::ogFillTriangle
 
-uInt32 ogSurface::ogGetAlpha(void) {
+uint32_t ogSurface::ogGetAlpha(void) {
   if (attributes != NULL)
     return attributes->defaultAlpha;
   else
@@ -2863,12 +2863,12 @@ void ogSurface::ogGetPixFmt(ogPixelFmt& pixfmt) {
   return;
 } // ogSurface::ogGetPixFmt
 
-uInt32 ogSurface::ogGetPixel(int32 x, int32 y) {
-  uInt32 result;
+uint32_t ogSurface::ogGetPixel(int32 x, int32 y) {
+  uint32_t result;
   if (!ogAvail())
     return ogGetTransparentColor();
 
-  if (((uInt32) x > maxX) || ((uInt32) y > maxY))
+  if (((uint32_t) x > maxX) || ((uint32_t) y > maxY))
     return ogGetTransparentColor();
 
   switch (bytesPerPix) {
@@ -2931,12 +2931,12 @@ uInt32 ogSurface::ogGetPixel(int32 x, int32 y) {
 } // ogSurface::ogGetPixel
 
 void *
-ogSurface::ogGetPtr(uInt32 x, uInt32 y) {
+ogSurface::ogGetPtr(uint32_t x, uint32_t y) {
 //  return (Avail() ? ( (uInt8*)buffer+(lineOfs[y]+x*((BPP+7) >> 3)) ) : NULL );
   return ((uInt8*) buffer + (lineOfs[y] + x * bytesPerPix));
 } // ogSurface::ogGetPtr
 
-uInt32 ogSurface::ogGetTransparentColor(void) {
+uint32_t ogSurface::ogGetTransparentColor(void) {
   if (attributes != NULL)
     return attributes->transparentColor;
   else
@@ -2946,7 +2946,7 @@ uInt32 ogSurface::ogGetTransparentColor(void) {
 void ogSurface::ogHFlip(void) {
   void * tmpBuf1;
   void * tmpBuf2;
-  uInt32 xWidth, count;
+  uint32_t xWidth, count;
 
   if (!ogAvail())
     return;
@@ -2980,13 +2980,13 @@ void ogSurface::ogHFlip(void) {
   return;
 } // ogSurface::ogHFlip
 
-void ogSurface::ogHLine(int32 x1, int32 x2, int32 y, uInt32 colour) {
+void ogSurface::ogHLine(int32 x1, int32 x2, int32 y, uint32_t colour) {
   int32 tmp;
   uInt8 r, g, b, a;
 
   if (!ogAvail())
     return;
-  if ((uInt32) y > maxY)
+  if ((uint32_t) y > maxY)
     return;
 
   if (x1 > x2) {
@@ -3129,7 +3129,7 @@ bool ogSurface::ogIsBlending(void) {
     return false;
 } // ogSurface::ogIsBlending
 
-void ogSurface::ogLine(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 colour) {
+void ogSurface::ogLine(int32 x1, int32 y1, int32 x2, int32 y2, uint32_t colour) {
   if (ClipLine(x1, y1, x2, y2)) {
     if (ogIsAntiAliasing())
       AARawLine(x1, y1, x2, y2, colour);
@@ -3146,7 +3146,7 @@ bool ogSurface::ogLoadPalette(const char *palfile) {
 #else
   FILE *f;
 #endif
-  uInt32 lresult;
+  uint32_t lresult;
   bool result;
 
   if (!fileExists(palfile)) {
@@ -3183,8 +3183,8 @@ bool ogSurface::ogLoadPalette(const char *palfile) {
   return result;
 } // ogSurface::ogLoadPalette
 
-void ogSurface::ogPolygon(uInt32 numPoints, ogPoint2d* polyPoints, uInt32 colour) {
-  uInt32 count;
+void ogSurface::ogPolygon(uint32_t numPoints, ogPoint2d* polyPoints, uint32_t colour) {
+  uint32_t count;
 
   if (numPoints == 1)
     ogSetPixel(polyPoints[0].x, polyPoints[0].y, colour);
@@ -3194,7 +3194,7 @@ void ogSurface::ogPolygon(uInt32 numPoints, ogPoint2d* polyPoints, uInt32 colour
   return;
 } // ogSurface::ogPolygon
 
-void ogSurface::ogRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 colour) {
+void ogSurface::ogRect(int32 x1, int32 y1, int32 x2, int32 y2, uint32_t colour) {
   int32 tmp;
 
   if ((x1 == x2) || (y1 == y2)) {
@@ -3223,9 +3223,9 @@ void ogSurface::ogRect(int32 x1, int32 y1, int32 x2, int32 y2, uInt32 colour) {
   return;
 } // ogSurface::ogRect
 
-uInt32 ogSurface::ogPack(uInt8 red, uInt8 green, uInt8 blue) {
-  uInt32 idx, colour;
-  uInt32 rd, gd, bd, dist, newdist;
+uint32_t ogSurface::ogPack(uInt8 red, uInt8 green, uInt8 blue) {
+  uint32_t idx, colour;
+  uint32_t rd, gd, bd, dist, newdist;
 
   colour = 0;
   switch (bytesPerPix) {
@@ -3259,9 +3259,9 @@ uInt32 ogSurface::ogPack(uInt8 red, uInt8 green, uInt8 blue) {
 
 } // ogSurface::ogPack
 
-uInt32 ogSurface::ogPack(uInt8 red, uInt8 green, uInt8 blue, uInt8 alpha) {
-  uInt32 idx, colour;
-  uInt32 rd, gd, bd, dist, newdist;
+uint32_t ogSurface::ogPack(uInt8 red, uInt8 green, uInt8 blue, uInt8 alpha) {
+  uint32_t idx, colour;
+  uint32_t rd, gd, bd, dist, newdist;
 
   colour = 0;
   switch (bytesPerPix) {
@@ -3300,7 +3300,7 @@ bool ogSurface::ogSavePalette(const char *palfile) {
 #else
   FILE * f;
 #endif
-  uInt32 lresult;
+  uint32_t lresult;
 
   if (pal == NULL) {
     ogSetLastError(ogNoPalette);
@@ -3328,11 +3328,11 @@ void ogSurface::ogScale(ogSurface& src) {
 
 void ogSurface::ogScaleBuf(int32 dX1, int32 dY1, int32 dX2, int32 dY2, ogSurface& src, int32 sX1, int32 sY1, int32 sX2, int32 sY2) {
 
-  uInt32 sWidth, dWidth;
-  uInt32 sHeight, dHeight;
+  uint32_t sWidth, dWidth;
+  uint32_t sHeight, dHeight;
   int32 sx, sy, xx, yy;
-  uInt32 xInc, yInc;
-  uInt32 origdX1, origdY1;
+  uint32_t xInc, yInc;
+  uint32_t origdX1, origdY1;
   ogPixelFmt pixFmt;
   ogSurface * tmpBuf;
   ogSurface * sBuf;
@@ -3360,7 +3360,7 @@ void ogSurface::ogScaleBuf(int32 dX1, int32 dY1, int32 dX2, int32 dY2, ogSurface
 
   // if any part of the source falls outside the buffer then don't do anything
 
-  if (((uInt32) sX1 > src.maxX) || ((uInt32) sX2 > src.maxX) || ((uInt32) sY1 > src.maxY) || ((uInt32) sY2 > src.maxY))
+  if (((uint32_t) sX1 > src.maxX) || ((uint32_t) sX2 > src.maxX) || ((uint32_t) sY1 > src.maxY) || ((uint32_t) sY2 > src.maxY))
     return;
 
   if (dX1 > dX2) {
@@ -3514,8 +3514,8 @@ void ogSurface::ogScaleBuf(int32 dX1, int32 dY1, int32 dX2, int32 dY2, ogSurface
   return;
 } // ogSurface::ogScaleBuf
 
-uInt32 ogSurface::ogSetAlpha(uInt32 _newAlpha) {
-  uInt32 tmp;
+uint32_t ogSurface::ogSetAlpha(uint32_t _newAlpha) {
+  uint32_t tmp;
 
   if (attributes != NULL) {
     tmp = attributes->defaultAlpha;
@@ -3564,15 +3564,15 @@ void ogSurface::ogSetPalette(const ogRGBA8 newPal[256]) {
   return;
 } // ogSurface::ogSetPalette
 
-void ogSurface::ogSetPixel(int32 x, int32 y, uInt32 colour) {
-  uInt32 newR, newG, newB, inverseA;
+void ogSurface::ogSetPixel(int32 x, int32 y, uint32_t colour) {
+  uint32_t newR, newG, newB, inverseA;
   uInt8 sR, sG, sB, sA;
   uInt8 dR, dG, dB;
 
   if (!ogAvail())
     return;
 
-  if (((uInt32) x > maxX) || ((uInt32) y > maxY))
+  if (((uint32_t) x > maxX) || ((uint32_t) y > maxY))
     return;
 
   do {
@@ -3654,7 +3654,7 @@ void ogSurface::ogSetPixel(int32 x, int32 y, uInt32 colour) {
 void ogSurface::ogSetPixel(int32 x, int32 y, uInt8 r, uInt8 g, uInt8 b, uInt8 a) {
   if (!ogAvail())
     return;
-  if (((uInt32) x > maxX) || ((uInt32) y > maxY))
+  if (((uint32_t) x > maxX) || ((uint32_t) y > maxY))
     return;
   RawSetPixel(x, y, r, g, b, a);
   return;
@@ -3680,8 +3680,8 @@ void ogSurface::ogSetPalette(uInt8 colour, uInt8 red, uInt8 green, uInt8 blue) {
   return;
 } // ogSurface::ogSetPalette
 
-uInt32 ogSurface::ogSetTransparentColor(uInt32 colour) {
-  uInt32 tmp = 0;
+uint32_t ogSurface::ogSetTransparentColor(uint32_t colour) {
+  uint32_t tmp = 0;
 
   if (attributes != NULL) {
     tmp = attributes->transparentColor & ogGetAlphaMasker();
@@ -3695,7 +3695,7 @@ static double f(double g) {
   return g * g * g - g;
 }
 
-void ogSurface::ogSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, uInt32 colour) {
+void ogSurface::ogSpline(uint32_t numPoints, ogPoint2d* points, uint32_t segments, uint32_t colour) {
   int32 i, oldY, oldX, x, y, j;
   float part, t, xx, yy, tmp;
   float * zc;
@@ -3737,7 +3737,7 @@ void ogSurface::ogSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, u
     if (py == NULL)
       break;
 
-    for (i = 0; (uInt32) i < numPoints; i++) {
+    for (i = 0; (uint32_t) i < numPoints; i++) {
       zc[i] = dx[i] = dy[i] = u[i] = wndX1[i] = wndY1[i] = px[i] = py[i] = 0.0f;
     }
 
@@ -3747,7 +3747,7 @@ void ogSurface::ogSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, u
     x = points[0].x;
     y = points[0].y;
 
-    for (i = 1; (uInt32) i < numPoints; i++) {
+    for (i = 1; (uint32_t) i < numPoints; i++) {
       xx = points[i - 1].x - points[i].x;
       yy = points[i - 1].y - points[i].y;
       t = sqrt(xx * xx + yy * yy);
@@ -3755,7 +3755,7 @@ void ogSurface::ogSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, u
     } // for
 
     u[0] = zc[1] - zc[0] + 1;
-    for (i = 1; (uInt32) i < numPoints - 1; i++) {
+    for (i = 1; (uint32_t) i < numPoints - 1; i++) {
       u[i] = zc[i + 1] - zc[i] + 1;
       tmp = 2 * (zc[i + 1] - zc[i - 1]);
       dx[i] = tmp;
@@ -3764,7 +3764,7 @@ void ogSurface::ogSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, u
       wndX1[i] = 6.0f * ((points[i + 1].x - points[i].x) / u[i] - (points[i].x - points[i - 1].x) / u[i - 1]);
     } // for
 
-    for (i = 1; (uInt32) i < numPoints - 2; i++) {
+    for (i = 1; (uint32_t) i < numPoints - 2; i++) {
       wndY1[i + 1] = wndY1[i + 1] - wndY1[i] * u[i] / dy[i];
       dy[i + 1] = dy[i + 1] - u[i] * u[i] / dy[i];
       wndX1[i + 1] = wndX1[i + 1] - wndX1[i] * u[i] / dx[i];
@@ -3776,8 +3776,8 @@ void ogSurface::ogSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, u
       px[i] = (wndX1[i] - u[i] * px[i + 1]) / dx[i];
     } // for
 
-    for (i = 0; (uInt32) i < numPoints - 1; i++) {
-      for (j = 0; (uInt32) j <= segments; j++) {
+    for (i = 0; (uint32_t) i < numPoints - 1; i++) {
+      for (j = 0; (uint32_t) j <= segments; j++) {
         part = zc[i] - (((zc[i] - zc[i + 1]) / segments) * j);
         t = (part - zc[i]) / u[i];
         part = t * points[i + 1].y + (1.0 - t) * points[i].y + u[i] * u[i] * (f(t) * py[i + 1] + f(1.0 - t) * py[i]) / 6.0;
@@ -3811,7 +3811,7 @@ void ogSurface::ogSpline(uInt32 numPoints, ogPoint2d* points, uInt32 segments, u
   return;
 } // ogSurface::ogSpline
 
-void ogSurface::ogTriangle(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, uInt32 colour) {
+void ogSurface::ogTriangle(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int32 y3, uint32_t colour) {
 
   ogLine(x1, y1, x2, y2, colour);
   ogLine(x2, y2, x3, y3, colour);
@@ -3819,7 +3819,7 @@ void ogSurface::ogTriangle(int32 x1, int32 y1, int32 x2, int32 y2, int32 x3, int
   return;
 } // ogSurface::ogTriangle
 
-void ogSurface::ogUnpack(uInt32 colour, uInt8& red, uInt8& green, uInt8& blue) {
+void ogSurface::ogUnpack(uint32_t colour, uInt8& red, uInt8& green, uInt8& blue) {
 
   switch (bytesPerPix) {
     case 4:
@@ -3861,7 +3861,7 @@ void ogSurface::ogUnpack(uInt32 colour, uInt8& red, uInt8& green, uInt8& blue) {
   return;
 } // ogSurface::ogUnpack
 
-void ogSurface::ogUnpack(uInt32 colour, uInt8& red, uInt8& green, uInt8& blue, uInt8& alpha) {
+void ogSurface::ogUnpack(uint32_t colour, uInt8& red, uInt8& green, uInt8& blue, uInt8& alpha) {
 
   switch (bytesPerPix) {
     case 4:
@@ -3918,7 +3918,7 @@ void ogSurface::ogUnpack(uInt32 colour, uInt8& red, uInt8& green, uInt8& blue, u
 } // ogSurface::ogUnpack
 
 void ogSurface::ogVFlip(void) {
-  uInt32 height;
+  uint32_t height;
 
   if (!ogAvail())
     return;
@@ -4037,13 +4037,13 @@ void ogSurface::ogVFlip(void) {
   return;
 } // ogSurface::ogVFlip
 
-void ogSurface::ogVLine(int32 x, int32 y1, int32 y2, uInt32 colour) {
+void ogSurface::ogVLine(int32 x, int32 y1, int32 y2, uint32_t colour) {
   int32 tmp;
   uInt8 r, g, b, a;
 
   if (!ogAvail())
     return;
-  if ((uInt32) x > maxX)
+  if ((uint32_t) x > maxX)
     return;
 
   if (y1 > y2) {

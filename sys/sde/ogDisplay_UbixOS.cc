@@ -47,7 +47,7 @@ extern "C" {
  *
  */
 
-void initVESAMode(uInt16 mode) {
+void initVESAMode(uint16_t mode) {
   biosCall(0x10, 0x4F02, mode, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0);
   return;
 }
@@ -65,7 +65,7 @@ ogDisplay_UbixOS::ogDisplay_UbixOS(void) {
   return;
 } // ogDisplay_UbixOS::ogDisplay_UbixOS
 
-void ogDisplay_UbixOS::GetModeInfo(uInt16 mode) {
+void ogDisplay_UbixOS::GetModeInfo(uint16_t mode) {
   biosCall(0x10, 0x4F01, 0x0, mode, 0x0, 0x0, 0x0, 0x1120, 0x0);
   return;
 } // ogDisplay_UbixOS::GetModeInfo
@@ -79,13 +79,14 @@ void ogDisplay_UbixOS::GetVESAInfo(void) {
   return;
 } // ogDisplay_UbixOS::GetVESAInfo
 
-uInt16 ogDisplay_UbixOS::FindMode(uInt32 _xRes, uInt32 _yRes, uInt32 _BPP) {
-  uInt16 mode;
+uint16_t ogDisplay_UbixOS::FindMode(uint32_t _xRes, uint32_t _yRes, uint32_t _BPP) {
+  uint16_t mode;
 
   if ((_xRes == 320) && (_yRes == 200) && (_BPP == 8))
     return 0x13;
 
 //  if ((VESAInfo==NULL) || (VESAInfo->videoModePtr==NULL)) return 0;
+
   if (modeInfo == NULL)
     return 0;
 
@@ -98,9 +99,9 @@ uInt16 ogDisplay_UbixOS::FindMode(uInt32 _xRes, uInt32 _yRes, uInt32 _BPP) {
   return 0;
 } // ogDisplay_UbixOS::FindMode
 
-void ogDisplay_UbixOS::SetMode(uInt16 mode) {
+void ogDisplay_UbixOS::SetMode(uint16_t mode) {
 
-  uInt32 size = 0x0, count = 0x0, i = 0x0;
+  uint32_t size = 0x0, count = 0x0, i = 0x0;
 
   if (mode == 0x13) {
 
@@ -179,8 +180,8 @@ void ogDisplay_UbixOS::SetMode(uInt16 mode) {
 
   if ((lineOfs != NULL) && (lSize != 0))
     delete[] lineOfs;
-  lSize = yRes * sizeof(uInt32);
-  lineOfs = new uInt32[yRes];
+  lSize = yRes * sizeof(uint32_t);
+  lineOfs = new uint32_t[yRes];
   ;
   if (lineOfs == NULL)
     return;
@@ -214,7 +215,7 @@ void ogDisplay_UbixOS::SetPal(void) {
   if (bytesPerPix != 1)
     return;
   outportByte(0x3c8, 0);
-  for (uInt32 c = 0; c < 256; c++) {
+  for (uint32_t c = 0; c < 256; c++) {
     outportByte(0x3c9, pal[c].red >> 2);
     outportByte(0x3c9, pal[c].green >> 2);
     outportByte(0x3c9, pal[c].blue >> 2);
@@ -222,12 +223,12 @@ void ogDisplay_UbixOS::SetPal(void) {
   return;
 } // ogDisplay_UbixOS::SetPal
 
-bool ogDisplay_UbixOS::ogAlias(ogSurface& SrcObject, uInt32 x1, uInt32 y1, uInt32 x2, uInt32 y2) {
+bool ogDisplay_UbixOS::ogAlias(ogSurface& SrcObject, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) {
   ogSetLastError(ogNoAliasing);
   return false;
 } // ogDisplay_UbixOS::ogAlias
 
-bool ogDisplay_UbixOS::ogCreate(uInt32 _xRes, uInt32 _yRes, ogPixelFmt _pixFormat) {
+bool ogDisplay_UbixOS::ogCreate(uint32_t _xRes, uint32_t _yRes, ogPixelFmt _pixFormat) {
   uint16_t mode;
 
   //mode = 0x114;  // was 0x111

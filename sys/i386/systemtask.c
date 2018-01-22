@@ -51,13 +51,14 @@ void systemTask() {
   int *x = 0x0;
   kTask_t *tmpTask = 0x0;
 
+  char buf[16] = { "a\n" };
+
   if (mpi_createMbox("system") != 0x0) {
     kpanic("Error: Error creating mailbox: system\n");
   }
 
   while (1) {
     if (mpi_fetchMessage("system", &myMsg) == 0x0) {
-      kprintf("A");
       switch (myMsg.header) {
         case 0x69:
           x = (int *) &myMsg.data;
@@ -115,6 +116,9 @@ void systemTask() {
     }
     if (ogprintOff == 1)
       videoBuffer[0] = systemVitals->sysTicks;
+    else
+      ogPrintf(buf);
+
     sched_yield();
   }
 

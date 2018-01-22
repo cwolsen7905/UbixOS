@@ -66,6 +66,9 @@ extern "C" void sdeThread() {
 
   screen->ogSetAntiAliasing(false);
 
+  //ogSurface::RawLine(100, 100, 200, 200, 0xDEADBEEF)
+  screen->RawLine(100, 100, 200, 200, 0xDEADBEEF);
+
   while (1) {
     for (tmp = windows; tmp; tmp = tmp->next) {
       switch (tmp->status) {
