@@ -90,7 +90,7 @@ int vmm_pagingInit() {
 
   /* MrOlsen (2016-01-15) NOTE: I'm Mappying It For Now Until I Can Figure Out Why FS:0x0 */
   for (i = 0x0; i < (PD_ENTRIES / 0x4); i++) {
-    pageTable[i] = (uint32_t) ((i * 0x1000) | KERNEL_PAGE_DEFAULT);  //MrOlsen 2018-01-14 PAGE_DEFAULT
+    pageTable[i] = (uint32_t) ((i * 0x1000) | PAGE_DEFAULT); //FIXME: This is temp becauseo f bios callKERNEL_PAGE_DEFAULT);  //MrOlsen 2018-01-14 PAGE_DEFAULT
   } /* end for */
 
   /* Allocate a page for the first 4MB of memory */

@@ -125,8 +125,10 @@ void sched() {
 
   if (_current->state == READY || _current->state == RUNNING) {
 
-    if (_current->oInfo.v86Task == 0x1)
+    if (_current->oInfo.v86Task == 0x1) {
       irqDisable(0x0);
+      kprintf("IRQ DISABLED");
+    }
 
     asm("cli");
 

@@ -401,7 +401,6 @@ sys_thread_t sys_thread_new(const char *name, void (*thread)(void *arg), void *a
    thread_param->arg = arg;
    thread_param->thread = thread;
    */
-  //execThread((void *)function,0x0,0x0);
   if (ubthread_create(&new_thread->ubthread, 0x0, (void *) (thread), arg) != 0x0) {
     kpanic("sys_thread_new: ubthread_create");
   }

@@ -427,7 +427,7 @@ int ubixfs_initialize(struct vfs_mountPoint *mp) {
     /* Start our ubixfs_thread to manage the mount point */
     /*
     UBU disable for now
-    execThread(ubixfs_Thread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
+    execThread(ubixfs_Thread,0x2000),0x0);
     */
     kprintf("  Offset: [%i], Partition: [%i]\n",
     mp->diskLabel->partitions[mp->partition].pOffset,mp->partition);

@@ -106,7 +106,6 @@ static char *envp_init[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/
 int kmain(uInt32 rootdev) {
   /* Set up counter for startup routine */
   int i = 0x0;
-  uInt32 *sysTask = 0x0;
 
   /* Do A Clear Screen Just To Make The TEXT Buffer Nice And Empty */
   clearScreen();
@@ -142,28 +141,14 @@ int kmain(uInt32 rootdev) {
   kprintf("MemoryMap:  [0x%X]\n", vmmMemoryMap);
   kprintf("Starting OS\n");
 
-  sysTask = kmalloc(0x2000);
-
-  if (sysTask == 0x0)
-    kprintf("OS: Unable to allocate memory\n");
-  else
-    kprintf("OS Stack: 0x%X\n", sysTask);
-
-  execThread(systemTask, (uint32_t) sysTask + 0x2000, 0x0);
+  execThread(systemTask, 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
   //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
   //kprintf("File Start!\n");
 
-  sysTask = kmalloc(0x2000);
-
-  if (sysTask == 0x0)
-    kprintf("OS: Unable to allocate memory\n");
-  else
-    kprintf("SDE Stack: 0x%X\n", sysTask);
-
-  execThread(sdeThread, sysTask + 0x2000,0x0);
-  kprintf("SDE Thread Start!\n");
+  kprintf("SDE Thread Start! [0x%X]\n", &sdeThread);
+  execThread(&sdeThread, 0x2000,0x0);
 
   irqEnable(0x0);
 

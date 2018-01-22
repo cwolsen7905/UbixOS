@@ -62,6 +62,7 @@ ogDisplay_UbixOS::ogDisplay_UbixOS(void) {
 
   VESAInfo = (ogVESAInfo *) 0x11000;
   modeInfo = (ogModeInfo *) 0x11200;
+
   GetVESAInfo();
   return;
 } // ogDisplay_UbixOS::ogDisplay_UbixOS
@@ -78,9 +79,9 @@ void ogDisplay_UbixOS::GetVESAInfo(void) {
   VESAInfo->VBESignature[1] = 'B';
   VESAInfo->VBESignature[2] = 'E';
   VESAInfo->VBESignature[3] = '2';
-  //kprintf("Pre-getVESAInfo\n");
+  kprintf("Pre-getVESAInfo\n");
   biosCall(0x10, 0x4F00, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1100, 0x0);
-  //kprintf("Post-getVESAInfo\n");
+  kprintf("Post-getVESAInfo\n");
   return;
 } // ogDisplay_UbixOS::GetVESAInfo
 

@@ -81,7 +81,7 @@ int ubthread_mutex_destroy(ubthread_mutex_t *mutex) {
 }
 
 int ubthread_create(kTask_t **thread, const uInt32 *attr, void (*tproc)(void), void *arg) {
-  *thread = (void *) execThread(tproc, (int) (kmalloc(0x2000) + 0x2000), arg);
+  *thread = (void *) execThread(tproc,0x2000, arg);
   return (0x0);
 }
 

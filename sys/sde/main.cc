@@ -43,9 +43,13 @@ extern "C" {
 
 extern "C" void sdeThread() {
   ogSurface *screen = new ogDisplay_UbixOS();
+
+
   struct sdeWindows *tmp = 0x0;
   ogSurface *buf = 0x0;
   ogBitFont * font = new ogBitFont();
+
+
 
   font->Load("ROM8X14.DPF", 0);
   font->SetFGColor(255, 255, 255, 255);
@@ -55,6 +59,8 @@ extern "C" void sdeThread() {
 
   screen->ogCreate(800, 600, OG_PIXFMT_16BPP);
   screen->ogClear(screen->ogPack(122, 140, 163));
+  //kprintf("HERE!");
+  //while (1) asm("nop");
 
   systemVitals->screen = screen;
   systemVitals->font = font;

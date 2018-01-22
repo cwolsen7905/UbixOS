@@ -231,7 +231,7 @@ int sysStartSDE() {
   for (i = 0; i < 1400; i++) {
     asm("hlt");
   }
-  //execThread(sdeThread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
+  //execThread(sdeThread,0x2000),0x0);
   for (i = 0; i < 1400; i++) {
     asm("hlt");
   }

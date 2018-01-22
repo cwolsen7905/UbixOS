@@ -148,13 +148,20 @@ static int elf_parse_dynamic(elf_file_t ef);
 uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   kTask_t * newProcess = 0x0;
+  uint32_t stackAddr = 0x0;
 
   /* Find A New Thread */
   newProcess = schedNewTask();
   assert(newProcess);
 
+  stackAddr = vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
+
+  kprintf("stackAddr: 0x%X", stackAddr);
+
+  /*
   if (stack < 0x100000)
     kpanic("exec: stack not in valid area: [0x%X]\n", stack);
+  */
 
   /* Set All The Correct Thread Attributes */
   newProcess->tss.back_link = 0x0;
@@ -167,7 +174,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
   newProcess->tss.cr3 = (unsigned int) kernelPageDirectory;
   newProcess->tss.eip = (unsigned int) tproc;
   newProcess->tss.eflags = 0x206;
-  newProcess->tss.esp = stack;
+  newProcess->tss.esp = stackAddr + (stack - 0x4); //stack;
   newProcess->tss.ebp = 0x0;//stack;
   newProcess->tss.esi = 0x0;
   newProcess->tss.edi = 0x0;

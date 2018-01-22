@@ -75,6 +75,11 @@ int idt_init() {
     : "r" ((char *)&loadidt)
   );
 
+  /*
+  for (int i = 0;i < 256;i++)
+    setVector(intNull, i, dPresent + dTrap + dDpl3);
+  */
+
   /* Set up the basic vectors for the reserved ints */
   setVector(_int0, 0, dPresent + dInt + dDpl0);
   setVector(_int1, 1, dPresent + dInt + dDpl0);
@@ -194,6 +199,7 @@ asm(
 );
 
 void __int0(struct trapframe *frame) {
+kpanic("BALLS");
   die_if_kernel("Divid-by-Zer0", frame, 0);
   kpanic("int0: Divide-by-Zero [%i]\n", _current->id);
   endTask(_current->id);
@@ -259,15 +265,15 @@ void __int6(struct trapframe *frame) {
 
 asm(
   ".globl _int8       \n"
-  "_int8:             \n"
-//  "  pushl $0x8            \n"
+  "_int8:                \n"
+  "  pushl $0x8           \n"
   "  pushal               \n" /* Save all registers           */
   "  push %ds             \n"
   "  push %es             \n"
   "  push %fs             \n"
   "  push %gs             \n"
   "  push %esp            \n"
-  "  call __int8          \n"
+  "  call __int8  \n"
   "  pop %gs              \n"
   "  pop %fs              \n"
   "  pop %es              \n"
@@ -446,12 +452,13 @@ void _int13() {
     break;
     default: /* something wrong */
       kprintf("NonHandled OpCode [0x%X:0x%X]\n", _current->id, ip[0]);
+while(1) asm("nop");
       _current->state = DEAD;
     break;
   }
   irqEnable(0);
   while (1)
-    ;
+    asm("nop");
 }
 
 /* Removed static however this is the only place it's called from */

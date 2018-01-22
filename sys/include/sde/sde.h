@@ -41,7 +41,7 @@ extern "C" {
 
 void sdeThread();
 
-void sysSDE(uInt32 cmd, void *ptr);
+void sysSDE(uint32_t cmd, void *ptr);
 
 struct sdeWindows {
     struct sdeWindows *next;

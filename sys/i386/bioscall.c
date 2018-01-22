@@ -29,24 +29,16 @@
 #include <sys/tss.h>
 #include <ubixos/sched.h>
 #include <vmm/vmm.h>
-#include <lib/kmalloc.h>
 #include <lib/bioscall.h>
 #include <string.h>
 #include <sys/video.h>
 #include <assert.h>
-
-asm(
-  ".globl bios16Code\n"
-//  ".code16          \n"
-  "bios16Code:      \n"
-  "int $0x10        \n"
-  "int $0x69        \n"
-//  ".code32          \n"
-);
+#include <lib/kprintf.h>
+#include <vmm/paging.h>
 
 void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi, int es, int ds) {
   short segment = 0x0, offset = 0x0;
-  uInt32 tmpAddr = (uInt32) &bios16Code;
+  uint32_t tmpAddr = (uint32_t) &bios16Code;
   kTask_t *newProcess = 0x0;
 
   offset = tmpAddr & 0xF;  // lower 4 bits
@@ -56,13 +48,13 @@ void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi,
   assert(newProcess);
 
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = (uInt32) kmalloc(0x2000) + 0x2000;
+  newProcess->tss.esp0 = (uint32_t)vmm_getFreeKernelPage(_current->id, 2) + (0x2000 - 0x4);
   newProcess->tss.ss0 = 0x10;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;
   newProcess->tss.esp2 = 0x0;
   newProcess->tss.ss2 = 0x0;
-  newProcess->tss.cr3 = (uInt32) _current->tss.cr3;  //(uInt32)vmmCreateVirtualSpace(newProcess->id);
+  newProcess->tss.cr3 = (uint32_t)_current->tss.cr3;  //(uInt32)vmmCreateVirtualSpace(newProcess->id);
   newProcess->tss.eip = offset & 0xFFFF;
   newProcess->tss.eflags = 2 | EFLAG_IF | EFLAG_VM;
   newProcess->tss.eax = eax & 0xFFFF;
@@ -85,15 +77,15 @@ void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi,
   newProcess->tss.io_map = sizeof(struct tssStruct) - 8192;
   newProcess->oInfo.v86Task = 0x1;
 
-  newProcess->state = READY;
 
+
+  kprintf("EIP: [0x%X] 0x%X:0x%X", tmpAddr, newProcess->tss.eip, newProcess->tss.cs);
+  newProcess->state = READY;
   while (newProcess->state > 0)
-    ;
+    asm("nop");
+  kprintf("EIP: [0x%X] 0x%X:0x%X!", tmpAddr, newProcess->tss.eip, newProcess->tss.cs);
+
+  kprintf("CALL DONE: %i 0x%X 0x%X!", newProcess->state, newProcess->tss.esp, newProcess->tss.ss);
 
   return;
 }
-
-/***
- END
- ***/
-

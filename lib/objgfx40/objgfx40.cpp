@@ -28,7 +28,7 @@ extern "C" {
 #include <objgfx40/defpal.inc>
 
 #ifdef __UBIXOS_KERNEL__
-#include <libcpp.h>
+#include <lib/libcpp.h>
 #endif
 
 const
@@ -105,8 +105,7 @@ float INTENSITIES[32] = {
 
 // #include "../ubixos-home/src/sys/include/ubixos/types.h"
 
-// #define ROUND(f) (int
-)((f) + ((f) > 0 ? 0.5 : -0.5))
+// #define ROUND(f) (int)((f) + ((f) > 0 ? 0.5 : -0.5))
 
 struct ogHLine {
     int32 xStart;

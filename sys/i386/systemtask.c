@@ -81,7 +81,7 @@ void systemTask() {
         case 0x80:
           if (!strcmp(myMsg.data, "sdeStart")) {
             kprintf("Starting SDE\n");
-            //execThread(sdeThread,(uInt32)(kmalloc(0x2000)+0x2000),0x0);
+            //execThread(sdeThread,0x2000),0x0);
           }
           else if (!strcmp(myMsg.data, "freePage")) {
             kprintf("kkk Free Pages");
