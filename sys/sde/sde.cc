@@ -29,7 +29,6 @@
 extern "C" {
 #include <sys/types.h>
 #include <sys/video.h>
-//#include <vmm/paging.h>
 #include <ubixos/sched.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>

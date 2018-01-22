@@ -20,7 +20,7 @@ ogPixCon::ogPixCon(ogPixelFmt srcPixFmt, ogPixelFmt dstPixFmt) {
   srcFieldSize[1] = srcPixFmt.redMaskSize;
   srcFieldSize[2] = srcPixFmt.greenMaskSize;
   srcFieldSize[3] = srcPixFmt.blueMaskSize;
- 
+
   srcFieldPos[0] = srcPixFmt.alphaFieldPosition;
   srcFieldPos[1] = srcPixFmt.redFieldPosition;
   srcFieldPos[2] = srcPixFmt.greenFieldPosition;
@@ -33,111 +33,106 @@ ogPixCon::ogPixCon(ogPixelFmt srcPixFmt, ogPixelFmt dstPixFmt) {
    * the 32 will turn into a 0 and the shift will do nothing
    */
 
-  dstShifters[0] = 32-(dstPixFmt.alphaFieldPosition+dstPixFmt.alphaMaskSize);
-  dstShifters[1] = 32-(dstPixFmt.redFieldPosition+dstPixFmt.redMaskSize);
-  dstShifters[2] = 32-(dstPixFmt.greenFieldPosition+dstPixFmt.greenMaskSize);
-  dstShifters[3] = 32-(dstPixFmt.blueFieldPosition+dstPixFmt.blueMaskSize);
+  dstShifters[0] = 32 - (dstPixFmt.alphaFieldPosition + dstPixFmt.alphaMaskSize);
+  dstShifters[1] = 32 - (dstPixFmt.redFieldPosition + dstPixFmt.redMaskSize);
+  dstShifters[2] = 32 - (dstPixFmt.greenFieldPosition + dstPixFmt.greenMaskSize);
+  dstShifters[3] = 32 - (dstPixFmt.blueFieldPosition + dstPixFmt.blueMaskSize);
 
   i = srcPixFmt.redMaskSize - dstPixFmt.redMaskSize;
-  if (i>0) 
-    srcMasker = OG_MASKS[dstPixFmt.redMaskSize] << (srcPixFmt.redFieldPosition+i);
+  if (i > 0)
+    srcMasker = OG_MASKS[dstPixFmt.redMaskSize] << (srcPixFmt.redFieldPosition + i);
   else
     srcMasker = OG_MASKS[srcPixFmt.redMaskSize] << srcPixFmt.redFieldPosition;
 
   i = srcPixFmt.greenMaskSize - dstPixFmt.greenMaskSize;
-  if (i>0) 
-    srcMasker+= OG_MASKS[dstPixFmt.greenMaskSize] << (srcPixFmt.greenFieldPosition+i);
+  if (i > 0)
+    srcMasker += OG_MASKS[dstPixFmt.greenMaskSize] << (srcPixFmt.greenFieldPosition + i);
   else
-    srcMasker+= OG_MASKS[srcPixFmt.greenMaskSize] << srcPixFmt.greenFieldPosition;
+    srcMasker += OG_MASKS[srcPixFmt.greenMaskSize] << srcPixFmt.greenFieldPosition;
 
   i = srcPixFmt.blueMaskSize - dstPixFmt.blueMaskSize;
-  if (i>0) 
-    srcMasker+= OG_MASKS[dstPixFmt.blueMaskSize] << (srcPixFmt.blueFieldPosition+i);
+  if (i > 0)
+    srcMasker += OG_MASKS[dstPixFmt.blueMaskSize] << (srcPixFmt.blueFieldPosition + i);
   else
-    srcMasker+= OG_MASKS[srcPixFmt.blueMaskSize] << srcPixFmt.blueFieldPosition;
+    srcMasker += OG_MASKS[srcPixFmt.blueMaskSize] << srcPixFmt.blueFieldPosition;
 
   i = srcPixFmt.alphaMaskSize - dstPixFmt.alphaMaskSize;
-  if (i>0) 
-    srcMasker+= OG_MASKS[dstPixFmt.alphaMaskSize] << (srcPixFmt.alphaFieldPosition+i);
+  if (i > 0)
+    srcMasker += OG_MASKS[dstPixFmt.alphaMaskSize] << (srcPixFmt.alphaFieldPosition + i);
   else
-    srcMasker+= OG_MASKS[srcPixFmt.alphaMaskSize] << srcPixFmt.alphaFieldPosition;
+    srcMasker += OG_MASKS[srcPixFmt.alphaMaskSize] << srcPixFmt.alphaFieldPosition;
 
   /*
    * sort in descending order based on srcFieldPos (oth field will hold
    * highest position value)
    */
- 
-  for (i = 1; i < 4; i++ ) 
+
+  for (i = 1; i < 4; i++)
     for (j = 0; j < i; j++) {
       if (srcFieldPos[j] < srcFieldPos[i]) {
         tmpb = srcFieldPos[j];
         srcFieldPos[j] = srcFieldPos[i];
         srcFieldPos[i] = tmpb;
-        
+
         tmpb = srcFieldSize[j];
         srcFieldSize[j] = srcFieldSize[i];
         srcFieldSize[i] = tmpb;
-        
+
         tmpb = channelIdx[j];
         channelIdx[j] = channelIdx[i];
         channelIdx[i] = tmpb;
       } // if
     } // for j
 
-  srcShifter = ((srcFieldSize[0] << 24) |
-                (srcFieldSize[1] << 16) |
-                (srcFieldSize[2] << 8) |
-                (srcFieldSize[3]));
+  srcShifter = ((srcFieldSize[0] << 24) | (srcFieldSize[1] << 16) | (srcFieldSize[2] << 8) | (srcFieldSize[3]));
 
-  dstShifter = ((dstShifters[channelIdx[0]] << 24) |
-                (dstShifters[channelIdx[1]] << 16) |
-                (dstShifters[channelIdx[2]] << 8) |
-                (dstShifters[channelIdx[3]]));
+  dstShifter = ((dstShifters[channelIdx[0]] << 24) | (dstShifters[channelIdx[1]] << 16) | (dstShifters[channelIdx[2]] << 8) | (dstShifters[channelIdx[3]]));
   return;
 } // ogPixCon::ogPixCon
 
-uInt32 
-ogPixCon::ConvPix(uInt32 pixel) {
+uInt32 ogPixCon::ConvPix(uInt32 pixel) {
   __asm__ __volatile__(
-       "  xor   %%ebx, %%ebx       \n"    // xor     ebx, ebx
-       "  xor   %%edi, %%edi       \n"    // xor     edi, edi
-       "                           \n"
-       "  push  %%eax              \n"    // push    eax
-       "                           \n"
-       "  and   %%edx, %%esi       \n"    // and     esi, edx
-       "  xor   %%eax, %%eax       \n"    // xor     eax, eax
-       "  xor   %%edx, %%edx       \n"    // xor     edx, edx
-       "                           \n"
-       "  shrdl %%cl, %%esi, %%eax \n"    // shrd    eax, esi, cl
-       "  shr   %%cl, %%esi        \n"    // shr     esi, cl
-       "  mov   %%ch, %%cl         \n"    // mov     cl, ch
-       "  shrdl %%cl, %%esi, %%ebx \n"    // shrd    ebx, esi, cl
-       "  shr   %%cl, %%esi        \n"    // shr     esi, cl
-       "  shr   $16, %%ecx         \n"    // shr     ecx, 16
-       "  shrdl %%cl, %%esi, %%edx \n"    // shrd    edx, esi, cl
-       "  shr   %%cl, %%esi        \n"    // shr     esi, cl
-       "  mov   %%ch, %%cl         \n"    // mov     cl, ch
-       "  shrdl %%cl, %%esi, %%edi \n"    // shrd    edi, esi, cl
-       "                           \n"
-       "  pop   %%ecx              \n"    // pop     ecx
-       "                           \n"
-       "  shr   %%cl, %%eax        \n"    // shr     eax, cl
-       "  shr   $8, %%ecx          \n"    // shr     ecx, 8
-       "  shr   %%cl, %%ebx        \n"    // shr     ebx, cl
-       "  shr   $8, %%ecx          \n"    // shr     ecx, 8
-       "  shr   %%cl, %%edx        \n"    // shr     edx, cl
-       "  shr   $8, %%ecx          \n"    // shr     ecx, 8
-       "  shr   %%cl, %%edi        \n"    // shr     edi, cl
-       "                           \n"
-       "  or    %%ebx, %%eax       \n"    // or      eax, ebx
-       "  or    %%edi, %%edx       \n"    // or      edx, edi
-       "  nop                      \n"    // nop
-       "  or    %%edx, %%eax       \n"    // or      eax, edx
+    "  xor   %%ebx, %%ebx       \n"    // xor     ebx, ebx
+    "  xor   %%edi, %%edi       \n"// xor     edi, edi
+    "                           \n"
+    "  push  %%eax              \n"// push    eax
+    "                           \n"
+    "  and   %%edx, %%esi       \n"// and     esi, edx
+    "  xor   %%eax, %%eax       \n"// xor     eax, eax
+    "  xor   %%edx, %%edx       \n"// xor     edx, edx
+    "                           \n"
+    "  shrdl %%cl, %%esi, %%eax \n"// shrd    eax, esi, cl
+    "  shr   %%cl, %%esi        \n"// shr     esi, cl
+    "  mov   %%ch, %%cl         \n"// mov     cl, ch
+    "  shrdl %%cl, %%esi, %%ebx \n"// shrd    ebx, esi, cl
+    "  shr   %%cl, %%esi        \n"// shr     esi, cl
+    "  shr   $16, %%ecx         \n"// shr     ecx, 16
+    "  shrdl %%cl, %%esi, %%edx \n"// shrd    edx, esi, cl
+    "  shr   %%cl, %%esi        \n"// shr     esi, cl
+    "  mov   %%ch, %%cl         \n"// mov     cl, ch
+    "  shrdl %%cl, %%esi, %%edi \n"// shrd    edi, esi, cl
+    "                           \n"
+    "  pop   %%ecx              \n"// pop     ecx
+    "                           \n"
+    "  shr   %%cl, %%eax        \n"// shr     eax, cl
+    "  shr   $8, %%ecx          \n"// shr     ecx, 8
+    "  shr   %%cl, %%ebx        \n"// shr     ebx, cl
+    "  shr   $8, %%ecx          \n"// shr     ecx, 8
+    "  shr   %%cl, %%edx        \n"// shr     edx, cl
+    "  shr   $8, %%ecx          \n"// shr     ecx, 8
+    "  shr   %%cl, %%edi        \n"// shr     edi, cl
+    "                           \n"
+    "  or    %%ebx, %%eax       \n"// or      eax, ebx
+    "  or    %%edi, %%edx       \n"// or      edx, edi
+    "  nop                      \n"// nop
+    "  or    %%edx, %%eax       \n"// or      eax, edx
 
-  : "=a" (pixel)                        // %0
-  : "S" (pixel), "d" (srcMasker),       // %1, %2
-    "c" (srcShifter), "a" (dstShifter)  // %3, %4
- //   "ecx" (srcShifter), "eax" (dstShifter)    // %2, %3
+    : "=a" (pixel)// %0
+    : "S" (pixel), "d" (srcMasker),// %1, %2
+    "c" (srcShifter), "a" (dstShifter)// %3, %4
+    //   "ecx" (srcShifter), "eax" (dstShifter)    // %2, %3
   );
   return pixel;
-}; // ogPixCon::ConvPix
+}
+;
+// ogPixCon::ConvPix

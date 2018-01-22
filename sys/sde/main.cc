@@ -51,12 +51,10 @@ extern "C" void sdeThread() {
   font->SetFGColor(255, 255, 255, 255);
   font->SetBGColor(0, 0, 0, 255);
 
-
   printOff = 0x1;
 
   screen->ogCreate(800, 600, OG_PIXFMT_16BPP);
   screen->ogClear(screen->ogPack(122, 140, 163));
-
 
   systemVitals->screen = screen;
   systemVitals->font = font;
