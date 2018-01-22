@@ -12,8 +12,7 @@ LINKER = ld
 REMOVE = rm -fr
 
 #  Objects
-OBJS = objgfx40.o ogFont.o ogPixelFmt.o ogPixCon.o ogDisplay_UbixOS.o sde.o main.o
-# colours.o
+OBJS = objgfx40.o ogFont.o ogPixelFmt.o ogPixCon.o ogDisplay_UbixOS.o sde.o main.o colours.o
 
 CFLAGS += -fno-rtti -nostdinc++
 

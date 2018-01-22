@@ -28,11 +28,11 @@
 #ifndef _SDE_SDE_H
 #define _SDE_SDE_H
 
+#include <sys/types.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include <sys/types.h>
 
 #define registerWindow   1
 #define windowReady      2

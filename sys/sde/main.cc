@@ -26,14 +26,17 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+//#include <ubixos/sched.h>
+//#include <lib/kprintf.h>
+//#include <vmm/paging.h>
+//#include <lib/bioscall.h>
+
 extern "C" {
-#include <ubixos/sched.h>
-#include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <ubixos/vitals.h>
+#include <ubixos/exec.h>
 #include <vmm/vmm.h>
-#include <vmm/paging.h>
-#include <lib/bioscall.h>
+#include <lib/kmalloc.h>
 }
 
 #include <sde/sde.h>
@@ -41,7 +44,11 @@ extern "C" {
 #include <sde/ogDisplay_UbixOS.h>
 #include <objgfx40/ogFont.h>
 
-extern "C" void sdeThread() {
+void sdeTestThread();
+
+extern "C" void sdeThread();
+
+void sdeThread() {
   ogSurface *screen = new ogDisplay_UbixOS();
 
 
@@ -65,6 +72,8 @@ extern "C" void sdeThread() {
   ogprintOff = (int) 0x0;
 
   screen->ogSetAntiAliasing(false);
+
+  execThread(&sdeTestThread, 0x2000, 0x0);
 
   //ogSurface::RawLine(100, 100, 200, 200, 0xDEADBEEF)
   screen->RawLine(100, 100, 200, 200, 0xDEADBEEF);
@@ -112,7 +121,6 @@ extern "C" void sdeThread() {
           }
           vmm_unmapPages(buf->buffer, buf->bSize, VMM_KEEP);
           vmm_unmapPages(buf->lineOfs, buf->lSize, VMM_KEEP);
-          //kfree(tmp->buf);
           kfree(tmp);
           tmp = 0x0;
         break;

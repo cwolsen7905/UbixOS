@@ -53,7 +53,7 @@ _start:
   mov   %eax,%gs
   mov   %eax,%ss
   mov   $kStack,%eax
-  addl  $0x2000,%eax
+  addl  $0x1000,%eax
   mov   %esp,%edx
   mov   %eax,%esp
   mov   %eax,%ebp 
@@ -73,4 +73,4 @@ start_next:
   subl  $0xE,%esp;
   call kmain
 .data
-.comm kStack,0x2000
+.comm kStack,0x1000

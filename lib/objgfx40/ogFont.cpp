@@ -5,6 +5,7 @@ extern "C" {
 #ifdef __UBIXOS_KERNEL__
 #include <vfs/file.h>
 #include <sys/types.h>
+#include <lib/kprintf.h>
 #else
 #include <stdlib.h>
 #include <stdio.h>
@@ -118,7 +119,7 @@ void ogBitFont::JustifyText(ogSurface& dest, ogTextAlign horiz, ogTextAlign vert
 
 bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
 #ifdef __UBIXOS_KERNEL__
-  fileDescriptor * infile;
+  fileDescriptor_t *infile;
 #else
   FILE * infile;
 #endif
@@ -127,7 +128,7 @@ bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
 
   delete[] fontData;
 
-  infile = fopen(fontFile, "rb");
+  infile = fopen(fontFile, "r");
 
   //fseek(infile, offset, SEEK_SET);
 
@@ -138,6 +139,7 @@ bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
 
   if (numOfChars == 0)
     numOfChars = 256;
+
   startingChar = header.startingChar;
 
   memset(fontDataIdx, 0, sizeof(fontDataIdx));
@@ -151,6 +153,7 @@ bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
     charWidthTable[tmp] = width;
     charHeightTable[tmp] = height;
     fontDataIdx[tmp] = (size * (tmp - startingChar));
+    //kprintf("fontDataIdx[%i]", tmp);
   } // for tmp
 
   fontData = new uint8_t[fontDataSize];

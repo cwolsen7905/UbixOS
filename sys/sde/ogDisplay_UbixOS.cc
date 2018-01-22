@@ -29,14 +29,14 @@
 #include <objgfx40/objgfx40.h>
 #include <objgfx40/defpal.inc>
 #include <sde/ogDisplay_UbixOS.h>
-#include <lib/bioscall.h>
+
+extern "C" {
 #include <vmm/vmm.h>
-#include <vmm/paging.h>
 #include <lib/kprintf.h>
-#include <sys/io.h>
-#include <string.h>
-#include <ubixos/sched.h>
+#include <lib/bioscall.h>
 #include <ubixos/kpanic.h>
+#include <sys/io.h>
+}
 
 /*
  *

@@ -259,7 +259,7 @@ int ogprintOff = 0x1;
 int kprintf(const char *fmt, ...) {
   va_list ap;
   int retval;
-  char buf[1024];
+  char buf[512];
 
   va_start(ap, fmt);
 

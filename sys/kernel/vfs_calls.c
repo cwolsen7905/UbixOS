@@ -102,7 +102,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
         if ( c != 0x0 ) {
           buf[x++] = c;
           bf[0] = c;
-          kprint(bf);
+          kprintf(bf);
         }
 
         if ( c == '\n') {
@@ -121,7 +121,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
       buf[x++] = '\n';
 
           bf[0] = '\n';
-          kprint(bf);
+          kprintf(bf);
 
    //MROlsen 2018 kprintf("READ: %i", x);
 
@@ -137,7 +137,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     buffer = kmalloc(1024);
     memcpy(buffer, uap->buf, uap->nbyte);
     printColor += 1;
-    kprint(buffer);
+    kprintf(buffer);
     printColor = defaultColor;
     kfree(buffer);
     td->td_retval[0] = uap->nbyte;
@@ -145,7 +145,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
   else if (uap->fd == 1) {
     buffer = kmalloc(1024);
     memcpy(buffer, uap->buf, uap->nbyte);
-    kprint(buffer);
+    kprintf(buffer);
     kfree(buffer);
     td->td_retval[0] = uap->nbyte;
   }

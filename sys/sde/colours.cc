@@ -26,7 +26,6 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-extern "C" {
 #include <sde/sde.h>
 #include <sde/ogDisplay_UbixOS.h>
 #include <objgfx40/objgfx40.h>
@@ -34,7 +33,7 @@ extern "C" {
 
 #include <sys/video.h>
 #include <vmm/paging.h>
-#include <lib/string.h>
+#include <string.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/sched.h>
@@ -115,5 +114,3 @@ extern "C" {
     } // while
 
   } // sdeTestThread
-
-}
