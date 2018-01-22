@@ -76,9 +76,9 @@ int idt_init() {
   );
 
   /*
-  for (int i = 0;i < 256;i++)
-    setVector(intNull, i, dPresent + dTrap + dDpl3);
-  */
+   for (int i = 0;i < 256;i++)
+   setVector(intNull, i, dPresent + dTrap + dDpl3);
+   */
 
   /* Set up the basic vectors for the reserved ints */
   setVector(_int0, 0, dPresent + dInt + dDpl0);
@@ -100,6 +100,7 @@ int idt_init() {
   setVector(_sys_call, 0x81, dPresent + dTrap + dDpl3);
   setVector(timerInt, 0x68, (dInt + dPresent + dDpl0));
 
+  memset(gpfTSS, 0x0, sizeof(struct tssStruct));
   gpfTSS->back_link = 0x0;
   gpfTSS->esp0 = 0x0;
   gpfTSS->ss0 = 0x0;
@@ -110,8 +111,8 @@ int idt_init() {
   gpfTSS->cr3 = (unsigned int) kernelPageDirectory;
   gpfTSS->eip = (unsigned int) &_int13;
   gpfTSS->eflags = 0x206;
-  gpfTSS->esp = 0x1D000;
-  gpfTSS->ebp = 0x1D000;
+  gpfTSS->esp = vmm_getFreeKernelPage(sysID, 1) + (PAGE_SIZE - 0x4); //0x1D000;
+  gpfTSS->ebp = 0x0; // 0x1D000;
   gpfTSS->esi = 0x0;
   gpfTSS->edi = 0x0;
   gpfTSS->es = 0x10;
@@ -199,7 +200,7 @@ asm(
 );
 
 void __int0(struct trapframe *frame) {
-kpanic("BALLS");
+  kpanic("BALLS");
   die_if_kernel("Divid-by-Zer0", frame, 0);
   kpanic("int0: Divide-by-Zero [%i]\n", _current->id);
   endTask(_current->id);
@@ -261,7 +262,6 @@ void __int6(struct trapframe *frame) {
   endTask(_current->id);
   sched_yield();
 }
-
 
 asm(
   ".globl _int8       \n"
@@ -452,7 +452,8 @@ void _int13() {
     break;
     default: /* something wrong */
       kprintf("NonHandled OpCode [0x%X:0x%X]\n", _current->id, ip[0]);
-while(1) asm("nop");
+      while (1)
+        asm("nop");
       _current->state = DEAD;
     break;
   }
