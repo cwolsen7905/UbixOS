@@ -43,6 +43,54 @@
 
 #define FP_TO_LINEAR(seg, off) ((void*) ((((uint16_t) (seg)) << 4) + ((uint16_t) (off))))
 
+static uint32_t gpfStack = 0x0;
+
+void intNull();
+
+void _divideError();
+void __divideError(struct trapframe *);
+
+void _debug();
+void __debug(struct trapframe *);
+
+void _nmi();
+void __nmi(struct trapframe *);
+
+static void _int3();
+static void _int4();
+static void _int5();
+static void _int6();
+static void _int7();
+
+void _doubleFault();
+void __doubleFault(struct trapframe *);
+
+static void _int9();
+static void _int10();
+static void _int11();
+static void _int12();
+
+void _gpf();
+void __gpf(struct trapframe *);
+
+void _floatingPoint();
+void __floatingPoint(struct trapframe *);
+
+void _alignmentCheck();
+void __alignmentCheck(struct trapframe *);
+
+void _machineCheck();
+void __machineCheck(struct trapframe *);
+
+void _simd();
+void __simd(struct trapframe *);
+
+void _virtualization();
+void __virtualization(struct trapframe *);
+
+void _security();
+void __security(struct trapframe *);
+
 static ubixDescriptorTable(ubixIDT, 256) {};
 
 static struct {
@@ -61,7 +109,7 @@ static struct {
  ************************************************************************/
 int idt_init() {
   struct tssStruct *sfTSS = (struct tssStruct *) 0x6200;
-  struct tssStruct *gpfTSS = (struct tssStruct *) 0x4200;
+  struct tssStruct *gpfTSS = (struct tssStruct *) 0x5200;
 
   /* Load the IDT into the system */
   asm volatile(
@@ -75,32 +123,41 @@ int idt_init() {
     : "r" ((char *)&loadidt)
   );
 
-  /*
    for (int i = 0;i < 256;i++)
    setVector(intNull, i, dPresent + dTrap + dDpl3);
-   */
 
   /* Set up the basic vectors for the reserved ints */
-  setVector(_int0, 0, dPresent + dInt + dDpl0);
-  setVector(_int1, 1, dPresent + dInt + dDpl0);
-  setVector(_int2, 2, dPresent + dInt + dDpl0);
+  setVector(_divideError, 0, dPresent + dInt + dDpl0);
+  setVector(_debug, 1, dPresent + dInt + dDpl0);
+  setVector(_nmi, 2, dPresent + dInt + dDpl0);
   setVector(_int3, 3, dPresent + dInt + dDpl0);
   setVector(_int4, 4, dPresent + dInt + dDpl0);
   setVector(_int5, 5, dPresent + dInt + dDpl0);
   setVector(_int6, 6, dPresent + dTrap + dDpl0);
   setVector(_int7, 7, dPresent + dInt + dDpl0);
-  setTaskVector(8, dPresent + dTask + dDpl0, 0x40);
+  setVector(_doubleFault, 8, dPresent + dInt + dDpl0);
+  //setTaskVector(8, dPresent + dTask + dDpl0, 0x40);
   setVector(_int9, 9, dPresent + dInt + dDpl0);
   setVector(_int10, 10, dPresent + dInt + dDpl0);
   setVector(_int11, 11, dPresent + dInt + dDpl0);
   setVector(_int12, 12, dPresent + dInt + dDpl0);
+  //setVector(_gpf, 13, dPresent + dInt + dDpl0);
   setTaskVector(13, dPresent + dTask + dDpl0, 0x38);
   setVector(_vmm_pageFault, 14, dPresent + dInt + dDpl0);
+  setVector(_floatingPoint, 16, dPresent + dInt + dDpl0);
+  setVector(_alignmentCheck, 17, dPresent + dInt + dDpl0);
+  setVector(_machineCheck, 18, dPresent + dInt + dDpl0);
+  setVector(_simd, 19, dPresent + dInt + dDpl0);
+  setVector(_virtualization, 20, dPresent + dInt + dDpl0);
+  setVector(_security, 30, dPresent + dInt + dDpl0);
   setVector(_sys_call_posix, 0x80, dPresent + dTrap + dDpl3);
   setVector(_sys_call, 0x81, dPresent + dTrap + dDpl3);
   setVector(timerInt, 0x68, (dInt + dPresent + dDpl0));
 
   memset(gpfTSS, 0x0, sizeof(struct tssStruct));
+
+  gpfStack = 0x1D000;//(uint32_t)vmm_getFreeKernelPage(sysID, 1) + (PAGE_SIZE - 0x4);
+
   gpfTSS->back_link = 0x0;
   gpfTSS->esp0 = 0x0;
   gpfTSS->ss0 = 0x0;
@@ -109,9 +166,9 @@ int idt_init() {
   gpfTSS->esp2 = 0x0;
   gpfTSS->ss2 = 0x0;
   gpfTSS->cr3 = (unsigned int) kernelPageDirectory;
-  gpfTSS->eip = (unsigned int) &_int13;
+  gpfTSS->eip = (unsigned int) &_gpf;
   gpfTSS->eflags = 0x206;
-  gpfTSS->esp = vmm_getFreeKernelPage(sysID, 1) + (PAGE_SIZE - 0x4); //0x1D000;
+  gpfTSS->esp = gpfStack; //0x1D000;
   gpfTSS->ebp = 0x0; // 0x1D000;
   gpfTSS->esi = 0x0;
   gpfTSS->edi = 0x0;
@@ -125,9 +182,10 @@ int idt_init() {
   gpfTSS->trace_bitmap = 0x0000;
   gpfTSS->io_map = 0x8000;
 
+  /*
   memset(sfTSS, 0x0, sizeof(struct tssStruct));
   sfTSS->cr3 = (unsigned int) kernelPageDirectory;
-  sfTSS->eip = (unsigned int) &_int8;
+  sfTSS->eip = (unsigned int) &__int8;
   sfTSS->eflags = 0x206;
   sfTSS->esp = 0x1C000;
   sfTSS->ebp = 0x1C000;
@@ -138,6 +196,7 @@ int idt_init() {
   sfTSS->fs = 0x10;
   sfTSS->gs = 0x10;
   sfTSS->io_map = 0x8000;
+  */
 
   /* Print out information for the IDT */
   kprintf("idt0 - Address: [0x%X]\n", &ubixIDT);
@@ -175,64 +234,129 @@ void setTaskVector(uInt8 interrupt, uInt16 controlMajor, uInt8 selector) {
 }
 
 /* Null Intterupt Descriptor */
-void intNull() {
-  kprintf("Invalid Interrupt[%i]\n", _current->id);
+void _intNull(struct trapframe *frame) {
+  die_if_kernel("invalid exception", frame, 0x0);
 }
 
 asm(
-  ".globl _int0  \n"
-  "_int0:        \n"
-  "  pushl $0x0  \n"
-  "  pushl $0x6  \n"
-  "  pushal      \n" /* Save all registers */
-  "  push %ds    \n"
-  "  push %es    \n"
-  "  push %fs    \n"
-  "  push %gs    \n"
-  "  push %esp   \n"
-  "  call __int0 \n"
-  "  pop %gs     \n"
-  "  pop %fs     \n"
-  "  pop %es     \n"
-  "  pop %ds     \n"
-  "  popal       \n"
-  "  iret        \n" /* Exit interrupt */
+  ".globl intNull \n"
+  "intNull:       \n"
+  "  pushl $0x0 \n"
+  "  pushl $0x0 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call _intNull \n"
+  "  pop %gs      \n"
+  "  pop %fs    \n"
+  "  pop %es    \n"
+  "  pop %ds    \n"
+  "  popal      \n"
+  "  iret       \n"
 );
 
-void __int0(struct trapframe *frame) {
-  kpanic("BALLS");
-  die_if_kernel("Divid-by-Zer0", frame, 0);
-  kpanic("int0: Divide-by-Zero [%i]\n", _current->id);
+void __divideError(struct trapframe *frame) {
+  die_if_kernel("Divid-by-Zero", frame, 0);
+  endTask(_current->id);
+    sched_yield();
+}
+
+asm(
+  ".globl _divideError \n"
+  "_divideError:       \n"
+  "  pushl $0x0 \n"
+  "  pushl $0x6 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call _divideError  \n"
+  "  pop %gs      \n"
+  "  pop %fs    \n"
+  "  pop %es    \n"
+  "  pop %ds    \n"
+  "  popal      \n"
+  "  iret       \n" 
+);
+
+void __debug(struct trapframe *frame) {
+  die_if_kernel("debug", frame, 0x2);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int1() {
-  kpanic("int1: Debug exception [%i]\n", _current->id);
+asm(
+  ".globl _debug \n"
+  "_debug:       \n"
+  "  pushl $0x0 \n"
+  "  pushl $0x6 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call _debug  \n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
+
+void __nmi(struct trapframe *frame) {
+  die_if_kernel("nmi", frame, 0x2);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int2() {
-  kpanic("int2: unknown error [%i]\n", _current->id);
-  endTask(_current->id);
-  sched_yield();
-}
+asm(
+  ".globl _nmi \n"
+  "_nmi:       \n"
+  "  pushl $0x0 \n"
+  "  pushl $0x6 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call _nmi  \n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
 
-void _int3() {
+
+static void _int3() {
   kpanic("int3: Breakpoint [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int4() {
+static void _int4() {
   kpanic("int4: Overflow [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int5() {
+static void _int5() {
   kpanic("int5: Bounds check [%i]\n", _current->id);
+  endTask(_current->id);
+  sched_yield();
+}
+
+void __int6(struct trapframe *frame) {
+  die_if_kernel("invalid_opcode", frame, 6);
   endTask(_current->id);
   sched_yield();
 }
@@ -257,15 +381,15 @@ asm(
   "  iret                 \n" /* Exit interrupt                           */
 );
 
-void __int6(struct trapframe *frame) {
-  die_if_kernel("invalid_opcode", frame, 6);
+void __doubleFault(struct trapframe *frame) {
+  die_if_kernel("double fault", frame, 0x8);
   endTask(_current->id);
   sched_yield();
 }
 
 asm(
-  ".globl _int8       \n"
-  "_int8:                \n"
+  ".globl _doubleFault       \n"
+  "_doubleFault:                \n"
   "  pushl $0x8           \n"
   "  pushal               \n" /* Save all registers           */
   "  push %ds             \n"
@@ -273,7 +397,7 @@ asm(
   "  push %fs             \n"
   "  push %gs             \n"
   "  push %esp            \n"
-  "  call __int8  \n"
+  "  call __doubleFault   \n"
   "  pop %gs              \n"
   "  pop %fs              \n"
   "  pop %es              \n"
@@ -282,60 +406,53 @@ asm(
   "  iret                 \n" /* Exit interrupt                           */
 );
 
-void __int8(struct trapframe *frame) {
-  die_if_kernel("INT8 Double Fault", frame, 8);
-  endTask(_current->id);
-  sched_yield();
-}
-
-void _int9() {
+static void _int9() {
   kpanic("int9: Coprocessor Segment Overrun! [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int10() {
+static void _int10() {
   kpanic("int10: Invalid TSS! [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int11() {
+static void _int11() {
   kpanic("int11: Segment Not Present! [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int12() {
+static void _int12() {
   kpanic("int12: Stack-Segment Fault! [%i]\n", _current->id);
   endTask(_current->id);
   sched_yield();
 }
 
-void _int13() {
+void __gpf(struct trapframe *frame) {
   uint8_t *ip = 0x0;
   uint16_t *stack = 0x0, *ivt = 0x0;
   uint32_t *stack32 = 0x0;
   bool isOperand32 = FALSE, isAddress32 = FALSE;
-  struct tssStruct *gpfTSS = (struct tssStruct *) 0x4200;
 
-  irqDisable(0x0);
+  struct tssStruct *gpfTSS = (struct tssStruct *) 0x5200;
 
-  gpfTSS->eip = (unsigned int) &_int13;
-  gpfTSS->esp = 0x1D000;
-  gpfTSS->ebp = 0x1D000;
-  gpfTSS->eflags = 0x206;
-
+  gpfEnter:
+  kprintf("DF");
   ip = FP_TO_LINEAR(_current->tss.cs, _current->tss.eip);
-  ivt = (uInt16 *) 0x0;
-  stack = (uInt16 *) FP_TO_LINEAR(_current->tss.ss, _current->tss.esp);
-  stack32 = (uInt32 *) stack;
+
+  ivt = (uint16_t *) 0x0;
+
+  stack = (uint16_t *) FP_TO_LINEAR(_current->tss.ss, _current->tss.esp);
+  stack32 = (uint32_t *) stack;
 
   gpfStart: switch (ip[0]) {
     case 0xCD: /* INT n */
       switch (ip[1]) {
         case 0x69:
           kprintf("Exit Bios [0x%X]\n", _current->id);
+          //while (1) asm("hlt");
           _current->state = DEAD;
         break;
         case 0x20:
@@ -345,13 +462,14 @@ void _int13() {
         default:
           stack -= 3;
           _current->tss.esp = ((_current->tss.esp & 0xffff) - 6) & 0xffff;
-          stack[0] = (uInt16) (_current->tss.eip + 2);
+          stack[0] = (uint16_t) (_current->tss.eip + 2);
           stack[1] = _current->tss.cs;
-          stack[2] = (uInt16) _current->tss.eflags;
+          stack[2] = (uint16_t) _current->tss.eflags;
           if (_current->oInfo.v86If)
             stack[2] |= EFLAG_IF;
           else
             stack[2] &= ~EFLAG_IF;
+
           _current->tss.cs = ivt[ip[1] * 2 + 1] & 0xFFFF;
           _current->tss.eip = ivt[ip[1] * 2] & 0xFFFF;
         break;
@@ -361,12 +479,14 @@ void _int13() {
       isOperand32 = TRUE;
       ip++;
       _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      kprintf("0x66");
       goto gpfStart;
     break;
     case 0x67:
       isAddress32 = TRUE;
       ip++;
       _current->tss.eip = (uInt16) (_current->tss.eip + 1);
+      kprintf("0x67");
       goto gpfStart;
     break;
     case 0xF0:
@@ -429,7 +549,7 @@ void _int13() {
       _current->tss.eflags = EFLAG_IF | EFLAG_VM | stack[2];
       _current->oInfo.v86If = (stack[2] & EFLAG_IF) != 0;
       _current->tss.esp = ((_current->tss.esp & 0xffff) + 6) & 0xffff;
-      /* kprintf("iret [0x%X]\n",_current->id); */
+      kprintf("iret [0x%X]\n",_current->id);
     break;
     case 0xEC: /* IN AL,DX */
       _current->tss.eax = (_current->tss.eax & ~0xFF) | inportByte(_current->tss.edx);
@@ -452,15 +572,194 @@ void _int13() {
     break;
     default: /* something wrong */
       kprintf("NonHandled OpCode [0x%X:0x%X]\n", _current->id, ip[0]);
-      while (1)
-        asm("nop");
-      _current->state = DEAD;
+      //_current->state = DEAD;
     break;
   }
+  kprintf("RET1");
   irqEnable(0);
-  while (1)
-    asm("nop");
+  sched_yield();
+  kprintf("RET2");
+  goto gpfEnter;
 }
+
+asm(
+  ".globl _gpf     \n"
+  "_gpf:           \n"
+  "  cli           \n"
+  "  pushl $0x13   \n"
+  "  pushal        \n" /* Save all registers           */
+  "  push %ds      \n"
+  "  push %es      \n"
+  "  push %fs      \n"
+  "  push %gs      \n"
+  "  push %esp     \n"
+  "  call __gpf    \n"
+  "  add $0x4,%esp \n"
+  "  mov %esp,%eax \n"
+  "  pop %gs       \n"
+  "  pop %fs       \n"
+  "  pop %es       \n"
+  "  pop %ds       \n"
+  "  popal         \n"
+  "  sti           \n"
+  "  iret          \n" /* Exit interrupt                           */
+);
+
+
+void __floatingPoint(struct trapframe *frame) {
+  die_if_kernel("floating point", frame, 0x10);
+  endTask(_current->id);
+  sched_yield();
+}
+
+asm(
+  ".globl _floatingPoint \n"
+  "_floatingPoint:       \n"
+  "  pushl $0x0 \n"
+  "  pushl $0x10 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call __floatingPoint  \n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
+
+void __alignmentCheck(struct trapframe *frame) {
+  die_if_kernel("alignment check", frame, 0x11);
+  endTask(_current->id);
+  sched_yield();
+}
+
+asm(
+  ".globl _alignmentCheck \n"
+  "_alignmentCheck:       \n"
+  "  pushl $0x11 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call __alignmentCheck  \n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
+
+void __machineCheck(struct trapframe *frame) {
+  die_if_kernel("machine check", frame, 0x12);
+  endTask(_current->id);
+  sched_yield();
+}
+
+asm(
+  ".globl _machineCheck \n"
+  "_machineCheck:       \n"
+   " pushl $0x0\n"
+  "  pushl $0x12 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call __machineCheck  \n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
+
+void __simd(struct trapframe *frame) {
+  die_if_kernel("simd", frame, 0x13);
+  endTask(_current->id);
+  sched_yield();
+}
+
+asm(
+  ".globl _simd \n"
+  "_simd:       \n"
+  "  iret\n"
+  "  pushl $0x0\n"
+  "  pushl $0x13 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call __simd  \n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
+
+void __virtualization(struct trapframe *frame) {
+  die_if_kernel("virtualization", frame, 0x14);
+  endTask(_current->id);
+  sched_yield();
+}
+
+asm(
+  ".globl _virtualization \n"
+  "_virtualization:       \n"
+  "  pushl $0x0  \n"
+  "  pushl $0x14 \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call __virtualization  \n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
+
+void __security(struct trapframe *frame) {
+  die_if_kernel("security exception", frame, 0x1E);
+  endTask(_current->id);
+  sched_yield();
+}
+
+asm(
+  ".globl _security \n"
+  "_security:       \n"
+  "  pushl $0x1E \n"
+  "  pushal     \n" /* Save all registers */
+  "  push %ds   \n"
+  "  push %es   \n"
+  "  push %fs   \n"
+  "  push %gs   \n"
+  "  push %esp  \n"
+  "  call __security\n"
+  "  pop %gs      \n"
+  "  pop %fs      \n"
+  "  pop %es      \n"
+  "  pop %ds      \n"
+  "  popal        \n"
+  "  iret         \n"
+);
 
 /* Removed static however this is the only place it's called from */
 void mathStateRestore() {
@@ -488,7 +787,6 @@ void mathStateRestore() {
   //Return
 }
 
-void _int7();
 
 asm(
   ".globl _int7              \n"

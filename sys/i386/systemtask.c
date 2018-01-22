@@ -113,7 +113,8 @@ void systemTask() {
       kfree(tmpTask);
 
     }
-    videoBuffer[0] = systemVitals->sysTicks;
+    if (ogprintOff == 1)
+      videoBuffer[0] = systemVitals->sysTicks;
     sched_yield();
   }
 

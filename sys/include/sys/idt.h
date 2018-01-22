@@ -40,47 +40,8 @@
 int idt_init();
 void setVector(void *handler, unsigned char interrupt, unsigned short controlMajor);
 void setTaskVector(uInt8 interrupt, uInt16 controlMajor, uInt8 selector);
-void intNull();
 
-void _int0();
-void _int1();
-void _int2();
-void _int3();
-void _int4();
-void _int5();
-void _int6();
-void _int7();
-void _int8();
-void _int9();
-void _int10();
-void _int11();
-void _int12();
-void _int13();
+
 void timerInt();
 
 #endif
-
-/***
- $Log: idt.h,v $
- Revision 1.1.1.1  2006/06/01 12:46:15  reddawg
- ubix2
-
- Revision 1.2  2005/10/12 00:13:37  reddawg
- Removed
-
- Revision 1.1.1.1  2005/09/26 17:23:52  reddawg
- no message
-
- Revision 1.5  2004/09/07 21:54:38  reddawg
- ok reverted back to old scheduling for now....
-
- Revision 1.3  2004/07/09 13:16:41  reddawg
- idt: idtInit to idt_init
- Adjusted Startup Routines
-
- Revision 1.2  2004/05/21 15:12:17  reddawg
- Cleaned up
-
-
- END
- ***/

@@ -48,9 +48,7 @@ extern "C" {
  */
 
 void initVESAMode(uInt16 mode) {
-  kprintf("Pre-initVESAMode\n");
   biosCall(0x10, 0x4F02, mode, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0);
-  kprintf("Post-initVESAMode\n");
   return;
 }
 
@@ -68,9 +66,7 @@ ogDisplay_UbixOS::ogDisplay_UbixOS(void) {
 } // ogDisplay_UbixOS::ogDisplay_UbixOS
 
 void ogDisplay_UbixOS::GetModeInfo(uInt16 mode) {
-  //kprintf("Pre-getModeInfo\n");
   biosCall(0x10, 0x4F01, 0x0, mode, 0x0, 0x0, 0x0, 0x1120, 0x0);
-  //kprintf("Post-getModeInfo\n");
   return;
 } // ogDisplay_UbixOS::GetModeInfo
 
@@ -79,9 +75,7 @@ void ogDisplay_UbixOS::GetVESAInfo(void) {
   VESAInfo->VBESignature[1] = 'B';
   VESAInfo->VBESignature[2] = 'E';
   VESAInfo->VBESignature[3] = '2';
-  kprintf("Pre-getVESAInfo\n");
   biosCall(0x10, 0x4F00, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1100, 0x0);
-  kprintf("Post-getVESAInfo\n");
   return;
 } // ogDisplay_UbixOS::GetVESAInfo
 

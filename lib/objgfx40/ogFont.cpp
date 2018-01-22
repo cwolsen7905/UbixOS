@@ -4,6 +4,7 @@
 extern "C" {
 #ifdef __UBIXOS_KERNEL__
 #include <vfs/file.h>
+#include <sys/types.h>
 #else
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,27 +16,14 @@ extern "C" {
 //using namespace std;
 
 typedef struct {
-    char ID[3];
-    uint8_t version;
-    uint8_t width, height;
-    uint8_t numOfChars;
-    uint8_t startingChar;
-    uint8_t colourType;
-    uint8_t paddington[7];
+  char ID[3];
+  uint8_t version;
+  uint8_t width, height;
+  uint8_t numOfChars;
+  uint8_t startingChar;
+  uint8_t colourType;
+  uint8_t paddington[7];
 } ogDPFHeader;
-
-static
-bool fileExists(const char *file) {
-#ifdef __UBIXOS_KERNEL__
-  fileDescriptor *f = fopen(file, "rb");
-#else
-  FILE *f = fopen(file, "rb");
-#endif
-  if (!f)
-    return false;
-  fclose(f);
-  return true;
-}
 
 ogBitFont::ogBitFont(void) {
   memset(fontDataIdx, 0, sizeof(fontDataIdx));
@@ -60,7 +48,7 @@ ogBitFont::ogBitFont(void) {
   return;
 } // ogBitFont::ogBitFont
 
-void ogBitFont::SetBGColor(uInt32 red, uInt32 green, uInt32 blue, uInt32 alpha) {
+void ogBitFont::SetBGColor(uint32_t red, uint32_t green, uint32_t blue, uint32_t alpha) {
   BGColour.red = red;
   BGColour.green = green;
   BGColour.blue = blue;
@@ -68,7 +56,7 @@ void ogBitFont::SetBGColor(uInt32 red, uInt32 green, uInt32 blue, uInt32 alpha) 
   return;
 } // ogBitFont::SetBGColor
 
-void ogBitFont::SetFGColor(uInt32 red, uInt32 green, uInt32 blue, uInt32 alpha) {
+void ogBitFont::SetFGColor(uint32_t red, uint32_t green, uint32_t blue, uint32_t alpha) {
   FGColour.red = red;
   FGColour.green = green;
   FGColour.blue = blue;
@@ -95,7 +83,7 @@ void ogBitFont::CenterTextX(ogSurface& dest, int32 y, const char * textString) {
 } // ogBitFont::CenterTextX
 
 void ogBitFont::JustifyText(ogSurface& dest, ogTextAlign horiz, ogTextAlign vert, const char * textString) {
-  uInt32 x, y;
+  uint32_t x, y;
 
   switch (horiz) {
     case leftText:
@@ -128,26 +116,26 @@ void ogBitFont::JustifyText(ogSurface& dest, ogTextAlign horiz, ogTextAlign vert
   return;
 } // ogBitFont::JustifyText
 
-bool ogBitFont::Load(const char* fontFile, uInt32 offset = 0) {
+bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
 #ifdef __UBIXOS_KERNEL__
   fileDescriptor * infile;
 #else
   FILE * infile;
 #endif
   ogDPFHeader header;
-  uInt32 lresult, size;
-
-  if (!fileExists(fontFile))
-    return false;
+  uint32_t lresult, size;
 
   delete[] fontData;
 
   infile = fopen(fontFile, "rb");
-  fseek(infile, offset, SEEK_SET);
+
+  //fseek(infile, offset, SEEK_SET);
+
   lresult = fread(&header, sizeof(header), 1, infile);
   width = header.width;
   height = header.height;
   numOfChars = header.numOfChars;
+
   if (numOfChars == 0)
     numOfChars = 256;
   startingChar = header.startingChar;
@@ -156,18 +144,18 @@ bool ogBitFont::Load(const char* fontFile, uInt32 offset = 0) {
   memset(charWidthTable, 0, sizeof(charWidthTable));
   memset(charHeightTable, 0, sizeof(charHeightTable));
 
-  size = (((uInt32) width + 7) / 8) * (uInt32) height;
-  fontDataSize = size * (uInt32) numOfChars;
+  size = (((uint32_t) width + 7) / 8) * (uint32_t) height;
+  fontDataSize = size * (uint32_t) numOfChars;
 
-  for (int32 tmp = startingChar; tmp <= startingChar + numOfChars - 1; tmp++) {
+  for (int32 tmp = startingChar; tmp <= startingChar + (numOfChars - 1); tmp++) {
     charWidthTable[tmp] = width;
     charHeightTable[tmp] = height;
     fontDataIdx[tmp] = (size * (tmp - startingChar));
   } // for tmp
 
-  fontData = new uInt8[fontDataSize];
+  fontData = new uint8_t[fontDataSize];
 
-  lresult = fread(fontData, 1, fontDataSize, infile);
+  lresult = fread(fontData, fontDataSize, 1, infile);
 
   fclose(infile);
   return true;
@@ -175,7 +163,7 @@ bool ogBitFont::Load(const char* fontFile, uInt32 offset = 0) {
 
 /*
  bool
- ogFont::LoadFrom(const char* FontFile, uInt32 Offset) {
+ ogFont::LoadFrom(const char* FontFile, uint32_t Offset) {
  return true;
  } // ogFont::LoadFrom
 
@@ -186,8 +174,8 @@ bool ogBitFont::Load(const char* fontFile, uInt32 offset = 0) {
  } // ogFont::Save
  */
 
-uInt32 ogBitFont::TextHeight(const char * textString) {
-  uInt32 size, tmpsize;
+uint32_t ogBitFont::TextHeight(const char * textString) {
+  uint32_t size, tmpsize;
   size = 0;
   const unsigned char * text = (const unsigned char *) textString;
 
@@ -201,8 +189,8 @@ uInt32 ogBitFont::TextHeight(const char * textString) {
   return size;
 } // ogBitFont::TextHeight
 
-uInt32 ogBitFont::TextWidth(const char * textString) {
-  uInt32 size = 0;
+uint32_t ogBitFont::TextWidth(const char * textString) {
+  uint32_t size = 0;
   const unsigned char * text = (const unsigned char *) textString;
 
   if (text != NULL)
@@ -220,14 +208,16 @@ uInt32 ogBitFont::TextWidth(const char * textString) {
 
 void ogBitFont::PutChar(ogSurface& dest, int32 x, int32 y, const char ch) {
 
-  uInt32 xx, xCount, yCount;
-  uInt32 BGC, FGC, tColour;
-  uInt8 * offset;
-  uInt8 bits = 0;
+  uint32_t xx, xCount, yCount;
+  uint32_t BGC, FGC, tColour;
+  uint8_t * offset;
+  uint8_t bits = 0;
+
   const unsigned char c = (const unsigned char) ch;
 
   if (fontData == NULL)
     return;
+
   if (!dest.ogAvail())
     return;
 

@@ -34,28 +34,6 @@
 #include <vmm/vmm.h>
 #include <ubixos/endtask.h>
 
-#define KERNEL_STACK 0x2000
-
-/*
-#define TRAP_CODE(trap_nr, signr, str, trap_name, tsk) void do_##trap_name(struct trapframe *regs, long error_code) { \
-  die_if_kernel(str, regs, error_code); \
-}
-
-TRAP_CODE(0, SIGFPE, "divide error", divide_error, _current)
-TRAP_CODE(3, SIGTRAP, "int3", int3, _current)
-TRAP_CODE(4, SIGSEGV, "overflow", overflow, _current)
-TRAP_CODE(5, SIGSEGV, "bounds", bounds, _current)
-TRAP_CODE(6, SIGILL, "invalid operand", invalid_op, _current)
-TRAP_CODE(7, SIGSEGV, "device not available", device_not_available, _current)
-TRAP_CODE(8, SIGSEGV, "double fault", double_fault, _current)
-TRAP_CODE( 9, SIGFPE,  "coprocessor segment overrun", coprocessor_segment_overrun, last_task_used_math)
-TRAP_CODE(10, SIGSEGV, "invalid TSS", invalid_TSS, _current)
-TRAP_CODE(11, SIGBUS, "segment not present", segment_not_present, _current)
-TRAP_CODE(12, SIGBUS, "stack segment", stack_segment, _current)
-TRAP_CODE(15, SIGSEGV, "reserved", reserved, _current)
-TRAP_CODE(17, SIGSEGV, "alignment check", alignment_check, _current)
-*/
-
 #define FIRST_TSS_ENTRY 6
 #define VM_MASK 0x00020000
 
@@ -100,7 +78,6 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
     ss = 0x10;
   }
 
-  kprintf("0x%X str", str);
   kprintf("\n%s: 0x%X:%i, CPU %d, EIP: 0x%X, EFLAGS: 0x%X\n", str, regs->tf_err, regs->tf_trapno, 0x0, regs->tf_eip, regs->tf_eflags);
   kprintf("eax: %08lx   ebx: %08lx   ecx: %08lx   edx: %08lx\n", regs->tf_eax, regs->tf_ebx, regs->tf_ecx, regs->tf_edx);
   kprintf("esi: %08lx   edi: %08lx   ebp: %08lx   esp: %08lx\n", regs->tf_esi, regs->tf_edi, regs->tf_ebp, esp);
@@ -108,7 +85,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   kprintf("cr0: 0x%X, cr2: 0x%X, cr3: 0x%X, cr4: 0x%X\n", rcr0(), rcr2(), rcr3(), rcr4());
   
   store_TR(i);
-  kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, KERNEL_STACK);
+  kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, esp);
 
   stack = (unsigned long *) esp;
 
@@ -128,18 +105,18 @@ void trap(struct trapframe *frame) {
   trap_code = frame->tf_trapno;
 
   cr2 = rcr2();
-  kprintf("CR2: 0x%X[0x%X]", cr2,_current->tss.ldt);
+  kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2,_current->tss.eip,_current->tss.ldt);
   if (_current->id == 7)
     while(1) asm("nop");
 
   if ((frame->tf_eflags & PSL_I) == 0) {
     if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
+      kpanic( "INT OFF! USER" );
       die_if_kernel("TEST", frame, 0x100);
-      //     kpanic( "INT OFF! USER" );
     }
     else {
+      kpanic( "INT OFF! KERN[0x%X]", trap_code );
       die_if_kernel("TEST", frame, 0x200);
-//      kpanic( "INT OFF! KERN[0x%X]", trap_code );
     }
   }
 
@@ -148,6 +125,7 @@ void trap(struct trapframe *frame) {
     vmm_pageFault(frame, cr2);
   }
   else {
+    kpanic("TRAPCODE");
     die_if_kernel("trapCode", frame, frame->tf_trapno);
     endTask(_current->id);
     sched_yield();

@@ -207,7 +207,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   newProcess->files[0] = 0x0;
 
-  kprintf("EIP: 0x%X", tproc);
+  kprintf("EIP: 0x%X(%i)", tproc, newProcess->id);
 
   /* Set up default stack for thread here filled with arg list 3 times */
   asm volatile(

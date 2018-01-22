@@ -84,7 +84,7 @@ ubixStandardDescriptor(VMM_USER_LDT, 0xFFFFF, (dLdt)),
 ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dCode + dRead + dBig + dBiglim + dDpl3)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
-ubixStandardDescriptor(0x4200, (sizeof(struct tssStruct)), (dTss)),
+ubixStandardDescriptor(0x5200, (sizeof(struct tssStruct)), (dTss + dDpl3)),
 ubixStandardDescriptor(0x6200, (sizeof(struct tssStruct)), (dTss)),
 ubixStandardDescriptor(0x0000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl0)),
 ubixStandardDescriptor(0xBFC00000, 0xFFFFF, (dData + dWrite + dBig + dBiglim + dDpl3)),
@@ -144,8 +144,8 @@ int kmain(uInt32 rootdev) {
   execThread(systemTask, 0x2000, 0x0);
   kprintf("Thread Start!\n");
 
-  //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
-  //kprintf("File Start!\n");
+  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+  kprintf("File Start!\n");
 
   kprintf("SDE Thread Start! [0x%X]\n", &sdeThread);
   execThread(&sdeThread, 0x2000,0x0);

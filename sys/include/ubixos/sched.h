@@ -56,6 +56,7 @@ struct osInfo {
     uInt32 controlKeys;
     char *stdin;
     char cwd[1024]; /* current working dir */
+    uint8_t gpf;
 };
 
 typedef struct taskStruct {

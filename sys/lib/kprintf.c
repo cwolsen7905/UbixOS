@@ -267,7 +267,10 @@ int kprintf(const char *fmt, ...) {
   buf[retval] = '\0';
   va_end(ap);
 
-  kprint(buf);
+  if (printOff == 0x0)
+    kprint(buf);
+  if (ogprintOff == 0x0)
+    ogPrintf(buf);
 
   return (retval);
 }

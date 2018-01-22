@@ -26,22 +26,24 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+extern "C" {
 #include <objgfx40/objgfx40.h>
 #include <objgfx40/ogFont.h>
 #include <sde/ogDisplay_UbixOS.h>
 
-extern "C" {
 
 #include <ubixos/vitals.h>
 
   static int screenRow = 0x0;
   static int screenCol = 0x1;
 
-  int ogPrintf(char *s) {
+  int ogPrintf(char *ch) {
     int i = 0x0;
     int bufHeight;
     ogSurface *screen = (ogDisplay_UbixOS *) systemVitals->screen;
     ogBitFont *font = (ogBitFont *) systemVitals->font;
+    char *s = 0;
+    s = ch;
 
     while ('\0' != s[i]) {
       switch (s[i]) {
@@ -63,7 +65,8 @@ extern "C" {
           }
         break;
         default:
-          font->PutChar(*screen, screenCol * font->GetWidth(), screenRow * font->GetHeight(), s[i]);
+          //font->PutChar(*screen, screenCol * font->GetWidth(), screenRow * font->GetHeight(), (char)s[i]);
+          font->PutChar(*screen, screenCol * font->GetWidth(), screenRow * font->GetHeight(), 65);
         break;
       } /* switch */
       ++screenCol;

@@ -2846,7 +2846,7 @@ ogErrorCode ogSurface::ogGetLastError(void) {
 } // ogSurface::ogGetLastError
 
 void ogSurface::ogGetPalette(ogRGBA8 _pal[256]) {
-  memcpy(_pal, pal, sizeof(_pal));
+  memcpy(_pal, pal, sizeof(ogRGBA8) * 256);
   return;
 } // ogSurface::ogGetPalette
 
@@ -3365,7 +3365,7 @@ void ogSurface::ogScaleBuf(int32 dX1, int32 dY1, int32 dX2, int32 dY2, ogSurface
 
   if (dX1 > dX2) {
     xx = dX1;
-    dX1 = dX1;
+    //dX1 = dX1;
     dX2 = xx;
   }
 
@@ -3560,7 +3560,7 @@ ogErrorCode ogSurface::ogSetLastError(ogErrorCode latestError) {
 void ogSurface::ogSetPalette(const ogRGBA8 newPal[256]) {
   if (pal == NULL)
     return;
-  memcpy(pal, newPal, sizeof(pal));
+  memcpy(pal, newPal, sizeof(ogRGBA8) * 256);
   return;
 } // ogSurface::ogSetPalette
 

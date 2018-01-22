@@ -127,7 +127,8 @@ void sched() {
 
     if (_current->oInfo.v86Task == 0x1) {
       irqDisable(0x0);
-      kprintf("IRQ DISABLED");
+      kprintf("IRQD(%i): 0x%X*0x%X:0x%X@, esp: 0x%X:0x%X, ebp: 0x%X:0x%X ds: 0x%X", _current->id, _current->tss.eflags, _current->tss.cs, _current->tss.eip, _current->tss.ss, _current->tss.esp, _current->tss.ss, _current->tss.ebp,_current->tss.ds);
+      kprintf("ss0: 0x%X, esp0: 0x%X", _current->tss.ss0, _current->tss.esp0);
     }
 
     asm("cli");
@@ -268,6 +269,7 @@ void schedEndTask(pidType pid) {
  ************************************************************************/
 
 void sched_yield() {
+  kprintf("sy %i", _current->id);
   sched();
 }
 

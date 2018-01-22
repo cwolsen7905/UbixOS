@@ -50,8 +50,7 @@ extern "C" void sdeThread() {
   ogBitFont * font = new ogBitFont();
 
 
-
-  font->Load("ROM8X14.DPF", 0);
+  font->Load("/var/fonts/ROM8X8.DPF", 0);
   font->SetFGColor(255, 255, 255, 255);
   font->SetBGColor(0, 0, 0, 255);
 
@@ -59,8 +58,6 @@ extern "C" void sdeThread() {
 
   screen->ogCreate(800, 600, OG_PIXFMT_16BPP);
   screen->ogClear(screen->ogPack(122, 140, 163));
-  //kprintf("HERE!");
-  //while (1) asm("nop");
 
   systemVitals->screen = screen;
   systemVitals->font = font;
@@ -117,6 +114,7 @@ extern "C" void sdeThread() {
           tmp = 0x0;
         break;
         default:
+          sched_yield();
         break;
       }
     }
