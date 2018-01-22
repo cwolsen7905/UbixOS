@@ -116,8 +116,10 @@ void systemTask() {
     }
     if (ogprintOff == 1)
       videoBuffer[0] = systemVitals->sysTicks;
+    /*
     else
       ogPrintf(buf);
+    */
 
     sched_yield();
   }

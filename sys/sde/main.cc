@@ -63,7 +63,7 @@ void sdeThread() {
 
   printOff = 0x1;
 
-  screen->ogCreate(800, 600, OG_PIXFMT_16BPP);
+  screen->ogCreate(800, 600, OG_PIXFMT_24BPP);
   screen->ogClear(screen->ogPack(122, 140, 163));
 
   systemVitals->screen = screen;
@@ -77,6 +77,9 @@ void sdeThread() {
 
   //ogSurface::RawLine(100, 100, 200, 200, 0xDEADBEEF)
   screen->RawLine(100, 100, 200, 200, 0xDEADBEEF);
+
+  font->PutChar(*screen, 100, 100, 'A' - 2);
+  font->PutChar(*screen, 100, 120, 'a');
 
   while (1) {
     for (tmp = windows; tmp; tmp = tmp->next) {

@@ -142,6 +142,7 @@ bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
 
   startingChar = header.startingChar;
 
+
   memset(fontDataIdx, 0, sizeof(fontDataIdx));
   memset(charWidthTable, 0, sizeof(charWidthTable));
   memset(charHeightTable, 0, sizeof(charHeightTable));
@@ -153,11 +154,11 @@ bool ogBitFont::Load(const char* fontFile, uint32_t offset = 0) {
     charWidthTable[tmp] = width;
     charHeightTable[tmp] = height;
     fontDataIdx[tmp] = (size * (tmp - startingChar));
-    //kprintf("fontDataIdx[%i]", tmp);
   } // for tmp
 
   fontData = new uint8_t[fontDataSize];
 
+  fseek(infile, 16, 0);
   lresult = fread(fontData, fontDataSize, 1, infile);
 
   fclose(infile);

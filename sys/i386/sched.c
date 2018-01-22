@@ -269,7 +269,6 @@ void schedEndTask(pidType pid) {
  ************************************************************************/
 
 void sched_yield() {
-  kprintf("sy %i", _current->id);
   sched();
 }
 
