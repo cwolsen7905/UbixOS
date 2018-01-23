@@ -93,7 +93,8 @@ int commands(inputBuffer *data) {
       else {
         printf("Childs Pid: [%i]\n",cPid);
         }
-      }
+    }
+    sde
     }
   else if (memcmp(data->args->arg,"test3", 5) == 0) {
     for (i=0x0;i<50;i++) {
@@ -108,7 +109,7 @@ int commands(inputBuffer *data) {
         printf("Childs Pid: [%i]\n",cPid);
         }
       }
-    }    
+    }
   else if (memcmp(data->args->arg,"echo",4) == 0) {
     for (i=1;i<data->argc;i++) {
       printf("%s ",argv[i]);
@@ -117,7 +118,7 @@ int commands(inputBuffer *data) {
     }
   else if (memcmp(data->args->arg,"about",5) == 0) {
     printf("UbixOS Shell v0.99 (C) 2002\n");
-    printf("Base Command Line Interface\n");   
+    printf("Base Command Line Interface\n");
     }
   else if (memcmp(data->args->arg,"cd",2) == 0) {
     if (argv[1]) {

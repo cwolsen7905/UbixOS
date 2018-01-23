@@ -31,9 +31,11 @@
 #include "shell.h"
 
 void parseInput( inputBuffer *buffer, char *data ) {
+
   int i = 0x0;
   char *arg = 0x0;
  // char **argv = 0x0;
+
   struct argsStruct *tmpArgs = 0x0;
 
   while ( data[0] == ' ' ) {
@@ -52,13 +54,6 @@ void parseInput( inputBuffer *buffer, char *data ) {
     arg = strtok( data, " " );
     data = strtok( NULL, "\n" );
 
-/*
-if (data != 0x0)
-    printf( "sh[%s:%s]", arg, data );
-else
-    printf( "sh[%s]", arg );
-*/
-
     if ( arg[0] == '&' ) {
       buffer->bg = 0x1;
     }
@@ -74,28 +69,19 @@ else
 
   /* Alloc memory for argv[] */
   buffer->argv = (char **) malloc( sizeof(char *) * ( buffer->argc + 1 ) );
-  //buffer->envp = (char **)malloc(sizeof(char));
-
-  //buffer->envp[0] = 0x1;
 
   tmpArgs = buffer->args;
-  //argv = buffer->argv;
 
-  //printf( "argc: [%i]\n", buffer->argc );
-  //printf( "arg-1: [%i:%s]\n", buffer->args->arg, buffer->args->arg );
 
   for ( i = 0x1; i <= buffer->argc ; i++ ) {
     buffer->argv[i] = tmpArgs->arg;
-    //printf( "argv[%i]: %s\n", i, argv[i] );
     tmpArgs = tmpArgs->next;
   }
+
   buffer->argv[0] = (char *)buffer->argc;
-  //argv[buffer->argc+1] = buffer->envp;
-  //printf( "arg-1: [%i:%i:%s]\n", argv[0], buffer->args->arg, buffer->args->arg );
 
 }
 
 void freeArgs( inputBuffer *ptr ) {
   free( ptr->args );
-  //free(tmpArgs->argv);
 }

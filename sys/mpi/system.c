@@ -142,7 +142,7 @@ int mpi_spam(uInt32 type, void *data) {
  Notes:
 
  *****************************************************************************************/
-int mpi_postMessage(char *name, uInt32 type, mpi_message_t *msg) {
+int mpi_postMessage(char *name, uint32_t type, mpi_message_t *msg) {
   mpi_mbox_t *mbox = 0x0;
   mpi_message_t *message = 0x0;
 

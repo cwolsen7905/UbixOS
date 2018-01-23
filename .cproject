@@ -44,8 +44,30 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.toolchain.gnu.base.1467187978.2130107369" name="/" resourcePath="bin/shell">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.mingw.base.1483026613" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.base" unusedChildren="">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.PE" id="cdt.managedbuild.target.gnu.platform.mingw.base" name="Debug Platform" osList="win32" superClass="cdt.managedbuild.target.gnu.platform.mingw.base"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.base.727809802" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.base.747903233">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.819867407" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.328624831" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.230846806"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1263257766" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1181389425">
+								<option id="gnu.cpp.compiler.option.include.paths.1516967921" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath"/>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1546303017" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1234173345" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1018334610">
+								<option id="gnu.c.compiler.option.include.paths.746440771" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/include_old}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/bin/shell}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1022299442" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.base.550799452" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.base.907977434"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base.1433983137" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base.1271626234"/>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
-						<entry excluding="sys/fs/ubixfsv2/|lib/libc/|bin/|lib/|include/|include_old/|contrib/|doc/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="sys/fs/ubixfsv2/|lib/libc/|lib/|include/|contrib/|doc/" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

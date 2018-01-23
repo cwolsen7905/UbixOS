@@ -41,39 +41,37 @@ char *cwc = 0x0;
 int main(int argc, char **argv, char **env) {
   unsigned int *segbase = 0x0;
 
-  char *buffer = (char *) malloc( 512 );
-  inputBuffer *inBuf = (inputBuffer *) malloc( sizeof(inputBuffer) );
+  char *buffer = (char *) malloc(512);
+  inputBuffer *inBuf = (inputBuffer *) malloc(sizeof(inputBuffer));
 
-  machine = (char *) malloc( 32 );
-  cwd = (char *) malloc( 1024 );
-  memset(cwd, 'A', 1024);
-  cwd[1022] = '\n';
-  cwd[1023] = '\0';
+  machine = (char *) malloc(32);
+  cwd = (char *) malloc(1024);
+  bzero(cwd, 1024);
 
-  sprintf( machine, "uBixCube" );
-  getcwd( cwd, 1024 );
+  sprintf(machine, "uBixCube");
+  getcwd(cwd, 1024);
 
-  while ( 1 ) {
+  while (1) {
     aGain:
 
-    printf( "%s@%s# ", machine, cwd );
-    gets( (char *) buffer );
+    printf("%s@%s# ", machine, cwd);
+    gets((char *) buffer);
 
-    if ( buffer[0] == 0x0 )
+    if (buffer[0] == 0x0)
       goto aGain;
 
     inBuf->argc = 0x0;
     inBuf->args = 0x0;
     inBuf->bg = 0x0;
 
-    parseInput( inBuf, buffer );
+    parseInput(inBuf, buffer);
 
-    if ( inBuf->args->arg != 0x0 ) {
+    if (inBuf->args->arg != 0x0) {
       if (!commands(inBuf))
         execProgram(inBuf);
     }
 
-    freeArgs( inBuf );
+    freeArgs(inBuf);
   }
-  return ( 0x0 );
+  return (0x0);
 }
