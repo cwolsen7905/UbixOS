@@ -89,7 +89,6 @@ typedef	__timer_t	timer_t;
 #define	_TIMER_T_DECLARED
 #endif
 
-#include <sys/timespec.h>
 #endif /* __POSIX_VISIBLE >= 199309 */
 
 struct tm {

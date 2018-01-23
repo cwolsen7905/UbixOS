@@ -39,7 +39,6 @@
 
 #include <sys/_timeval.h>
 #include <sys/types.h>
-#include <sys/timespec.h>
 
 struct timezone {
 	int	tz_minuteswest;	/* minutes west of Greenwich */
@@ -56,13 +55,13 @@ struct timezone {
 #if __BSD_VISIBLE
 struct bintime {
 	time_t	sec;
-	uInt64 frac;
+	uint64_t frac;
 };
 
 static __inline void
-bintime_addx(struct bintime *bt, uInt64 x)
+bintime_addx(struct bintime *bt, uint64_t x)
 {
-	uInt64 u;
+	uint64_t u;
 
 	u = bt->frac;
 	bt->frac += x;
@@ -73,7 +72,7 @@ bintime_addx(struct bintime *bt, uInt64 x)
 static __inline void
 bintime_add(struct bintime *bt, const struct bintime *bt2)
 {
-	uInt64 u;
+	uint64_t u;
 
 	u = bt->frac;
 	bt->frac += bt2->frac;
@@ -85,7 +84,7 @@ bintime_add(struct bintime *bt, const struct bintime *bt2)
 static __inline void
 bintime_sub(struct bintime *bt, const struct bintime *bt2)
 {
-	uInt64 u;
+	uint64_t u;
 
 	u = bt->frac;
 	bt->frac -= bt2->frac;
@@ -113,7 +112,7 @@ bintime2timespec(const struct bintime *bt, struct timespec *ts)
 {
 
 	ts->tv_sec = bt->sec;
-	ts->tv_nsec = ((uInt64)1000000000 * (uInt32)(bt->frac >> 32)) >> 32;
+	ts->tv_nsec = ((uint64_t)1000000000 * (uint32_t)(bt->frac >> 32)) >> 32;
 }
 
 static __inline void
@@ -122,7 +121,7 @@ timespec2bintime(const struct timespec *ts, struct bintime *bt)
 
 	bt->sec = ts->tv_sec;
 	/* 18446744073 = int(2^64 / 1000000000) */
-	bt->frac = ts->tv_nsec * (uInt64)18446744073LL; 
+	bt->frac = ts->tv_nsec * (uint64_t)18446744073LL; 
 }
 
 static __inline void
@@ -130,7 +129,7 @@ bintime2timeval(const struct bintime *bt, struct timeval *tv)
 {
 
 	tv->tv_sec = bt->sec;
-	tv->tv_usec = ((uInt64)1000000 * (uInt32)(bt->frac >> 32)) >> 32;
+	tv->tv_usec = ((uint64_t)1000000 * (uint32_t)(bt->frac >> 32)) >> 32;
 }
 
 static __inline void
@@ -139,7 +138,7 @@ timeval2bintime(const struct timeval *tv, struct bintime *bt)
 
 	bt->sec = tv->tv_sec;
 	/* 18446744073709 = int(2^64 / 1000000) */
-	bt->frac = tv->tv_usec * (uInt64)18446744073709LL;
+	bt->frac = tv->tv_usec * (uint64_t)18446744073709LL;
 }
 #endif /* __BSD_VISIBLE */
 

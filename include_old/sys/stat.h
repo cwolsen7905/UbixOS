@@ -125,13 +125,13 @@ struct ostat {
 #endif /* __BSD_VISIBLE */
 
 struct stat {
-	__udev_t  st_dev;		/* inode's device */
+	__dev_t  st_dev;		/* inode's device */
 	ino_t	  st_ino;		/* inode's number */
 	mode_t	  st_mode;		/* inode protection mode */
 	nlink_t	  st_nlink;		/* number of hard links */
 	uid_t	  st_uid;		/* user ID of the file's owner */
 	gid_t	  st_gid;		/* group ID of the file's group */
-	__udev_t  st_rdev;		/* device type */
+	__dev_t  st_rdev;		/* device type */
 #if __BSD_VISIBLE
 	struct	timespec st_atimespec;	/* time of last access */
 	struct	timespec st_mtimespec;	/* time of last data modification */
@@ -172,13 +172,13 @@ struct stat {
 
 #if __BSD_VISIBLE
 struct nstat {
-	__udev_t st_dev;		/* inode's device */
+	__dev_t st_dev;		/* inode's device */
 	ino_t	  st_ino;		/* inode's number */
 	__uint32_t st_mode;		/* inode protection mode */
 	__uint32_t st_nlink;		/* number of hard links */
 	uid_t	  st_uid;		/* user ID of the file's owner */
 	gid_t	  st_gid;		/* group ID of the file's group */
-	__udev_t st_rdev;		/* device type */
+	__dev_t st_rdev;		/* device type */
 	struct	timespec st_atimespec;	/* time of last access */
 	struct	timespec st_mtimespec;	/* time of last data modification */
 	struct	timespec st_ctimespec;	/* time of last file status change */

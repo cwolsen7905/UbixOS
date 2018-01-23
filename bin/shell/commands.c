@@ -39,7 +39,7 @@
 
 int commands(inputBuffer *data) {
   int cPid = 0x0,i = 0x0,x = 0x0;
-  char **argv = &data->argv;
+  char **argv = data->argv;
 
   mpi_message_t cmdMsg;
 
@@ -89,13 +89,12 @@ int commands(inputBuffer *data) {
         printf("Pid: [%i:%i]\n",cPid,i);
         execve("clock",0x0,0x0);
         exit(0x1);
-        }
+      }
       else {
         printf("Childs Pid: [%i]\n",cPid);
-        }
+      }
     }
-    sde
-    }
+  }
   else if (memcmp(data->args->arg,"test3", 5) == 0) {
     for (i=0x0;i<50;i++) {
       cPid = fork();
@@ -133,9 +132,9 @@ int commands(inputBuffer *data) {
     }
   else if (memcmp(data->args->arg,"msg",3) == 0x0) {
     printf("Posting Message\n");
-    cmdMsg.header = atoi(argv[2]);
-    sprintf(cmdMsg.data,argv[3]);
-    mpi_postMessage(argv[1],0x1,&cmdMsg);
+    cmdMsg.header = atoi(argv[3]);
+    sprintf(cmdMsg.data,argv[4]);
+    mpi_postMessage(argv[2],0x1,&cmdMsg);
     }
   else if (memcmp(data->args->arg,"mkdir",5) == 0x0) {
     if (argv[1]) {

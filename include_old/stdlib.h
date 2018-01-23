@@ -30,7 +30,7 @@ extern int __mb_cur_max;
 #define MB_CUR_MAX      __mb_cur_max
 
 void exit(int);
-void *malloc(uInt len);
+void *malloc(u_int len);
 void free(void *);
 int abs(int val);
 int atoi(const char *str);

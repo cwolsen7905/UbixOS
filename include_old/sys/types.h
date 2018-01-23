@@ -59,14 +59,6 @@ typedef __int64_t quad_t;
 typedef __int64_t daddr_t; /* disk address */
 typedef __uint32_t u_daddr_t; /* unsigned disk address */
 
-typedef unsigned char uInt8;
-typedef unsigned short uInt16;
-typedef unsigned int uInt32;
-typedef unsigned int uInt;
-typedef char Int8;
-typedef short Int16;
-typedef long Int32;
-
 typedef unsigned char u_char;
 typedef unsigned short u_short;
 typedef unsigned int u_int;
@@ -75,7 +67,11 @@ typedef unsigned long u_long;
 typedef int pidType;
 
 typedef int pid_t;
-typedef int size_t; /* standart */
+
+#ifndef _SIZE_T_DECLARED
+typedef __size_t        size_t;
+#define _SIZE_T_DECLARED
+#endif
 
 #ifndef NOBOOL
 #ifndef __cplusplus

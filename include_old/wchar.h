@@ -84,7 +84,7 @@ typedef __size_t size_t;
 
 #ifndef	__cplusplus
 #ifndef _WCHAR_T_DECLARED
-typedef __wchar_t wchar_t;
+typedef ___wchar_t wchar_t;
 #define	_WCHAR_T_DECLARED
 #endif
 #endif
@@ -109,8 +109,7 @@ struct tm;
 __BEGIN_DECLS
 wint_t btowc(int);
 wint_t fgetwc(struct __sFILE *);
-wchar_t *
-fgetws(wchar_t * __restrict, int, struct __sFILE * __restrict);
+wchar_t *fgetws(wchar_t * __restrict, int, struct __sFILE * __restrict);
 wint_t fputwc(wchar_t, struct __sFILE *);
 int fputws(const wchar_t * __restrict, struct __sFILE * __restrict);
 int fwide(struct __sFILE *, int);
@@ -126,14 +125,11 @@ size_t mbsrtowcs(wchar_t * __restrict, const char ** __restrict, size_t,
 mbstate_t * __restrict);
 wint_t putwc(wchar_t, struct __sFILE *);
 wint_t putwchar(wchar_t);
-int swprintf(wchar_t * __restrict, size_t n, const wchar_t * __restrict,
-...);
+int swprintf(wchar_t * __restrict, size_t n, const wchar_t * __restrict, ...);
 int swscanf(const wchar_t * __restrict, const wchar_t * __restrict, ...);
 wint_t ungetwc(wint_t, struct __sFILE *);
-int vfwprintf(struct __sFILE * __restrict, const wchar_t * __restrict,
-__va_list);
-int vswprintf(wchar_t * __restrict, size_t n, const wchar_t * __restrict,
-__va_list);
+int vfwprintf(struct __sFILE * __restrict, const wchar_t * __restrict, __va_list);
+int vswprintf(wchar_t * __restrict, size_t n, const wchar_t * __restrict, __va_list);
 int vwprintf(const wchar_t * __restrict, __va_list);
 size_t wcrtomb(char * __restrict, wchar_t, mbstate_t * __restrict);
 wchar_t *wcscat(wchar_t * __restrict, const wchar_t * __restrict);
@@ -142,27 +138,22 @@ int wcscmp(const wchar_t *, const wchar_t *);
 int wcscoll(const wchar_t *, const wchar_t *);
 wchar_t *wcscpy(wchar_t * __restrict, const wchar_t * __restrict);
 size_t wcscspn(const wchar_t *, const wchar_t *);
-size_t wcsftime(wchar_t * __restrict, size_t, const wchar_t * __restrict,
-const struct tm * __restrict);
+size_t wcsftime(wchar_t * __restrict, size_t, const wchar_t * __restrict, const struct tm * __restrict);
 size_t wcslen(const wchar_t *);
-wchar_t *wcsncat(wchar_t * __restrict, const wchar_t * __restrict,
-size_t);
+wchar_t *wcsncat(wchar_t * __restrict, const wchar_t * __restrict, size_t);
 int wcsncmp(const wchar_t *, const wchar_t *, size_t);
 wchar_t *wcsncpy(wchar_t * __restrict , const wchar_t * __restrict, size_t);
 wchar_t *wcspbrk(const wchar_t *, const wchar_t *);
 wchar_t *wcsrchr(const wchar_t *, wchar_t);
-size_t wcsrtombs(char * __restrict, const wchar_t ** __restrict, size_t,
-mbstate_t * __restrict);
+size_t wcsrtombs(char * __restrict, const wchar_t ** __restrict, size_t, mbstate_t * __restrict);
 size_t wcsspn(const wchar_t *, const wchar_t *);
 wchar_t *wcsstr(const wchar_t * __restrict, const wchar_t * __restrict);
 size_t wcsxfrm(wchar_t * __restrict, const wchar_t * __restrict, size_t);
 int wctob(wint_t);
 double wcstod(const wchar_t * __restrict, wchar_t ** __restrict);
-wchar_t *wcstok(wchar_t * __restrict, const wchar_t * __restrict,
-wchar_t ** __restrict);
+wchar_t *wcstok(wchar_t * __restrict, const wchar_t * __restrict, wchar_t ** __restrict);
 long wcstol(const wchar_t * __restrict, wchar_t ** __restrict, int);
-unsigned long
-wcstoul(const wchar_t * __restrict, wchar_t ** __restrict, int);
+unsigned long wcstoul(const wchar_t * __restrict, wchar_t ** __restrict, int);
 wchar_t *wmemchr(const wchar_t *, wchar_t, size_t);
 int wmemcmp(const wchar_t *, const wchar_t *, size_t);
 wchar_t *wmemcpy(wchar_t * __restrict, const wchar_t * __restrict, size_t);
@@ -172,21 +163,16 @@ int wprintf(const wchar_t * __restrict, ...);
 int wscanf(const wchar_t * __restrict, ...);
 
 #if __ISO_C_VISIBLE >= 1999
-    int vfwscanf(struct __sFILE * __restrict, const wchar_t * __restrict,
-    __va_list);
-    int vswscanf(const wchar_t * __restrict, const wchar_t * __restrict,
-    __va_list);
+    int vfwscanf(struct __sFILE * __restrict, const wchar_t * __restrict, __va_list);
+    int vswscanf(const wchar_t * __restrict, const wchar_t * __restrict, __va_list);
     int vwscanf(const wchar_t * __restrict, __va_list);
     float wcstof(const wchar_t * __restrict, wchar_t ** __restrict);
-    long double
-    wcstold(const wchar_t * __restrict, wchar_t ** __restrict);
+    long double wcstold(const wchar_t * __restrict, wchar_t ** __restrict);
 #ifdef __LONG_LONG_SUPPORTED
     /* LONGLONG */
-    long long
-    wcstoll(const wchar_t * __restrict, wchar_t ** __restrict, int);
+    long long wcstoll(const wchar_t * __restrict, wchar_t ** __restrict, int);
     /* LONGLONG */
-    unsigned long long
-    wcstoull(const wchar_t * __restrict, wchar_t ** __restrict, int);
+    unsigned long long wcstoull(const wchar_t * __restrict, wchar_t ** __restrict, int);
 #endif
 #endif	/* __ISO_C_VISIBLE >= 1999 */
 

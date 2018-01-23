@@ -65,7 +65,7 @@ void systemTask() {
           kprintf("Switching to term: [%i][%i]\n", *x, myMsg.pid);
           schedFindTask(myMsg.pid)->term = tty_find(*x);
         break;
-        case 1000:
+       case 1000:
           kprintf("Restarting the system in 5 seconds\n");
           counter = systemVitals->sysUptime + 5;
           while (systemVitals->sysUptime < counter) {
@@ -82,7 +82,7 @@ void systemTask() {
         case 0x80:
           if (!strcmp(myMsg.data, "sdeStart")) {
             kprintf("Starting SDE\n");
-            //execThread(sdeThread,0x2000),0x0);
+            execThread(sdeThread,0x2000,0x0);
           }
           else if (!strcmp(myMsg.data, "freePage")) {
             kprintf("kkk Free Pages");

@@ -52,11 +52,11 @@ typedef __uid_t         uid_t;
 /**** END ****/
 
 
-uShort getpid(void);
+u_short getpid(void);
 pid_t fork();
 
 //New Functions Added Belong Under Here
-char *getcwd(char *buffer,uInt32 size);
+char *getcwd(char *buffer,uint32_t size);
 int  setuid(int);
 int  setgid(int);
 int  getuid(void);

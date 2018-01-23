@@ -39,6 +39,9 @@ typedef long long __int64_t;
 typedef unsigned long long __uint64_t;
 
 typedef unsigned long __clock_t;
+typedef struct __timer  *__timer_t;     /* timer_gettime()... */
+typedef __int32_t __clockid_t;    /* clock_gettime()... */
+typedef __int64_t        __off_t; /* File Offset */
 typedef __uint32_t           __ino_t;
  typedef __int32_t            __ssize_t;/* stat types */
 typedef __uint32_t           __dev_t;/* device number */
@@ -91,6 +94,29 @@ union {
     char __mbstate8[128];
     __int64_t _mbstateL; /* for alignment */
 } __mbstate_t;
+
+typedef int             __ct_rune_t;    /* arg type for ctype funcs */
+typedef __ct_rune_t     __rune_t;       /* rune_t (see above) */
+typedef __ct_rune_t     __wint_t;       /* wint_t (see above) */
+
+#ifdef __GNUCLIKE_BUILTIN_VARARGS
+typedef __builtin_va_list       __va_list;      /* internally known to gcc */
+#else
+#ifdef __LP64__
+struct __s_va_list {
+        __uint32_t      _pad1[2];       /* gp_offset, fp_offset */
+        __uint64_t      _pad2[2];       /* overflow_arg_area, reg_save_area */
+};
+typedef struct __s_va_list      __va_list;
+#else
+typedef char *                  __va_list;
+#endif
+#endif
+#if defined(__GNUC_VA_LIST_COMPATIBILITY) && !defined(__GNUC_VA_LIST) \
+    && !defined(__NO_GNUC_VA_LIST)
+#define __GNUC_VA_LIST
+typedef __va_list               __gnuc_va_list; /* compatibility w/GNU headers*/
+#endif
 
 
 #endif /* END _SYS__TYPES_H */

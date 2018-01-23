@@ -36,7 +36,7 @@
 
 struct mpi_message {
   char               data[MESSAGE_LENGTH];
-  uInt32             header;
+  uint32_t             header;
   struct mpi_message *next;
   };
 
@@ -45,9 +45,9 @@ typedef struct mpi_message mpi_message_t;
 
 int mpi_createMbox(char *);
 int mpi_destroyMbox(char *);
-int mpi_postMessage(char *,uInt32,mpi_message_t *);
+int mpi_postMessage(char *,uint32_t,mpi_message_t *);
 int mpi_fetchMessage(char *,mpi_message_t *);
-int mpi_fpam(uInt32 type,void *);
+int mpi_fpam(uint32_t type,void *);
 
 #endif
 
