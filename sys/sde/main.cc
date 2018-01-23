@@ -77,10 +77,10 @@ void sdeThread() {
   execThread(&sdeTestThread, 0x2000, 0x0);
 
   //ogSurface::RawLine(100, 100, 200, 200, 0xDEADBEEF)
-  screen->RawLine(100, 100, 200, 200, 0xDEADBEEF);
+  //screen->RawLine(100, 100, 200, 200, 0xDEADBEEF);
 
-  font->PutChar(*screen, 100, 100, 'A' - 2);
-  font->PutChar(*screen, 100, 120, 'a');
+  //font->PutChar(*screen, 100, 100, 'A' - 2);
+  //font->PutChar(*screen, 100, 120, 'a');
 
   while (1) {
     for (tmp = windows; tmp; tmp = tmp->next) {

@@ -40,6 +40,35 @@
 #include <ubixos/vitals.h>
 
   void sdeTestThread() {
+    ogSurface *screen = 0x0;
+    while (screen == 0x0) {
+      screen = (ogDisplay_UbixOS *) systemVitals->screen;
+    }
+    while (!screen->ogAvail())
+      ;
+
+ogSurface* background = new ogSurface();
+background->ogClone(*screen); // same res and pixel format
+for (int x = 0; x < 255; x++) {
+  for (int y = 0; y < 255; y++) {
+    for (int z = 0; z < 255; z++) {
+      //background->ogSetPixel((x+100-(z/2)) + g, (y+100) - g, background->ogPack(x, y, z));
+//background->ogSetPixel(x+500-(z/2), y+z+25, background->ogPack(x, y, z));
+//background->ogSetPixel(x+-(z/2)+(800-(256+128)), y+(z/2)+600-(256+128), background->ogPack(x, y, z));
+background->ogSetPixel(x-(z/2)+(800-(256+128))/2, y+(z/2)+(600-(256+128))/2, background->ogPack(x, 255-y, z));
+    } // for z
+  } // for y
+} // for x
+screen->ogCopy(*background);
+
+while (1) {
+  sched_yield();
+}
+
+}
+
+
+void sdeTestThreadOld() {
 //  uInt32 count, i = 0x0;
     uInt8 r, g, b;
     ogSurface *screen = 0x0;
