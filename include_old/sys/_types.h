@@ -26,8 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _SYS__TYPES_H_
-#define _SYS__TYPES_H_
+#ifndef _SYS__TYPES_H
+#define _SYS__TYPES_H
 
 typedef char __int8_t;
 typedef unsigned char __uint8_t;
@@ -63,7 +63,7 @@ typedef __int8_t        __int_fast8_t;
 typedef       __uint32_t      __uintfptr_t;
  typedef __uint32_t       __size_t;
  typedef __int64_t        __intmax_t;
- typedef __uint64_t        __uintmax_t; 
+ typedef __uint64_t        __uintmax_t;
 typedef __int32_t        __ptrdiff_t;
  typedef __uint8_t        __uint_least8_t;
  typedef __uint16_t       __uint_least16_t;
@@ -82,5 +82,15 @@ typedef __int32_t __pid_t;  /* process [group] */
 typedef __uint_least16_t  __char16_t;
  typedef __uint_least32_t  __char32_t;
 #endif
+/*
+ * mbstate_t is an opaque object to keep conversion state during multibyte
+ * stream conversions.
+ */
+typedef
+union {
+    char __mbstate8[128];
+    __int64_t _mbstateL; /* for alignment */
+} __mbstate_t;
 
-#endif
+
+#endif /* END _SYS__TYPES_H */
