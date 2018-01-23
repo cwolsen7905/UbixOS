@@ -64,6 +64,7 @@ void sdeThread() {
   printOff = 0x1;
 
   screen->ogCreate(800, 600, OG_PIXFMT_24BPP);
+
   screen->ogClear(screen->ogPack(122, 140, 163));
 
   systemVitals->screen = screen;

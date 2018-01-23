@@ -230,7 +230,8 @@ int hdInit(struct device_node *dev) {
   outportByte(hdd->hdPort + ATA_DRIVE, hdd->hdDev);
   outportByte(hdd->hdPort + ATA_COMMAND, ATA_IDENTIFY);
 
-  for (counter = 1000000; counter >= 0; counter--) {
+  //for (counter = 1000000; counter >= 0; counter--) {
+  for (counter = 10000000; counter >= 0; counter--) {
     retVal = inportByte(hdd->hdPort + ATA_COMMAND);
     if ((retVal & 1) != 0x0) {
       kprintf("Error Drive Not Available\n");
@@ -365,7 +366,8 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
     transactionCount = sectorCount >> hdd->hdShift;
   }
   for (; transactionCount > 0; transactionCount--) {
-    for (counter = 1000000; counter >= 0; counter--) {
+    //for (counter = 1000000; counter >= 0; counter--) {
+    for (counter = 10000000; counter >= 0; counter--) {
       retVal = inportByte(hdd->hdPort + hdStat) & 0x80;
       if (!retVal)
         goto ready;
@@ -386,7 +388,8 @@ int hdWrite(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 se
       outportByte(hdd->hdPort + hdCmd, 0xC5);
     else
       outportByte(hdd->hdPort + hdCmd, 0x30);
-    for (counter = 1000000; counter >= 0; counter--) {
+    //for (counter = 1000000; counter >= 0; counter--) {
+    for (counter = 10000000; counter >= 0; counter--) {
       retVal = inportByte(hdd->hdPort + hdStat);
       if ((retVal & 1) != 0x0) {
         kprintf("HD Write Error\n");
@@ -428,7 +431,8 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
     transactionCount = sectorCount >> hdd->hdShift;
   }
   for (; transactionCount > 0; transactionCount--) {
-    for (counter = 1000000; counter >= 0; counter--) {
+    //for (counter = 1000000; counter >= 0; counter--) {
+    for (counter = 10000000; counter >= 0; counter--) {
       retVal = inportByte(hdd->hdPort + hdStat) & 0x80;
       if (!retVal)
         goto ready;
@@ -450,7 +454,8 @@ int hdRead(struct driveInfo *hdd, void *baseAddr, uInt32 startSector, uInt32 sec
       outportByte(hdd->hdPort + hdCmd, 0xC4);
     else
       outportByte(hdd->hdPort + hdCmd, 0x20);
-    for (counter = 1000000; counter >= 0; counter--) {
+    //for (counter = 1000000; counter >= 0; counter--) {
+    for (counter = 10000000; counter >= 0; counter--) {
       retVal = inportByte(hdd->hdPort + hdStat);
       if ((retVal & 1) != 0x0) {
         kprintf("HD Read Error: [%i:0x%X:%i]\n", counter, (uInt32) baseAddr, startSector);
