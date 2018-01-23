@@ -103,7 +103,7 @@ static char *envp_init[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/
  *
  * \param rootdev address of root device structure
  */
-int kmain(uInt32 rootdev) {
+int kmain(uint32_t rootdev) {
   /* Set up counter for startup routine */
   int i = 0x0;
 
@@ -142,13 +142,11 @@ int kmain(uInt32 rootdev) {
   kprintf("Starting OS\n");
 
   execThread(systemTask, 0x2000, 0x0);
-  kprintf("Thread Start!\n");
 
   execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
-  //kprintf("File Start!\n");
 
-  kprintf("SDE Thread Start! [0x%X]\n", &sdeThread);
-  execThread(&sdeThread, 0x2000,0x0);
+  //kprintf("SDE Thread Start! [0x%X]\n", &sdeThread);
+  //execThread(&sdeThread, 0x2000,0x0);
 
   irqEnable(0x0);
 
