@@ -121,6 +121,7 @@ void vmm_pageFault(struct trapframe *frame, uint32_t cr2) {
     }
     else if (memAddr < (_current->td.vm_dsize + _current->td.vm_daddr)) {
       kprintf("THIS IS BAD");
+      die_if_kernel("SEGFAULT", frame, 0xC);
       pageTable[pageTableIndex] = (uInt32) vmm_findFreePage(_current->id) | PAGE_DEFAULT;
     }
     else {

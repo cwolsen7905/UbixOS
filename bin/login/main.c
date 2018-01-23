@@ -71,6 +71,7 @@ int main(int argc, char **argv, char **env) {
   char passWord[32];
   char *data2 = 0x0;
   struct passwd *data = 0x0;
+  int users = 0;
 
 
   if ((getuid() != 0x0) && (getgid() != 0x0)) {
@@ -89,7 +90,8 @@ int main(int argc, char **argv, char **env) {
     exit(0x1);
     }
      
-  fread(data,0x1000,0x1,fd);
+  users = fread(data,0x1000,0x1,fd) / sizeof(struct passwd);
+
 
   fclose(fd);
 
@@ -98,23 +100,20 @@ int main(int argc, char **argv, char **env) {
     exit(0x1);
     }
 
-/* we need to move this into the libc for getpwent(), etc */
-/*
-	foo = auth("root", "user");
-	if(foo != -1)
-		printf("yay\n");
-	else
-		printf("damn\n");
-*/
-
   login:
   printf("\nUbixOS/IA-32 (devel.ubixos.com) (console)");
+  getUsername:
   printf("\n\nLogin: ");
   gets((char *)&userName);
+
+  if (userName[0] == '\0')
+    goto getUsername;
+
   printf("Password: ");
   pgets((char *)&passWord);
 
-  for (i=0x0;i<(4096/sizeof(struct passwd));i++) {
+
+  for (i=0x0;i<users;i++) {
     if (0x0 == strcmp(userName,data[i].username)) {
       if (0x0 == strcmp(passWord,data[i].password)) {
         shellPid = fork();
@@ -130,7 +129,6 @@ int main(int argc, char **argv, char **env) {
           fd = 0x0;
           fd = fopen("sys:/etc/motd","r");
 
-          //if ((fd = fopen("sys:/motd","r")) == 0x0) {
           if (fd == 0x0) {
             printf("No MOTD");
             }

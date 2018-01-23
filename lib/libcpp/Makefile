@@ -2,14 +2,16 @@
 #  $Id: Makefile 89 2016-01-12 00:20:40Z reddawg $
 
 # Include Global 'Source' Options
-Makefile.incl
-Makefile.incl
+include ../../Makefile.incl
+include ../Makefile.incl
+
 #  Objects
 OBJS = libcpp.o
 
 #Include
 
-INCLUDE = -I../../include -I./include -I../libc/include
+INCLUDE += -I../libcpp/include/
+#-I../../include -I./include -I../libc/include
 
 all: $(OBJS)
 

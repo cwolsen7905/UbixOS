@@ -327,7 +327,7 @@ ogBlit::GetBlitWithMask(ogSurface & src, int32 x, int32 y) {
   uInt8  lineCount, offset, pixCount;
   uInt32 nsy, ney;
   uInt8 *blitMaskPtr;
-  void  *imagePtr;
+  uint8_t  *imagePtr;
   uInt32 distToEdge, xRight, count;
   ogPixelFmt pixFmt;
 
@@ -372,16 +372,16 @@ ogBlit::GetBlitWithMask(ogSurface & src, int32 x, int32 y) {
     image = malloc(imageSize);
   } // if
 
-  imagePtr = image;
+  imagePtr = (uint8_t *)image;
   // If any part of the blit data is out of bounds, we need to fill it with the
   // transparent colour
   if ( (x + startX < 0) || (x + endX > (int32)src.ogGetMaxX()) ||
        (y + startY < 0) || (y + endY > (int32)src.ogGetMaxY())) {
     for (count = 0; count < totalPixCount; count++) {
       SetPixel(imagePtr, tColour);
-      (uInt8 *)imagePtr += bytesPerPixel;
+      imagePtr += bytesPerPixel;
     } // for count
-    imagePtr = image;   // reset the image pointer
+    imagePtr = (uint8_t *)image;   // reset the image pointer
   } // if
 
   // first do clipping on the top edge
@@ -401,7 +401,7 @@ ogBlit::GetBlitWithMask(ogSurface & src, int32 x, int32 y) {
         ++blitMaskPtr;
         pixCount = *blitMaskPtr;
         ++blitMaskPtr;
-        if (pixCount > 0) (uInt8 *)imagePtr += pixCount*bytesPerPixel;
+        if (pixCount > 0) imagePtr += pixCount*bytesPerPixel;
         --lineCount;
       } // while
     } // for sy
@@ -429,7 +429,7 @@ ogBlit::GetBlitWithMask(ogSurface & src, int32 x, int32 y) {
         if (sx <= (int32)src.ogGetMaxX()) {
           if ((sx < 0) && (sx+pixCount > 0)) {
             pixCount += sx;                         // remember, sx is negative
-            (uInt8*)imagePtr -= sx*bytesPerPixel;   // remember, sx is negative
+            imagePtr -= sx*bytesPerPixel;   // remember, sx is negative
             sx = 0;
           } // if sx<0 && sx+pixcount>0
 
@@ -442,11 +442,11 @@ ogBlit::GetBlitWithMask(ogSurface & src, int32 x, int32 y) {
           if (sx >= 0)
             src.ogCopyLineFrom(sx, y+sy, imagePtr, pixCount*bytesPerPixel);
 
-          (uInt8*)imagePtr += xRight; // get any remainter from right edge clip
+          imagePtr += xRight; // get any remainter from right edge clip
         } // if sx <= MaxX
 
         sx += pixCount;
-        (uInt8*)imagePtr += pixCount*bytesPerPixel;
+        imagePtr += pixCount*bytesPerPixel;
 
       } // if pixCount>0
       --lineCount;
@@ -654,7 +654,7 @@ ogBlit::Put(ogSurface& dest, int32 x, int32 y) {
         ++blitMaskPtr;
         pixCount = *blitMaskPtr;
         ++blitMaskPtr;
-        if (pixCount > 0) (uInt8 *)imagePtr += pixCount*bytesPerPixel;
+        if (pixCount > 0) imagePtr += pixCount*bytesPerPixel;
         --lineCount;
       } // while
     } // for sy

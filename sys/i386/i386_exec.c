@@ -156,13 +156,6 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   stackAddr = vmm_getFreeKernelPage(newProcess->id, stack / PAGE_SIZE);
 
-  kprintf("stackAddr: 0x%X", stackAddr);
-
-  /*
-  if (stack < 0x100000)
-    kpanic("exec: stack not in valid area: [0x%X]\n", stack);
-  */
-
   /* Set All The Correct Thread Attributes */
   newProcess->tss.back_link = 0x0;
   newProcess->tss.esp0 = 0x0;
@@ -207,7 +200,7 @@ uint32_t execThread(void (*tproc)(void), uint32_t stack, char *arg) {
 
   newProcess->files[0] = 0x0;
 
-  kprintf("EIP: 0x%X(%i)", tproc, newProcess->id);
+  //kprintf("EIP: 0x%X(%i)", tproc, newProcess->id);
 
   /* Set up default stack for thread here filled with arg list 3 times */
   asm volatile(
@@ -748,6 +741,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
       EXECP = (char *)tmp[i];
     }
     strcpy((char *)tmp[i], (const char *)argv_out[i]);
+    kprintf("argv[%i]:%s",i, (const char *)argv_out[i]);
     sp += strlen((const char *)argv_out[i]) + 1;
   }
 

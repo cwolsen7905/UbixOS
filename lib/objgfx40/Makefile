@@ -1,14 +1,16 @@
 # $Id: Makefile 89 2016-01-12 00:20:40Z reddawg $
 # Kernel Makefile (C) 2002 The UbixOS Project
 
-Makefile.incl
-Makefile.incl
+# Include Global 'Source' Options
+include ../../Makefile.incl
+include ../Makefile.incl
 
 #Delete Program
 REMOVE = rm -f
 
 #Objects
-OBJS = objgfx40.o ogFont.o ogSprite.o ogBlit.o ogPixCon.o ogPixelFmt.o
+OBJS = objgfx40.o ogFont.o ogSprite.o ogPixCon.o ogPixelFmt.o
+#ogBlit.o
 
 #Include
 INCLUDE = -I./ -I../../lib/libc/include -I../../lib/libcpp/include

@@ -486,8 +486,7 @@ void *vmm_getFreeMallocPage(uInt16 count) {
   spinLock(&fkpSpinLock);
 
   /* Lets Search For A Free Page */
-  for (x = PT_INDEX(VMM_KERN_START); x <= PT_INDEX(VMM_KERN_END); x++) {
-
+  for (x = PD_INDEX(VMM_KERN_START); x <= PD_INDEX(VMM_KERN_END); x++) {
     if ((pageDirectory[x] & PAGE_PRESENT) != PAGE_PRESENT) /* If Page Directory Is Not Yet Allocated Allocate It */
       vmm_allocPageTable(x, sysID);
 

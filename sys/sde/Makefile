@@ -12,7 +12,7 @@ LINKER = ld
 REMOVE = rm -fr
 
 #  Objects
-OBJS = objgfx40.o ogFont.o ogPixelFmt.o ogPixCon.o ogDisplay_UbixOS.o sde.o main.o colours.o
+OBJS = objgfx40.o ogFont.o ogPixelFmt.o ogPixCon.o ogDisplay_UbixOS.o sde.o main.o colours.o #ogImage.o
 
 CFLAGS += -fno-rtti -nostdinc++
 
@@ -22,6 +22,7 @@ all:
 	(cp ../../lib/objgfx40/ogFont.cpp ./)
 	(cp ../../lib/objgfx40/ogPixCon.cpp ./)
 	(cp ../../lib/objgfx40/ogPixelFmt.cpp ./)
+	(cp ../../lib/objgfx40/ogImage.cpp ./)
 	(make allBuild)
 
 allBuild: $(OBJS)

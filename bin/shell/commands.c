@@ -131,7 +131,7 @@ int commands(inputBuffer *data) {
       }
     }
   else if (memcmp(data->args->arg,"msg",3) == 0x0) {
-    printf("Posting Message\n");
+    printf("Posting Message: mbox(%s), header: 0x%X, data: %s\n", argv[2], atoi(argv[3]), argv[4]);
     cmdMsg.header = atoi(argv[3]);
     sprintf(cmdMsg.data,argv[4]);
     mpi_postMessage(argv[2],0x1,&cmdMsg);

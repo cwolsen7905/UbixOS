@@ -10,7 +10,7 @@ CLEANDIR=clean
 WORLD_LIB_SRC=${CURDIR}/lib
 WORLD_LIBEXEC_SRC=${CURDIR}/libexec
 WORLD_BIN_SRC=${CURDIR}/bin
-WORLD_INC="-I${CURDIR}/include_old -I${CURDIR}/lib/objgfx40/"
+WORLD_INC="-I${CURDIR}/include_old -I${CURDIR}/lib/objgfx40/ -I${CURDIR}/lib/libcpp/include"
 WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm  OBJDUMP= OBJCOPY="objcopy"  RANLIB=ranlib
 
 WMAKE= ${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build

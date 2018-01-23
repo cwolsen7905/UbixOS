@@ -132,13 +132,13 @@ int sys_fseek( struct thread *td, struct sys_fseek_args *args ) {
 }
 
 int sys_chdir( struct thread *td, struct sys_chdir_args *args ) {
-  kprintf("chdir: [%s][%s]", _current->oInfo.cwd, args->path);
   if ( strstr( args->path, ":" ) == 0x0 ) {
     sprintf( _current->oInfo.cwd, "%s%s", _current->oInfo.cwd, args->path );
   }
   else {
     sprintf( _current->oInfo.cwd, args->path );
   }
+  td->td_retval[0] = 0;
   return (0);
 }
 
@@ -200,7 +200,6 @@ int sys_fopen( struct thread *td, struct sys_fopen_args *args ) {
 
  ************************************************************************/
 int sys_fread( struct thread *td, struct sys_fread_args *args ) {
-//void *data,long size,userFileDescriptor *userFd) {
 
   /* TODO : coredump? */
   if ( args->FILE == NULL )
@@ -209,7 +208,8 @@ int sys_fread( struct thread *td, struct sys_fread_args *args ) {
   if ( args->FILE->fd == NULL )
     return (-1);
 
-  return (fread( args->ptr, args->size, args->nmemb, args->FILE->fd ));
+  td->td_retval[0] = fread( args->ptr, args->size, args->nmemb, args->FILE->fd );
+  return(0);
 }
 
 /************************************************************************
@@ -388,7 +388,7 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (0x0);
   }
 
-  kprintf("[fO: %s]", file);
+  //kprintf("[fO: %s]", file);
 
   /* This Will Set Up The Descriptor Modes */
   tmpFd->mode = 0;

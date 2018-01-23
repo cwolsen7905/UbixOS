@@ -136,7 +136,7 @@ ogSprite::Get(ogSurface& srcObject, int32 x1, int32 y1, int32 x2, int32 y2) {
   uInt32     xx, yy, xOfs, yOfs;
   uInt32     rx1, ry1, rx2, ry2;
   uInt32     xCount, yCount, count;
-  void       *p;
+  uint8_t       *p;
   uInt32     maxX, maxY;
 
   if (!srcObject.ogAvail()) return;
@@ -199,16 +199,16 @@ ogSprite::Get(ogSurface& srcObject, int32 x1, int32 y1, int32 x2, int32 y2) {
   imageSize = xCount*yCount*bytesPerPixel;
 
   image = malloc(imageSize);
-  p = image;
+  p = (uint8_t *)image;
 
   if ( ((uInt32)x1 > maxX) || ((uInt32)y1 > maxY) ||
        ((uInt32)x2 > maxX) || ((uInt32)y2 > maxY) ) {
 
     for (count = 0; count < (xCount*yCount); count++) {
       SetPixel(p, tColour);
-      (uInt8 *)p += bytesPerPixel;
+      *p += bytesPerPixel;
     } // for
-    p = image;  // reset the pointer;
+    p = (uint8_t *)image;  // reset the pointer;
   } // if
 
   xOfs = 0;
@@ -239,9 +239,9 @@ ogSprite::Get(ogSurface& srcObject, int32 x1, int32 y1, int32 x2, int32 y2) {
   xCount *= bytesPerPixel;
 
   for (yy = 0; yy < yCount; yy++) {
-    ( (uInt8 *)p ) += xOfs;
+    p  += xOfs;
     srcObject.ogCopyLineFrom(rx1, ry1+yy, p, xCount);    
-    ( (uInt8 *)p ) += xCount;
+    p += xCount;
   }
   return;
 } // ogSprite::Get
@@ -474,7 +474,7 @@ ogSprite::Put(ogSurface& destObject, int32 x, int32 y) {
   uInt32 yOfs;
   uInt32 xLeft, xRight;
   int32 maxX, maxY;
-  void * p;
+  uint8_t * p;
   uInt8  r, g, b, a;
   ogPixelFmt pixfmt;
 
@@ -491,7 +491,7 @@ ogSprite::Put(ogSurface& destObject, int32 x, int32 y) {
   if ((x+xCount < 0) || (y+yCount < 0) || 
       (x > (int32)maxX) || (y > (int32)maxY)) return;
 
-  p = image;
+  p = (uint8_t *)image;
 
   if (y < 0) {
     yOfs = abs(y)*xCount*bytesPerPixel;
@@ -514,31 +514,32 @@ ogSprite::Put(ogSurface& destObject, int32 x, int32 y) {
 
   destObject.ogGetPixFmt(pixfmt);
   
-  (uInt8 *)p += yOfs;
+  p += yOfs;
+
   
   if ((destObject.ogGetPixFmtID() != pixelFmtID) || (destObject.ogIsBlending())) {
 
     for (yy = 0; yy < (uInt32)yCount; yy++) { 
-      (uInt8 *)p += xLeft;
+      p += xLeft;
       
       for (xx = 0; xx < (uInt32)xCount; xx++) {
         Unpack(GetPixel(p), r, g, b, a);
-        (uInt8 *)p += bytesPerPixel;
+        p += bytesPerPixel;
           // this could probably be rawSetPixelRGBA instead
         destObject.ogSetPixel(x+xx, y+yy, r, g, b, a);
       } // for
 
-      (uInt8 *)p += xRight;
+      p += xRight;
     } // for yy
 
   } else {                            // pixel formats match
     xCount *= bytesPerPixel;
 
     for (yy = 0; yy < (uInt32)yCount; yy++) {
-      (uInt8 *)p += xLeft;
+      p += xLeft;
       destObject.ogCopyLineTo(x, y+yy, p, xCount);
-      (uInt8 *)p += xCount;
-      (uInt8 *)p += xRight;
+      p += xCount;
+      p += xRight;
     } // for
 
   } // else

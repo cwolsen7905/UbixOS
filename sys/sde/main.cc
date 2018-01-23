@@ -57,7 +57,7 @@ void sdeThread() {
   ogBitFont * font = new ogBitFont();
 
 
-  font->Load("/var/fonts/ROM8X8.DPF", 0);
+  font->Load("/var/fonts/ROM8X14.DPF", 0);
   font->SetFGColor(255, 255, 255, 255);
   font->SetBGColor(0, 0, 0, 255);
 

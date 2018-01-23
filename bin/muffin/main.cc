@@ -45,13 +45,13 @@ int main() {
       for (i=0x2;i<0xFF;i += 16) {
         for (ii=0x0;ii<0xFF;ii+= 16) {
           for (iii= 0x0;iii< 0xFF;iii+= 16) {
-            window->Clear(window->Pack(i,ii,iii));
-            window->FillRect(50, 50, 100, 100, window->Pack(255, 0, 0));
-            window->FillRect(50, 50, 100, 100, window->Pack(255, 0, 0));
-            window->FillRect(100, 50, 150, 100, window->Pack(0, 255, 0));
-            window->FillRect(150, 50, 200, 100, window->Pack(0, 0, 255));
-            window->FillRect(200, 50, 250, 100, window->Pack(0, 0, 0));
-            window->FillRect(250, 50, 300, 100, window->Pack(255, 255, 255));
+            window->ogClear(window->ogPack(i,ii,iii));
+            window->ogFillRect(50, 50, 100, 100, window->ogPack(255, 0, 0));
+            window->ogFillRect(50, 50, 100, 100, window->ogPack(255, 0, 0));
+            window->ogFillRect(100, 50, 150, 100, window->ogPack(0, 255, 0));
+            window->ogFillRect(150, 50, 200, 100, window->ogPack(0, 0, 255));
+            window->ogFillRect(200, 50, 250, 100, window->ogPack(0, 0, 0));
+            window->ogFillRect(250, 50, 300, 100, window->ogPack(255, 255, 255));
             window->vSDECommand(3);
             }
           }
