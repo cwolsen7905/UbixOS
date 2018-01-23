@@ -29,8 +29,6 @@
 #include <objgfx40/objgfx40.h>
 #include <objgfx40/defpal.inc>
 #include <sde/ogDisplay_UbixOS.h>
-
-extern "C" {
 #include <lib/bioscall.h>
 #include <vmm/vmm.h>
 #include <vmm/paging.h>
@@ -39,7 +37,6 @@ extern "C" {
 #include <string.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
-}
 
 /*
  *
@@ -234,12 +231,16 @@ bool ogDisplay_UbixOS::ogCreate(uint32_t _xRes, uint32_t _yRes, ogPixelFmt _pixF
   //mode = 0x114;  // was 0x111
   //SetMode(mode);
 
-   mode = FindMode(_xRes, _yRes, _pixFormat.BPP);
-   if ((mode == 0) && ((_pixFormat.BPP==24) || (_pixFormat.BPP==32))) {
-   if (_pixFormat.BPP==24) _pixFormat.BPP=32; else _pixFormat.BPP=24;
-   mode=FindMode(_xRes,_yRes,_pixFormat.BPP);
-   } // if
-   if (mode!=0) SetMode(mode);
+  mode = FindMode(_xRes, _yRes, _pixFormat.BPP);
+  if ((mode == 0) && ((_pixFormat.BPP == 24) || (_pixFormat.BPP == 32))) {
+    if (_pixFormat.BPP == 24)
+      _pixFormat.BPP = 32;
+    else
+      _pixFormat.BPP = 24;
+    mode = FindMode(_xRes, _yRes, _pixFormat.BPP);
+  } // if
+  if (mode != 0)
+    SetMode(mode);
 
   return (mode != 0);
 } // ogDisplay_UbixOS::ogCreate
