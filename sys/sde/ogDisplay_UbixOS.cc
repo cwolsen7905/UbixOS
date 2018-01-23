@@ -228,17 +228,18 @@ bool ogDisplay_UbixOS::ogAlias(ogSurface& SrcObject, uInt32 x1, uInt32 y1, uInt3
 } // ogDisplay_UbixOS::ogAlias
 
 bool ogDisplay_UbixOS::ogCreate(uInt32 _xRes, uInt32 _yRes, ogPixelFmt _pixFormat) {
-  uInt16 mode;
-  mode = 0x114;  // was 0x111
-  SetMode(mode);
-  /*
+  uint16_t mode;
+
+  //mode = 0x114;  // was 0x111
+  //SetMode(mode);
+
    mode = FindMode(_xRes, _yRes, _pixFormat.BPP);
    if ((mode == 0) && ((_pixFormat.BPP==24) || (_pixFormat.BPP==32))) {
    if (_pixFormat.BPP==24) _pixFormat.BPP=32; else _pixFormat.BPP=24;
    mode=FindMode(_xRes,_yRes,_pixFormat.BPP);
    } // if
    if (mode!=0) SetMode(mode);
-   */
+
   return (mode != 0);
 } // ogDisplay_UbixOS::ogCreate
 
@@ -275,6 +276,7 @@ void ogDisplay_UbixOS::ogSetPalette(uInt8 colour, uInt8 red, uInt8 green, uInt8 
 void ogDisplay_UbixOS::ogSetPalette(uInt8 colour, uInt8 red, uInt8 green, uInt8 blue, uInt8 alpha) {
   if (pal == NULL)
     return;
+
   ogSurface::ogSetPalette(colour, red, green, blue, alpha);
   outportByte(0x3c8, colour);
   outportByte(0x3c9, red >> 2);
@@ -291,8 +293,3 @@ ogDisplay_UbixOS::~ogDisplay_UbixOS(void) {
 //mji  delete modeInfo;
   return;
 } // ogDisplay_UbixOS::~ogDisplay_UbixOS
-
-/***
- END
- ***/
-
