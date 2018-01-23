@@ -26,11 +26,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+extern "C" {
 #include <sde/sde.h>
 #include <sde/ogDisplay_UbixOS.h>
 #include <objgfx40/objgfx40.h>
 
-extern "C" {
+
 #include <sys/video.h>
 #include <vmm/paging.h>
 #include <lib/string.h>
@@ -38,9 +39,7 @@ extern "C" {
 #include <lib/kmalloc.h>
 #include <ubixos/sched.h>
 #include <ubixos/vitals.h>
-}
 
-extern "C" {
   void sdeTestThread() {
 //  uInt32 count, i = 0x0;
     uInt8 r, g, b;
@@ -90,7 +89,7 @@ extern "C" {
         screen->FillCircle(screen->GetMaxX() - 50, 50, count,
           screen->RGB(r, g, b));
 
-//      screen->FillRect(screen->GetMaxX() - 50 - count, count, 
+//      screen->FillRect(screen->GetMaxX() - 50 - count, count,
 //                     screen->GetMaxX() - count, 100 - count,
 //                     screen->RGB(r, g, b));
         r -= 8;
@@ -118,8 +117,3 @@ extern "C" {
   } // sdeTestThread
 
 }
-
-/***
- END
- ***/
-
