@@ -40,10 +40,12 @@ extern "C" {
 
 struct sdeWindows *windows = 0x0;
 
-extern "C" void sysSDE(uInt32 cmd, void *ptr) {
+//extern "C" void sysSDE(uInt32 cmd, void *ptr) {
+extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
   ogSurface *newBuf = 0x0;
-  ogSurface *oldBuf = (ogSurface *) ptr;
+  ogSurface *oldBuf = (ogSurface *) args->ptr;
   struct sdeWindows *tmp = 0x0;
+  kprintf("\nCMD: %i:0x%X\n", args->cmd, args->ptr);
 
   for (tmp = windows; tmp; tmp = tmp->next) {
     if (tmp->pid == (int) _current->id)
@@ -54,12 +56,14 @@ extern "C" void sysSDE(uInt32 cmd, void *ptr) {
     while (tmp->status != windowReady)
       asm("hlt");
   }
-  else if (tmp == 0x0 && cmd != registerWindow) {
+  else if (tmp == 0x0 && args->cmd != registerWindow) {
     kprintf("Invalid Window\n");
-    return;
+    td->td_retval[0] = -1;
+    return(-1);
   }
 
-  switch (cmd) {
+
+  switch (args->cmd) {
     case drawWindow:
       tmp->status = drawWindow;
       while (tmp->status != windowReady) {
@@ -118,10 +122,12 @@ extern "C" void sysSDE(uInt32 cmd, void *ptr) {
       }
     break;
     default:
-      kprintf("Invalid SDE Command [0x%X]\n", ptr);
+      kprintf("Invalid SDE Command [0x%X]\n", args->ptr);
     break;
   }
-  return;
+  kprintf("Here");
+  td->td_retval[0] = 0;
+  return(0);
 }
 
 /***

@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <objgfx40/vWindow.h>
+#include <objgfx/vWindow.h>
 extern "C" {
   #include <stdio.h>
   #include <unistd.h>
@@ -38,7 +38,7 @@ int main() {
   uInt16 i = 0x0;
   uInt16 ii = 0x0;
   uInt16 iii = 0x0;
-  if (fork() == 0x0) {
+  //if (fork() == 0x0) {
     window->vCreate();
     window->vSDECommand(1);
     while (1) {
@@ -58,6 +58,6 @@ int main() {
         }
       }
     window->vSDECommand(4);    
-    }
+    //}
   return(0);
   }

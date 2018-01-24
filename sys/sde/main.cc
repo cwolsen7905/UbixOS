@@ -65,7 +65,9 @@ void sdeThread() {
 
   screen->ogCreate(800, 600, OG_PIXFMT_24BPP);
 
-  screen->ogClear(screen->ogPack(122, 140, 163));
+  //screen->ogClear(screen->ogPack(122, 140, 163));
+  //screen->ogClear(screen->ogPack(0x66, 0xE0, 0xFF));
+  screen->ogClear(screen->ogPack(0x92, 0xA8, 0xD1));
 
   systemVitals->screen = screen;
   systemVitals->font = font;
@@ -86,6 +88,7 @@ void sdeThread() {
     for (tmp = windows; tmp; tmp = tmp->next) {
       switch (tmp->status) {
         case registerWindow:
+          kprintf("buf->buffer 0x%X, buf->bSize: 0x%X", buf->buffer, buf->bSize);
           buf = (ogSurface *) tmp->buf;
           buf->buffer = (void *) vmm_mapFromTask(tmp->pid, buf->buffer, buf->bSize);
           if (buf->buffer == 0x0) {
@@ -93,6 +96,9 @@ void sdeThread() {
             while (1)
               asm("nop");
           }
+
+
+          kprintf("buf->lineOfs 0x%X, buf->lSize: 0x%X", buf->lineOfs, buf->lSize);
           buf->lineOfs = (uInt32 *) vmm_mapFromTask(tmp->pid, buf->lineOfs, buf->lSize);
           if (buf->lineOfs == 0x0) {
             kprintf("Error: buf->lineOfs\n");

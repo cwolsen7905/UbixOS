@@ -77,6 +77,15 @@ struct sys_mpiPostMessage_args {
     char msg_r_[PADR_(const void *)];
 };
 
+struct sys_sde_args {
+  char cmd_l_[PADL_(uint32_t)];
+  uint32_t cmd;
+  char cmd_r_[PADR_(uint32_t)];
+  char ptr_l_[PADL_(void *)];
+  void *ptr;
+  char ptr_r_[PADR_(void *)];
+};
+
 
 //Func Defs
 int sys_invalid(struct thread *, void *);

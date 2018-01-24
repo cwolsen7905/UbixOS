@@ -29,6 +29,7 @@
 #define _SDE_SDE_H
 
 #include <sys/types.h>
+#include <sys/sysproto.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,7 +42,8 @@ extern "C" {
 
 void sdeThread();
 
-void sysSDE(uint32_t cmd, void *ptr);
+//void sysSDE(uint32_t cmd, void *ptr);
+int sysSDE(struct thread *td, struct sys_sde_args *args);
 
 struct sdeWindows {
     struct sdeWindows *next;

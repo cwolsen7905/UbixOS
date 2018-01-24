@@ -1,8 +1,7 @@
 # $Id: Makefile 121 2016-01-14 03:18:20Z reddawg $
 # The System Makefile (C) 2002 The UbixOS Project
 
-all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin
-# muffin-bin
+all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin muffin-bin
 # cat-bin
 # MrOlsen (2016-01-11) ERROR: weird it didnt like -elf rtld-elf-bin
 # MrOlsen (2016-01-11) NOTE: edit-bin

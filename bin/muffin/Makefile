@@ -2,11 +2,12 @@
 # Application Makefile (C) 2002 The UbixOS Project
 
 # Include Global 'Source' Options
-include ../../Makefile.incl
-include ../Makefile.incl
+#include ../../Makefile.incl
+#include ../Makefile.incl
 
 #Compiler Flags
-CFLAGS = -DNOBOOL -fno-builtin -fno-exceptions -nostdlib -nostdinc
+CFLAGS =
+# -DNOBOOL -fno-builtin -fno-exceptions
 
 #Linker
 LD = ld
@@ -21,14 +22,16 @@ REMOVE = rm -f
 OBJS = main.o
 
 #Libraries
-LIBRARIES2 = ../../lib/objgfx40/*.o ../../lib/libcpp/*.o
+LIBRARIES2 = ../../lib/objgfx/*.o -lstdc++ -lm
 
 #Include
-INCLUDE = -I../../lib/libc/include -I../../lib/libcpp/include -I../../lib/objgfx40
+INCLUDE = -I../../lib/objgfx
+
+STARTUP=
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o ${BUILD_DIR}/bin/$@ $(STARTUP) $(LIBRARIES) $(LIBRARIES2) $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(LIBRARIES2) $(OBJS)
 	strip $(BINARY)
 
 # Compile the source files
