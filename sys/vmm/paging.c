@@ -393,8 +393,9 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
     K_PANIC("vmm_remapPage: Failed");
 
   for (i = 0; i < PD_ENTRIES; i++) {
-    kprintf("mapping: 0x%X\n", i);
+
     if ((childPageDir[i] & PAGE_PRESENT) == PAGE_PRESENT) {
+      kprintf("mapping: 0x%X\n", i);
       if (vmm_remapPage(childPageDir[i], 0x5A01000 + (i * 0x1000), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
         K_PANIC("Returned NULL");
     }
