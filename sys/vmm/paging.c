@@ -436,7 +436,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
               }
 
               if ((childPageDir[dI] & PAGE_PRESENT) == PAGE_PRESENT) {
-              kprintf("dI: 0x%X\n", dI);
+              //kprintf("dI: 0x%X\n", dI);
                 childPageTable = (uint32_t *) (0x5A01000 + (0x1000 * dI));
 
                 if ((childPageTable[tI + c] & PAGE_PRESENT) == PAGE_PRESENT) {
@@ -462,7 +462,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
           //Map A Physical Page To The Virtual Page
           childPageTable = (uint32_t *) (0x5A01000 + (0x1000 * dI));
           if ((childPageDir[dI] & PAGE_PRESENT) == PAGE_PRESENT) {
-          kprintf("eDI: 0x%X", dI);
+          //kprintf("eDI: 0x%X", dI);
             if ((childPageTable[tI] & PAGE_PRESENT) == PAGE_PRESENT) {
               if (vmm_remapPage(childPageTable[tI], ((x * (1024 * 4096)) + (y * 4096)), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
                 K_PANIC("remap Failed");

@@ -3,11 +3,11 @@
 
 # Include Global 'Source' Options
 #include ../../Makefile.incl
-#include ../Makefile.incl
+include ../Makefile.incl
 
 #Compiler Flags
-CFLAGS =
-# -DNOBOOL -fno-builtin -fno-exceptions
+CFLAGS = -g
+ # -DNOBOOL -fno-builtin -fno-exceptions
 
 #Linker
 LD = ld
@@ -22,24 +22,24 @@ REMOVE = rm -f
 OBJS = main.o
 
 #Libraries
-LIBRARIES2 = ../../lib/objgfx/*.o -lstdc++ -lm
+LIBRARIES2=../../lib/objgfx/*.o -lstdc++ -lm
 
 #Include
-INCLUDE = -I../../lib/objgfx
+INCLUDE2=-I../../lib/objgfx
 
 STARTUP=
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(STARTUP) $(LIBRARIES) $(LIBRARIES2) $(OBJS)
-	strip $(BINARY)
+	$(CC) $(CFLAGS) -o ${BUILD_DIR}/bin/$@ $(STARTUP) $(LIBRARIES) $(LIBRARIES2) $(OBJS)
+	#strip $(BINARY)
 
 # Compile the source files
 .cc.o:
-	$(CXX)  -Wall -fomit-frame-pointer -O $(CFLAGS) $(INCLUDE) -c -o $@ $<
+	$(CXX)  -Wall -fomit-frame-pointer -O $(CFLAGS) $(INCLUDE2) -c -o $@ $<
  
 .cc.s:
-	$(CXX)  -Wall -fomit-frame-pointer -O $(CFLAGS) $(INCLUDE) -S -o $@ $<
+	$(CXX)  -Wall -fomit-frame-pointer -O $(CFLAGS) $(INCLUDE2) -S -o $@ $<
  
 .c.o:
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDE) -c -o $@ $<

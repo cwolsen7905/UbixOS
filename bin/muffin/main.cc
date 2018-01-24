@@ -36,20 +36,24 @@ extern "C" {
 
 int main() {
   vWindow *window = new vWindow();
-  uInt16 i = 0x0;
-  uInt16 ii = 0x0;
-  uInt16 iii = 0x0;
+
+  uint16_t i = 0x0;
+  uint16_t ii = 0x0;
+  uint16_t iii = 0x0;
+
   //if (fork() == 0x0) {
     window->vCreate();
     window->vSDECommand(1);
 ogImage * image = new ogImage();
 ogSurface * bgImage = new ogSurface();
-//image->Load("/ubixos/var/background/ringed800_600.bmp", *bgImage);
-image->Load("/ubixos/var/background/sphere800x600.bmp", *bgImage);
+image->Load("/var/background/ringed800_600.bmp", *bgImage);
+//image->Load("/var/background/sphere800x600.bmp", *bgImage);
+
+
 window->ogCopy(*bgImage);
-            window->vSDECommand(3);
-while(1)
-  asm("nop");
+window->vSDECommand(3);
+return(0);
+
     while (1) {
       for (i=0x2;i<0xFF;i += 16) {
         for (ii=0x0;ii<0xFF;ii+= 16) {
@@ -61,12 +65,16 @@ while(1)
             window->ogFillRect(150, 50, 200, 100, window->ogPack(0, 0, 255));
             window->ogFillRect(200, 50, 250, 100, window->ogPack(0, 0, 0));
             window->ogFillRect(250, 50, 300, 100, window->ogPack(255, 255, 255));
+            printf("ogGetMaxX: %i, ogGetMaxY: %i\n", window->ogGetMaxX(), window->ogGetMaxY());
             window->vSDECommand(3);
             }
           }
         }
       }
+
     window->vSDECommand(4);    
+
     //}
+
   return(0);
   }

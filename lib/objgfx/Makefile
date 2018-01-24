@@ -13,7 +13,7 @@ OBJS = objgfx.o ogEdgeTable.o ogImage.o ogPixCon.o ogPixelFmt.o vWindow.o ogFont
 #ogBlit.o
 
 #Include
-INCLUDE = -I./objgfx
+INCLUDE2 = -I./objgfx
 # -I../../lib/libc/include -I../../lib/libcpp/include
 
 #Output
@@ -24,7 +24,7 @@ $(OUTPUT): $(OBJS)
 
 # Compile the source files
 .cpp.o:
-	$(CXX)  -Wall -g -fno-inline -fno-exceptions -std=c++11 $(INCLUDE) -c -o $@ $<
+	$(CXX)  -Wall -g -fno-inline -fno-exceptions -std=c++11 $(INCLUDE2) -c -o $@ $<
  
 .cc.o:
 	$(CXX)  -Wall -fomit-frame-pointer -std=c++11 -c -o $@ $<

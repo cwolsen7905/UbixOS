@@ -30,21 +30,28 @@ extern "C" {
 #include <sys/types.h>
 #include <sys/video.h>
 #include <ubixos/sched.h>
+#include <ubixos/vitals.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <string.h>
 }
 
 #include <sde/sde.h>
+#include <sde/ogDisplay_UbixOS.h>
 #include <objgfx40/objgfx40.h>
 
 struct sdeWindows *windows = 0x0;
 
-//extern "C" void sysSDE(uInt32 cmd, void *ptr) {
 extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
+
   ogSurface *newBuf = 0x0;
-  ogSurface *oldBuf = (ogSurface *) args->ptr;
+  ogSurface *oldBuf = (ogSurface *)args->ptr;
+  ogSurface *screen = 0x0;
+
   struct sdeWindows *tmp = 0x0;
+
+  screen = (ogDisplay_UbixOS *) systemVitals->screen;
+
   kprintf("\nCMD: %i:0x%X\n", args->cmd, args->ptr);
 
   for (tmp = windows; tmp; tmp = tmp->next) {
@@ -57,14 +64,22 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
       asm("hlt");
   }
   else if (tmp == 0x0 && args->cmd != registerWindow) {
+    if (args->cmd == drawWindow) {
+      screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
+      kprintf("sX: %i, oX: %i, sY: %i, oY: %i", screen->ogGetMaxX(), oldBuf->ogGetMaxX(), screen->ogGetMaxY(), oldBuf->ogGetMaxY());
+    }
+
     kprintf("Invalid Window\n");
     td->td_retval[0] = -1;
     return(-1);
   }
 
-
   switch (args->cmd) {
     case drawWindow:
+      screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
+      kprintf("Draw Window\n");
+      while(1) asm("nop");
+
       tmp->status = drawWindow;
       while (tmp->status != windowReady) {
         asm("nop");
@@ -75,6 +90,7 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
       tmp->status = killWindow;
     break;
     case registerWindow:
+      /*
       if (oldBuf->buffer != 0x0) {
         newBuf = new ogSurface();
         newBuf->version = oldBuf->version;
@@ -120,12 +136,13 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
       else {
         kprintf("Invalid Window\n");
       }
+      */
     break;
     default:
       kprintf("Invalid SDE Command [0x%X]\n", args->ptr);
     break;
   }
-  kprintf("Here");
+
   td->td_retval[0] = 0;
   return(0);
 }

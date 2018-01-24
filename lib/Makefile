@@ -1,7 +1,7 @@
 # $Id: Makefile 121 2016-01-14 03:18:20Z reddawg $
 # The System Makefile (C) 2002 The UbixOS Project
 
-all: csu-code ubix_api-code libc_old-code ubix-code libcpp-code objgfx40-code #libc-code# libcpp-code
+all: csu-code ubix_api-code libc_old-code ubix-code libcpp-code objgfx-code #libc-code# libcpp-code
 # bin tools
 # depend kernel tools
 
@@ -17,8 +17,8 @@ libc_old-code: libc_old
 libc-code: libc
 	(cd libc;make)
 
-objgfx40-code: objgfx40
-	(cd objgfx40;make)
+objgfx-code: objgfx
+	(cd objgfx;make)
 
 views: src
 	(cd src/lib/views/sunlight;make)

@@ -112,7 +112,7 @@ void sdeThread() {
           buf = (ogSurface *) tmp->buf;
           screen->ogCopyBuf(screen->ogGetMaxX() - buf->ogGetMaxX(), screen->ogGetMaxY() - buf->ogGetMaxY(), *buf, 0, 0, buf->ogGetMaxX(), buf->ogGetMaxY());
           tmp->status = windowReady;
-          //kprintf("Draw Window Routines Here\n");
+          kprintf("Draw Window Routines Here: %i-%i\n", buf->ogGetMaxX(), buf->ogGetMaxY());
         break;
         case killWindow:
           //kprintf("Killed Window\n");
