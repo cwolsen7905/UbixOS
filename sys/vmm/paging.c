@@ -395,7 +395,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   for (i = 0; i < PD_ENTRIES; i++) {
 
     if ((childPageDir[i] & PAGE_PRESENT) == PAGE_PRESENT) {
-      kprintf("mapping: 0x%X\n", i);
+      //kprintf("mapping: 0x%X\n", i);
       if (vmm_remapPage(childPageDir[i], 0x5A01000 + (i * 0x1000), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
         K_PANIC("Returned NULL");
     }
@@ -403,7 +403,7 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
   kprintf("mapping completed\n");
   //for (x = (_current->oInfo.vmStart / (1024 * 4096)); x < 1024; x++) {
   for (x = PD_INDEX(VMM_KERN_START); x < PD_INDEX(VMM_KERN_END); x++) {
-    kpanic("v_mFT");
+    //kpanic("v_mFT");
     pageTableSrc = (uint32_t *) (PT_BASE_ADDR + (4096 * x));
 
     for (y = 0; y < 1024; y++) {
@@ -435,8 +435,8 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
 
               }
 
-              kprintf("dI: 0x%X", dI);
               if ((childPageDir[dI] & PAGE_PRESENT) == PAGE_PRESENT) {
+              kprintf("dI: 0x%X\n", dI);
                 childPageTable = (uint32_t *) (0x5A01000 + (0x1000 * dI));
 
                 if ((childPageTable[tI + c] & PAGE_PRESENT) == PAGE_PRESENT) {
@@ -461,8 +461,8 @@ void *vmm_mapFromTask(pidType pid, void *ptr, uint32_t size) {
 
           //Map A Physical Page To The Virtual Page
           childPageTable = (uint32_t *) (0x5A01000 + (0x1000 * dI));
-          kprintf("eDI: 0x%X", dI);
           if ((childPageDir[dI] & PAGE_PRESENT) == PAGE_PRESENT) {
+          kprintf("eDI: 0x%X", dI);
             if ((childPageTable[tI] & PAGE_PRESENT) == PAGE_PRESENT) {
               if (vmm_remapPage(childPageTable[tI], ((x * (1024 * 4096)) + (y * 4096)), KERNEL_PAGE_DEFAULT, _current->id, 0) == 0x0)
                 K_PANIC("remap Failed");

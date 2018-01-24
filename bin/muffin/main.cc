@@ -27,6 +27,7 @@
  */
 
 #include <objgfx/vWindow.h>
+#include <objgfx/ogImage.h>
 extern "C" {
   #include <stdio.h>
   #include <unistd.h>
@@ -41,6 +42,14 @@ int main() {
   //if (fork() == 0x0) {
     window->vCreate();
     window->vSDECommand(1);
+ogImage * image = new ogImage();
+ogSurface * bgImage = new ogSurface();
+//image->Load("/ubixos/var/background/ringed800_600.bmp", *bgImage);
+image->Load("/ubixos/var/background/sphere800x600.bmp", *bgImage);
+window->ogCopy(*bgImage);
+            window->vSDECommand(3);
+while(1)
+  asm("nop");
     while (1) {
       for (i=0x2;i<0xFF;i += 16) {
         for (ii=0x0;ii<0xFF;ii+= 16) {
