@@ -45,17 +45,15 @@ ogSurface * bgImage = new ogSurface();
 
 //image->Load("/var/background/ringed800_600.bmp", *bgImage);
 //image->Load("/var/background/sphere800x600.bmp", *bgImage);
-image->Load("/var/background/carrot2_Running.bmp", *bgImage);
+//image->Load("/var/background/carrot2_Running.bmp", *bgImage);
 
-//bgImage->ogCreate(800,600,OG_PIXFMT_24BPP);
-
-//bgImage->ogLine(bgImage->ogGetMaxX(), bgImage->ogGetMaxY(), 0, 0, 0xFF00FFFF);
-
+bgImage->ogCreate(800,600,OG_PIXFMT_16BPP);
+bgImage->ogLine(400, 400, 400, 200, bgImage->ogPack(255,0,255));
+bgImage->ogLine(200, 200, 200, 400, bgImage->ogPack(0,255,0));
 window->ogCopy(*bgImage);
+window->vSDECommand(3);
 
-//window->ogLine(0, 0, window->ogGetMaxX(), window->ogGetMaxY(), 0x00FF00FF);
-//window->vSDECommand(3);
-
+bgImage->ogLine(bgImage->ogGetMaxX(), bgImage->ogGetMaxY(), 0, 0, 0xFF00FFFF);
 return(0);
 
     while (1) {
