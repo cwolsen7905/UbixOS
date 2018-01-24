@@ -50,7 +50,7 @@ int mpi_destroyMbox(char *name) {
   return(status);
   }
 
-int mpi_postMessage_old(char *name,uInt32 type,mpi_message_t *msg) {
+int mpi_postMessage_old(char *name,uint32_t type,mpi_message_t *msg) {
   asm volatile(
     "int %0\n"
     : : "i" (0x81),"a" (52),"b" (name),"c" (&type),"d" (msg)
@@ -67,7 +67,7 @@ int mpi_fetchMessage_old(char *name,mpi_message_t *msg) {
   return(status);
   }
 
-int mpi_spam(uInt32 type,void *data) {
+int mpi_spam(uint32_t type,void *data) {
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"

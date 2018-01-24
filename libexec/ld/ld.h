@@ -29,7 +29,7 @@ extern ldLibrary *libs;
 extern int       lib_c;
 extern int       lib_s[10];
 
-uInt32 ldFindFunc(const char *,const char *);
+uint32_t ldFindFunc(const char *,const char *);
 ldLibrary *ldFindLibrary(const char *);
 ldLibrary *ldAddLibrary(const char *);
 

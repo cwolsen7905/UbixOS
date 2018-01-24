@@ -46,8 +46,9 @@ int main() {
     window->vSDECommand(1);
 ogImage * image = new ogImage();
 ogSurface * bgImage = new ogSurface();
-image->Load("/var/background/ringed800_600.bmp", *bgImage);
-//image->Load("/var/background/sphere800x600.bmp", *bgImage);
+//image->Load("/var/background/ringed800_600.bmp", *bgImage);
+image->Load("/var/background/sphere800x600.bmp", *bgImage);
+image->Load("/var/background/carrot2_Running.bmp", *bgImage);
 
 
 window->ogCopy(*bgImage);

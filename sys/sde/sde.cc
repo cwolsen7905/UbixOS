@@ -65,8 +65,14 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
   }
   else if (tmp == 0x0 && args->cmd != registerWindow) {
     if (args->cmd == drawWindow) {
+      kprintf("oldBuf->ogAvail(): %i\n", oldBuf->ogAvail());
+      kprintf("oldBuf->ogGetBPP(): %i\n", oldBuf->ogGetBPP());
       screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
       kprintf("sX: %i, oX: %i, sY: %i, oY: %i", screen->ogGetMaxX(), oldBuf->ogGetMaxX(), screen->ogGetMaxY(), oldBuf->ogGetMaxY());
+      oldBuf->ogLine(0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY(), 0xFFFFFFFF);
+      kprintf("Did ogLine\n");
+      screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
+      kprintf("Did another copy buf\n");
     }
 
     kprintf("Invalid Window\n");

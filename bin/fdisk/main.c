@@ -43,8 +43,8 @@ struct dos_partition {
   unsigned char dp_ehd; /* end head */
   unsigned char dp_esect; /* end sector */
   unsigned char dp_ecyl; /* end cylinder */
-  uInt32 dp_start; /* absolute starting sector number */
-  uInt32 dp_size; /* partition size in sectors */
+  uint32_t dp_start; /* absolute starting sector number */
+  uint32_t dp_size; /* partition size in sectors */
 };
 
 int main(int argc, char **argv) {

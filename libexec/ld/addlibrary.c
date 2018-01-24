@@ -8,13 +8,13 @@ ldLibrary *ldAddLibrary(const char *lib) {
   int        i        = 0x0;
   int        x        = 0x0;
   int        rel      = 0x0;
-  uInt32    *reMap    = 0x0;
+  uint32_t    *reMap    = 0x0;
   char      *newLoc   = 0x0;
   FILE      *linkerFd = 0x0;
   char       tmpFile[1024];
   ldLibrary *tmpLib   = 0x0;
   elfDynamic *dynp    = 0x0;
-  uInt32     *tmp     = 0x0;
+  uint32_t     *tmp     = 0x0;
 
   if ((tmpLib = (ldLibrary *)malloc(sizeof(ldLibrary))) == 0x0) {
     printf("malloc failed: tmpLib\n");
@@ -58,17 +58,17 @@ ldLibrary *ldAddLibrary(const char *lib) {
     for (i=0;i<tmpLib->linkerHeader->ePhnum;i++) {
       switch (tmpLib->linkerProgramHeader[i].phType) {
         case PT_LOAD:
-          newLoc = (char *)(tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
+          newLoc = (char *)(tmpLib->linkerProgramHeader[i].phVaddr + (uint32_t)tmpLib->output);
           fseek(linkerFd,tmpLib->linkerProgramHeader[i].phOffset,0);
           fread(newLoc,tmpLib->linkerProgramHeader[i].phFilesz,1,linkerFd);
           break;
         case PT_DYNAMIC:
-          dynp = (elfDynamic *)(tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
+          dynp = (elfDynamic *)(tmpLib->linkerProgramHeader[i].phVaddr + (uint32_t)tmpLib->output);
           printf("dynp: 0x%X:0x%X:0x%X", dynp, tmpLib->linkerProgramHeader[i].phVaddr, tmpLib->output);
           for (;dynp->dynVal != 0x0;dynp++) {
            switch (dynp->dynVal) {
              case DT_PLTGOT:
-                tmp = (void *)((uInt32)tmpLib->output + dynp->dynPtr);
+                tmp = (void *)((uint32_t)tmpLib->output + dynp->dynPtr);
                 tmp[1] = 0xDEAD;
                 tmp[2] = 0xBEEF;
                 break;
@@ -84,10 +84,10 @@ ldLibrary *ldAddLibrary(const char *lib) {
             tmpLib->tlssize = tmpLib->linkerProgramHeader[i].phMemsz;//ph->p_memsz;
             tmpLib->tlsalign = tmpLib->linkerProgramHeader[i].phAlign;//ph->p_align;
             tmpLib->tlsinitsize = tmpLib->linkerProgramHeader[i].phFilesz;//ph->p_filesz;
-            tmpLib->tlsinit = (void*)(tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output);
-            printf("TLS: 0x%X, 0x%X, 0x%X, 0x%X", tmpLib->tlssize, tmpLib->tlsinitsize, tmpLib->tlsinit, tmpLib->tlsinit - (uInt32)tmpLib->output);
+            tmpLib->tlsinit = (void*)(tmpLib->linkerProgramHeader[i].phVaddr + (uint32_t)tmpLib->output);
+            printf("TLS: 0x%X, 0x%X, 0x%X, 0x%X", tmpLib->tlssize, tmpLib->tlsinitsize, tmpLib->tlsinit, tmpLib->tlsinit - (uint32_t)tmpLib->output);
 /*
-          newLoc = (char *)tmpLib->linkerProgramHeader[i].phVaddr + (uInt32)tmpLib->output;
+          newLoc = (char *)tmpLib->linkerProgramHeader[i].phVaddr + (uint32_t)tmpLib->output;
           fseek(linkerFd,tmpLib->linkerProgramHeader[i].phOffset,0);
           fread(newLoc,tmpLib->linkerProgramHeader[i].phFilesz,1,linkerFd);
 */
@@ -145,27 +145,27 @@ ldLibrary *ldAddLibrary(const char *lib) {
 
         for (x=0x0;x<tmpLib->linkerSectionHeader[i].shSize/sizeof(elfPltInfo);x++) {
           rel = ELF32_R_SYM(tmpLib->linkerElfRel[x].pltInfo);
-          reMap = (uInt32 *)((uInt32)tmpLib->output + tmpLib->linkerElfRel[x].pltOffset);
+          reMap = (uint32_t *)((uint32_t)tmpLib->output + tmpLib->linkerElfRel[x].pltOffset);
           switch (ELF32_R_TYPE(tmpLib->linkerElfRel[x].pltInfo)) {
             case R_386_32:
             case R_386_TLS_TPOFF:
             case R_386_TLS_TPOFF32:
             case R_386_TLS_DTPMOD32:
             case R_386_TLS_DTPOFF32:
-              *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
-              *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uInt32)reMap;
+              *reMap += ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
+              *reMap += ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uint32_t)reMap;
               break;
             case R_386_PC32:
-              *reMap += ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uInt32)reMap;
+              *reMap += ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue) - (uint32_t)reMap;
               break;
             case R_386_RELATIVE:
-              *reMap += (uInt32)tmpLib->output;
+              *reMap += (uint32_t)tmpLib->output;
               break;
             case R_386_JMP_SLOT:
-              *reMap += (uInt32)tmpLib->output;
+              *reMap += (uint32_t)tmpLib->output;
               break;
             case R_386_GLOB_DAT:
-              *reMap = ((uInt32)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
+              *reMap = ((uint32_t)tmpLib->output + tmpLib->linkerRelSymTab[rel].dynValue);
               break;
             default:
               printf("Unhandled sym: [0x%X]\n", ELF32_R_TYPE(tmpLib->linkerElfRel[x].pltInfo));

@@ -45,18 +45,18 @@ static Elf32_Dyn *binaryElf32_Dyn = 0x0;
 static elfPltInfo *binaryElfRelDyn = 0x0;
 static elfPltInfo *binaryElfRel = 0x0;
 
-uInt32 ld( uInt32 got2, uInt32 entry ) {
+uint32_t ld( uint32_t got2, uint32_t entry ) {
   int i = 0x0;
   int x = 0x0;
   //int y = 0x0;
   int rel = 0x0;
   int relDyn = 0x0;
-  uInt32 *reMap = 0x0;
+  uint32_t *reMap = 0x0;
   FILE *binaryFd = 0x0;
 
   if ( binaryHeader == 0x0 ) {
     binaryFd = malloc( sizeof(FILE) );
-    binaryFd->fd = (uInt32) got2;
+    binaryFd->fd = (uint32_t) got2;
     fseek( binaryFd, 0x0, 0x0 );
     binaryHeader = (elfHeader *) malloc( sizeof(elfHeader) );
     fread( binaryHeader, sizeof(elfHeader), 1, binaryFd );
@@ -122,7 +122,7 @@ uInt32 ld( uInt32 got2, uInt32 entry ) {
    switch (ELF32_R_TYPE(binaryElfRelDyn[x].pltInfo)) {
    case R_386_COPY:
    printf("COPY");
-   reMap = (uInt32 *)binaryElfRelDyn[x].pltOffset;
+   reMap = (uint32_t *)binaryElfRelDyn[x].pltOffset;
    *reMap = 0x1;
    break;
    default:
@@ -142,7 +142,7 @@ uInt32 ld( uInt32 got2, uInt32 entry ) {
 
   i = ( entry / sizeof(elfPltInfo) );
   x = ELF32_R_SYM( binaryElfRel[i].pltInfo );
-  reMap = (uInt32 *) binaryElfRel[i].pltOffset;
+  reMap = (uint32_t *) binaryElfRel[i].pltOffset;
   *reMap = ldFindFunc( binaryDynStr + binaryRelSymTab[x].dynName, binaryDynStr );
   printf( "\nld(%s:0x%X:0x%X)", binaryDynStr + binaryRelSymTab[x].dynName, reMap, *reMap );
   //*reMap = ldFindFunc(binaryDynStr + binaryRelSymTab[x].dynName,(char *)(binaryDynStr + 1));

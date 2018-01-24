@@ -35,7 +35,7 @@ struct memDescriptor {
     struct memDescriptor *prev;        //4
     struct memDescriptor *next;        //4
     void *baseAddr;    //4
-    uInt32 limit;        //4
+    uint32_t limit;        //4
 };
 
 #define MALLOC_ALIGN_SIZE  32
@@ -87,7 +87,7 @@ static void *getEmptyDesc() {
 
 /************************************************************************
 
- Function: void *kmalloc(uInt32 len)
+ Function: void *kmalloc(uint32_t len)
  Description: Allocate Kernel Memory
 
  Notes:
@@ -95,7 +95,7 @@ static void *getEmptyDesc() {
  02/17/03 - Do I Still Need To Pass In The Pid?
 
  ************************************************************************/
-void *malloc( uInt32 len ) {
+void *malloc( uint32_t len ) {
   struct memDescriptor *tmpDesc1 = 0x0;
   struct memDescriptor *tmpDesc2 = 0x0;
   char *buf = 0x0;
@@ -203,7 +203,7 @@ void free( void *baseAddr ) {
       return;
     }
   }
-  printf( "Kernel: Error Freeing Descriptor! [0x%X]\n", (uInt32) baseAddr );
+  printf( "Kernel: Error Freeing Descriptor! [0x%X]\n", (uint32_t) baseAddr );
 
   return;
 }

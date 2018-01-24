@@ -79,7 +79,7 @@ class ogSurface {
 #else
  protected:
 #endif
-  float        version;
+  double        version;
   void       * buffer;
   ogSurface  * owner;
   uInt32     * lineOfs;

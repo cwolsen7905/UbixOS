@@ -110,63 +110,63 @@ OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMA
 /* End Elf Program Header Types */
 
 typedef struct {
-  uInt8  eIdent[16]; /* File identification. */
-  uInt16 eType;      /* File type. */
-  uInt16 eMachine;   /* Machine architecture. */
-  uInt32  eVersion;   /* ELF format version. */
-  uInt32  eEntry;     /* Entry point. */
-  uInt32  ePhoff;     /* Program Header file offset. */
-  uInt32  eShoff;     /* Section header file offset. */
-  uInt32  eFlags;     /* Architecture-specific flags. */
-  uInt16 eEhsize;    /* Size of ELF header in bytes. */
-  uInt16 ePhentsize; /* Size of program header entry. */
-  uInt16 ePhnum;     /* Number of program header entries. */
-  uInt16 eShentsize; /* Size of section header entry. */
-  uInt16 eShnum;     /* Number of section header entries. */
-  uInt16 eShstrndx;  /* Section name strings section. */
+  uint8_t  eIdent[16]; /* File identification. */
+  uint16_t eType;      /* File type. */
+  uint16_t eMachine;   /* Machine architecture. */
+  uint32_t  eVersion;   /* ELF format version. */
+  uint32_t  eEntry;     /* Entry point. */
+  uint32_t  ePhoff;     /* Program Header file offset. */
+  uint32_t  eShoff;     /* Section header file offset. */
+  uint32_t  eFlags;     /* Architecture-specific flags. */
+  uint16_t eEhsize;    /* Size of ELF header in bytes. */
+  uint16_t ePhentsize; /* Size of program header entry. */
+  uint16_t ePhnum;     /* Number of program header entries. */
+  uint16_t eShentsize; /* Size of section header entry. */
+  uint16_t eShnum;     /* Number of section header entries. */
+  uint16_t eShstrndx;  /* Section name strings section. */
   } elfHeader;
 
 typedef struct {
-  uInt32 phType;         /* Entry type. */
-  uInt32 phOffset;       /* File offset of contents. */
-  uInt32 phVaddr;        /* Virtual address in memory image. */
-  uInt32 phPaddr;        /* Physical address (not used). */
-  uInt32 phFilesz;       /* Size of contents in file. */
-  uInt32 phMemsz;        /* Size of contents in memory. */
-  uInt32 phFlags;        /* Access permission flags. */
-  uInt32 phAlign;        /* Alignment in memory and file. */
+  uint32_t phType;         /* Entry type. */
+  uint32_t phOffset;       /* File offset of contents. */
+  uint32_t phVaddr;        /* Virtual address in memory image. */
+  uint32_t phPaddr;        /* Physical address (not used). */
+  uint32_t phFilesz;       /* Size of contents in file. */
+  uint32_t phMemsz;        /* Size of contents in memory. */
+  uint32_t phFlags;        /* Access permission flags. */
+  uint32_t phAlign;        /* Alignment in memory and file. */
   } elfProgramHeader;
 
 typedef struct {
-  uInt32 shName;        /* Section name (index into the section header string table). */
-  uInt32 shType;        /* Section type. */
-  uInt32 shFlags;       /* Section flags. */
-  uInt32 shAddr;        /* Address in memory image. */
-  uInt32 shOffset;      /* Offset in file. */
-  uInt32 shSize;        /* Size in bytes. */
-  uInt32 shLink;        /* Index of a related section. */
-  uInt32 shInfo;        /* Depends on section type. */
-  uInt32 shAddralign;   /* Alignment in bytes. */
-  uInt32 shEntsize;     /* Size of each entry in section. */
+  uint32_t shName;        /* Section name (index into the section header string table). */
+  uint32_t shType;        /* Section type. */
+  uint32_t shFlags;       /* Section flags. */
+  uint32_t shAddr;        /* Address in memory image. */
+  uint32_t shOffset;      /* Offset in file. */
+  uint32_t shSize;        /* Size in bytes. */
+  uint32_t shLink;        /* Index of a related section. */
+  uint32_t shInfo;        /* Depends on section type. */
+  uint32_t shAddralign;   /* Alignment in bytes. */
+  uint32_t shEntsize;     /* Size of each entry in section. */
   } elfSectionHeader;
 
 typedef struct {
-  uInt32 pltOffset;
-  uInt32 pltInfo;
+  uint32_t pltOffset;
+  uint32_t pltInfo;
   } elfPltInfo;
 
 typedef struct {
-  uInt32 dynName;
-  uInt32 dynValue;
-  uInt32 dynSize;
-  uInt8  dynInfo;
-  uInt8  dynOther;
-  uInt16 dynShndx;
+  uint32_t dynName;
+  uint32_t dynValue;
+  uint32_t dynSize;
+  uint8_t  dynInfo;
+  uint8_t  dynOther;
+  uint16_t dynShndx;
   } elfDynSym;
 
 typedef struct {
-  uInt32 dynVal;
-  uInt32 dynPtr;
+  uint32_t dynVal;
+  uint32_t dynPtr;
   } elfDynamic;
 
 
@@ -199,8 +199,8 @@ char *elfGetRelType(int);
 typedef struct {
   long d_tag; 
   union {
-    uInt32 d_val;
-    uInt32 d_ptr;
+    uint32_t d_val;
+    uint32_t d_ptr;
     } d_un;
   } Elf32_Dyn;
 

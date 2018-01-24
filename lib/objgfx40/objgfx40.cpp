@@ -2128,17 +2128,25 @@ void ogSurface::ogCopyBuf(int32 dX1, int32 dY1, ogSurface& src, int32 sX1, int32
   ogPixCon * pc;
   ogPixelFmt srcPixFmt, dstPixFmt;
 
-  if (!ogAvail())
+  if (!ogAvail()) {
+    kprintf("!ogAvail()\n");
     return;
-  if (!src.ogAvail())
+  }
+  if (!src.ogAvail()) {
+    kprintf("!src.ogAvail()\n");
     return;
+  }
 
-  if ((dX1 > (int32) maxX) || (dY1 > (int32) maxY))
+  if ((dX1 > (int32) maxX) || (dY1 > (int32) maxY)) {
+    kprintf("(dX1 > (int32) maxX) || (dY1 > (int32) maxY)");
     return;
+  }
 
   // if any of the source buffer is out of bounds then do nothing
-  if (((uint32_t) sX1 > src.maxX) || ((uint32_t) sX2 > src.maxX) || ((uint32_t) sY1 > src.maxY) || ((uint32_t) sY2 > src.maxY))
+  if (((uint32_t) sX1 > src.maxX) || ((uint32_t) sX2 > src.maxX) || ((uint32_t) sY1 > src.maxY) || ((uint32_t) sY2 > src.maxY)) {
+    kprintf("((uint32_t) sX1 > src.maxX) || ((uint32_t) sX2 > src.maxX) || ((uint32_t) sY1 > src.maxY) || ((uint32_t) sY2 > src.maxY)");
     return;
+  }
 
   if (sX1 > sX2) {
     xx = sX1;
@@ -2172,8 +2180,10 @@ void ogSurface::ogCopyBuf(int32 dX1, int32 dY1, ogSurface& src, int32 sX1, int32
     dY1 = 0;
   } // if
 
-  if ((dX1 + xCount < 0) || (dY1 + yCount < 0))
+  if ((dX1 + xCount < 0) || (dY1 + yCount < 0)) {
+    kprintf("(dX1 + xCount < 0) || (dY1 + yCount < 0)");
     return;
+  }
 
   if (ogIsBlending()) {
     for (yy = 0; yy < yCount; yy++)
@@ -2198,8 +2208,10 @@ void ogSurface::ogCopyBuf(int32 dX1, int32 dY1, ogSurface& src, int32 sX1, int32
       src.ogGetPixFmt(srcPixFmt);
       ogGetPixFmt(dstPixFmt);
       pc = new ogPixCon(srcPixFmt, dstPixFmt);  // allocate the pixel converter
-      if (pc == NULL)
+      if (pc == NULL) {
+        kprintf("pc == NULL");
         return;
+      }
 
       for (yy = 0; yy < yCount; yy++)
         for (xx = 0; xx < xCount; xx++) {

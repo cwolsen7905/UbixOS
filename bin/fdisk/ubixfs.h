@@ -29,22 +29,22 @@
 #include <sys/types.h>
 
 #define	DOSPTYP_UBX	 0x2A	/* UbixFS partition type */
-#define UBIXDISKMAGIC    ((uInt32)0x45) /* The disk magic number */
+#define UBIXDISKMAGIC    ((uint32_t)0x45) /* The disk magic number */
 #define MAXUBIXPARTITIONS 16
-#define UBIXFSMAGIC      ((uInt32)0x69) /* The File System Magic Number */
+#define UBIXFSMAGIC      ((uint32_t)0x69) /* The File System Magic Number */
 
 struct ubixDiskLabel {
-    uInt32 magicNum;
-    uInt32 magicNum2;
-    uInt16 driveType;
-    uInt16 numPartitions;
+    uint32_t magicNum;
+    uint32_t magicNum2;
+    uint16_t driveType;
+    uint16_t numPartitions;
     struct ubixPartitions { /* the partition table */
-        uInt32 p_size; /* number of sectors in partition */
-        uInt32 p_offset; /* starting sector */
-        uInt32 p_fsize; /* filesystem basic fragment size */
-        uInt32 p_bsize; /* BAT size */
-        uInt8 p_fstype; /* filesystem type, see below */
-        uInt8 p_frag; /* filesystem fragments per block */
+        uint32_t p_size; /* number of sectors in partition */
+        uint32_t p_offset; /* starting sector */
+        uint32_t p_fsize; /* filesystem basic fragment size */
+        uint32_t p_bsize; /* BAT size */
+        uint8_t p_fstype; /* filesystem type, see below */
+        uint8_t p_frag; /* filesystem fragments per block */
     } partitions[MAXUBIXPARTITIONS];
 };
 
@@ -57,14 +57,14 @@ struct blockAllocationTableEntry {
 };
 
 struct directoryEntry {
-    uInt32 startCluster;   //Starting Cluster Of File
-    uInt32 size;           //Size Of File
-    uInt32 creationDate;  //Date Created
-    uInt32 lastModified;  //Date Last Modified
-    uInt32 uid;           //UID Of Owner
-    uInt32 gid;           //GID Of Owner
-    uInt16 attributes;    //Files Attributes
-    uInt16 permissions;   //Files Permissions
+    uint32_t startCluster;   //Starting Cluster Of File
+    uint32_t size;           //Size Of File
+    uint32_t creationDate;  //Date Created
+    uint32_t lastModified;  //Date Last Modified
+    uint32_t uid;           //UID Of Owner
+    uint32_t gid;           //GID Of Owner
+    uint16_t attributes;    //Files Attributes
+    uint16_t permissions;   //Files Permissions
     char fileName[256]; //File Name
 };
 
