@@ -30,6 +30,12 @@
 #include <objgfx/ogImage.h>
 #include <iostream>
 
+extern "C" {
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+}
+
 int main(int argc, char **argv) {
   vWindow *window = new vWindow();
 
@@ -43,17 +49,37 @@ int main(int argc, char **argv) {
 ogImage * image = new ogImage();
 ogSurface * bgImage = new ogSurface();
 
-//image->Load("/var/background/ringed800_600.bmp", *bgImage);
 //image->Load("/var/background/sphere800x600.bmp", *bgImage);
 //image->Load("/var/background/carrot2_Running.bmp", *bgImage);
 
-bgImage->ogCreate(800,600,OG_PIXFMT_16BPP);
-bgImage->ogLine(400, 400, 400, 200, bgImage->ogPack(255,0,255));
-bgImage->ogLine(200, 200, 200, 400, bgImage->ogPack(0,255,0));
+//bgImage->ogLine(400, 400, 400, 200, bgImage->ogPack(255,0,255));
+//bgImage->ogLine(200, 200, 200, 400, bgImage->ogPack(0,255,0));
+//window->ogCopy(*bgImage);
+//image->Load("/var/background/sphere800x600.bmp", *window);
+
+//image->Load("/var/background/sphere800x600.bmp", *bgImage);
+
+bgImage->ogCreate(800,600,OG_PIXFMT_24BPP);
+
+int fd = open("/var/background/ringed800_600.bmp", O_RDONLY);
+//int fd = open("/var/background/sphere800x600.bmp", O_RDONLY);
+
+std::cout << "FD: " << fd << std::endl;
+
+if (fd != 0) {
+lseek(fd, 54, SEEK_SET);
+
+read(fd, bgImage->ogGetPtr(0,0), 800*600*3);
+
+close(fd);
+}
+
+//image->Load("/var/background/ringed800_600.bmp", *bgImage);
+//image->Load("/var/background/sphere800x600.bmp", *bgImage);
 window->ogCopy(*bgImage);
 window->vSDECommand(3);
 
-bgImage->ogLine(bgImage->ogGetMaxX(), bgImage->ogGetMaxY(), 0, 0, 0xFF00FFFF);
+//bgImage->ogLine(bgImage->ogGetMaxX(), bgImage->ogGetMaxY(), 0, 0, 0xFF00FFFF);
 return(0);
 
     while (1) {

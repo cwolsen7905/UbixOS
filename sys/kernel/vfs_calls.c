@@ -88,6 +88,8 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 
   getfd(td, &fd, args->fd);
 
+  //kprintf("\nsys_read\n");
+
   if (args->fd > 3) {
     td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
   }

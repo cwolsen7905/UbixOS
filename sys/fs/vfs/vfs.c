@@ -143,6 +143,8 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   int          index = 0x0;
   struct file *nfp   = 0x0;
 
+  kprintf("openat");
+
   error = falloc(td,&nfp,&index);
 
   if (error)
@@ -156,6 +158,9 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     td->td_retval[0] = -1;
   }
   else {
+    //td->o_files[index] = nfp;
+    td->td_retval[0] = index;
+    /*
     for (index = 0; index < 256;index++) {
       if (td->o_files[index] == 0x0) {
         td->o_files[index] = nfp;//->fd;
@@ -166,9 +171,10 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
         td->td_retval[0] = -1;//nfp->fd->ino;//MrOlsen 2018index;
       }
     }
+    */
   }
 
-  //kprintf("path: %s:%i ", args->path, index);
+  kprintf("path: %s:%i ", args->path, index);
 
   return (error);
   }
