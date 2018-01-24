@@ -45,6 +45,7 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
     return (error);
 
   kprintf("sO: 0x%X:%s", args->mode, args->path);
+
   nfp->fd = fopen(args->path, "rb");
 
   if (nfp->fd == 0x0) {
@@ -54,11 +55,41 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
     error = -1;
   }
   else {
-    td->td_retval[0] = fd; //nfp->fd; //MrOlsen 2018index;
+    td->td_retval[0] = fd;
   }
 
   return (error);
 }
+
+int sys_openat(struct thread *td, struct sys_openat_args *args) {
+  int          error = 0x0;
+  int          fd = 0x0;
+  struct file *nfp   = 0x0;
+
+  kprintf("openat");
+
+  error = falloc(td,&nfp,&fd);
+
+  if (error)
+     return(error);
+
+  kprintf("sOA: 0x%X:%s", args->mode, args->path);
+
+  nfp->fd = fopen(args->path,"r");
+
+  if (nfp->fd == 0x0) {
+    fdestroy(td, nfp, fd);
+
+    td->td_retval[0] = -1;
+    error = -1;
+  }
+  else {
+    td->td_retval[0] = fd;
+  }
+
+  return (error);
+  }
+
 
 int sys_close(struct thread *td, struct sys_close_args *args) {
   struct file *fd = 0x0;
@@ -87,8 +118,6 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
   struct file *fd = 0x0;
 
   getfd(td, &fd, args->fd);
-
-  //kprintf("\nsys_read\n");
 
   if (args->fd > 3) {
     td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
@@ -124,8 +153,6 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 
           bf[0] = '\n';
           kprintf(bf);
-
-   //MROlsen 2018 kprintf("READ: %i", x);
 
     td->td_retval[0] = x;
   }

@@ -52,8 +52,6 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
 
   screen = (ogDisplay_UbixOS *) systemVitals->screen;
 
-  kprintf("\nCMD: %i:0x%X\n", args->cmd, args->ptr);
-
   for (tmp = windows; tmp; tmp = tmp->next) {
     if (tmp->pid == (int) _current->id)
       break;
@@ -65,18 +63,10 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
   }
   else if (tmp == 0x0 && args->cmd != registerWindow) {
     if (args->cmd == drawWindow) {
-      kprintf("oldBuf->ogAvail(): %i\n", oldBuf->ogAvail());
-      kprintf("oldBuf->ogGetBPP(): %i\n", oldBuf->ogGetBPP());
       screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
-      kprintf("sX: %i, oX: %i, sY: %i, oY: %i", screen->ogGetMaxX(), oldBuf->ogGetMaxX(), screen->ogGetMaxY(), oldBuf->ogGetMaxY());
-      kprintf("sID: 0x%X, oID: 0x%X", screen->ogGetPixFmtID(), oldBuf->ogGetPixFmtID());
-//      oldBuf->ogLine(0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY(), 0xFFFFFFFF);
-//      kprintf("Did ogLine\n");
-//      screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
-//      kprintf("Did another copy buf\n");
     }
 
-    kprintf("Invalid Window\n");
+    //kprintf("Invalid Window\n");
     td->td_retval[0] = -1;
     return(-1);
   }

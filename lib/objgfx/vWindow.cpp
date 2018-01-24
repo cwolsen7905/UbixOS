@@ -38,7 +38,6 @@ asm(
 
 void vWindow::vSDECommand(uint32_t command) {
   uint32_t rwAddr = (uint32_t)realWindow;
-  printf("\nREAL WINDOW: 0x%X:0x%X:0x%X\n", &realWindow, realWindow, rwAddr);
 
   /*
   asm(

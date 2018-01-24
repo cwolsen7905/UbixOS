@@ -114,9 +114,8 @@ void sysRmDir() {
   return;
 }
 
-//int sys_fseek(userFileDescriptor *userFd,long offset,int whence) {
 int sys_fseek( struct thread *td, struct sys_fseek_args *args ) {
-  kprintf("offset: 0x%X, whence: 0x%X", args->offset, args->whence);
+  kprintf("offset: %ld, whence: 0x%X", args->offset, args->whence);
 
   // TODO : coredump?
   if ( args->FILE == NULL ) {
@@ -142,6 +141,7 @@ int sys_fseek( struct thread *td, struct sys_fseek_args *args ) {
     break;
   }
 
+      td->td_retval[0] = args->FILE->fd->offset & 0xFFFFFFFF;
   return (0);
 }
 
@@ -159,21 +159,25 @@ int sys_lseek( struct thread *td, struct sys_lseek_args *args ) {
     kprintf("ERROR!");
   }
 
-  kprintf("offset: 0x%X, whence: 0x%X", args->offset, args->whence);
+  kprintf("loffset(%i): %i:%i, whence: 0x%X", sizeof(off_t), args->offset >> 32, args->offset & 0xFFFFFF, args->whence);
 
   switch (args->whence) {
-    case 0:
-      fd->offset = args->offset + args->whence;
-      td->td_retval[0] = fd->offset;
+    case SEEK_SET:
+      fd->offset = args->offset;
+      td->td_retval[0] = fd->offset & 0xFFFFFFFF;
+      td->td_retval[1] = fd->offset >> 32;
     break;
-    case 1:
+    case SEEK_CUR:
       fd->offset += args->offset;
-      td->td_retval[0] = fd->offset;
+      td->td_retval[0] = fd->offset & 0xFFFFFFFF;
+      td->td_retval[1] = fd->offset >> 32;
     break;
     default:
       kprintf ("seek-whence: %i", args->whence);
     break;
   }
+
+  kprintf("loff: %ld", fd->offset);
 
   return (error);
 }
@@ -492,7 +496,7 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (tmpFd);
   }
   else {
-    kprintf("Freeing");
+    //kprintf("Freeing");
     kfree( tmpFd->buffer );
     kfree( tmpFd );
     spinUnlock( &fdTable_lock );
@@ -529,7 +533,6 @@ int fclose( fileDescriptor_t *fd ) {
 
       systemVitals->openFiles--;
       spinUnlock( &fdTable_lock );
-kprintf("Fclose\n");
       if ( tmpFd->buffer != NULL )
         kfree( tmpFd->buffer );
       kfree( tmpFd );

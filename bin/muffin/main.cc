@@ -59,6 +59,7 @@ ogSurface * bgImage = new ogSurface();
 
 //image->Load("/var/background/sphere800x600.bmp", *bgImage);
 
+/*
 bgImage->ogCreate(800,600,OG_PIXFMT_24BPP);
 
 int fd = open("/var/background/ringed800_600.bmp", O_RDONLY);
@@ -73,7 +74,9 @@ read(fd, bgImage->ogGetPtr(0,0), 800*600*3);
 
 close(fd);
 }
+*/
 
+image->Load("/var/background/ubix.bmp", *bgImage);
 //image->Load("/var/background/ringed800_600.bmp", *bgImage);
 //image->Load("/var/background/sphere800x600.bmp", *bgImage);
 window->ogCopy(*bgImage);

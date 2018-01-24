@@ -40,7 +40,9 @@
 /* HACK */
 int getchar();
 
-#define SEEK_SET 0x0
+#define SEEK_SET 0
+#define SEEK_CUR 1
+#define SEEK_END 2
 
 #define VBLKSHIFT       12
 #define VBLKSIZE        (1 << VBLKSHIFT)
@@ -64,7 +66,7 @@ typedef struct fileDescriptor {
     uint32_t ino;
     uint16_t status;
     uint16_t mode;
-    uint32_t offset;
+    off_t offset;
     uint32_t size;
     uint16_t length;
     uint32_t start;

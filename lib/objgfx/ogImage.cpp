@@ -459,7 +459,7 @@ ogImageType ogImage::ImageType(std::istream& input)
 				break;
 			} // if
 		} // for iType
-
+std::cout << "bRead: " << bytesRead << std::endl;
 		// Now seek backwards in the stream.
 		input.seekg(-bytesRead, std::ios_base::cur);
 	}
@@ -492,6 +492,8 @@ bool ogImage::Load(const std::string& filename, ogSurface & surface)
 
 	ifstream stream(filename, ios_base::in | ios_base::binary);
 
+std::cout << "Loaded" << std::endl;
+
 	if (stream)
 	{
 		success = Load(stream, surface);
@@ -504,7 +506,9 @@ bool ogImage::Load(const std::string& filename, ogSurface & surface)
 bool ogImage::Load(std::istream& stream, ogSurface& surface)
 {
 	// First we need to find out what type of graphics file it is:
+std::cout << "eIT" << std::endl;
 	ogImageType imageType = ogImage::ImageType(stream);
+std::cout << "rIT" << std::endl;
 
 	if (imageType == NoImage) return false;
 

@@ -82,11 +82,11 @@ void sys_call(struct trapframe *frame) {
       return;
     }
 
-kprintf("ERROR: 0x%X",error);
+//kprintf("ERROR: 0x%X",error);
     switch (error) {
       case 0:
         frame->tf_eax = td->td_retval[0];
-  //      frame->tf_edx = td->td_retval[1];
+        frame->tf_edx = td->td_retval[1];
         frame->tf_eflags &= ~PSL_C;
       break;
       default:

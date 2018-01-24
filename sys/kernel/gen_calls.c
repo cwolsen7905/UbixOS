@@ -43,7 +43,7 @@
 
 /* Exit Syscall */
 int sys_exit(struct thread *td, struct sys_exit_args *args) {
-  kprintf("exit(%i)", args->status);
+  //kprintf("exit(%i)", args->status);
   endTask(_current->id);
   return (0x0);
 }
@@ -180,7 +180,6 @@ int sys_wait4(struct thread *td, struct sys_wait4_args *args) {
       error = -1;
     }
   }
-  kprintf("w4: %i", td->td_retval[0]);
   return (error);
 }
 

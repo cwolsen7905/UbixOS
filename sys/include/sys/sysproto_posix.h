@@ -208,23 +208,18 @@ struct sys_fseek_args {
     char FILE_l_[PADL_(userFileDescriptor *)];
     userFileDescriptor *FILE;
     char FILE_r_[PADR_(userFileDescriptor *)];
-    char offset_l_[PADL_(long)];
-    long offset;
-    char offset_r_[PADR_(long)];
+    char offset_l_[PADL_(off_t)];
+    off_t offset;
+    char offset_r_[PADR_(off_t)];
     char whence_l_[PADL_(int)];
     int whence;
     char whence_r_[PADR_(int)];
 };
+
 struct sys_lseek_args {
-    char fd_l_[PADL_(uint32_t)];
-    uint32_t fd;
-    char fd_r_[PADR_(uint32_t)];
-    char offset_l_[PADL_(long)];
-    long offset;
-    char offset_r_[PADR_(long)];
-    char whence_l_[PADL_(int)];
-    int whence;
-    char whence_r_[PADR_(int)];
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+        char offset_l_[PADL_(off_t)]; off_t offset; char offset_r_[PADR_(off_t)];
+        char whence_l_[PADL_(int)]; int whence; char whence_r_[PADR_(int)];
 };
 
 struct sys_sysctl_args {

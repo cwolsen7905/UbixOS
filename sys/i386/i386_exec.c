@@ -524,8 +524,10 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   fd = fopen(file, "r");
 
-  if (fd == 0x0)
+  if (fd == 0x0) {
+    td->td_retval[0] = 2;
     return (-1);
+  }
 
   /* Test If Executable */
   if (fd->perms == 0) {
