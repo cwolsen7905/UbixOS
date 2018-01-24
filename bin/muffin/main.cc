@@ -43,15 +43,16 @@ int main() {
 
   //if (fork() == 0x0) {
     window->vCreate();
-    window->vSDECommand(1);
+//    window->vSDECommand(1);
 ogImage * image = new ogImage();
 ogSurface * bgImage = new ogSurface();
 //image->Load("/var/background/ringed800_600.bmp", *bgImage);
-image->Load("/var/background/sphere800x600.bmp", *bgImage);
+//mage->Load("/var/background/sphere800x600.bmp", *bgImage);
 image->Load("/var/background/carrot2_Running.bmp", *bgImage);
 
 
 window->ogCopy(*bgImage);
+window->ogLine(0, 0, window->ogGetMaxX(), window->ogGetMaxY(), 0xFFFFFFFF);
 window->vSDECommand(3);
 return(0);
 
