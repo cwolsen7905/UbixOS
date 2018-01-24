@@ -34,6 +34,7 @@
 #include <vmm/vmm.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/types.h>
 
 /*
  Set up three descriptor tables:
