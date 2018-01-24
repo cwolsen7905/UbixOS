@@ -6,7 +6,7 @@
 include ../Makefile.incl
 
 #Compiler Flags
-CFLAGS = -g
+CFLAGS = -std=c++11
  # -DNOBOOL -fno-builtin -fno-exceptions
 
 #Linker
@@ -31,15 +31,15 @@ STARTUP=
 
 # Link The Binary
 $(BINARY) : $(OBJS)
-	$(CC) $(CFLAGS) -o ${BUILD_DIR}/bin/$@ $(STARTUP) $(LIBRARIES) $(LIBRARIES2) $(OBJS)
+	$(CC) -static $(CFLAGS) -o ${BUILD_DIR}/bin/$@ $(LIBRARIES2) $(OBJS)
 	#strip $(BINARY)
 
 # Compile the source files
 .cc.o:
-	$(CXX)  -Wall -fomit-frame-pointer -O $(CFLAGS) $(INCLUDE2) -c -o $@ $<
+	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDE2) -c -o $@ $<
  
 .cc.s:
-	$(CXX)  -Wall -fomit-frame-pointer -O $(CFLAGS) $(INCLUDE2) -S -o $@ $<
+	$(CXX)  -Wall -O $(CFLAGS) $(INCLUDE2) -S -o $@ $<
  
 .c.o:
 	$(CC)  -Wall -O $(CFLAGS) $(INCLUDE) -c -o $@ $<

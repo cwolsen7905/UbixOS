@@ -96,53 +96,49 @@ ogPixCon::ogPixCon(ogPixelFmt srcPixFmt, ogPixelFmt dstPixFmt) {
   return;
 } // ogPixCon::ogPixCon()
 
-uInt32 ogPixCon::ConvPix(uInt32 pixel)
-{
-    /*
-	_asm {
-        xor     ebx, ebx                  ; // ebx <- 0
-        xor     edi, edi                  ; // edi <- 0
+uint32_t 
+ogPixCon::ConvPix(uint32_t pixel) {
+  __asm__ __volatile__(
+       "  xor   %%ebx, %%ebx       \n"    // xor     ebx, ebx
+       "  xor   %%edi, %%edi       \n"    // xor     edi, edi
+       "                           \n"
+       "  push  %%eax              \n"    // push    eax
+       "                           \n"
+       "  and   %%edx, %%esi       \n"    // and     esi, edx
+       "  xor   %%eax, %%eax       \n"    // xor     eax, eax
+       "  xor   %%edx, %%edx       \n"    // xor     edx, edx
+       "                           \n"
+       "  shrdl %%cl, %%esi, %%eax \n"    // shrd    eax, esi, cl
+       "  shr   %%cl, %%esi        \n"    // shr     esi, cl
+       "  mov   %%ch, %%cl         \n"    // mov     cl, ch
+       "  shrdl %%cl, %%esi, %%ebx \n"    // shrd    ebx, esi, cl
+       "  shr   %%cl, %%esi        \n"    // shr     esi, cl
+       "  shr   $16, %%ecx         \n"    // shr     ecx, 16
+       "  shrdl %%cl, %%esi, %%edx \n"    // shrd    edx, esi, cl
+       "  shr   %%cl, %%esi        \n"    // shr     esi, cl
+       "  mov   %%ch, %%cl         \n"    // mov     cl, ch
+       "  shrdl %%cl, %%esi, %%edi \n"    // shrd    edi, esi, cl
+       "                           \n"
+       "  pop   %%ecx              \n"    // pop     ecx
+       "                           \n"
+       "  shr   %%cl, %%eax        \n"    // shr     eax, cl
+       "  shr   $8, %%ecx          \n"    // shr     ecx, 8
+       "  shr   %%cl, %%ebx        \n"    // shr     ebx, cl
+       "  shr   $8, %%ecx          \n"    // shr     ecx, 8
+       "  shr   %%cl, %%edx        \n"    // shr     edx, cl
+       "  shr   $8, %%ecx          \n"    // shr     ecx, 8
+       "  shr   %%cl, %%edi        \n"    // shr     edi, cl
+       "                           \n"
+       "  or    %%ebx, %%eax       \n"    // or      eax, ebx
+       "  or    %%edi, %%edx       \n"    // or      edx, edi
+       "  nop                      \n"    // nop
+       "  or    %%edx, %%eax       \n"    // or      eax, edx
 
-		mov		eax, this
-
-		mov     edx, [eax + ogPixCon::srcMasker]
-        mov     ecx, [eax + ogPixCon::srcShifter]   ; // ecx <- src shifter
-        mov     eax, [eax + ogPixCon::dstShifter]   ; // eax <- dst shifter
-        mov     esi, pixel                ; // esi <- pixel to convert
-
-        push    eax                       ; // save the dest shifter for later
-
-        and     esi, edx                  ; // esi <- esi & srcMasker
-        xor     eax, eax                  ; // eax <- 0
-        xor     edx, edx                  ; // edx <- 0
-
-        shrd    eax, esi, cl              ; // copy the 1st channel
-        shr     esi, cl                   ; // shift the source
-        mov     cl, ch                    ; // load next shifter
-        shrd    ebx, esi, cl              ; // copy the 2nd channel
-        shr     esi, cl                   ; // shift the source
-        shr     ecx, 16                   ; // load the next shifter
-        shrd    edx, esi, cl              ; // copy the 3rd channel
-        shr     esi, cl                   ; // shift the source
-        mov     cl, ch                    ; // load the next shifter
-        shrd    edi, esi, cl              ; // copy the 4th channel
-
-        pop     ecx                       ; // restore the dest shifter
-
-        shr     eax, cl                   ; // shift 1st src chan to dest pos
-        shr     ecx, 8                    ; // load next shifter
-        shr     ebx, cl                   ; // shift 2nd src chan to dest pos
-        shr     ecx, 8                    ; // load next shifter
-        shr     edx, cl                   ; // shift 3rd src chan to dest pos
-        shr     ecx, 8                    ; // load next shifter
-        shr     edi, cl                   ; // shift 4th src chan to dest pos
-
-        or      eax, ebx                  ; // combine 1st and 2nd channels
-        or      edx, edi                  ; // combine 3rd and 4th channels
-        nop
-        or      eax, edx                  ; // combine all to form new pixel
-	} // _asm
-*/
-	return 0;
-} // uInt32 ogPixCon::ConvPix()
+  : "=a" (pixel)                        // %0
+  : "S" (pixel), "d" (srcMasker),       // %1, %2
+    "c" (srcShifter), "a" (dstShifter)  // %3, %4
+ //   "ecx" (srcShifter), "eax" (dstShifter)    // %2, %3
+  );
+  return pixel;
+}; // ogPixCon::ConvPix
 

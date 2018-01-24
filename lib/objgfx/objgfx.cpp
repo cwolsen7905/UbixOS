@@ -1338,8 +1338,16 @@ void ogSurface::ogCopy(ogSurface& src)
 	uInt8  r, g, b, a;
 	void * srcPtr;
 
-	if (!ogAvail()) return;
-	if (!src.ogAvail()) return;
+std::cout << "ogCopy" << std::endl;
+
+	if (!ogAvail()) {
+std::cout << "ogAvail" << std::endl;
+          return;
+        }
+	if (!src.ogAvail()) {
+std::cout << "src.ogAvail" << std::endl;
+         return;
+        }
 
 	xCount = src.maxX+1;
 	if (xCount > maxX+1) xCount = maxX+1;

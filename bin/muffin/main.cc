@@ -28,32 +28,34 @@
 
 #include <objgfx/vWindow.h>
 #include <objgfx/ogImage.h>
-extern "C" {
-  #include <stdio.h>
-  #include <unistd.h>
-  #include <stdlib.h>
-  }
+#include <iostream>
 
-int main() {
+int main(int argc, char **argv) {
   vWindow *window = new vWindow();
 
   uint16_t i = 0x0;
   uint16_t ii = 0x0;
   uint16_t iii = 0x0;
 
-  //if (fork() == 0x0) {
     window->vCreate();
 //    window->vSDECommand(1);
+
 ogImage * image = new ogImage();
 ogSurface * bgImage = new ogSurface();
+
 //image->Load("/var/background/ringed800_600.bmp", *bgImage);
-//mage->Load("/var/background/sphere800x600.bmp", *bgImage);
+//image->Load("/var/background/sphere800x600.bmp", *bgImage);
 image->Load("/var/background/carrot2_Running.bmp", *bgImage);
 
+//bgImage->ogCreate(800,600,OG_PIXFMT_24BPP);
+
+//bgImage->ogLine(bgImage->ogGetMaxX(), bgImage->ogGetMaxY(), 0, 0, 0xFF00FFFF);
 
 window->ogCopy(*bgImage);
-window->ogLine(0, 0, window->ogGetMaxX(), window->ogGetMaxY(), 0xFFFFFFFF);
-window->vSDECommand(3);
+
+//window->ogLine(0, 0, window->ogGetMaxX(), window->ogGetMaxY(), 0x00FF00FF);
+//window->vSDECommand(3);
+
 return(0);
 
     while (1) {
@@ -75,8 +77,6 @@ return(0);
       }
 
     window->vSDECommand(4);    
-
-    //}
 
   return(0);
   }

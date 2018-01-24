@@ -215,6 +215,17 @@ struct sys_fseek_args {
     int whence;
     char whence_r_[PADR_(int)];
 };
+struct sys_lseek_args {
+    char fd_l_[PADL_(uint32_t)];
+    uint32_t fd;
+    char fd_r_[PADR_(uint32_t)];
+    char offset_l_[PADL_(long)];
+    long offset;
+    char offset_r_[PADR_(long)];
+    char whence_l_[PADL_(int)];
+    int whence;
+    char whence_r_[PADR_(int)];
+};
 
 struct sys_sysctl_args {
     char name_l_[PADL_(int *)];
@@ -701,6 +712,7 @@ int sys_fread(struct thread *td, struct sys_fread_args *);
 int sys_fclose(struct thread *td, struct sys_fclose_args *);
 int sys_fgetc(struct thread *td, struct sys_fgetc_args *);
 int sys_fseek(struct thread *td, struct sys_fseek_args *);
+int sys_lseek(struct thread *td, struct sys_lseek_args *);
 
 int sys_sched_yield(struct thread *td, void *);
 

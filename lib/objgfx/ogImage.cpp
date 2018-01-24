@@ -224,8 +224,8 @@ std::map<ogImageType, std::function<bool(std::istream&)>> ogImage::IsImage = Cre
 ogImage::ogImage() :
 	surface(nullptr),
 	options(nullptr),
-	input(nullptr),
-	output(nullptr)
+	output(nullptr),
+	input(nullptr)
 {
 	Decode[NoImage] = &ogImage::NoOp;
 	Decode[BMP] = &ogImage::DecodeBMP;
@@ -242,12 +242,20 @@ bool ogImage::DecodeBMP()
 
 	Win3xBitmapHeader bmpHeader;
 	Win3xBitmapInfoHeader bmpInfoHeader;
-	if (!bmpHeader.Deserialize(*input)) return false;
-	if (!bmpInfoHeader.Deserialize(*input)) return false;
+	if (!bmpHeader.Deserialize(*input)) {
+ std::cout << "!bmpHeader" << std::endl;
+        return false;
+}
+	if (!bmpInfoHeader.Deserialize(*input)) {
+ std::cout << "!bmpInfoHeader" << std::endl;
+return false;
+}
 
 	size_t lineSize;
 	size_t paddington;
 	char linePadding[4];
+
+std::cout <<"DecodeBMP" << std::endl;
 	
 	if (bmpInfoHeader.BitsPerPixel == 8)
 	{
@@ -506,6 +514,8 @@ bool ogImage::Load(std::istream& stream, ogSurface& surface)
 	this->output = nullptr;		// shouldn't be necessary
 
 	assert(Decode.count(imageType) == 1);	// make sure we can handle it
+
+        std::cout << "Load-istream2" << std::endl;
 
 	return (this->*Decode[imageType])();	// Decode
 } // bool ogImage::Load()

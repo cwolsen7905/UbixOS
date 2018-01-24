@@ -116,6 +116,8 @@ void sysRmDir() {
 
 //int sys_fseek(userFileDescriptor *userFd,long offset,int whence) {
 int sys_fseek( struct thread *td, struct sys_fseek_args *args ) {
+  kprintf("offset: 0x%X, whence: 0x%X", args->offset, args->whence);
+
   // TODO : coredump?
   if ( args->FILE == NULL ) {
     td->td_retval[0] = -1;
@@ -127,9 +129,55 @@ int sys_fseek( struct thread *td, struct sys_fseek_args *args ) {
     return (-1);
   }
 
-  args->FILE->fd->offset = args->offset + args->whence;
+
+  switch (args->whence) {
+    case 0:
+      args->FILE->fd->offset = args->offset + args->whence;
+    break;
+    case 1:
+      args->FILE->fd->offset += args->offset;
+    break;
+    default:
+      kprintf ("seek-whence: %i", args->whence);
+    break;
+  }
+
   return (0);
 }
+
+int sys_lseek( struct thread *td, struct sys_lseek_args *args ) {
+  int error = 0;
+  struct file *fdd = 0x0;
+  fileDescriptor_t *fd = 0x0;
+
+  getfd(td, &fdd, args->fd);
+
+  fd = fdd->fd;
+
+  if (fdd == 0 || fdd->fd == 0x0) {
+    error = -1;
+    kprintf("ERROR!");
+  }
+
+  kprintf("offset: 0x%X, whence: 0x%X", args->offset, args->whence);
+
+  switch (args->whence) {
+    case 0:
+      fd->offset = args->offset + args->whence;
+      td->td_retval[0] = fd->offset;
+    break;
+    case 1:
+      fd->offset += args->offset;
+      td->td_retval[0] = fd->offset;
+    break;
+    default:
+      kprintf ("seek-whence: %i", args->whence);
+    break;
+  }
+
+  return (error);
+}
+
 
 int sys_chdir( struct thread *td, struct sys_chdir_args *args ) {
   if ( strstr( args->path, ":" ) == 0x0 ) {
@@ -410,8 +458,7 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     /* in order to save resources we will allocate the buffer later when it is needed */
 
     tmpFd->buffer = (char *) kmalloc( 4096 );
-    if ( tmpFd->buffer == 0x0 )
-        {
+    if ( tmpFd->buffer == 0x0 ) {
       kfree( tmpFd );
       kprintf( "Error: tmpFd->buffer == NULL, File: %s, Line: %i\n", __FILE__, __LINE__ );
       spinUnlock( &fdTable_lock );
@@ -444,6 +491,7 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
     return (tmpFd);
   }
   else {
+    kprintf("Freeing");
     kfree( tmpFd->buffer );
     kfree( tmpFd );
     spinUnlock( &fdTable_lock );
@@ -480,6 +528,7 @@ int fclose( fileDescriptor_t *fd ) {
 
       systemVitals->openFiles--;
       spinUnlock( &fdTable_lock );
+kprintf("Fclose\n");
       if ( tmpFd->buffer != NULL )
         kfree( tmpFd->buffer );
       kfree( tmpFd );

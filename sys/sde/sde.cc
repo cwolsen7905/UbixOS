@@ -69,6 +69,7 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
       kprintf("oldBuf->ogGetBPP(): %i\n", oldBuf->ogGetBPP());
       screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
       kprintf("sX: %i, oX: %i, sY: %i, oY: %i", screen->ogGetMaxX(), oldBuf->ogGetMaxX(), screen->ogGetMaxY(), oldBuf->ogGetMaxY());
+      kprintf("sID: 0x%X, oID: 0x%X", screen->ogGetPixFmtID(), oldBuf->ogGetPixFmtID());
 //      oldBuf->ogLine(0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY(), 0xFFFFFFFF);
 //      kprintf("Did ogLine\n");
 //      screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());

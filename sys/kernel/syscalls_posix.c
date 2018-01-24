@@ -509,7 +509,7 @@ struct syscall_entry systemCalls_posix[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 475 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 476 - Invalid */
   { ARG_COUNT(sys_mmap_args), "MMAP", (sys_call_t *) sys_mmap, SYSCALL_VALID }, /* 477 - sys_mmap */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 478 - Invalid */
+  { ARG_COUNT(sys_lseek_args), "lseek", (sys_call_t *) sys_lseek, SYSCALL_VALID }, /* 478 - sys_lseek */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 359 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 350 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 351 - Invalid */
