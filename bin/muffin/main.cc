@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
   uint16_t iii = 0x0;
 
     window->vCreate();
-//    window->vSDECommand(1);
+    window->vSDECommand(1);
 
 ogImage * image = new ogImage();
 ogSurface * bgImage = new ogSurface();
@@ -83,13 +83,14 @@ window->ogCopy(*bgImage);
 window->vSDECommand(3);
 
 //bgImage->ogLine(bgImage->ogGetMaxX(), bgImage->ogGetMaxY(), 0, 0, 0xFF00FFFF);
-return(0);
+//return(0);
 
     while (1) {
       for (i=0x2;i<0xFF;i += 16) {
         for (ii=0x0;ii<0xFF;ii+= 16) {
           for (iii= 0x0;iii< 0xFF;iii+= 16) {
             window->ogClear(window->ogPack(i,ii,iii));
+window->ogCopy(*bgImage);
             window->ogFillRect(50, 50, 100, 100, window->ogPack(255, 0, 0));
             window->ogFillRect(50, 50, 100, 100, window->ogPack(255, 0, 0));
             window->ogFillRect(100, 50, 150, 100, window->ogPack(0, 255, 0));

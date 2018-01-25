@@ -63,7 +63,7 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
   }
   else if (tmp == 0x0 && args->cmd != registerWindow) {
     if (args->cmd == drawWindow) {
-      screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
+      //screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
     }
 
     //kprintf("Invalid Window\n");
@@ -73,9 +73,11 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
 
   switch (args->cmd) {
     case drawWindow:
+      /*
       screen->ogCopyBuf(screen->ogGetMaxX() - oldBuf->ogGetMaxX(), screen->ogGetMaxY() - oldBuf->ogGetMaxY(), *oldBuf, 0, 0, oldBuf->ogGetMaxX(), oldBuf->ogGetMaxY());
       kprintf("Draw Window\n");
       while(1) asm("nop");
+      */
 
       tmp->status = drawWindow;
       while (tmp->status != windowReady) {
@@ -87,7 +89,6 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
       tmp->status = killWindow;
     break;
     case registerWindow:
-      /*
       if (oldBuf->buffer != 0x0) {
         newBuf = new ogSurface();
         newBuf->version = oldBuf->version;
@@ -133,7 +134,6 @@ extern "C" int sysSDE(struct thread *td, struct sys_sde_args *args) {
       else {
         kprintf("Invalid Window\n");
       }
-      */
     break;
     default:
       kprintf("Invalid SDE Command [0x%X]\n", args->ptr);
