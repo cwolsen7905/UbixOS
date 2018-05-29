@@ -114,8 +114,11 @@ void systemTask() {
       kfree(tmpTask);
 
     }
-    if (ogprintOff == 1)
+
+    if (ogprintOff == 1) {
       videoBuffer[0] = systemVitals->sysTicks;
+      videoBuffer[1] = 'c';
+    }
     /*
     else
       ogPrintf(buf);
