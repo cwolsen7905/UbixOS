@@ -48,7 +48,7 @@ void biosCall(int biosInt, int eax, int ebx, int ecx, int edx, int esi, int edi,
   assert(newProcess);
 
   newProcess->tss.back_link = 0x0;
-  newProcess->tss.esp0 = 0xDEADBEAD;(uint32_t)vmm_getFreeKernelPage(newProcess->id, 2) + (0x2000 - 0x4);
+  newProcess->tss.esp0 = (uint32_t) vmm_getFreeKernelPage(newProcess->id, 2) + (0x2000 - 0x4); // XXX I had 0xDEADBEEF I'm not sure why
   newProcess->tss.ss0 = 0x10;
   newProcess->tss.esp1 = 0x0;
   newProcess->tss.ss1 = 0x0;

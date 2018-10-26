@@ -123,7 +123,7 @@ struct syscall_entry systemCalls_posix[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  89 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  90 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  91 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  92 - Invalid */
+    { ARG_COUNT(sys_fcntl_args), "fcntl", sys_fcntl, SYSCALL_VALID }, //  92 - fcntl
   { ARG_COUNT(sys_select_args), "select", sys_select, SYSCALL_VALID }, // 93 - select
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  94 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  95 - Invalid */

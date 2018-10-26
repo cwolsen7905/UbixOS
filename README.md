@@ -21,4 +21,3 @@ Directory Structure:
   share       - Shared Data
   sys         - System Code
   tools       - Tool kit required to build and install UbixOS
-

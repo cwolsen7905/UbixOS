@@ -244,6 +244,20 @@ struct sys_sysctl_args {
 
 };
 
+/* fcntl args */
+struct sys_fcntl_args {
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char cmd_l_[PADL_(int)];
+    int cmd;
+    char cmd_r_[PADR_(int)];
+    char arg_l_[PADL_(long)];
+    long arg;
+    char arg_r_[PADR_(long)];
+};
+
+
 /* OLD */
 
 struct setitimer_args {
@@ -767,6 +781,7 @@ int sys_select(struct thread *td, struct sys_select_args *);
 
 int sys_rename(struct thread *td, struct sys_rename_args *);
 
+int sys_fcntl(struct thread *td, struct sys_fcntl_args *);
 
 int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *);
 int sys_sendto(struct thread *td, struct sys_sendto_args *);

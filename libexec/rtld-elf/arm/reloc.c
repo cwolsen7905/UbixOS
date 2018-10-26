@@ -63,14 +63,14 @@ arm_abi_variant_hook(Elf_Auxinfo **aux_info)
 
 void
 init_pltgot(Obj_Entry *obj)
-{       
+{
 	if (obj->pltgot != NULL) {
 		obj->pltgot[1] = (Elf_Addr) obj;
 		obj->pltgot[2] = (Elf_Addr) &_rtld_bind_start;
 	}
 }
 
-int             
+int
 do_copy_relocations(Obj_Entry *dstobj)
 {
 	const Elf_Rel *rellim;
@@ -90,7 +90,7 @@ do_copy_relocations(Obj_Entry *dstobj)
 			const Obj_Entry *srcobj, *defobj;
 			SymLook req;
 			int res;
-			
+
 			dstaddr = (void *) (dstobj->relocbase + rel->r_offset);
 			dstsym = dstobj->symtab + ELF_R_SYM(rel->r_info);
 			name = dstobj->strtab + dstsym->st_name;
@@ -109,20 +109,20 @@ do_copy_relocations(Obj_Entry *dstobj)
 					defobj = req.defobj_out;
 					break;
 				}
-			}			
+			}
 			if (srcobj == NULL) {
 				_rtld_error(
 "Undefined symbol \"%s\" referenced from COPY relocation in %s",
 				    name, dstobj->path);
 				return (-1);
 			}
-			
+
 			srcaddr = (const void *)(defobj->relocbase +
 			    srcsym->st_value);
 			memcpy(dstaddr, srcaddr, size);
 		}
 	}
-	return 0;			     
+	return 0;
 }
 
 void _rtld_bind_start(void);
@@ -152,7 +152,7 @@ _rtld_relocate_nonplt_self(Elf_Dyn *dynp, Elf_Addr relocbase)
 	size = (rellim - 1)->r_offset - rel->r_offset;
 	for (; rel < rellim; rel++) {
 		where = (Elf_Addr *)(relocbase + rel->r_offset);
-		
+
 		*where += (Elf_Addr)relocbase;
 	}
 }
@@ -196,18 +196,18 @@ reloc_nonplt_object(Obj_Entry *obj, const Elf_Rel *rel, SymCache *cache,
 	switch (ELF_R_TYPE(rel->r_info)) {
 	case R_ARM_NONE:
 		break;
-		
+
 #if 1 /* XXX should not occur */
 	case R_ARM_PC24: {	/* word32 S - P + A */
 		Elf32_Sword addend;
-		
+
 		/*
 		 * Extract addend and sign-extend if needed.
 		 */
 		addend = *where;
 		if (addend & 0x00800000)
 			addend |= 0xff000000;
-		
+
 		def = find_symdef(symnum, obj, &defobj, flags, cache,
 		    lockstate);
 		if (def == NULL)
@@ -328,8 +328,7 @@ reloc_nonplt_object(Obj_Entry *obj, const Elf_Rel *rel, SymCache *cache,
 				return -1;
 
 			/* XXX: FIXME */
-			tmp = (Elf_Addr)def->st_value + defobj->tlsoffset +
-			    TLS_TCB_SIZE;
+    tmp = (Elf_Addr) def->st_value + defobj->tlsoffset + TLS_TCB_SIZE;
 			if (__predict_true(RELOC_ALIGNED_P(where)))
 				*where = tmp;
 			else
@@ -365,7 +364,7 @@ reloc_non_plt(Obj_Entry *obj, Obj_Entry *obj_rtld, int flags,
 	const Elf_Rel *rel;
 	SymCache *cache;
 	int r = -1;
-	
+
 	/* The relocation for the dynamic loader has already been done. */
 	if (obj == obj_rtld)
 		return (0);
@@ -400,18 +399,18 @@ reloc_plt(Obj_Entry *obj)
 {
 	const Elf_Rel *rellim;
 	const Elf_Rel *rel;
-		
+
 	rellim = (const Elf_Rel *)((char *)obj->pltrel +
 	    obj->pltrelsize);
 	for (rel = obj->pltrel;  rel < rellim;  rel++) {
 		Elf_Addr *where;
 
 		assert(ELF_R_TYPE(rel->r_info) == R_ARM_JUMP_SLOT);
-		
+
 		where = (Elf_Addr *)(obj->relocbase + rel->r_offset);
 		*where += (Elf_Addr )obj->relocbase;
 	}
-	
+
 	return (0);
 }
 
@@ -427,7 +426,7 @@ reloc_jmpslots(Obj_Entry *obj, int flags, RtldLockState *lockstate)
 	const Elf_Sym *def;
 	Elf_Addr *where;
 	Elf_Addr target;
-	
+
 	rellim = (const Elf_Rel *)((char *)obj->pltrel + obj->pltrelsize);
 	for (rel = obj->pltrel; rel < rellim; rel++) {
 		assert(ELF_R_TYPE(rel->r_info) == R_ARM_JUMP_SLOT);
@@ -438,14 +437,14 @@ reloc_jmpslots(Obj_Entry *obj, int flags, RtldLockState *lockstate)
 			dbg("reloc_jmpslots: sym not found");
 			return (-1);
 		}
-		
-		target = (Elf_Addr)(defobj->relocbase + def->st_value);		
+
+		target = (Elf_Addr)(defobj->relocbase + def->st_value);
 		reloc_jmpslot(where, target, defobj, obj,
 		    (const Elf_Rel *) rel);
 	}
-	
+
 	obj->jmpslots_done = true;
-	
+
 	return (0);
 }
 
