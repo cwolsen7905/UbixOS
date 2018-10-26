@@ -38,7 +38,7 @@
 
 static struct file *kern_files = 0x0;
 
-int sys_fcntl(struct thread *td, struct fcntl_args *uap) {
+int sys_fcntl(struct thread *td, struct sys_fcntl_args *uap) {
   return (fnctl(td, uap));
 }
 
