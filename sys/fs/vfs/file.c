@@ -217,9 +217,14 @@ else {
   return (error);
 }
 
+int sys_rename( struct thread *td, struct sys_rename_args *args ) {
+  td->td_retval[0] = 0;
+  return (0);
+}
+
 int sysUnlink( const char *path, int *retVal ) {
-  *retVal = unlink( path );
-  return (*retVal);
+  *retVal = 0;
+  return(*retVal);
 }
 
 /************************************************************************

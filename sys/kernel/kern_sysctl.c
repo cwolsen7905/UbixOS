@@ -86,17 +86,36 @@ static void def_ctls() {
   page_val = 0x4000;
   sysctl_add(name, name_len, "p1003_1b.pagesize", &page_val, sizeof(uint32_t));
 
-  /* 1, 1 */
+  /* XXX 1, 1 */
   name[0] = 1;
   name[1] = 1;
   char s11[4] = "UBIX";
   sysctl_add(name, name_len, "kern.ostype", &s11, 4);
 
-  /* 1, 10 */
+  /* XXX 1, 10 */
   name[0] = 1;
-  name[1] = 1;
+  name[1] = 10;
   char s110[16] = "devel.ubixos.com";
   sysctl_add(name, name_len, "kern.hostname", &s110, 16);
+
+  /* XXX 1, 2 */
+  name[0] = 1;
+  name[1] = 2;
+  char s12[11] = "1.0-RELEASE";
+  sysctl_add(name, name_len, "kern.hostname", &s12, 11);
+
+  /* XXX 1, 4 */
+  name[0] = 1;
+  name[1] = 4;
+  char s14[18] = "UbixOS 1.0-RELEASE";
+  sysctl_add(name, name_len, "kern.hostname", &s14, 18);
+
+  /* XXX 6, 1 */
+  name[0] = 6;
+  name[1] = 1;
+  char s61[4] = "i386";
+  sysctl_add(name, name_len, "kern.hostname", &s61, 4);
+
 }
 
 int sysctl_init() {
@@ -317,7 +336,7 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) 
   /* Check if it exists */
   tmpCtl = sysctl_find(name, namelen);
   if (tmpCtl != 0x0) {
-    kprintf("Node Exists!\n");
+    kprintf("Node Exists! [%s]\n", str_name);
     while (1)
       ;
   }

@@ -684,6 +684,11 @@ struct sys_sendto_args {
         char tolen_l_[PADL_(int)]; int tolen; char tolen_r_[PADR_(int)];
 };
 
+struct sys_rename_args {
+        char from_l_[PADL_(char *)]; char * from; char from_r_[PADR_(char *)];
+        char to_l_[PADL_(char *)]; char * to; char to_r_[PADR_(char *)];
+};
+
 //Func Defs
 int sys_invalid(struct thread *, void *);
 int sys_exit(struct thread *, struct sys_exit_args *);
@@ -759,6 +764,8 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *);
 int sys_socket(struct thread *td, struct sys_socket_args *);
 int sys_setsockopt(struct thread *td, struct sys_setsockopt_args *);
 int sys_select(struct thread *td, struct sys_select_args *);
+
+int sys_rename(struct thread *td, struct sys_rename_args *);
 
 
 int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *);

@@ -159,7 +159,7 @@ struct syscall_entry systemCalls_posix[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 125 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 126 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 127 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 128 - Invalid */
+  { ARG_COUNT(sys_rename_args), "rename", sys_rename, SYSCALL_VALID }, /* 128 - rename */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 129 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 130 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 131 - Invalid */
