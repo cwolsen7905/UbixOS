@@ -522,7 +522,11 @@ fileDescriptor_t *fopen( const char *file, const char *flags ) {
  ************************************************************************/
 int fclose( fileDescriptor_t *fd ) {
   fileDescriptor_t *tmpFd = 0x0;
-  assert( fd );
+
+  // XXX Can't do this
+  //assert( fd );
+  if (fd == 0)
+    return (0x0);
 
   spinLock( &fdTable_lock );
 
