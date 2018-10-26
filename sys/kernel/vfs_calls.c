@@ -97,7 +97,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
   struct file *fd = 0x0;
   getfd(td, &fd, args->fd);
 
-  kprintf("[sC:%i]", args->fd);
+  kprintf("[sC:%i:0x%X]", args->fd, fd);
 
   if (fd == 0x0) {
     td->td_retval[0] = -1;
