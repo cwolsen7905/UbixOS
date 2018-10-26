@@ -38,10 +38,6 @@
 
 static struct file *kern_files = 0x0;
 
-int sys_fcntl(struct thread *td, struct fcntl_args *uap) {
-  return (fnctl(td, uap));
-}
-
 int fcntl(struct thread *td, struct fcntl_args *uap) {
   struct file *fp = 0x0;
 
@@ -68,6 +64,10 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
   }
 
   return (0x0);
+}
+
+int sys_fcntl(struct thread *td, struct fcntl_args *uap) {
+  return (fnctl(td, uap));
 }
 
 int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
