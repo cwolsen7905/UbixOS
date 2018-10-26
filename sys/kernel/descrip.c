@@ -60,7 +60,7 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
       fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
     break;
     default:
-      kprintf("ERROR DEFAULT");
+      kprintf("ERROR DEFAULT: [%i]", uap->fd);
   }
 
   return (0x0);
