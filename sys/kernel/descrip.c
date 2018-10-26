@@ -67,7 +67,7 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
 }
 
 int sys_fcntl(struct thread *td, struct sys_fcntl_args *uap) {
-  return (fnctl(td, uap));
+  return (fcntl(td, uap));
 }
 
 int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
