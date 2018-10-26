@@ -68,12 +68,12 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
 
   kprintf("openat");
 
-  error = falloc(td,&nfp,&fd);
+  error = falloc(td, &nfp, &fd);
 
   if (error)
      return(error);
 
-  kprintf("sOA: 0x%X:%s", args->mode, args->path);
+
 
   nfp->fd = fopen(args->path,"r");
 
@@ -86,6 +86,8 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   else {
     td->td_retval[0] = fd;
   }
+
+  kprintf("[sOA: 0x%X:%s:%i]", args->mode, args->path, td->td_retval[0]);
 
   return (error);
   }
@@ -221,6 +223,6 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
       s += d->d_reclen;
     }
 */
-  
+
   return(0);
 }
