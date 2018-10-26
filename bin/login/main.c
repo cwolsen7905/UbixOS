@@ -117,6 +117,7 @@ int main(int argc, char **argv, char **env) {
     if (0x0 == strcmp(userName,data[i].username)) {
       if (0x0 == strcmp(passWord,data[i].password)) {
         shellPid = fork();
+
         if (shellPid == 0x0) {
           if (setuid(data[i].uid) != 0x0) {
             printf("Set UID Failed\n");

@@ -8,5 +8,7 @@ KERNEL_INC=${KERNEL_SRC}/include
 KMAKE= ${MAKE} ${KERNEL_FLAGS} INCLUDE=${KERNEL_INC} KERNEL=${KERNEL_NAME}
 
 INCLUDES = -I${INCLUDE}
-CFLAGS = ${KFLAGS} -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding
+
+CFLAGS = ${KFLAGS} -O -Wall -nostdlib -nostdinc -fno-builtin -fno-exceptions -ffreestanding
+
 ROOT=/ubixos

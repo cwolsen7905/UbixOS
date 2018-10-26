@@ -85,6 +85,18 @@ static void def_ctls() {
   name[1] = 20;
   page_val = 0x4000;
   sysctl_add(name, name_len, "p1003_1b.pagesize", &page_val, sizeof(uint32_t));
+
+  /* 1, 1 */
+  name[0] = 1;
+  name[1] = 1;
+  char s11[4] = "UBIX";
+  sysctl_add(name, name_len, "kern.ostype", &s11, 4);
+
+  /* 1, 10 */
+  name[0] = 1;
+  name[1] = 1;
+  char s110[16] = "devel.ubixos.com";
+  sysctl_add(name, name_len, "kern.hostname", &s110, 16);
 }
 
 int sysctl_init() {

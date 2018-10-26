@@ -37,6 +37,7 @@ asm(
   "setuid:\n"
   "movl $23, %eax\n"
   "int $0x80\n"
+  "ret\n"
 );
 
 /***
