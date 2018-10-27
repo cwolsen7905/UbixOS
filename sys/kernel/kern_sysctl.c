@@ -252,7 +252,7 @@ int sys_sysctl(struct thread *td, struct sys_sysctl_args *args) {
 
   if (args->namelen == 2 && args->name[0] == 0 && args->name[1] == 3) {
     #ifdef DEBUG_SYSCTL
-    kprintf("name_to_mib: %s", args->newp);
+    kprintf("%s:%i>name_to_mib: %s", __FILE__,__LINE__,args->newp);
     #endif
    // tmpCtl = sysctl_findMib(args->newp, args->namelen);
    td->td_retval[0] = ENOENT;

@@ -2,10 +2,14 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#include <string.h>
 
-int mib[2];
+int mib[CTL_MAXNAME];
+//int mib[2];
 size_t len;
 char *p;
+
+static int name2oid(const char *name, int *oidp);
 
 int main() {
   printf("SYSCTL\n");
@@ -56,4 +60,30 @@ int main() {
 
   printf("[%s]\n", p); 
   
+  size_t j;
+
+  j = name2oid("vm.overcommit", mib);
+
+  printf("j:[%i]\n", j);
+
+  for (int i = 0; i < j; i++)
+    printf("[%i]", mib[i]);
+  printf("\n");
+}
+
+static int name2oid(const char *name, int *oidp)
+{
+        int oid[2];
+        int i;
+        size_t j;
+
+        oid[0] = 0;
+        oid[1] = 3;
+
+        j = CTL_MAXNAME * sizeof(int);
+        i = sysctl(oid, 2, oidp, &j, name, strlen(name));
+        if (i < 0)
+                return (i);
+        j /= sizeof(int);
+        return (j);
 }
