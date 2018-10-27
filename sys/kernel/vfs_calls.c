@@ -73,8 +73,12 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   if (error)
      return(error);
 
-
-  nfp->fd = fopen(args->path,"r");
+  if ((args->flag & O_WRONLY) == O_WRONLY)
+    nfp->fd = fopen(args->path, "w");
+  else if ((args->flag & O_RDWR) == O_RDWR)
+    nfp->fd = fopen(args->path, "a");
+  else
+    nfp->fd = fopen(args->path, "r");
 
   if (nfp->fd == 0x0) {
     fdestroy(td, nfp, fd);
