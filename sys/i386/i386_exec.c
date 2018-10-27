@@ -683,7 +683,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         //fread( (void *) programHeader[i].phVaddr, programHeader[i].phFilesz, 1, fd );
       break;
       case PT_INTERP:
-        kprintf("Malloc: %i\n", programHeader[i].p_filesz);
+        #ifdef DEBUG_EXEC
+        kprintf("%s:%i>Malloc: %i\n", _FILE_,_LINE_,programHeader[i].p_filesz);
+        #endif
         interp = (char *) kmalloc(programHeader[i].p_filesz);
         fseek(fd, programHeader[i].p_offset, 0);
         fread((void *) interp, programHeader[i].p_filesz, 1, fd);
