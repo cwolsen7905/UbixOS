@@ -687,7 +687,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
         interp = (char *) kmalloc(programHeader[i].p_filesz);
         fseek(fd, programHeader[i].p_offset, 0);
         fread((void *) interp, programHeader[i].p_filesz, 1, fd);
+        #ifdef DEBUG_EXEC
         kprintf("Interp: [%s]\n", interp);
+        #endif
         ldAddr = ldEnable(interp);
         //ef->ld_addr = ldEnable();
       break;

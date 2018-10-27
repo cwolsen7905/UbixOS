@@ -1,0 +1,3 @@
+DEBUG_EXEC - Will print out lots of debug data for exec related calls
+DEBUG_VFS  - Will print out lots of vfs data
+DEBUG_VMM  - Will print out lots of VMM data
