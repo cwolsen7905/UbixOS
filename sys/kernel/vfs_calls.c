@@ -82,7 +82,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     td->td_retval[0] = -1;
     error = -1;
 
-    kprintf("[sOA: 0x%X:0x%X:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
+    kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
 
     if ((args->flag & O_RDONLY) == O_RDONLY)
       kprintf("O_RDONLY");
