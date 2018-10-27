@@ -180,6 +180,61 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
   return (0);
 }
 
+int sys_pread(struct thread *td, struct sys_pread_args *args) {
+  int offset = 0;
+  int x = 0;
+  char c = 0x0;
+  char bf[2];
+  volatile char *buf = args->buf;
+
+  struct file *fd = 0x0;
+
+  getfd(td, &fd, args->fd);
+
+  if (args->fd > 3) {
+    offset = fd->fd->offset;
+   fd->fd->offset = args->offset;
+    td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
+    fd->fd->offset = offset;
+  }
+  else {
+   bf[1] = '\0';
+   if ( _current->term == tty_foreground )
+     c = getchar();
+
+    for (x = 0; x < args->nbyte && c != '\n';) {
+      if ( _current->term == tty_foreground ) {
+
+        if ( c != 0x0 ) {
+          buf[x++] = c;
+          bf[0] = c;
+          kprintf(bf);
+        }
+
+        if ( c == '\n') {
+          buf[x++] = c;
+          break;
+        }
+
+        sched_yield();
+        c = getchar();
+      }
+      else {
+        sched_yield();
+      }
+    }
+    if ( c == '\n')
+      buf[x++] = '\n';
+
+          bf[0] = '\n';
+          kprintf(bf);
+
+    td->td_retval[0] = x;
+  }
+  return (0);
+}
+
+
 int sys_write(struct thread *td, struct sys_write_args *uap) {
   char *buffer = 0x0;
 

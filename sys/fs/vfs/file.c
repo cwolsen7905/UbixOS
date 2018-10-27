@@ -236,7 +236,7 @@ int sysUnlink( const char *path, int *retVal ) {
  ************************************************************************/
 //void sysFopen(const char *file,char *flags,userFileDescriptor *userFd) {
 int sys_fopen( struct thread *td, struct sys_fopen_args *args ) {
-  kprintf("fopen really?");
+
   if ( args->FILE == NULL ) {
     kprintf( "Error: userFd == NULL, File: %s, Line: %i\n", __FILE__, __LINE__ );
     return (-1);

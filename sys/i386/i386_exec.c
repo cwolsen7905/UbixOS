@@ -743,7 +743,9 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
       EXECP = (char *)tmp[i];
     }
     strcpy((char *)tmp[i], (const char *)argv_out[i]);
+    #ifdef EXEC_DEBUG
     kprintf("argv[%i]:%s",i, (const char *)argv_out[i]);
+    #endif
     sp += strlen((const char *)argv_out[i]) + 1;
   }
 

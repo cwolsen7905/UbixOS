@@ -634,7 +634,10 @@ int vmm_cleanVirtualSpace(uint32_t addr) {
       "movl %cr3,%eax\n"
       "movl %eax,%cr3\n"
   );
-  kprintf("Here?");
+
+  #ifdef VMM_DEBUG
+  kprintf("Here!?");
+  #endif
 
   return (0x0);
 }

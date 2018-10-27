@@ -703,6 +703,14 @@ struct sys_rename_args {
         char to_l_[PADL_(char *)]; char * to; char to_r_[PADR_(char *)];
 };
 
+struct sys_pread_args {
+        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
+        char buf_l_[PADL_(void *)]; void * buf; char buf_r_[PADR_(void *)];
+        char nbyte_l_[PADL_(size_t)]; size_t nbyte; char nbyte_r_[PADR_(size_t)];
+        char offset_l_[PADL_(off_t)]; off_t offset; char offset_r_[PADR_(off_t)];
+};
+
+
 //Func Defs
 int sys_invalid(struct thread *, void *);
 int sys_exit(struct thread *, struct sys_exit_args *);
@@ -785,4 +793,6 @@ int sys_fcntl(struct thread *td, struct sys_fcntl_args *);
 
 int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *);
 int sys_sendto(struct thread *td, struct sys_sendto_args *);
+
+int sys_pread(struct thread *td, struct sys_pread_args *);
 #endif /* END _SYS_SYSPROTO_POSIX_H */
