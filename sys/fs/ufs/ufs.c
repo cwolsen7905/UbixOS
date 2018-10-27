@@ -272,6 +272,7 @@ static int ufs_openFile(const char *file, fileDescriptor_t *fd) {
   fd->offset = 0x0;
   fd->ino = ino;
   if (ino == 0x0) {
+    kfree(fd->dmadat);
     return (-1);
   }
 
