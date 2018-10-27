@@ -33,7 +33,7 @@ int setgid(int gid) {
   volatile int status = 0x0;
   asm volatile(
     "int %0\n"
-    : : "i" (0x80),"a" (34),"b" (gid),"c" (&status)
+    : : "i" (0x80),"a" (181),"b" (gid),"c" (&status)
     );
   return(status);
   }
