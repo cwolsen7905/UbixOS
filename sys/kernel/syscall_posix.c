@@ -74,6 +74,11 @@ void sys_call_posix(struct trapframe *frame) {
     frame->tf_eax = -1;
     frame->tf_edx = 0x0;
   }
+  else if ((uint32_t) systemCalls_posix[code].sc_status == SYSCALL_NOTIMP) {
+    kprintf("Not Implemented Call: [%i][0x%X]\n", code, (uint32_t) systemCalls[code].sc_name);
+    frame->tf_eax = -1;
+    frame->tf_edx = 0x0;
+  }
   else {
     td->td_retval[0] = 0;
     td->td_retval[1] = frame->tf_edx;

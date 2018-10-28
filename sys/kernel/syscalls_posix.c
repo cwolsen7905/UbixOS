@@ -39,106 +39,106 @@ struct syscall_entry systemCalls_posix[] = {
   { ARG_COUNT(sys_open_args), "open", (sys_call_t *) sys_open, SYSCALL_VALID },    // 5 - open
   { ARG_COUNT(sys_close_args), "close", (sys_call_t *) sys_close, SYSCALL_VALID }, // 6 - close
   { ARG_COUNT(sys_wait4_args), "wiat4", (sys_call_t *) sys_wait4, SYSCALL_VALID }, // 7 - wait4
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { 0, "No Call", sys_invalid, SYSCALL_INVALID }, // 8
+  { 0, "link", sys_invalid, SYSCALL_NOTIMP }, // 9 - link
+  { 0, "unlink", sys_invalid, SYSCALL_NOTIMP }, // 10 - unlink
+  { 0, "No Call", sys_invalid, SYSCALL_INVALID }, // 11
   { ARG_COUNT(sys_chdir_args), "Change Dir", (sys_call_t *) sys_chdir, SYSCALL_VALID }, // 12 - chdir
   { ARG_COUNT(sys_fchdir_args), "fchdir", sys_fchdir, SYSCALL_VALID },                  // 13 - fchdir
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { 0, "mknod", sys_invalid, SYSCALL_NOTIMP }, // 14 - mknod
+  { 0, "chmod", sys_invalid, SYSCALL_NOTIMP }, // 15 - chmod
+  { 0, "chown", sys_invalid, SYSCALL_NOTIMP }, // 16 - chown
+  { 0, "break", sys_invalid, SYSCALL_NOTIMP }, // 17 - break
+  { 0, "No Call", sys_invalid, SYSCALL_INVALID }, // 18
+  { 0, "No Call", sys_invalid, SYSCALL_INVALID }, // 19
   { ARG_COUNT(sys_getpid_args), "getpid", sys_getpid, SYSCALL_VALID }, // 20 - getpid
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { ARG_COUNT(sys_setUID_args), "Set UID", (sys_call_t *) sys_setUID, SYSCALL_VALID }, // 23 - setUID
-  { 0, "Get UID", sys_getUID, SYSCALL_VALID },
-  { ARG_COUNT(sys_geteuid_args), "geteuid", sys_geteuid, SYSCALL_VALID }, // 25 - getuid
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 31
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 32
+  { 0, "mount", sys_invalid, SYSCALL_NOTIMP }, // 21 - mount
+  { 0, "unmount", sys_invalid, SYSCALL_NOTIMP }, // 22 - unmount
+  { ARG_COUNT(sys_setUID_args), "setuid", (sys_call_t *) sys_setUID, SYSCALL_VALID }, // 23 - setUID
+  { 0, "getuid", sys_getUID, SYSCALL_NOTIMP }, // 24 - getuid
+  { ARG_COUNT(sys_geteuid_args), "geteuid", sys_geteuid, SYSCALL_VALID }, // 25 - geteuid
+  { 0, "ptrace", sys_invalid, SYSCALL_NOTIMP }, // 26 - ptrace
+  { 0, "recvmsg", sys_invalid, SYSCALL_NOTIMP }, // 27 - recvmsg
+  { 0, "sendmsg", sys_invalid, SYSCALL_NOTIMP }, // 28 - sendmsg
+  { 0, "recvfrom", sys_invalid, SYSCALL_NOTIMP }, // 29 - recvfrom
+  { 0, "accept", sys_invalid, SYSCALL_NOTIMP }, // 30 - accept
+  { 0, "getpeername", sys_invalid, SYSCALL_NOTIMP }, // 31 - getpeername
+  { 0, "getsockname", sys_invalid, SYSCALL_NOTIMP }, // 32 - getsockname
   { ARG_COUNT(sys_access_args), "access", sys_access, SYSCALL_VALID }, // 33 - access
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { 0, "chflags", sys_invalid, SYSCALL_NOTIMP }, // 34 - chflags
+  { 0, "fchflags", sys_invalid, SYSCALL_NOTIMP }, // 35 - fchflags
+  { 0, "sync", sys_invalid, SYSCALL_NOTIMP }, // 36 - sync
+  { 0, "kill", sys_invalid, SYSCALL_NOTIMP }, // 37 - kill
+  { 0, "No Call", sys_invalid, SYSCALL_INVALID }, // 38
   { ARG_COUNT(sys_getppid_args), "getpid", sys_getpid, SYSCALL_VALID }, // 39 - getppid
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { 0, "No Call", sys_invalid, SYSCALL_INVALID }, // 40 
+  { 0, "dup", sys_invalid, SYSCALL_NOTIMP }, // 41 - dup
+  { 0, "No Call", sys_invalid, SYSCALL_INVALID }, // 42
   { ARG_COUNT(sys_getegid_args), "getegid", sys_getegid, SYSCALL_VALID }, // 43 - getegid
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "getuid", sys_getGID, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 44  - profile
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 45 - ktrace
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 46
+  { 0, "getuid", sys_getGID, SYSCALL_VALID }, // 47 - getgid
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 48
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 49 - getlogin
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 50 - setlogin
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 51 - acct
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 52
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 53 - sigaltstack
   { ARG_COUNT(sys_ioctl_args), "ioctl", sys_ioctl, SYSCALL_VALID }, // 54 - ioctl
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID },
-  { ARG_COUNT(sys_execve_args), "execve", (sys_call_t *) sys_execve, SYSCALL_VALID },
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  60 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  61 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  62 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  63 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  64 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  65 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  66 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 55 - reboot
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 56 - revoke
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 57 - symlink
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 58 - readlink
+  { ARG_COUNT(sys_execve_args), "execve", (sys_call_t *) sys_execve, SYSCALL_VALID }, // 59 - execv
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  60 - umask 
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  61 - chroot
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  62
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  63
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  64
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  65 - msync
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  66 - vfork
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  67 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  68 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  69 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  70 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  71 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  72 - Invalid */
-  { ARG_COUNT(sys_munmap_args), "MUNMAP", sys_munmap, SYSCALL_VALID }, /*  73 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  74 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  75 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  69 - sbrk */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  70 - sstk */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  71
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  72 - vadvise */
+  { ARG_COUNT(sys_munmap_args), "MUNMAP", sys_munmap, SYSCALL_VALID }, //  73 - munmap
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  74 - mprotect
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, //  75 - madvise
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  76 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  77 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  78 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  79 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  80 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  78 - minicore */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  79 - getgroups */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  80 - setgroups */
   { ARG_COUNT(sys_getpgrp_args), "getpgrp", sys_getpgrp, SYSCALL_VALID }, //  81 - getpgrp
   { ARG_COUNT(sys_setpgid_args), "setpgid", sys_setpgid, SYSCALL_VALID }, //  82 - setpgid
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  83 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  83 - setitimer */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  84 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  85 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  86 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  87 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  85 - swapon */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  86 - getitimer */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  87  */
   { 0, "Get Free Page", (sys_call_t *) sysGetFreePage, SYSCALL_VALID }, /*  88 - getFreePage TEMP */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  89 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  90 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  91 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  89 - gettablesize */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  90 - dup2 */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  91 - getdopt */
     { ARG_COUNT(sys_fcntl_args), "fcntl", sys_fcntl, SYSCALL_VALID }, //  92 - fcntl
   { ARG_COUNT(sys_select_args), "select", sys_select, SYSCALL_VALID }, // 93 - select
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  94 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  95 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  96 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  94 - setdopt */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  95 - fsync */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  96 - setpriority */
   { ARG_COUNT(sys_socket_args), "socket", sys_socket, SYSCALL_VALID }, //  97 - socket
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  98 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  99 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 100 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 101 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 102 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 103 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 104 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  98 - connect */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /*  99  */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 100 - getpriority */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 101 */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 102 */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 103 */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 104 - bind
   { ARG_COUNT(sys_setsockopt_args), "setsockopt", sys_setsockopt, SYSCALL_VALID }, // 105 setsockopt
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 106 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 107 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 106 - listen */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 107  */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 108 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 109 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 110 - Invalid */
@@ -148,73 +148,73 @@ struct syscall_entry systemCalls_posix[] = {
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 114 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 115 - Invalid */
   { ARG_COUNT(sys_gettimeofday_args), "gettimeofday", sys_gettimeofday, SYSCALL_VALID }, // 116 - gettimeofday
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 117 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 118 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 119 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 120 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 121 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 122 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 123 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 124 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 117 - getrusage */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 118 - getsockopt */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 119 - resuba */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 120 - readv */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 121 - writev */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 122 - settimeofday */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 123 - fchown */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 124 - fchmod */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 125 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 126 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 127 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 126 - setreuid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 127 - setregid */
   { ARG_COUNT(sys_rename_args), "rename", sys_rename, SYSCALL_VALID }, /* 128 - rename */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 129 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 130 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 131 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 132 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 131 - flock */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 132 - mkfifo */
   { ARG_COUNT(sys_sendto_args), "sendto", sys_sendto, SYSCALL_VALID }, // 133 - sendto
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 134 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 135 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 136 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 137 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 138 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 134 - shutdown */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 135 - socketpair */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 136 - mkdir */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 137 - rmdir */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 138 - utimes */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 139 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 140 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 140 - adjtime */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 141 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 142 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 143 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 144 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 145 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 146 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 147 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 148 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 147 - setsid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 148 - quotactl */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 149 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 150 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 151 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 152 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 153 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 154 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 155 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 151 - sem_lock */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 152 - sem_Wakeup */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 153 - asyncdaemon */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 154 - nlm_syscall */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 155 - nfssvc */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 156 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 157 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 158 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 159 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 160 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 159 - nosys */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 160 - lgetfh */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 161 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 162 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 163 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 164 - Invalid */
   { ARG_COUNT(sys_sysarch_args), "sysarch", sys_sysarch, SYSCALL_VALID }, // 165 - sysarch
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 166 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 167 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 168 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 169 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 170 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 171 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 172 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 166 - rtprio */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 167 - nosys */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 168 - nosys */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 169 - semsys */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 170 - msgsys */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 171 - shmsys */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 172 - nosys */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 173 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 174 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 175 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 176 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 177 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 178 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 179 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 175 - setfib */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 176 - ntp_adjtime */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 177 - sfork */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 178 - getdescriptor */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 179 - setdescriptor */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 180 - Invalid */
   { ARG_COUNT(sys_setGID_args), "Set GID", (sys_call_t *) sys_setGID, SYSCALL_VALID }, // 181 - getgid
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 182 - Invalid */
-  { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 183 - Invalid */
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 182 - setegid
+  { 0, "No Call", sys_invalid, SYSCALL_VALID }, // 183 - seteuid
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 184 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 185 - Invalid */
   { 0, "No Call", sys_invalid, SYSCALL_VALID }, /* 186 - Invalid */
