@@ -23,13 +23,13 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.230846806" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1181389425" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base">
-								<option id="gnu.cpp.compiler.option.include.paths.914925597" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.compiler.option.include.paths.914925597" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/sys/include}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.514749678" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1018334610" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.base">
-								<option id="gnu.c.compiler.option.include.paths.1993117043" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.include.paths.1993117043" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/sys/include}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1135296794" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols"/>
@@ -52,11 +52,11 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.328624831" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base.230846806"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1263257766" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1181389425">
-								<option id="gnu.cpp.compiler.option.include.paths.1516967921" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath"/>
+								<option id="gnu.cpp.compiler.option.include.paths.1516967921" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1546303017" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1234173345" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.1018334610">
-								<option id="gnu.c.compiler.option.include.paths.746440771" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.include.paths.746440771" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/include_old}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/UbixOS/bin/shell}&quot;"/>
 								</option>
