@@ -70,7 +70,7 @@ void sys_call_posix(struct trapframe *frame) {
     kpanic("PID: %i", _current->id);
   }
   else if ((int) systemCalls_posix[code].sc_status == SYSCALL_INVALID) {
-    kprintf("Invalid Call: [%i][%s]\n", code, systemCalls_posixs[code].sc_name);
+    kprintf("Invalid Call: [%i][%s]\n", code, systemCalls_posix[code].sc_name);
     frame->tf_eax = -1;
     frame->tf_edx = 0x0;
   }
