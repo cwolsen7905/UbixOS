@@ -69,13 +69,13 @@ void sys_call_posix(struct trapframe *frame) {
     die_if_kernel("Invalid System pCall", frame, frame->tf_eax);
     kpanic("PID: %i", _current->id);
   }
-  else if ((uint32_t) systemCalls_posix[code].sc_status == SYSCALL_INVALID) {
-    kprintf("Invalid Call: [%i][%s]\n", code, systemCalls[code].sc_name);
+  else if ((int) systemCalls_posix[code].sc_status == SYSCALL_INVALID) {
+    kprintf("Invalid Call: [%i][%s]\n", code, systemCalls_posixs[code].sc_name);
     frame->tf_eax = -1;
     frame->tf_edx = 0x0;
   }
-  else if ((uint32_t) systemCalls_posix[code].sc_status == SYSCALL_NOTIMP) {
-    kprintf("Not Implemented Call: [%i][%s]\n", code, systemCalls[code].sc_name);
+  else if ((int) systemCalls_posix[code].sc_status == SYSCALL_NOTIMP) {
+    kprintf("Not Implemented Call: [%i][%s]\n", code, systemCalls_posix[code].sc_name);
     frame->tf_eax = -1;
     frame->tf_edx = 0x0;
   }
