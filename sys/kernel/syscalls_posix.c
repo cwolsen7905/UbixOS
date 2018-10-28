@@ -55,7 +55,7 @@ struct syscall_entry systemCalls_posix[] = {
   { 0, "mount", sys_invalid, SYSCALL_NOTIMP }, // 21 - mount
   { 0, "unmount", sys_invalid, SYSCALL_NOTIMP }, // 22 - unmount
   { ARG_COUNT(sys_setUID_args), "setuid", (sys_call_t *) sys_setUID, SYSCALL_VALID }, // 23 - setUID
-  { 0, "getuid", sys_getUID, SYSCALL_NOTIMP }, // 24 - getuid
+  { 0, "getuid", sys_getUID, SYSCALL_VALID }, // 24 - getuid
   { ARG_COUNT(sys_geteuid_args), "geteuid", sys_geteuid, SYSCALL_VALID }, // 25 - geteuid
   { 0, "ptrace", sys_invalid, SYSCALL_NOTIMP }, // 26 - ptrace
   { 0, "recvmsg", sys_invalid, SYSCALL_NOTIMP }, // 27 - recvmsg
