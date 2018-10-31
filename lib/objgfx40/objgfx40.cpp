@@ -15,7 +15,7 @@ extern "C" {
 extern "C" {
 #include <math.h>
 #include <lib/kmalloc.h>
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 #include <string.h>
 }
 

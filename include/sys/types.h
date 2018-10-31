@@ -75,7 +75,12 @@ typedef unsigned long u_long;
 typedef int pidType;
 
 typedef int pid_t;
-typedef int size_t; /* standart */
+
+#ifndef _SIZE_T_DECLARED
+typedef __size_t        size_t;
+#define _SIZE_T_DECLARED
+#endif
+
 
 #ifndef NOBOOL
 #ifndef __cplusplus

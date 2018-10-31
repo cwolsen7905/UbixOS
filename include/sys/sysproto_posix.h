@@ -34,7 +34,7 @@
 
 
 /* TEMP */
-#include <vfs/file.h>
+#include <sys/vfs/file.h>
 
 typedef int register_t;
 

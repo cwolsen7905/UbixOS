@@ -29,7 +29,7 @@
 #ifndef _SYS_TRAP_H
 #define _SYS_TRAP_H
 
-#include <i386/cpu.h>
+#include <sys/i386/cpu.h>
 
 struct trapframe {
     int tf_gs;

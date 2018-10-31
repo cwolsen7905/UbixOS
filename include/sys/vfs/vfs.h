@@ -29,12 +29,12 @@
 #define _VFS_VFS_H
 
 #include <sys/types.h>
-#include <vfs/file.h>
-#include <vfs/mount.h>
+#include <sys/vfs/file.h>
+#include <sys/vfs/mount.h>
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <net/net.h>
-#include <ubixos/wait.h>
+#include <sys/ubixos/wait.h>
 
 #define MAY_EXEC 1
 #define MAY_WRITE 2

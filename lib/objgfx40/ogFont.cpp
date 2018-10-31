@@ -3,7 +3,7 @@
 
 extern "C" {
 #ifdef __UBIXOS_KERNEL__
-#include <vfs/file.h>
+#include <sys/vfs/file.h>
 #include <sys/types.h>
 #include <lib/kprintf.h>
 #else
