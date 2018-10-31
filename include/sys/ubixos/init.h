@@ -30,26 +30,26 @@
 #define _UBIXOS_INIT_H
 
 #include <vmm/vmm.h>
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 #include <isa/8259.h>
 #include <sys/idt.h>
-#include <ubixos/sched.h>
+#include <sys/ubixos/sched.h>
 #include <isa/pit.h>
 #include <isa/atkbd.h>
-#include <ubixos/time.h>
+#include <sys/ubixos/time.h>
 #include <net/net.h>
 #include <isa/ne2k.h>
 #include <devfs/devfs.h>
 #include <pci/pci.h>
 #include <ubixfs/ubixfs.h>
 #include <isa/fdc.h>
-#include <ubixos/tty.h>
-#include <ufs/ufs.h>
-#include <ubixos/static.h>
+#include <sys/ubixos/tty.h>
+#include <fs/ufs/ufs.h>
+#include <sys/ubixos/static.h>
 #include <pci/hd.h>
 #include <sys/kern_sysctl.h>
-#include <ubixos/vitals.h>
-#include <ubixos/syscalls.h>
+#include <sys/ubixos/vitals.h>
+#include <sys//ubixos/syscalls.h>
 #include <pci/lnc.h>
 
 typedef int (*intFunctionPTR)(void);

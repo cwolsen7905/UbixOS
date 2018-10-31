@@ -26,15 +26,15 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ubixos/init.h>
+#include <sys/ubixos/init.h>
 #include <sys/gdt.h>
 #include <sys/video.h>
 #include <sys/tss.h>
 #include <sys/bootinfo.h>
-#include <ubixos/exec.h>
-#include <ubixos/kpanic.h>
-#include <ubixos/systemtask.h>
-#include <vfs/mount.h>
+#include <sys/ubixos/exec.h>
+#include <sys/ubixos/kpanic.h>
+#include <sys/ubixos/systemtask.h>
+#include <sys/vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <sde/sde.h>
