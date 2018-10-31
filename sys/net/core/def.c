@@ -61,6 +61,7 @@
 #include "net/opt.h"
 #include "net/def.h"
 
+#include <sys/types.h>
 #include <string.h>
 
 #if BYTE_ORDER == LITTLE_ENDIAN

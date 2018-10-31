@@ -39,9 +39,9 @@
 #include <ubixos/time.h>
 #include <net/net.h>
 #include <isa/ne2k.h>
-#include <devfs/devfs.h>
+#include <fs/devfs/devfs.h>
 #include <pci/pci.h>
-#include <ubixfs/ubixfs.h>
+#include <fs/ubixfs/ubixfs.h>
 #include <isa/fdc.h>
 #include <ubixos/tty.h>
 #include <fs/ufs/ufs.h>

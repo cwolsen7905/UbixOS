@@ -30,7 +30,7 @@
 #define _PCI_HD_H_
 
 #include <sys/types.h>
-#include <ubixfs/ubixfs.h>
+#include <fs/ubixfs/ubixfs.h>
 
 #define hdData     0x0
 #define hdError    0x1

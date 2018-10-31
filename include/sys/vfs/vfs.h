@@ -34,7 +34,7 @@
 #include <sys/sysproto_posix.h>
 #include <sys/thread.h>
 #include <net/net.h>
-#include <sys/ubixos/wait.h>
+#include <ubixos/wait.h>
 
 #define MAY_EXEC 1
 #define MAY_WRITE 2

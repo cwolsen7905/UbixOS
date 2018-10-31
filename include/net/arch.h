@@ -48,7 +48,7 @@
 #include <sys/types.h>
 #include <net/arch/cc.h>
 #include <lib/kprintf.h>
-#include <sys/ubixos/kpanic.h>
+#include <ubixos/kpanic.h>
 
 /**
  * @defgroup compiler_abstraction Compiler/platform abstraction

@@ -28,7 +28,7 @@
 
 #include <sys/types.h>
 #include <ubixos/errno.h>
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 #include <ubixos/sched.h>
 
 int follow_link(struct inode * dir, struct inode * inode, int flag, int mode, struct inode ** res_inode) {

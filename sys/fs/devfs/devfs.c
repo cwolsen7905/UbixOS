@@ -29,8 +29,8 @@
 #include <fs/devfs/devfs.h>
 #include <sys/vfs/vfs.h>
 #include <sys/device.h>
-#include <sys/ubixos/spinlock.h>
-#include <sys/ubixos/kpanic.h>
+#include <ubixos/spinlock.h>
+#include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>
 #include <string.h>
 #include <lib/kprintf.h>
