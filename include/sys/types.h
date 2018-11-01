@@ -30,7 +30,7 @@
 #define _SYS_TYPES_H_
 
 #include <sys/_types.h>
-#include <sys/select.h>
+// XXX #include <sys/select.h>
 
 #ifndef NULL
 #define NULL 0x0
@@ -39,6 +39,9 @@
 typedef        __uintfptr_t    uintfptr_t;
 
 typedef char *caddr_t;
+
+/* POSIX integrals that should only appear only in <sys/stdint.h> */
+#include <sys/stdint.h>
 
 /* unsigned integrals */
 typedef __uint8_t uint8_t;

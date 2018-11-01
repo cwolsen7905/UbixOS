@@ -26,21 +26,19 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _UBIXOS_SPINLOCK_H
-#define _UBIXOS_SPINLOCK_H
+#ifndef _UBIXOS_SPINLOCK_H_
+#define _UBIXOS_SPINLOCK_H_
 
 #include <sys/types.h>
 
 #define LOCKED   1
 #define UNLOCKED 0
-#define SPIN_LOCK_INITIALIZER {NULL, 0}
+#define SPIN_LOCK_INITIALIZER { 0x0, 0x0 }
 #define LLOCK_FLAG 1
 
-//typedef volatile int spinLock_t;
-
 struct spinLock {
-    struct spinLock *next;
-    uint32_t locked;
+	struct spinLock *next;
+	u_int32_t locked;
 };
 
 typedef struct spinLock *spinLock_t;
@@ -58,39 +56,39 @@ int spinLockLocked(spinLock_t *);
 
 /* Atomic exchange (of various sizes) */
 static inline u_long xchg_64(volatile uint32_t *ptr, u_long x) {
-  __asm__ __volatile__("xchgq %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
+	__asm__ __volatile__("xchgq %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
 
-  return x;
+	return x;
 }
 
 static inline unsigned xchg_32(volatile uint32_t *ptr, uint32_t x) {
-  __asm__ __volatile__("xchgl %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
+	__asm__ __volatile__("xchgl %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
 
-  return x;
+	return x;
 }
 
 static inline unsigned short xchg_16(volatile uint32_t *ptr, uint16_t x) {
-  __asm__ __volatile__("xchgw %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
+	__asm__ __volatile__("xchgw %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
 
-  return x;
+	return x;
 }
 
 /* Test and set a bit */
 static inline char atomic_bitsetandtest(void *ptr, int x) {
-  char out;
-  __asm__ __volatile__("lock; bts %2,%1\n"
-    "sbb %0,%0\n"
-    :"=r" (out), "=m" (*(volatile long long *)ptr)
-    :"Ir" (x)
-    :"memory");
+	char out;
+	__asm__ __volatile__("lock; bts %2,%1\n"
+			"sbb %0,%0\n"
+			:"=r" (out), "=m" (*(volatile long long *)ptr)
+			:"Ir" (x)
+			:"memory");
 
-  return out;
+	return out;
 }
 
-#endif
+#endif /* !_UBIXOS_SPINLOCK_H_ */
