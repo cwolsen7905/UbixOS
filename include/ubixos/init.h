@@ -33,32 +33,32 @@
 #include <sys/vfs/vfs.h>
 #include <isa/8259.h>
 #include <sys/idt.h>
-#include <sys/ubixos/sched.h>
+#include <ubixos/sched.h>
 #include <isa/pit.h>
 #include <isa/atkbd.h>
-#include <sys/ubixos/time.h>
+#include <ubixos/time.h>
 #include <net/net.h>
 #include <isa/ne2k.h>
 #include <devfs/devfs.h>
 #include <pci/pci.h>
 #include <ubixfs/ubixfs.h>
 #include <isa/fdc.h>
-#include <sys/ubixos/tty.h>
+#include <ubixos/tty.h>
 #include <fs/ufs/ufs.h>
-#include <sys/ubixos/static.h>
+#include <ubixos/static.h>
 #include <pci/hd.h>
 #include <sys/kern_sysctl.h>
-#include <sys/ubixos/vitals.h>
-#include <sys//ubixos/syscalls.h>
+#include <ubixos/vitals.h>
+#include <ubixos/syscalls.h>
 #include <pci/lnc.h>
 
 typedef int (*intFunctionPTR)(void);
 
 intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init, pci_init, devfs_init, tty_init, ufs_init, initHardDisk, initLNC, net_init };
 
-//ne2k_init,
-//ubixfs_init,
-//fdc_init,
+/* ne2k_init, */
+/* ubixfs_init, */
+/* fdc_init, */
 
 int init_tasksTotal = sizeof(init_tasks) / sizeof(intFunctionPTR);
 

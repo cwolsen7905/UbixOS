@@ -33,15 +33,15 @@
 #include <machine/_types.h>
 
 typedef __uint32_t            __ino_t;
-typedef __uint32_t            __dev_t;/* device number */
+typedef __uint32_t            __dev_t;		/* device number */
 typedef __uint16_t            __mode_t;
-typedef __uint16_t            __nlink_t;/* link count */
+typedef __uint16_t            __nlink_t;	/* link count */
 typedef __uint32_t            __uid_t;
 typedef __uint32_t            __gid_t;
 typedef __int32_t             __time_t;
-typedef __int64_t             __blkcnt_t;/* file block count */
-typedef __uint32_t            __blksize_t;/* file block size */
-typedef __uint32_t            __fflags_t;/* file flags */
+typedef __int64_t             __blkcnt_t;	/* file block count */
+typedef __uint32_t            __blksize_t;	/* file block size */
+typedef __uint32_t            __fflags_t;	/* file flags */
 typedef int ___wchar_t;
 
 typedef long __suseconds_t; /* microseconds (signed) */
