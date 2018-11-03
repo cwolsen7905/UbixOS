@@ -31,7 +31,7 @@
 
 #include <sys/types.h>
 #include <ubixos/spinlock.h>
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 
 typedef struct vitalsStruct {
     uint32_t sysTicks;  // 0 - Do Not Change Order

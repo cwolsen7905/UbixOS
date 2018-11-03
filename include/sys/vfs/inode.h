@@ -30,7 +30,7 @@
 #define _VFS_INODE_H
 
 #include <sys/types.h>
-#include <sys/ubixos/wait.h>
+#include <ubixos/wait.h>
 
 #include <fs/pipe_fs.h>
 #include <fs/msdos_fs.h>

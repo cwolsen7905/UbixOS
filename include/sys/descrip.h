@@ -32,8 +32,8 @@
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
 
-#include <vfs/file.h>
-#include <vfs/stat.h>
+#include <sys/vfs/file.h>
+#include <sys/vfs/stat.h>
 
 /* Limits */
 #define MAX_FILES 256

@@ -30,6 +30,9 @@
 #define _SYS_SIGNAL_H
 
 #include <sys/types.h>
+#include <sys/_sigset.h>
+
+typedef __sigset_t sigset_t;
 
 #define _SIG_WORDS      4
 #define _SIG_MAXSIG     128

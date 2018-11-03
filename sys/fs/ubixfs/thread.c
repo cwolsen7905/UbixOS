@@ -27,9 +27,9 @@
 
 *****************************************************************************************/
 
-#include <ubixfs/ubixfs.h>
+#include <fs/ubixfs/ubixfs.h>
 #include <ubixos/kpanic.h>
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 #include <lib/kprintf.h>
 
 static struct {

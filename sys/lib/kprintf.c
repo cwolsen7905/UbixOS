@@ -564,7 +564,7 @@ int kvprintf(const char *fmt, void (*func)(int, void*), void *arg, int radix, va
         else if (qflag)
           num = va_arg(ap, u_quad_t);
         else if (tflag)
-          num = va_arg(ap, ptrdiff_t);
+          num = va_arg(ap, __ptrdiff_t);
         else if (lflag)
           num = va_arg(ap, u_long);
         else if (zflag)
@@ -581,7 +581,7 @@ int kvprintf(const char *fmt, void (*func)(int, void*), void *arg, int radix, va
         else if (qflag)
           num = va_arg(ap, quad_t);
         else if (tflag)
-          num = va_arg(ap, ptrdiff_t);
+          num = va_arg(ap, __ptrdiff_t);
         else if (lflag)
           num = va_arg(ap, long);
         else if (zflag)

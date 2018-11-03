@@ -30,10 +30,10 @@
 #define _UBIXFS_UBIXFS_H
 
 #include <sys/types.h>
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 #include <sys/device.h>
 #include <mpi/mpi.h>
-#include <ubixfs/dirCache.h>
+#include <fs/ubixfs/dirCache.h>
 
 #define UBIXFS_BLOCKSIZE_BYTES     blockSize*512
 #define UBIXFS_ALIGN(size) (size + ((((size) % (UBIXFS_BLOCKSIZE_BYTES)) == 0)? 0 : ((UBIXFS_BLOCKSIZE_BYTES) - ((size) % (UBIXFS_BLOCKSIZE_BYTES)))))
