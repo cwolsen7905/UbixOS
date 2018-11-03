@@ -70,6 +70,13 @@ typedef int             __ct_rune_t;    /* arg type for ctype funcs */
 typedef __ct_rune_t     __rune_t;       /* rune_t (see above) */
 typedef __ct_rune_t     __wint_t;       /* wint_t (see above) */
 
+typedef struct {
+        long long __max_align1 __aligned(_Alignof(long long));
+#ifndef _STANDALONE
+        long double __max_align2 __aligned(_Alignof(long double));
+#endif
+} __max_align_t;
+
 
 #if !defined(__clang__) || !defined(__cplusplus)
 typedef __uint_least16_t   __char16_t;
