@@ -37,4 +37,4 @@ extern const char hex2ascii_data[];
 #define bin2bcd(bin)    (bin2bcd_data[bin])
 #define hex2ascii(hex)  (hex2ascii_data[hex])
 
-#endif /* !_UBIXOS_BCD_H_
+#endif /* !_UBIXOS_BCD_H_ */
