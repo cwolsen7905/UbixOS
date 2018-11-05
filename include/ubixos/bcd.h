@@ -29,9 +29,14 @@
 #ifndef _UBIXOS_BCD_H_
 #define _UBIXOS_BCD_H_
 
+
+/* XXX Putting this here for now as I'm not sure where is the best place for them yet. */
+#define toupper(c) ((c) - 0x20 * (((c) >= 'a') && ((c) <= 'z')))
+#define tolower(c) ((c) + 0x20 * (((c) >= 'A') && ((c) <= 'Z')))
+
 extern const u_char bcd2bin_data[];
 extern const u_char bin2bcd_data[];
-extern const char hex2ascii_data[];
+extern char const hex2ascii_data[];
 
 #define bcd2bin(bcd)    (bcd2bin_data[bcd])
 #define bin2bcd(bin)    (bin2bcd_data[bin])

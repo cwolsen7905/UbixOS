@@ -92,6 +92,9 @@ int vmm_memMapInit() {
     systemVitals->freePages = freePages;
 
   /* Print Out Amount Of Memory */
+  kprintf("T\n");
+  kprintf("[%i]\n", 1024);
+  kprintf("E\n");
   kprintf("Real Memory:      %iKB\n", numPages * 4);
   kprintf("Available Memory: %iKB\n", freePages * 4);
 

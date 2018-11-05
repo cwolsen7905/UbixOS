@@ -26,6 +26,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/types.h>
+#include <ubixos/bcd.h>
+
+const char hex2ascii_data[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+
 const u_char bcd2bin_data[] = {
         0,
         1,
@@ -284,4 +289,3 @@ const u_char bin2bcd_data[] = {
         0x98,
         0x99 };
 
-const char hex2ascii_data[] = "0123456789abcdefghijklmnopqrstuvwxyz";
