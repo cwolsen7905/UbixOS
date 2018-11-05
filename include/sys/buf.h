@@ -30,7 +30,7 @@
 #ifndef _BUF_H
 #define _BUF_H
 
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 #include <sys/device.h>
 
 struct buf {

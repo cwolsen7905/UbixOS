@@ -36,7 +36,7 @@
 #include <assert.h>
 
 //MrOlsen (2016-01-11) NOTE: Need to Seperate Out CPU Specific Stuff Over Time
-#include <i386/cpu.h>
+#include <sys/i386/cpu.h>
 
 static uint32_t freePages = 0;
 static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
@@ -92,6 +92,9 @@ int vmm_memMapInit() {
     systemVitals->freePages = freePages;
 
   /* Print Out Amount Of Memory */
+  kprintf("T\n");
+  kprintf("[%i]\n", 1024);
+  kprintf("E\n");
   kprintf("Real Memory:      %iKB\n", numPages * 4);
   kprintf("Available Memory: %iKB\n", freePages * 4);
 

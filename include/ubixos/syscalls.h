@@ -30,7 +30,7 @@
 #define _SYSCALLS_H
 
 #include <ubixos/sched.h>
-#include <vfs/file.h>
+#include <sys/vfs/file.h>
 #include <ubixos/syscall.h>
 
 #define SYSCALLS_MAX 1024

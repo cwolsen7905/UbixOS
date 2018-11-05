@@ -26,71 +26,40 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _UBIXOS_SPINLOCK_H
-#define _UBIXOS_SPINLOCK_H
+#ifndef _UBIXOS_INIT_H
+#define _UBIXOS_INIT_H
 
-#include <sys/types.h>
+#include <vmm/vmm.h>
+#include <sys/vfs/vfs.h>
+#include <isa/8259.h>
+#include <sys/idt.h>
+#include <ubixos/sched.h>
+#include <isa/pit.h>
+#include <isa/atkbd.h>
+#include <ubixos/time.h>
+#include <net/net.h>
+#include <isa/ne2k.h>
+#include <fs/devfs/devfs.h>
+#include <pci/pci.h>
+#include <fs/ubixfs/ubixfs.h>
+#include <isa/fdc.h>
+#include <ubixos/tty.h>
+#include <fs/ufs/ufs.h>
+#include <ubixos/static.h>
+#include <pci/hd.h>
+#include <sys/kern_sysctl.h>
+#include <ubixos/vitals.h>
+#include <ubixos/syscalls.h>
+#include <pci/lnc.h>
 
-#define LOCKED   1
-#define UNLOCKED 0
-#define SPIN_LOCK_INITIALIZER {NULL, 0}
-#define LLOCK_FLAG 1
+typedef int (*intFunctionPTR)(void);
 
-//typedef volatile int spinLock_t;
+intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init, pci_init, devfs_init, tty_init, ufs_init, initHardDisk, initLNC, net_init };
 
-struct spinLock {
-    struct spinLock *next;
-    uint32_t locked;
-};
+/* ne2k_init, */
+/* ubixfs_init, */
+/* fdc_init, */
 
-typedef struct spinLock *spinLock_t;
+int init_tasksTotal = sizeof(init_tasks) / sizeof(intFunctionPTR);
 
-extern struct spinLock Master;
-
-void spinLockInit(spinLock_t);
-void spinUnlock(spinLock_t);
-int spinTryLock(spinLock_t);
-void spinLock(spinLock_t);
-
-void spinLock_scheduler(spinLock_t *); /* Only use this spinlock in the sched. */
-
-int spinLockLocked(spinLock_t *);
-
-/* Atomic exchange (of various sizes) */
-static inline u_long xchg_64(volatile uint32_t *ptr, u_long x) {
-  __asm__ __volatile__("xchgq %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
-
-  return x;
-}
-
-static inline unsigned xchg_32(volatile uint32_t *ptr, uint32_t x) {
-  __asm__ __volatile__("xchgl %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
-
-  return x;
-}
-
-static inline unsigned short xchg_16(volatile uint32_t *ptr, uint16_t x) {
-  __asm__ __volatile__("xchgw %1,%0"
-    :"+r" (x),
-    "+m" (*ptr));
-
-  return x;
-}
-
-/* Test and set a bit */
-static inline char atomic_bitsetandtest(void *ptr, int x) {
-  char out;
-  __asm__ __volatile__("lock; bts %2,%1\n"
-    "sbb %0,%0\n"
-    :"=r" (out), "=m" (*(volatile long long *)ptr)
-    :"Ir" (x)
-    :"memory");
-
-  return out;
-}
-
-#endif
+#endif /* END _UBIXOS_INIT_H */

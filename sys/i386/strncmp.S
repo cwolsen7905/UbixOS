@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- #include <i386/asmacros.h>
+ #include <sys/i386/asmacros.h>
 
 ENTRY(strncmp)
         pushl   %ebx

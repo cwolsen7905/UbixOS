@@ -40,6 +40,9 @@ typedef        __uintfptr_t    uintfptr_t;
 
 typedef char *caddr_t;
 
+/* POSIX integrals that should only appear only in <sys/stdint.h> */
+#include <sys/stdint.h>
+
 /* unsigned integrals */
 typedef __uint8_t uint8_t;
 typedef __uint16_t uint16_t;
@@ -129,11 +132,6 @@ typedef __fflags_t fflags_t;
 typedef __time_t time_t;
 #define _TIME_T_DECLARED
 #endif
-
-typedef uint32_t uintmax_t;
-typedef int32_t intmax_t;
-typedef int32_t ptrdiff_t;
-typedef uint32_t uintptr_t;
 
 #define __ULONG_MAX     0xffffffffUL
 #define __USHRT_MAX     0xffff          /* max value for an unsigned short */

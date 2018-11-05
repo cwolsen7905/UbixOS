@@ -26,40 +26,20 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _UBIXOS_INIT_H
-#define _UBIXOS_INIT_H
+#ifndef _UBIXOS_BCD_H_
+#define _UBIXOS_BCD_H_
 
-#include <vmm/vmm.h>
-#include <vfs/vfs.h>
-#include <isa/8259.h>
-#include <sys/idt.h>
-#include <ubixos/sched.h>
-#include <isa/pit.h>
-#include <isa/atkbd.h>
-#include <ubixos/time.h>
-#include <net/net.h>
-#include <isa/ne2k.h>
-#include <devfs/devfs.h>
-#include <pci/pci.h>
-#include <ubixfs/ubixfs.h>
-#include <isa/fdc.h>
-#include <ubixos/tty.h>
-#include <ufs/ufs.h>
-#include <ubixos/static.h>
-#include <pci/hd.h>
-#include <sys/kern_sysctl.h>
-#include <ubixos/vitals.h>
-#include <ubixos/syscalls.h>
-#include <pci/lnc.h>
 
-typedef int (*intFunctionPTR)(void);
+/* XXX Putting this here for now as I'm not sure where is the best place for them yet. */
+#define toupper(c) ((c) - 0x20 * (((c) >= 'a') && ((c) <= 'z')))
+#define tolower(c) ((c) + 0x20 * (((c) >= 'A') && ((c) <= 'Z')))
 
-intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init, pci_init, devfs_init, tty_init, ufs_init, initHardDisk, initLNC, net_init };
+extern const u_char bcd2bin_data[];
+extern const u_char bin2bcd_data[];
+extern char const hex2ascii_data[];
 
-//ne2k_init,
-//ubixfs_init,
-//fdc_init,
+#define bcd2bin(bcd)    (bcd2bin_data[bcd])
+#define bin2bcd(bin)    (bin2bcd_data[bin])
+#define hex2ascii(hex)  (hex2ascii_data[hex])
 
-int init_tasksTotal = sizeof(init_tasks) / sizeof(intFunctionPTR);
-
-#endif /* END _UBIXOS_INIT_H */
+#endif /* !_UBIXOS_BCD_H_ */

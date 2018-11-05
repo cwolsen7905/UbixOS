@@ -26,54 +26,69 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- #include <sys/i386/asmacros.h>
+#ifndef _UBIXOS_SPINLOCK_H_
+#define _UBIXOS_SPINLOCK_H_
 
+#include <sys/types.h>
 
-ENTRY(memset)
-        pushl   %edi
-        pushl   %ebx
-        movl    12(%esp),%edi
-        movzbl  16(%esp),%eax           /* unsigned char, zero extend */
-        movl    20(%esp),%ecx
-        pushl   %edi                    /* push address of buffer */
+#define LOCKED   1
+#define UNLOCKED 0
+#define SPIN_LOCK_INITIALIZER { 0x0, 0x0 }
+#define LLOCK_FLAG 1
 
-        cld                             /* set fill direction forward */
+struct spinLock {
+	struct spinLock *next;
+	u_int32_t locked;
+};
 
-        /*
-         * if the string is too short, it's really not worth the overhead
-         * of aligning to word boundries, etc.  So we jump to a plain
-         * unaligned set.
-         */
-        cmpl    $0x0f,%ecx
-        jle     L1
+typedef struct spinLock *spinLock_t;
 
-        movb    %al,%ah                 /* copy char to all bytes in word */
-        movl    %eax,%edx
-        sall    $16,%eax
-        orl     %edx,%eax
+extern struct spinLock Master;
 
-        movl    %edi,%edx               /* compute misalignment */
-        negl    %edx
-        andl    $3,%edx
-        movl    %ecx,%ebx
-        subl    %edx,%ebx
+void spinLockInit(spinLock_t);
+void spinUnlock(spinLock_t);
+int spinTryLock(spinLock_t);
+void spinLock(spinLock_t);
 
-        movl    %edx,%ecx               /* set until word aligned */
-        rep
-        stosb
+void spinLock_scheduler(spinLock_t *); /* Only use this spinlock in the sched. */
 
-        movl    %ebx,%ecx
-        shrl    $2,%ecx                 /* set by words */
-        rep
-        stosl
+int spinLockLocked(spinLock_t *);
 
-        movl    %ebx,%ecx               /* set remainder by bytes */
-        andl    $3,%ecx
-L1:     rep
-        stosb
+/* Atomic exchange (of various sizes) */
+static inline u_long xchg_64(volatile uint32_t *ptr, u_long x) {
+	__asm__ __volatile__("xchgq %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
 
-        popl    %eax                    /* pop address of buffer */
-        popl    %ebx
-        popl    %edi
-        ret
-END(memset)
+	return x;
+}
+
+static inline unsigned xchg_32(volatile uint32_t *ptr, uint32_t x) {
+	__asm__ __volatile__("xchgl %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
+
+	return x;
+}
+
+static inline unsigned short xchg_16(volatile uint32_t *ptr, uint16_t x) {
+	__asm__ __volatile__("xchgw %1,%0"
+			:"+r" (x),
+			"+m" (*ptr));
+
+	return x;
+}
+
+/* Test and set a bit */
+static inline char atomic_bitsetandtest(void *ptr, int x) {
+	char out;
+	__asm__ __volatile__("lock; bts %2,%1\n"
+			"sbb %0,%0\n"
+			:"=r" (out), "=m" (*(volatile long long *)ptr)
+			:"Ir" (x)
+			:"memory");
+
+	return out;
+}
+
+#endif /* !_UBIXOS_SPINLOCK_H_ */

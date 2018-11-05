@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <vfs/vfs.h>
+#include <sys/vfs/vfs.h>
 #include <ubixos/vitals.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>

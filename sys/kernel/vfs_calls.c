@@ -32,7 +32,7 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <string.h>
-#include <ufs/ufs.h>
+#include <fs/ufs/ufs.h>
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
   int error = 0x0;

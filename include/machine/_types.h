@@ -29,7 +29,8 @@
 #ifndef _MACHINE__TYPES_H_
 #define	_MACHINE__TYPES_H_
 
-// Basic types upon which most other types are built.
+/* Basic types upon which most other types are built */
+
 typedef	__signed char		__int8_t;
 typedef	unsigned char		__uint8_t;
 typedef	short				__int16_t;

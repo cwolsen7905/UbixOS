@@ -32,7 +32,7 @@
 #define __i386__ 1
 
 #include <sys/types.h>
-#include <i386/elf.h>
+#include <sys/i386/elf.h>
 #include <sys/elf32.h>
 #include <sys/elf64.h>
 

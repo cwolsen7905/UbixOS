@@ -34,7 +34,7 @@
 #include <ubixos/exec.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/systemtask.h>
-#include <vfs/mount.h>
+#include <sys/vfs/mount.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <sde/sde.h>
@@ -109,8 +109,8 @@ struct {
   union descriptorTableUnion *gdt __attribute__ ((packed));
 } loadGDT = { (11 * sizeof(union descriptorTableUnion) - 1), ubixGDT };
 
-static char *argv_init[2] = { "init", NULL, }; // ARGV For Initial Proccess
-static char *envp_init[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; //ENVP For Initial Proccess
+static char *argv_init[2] = { "init", NULL, }; /* ARGV For Initial Proccess */
+static char *envp_init[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; /* ENVP For Initial Proccess */
 
 struct bootinfo _bootinfo;
 char _kernelname[512];
