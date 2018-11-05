@@ -48,8 +48,7 @@ char *strtok(char *str, const char *sep);
 char *strtok_r(char *str, const char *sep, char **last);
 char *strstr(const char *s, char *find);
 
-#define toupper(c) ((c) - 0x20 * (((c) >= 'a') && ((c) <= 'z')))
-#define tolower(c) ((c) + 0x20 * (((c) >= 'A') && ((c) <= 'Z')))
+
 
 #ifdef __cplusplus
 extern "C" {
