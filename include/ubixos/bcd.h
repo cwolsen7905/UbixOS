@@ -26,39 +26,15 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _STRING_H_
-#define _STRING_H_
+#ifndef _UBIXOS_BCD_H_
+#define _UBIXOS_BCD_H_
 
-#include <sys/cdefs.h>
-#include <sys/_null.h>
-#include <sys/_types.h>
+extern const u_char bcd2bin_data[];
+extern const u_char bin2bcd_data[];
+extern const char hex2ascii_data[];
 
+#define bcd2bin(bcd)    (bcd2bin_data[bcd])
+#define bin2bcd(bin)    (bin2bcd_data[bin])
+#define hex2ascii(hex)  (hex2ascii_data[hex])
 
-#include <strings.h>
-
-void *memcpy(const void *dst, const void * src, size_t length);
-char *strcpy(char *, const char *);
-int strcmp(const char *str1, const char *str2);
-int strncmp(const char * a, const char * b, size_t c);
-void *memset(void * dst, int c, size_t length);
-int strlen(const char * string);
-int memcmp(const void * dst, const void * src, size_t length);
-char    *strncpy(char * __restrict, const char * __restrict, size_t);
-char *strtok(char *str, const char *sep);
-char *strtok_r(char *str, const char *sep, char **last);
-char *strstr(const char *s, char *find);
-
-#define toupper(c) ((c) - 0x20 * (((c) >= 'a') && ((c) <= 'z')))
-#define tolower(c) ((c) + 0x20 * (((c) >= 'A') && ((c) <= 'Z')))
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-  int sprintf(char *buf, const char *fmt, ...);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif /* !_STRING_H_ */
+#endif /* !_UBIXOS_BCD_H_

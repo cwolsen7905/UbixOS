@@ -30,6 +30,7 @@
 #include <string.h>
 #include <sys/video.h>
 #include <ubixos/kpanic.h>
+#include <ubixos/bcd.h>
 
 static char *ksprintn(char *nbuf, uintmax_t num, int base, int *lenp, int upper);
 
@@ -66,7 +67,7 @@ u_quad_t __qdivrem(u_quad_t uq, u_quad_t vq, u_quad_t *arq) {
    */
   if (vq == 0) {
     /* divide by zero. */
-    static const volatile unsigned int zero = 0;
+        static const volatile unsigned int zero = 0;
 
     tmp.ul[H] = tmp.ul[L] = 1 / zero;
     if (arq)
