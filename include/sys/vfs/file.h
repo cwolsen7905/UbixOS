@@ -31,11 +31,11 @@
 
 #include <sys/types.h>
 
-#include <fs/ubixfs/dirCache.h>
+#include <ubixfs/dirCache.h>
 #include <sys/thread.h>
-#include <sys/vfs/inode.h>
-#include <sys/vfs/mount.h>
-#include <fs/ufs/ufs.h>
+#include <vfs/inode.h>
+#include <vfs/mount.h>
+#include <ufs/ufs.h>
 
 /* HACK */
 int getchar();

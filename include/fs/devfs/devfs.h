@@ -30,7 +30,7 @@
 #define _DEVFS_DEVFS_H
 
 #include <sys/types.h>
-#include <sys/vfs/file.h>
+#include <vfs/file.h>
 
 struct devfs_devices {
     struct devfs_devices *next;
