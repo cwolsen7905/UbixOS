@@ -1,4 +1,3 @@
-b
 /*-
  * Copyright (c) 2002-2018 The UbixOS Project.
  * All rights reserved.
