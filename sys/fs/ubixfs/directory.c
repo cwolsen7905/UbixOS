@@ -27,9 +27,9 @@
 
 *****************************************************************************************/
 
-#include <fs/ubixfs/ubixfs.h>
-#include <sys/vfs/file.h>
-#include <sys/vfs/mount.h>
+#include <ubixfs/ubixfs.h>
+#include <vfs/file.h>
+#include <vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <string.h>

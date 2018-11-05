@@ -37,7 +37,7 @@
 #include <sys/device.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
-#include <fs/devfs/devfs.h>
+#include <devfs/devfs.h>
 
 static struct spinLock fdcSpinLock = SPIN_LOCK_INITIALIZER;
 

@@ -26,7 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <sys/vfs/mount.h>
+#include <vfs/mount.h>
 #include <ubixos/vitals.h>
 #include <ubixos/kpanic.h>
 #include <lib/kmalloc.h>

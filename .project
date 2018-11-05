@@ -3,6 +3,8 @@
 	<name>UbixOS</name>
 	<comment></comment>
 	<projects>
+		<project>UbixOS Kernel</project>
+		<project>UbixOS Libc</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

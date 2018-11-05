@@ -41,8 +41,9 @@
  * Prototype functions which were historically defined in <string.h>, but
  * are required by POSIX to be prototyped in <strings.h>.
  */
+#if __BSD_VISIBLE
 #include <strings.h>
-
+#endif
 
 #ifndef _SIZE_T_DECLARED
 typedef	__size_t	size_t;
