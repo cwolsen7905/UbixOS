@@ -40,7 +40,7 @@
 
 static uint32_t freePages = 0;
 static struct spinLock vmmSpinLock = SPIN_LOCK_INITIALIZER;
-static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
+//static struct spinLock vmmCowSpinLock = SPIN_LOCK_INITIALIZER;
 
 int numPages = 0x0;
 
@@ -344,7 +344,7 @@ int adjustCowCounter(uInt32 baseAddr, int adjustment) {
 
  ************************************************************************/
 
-/* TODO: This can be greatly immproved for performance but it gets the job done */
+/* TODO: This can be greatly improved for performance but it gets the job done */
 void vmm_freeProcessPages(pidType pid) {
   int i = 0, x = 0;
   uint32_t *tmpPageTable = 0x0;
@@ -353,7 +353,7 @@ void vmm_freeProcessPages(pidType pid) {
   spinLock(&vmmSpinLock);
 
   /* Check Page Directory For An Avail Page Table */
-  //NOTE: Thie cleans all memory space up to kernel space
+  //NOTE: This cleans all memory space up to kernel space
 #ifdef _IGNORE
   for (i = 0; i < (PAGE_SIZE - (PAGE_SIZE / 4)); i++) {
 

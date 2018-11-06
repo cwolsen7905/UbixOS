@@ -1,3 +1,4 @@
+b
 /*-
  * Copyright (c) 2002-2018 The UbixOS Project.
  * All rights reserved.
@@ -109,8 +110,17 @@ struct {
   union descriptorTableUnion *gdt __attribute__ ((packed));
 } loadGDT = { (11 * sizeof(union descriptorTableUnion) - 1), ubixGDT };
 
-static char *argv_init[2] = { "init", NULL, }; // ARGV For Initial Proccess
-static char *envp_init[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; //ENVP For Initial Proccess
+static char *argv_init[2] = {
+    "init",
+    NULL, }; /* ARGV For Initial Process */
+
+static char *envp_init[6] = {
+    "HOME=/",
+    "PWD=/",
+    "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
+    "USER=root",
+    "GROUP=admin",
+    NULL, }; /* ENVP For Initial Process */
 
 struct bootinfo _bootinfo;
 char _kernelname[512];
@@ -136,9 +146,9 @@ int kmain(uint32_t rootdev) {
   }
 
   /* New Root Mount Point */
-  //Old 2 new 10
+  /* Old 2 new 10 */
   kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR(rootdev), B_CONTROLLER(rootdev), B_SLICE(rootdev), B_UNIT(rootdev), B_PARTITION(rootdev), B_TYPE(rootdev));
-  //if ( vfs_mount( B_UNIT(_bootdev), B_PARTITION(_bootdev), 0x0, 0xAA, "sys", "rw" ) != 0x0 ) {
+  /* if ( vfs_mount( B_UNIT(_bootdev), B_PARTITION(_bootdev), 0x0, 0xAA, "sys", "rw" ) != 0x0 ) { */
   if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "sys", "rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
   }
@@ -162,8 +172,8 @@ int kmain(uint32_t rootdev) {
 
 
 
-  //kprintf("SDE Thread Start! [0x%X]\n", &sdeThread);
-  //execThread(&sdeThread, 0x2000,0x0);
+  /* kprintf("SDE Thread Start! [0x%X]\n", &sdeThread); */
+  /* execThread(&sdeThread, 0x2000,0x0); */
 
   kprintf("Kernel Name: [%s], Boot How To [0x%X], Boot Dev: [0x%X]\n", _kernelname, _boothowto, _bootdev);
   kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n", B_TYPE(_bootdev), B_SLICE(_bootdev), B_UNIT(_bootdev), B_PARTITION(_bootdev));

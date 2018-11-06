@@ -11,7 +11,7 @@
  * \#define lwip_htonl(x) your_htonl
  *
  * Note lwip_ntohs() and lwip_ntohl() are merely references to the htonx counterparts.
- * 
+ *
  * If you \#define them to htons() and htonl(), you should
  * \#define LWIP_DONT_PROVIDE_BYTEORDER_FUNCTIONS to prevent lwIP from
  * defining htonx/ntohx compatibility macros.
@@ -72,10 +72,8 @@
  * @param n u16_t in host byte order
  * @return n in network byte order
  */
-u16_t
-lwip_htons(u16_t n)
-{
-  return (u16_t)PP_HTONS(n);
+u16_t lwip_htons(u16_t n) {
+  return ((u16_t) PP_HTONS(n));
 }
 #endif /* lwip_htons */
 
@@ -89,7 +87,7 @@ lwip_htons(u16_t n)
 u32_t
 lwip_htonl(u32_t n)
 {
-  return (u32_t)PP_HTONL(n);
+  return ((u32_t) PP_HTONL(n));
 }
 #endif /* lwip_htonl */
 
@@ -114,7 +112,7 @@ lwip_strnstr(const char* buffer, const char* token, size_t n)
       return LWIP_CONST_CAST(char *, p);
     }
   }
-  return NULL;
+  return (NULL);
 }
 #endif
 
@@ -141,15 +139,15 @@ lwip_stricmp(const char* str1, const char* str2)
         if (c1_upc != c2_upc) {
           /* still not equal */
           /* don't care for < or > */
-          return 1;
+          return (1);
         }
       } else {
         /* characters are not equal but none is in the alphabet range */
-        return 1;
+        return (1);
       }
     }
   } while (c1 != 0);
-  return 0;
+  return (0);
 }
 #endif
 
@@ -176,15 +174,15 @@ lwip_strnicmp(const char* str1, const char* str2, size_t len)
         if (c1_upc != c2_upc) {
           /* still not equal */
           /* don't care for < or > */
-          return 1;
+          return (1);
         }
       } else {
         /* characters are not equal but none is in the alphabet range */
-        return 1;
+        return (1);
       }
     }
   } while (len-- && c1 != 0);
-  return 0;
+  return (0);
 }
 #endif
 
