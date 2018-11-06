@@ -66,9 +66,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 *****************************************************************************************/
 
-#include <fs/ubixfs/ubixfs.h>
-#include <sys/vfs/file.h>
-#include <sys/vfs/mount.h>
+#include <ubixfs/ubixfs.h>
+#include <vfs/file.h>
+#include <vfs/mount.h>
 
 
 void syncBat(struct vfs_mountPoint *mp) {

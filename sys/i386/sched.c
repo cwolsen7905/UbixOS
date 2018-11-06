@@ -31,7 +31,7 @@
 #include <ubixos/spinlock.h>
 #include <ubixos/endtask.h>
 #include <ubixos/wait.h>
-#include <sys/vfs/mount.h>
+#include <vfs/mount.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
 #include <vmm/vmm.h>

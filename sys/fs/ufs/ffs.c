@@ -1,6 +1,6 @@
-#include <sys/vfs/vfs.h>
-#include <fs/ufs/ufs.h>
-#include <fs/ufs/ffs.h>
+#include <vfs/vfs.h>
+#include <ufs/ufs.h>
+#include <ufs/ffs.h>
 #include <lib/kprintf.h>
 #include <lib/kmalloc.h>
 #include <ubixos/kpanic.h>

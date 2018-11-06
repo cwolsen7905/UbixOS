@@ -27,9 +27,9 @@
 
 *****************************************************************************************/
 
-#include <fs/ubixfs/ubixfs.h>
-#include <fs/ubixfs/dirCache.h>
-#include <sys/vfs/vfs.h>
+#include <ubixfs/ubixfs.h>
+#include <ubixfs/dirCache.h>
+#include <vfs/vfs.h>
 #include <ubixos/sched.h>
 #include <ubixos/kpanic.h>
 #include <ubixos/exec.h>

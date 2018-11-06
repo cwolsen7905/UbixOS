@@ -26,8 +26,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <fs/devfs/devfs.h>
-#include <sys/vfs/vfs.h>
+#include <devfs/devfs.h>
+#include <vfs/vfs.h>
 #include <sys/device.h>
 #include <ubixos/spinlock.h>
 #include <ubixos/kpanic.h>

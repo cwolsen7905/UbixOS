@@ -31,7 +31,7 @@
 #include <sys/device.h>
 #include <lib/kmalloc.h>
 #include <lib/kprintf.h>
-#include <fs/devfs/devfs.h>
+#include <devfs/devfs.h>
 #include <string.h>
 #include <fs/common/gpt.h>
 
