@@ -37,8 +37,8 @@ generic-code: generic
 init-code: init
 	(cd init;make)
 
-arch-code: ${_ARCH}
-	(cd ${_ARCH};make)
+arch-code: arch/${_ARCH}
+	(cd arch/${_ARCH};make)
 	
 kernel-code: kernel
 	(cd kernel;make)
@@ -110,7 +110,7 @@ install-kernel:
 
 clean:
 	(cd init;make clean)
-	(cd ${_ARCH};make clean)
+	(cd arch/${_ARCH};make clean)
 	(cd sys;make clean)
 	(cd kernel;make clean)
 	(cd vmm;make clean)
