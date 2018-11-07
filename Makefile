@@ -3,7 +3,7 @@ MAKE=make
 
 CURDIR=${.CURDIR}
 
-OBJ_DIR?= ${CURDIR}/obj
+OBJ_DIR?= ${CURDIR}/build
 
 CLEANDIR=clean
 
@@ -15,12 +15,11 @@ WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm  OBJD
 
 WMAKE=${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
 
-TMP_PATH=${PATH}
+TMP_PATH=${PATH
+}
 ROOT=/ubixos
 
 all: kernel world install-kernel install-world
-# csu ubix_api libc_old libc ubix libcpp bin tools
-# depend kernel tools
 
 kernel:
 	@cd sys;make

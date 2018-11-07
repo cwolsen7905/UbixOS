@@ -1,5 +1,4 @@
-# $Id: Makefile 134 2016-01-15 14:50:24Z reddawg $
-# Kernel Makefile (C) 2002 The UbixOS Project
+# Makefile (C) 2002 The UbixOS Project
 
 include ../Makefile.incl
 include Makefile.incl
@@ -13,7 +12,7 @@ all:
 	@echo "***************************************************************"
 	@echo "Step 1: Clean Kernel"
 	@echo "***************************************************************"
-	#${MAKE} clean
+	${MAKE} clean
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 2: Build Kernel Objects"
@@ -121,10 +120,10 @@ clean:
 	(cd pci;make clean)
 	(cd net;make clean)
 	(cd compile;make clean)
-	#(cd vfs;make clean)
-	#(cd sde;make clean)
-	#(cd devfs;make clean)
-	#(cd net;make clean)
-	#(cd kmods;make clean)
-	#(cd ufs;make clean)
+	(cd vfs;make clean)
+	(cd sde;make clean)
+	(cd devfs;make clean)
+	(cd net;make clean)
+	(cd kmods;make clean)
+	(cd ufs;make clean)
 	#(cd ../tools/;make clean)

@@ -1,5 +1,4 @@
-# $Id: Makefile 121 2016-01-14 03:18:20Z reddawg $
-# The System Makefile (C) 2002 The UbixOS Project
+# System Makefile (C) 2002 The UbixOS Project
 
 all: init-bin login-bin shell-bin clock-bin cp-bin fdisk-bin format-bin disklabel-bin ubistry-bin ttyd-bin stat-bin muffin-bin
 # cat-bin
