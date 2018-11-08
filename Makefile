@@ -15,8 +15,7 @@ WORLD_FLAGS=_ARCH=${_ARCH} CC="cc" CXX="c++" AS="as" AR="ar" LD="ld" NM=nm  OBJD
 
 WMAKE=${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
 
-TMP_PATH=${PATH
-}
+TMP_PATH=${PATH}
 ROOT=/ubixos
 
 all: kernel world install-kernel install-world
