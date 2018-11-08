@@ -119,6 +119,17 @@ static void def_ctls() {
   char s61[4] = "i386";
   sysctl_add(name, name_len, "kern.hostname", &s61, 4);
 
+  /* XXX 6, 2147482988 */
+  name[0] = 6;
+  name[1] = 2147482988;
+  page_val = 4096;
+  sysctl_add(name, name_len, "hw.pagesizes", &page_val, sizeof(u_int32_t));
+
+  name[0] = 2;
+  name[1] = 12;
+  page_val = 0;
+  sysctl_add(name, name_len, "vm.overcommit", &page_val, sizeof(u_int32_t));
+
 }
 
 int sysctl_init() {
@@ -259,6 +270,7 @@ int __sysctl(struct thread *td, struct sysctl_args *uap) {
 
 int sys_sysctl(struct thread *td, struct sys_sysctl_args *args) {
   struct sysctl_entry *tmpCtl = 0x0;
+  struct Trie *tmpTrie = 0x0;
   int i = 0;
 
   if (ctls == 0x0)
@@ -275,27 +287,55 @@ int sys_sysctl(struct thread *td, struct sys_sysctl_args *args) {
     #endif
 
     kprintf("Let's Find The Trie\n");
-    tmpCtl = (struct sysctl_entry *) search_trieNode(sysctl_headTrie, args->newp)->e;
-    kprintf("Done Searching: 0x%X\n", tmpCtl);
+    tmpTrie = search_trieNode(sysctl_headTrie, args->newp);
+    kprintf("Done Searching: 0x%X\n", tmpTrie);
 
-    if (tmpCtl != 0x0)
-     kprintf("<FT: %s>\n", tmpCtl->name);
-   // tmpCtl = sysctl_findMib(args->newp, args->namelen);
-   td->td_retval[0] = ENOENT;
-  return(-1);
+    if (tmpTrie != 0x0) {
+      tmpCtl = (struct sysctl_entry *)tmpTrie->e;
+      kprintf("<FT: %s:%i>\n", tmpCtl->name,tmpCtl->namelen);
+      // tmpCtl = sysctl_findMib(args->newp, args->namelen);
+      *args->oldlenp = tmpCtl->namelen *4;
+      u_int32_t *oldp = args->oldp;
+
+      for (i=0;i<tmpCtl->namelen;i++)
+        oldp[i] = tmpCtl->full_name[i];
+
+      td->td_retval[0] = 0; /* XXX - Very Bad need to store namelen in the struct */
+
+      return(0x0); 
+    }
+    else {
+      td->td_retval[0] = ENOENT;
+      return(-1);
+    }
   }
   else {
-  tmpCtl = sysctl_find(args->name, args->namelen);
+    kprintf("TMP: %i\n", args->namelen);
+    for (i = 0x0; i < args->namelen; i++)
+      kprintf("(%i)", (int) args->name[i]);
+    kprintf("ET\n");
+    tmpCtl = sysctl_find(args->name, args->namelen);
   }
 
   if (tmpCtl == 0x0) {
-    kprintf("Invalid CTL: ");
+    kprintf("Invalid CTL(%i): ", args->namelen);
     for (i = 0x0; i < args->namelen; i++)
       kprintf("(%i)", (int) args->name[i]);
     kprintf("\n");
     td->td_retval[0] = -1;
     return (-1);
   }
+  /*
+  else {
+    kprintf("Valid CTL(%i): ", args->namelen);
+    for (i = 0x0; i < args->namelen; i++)
+      kprintf("(%i)", (int) args->name[i]);
+    kprintf("\n");
+  }
+
+  kprintf("{%i:%i}\n",args->oldlenp, tmpCtl->val_len);
+
+*/
 
   if ((uint32_t) args->oldlenp < tmpCtl->val_len)
     memcpy(args->oldp, tmpCtl->value, (uInt32) args->oldlenp);
@@ -364,6 +404,7 @@ static struct sysctl_entry *sysctl_findMib(char *name, int namelen) {
 int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) {
   struct sysctl_entry *tmpCtl = 0x0;
   struct sysctl_entry *newCtl = 0x0;
+  int i = 0;
 
   /* Check if it exists */
   tmpCtl = sysctl_find(name, namelen);
@@ -381,11 +422,18 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) 
   }
   if (tmpCtl->children == 0x0) {
     tmpCtl->children = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
+    memset(tmpCtl->children, 0x0, sizeof(struct sysctl_entry));
     tmpCtl->children->children = 0x0;
     tmpCtl->children->prev = 0x0;
     tmpCtl->children->next = 0x0;
     tmpCtl->children->id = name[namelen - 1];
+    for (i = 0; i < namelen;i++)
+      tmpCtl->children->full_name[i] = name[i];
+
+    tmpCtl->children->namelen = namelen;
+
     sprintf(tmpCtl->children->name, str_name);
+
     insert_trieNode(&sysctl_headTrie, &tmpCtl->children->name, tmpCtl->children);
     tmpCtl->children->value = (void *) kmalloc(buf_size);
     memcpy(tmpCtl->children->value, buf, buf_size);
@@ -393,10 +441,17 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) 
   }
   else {
     newCtl = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
+    memset(newCtl, 0x0, sizeof(struct sysctl_entry));
     newCtl->prev = 0x0;
     newCtl->next = tmpCtl->children;
     newCtl->children = 0x0;
     newCtl->id = name[namelen - 1];
+
+    for (i = 0; i<namelen;i++)
+      newCtl->full_name[i] = name[i];
+
+    newCtl->namelen = namelen;
+
     sprintf(newCtl->name, str_name);
     insert_trieNode(&sysctl_headTrie, &newCtl->name, newCtl);
     newCtl->value = (void *) kmalloc(buf_size);

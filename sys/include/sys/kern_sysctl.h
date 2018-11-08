@@ -61,6 +61,8 @@ struct sysctl_entry {
   int                  id;
   void                *value;
   int                  val_len;
+  int                 full_name[CTL_MAXNAME];
+  int                 namelen;
   };
 
 int kern_sysctl(int *name,u_int namelen,void *old,size_t *oldlenp,void *new,size_t newlen,size_t *retval,int flags);
