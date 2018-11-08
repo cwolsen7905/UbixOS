@@ -70,7 +70,7 @@ void insert_trieNode(struct Trie **head, char* str, void *e) {
 struct Trie *search_trieNode(struct Trie *head, char *str) {
 
   // return 0 if Trie is empty
-  if (head == NULL)
+  if (head == NULL || str == NULL)
     return (0);
 
   struct Trie *curr = head;

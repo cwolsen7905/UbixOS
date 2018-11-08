@@ -139,7 +139,7 @@ int sysctl_init() {
   ctls->id = CTL_UNSPEC;
   ctls->children = 0x0;
   sprintf(ctls->name, "unspec");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->prev = ctls;
@@ -147,7 +147,7 @@ int sysctl_init() {
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "kern");
   ctls->next = tmpCtl;
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -155,7 +155,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_VM;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "vm");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -163,7 +163,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_VFS;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "vfs");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -171,7 +171,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_NET;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "net");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -179,7 +179,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_DEBUG;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "debug");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -187,7 +187,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_HW;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "hw");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -195,7 +195,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_MACHDEP;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "machdep");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -203,7 +203,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_USER;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "user");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -211,7 +211,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_P1003_1B;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "p1003_1b");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -219,7 +219,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_UBIX;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "ubix");
-  insert_trieNode(sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
 
   def_ctls();
 
@@ -271,8 +271,15 @@ int sys_sysctl(struct thread *td, struct sys_sysctl_args *args) {
 
   if (args->namelen == 2 && args->name[0] == 0 && args->name[1] == 3) {
     #ifdef DEBUG_SYSCTL
-    kprintf("%s:%i>name_to_mib: %s", __FILE__,__LINE__,args->newp);
+    kprintf("%s:%i>name_to_mib: %s\n", __FILE__,__LINE__,args->newp);
     #endif
+
+    kprintf("Let's Find The Trie\n");
+    tmpCtl = (struct sysctl_entry *) search_trieNode(sysctl_headTrie, args->newp)->e;
+    kprintf("Done Searching: 0x%X\n", tmpCtl);
+
+    if (tmpCtl != 0x0)
+     kprintf("<FT: %s>\n", tmpCtl->name);
    // tmpCtl = sysctl_findMib(args->newp, args->namelen);
    td->td_retval[0] = ENOENT;
   return(-1);
@@ -379,7 +386,7 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) 
     tmpCtl->children->next = 0x0;
     tmpCtl->children->id = name[namelen - 1];
     sprintf(tmpCtl->children->name, str_name);
-    insert_trieNode(sysctl_headTrie, &tmpCtl->children->name);
+    insert_trieNode(&sysctl_headTrie, &tmpCtl->children->name, tmpCtl->children);
     tmpCtl->children->value = (void *) kmalloc(buf_size);
     memcpy(tmpCtl->children->value, buf, buf_size);
     tmpCtl->children->val_len = buf_size;
@@ -391,7 +398,7 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) 
     newCtl->children = 0x0;
     newCtl->id = name[namelen - 1];
     sprintf(newCtl->name, str_name);
-    insert_trieNode(sysctl_headTrie, &newCtl->name);
+    insert_trieNode(&sysctl_headTrie, &newCtl->name, newCtl);
     newCtl->value = (void *) kmalloc(buf_size);
     memcpy(newCtl->value, buf, buf_size);
     newCtl->val_len = buf_size;
