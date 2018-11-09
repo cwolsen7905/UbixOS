@@ -65,7 +65,9 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
 	int fd = 0x0;
 	struct file *nfp = 0x0;
 
+#ifdef DEBUG_OPENAT
 	kprintf("openat");
+#endif
 
 	error = falloc(td, &nfp, &fd);
 
@@ -85,8 +87,9 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
 		td->td_retval[0] = -1;
 		error = -1;
 
-		kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path,
-				td->td_retval[0]);
+#ifdef DEBUG_OPENAT
+    kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
+#endif
 
 		if ((args->flag & O_RDONLY) == O_RDONLY)
 			kprintf("O_RDONLY");
@@ -295,5 +298,6 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   kprintf("Path: %s\n", args->path);
   kprintf("Count: %i\n", args->count);
   thr->td_retval[0] = -1;
+  thr->td_retval[1] = 2;
   return (0);
 }
