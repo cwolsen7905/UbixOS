@@ -297,7 +297,8 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   kprintf("Call to readlink\n");
   kprintf("Path: %s\n", args->path);
   kprintf("Count: %i\n", args->count);
-  thr->td_retval[0] = -1;
-  thr->td_retval[1] = 2;
+
+  //Return ERROr
+  thr->td_retval[0] = 2;
   return (-1);
 }
