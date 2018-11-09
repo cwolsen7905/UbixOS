@@ -324,8 +324,8 @@ struct syscall_entry systemCalls_posix[] = {
   {
     0,
     "readlink",
-    sys_invalid,
-    SYSCALL_NOTIMP }, // 58 - readlink
+    sys_readlink,
+    SYSCALL_VALID }, /* 58 */
   {
     ARG_COUNT(sys_execve_args),
     "execve",
