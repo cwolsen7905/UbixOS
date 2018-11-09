@@ -787,7 +787,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   tmp[i++] = 2;
   tmp[i++] = -1;// tFD;  // _current->imageFd;
-  _current->td.o_files[4] = _current->files[0];
+  _current->td.o_files[4] = tFP; // XXX - I had this -> _current->files[0]; not sure why changed to tFP on 2018-11-09
   //MrOlsen 2018kprintf("AT_EXECFD: [%i:%i]", tmp[i - 1], tFD);
 
   tmp[i++] = 3;
