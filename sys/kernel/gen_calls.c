@@ -202,7 +202,7 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
     tmpDesc->limitHigh = (0xFFFFF >> 16);
     tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
     tmpDesc->baseHigh = base_addr >> 24;
-    /*
+
      asm(
      "push %eax\n"
      "lgdtl (loadGDT)\n"
@@ -210,7 +210,7 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
      "mov %eax,%gs\n"
      "pop %eax\n"
      );
-     */
+
     td->td_retval[0] = 0;
   }
   else {
