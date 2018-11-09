@@ -114,6 +114,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
 
 int sys_close(struct thread *td, struct sys_close_args *args) {
   struct file *fd = 0x0;
+
   getfd(td, &fd, args->fd);
 
   kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
@@ -127,7 +128,10 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
         kprintf("Can't close pipes yet");
         break;
       default:
-        if (!fclose(fd->fd))
+        kprintf("[CLS: %i:0x%X]", args->fd, fd);
+        if (args->fd < 3)
+          td->td_retval[0] = 0;
+        else if (!fclose(fd->fd))
           td->td_retval[0] = -1;
         else {
           fdestroy(td, fd, args->fd);
@@ -154,7 +158,10 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
     switch (fd->fd_type) {
       case 3: /* XXX - Pipe2 Handling */
         nbytes = (args->nbyte - (1024 - fd->fd->offset) < 0) ? args->nbyte : (1024 - fd->fd->offset);
+        kprintf("[unb: %i, nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
         kprintf("PR: [%i]", nbytes);
+        memcpy(args->buf, fd->fd->buffer + fd->fd->offset, nbytes);
+        fd->fd->offset += nbytes;
         td->td_retval[0] = nbytes;
         break;
       default:
@@ -282,8 +289,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     switch (fd->fd_type) {
       case 3: /* XXX - Temp Pipe Stuff */
         nbytes = (uap->nbyte - (1024 - fd->fd->offset) < 0) ? uap->nbyte : (1024 - fd->fd->offset);
-        kprintf("[unb: %i, nbs: %i]", uap->nbyte, nbytes);
-        memcpy(fd->fd->buffer, uap->buf, nbytes);
+        kprintf("[unb: %i, nbs: %i, bf: 0x%X]", uap->nbyte, nbytes, fd->fd->buffer);
+        memcpy(fd->fd->buffer + fd->fd->offset, uap->buf, nbytes);
         fd->fd->offset += nbytes;
         td->td_retval[0] = nbytes;
         kprintf("[PW: %i:%i]", nbytes, fd->fd->offset);

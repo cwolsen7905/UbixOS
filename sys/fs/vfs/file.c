@@ -391,6 +391,9 @@ fileDescriptor_t *fopen(const char *file, const char *flags) {
     return (NULL);
   }
 
+  /* XXX - Temp */
+  memset(tmpFd, 0x0, sizeof(fileDescriptor_t));
+
   path = file;
 
   if (path[0] == "." && path[1] == '\0')
@@ -520,6 +523,7 @@ int fclose(fileDescriptor_t *fd) {
   spinLock(&fdTable_lock);
 
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
+    kprintf("(tFd: 0x%X, tFdN: 0x%X, fd: 0x%X)", tmpFd, tmpFd->next, fd);
     if (tmpFd == fd) {
       if (tmpFd->prev)
         tmpFd->prev->next = tmpFd->next;
@@ -528,6 +532,8 @@ int fclose(fileDescriptor_t *fd) {
 
       if (tmpFd == fdTable)
         fdTable = tmpFd->next;
+
+      kprintf("(NfdT: 0x%X]", fdTable);
 
       systemVitals->openFiles--;
       spinUnlock(&fdTable_lock);
