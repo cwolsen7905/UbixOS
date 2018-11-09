@@ -281,18 +281,16 @@ int sys_sysctl(struct thread *td, struct sys_sysctl_args *args) {
     endTask(_current->id);
   }
 
+  /* XXX - Handle search by name */
   if (args->namelen == 2 && args->name[0] == 0 && args->name[1] == 3) {
-    #ifdef DEBUG_SYSCTL
-    kprintf("%s:%i>name_to_mib: %s\n", __FILE__,__LINE__,args->newp);
-    #endif
 
-    kprintf("Let's Find The Trie\n");
     tmpTrie = search_trieNode(sysctl_headTrie, args->newp);
-    kprintf("Done Searching: 0x%X\n", tmpTrie);
 
     if (tmpTrie != 0x0) {
       tmpCtl = (struct sysctl_entry *)tmpTrie->e;
-      kprintf("<FT: %s:%i>\n", tmpCtl->name,tmpCtl->namelen);
+
+      //kprintf("<FT: %s:%i>\n", tmpCtl->name,tmpCtl->namelen);
+
       // tmpCtl = sysctl_findMib(args->newp, args->namelen);
       *args->oldlenp = tmpCtl->namelen *4;
       u_int32_t *oldp = args->oldp;
@@ -305,15 +303,16 @@ int sys_sysctl(struct thread *td, struct sys_sysctl_args *args) {
       return(0x0); 
     }
     else {
+
+      #ifdef DEBUG_SYSCTL
+      kprintf("%s:%i>name_to_mib: %s\n", __FILE__,__LINE__,args->newp);
+      #endif
+
       td->td_retval[0] = ENOENT;
       return(-1);
     }
   }
   else {
-    kprintf("TMP: %i\n", args->namelen);
-    for (i = 0x0; i < args->namelen; i++)
-      kprintf("(%i)", (int) args->name[i]);
-    kprintf("ET\n");
     tmpCtl = sysctl_find(args->name, args->namelen);
   }
 
