@@ -353,15 +353,17 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   struct file *nfp1 = 0x0;
   struct file *nfp2 = 0x0;
 
-  fileDescriptor_t *pipeDesc = kmalloc(sizeof(fileDescriptor_t));
+  fileDescriptor_t *pipeDesc1 = kmalloc(sizeof(fileDescriptor_t));
+  fileDescriptor_t *pipeDesc2 = kmalloc(sizeof(fileDescriptor_t));
 
   error = falloc(thr, &nfp1, &fd1);
   error = falloc(thr, &nfp2, &fd2);
 
-  nfp1->fd = pipeDesc;
-  nfp2->fd = pipeDesc;
+  nfp1->fd = pipeDesc1;
+  nfp2->fd = pipeDesc2;
 
-  pipeDesc->buffer = kmalloc(1024);
+  pipeDesc1->buffer = kmalloc(1024);
+  pipeDesc2->buffer = pipeDesc1->buffer;
 
   nfp1->fd_type = 3;
   nfp2->fd_type = 3;
@@ -372,5 +374,6 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   kprintf("P2: %i, fd1: %i:0x%X, fd1t: %i, fd2: %i:0x%X, fd2t: %i\n", args->flags, fd1, nfp1, nfp1->fd_type, fd2, nfp2, nfp2->fd_type);
 
   thr->td_retval[0] = 0;
+
   return (0x0);
 }
