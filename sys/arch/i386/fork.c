@@ -56,6 +56,9 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   /* Set PGRP */
   newProcess->pgrp = _current->pgrp;
 
+  /* Copy File Descriptor Table */
+  memcpy(newProcess->files, _current->files, sizeof(fileDescriptor_t *) * MAX_OFILES);
+
   /* Set Up Task State */
   newProcess->tss.eip = td->frame->tf_eip;
   newProcess->oInfo.vmStart = _current->oInfo.vmStart;
@@ -183,7 +186,7 @@ int fork_copyProcess(struct taskStruct *newProcess, long ebp, long edi, long esi
     sched_yield();
   /* Return Id of Proccess */
   kprintf("Returning! [%i]", _current->id);
-  
+
   return (newProcess->id);
 }
 

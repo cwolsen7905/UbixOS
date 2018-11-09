@@ -26,6 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/_null.h>
 #include <ubixos/kpanic.h>
 #include <lib/kprintf.h>
 #include <isa/8259.h>

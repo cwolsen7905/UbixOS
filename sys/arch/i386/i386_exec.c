@@ -26,6 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/_null.h>
 #include <sys/types.h>
 #include <sys/elf.h>
 #include <sys/gdt.h>
@@ -881,7 +882,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
   struct gdtDescriptor *taskLDT = 0x0;
 
   taskLDT = (struct gdtDescriptor *)(VMM_USER_LDT + sizeof(struct gdtDescriptor));
- 
+
   //data_addr = 0x0; //TEMP
 
   taskLDT->limitLow = (0xFFFFF & 0xFFFF);

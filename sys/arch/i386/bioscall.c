@@ -26,6 +26,7 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <sys/_null.h>
 #include <sys/tss.h>
 #include <ubixos/sched.h>
 #include <vmm/vmm.h>
