@@ -73,7 +73,16 @@ int main() {
   
   size_t j;
 
-  j = name2oid("vm.overcommit", mib);
+
+  char test[4];
+
+  test[0] = 'a';
+  test[1] = 'a';
+  test[2] = 'a';
+  test[3] = 'a';
+
+  j = name2oid(&test, mib);
+ // j = name2oid("vm.overcommit", mib);
   //j = name2oid("hw.pagesizes", mib);
 
   printf("j:[%i]\n", j);

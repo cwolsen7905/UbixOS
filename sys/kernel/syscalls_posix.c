@@ -325,7 +325,7 @@ struct syscall_entry systemCalls_posix[] = {
     0,
     "readlink",
     sys_invalid,
-    SYSCALL_NOTIMPD }, // 58 - readlink
+    SYSCALL_NOTIMP }, // 58 - readlink
   {
     ARG_COUNT(sys_execve_args),
     "execve",
@@ -695,7 +695,7 @@ struct syscall_entry systemCalls_posix[] = {
     0,
     "mkfifo",
     sys_invalid,
-    SYSCALL_NOTMP }, /* 132 - mkfifo */
+    SYSCALL_NOTIMP }, /* 132 - mkfifo */
   {
     ARG_COUNT(sys_sendto_args),
     "sendto",
