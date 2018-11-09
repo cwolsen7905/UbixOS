@@ -42,8 +42,10 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
 
   error = falloc(td, &nfp, &fd);
 
-  if (error)
+  if (error) {
+    td->td_retval[0] = -1;
     return (error);
+  }
 
 
   nfp->fd = fopen(args->path, "rb");
@@ -128,6 +130,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
 #endif
 
   if (fd == 0x0) {
+    kprintf("COULDN'T FIND FD: %i", args->fd);
     td->td_retval[0] = -1;
   }
   else {
@@ -150,11 +153,14 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
       default:
         if (args->fd < 3)
           td->td_retval[0] = 0;
-        else if (!fclose(fd->fd))
-          td->td_retval[0] = -1;
         else {
-          fdestroy(td, fd, args->fd);
-          td->td_retval[0] = 0;
+          if (!fclose(fd->fd))
+            td->td_retval[0] = -1;
+          else {
+            kprintf("DESTROY: %i!!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
+            fdestroy(td, fd, args->fd);
+            td->td_retval[0] = 0;
+          }
         }
     }
   }
@@ -209,7 +215,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 }
         break;
       default:
-        kprintf("[r:0x%X:%i:%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
+        //kprintf("[r:0x%X:%i:%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
         td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
     }
   }
