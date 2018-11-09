@@ -271,6 +271,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
   else {
     getfd(td, &fd, uap->fd);
 
+    kprintf("fd: %i:0x%X, fd_type: %i", uap->fd, fd, fd->fd_type);
+
     switch (fd->fd_type) {
       case 3: /* XXX - Temp Pipe Stuff */
         nbytes = (uap->nbyte - (1024 - fd->fd->offset) < 0) ? uap->nbyte : (1024 - fd->fd->offset);
@@ -354,15 +356,16 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   nfp1->fd = pipeDesc;
   nfp2->fd = pipeDesc;
 
-  pipeDesc->buffer = kmmaloc(1024);
+  pipeDesc->buffer = kmalloc(1024);
 
   nfp1->fd_type = 3;
   nfp2->fd_type = 3;
 
-  kprintf("P2: %i\n", args->flags);
 
   args->fildes[0] = fd1;
   args->fildes[1] = fd2;
+
+  kprintf("P2: %i, fd1: %i:0x%X, fd1t: %i, fd2: %i:0x%X, fd2t: %i\n", args->flags, fd1, nfp1, nfp1->fd_type, fd2, nfp2, nfp2->fd_type);
 
   thr->td_retval[0] = 0;
   return (0x0);
