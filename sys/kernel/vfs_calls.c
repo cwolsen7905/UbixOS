@@ -122,11 +122,17 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
     td->td_retval[0] = -1;
   }
   else {
-    if (!fclose(fd->fd))
-      td->td_retval[0] = -1;
-    else {
-      fdestroy(td, fd, args->fd);
-      td->td_retval[0] = 0;
+    switch (fd->fd_type) {
+      case 3:
+        kprintf("Can't close pipes yet");
+        break;
+      default:
+        if (!fclose(fd->fd))
+          td->td_retval[0] = -1;
+        else {
+          fdestroy(td, fd, args->fd);
+          td->td_retval[0] = 0;
+        }
     }
   }
   return (0);
@@ -290,7 +296,6 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         td->td_retval[0] = uap->nbyte;
     }
 
-
   }
   return (0x0);
 }
@@ -360,7 +365,6 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
 
   nfp1->fd_type = 3;
   nfp2->fd_type = 3;
-
 
   args->fildes[0] = fd1;
   args->fildes[1] = fd2;

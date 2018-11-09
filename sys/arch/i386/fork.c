@@ -57,7 +57,9 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   newProcess->pgrp = _current->pgrp;
 
   /* Copy File Descriptor Table */
-  memcpy(newProcess->files, _current->files, sizeof(fileDescriptor_t *) * MAX_OFILES);
+  //memcpy(newProcess->files, _current->files, sizeof(fileDescriptor_t *) * MAX_OFILES);
+  for (int i = 3; i < 256; i++)
+    newProcess->td->o_files[i] = td->o_files[i];
 
   /* Set Up Task State */
   newProcess->tss.eip = td->frame->tf_eip;
