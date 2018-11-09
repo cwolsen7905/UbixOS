@@ -299,5 +299,5 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   kprintf("Count: %i\n", args->count);
   thr->td_retval[0] = -1;
   thr->td_retval[1] = 2;
-  return (0);
+  return (-1);
 }
