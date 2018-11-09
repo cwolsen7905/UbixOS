@@ -302,7 +302,7 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
 }
 
 int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
-  kprintf("P2: %i\n", args->flags)
-
-  return (0);
+  kprintf("P2: %i\n", args->flags);
+  thr->td_retval[0] = 0;
+  return (-1);
 }
