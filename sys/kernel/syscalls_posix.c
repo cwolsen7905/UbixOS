@@ -2744,8 +2744,8 @@ struct syscall_entry systemCalls_posix[] = {
   {
     0,
     "pipe2",
-    sys_invalid,
-    SYSCALL_NOTIMP }, /* 542 - Invalid */
+        sys_pipe2,
+        SYSCALL_VALID }, /* 542 - Invalid */
   {
     0,
     "aio_mlock",

@@ -300,3 +300,9 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   thr->td_retval[0] = 2;
   return (-1);
 }
+
+int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
+  kprintf("P2: %i\n", args->flags)
+
+  return (0);
+}

@@ -754,6 +754,18 @@ struct sys_readlink_args {
 
 int sys_readlink(struct thread *, struct sys_readlink_args *);
 
+struct sys_pipe2_args {
+    char fildes_l_[PADL_(int *)];
+    int * fildes;
+    char fildes_r_[PADR_(int *)];
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
+};
+
+int sys_pipe2(struct thread *, struct sys_pipe2_args *);
+
+
 
 //Func Defs
 int sys_invalid(struct thread *, void *);
