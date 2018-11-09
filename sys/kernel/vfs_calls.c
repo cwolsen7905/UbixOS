@@ -297,10 +297,10 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   kprintf("Call to readlink\n");
   kprintf("Path: %s\n", args->path);
   kprintf("Count: %i\n", args->count);
-  kprintf("EDX: 0x%X", thr->td_retval[1]);
+  kprintf("EDX: 0x%X:0x%X", thr->td_retval[1], thr->td_retval[1][0]);
 
   //Return ERROr
-  thr->td_retval[0] = 2;
-  thr->td_retval[1] = 3;
+  thr->td_retval[0] = 3;
+  thr->td_retval[1][0] = 2;
   return (-1);
 }
