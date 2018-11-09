@@ -300,5 +300,6 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
 
   //Return ERROr
   thr->td_retval[0] = 2;
+  thr->td_retval[1] = 3;
   return (-1);
 }
