@@ -45,7 +45,6 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
   if (error)
     return (error);
 
-  //kprintf("sO: 0x%X:%s", args->mode, args->path);
 
   nfp->fd = fopen(args->path, "rb");
 
@@ -58,6 +57,8 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
   else {
     td->td_retval[0] = fd;
   }
+
+  kprintf("sO: 0x%X:%s:%i", args->mode, args->path, td->td_retval[0]);
 
   return (error);
 }
@@ -83,15 +84,15 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   else
     nfp->fd = fopen(args->path, "r");
 
+
   if (nfp->fd == 0x0) {
     fdestroy(td, nfp, fd);
 
     td->td_retval[0] = -1;
     error = -1;
+/*
 
-#ifdef DEBUG_OPENAT
     kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
-#endif
 
     if ((args->flag & O_RDONLY) == O_RDONLY)
       kprintf("O_RDONLY");
@@ -104,11 +105,14 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
 
     if ((args->flag & O_ACCMODE) == O_ACCMODE)
       kprintf("O_ACCMODE");
+*/
 
   }
   else {
     td->td_retval[0] = fd;
   }
+
+    kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
 
   return (error);
 }
