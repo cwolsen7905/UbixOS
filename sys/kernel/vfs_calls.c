@@ -302,7 +302,22 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
 }
 
 int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
+  int error = 0x0;
+
+  int fd1 = 0x0;
+  struct file *nfp1 = 0x0;
+
+  int fd2 = 0x0;
+  struct file *nfp2 = 0x0;
+
+  error = falloc(thr, &nfp1, &fd1);
+  error = falloc(thr, &nfp2, &fd2);
+
   kprintf("P2: %i\n", args->flags);
+
+  args->fildes[0] = fd1;
+  args->fildes[1] = fd2;
+
   thr->td_retval[0] = 0;
-  return (-1);
+  return (0x0);
 }
