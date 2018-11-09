@@ -51,7 +51,9 @@ int sys_fwrite(struct thread *td, struct sys_fwrite_args *uap) {
   if (uap->fd == 0x0)
     tty_print((char *) uap->buf, _current->term);
   else {
+    #ifdef DEBUG_VFS
     kprintf("uap->size: %i, FD: [0x%X], BUF: [0x%X][%c]\n", uap->nbytes, uap->fd, uap->buf, t[0]);
+    #endif
     fwrite(uap->buf, uap->nbytes, 1, uap->fd->fd);
   }
 
@@ -523,7 +525,6 @@ int fclose(fileDescriptor_t *fd) {
   spinLock(&fdTable_lock);
 
   for (tmpFd = fdTable; tmpFd != 0x0; tmpFd = tmpFd->next) {
-    kprintf("(tFd: 0x%X, tFdN: 0x%X, fd: 0x%X)", tmpFd, tmpFd->next, fd);
     if (tmpFd == fd) {
       if (tmpFd->prev)
         tmpFd->prev->next = tmpFd->next;
@@ -532,8 +533,6 @@ int fclose(fileDescriptor_t *fd) {
 
       if (tmpFd == fdTable)
         fdTable = tmpFd->next;
-
-      kprintf("(NfdT: 0x%X]", fdTable);
 
       systemVitals->openFiles--;
       spinUnlock(&fdTable_lock);

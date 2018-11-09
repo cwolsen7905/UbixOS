@@ -45,7 +45,7 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
   if (error)
     return (error);
 
-  kprintf("sO: 0x%X:%s", args->mode, args->path);
+  //kprintf("sO: 0x%X:%s", args->mode, args->path);
 
   nfp->fd = fopen(args->path, "rb");
 
@@ -115,6 +115,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
 
 int sys_close(struct thread *td, struct sys_close_args *args) {
   struct file *fd = 0x0;
+  struct pipeInfo *pFD = 0x0;
 
   getfd(td, &fd, args->fd);
 
@@ -128,10 +129,21 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
   else {
     switch (fd->fd_type) {
       case 3:
-        kprintf("Can't close pipes yet");
+        pFD = fd->data;
+        if (args->fd == pFD->rFD) {
+           if (pFD->rfdCNT < 2)
+             fdestroy(td, fd, args->fd);
+           pFD->rfdCNT--;
+        }
+
+        if (args->fd == pFD->wFD) {
+           if (pFD->wfdCNT < 2)
+             fdestroy(td, fd, args->fd);
+           pFD->wfdCNT--;
+        }
+
         break;
       default:
-        kprintf("[CLS: %i:0x%X]", args->fd, fd);
         if (args->fd < 3)
           td->td_retval[0] = 0;
         else if (!fclose(fd->fd))
@@ -158,16 +170,24 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 
   size_t nbytes;
 
+  int rpCNT = 0;
+
   getfd(td, &fd, args->fd);
 
   if (args->fd > 3) {
     switch (fd->fd_type) {
       case 3: /* XXX - Pipe2 Handling */
       pFD = fd->data;
-      while (pFD->bCNT == 0)
+      while (pFD->bCNT == 0 && rpCNT < 100) {
         sched_yield();
+        rpCNT++;
+      }
 
-      nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
+      if (rpCNT >= 100 && pFD->bCNT == 0) {
+        td->td_retval[0] = 0;
+      }
+      else {       
+        nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
       //kprintf("[unb: %i, nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
       //kprintf("PR: [%i]", nbytes);
       memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
@@ -177,11 +197,15 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
         rpFD = pFD->headPB;
         pFD->headPB = pFD->headPB->next;
         kfree(rpFD);
+        pFD->bCNT--;
       }
 
+
         td->td_retval[0] = nbytes;
+}
         break;
       default:
+        kprintf("[r:0x%X:%i:%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
         td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
     }
   }
@@ -313,7 +337,9 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
       pBuf->buffer = kmalloc(uap->nbyte);
 
       //kprintf("[unb: %i, nbs: %i, bf: 0x%X]", uap->nbyte, nbytes, fd->fd->buffer);
-      memcpy(pBuf->buffer, uap->buf, nbytes);
+      memcpy(pBuf->buffer, uap->buf, uap->nbyte);
+
+      pBuf->nbytes = uap->nbyte;
 
       if (pFD->tailPB)
         pFD->tailPB->next = pBuf;
@@ -322,6 +348,8 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
       if (!pFD->headPB)
         pFD->headPB = pBuf;
+
+        pFD->bCNT++;
 
         td->td_retval[0] = nbytes;
       //kprintf("[PW: %i:%i]", nbytes, fd->fd->offset);

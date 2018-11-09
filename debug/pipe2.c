@@ -20,6 +20,27 @@ int main(int argc, char **argv) {
   for (j = 0; j < 2; j++)
     printf("p[%i]: %i\n", j, p[j]);
 
+      write(p[1], "TEST 1", MSGSIZE);
+        printf("r: %i\n", read(p[0], inbuf, MSGSIZE));
+        printf("Parent: %s\n", inbuf);
+      write(p[1], "TEST 2", MSGSIZE);
+        printf("r: %i\n", read(p[0], inbuf, MSGSIZE));
+        printf("Parent: %s\n", inbuf);
+        printf("r: %i\n", read(p[0], inbuf, MSGSIZE));
+        printf("Parent: %s\n", inbuf);
+      write(p[1], "TEST 3", MSGSIZE);
+        read(p[0], inbuf, MSGSIZE);
+        printf("Parent: %s\n", inbuf);
+printf("lseek: %i\n", lseek(p[0], 128, SEEK_SET));
+      write(p[1], "TEST 4", MSGSIZE);
+      write(p[1], "TEST 5", MSGSIZE);
+        read(p[0], inbuf, MSGSIZE);
+        printf("Parent: %s\n", inbuf);
+        read(p[0], inbuf, MSGSIZE);
+        printf("Parent: %s\n", inbuf);
+        printf("r: %i\n", read(p[0], inbuf, MSGSIZE));
+        printf("Parent: %s\n", inbuf);
+/*
   switch (pid = fork()) {
     case 0:
       close(p[0]);
@@ -34,6 +55,7 @@ int main(int argc, char **argv) {
         printf("Parent: %s\n", inbuf);
       }
   }
+*/
 
   return(0);
 }
