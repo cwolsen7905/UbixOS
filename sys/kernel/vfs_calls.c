@@ -299,7 +299,7 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   kprintf("Count: %i\n", args->count);
   kprintf("EDX: 0x%X:0x%X", thr->td_retval[1], thr->td_retval[1][0]);
 
-  //Return ERROr
+  //Return Error
   thr->td_retval[0] = 3;
   thr->td_retval[1][0] = 2;
   return (-1);
