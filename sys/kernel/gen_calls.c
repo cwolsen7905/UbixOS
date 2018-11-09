@@ -205,8 +205,8 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
 
      asm(
      "push %eax\n"
-        "mov $0x18,%eax\n"
-        "lldt %eax\n" /* "lgdtl (loadGDT)\n" */
+        "mov $0x18,%ax\n"
+        "lldt %ax\n" /* "lgdtl (loadGDT)\n" */
      "mov $0xF,%eax\n"
      "mov %eax,%gs\n"
      "pop %eax\n"
