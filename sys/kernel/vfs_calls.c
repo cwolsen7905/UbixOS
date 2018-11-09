@@ -294,13 +294,9 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
 }
 
 int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
-  kprintf("Call to readlink\n");
-  kprintf("Path: %s\n", args->path);
-  kprintf("Count: %i\n", args->count);
-  kprintf("EDX: 0x%X:0x%X", thr->td_retval[1], thr->td_retval[1][0]);
+  kprintf("RL: %s:%i\n", args->path, args->count);
 
   //Return Error
-  thr->td_retval[0] = 3;
-  thr->td_retval[1][0] = 2;
+  thr->td_retval[0] = 2;
   return (-1);
 }
