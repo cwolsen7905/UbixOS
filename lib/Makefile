@@ -1,5 +1,4 @@
-# $Id: Makefile 121 2016-01-14 03:18:20Z reddawg $
-# The System Makefile (C) 2002 The UbixOS Project
+# Makefile (C) 2002 The UbixOS Project
 
 all: csu-code ubix_api-code libc_old-code ubix-code libcpp-code objgfx-code #libc-code# libcpp-code
 # bin tools

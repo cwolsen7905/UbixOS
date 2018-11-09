@@ -1,5 +1,4 @@
-# $Id: Makefile 134 2016-01-15 14:50:24Z reddawg $
-# Kernel Makefile (C) 2002 The UbixOS Project
+# Makefile (C) 2002 The UbixOS Project
 
 include ../Makefile.incl
 include Makefile.incl
@@ -37,8 +36,8 @@ generic-code: generic
 init-code: init
 	(cd init;make)
 
-arch-code: ${_ARCH}
-	(cd ${_ARCH};make)
+arch-code: arch/${_ARCH}
+	(cd arch/${_ARCH};make)
 	
 kernel-code: kernel
 	(cd kernel;make)
@@ -110,7 +109,7 @@ install-kernel:
 
 clean:
 	(cd init;make clean)
-	(cd ${_ARCH};make clean)
+	(cd arch/${_ARCH};make clean)
 	(cd sys;make clean)
 	(cd kernel;make clean)
 	(cd vmm;make clean)
@@ -121,10 +120,10 @@ clean:
 	(cd pci;make clean)
 	(cd net;make clean)
 	(cd compile;make clean)
-	#(cd vfs;make clean)
-	#(cd sde;make clean)
-	#(cd devfs;make clean)
-	#(cd net;make clean)
-	#(cd kmods;make clean)
-	#(cd ufs;make clean)
+	(cd fs/vfs;make clean)
+	(cd sde;make clean)
+	(cd fs/devfs;make clean)
+	(cd net;make clean)
+	(cd kmods;make clean)
+	(cd fs/ufs;make clean)
 	#(cd ../tools/;make clean)
