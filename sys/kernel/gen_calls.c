@@ -203,14 +203,14 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
     tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
     tmpDesc->baseHigh = base_addr >> 24;
 
-     asm(
-     "push %eax\n"
+    asm(
+        "push %eax\n"
         "mov $0x18,%ax\n"
         "lldt %ax\n" /* "lgdtl (loadGDT)\n" */
-     "mov $0xF,%eax\n"
-     "mov %eax,%gs\n"
-     "pop %eax\n"
-     );
+        "mov $0xF,%eax\n"
+        "mov %eax,%gs\n"
+        "pop %eax\n"
+    );
 
     td->td_retval[0] = 0;
   }
@@ -373,17 +373,206 @@ int sys_setlogin(struct thread *thr, struct sys_setlogin_args *args) {
   return (error);
 }
 
-int sys_getrlimit(struct thread *thr, struct sys_getrlimit *args) {
+int sys_getrlimit(struct thread *thr, struct sys_getrlimit_args *args) {
   int error = 0;
 
-  switch(args->resource) {
+  switch (args->which) {
+  case 0:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 1:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 2:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 3:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 4:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 5:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 6:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 7:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 8:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 9:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 10:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 11:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 12:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 13:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  case 14:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    args->rlp->rlim_cur = thr->rlim[args->which]->rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which]->rlim_max;
+    break;
+  default:
+    error = -1;
+    kprintf("[getrlimit: %i]", args->which);
   }
 
-  return(error);
+  return (error);
 }
 
-int sys_setrlimit(struct thread *thr, struct sys_setrlimit *args) {
+int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args) {
   int error = 0;
 
-  return(error);
+  switch (args->which) {
+  case 0:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 1:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 2:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 3:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 4:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 5:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 6:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 7:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 8:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 9:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 10:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 11:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 12:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 13:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  case 14:
+    if (thr->rlim[args->which] == 0)
+      thr->rlim[args->which] = (struct rlimit *) kmalloc(sizeof(struct rlimit));
+    thr->rlim[args->which]->rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which]->rlim_max = args->rlp->rlim_max;
+    break;
+  default:
+    error = -1;
+    kprintf("[setrlimit: %i]", args->which);
+  }
+
+  return (error);
 }

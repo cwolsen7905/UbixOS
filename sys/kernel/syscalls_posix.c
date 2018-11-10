@@ -1002,15 +1002,15 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /* 193 - Invalid */
     {
-        0,
+        ARG_COUNT(sys_getrlimit_args),
         "getrlimit",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 194 - Invalid */
+        sys_getrlimit,
+        SYSCALL_VALID }, /* 194 - Invalid */
     {
-        0,
+        ARG_COUNT(sys_setrlimit_args),
         "setrlimit",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /* 195 - Invalid */
+        sys_setrlimit,
+        SYSCALL_VALID }, /* 195 - Invalid */
     {
         ARG_COUNT(sys_getdirentries_args),
         "getdirentries",

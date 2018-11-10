@@ -785,6 +785,28 @@ struct sys_setlogin_args {
 int sys_setlogin(struct thread *, struct sys_setlogin_args *);
 
 
+struct sys_getrlimit_args {
+    char which_l_[PADL_(u_int)];
+    u_int which;
+    char which_r_[PADR_(u_int)];
+    char rlp_l_[PADL_(struct rlimit *)];
+    struct rlimit * rlp;
+    char rlp_r_[PADR_(struct rlimit *)];
+};
+
+int sys_getrlimit(struct thread *, struct sys_getrlimit_args *);
+
+struct sys_setrlimit_args {
+    char which_l_[PADL_(u_int)];
+    u_int which;
+    char which_r_[PADR_(u_int)];
+    char rlp_l_[PADL_(struct rlimit *)];
+    struct rlimit * rlp;
+    char rlp_r_[PADR_(struct rlimit *)];
+};
+
+int sys_setrlimit(struct thread *, struct sys_setrlimit_args *);
+
 //Func Defs
 int sys_invalid(struct thread *, void *);
 int sys_exit(struct thread *, struct sys_exit_args *);
