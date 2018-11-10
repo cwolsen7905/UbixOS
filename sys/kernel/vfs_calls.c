@@ -60,7 +60,7 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
     td->td_retval[0] = fd;
   }
 
-  //kprintf("sO: 0x%X:%s:%i", args->mode, args->path, td->td_retval[0]);
+  //kprintf("sO: 0x%X:%s:", args->mode, args->path, td->td_retval[0]);
 
   return (error);
 }
@@ -94,7 +94,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     error = -1;
 /*
 
-    kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
+    kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
 
     if ((args->flag & O_RDONLY) == O_RDONLY)
       kprintf("O_RDONLY");
@@ -114,7 +114,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     td->td_retval[0] = fd;
   }
 
-    //kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
+    //kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
 
   return (error);
 }
@@ -126,11 +126,11 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
   getfd(td, &fd, args->fd);
 
 #ifdef DEBUG_VFS_CALLS
-  kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
+  kprintf("[sC::0x%X:0x%X]", args->fd, fd, fd->fd);
 #endif
 
   if (fd == 0x0) {
-    kprintf("COULDN'T FIND FD: %i", args->fd);
+    kprintf("COULDN'T FIND FD: ", args->fd);
     td->td_retval[0] = -1;
   }
   else {
@@ -157,7 +157,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
           if (!fclose(fd->fd))
             td->td_retval[0] = -1;
           else {
-            kprintf("DESTROY: %i!!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
+            kprintf("DESTROY: !!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
             fdestroy(td, fd, args->fd);
             td->td_retval[0] = 0;
           }
@@ -198,8 +198,8 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
       }
       else {       
         nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
-      //kprintf("[unb: %i, nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
-      //kprintf("PR: [%i]", nbytes);
+      //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
+      //kprintf("PR: []", nbytes);
       memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
       pFD->headPB->offset += nbytes;
 
@@ -215,7 +215,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 }
         break;
       default:
-        //kprintf("[r:0x%X:%i:%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
+        //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
         td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
     }
   }
@@ -338,7 +338,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
   else {
     getfd(td, &fd, uap->fd);
 
-    kprintf("[fd: %i:0x%X, fd_type: %i]", uap->fd, fd, fd->fd_type);
+    kprintf("[fd: :0x%X, fd_type: %i]", uap->fd, fd, fd->fd_type);
 
     switch (fd->fd_type) {
       case 3: /* XXX - Temp Pipe Stuff */
@@ -346,7 +346,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
       pBuf = (struct pipeBuf *) kmalloc(sizeof(struct pipeBuf));
       pBuf->buffer = kmalloc(uap->nbyte);
 
-      //kprintf("[unb: %i, nbs: %i, bf: 0x%X]", uap->nbyte, nbytes, fd->fd->buffer);
+      //kprintf("[unb: , nbs: %i, bf: 0x%X]", uap->nbyte, nbytes, fd->fd->buffer);
       memcpy(pBuf->buffer, uap->buf, uap->nbyte);
 
       pBuf->nbytes = uap->nbyte;
@@ -362,13 +362,13 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         pFD->bCNT++;
 
         td->td_retval[0] = nbytes;
-      //kprintf("[PW: %i:%i]", nbytes, fd->fd->offset);
+      //kprintf("[PW: :%i]", nbytes, fd->fd->offset);
         break;
       default:
-        kprintf("[%i]", uap->nbyte);
+        kprintf("[]", uap->nbyte);
         buffer = kmalloc(uap->nbyte);
         memcpy(buffer, uap->buf, uap->nbyte);
-        kprintf("(%i) %s", uap->fd, uap->buf);
+        kprintf("() %s", uap->fd, uap->buf);
         kfree(buffer);
         td->td_retval[0] = uap->nbyte;
     }
@@ -378,13 +378,14 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 }
 
 int sys_access(struct thread *td, struct sys_access_args *args) {
-  kprintf("%s:%i", args->path, args->amode);
+  /* XXX - Need to impliment */
+  //kprintf("SA:%s:", args->path, args->amode);
   td->td_retval[0] = 0;
   return (0);
 }
 
 int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
-  //kprintf("GDE: [%i:%i:0x%X]", args->fd, args->count, args->basep);
+  //kprintf("GDE: [:%i:0x%X]", args->fd, args->count, args->basep);
   struct file *fd = 0x0;
   getfd(td, &fd, args->fd);
 
@@ -414,7 +415,7 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
 }
 
 int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
-  kprintf("RL: %s:%i\n", args->path, args->count);
+  kprintf("RL: %s:\n", args->path, args->count);
 
   //Return Error
   thr->td_retval[0] = 2;

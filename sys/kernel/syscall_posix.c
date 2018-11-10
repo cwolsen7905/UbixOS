@@ -77,7 +77,7 @@ void sys_call_posix(struct trapframe *frame) {
   }
   else if ((int) systemCalls_posix[code].sc_status == SYSCALL_NOTIMP) {
     kprintf("Not Implemented Call: [%i][%s]\n", code, systemCalls_posix[code].sc_name);
-    frame->tf_eax = -1;
+    frame->tf_eax = 22;//-1;
     frame->tf_edx = 0x0;
     frame->tf_eflags |= PSL_C;
   }
@@ -115,6 +115,7 @@ void sys_call_posix(struct trapframe *frame) {
         frame->tf_eax = td->td_retval[0];
         frame->tf_edx = td->td_retval[1];
         frame->tf_eflags |= PSL_C;
+        kprintf("SC[%i][%s][%i][%i]\n", code, systemCalls_posix[code].sc_name, frame->tf_eax, frame->tf_edx);
       break;
     }
   }
