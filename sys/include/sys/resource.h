@@ -29,7 +29,13 @@
 #ifndef _SYS_RESOURCE_H_
 #define _SYS_RESOURCE_H_
 
-#include <sys/types.h>
+#include <sys/_types.h>
+
+#ifndef _RLIM_T_DECLARED
+typedef __rlim_t        rlim_t;
+#define _RLIM_T_DECLARED
+#endif
+
 
 /*
  * Resource limits
