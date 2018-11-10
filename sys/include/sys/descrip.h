@@ -114,6 +114,7 @@ struct file {
     fileDescriptor_t *fd;
     int fd_type;
     int socket;
+    void *data;
 };
 
 struct fileOps {

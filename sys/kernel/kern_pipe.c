@@ -26,30 +26,45 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _SYS_PIPE_H
-#define _SYS_PIPE_H
-
+//#include <ubixos/sched.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
+#include <sys/pipe.h>
+#include <sys/descrip.h>
+#include <sys/video.h>
+#include <string.h>
+//#include <ufs/ufs.h>
 
-int pipe(struct thread *, struct pipe_args *);
+int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
+  int error = 0x0;
 
-struct pipeBuf {
-    struct pipeBuf *next;
-    char *buffer;
-    size_t nbytes;
-    off_t offset;
+  int fd1 = 0x0;
+  int fd2 = 0x0;
 
-};
+  struct file *nfp1 = 0x0;
+  struct file *nfp2 = 0x0;
 
-struct pipeInfo {
-    int rFD;
-    int rfdCNT;
-    int wFD;
-    int wfdCNT;
-    int bCNT;
-    struct pipeBuf *headPB;
-    struct pipeBuf *tailPB;
-};
+  struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
+  memset(pipeDesc, 0x0, sizeof(struct pipeInfo));
 
-#endif /* END _SYS_PIPE_H */
+  error = falloc(thr, &nfp1, &fd1);
+  error = falloc(thr, &nfp2, &fd2);
+
+  nfp1->data = pipeDesc;
+  nfp2->data = pipeDesc;
+
+  nfp1->fd_type = 3;
+  nfp2->fd_type = 3;
+
+  pipeDesc->rFD = fd1;
+  pipeDesc->rfdCNT = 2;
+  pipeDesc->wFD = fd2;
+  pipeDesc->wfdCNT = 2;
+
+  args->fildes[0] = fd1;
+  args->fildes[1] = fd2;
+
+  thr->td_retval[0] = 0;
+
+  return (0x0);
+}

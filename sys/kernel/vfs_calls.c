@@ -31,6 +31,7 @@
 #include <sys/sysproto_posix.h>
 #include <sys/descrip.h>
 #include <sys/video.h>
+#include <sys/pipe.h>
 #include <string.h>
 #include <ufs/ufs.h>
 
@@ -117,7 +118,9 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
 
   getfd(td, &fd, args->fd);
 
+#ifdef DEBUG_VFS_CALLS
   kprintf("[sC:%i:0x%X:0x%X]", args->fd, fd, fd->fd);
+#endif
 
   if (fd == 0x0) {
     td->td_retval[0] = -1;
@@ -150,6 +153,9 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 
   struct file *fd = 0x0;
 
+  struct pipeInfo *pFD = 0x0;
+  struct pipeInfo *rpFD = 0x0;
+
   size_t nbytes;
 
   getfd(td, &fd, args->fd);
@@ -157,11 +163,22 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
   if (args->fd > 3) {
     switch (fd->fd_type) {
       case 3: /* XXX - Pipe2 Handling */
-        nbytes = (args->nbyte - (1024 - fd->fd->offset) < 0) ? args->nbyte : (1024 - fd->fd->offset);
-        kprintf("[unb: %i, nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
-        kprintf("PR: [%i]", nbytes);
-        memcpy(args->buf, fd->fd->buffer + fd->fd->offset, nbytes);
-        fd->fd->offset += nbytes;
+      pFD = fd->data;
+      while (pFD->bCNT == 0)
+        sched_yield();
+
+      nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
+      //kprintf("[unb: %i, nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
+      //kprintf("PR: [%i]", nbytes);
+      memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
+      pFD->headPB->offset += nbytes;
+
+      if (pFD->headPB->offset >= pFD->headPB->nbytes) {
+        rpFD = pFD->headPB;
+        pFD->headPB = pFD->headPB->next;
+        kfree(rpFD);
+      }
+
         td->td_retval[0] = nbytes;
         break;
       default:
@@ -263,6 +280,9 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
   char *buffer = 0x0;
   struct file *fd = 0x0;
 
+  struct pipeInfo *pFD = 0x0;
+  struct pipeBuf *pBuf = 0x0;
+
   size_t nbytes;
 
   if (uap->fd == 2) {
@@ -288,12 +308,23 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
     switch (fd->fd_type) {
       case 3: /* XXX - Temp Pipe Stuff */
-        nbytes = (uap->nbyte - (1024 - fd->fd->offset) < 0) ? uap->nbyte : (1024 - fd->fd->offset);
-        kprintf("[unb: %i, nbs: %i, bf: 0x%X]", uap->nbyte, nbytes, fd->fd->buffer);
-        memcpy(fd->fd->buffer + fd->fd->offset, uap->buf, nbytes);
-        fd->fd->offset += nbytes;
+      pFD = fd->data;
+      pBuf = (struct pipeBuf *) kmalloc(sizeof(struct pipeBuf));
+      pBuf->buffer = kmalloc(uap->nbyte);
+
+      //kprintf("[unb: %i, nbs: %i, bf: 0x%X]", uap->nbyte, nbytes, fd->fd->buffer);
+      memcpy(pBuf->buffer, uap->buf, nbytes);
+
+      if (pFD->tailPB)
+        pFD->tailPB->next = pBuf;
+
+      pFD->tailPB = pBuf;
+
+      if (!pFD->headPB)
+        pFD->headPB = pBuf;
+
         td->td_retval[0] = nbytes;
-        kprintf("[PW: %i:%i]", nbytes, fd->fd->offset);
+      //kprintf("[PW: %i:%i]", nbytes, fd->fd->offset);
         break;
       default:
         kprintf("[%i]", uap->nbyte);
@@ -350,38 +381,4 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   //Return Error
   thr->td_retval[0] = 2;
   return (-1);
-}
-
-int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
-  int error = 0x0;
-
-  int fd1 = 0x0;
-  int fd2 = 0x0;
-
-  struct file *nfp1 = 0x0;
-  struct file *nfp2 = 0x0;
-
-  fileDescriptor_t *pipeDesc1 = kmalloc(sizeof(fileDescriptor_t));
-  fileDescriptor_t *pipeDesc2 = kmalloc(sizeof(fileDescriptor_t));
-
-  error = falloc(thr, &nfp1, &fd1);
-  error = falloc(thr, &nfp2, &fd2);
-
-  nfp1->fd = pipeDesc1;
-  nfp2->fd = pipeDesc2;
-
-  pipeDesc1->buffer = kmalloc(1024);
-  pipeDesc2->buffer = pipeDesc1->buffer;
-
-  nfp1->fd_type = 3;
-  nfp2->fd_type = 3;
-
-  args->fildes[0] = fd1;
-  args->fildes[1] = fd2;
-
-  kprintf("P2: %i, fd1: %i:0x%X, fd1t: %i, fd2: %i:0x%X, fd2t: %i\n", args->flags, fd1, nfp1, nfp1->fd_type, fd2, nfp2, nfp2->fd_type);
-
-  thr->td_retval[0] = 0;
-
-  return (0x0);
 }
