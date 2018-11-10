@@ -170,6 +170,8 @@ kTask_t *schedNewTask() {
   tmpTask->usedMath = 0x0;
   tmpTask->state = NEW;
 
+  memcpy(tmpTask->username, "UbixOS", 6);
+
   /* HACK */
 
   for (i = 0; i < 3; i++) {

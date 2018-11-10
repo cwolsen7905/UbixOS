@@ -765,6 +765,24 @@ struct sys_pipe2_args {
 
 int sys_pipe2(struct thread *, struct sys_pipe2_args *);
 
+struct sys_getlogin_args {
+    char namebuf_l_[PADL_(char *)];
+    char * namebuf;
+    char namebuf_r_[PADR_(char *)];
+    char namelen_l_[PADL_(u_int)];
+    u_int namelen;
+    char namelen_r_[PADR_(u_int)];
+};
+
+int sys_getlogin(struct thread *, struct sys_getlogin_args *);
+
+struct sys_setlogin_args {
+    char namebuf_l_[PADL_(char *)];
+    char * namebuf;
+    char namebuf_r_[PADR_(char *)];
+};
+
+int sys_setlogin(struct thread *, struct sys_setlogin_args *);
 
 
 //Func Defs

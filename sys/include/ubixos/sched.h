@@ -88,6 +88,7 @@ typedef struct taskStruct {
     uint32_t children; // Hack for WAIT
     uint32_t last_exit; // Hack For WAIT
     struct taskStruct *parent;
+    char username[256];
 } kTask_t;
 
 int sched_init();

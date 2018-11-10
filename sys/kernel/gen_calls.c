@@ -356,3 +356,20 @@ int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *args) {
   td->td_retval[0] = 0;
   return (0);
 }
+
+int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args) {
+  int error = 0;
+
+  memcpy(args->namebuf, _current->username, args->namelen);
+
+  return (error);
+}
+
+int sys_setlogin(struct thread *thr, struct sys_setlogin_args *args) {
+  int error = 0;
+
+  memcpy(_current->username, args->namebuf, 256);
+
+  return (error);
+}
+}
