@@ -49,6 +49,7 @@ struct Trie *sysctl_headTrie = 0x0;
 static void def_ctls() {
   int name[CTL_MAXNAME], name_len;
   uint32_t page_val = 0x1000;
+  int32_t usPage_val = 0x0;
   name[0] = 6;
   name[1] = 7;
   name_len = 2;
@@ -129,6 +130,11 @@ static void def_ctls() {
   name[1] = 12;
   page_val = 0;
   sysctl_add(name, name_len, "vm.overcommit", &page_val, sizeof(u_int32_t));
+
+  name[0] = 1;
+  name[1] = 18;
+  usPage_val = 1023;
+  sysctl_add(name, name_len, "kern.ngroups", &page_val, sizeof(int32_t));
 
 }
 

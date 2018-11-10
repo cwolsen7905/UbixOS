@@ -62,19 +62,13 @@ int sys_fork(struct thread *td, struct sys_fork_args *args) {
   for (int i = 3; i < 64; i++)
     if (td->o_files[i]) {
       newProcess->td.o_files[i] = (struct file *)kmalloc(sizeof(struct file));
-kprintf("A1.%i", i);
       memcpy(newProcess->td.o_files[i], td->o_files[i], sizeof(struct file));
-kprintf("A2");
       if (((struct file *)td->o_files[i])->fd) {
       ((struct file *)newProcess->td.o_files[i])->fd = kmalloc(sizeof(fileDescriptor_t));
-kprintf("B1");
       memcpy( ((struct file *)newProcess->td.o_files[i])->fd, ((struct file *)td->o_files[i])->fd, sizeof(fileDescriptor_t));
-kprintf("B2");
       if (((struct file *)td->o_files[i])->fd->buffer) {
         ((struct file *)newProcess->td.o_files[i])->fd->buffer = kmalloc(4096);
-kprintf("C1");
       memcpy(((struct file *)newProcess->td.o_files[i])->fd->buffer, ((struct file *)td->o_files[i])->fd->buffer,  4096);
-kprintf("C2");
       }
       }
     }

@@ -60,7 +60,7 @@ int sys_open(struct thread *td, struct sys_open_args *args) {
     td->td_retval[0] = fd;
   }
 
-  kprintf("sO: 0x%X:%s:%i", args->mode, args->path, td->td_retval[0]);
+  //kprintf("sO: 0x%X:%s:%i", args->mode, args->path, td->td_retval[0]);
 
   return (error);
 }
@@ -114,7 +114,7 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
     td->td_retval[0] = fd;
   }
 
-    kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
+    //kprintf("[sOA: 0x%X:%s:%s:%i]", args->flag, args->mode, args->path, td->td_retval[0]);
 
   return (error);
 }
