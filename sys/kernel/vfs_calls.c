@@ -36,36 +36,13 @@
 #include <ufs/ufs.h>
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
-  int error = 0x0;
-  int fd = 0x0;
-  struct file *nfp = 0x0;
 
-  error = falloc(td, &nfp, &fd);
+  return(kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
 
-  if (error) {
-    td->td_retval[0] = -1;
-    return (error);
-  }
-
-
-  nfp->fd = fopen(args->path, "rb");
-
-  if (nfp->fd == 0x0) {
-    fdestroy(td, nfp, fd);
-
-    td->td_retval[0] = -1;
-    error = -1;
-  }
-  else {
-    td->td_retval[0] = fd;
-  }
-
-  //kprintf("sO: 0x%X:%s:", args->mode, args->path, td->td_retval[0]);
-
-  return (error);
 }
 
 int sys_openat(struct thread *td, struct sys_openat_args *args) {
+
   int error = 0x0;
   int fd = 0x0;
   struct file *nfp = 0x0;
@@ -420,4 +397,53 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   //Return Error
   thr->td_retval[0] = 2;
   return (-1);
+}
+
+int kern_openat(struct thread *thr, int fd, char *path, int flags, int mode) {
+  int error = 0x0;
+  int fd = 0x0;
+  struct file *nfp = 0x0;
+
+  /*
+   * Only one of the O_EXEC, O_RDONLY, O_WRONLY and O_RDWR flags
+   * may be specified.
+   */
+  if (flags & O_EXEC) {
+    if (flags & O_ACCMODE)
+      return (EINVAL);
+  }
+  else if ((flags & O_ACCMODE) == O_ACCMODE) {
+    return (EINVAL);
+  }
+  else {
+    flags = FFLAGS(flags);
+  }
+
+  error = falloc(td, &nfp, &fd);
+
+  if (error) {
+    thr->td_retval[0] = -1;
+    return (error);
+  }
+
+  nfp->f_flag = flags & FMASK;
+
+
+  nfp->fd = fopen(args->path, "rb");
+
+
+  if (nfp->fd == 0x0) {
+    fdestroy(td, nfp, fd);
+
+    td->td_retval[0] = -1;
+    error = -1;
+  }
+  else {
+    td->td_retval[0] = fd;
+  }
+
+  //kprintf("sO: 0x%X:%s:", args->mode, args->path, td->td_retval[0]);
+
+  return (error);
+
 }

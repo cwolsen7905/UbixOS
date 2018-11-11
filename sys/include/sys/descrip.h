@@ -84,10 +84,21 @@ typedef __nlink_t nlink_t;
 #define O_NDELAY        O_NONBLOCK      /* compat */
 #define FPOSIXSHM       O_NOFOLLOW
 
+#define O_DIRECTORY     0x00020000      /* Fail if not directory */
+#define O_EXEC          0x00040000      /* Open for execute only */
+
 #define FCNTLFLAGS      (FAPPEND|FASYNC|FFSYNC|FNONBLOCK|FPOSIXSHM|O_DIRECT)
 
+/*
 #define FFLAGS(oflags)  ((oflags) + 1)
 #define OFLAGS(fflags)  ((fflags) - 1)
+*/
+
+/* convert from open() flags to/from fflags; convert O_RD/WR to FREAD/FWRITE */
+#define FFLAGS(oflags)  ((oflags) & O_EXEC ? (oflags) : (oflags) + 1)
+#define OFLAGS(fflags)  ((fflags) & O_EXEC ? (fflags) : (fflags) - 1)
+
+#define        FMASK   (FREAD|FWRITE|FAPPEND|FASYNC|FFSYNC|FNONBLOCK|O_DIRECT|FEXEC)
 
 struct fileOps;
 struct file;
@@ -179,6 +190,8 @@ int getdtablesize(struct thread *, struct getdtablesize_args *);
 int fstat(struct thread *, struct sys_fstat_args *);
 int ioctl(struct thread *, struct ioctl_args *);
 int getfd(struct thread *td, struct file **fp, int fd);
+
+int_kern_openat(struct thread *,int, char *,int int);
 
 #endif
 
