@@ -26,14 +26,12 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-//#include <ubixos/sched.h>
 #include <sys/thread.h>
 #include <sys/sysproto_posix.h>
 #include <sys/pipe.h>
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <string.h>
-//#include <ufs/ufs.h>
 
 int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   int error = 0x0;
@@ -45,6 +43,7 @@ int sys_pipe2(struct thread *thr, struct sys_pipe2_args *args) {
   struct file *nfp2 = 0x0;
 
   struct pipeInfo *pipeDesc = kmalloc(sizeof(struct pipeInfo));
+
   memset(pipeDesc, 0x0, sizeof(struct pipeInfo));
 
   error = falloc(thr, &nfp1, &fd1);

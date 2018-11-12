@@ -196,7 +196,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
       if (rpCNT >= 100 && pFD->bCNT == 0) {
         td->td_retval[0] = 0;
       }
-      else {       
+      else {
         nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
       //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
       //kprintf("PR: []", nbytes);
@@ -342,11 +342,12 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 
     switch (fd->fd_type) {
       case 3: /* XXX - Temp Pipe Stuff */
+
       pFD = fd->data;
       pBuf = (struct pipeBuf *) kmalloc(sizeof(struct pipeBuf));
       pBuf->buffer = kmalloc(uap->nbyte);
 
-      //kprintf("[unb: , nbs: %i, bf: 0x%X]", uap->nbyte, nbytes, fd->fd->buffer);
+
       memcpy(pBuf->buffer, uap->buf, uap->nbyte);
 
       pBuf->nbytes = uap->nbyte;
@@ -362,7 +363,7 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
         pFD->bCNT++;
 
         td->td_retval[0] = nbytes;
-      //kprintf("[PW: :%i]", nbytes, fd->fd->offset);
+
         break;
       default:
         kprintf("[]", uap->nbyte);
@@ -378,15 +379,18 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 }
 
 int sys_access(struct thread *td, struct sys_access_args *args) {
-  /* XXX - Need to impliment */
-  //kprintf("SA:%s:", args->path, args->amode);
+  /* XXX - This is a temporary as it always returns true */
+
+
   td->td_retval[0] = 0;
   return (0);
 }
 
 int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
-  //kprintf("GDE: [:%i:0x%X]", args->fd, args->count, args->basep);
+
+
   struct file *fd = 0x0;
+
   getfd(td, &fd, args->fd);
 
   char buf[DEV_BSIZE];
@@ -394,27 +398,15 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
   char *s;
   ssize_t n;
 
-  //fd->offset = 0;
-  td->td_retval[0] = fread(args->buf, args->count, 1, fd->fd);
-  //n = fsread(fd->fd->ino, args->buf, DEV_BSIZE, fd->fd);
-  //td->td_retval[0] = n;
 
-  /*
-   while ((n = fsread(*ino, buf, DEV_BSIZE, fd)) > 0)
-   for (s = buf; s < buf + DEV_BSIZE;) {
-   d = (void *) s;
-   if (!strcmp(name, d->d_name)) {
-   *ino = d->d_fileno;
-   return d->d_type;
-   }
-   s += d->d_reclen;
-   }
-   */
+  td->td_retval[0] = fread(args->buf, args->count, 1, fd->fd);
 
   return (0);
 }
 
 int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
+  /* XXX - Need to implement readlink */
+
   kprintf("RL: %s:\n", args->path, args->count);
 
   //Return Error
