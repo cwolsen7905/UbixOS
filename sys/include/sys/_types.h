@@ -29,6 +29,7 @@
 #ifndef _SYS__TYPES_H_
 #define _SYS__TYPES_H_
 
+
 typedef char __int8_t;
 typedef unsigned char __uint8_t;
 typedef short __int16_t;
@@ -37,6 +38,10 @@ typedef int __int32_t;
 typedef unsigned int __uint32_t;
 typedef long long __int64_t;
 typedef unsigned long long __uint64_t;
+
+typedef __int64_t       __rlim_t;       /* resource limit - intentionally */
+                                        /* signed, because of legacy code */
+                                        /* that uses -1 for RLIM_INFINITY */
 
 typedef unsigned long __clock_t;
 typedef __uint32_t            __ino_t; typedef __int32_t             __ssize_t;/* stat types */
