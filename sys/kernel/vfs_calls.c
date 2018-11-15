@@ -418,10 +418,13 @@ int kern_openat(struct thread *thr, int fd, char *path, int flags, int mode) {
     return (error);
   }
 
+  if (flags | O_CREAT)
+    kprintf("O_CREAT\n");
+
   nfp->f_flag = flags & FMASK;
 
 
-  nfp->fd = fopen(args->path, "rb");
+  nfp->fd = fopen(args->path, "rwb");
 
 
   if (nfp->fd == 0x0) {
