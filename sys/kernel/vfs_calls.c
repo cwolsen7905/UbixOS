@@ -392,7 +392,7 @@ int sys_readlink(struct thread *thr, struct sys_readlink_args *args) {
   return (-1);
 }
 
-int kern_openat(struct thread *thr, int fd, char *path, int flags, int mode) {
+int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
   int error = 0x0;
   int fd = 0x0;
   struct file *nfp = 0x0;

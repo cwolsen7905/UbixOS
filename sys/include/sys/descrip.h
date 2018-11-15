@@ -35,6 +35,8 @@
 #include <vfs/file.h>
 #include <vfs/stat.h>
 
+#include <sys/fcntl.h>
+
 /* Limits */
 #define MAX_FILES 256
 
@@ -191,7 +193,7 @@ int fstat(struct thread *, struct sys_fstat_args *);
 int ioctl(struct thread *, struct ioctl_args *);
 int getfd(struct thread *td, struct file **fp, int fd);
 
-int_kern_openat(struct thread *,int, char *,int int);
+int_kern_openat(struct thread *, int, char *, int);
 
 #endif
 
