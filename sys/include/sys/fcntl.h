@@ -31,4 +31,12 @@
 
 #define AT_FDCWD                -100
 
+#define O_DIRECTORY     0x00020000      /* Fail if not directory */
+#define O_EXEC          0x00040000      /* Open for execute only */
+
+#define FEXEC           O_EXEC
+
+/* bits to save after open */
+#define FMASK   (FREAD|FWRITE|FAPPEND|FASYNC|FFSYNC|FNONBLOCK|O_DIRECT|FEXEC)
+
 #endif /* !_SYS_FCNTL_H_ */
