@@ -33,12 +33,13 @@
 #include <sys/video.h>
 #include <sys/pipe.h>
 #include <sys/fcntl.h>
+#include <sys/errno.h>
 #include <string.h>
 #include <ufs/ufs.h>
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
 
-  return(kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
+  return (kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
 
 }
 
@@ -64,35 +65,34 @@ int sys_openat(struct thread *td, struct sys_openat_args *args) {
   else
     nfp->fd = fopen(args->path, "r");
 
-
   if (nfp->fd == 0x0) {
     fdestroy(td, nfp, fd);
 
     td->td_retval[0] = -1;
     error = -1;
-/*
+    /*
 
-    kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
+     kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
 
-    if ((args->flag & O_RDONLY) == O_RDONLY)
-      kprintf("O_RDONLY");
+     if ((args->flag & O_RDONLY) == O_RDONLY)
+     kprintf("O_RDONLY");
 
-    if ((args->flag & O_WRONLY) == O_WRONLY)
-      kprintf("O_WRONLY");
+     if ((args->flag & O_WRONLY) == O_WRONLY)
+     kprintf("O_WRONLY");
 
-    if ((args->flag & O_RDWR) == O_RDWR)
-      kprintf("O_RDWR");
+     if ((args->flag & O_RDWR) == O_RDWR)
+     kprintf("O_RDWR");
 
-    if ((args->flag & O_ACCMODE) == O_ACCMODE)
-      kprintf("O_ACCMODE");
-*/
+     if ((args->flag & O_ACCMODE) == O_ACCMODE)
+     kprintf("O_ACCMODE");
+     */
 
   }
   else {
     td->td_retval[0] = fd;
   }
 
-    //kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
+  //kprintf("[sOA: 0x%X:%s:%s:]", args->flag, args->mode, args->path, td->td_retval[0]);
 
   return (error);
 }
@@ -113,33 +113,33 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
   }
   else {
     switch (fd->fd_type) {
-      case 3:
-        pFD = fd->data;
-        if (args->fd == pFD->rFD) {
-           if (pFD->rfdCNT < 2)
-             fdestroy(td, fd, args->fd);
-           pFD->rfdCNT--;
-        }
+    case 3:
+      pFD = fd->data;
+      if (args->fd == pFD->rFD) {
+        if (pFD->rfdCNT < 2)
+          fdestroy(td, fd, args->fd);
+        pFD->rfdCNT--;
+      }
 
-        if (args->fd == pFD->wFD) {
-           if (pFD->wfdCNT < 2)
-             fdestroy(td, fd, args->fd);
-           pFD->wfdCNT--;
-        }
+      if (args->fd == pFD->wFD) {
+        if (pFD->wfdCNT < 2)
+          fdestroy(td, fd, args->fd);
+        pFD->wfdCNT--;
+      }
 
-        break;
-      default:
-        if (args->fd < 3)
-          td->td_retval[0] = 0;
+      break;
+    default:
+      if (args->fd < 3)
+        td->td_retval[0] = 0;
+      else {
+        if (!fclose(fd->fd))
+          td->td_retval[0] = -1;
         else {
-          if (!fclose(fd->fd))
-            td->td_retval[0] = -1;
-          else {
-            kprintf("DESTROY: !!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
-            fdestroy(td, fd, args->fd);
-            td->td_retval[0] = 0;
-          }
+          kprintf("DESTROY: !!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
+          fdestroy(td, fd, args->fd);
+          td->td_retval[0] = 0;
         }
+      }
     }
   }
   return (0);
@@ -164,7 +164,7 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 
   if (args->fd > 3) {
     switch (fd->fd_type) {
-      case 3: /* XXX - Pipe2 Handling */
+    case 3: /* XXX - Pipe2 Handling */
       pFD = fd->data;
       while (pFD->bCNT == 0 && rpCNT < 100) {
         sched_yield();
@@ -176,25 +176,24 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
       }
       else {
         nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
-      //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
-      //kprintf("PR: []", nbytes);
-      memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
-      pFD->headPB->offset += nbytes;
+        //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
+        //kprintf("PR: []", nbytes);
+        memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
+        pFD->headPB->offset += nbytes;
 
-      if (pFD->headPB->offset >= pFD->headPB->nbytes) {
-        rpFD = pFD->headPB;
-        pFD->headPB = pFD->headPB->next;
-        kfree(rpFD);
-        pFD->bCNT--;
-      }
-
+        if (pFD->headPB->offset >= pFD->headPB->nbytes) {
+          rpFD = pFD->headPB;
+          pFD->headPB = pFD->headPB->next;
+          kfree(rpFD);
+          pFD->bCNT--;
+        }
 
         td->td_retval[0] = nbytes;
-}
-        break;
-      default:
-        //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
-        td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
+      }
+      break;
+    default:
+      //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
+      td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
     }
   }
   else {
@@ -319,12 +318,11 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     kprintf("[fd: :0x%X, fd_type: %i]", uap->fd, fd, fd->fd_type);
 
     switch (fd->fd_type) {
-      case 3: /* XXX - Temp Pipe Stuff */
+    case 3: /* XXX - Temp Pipe Stuff */
 
       pFD = fd->data;
       pBuf = (struct pipeBuf *) kmalloc(sizeof(struct pipeBuf));
       pBuf->buffer = kmalloc(uap->nbyte);
-
 
       memcpy(pBuf->buffer, uap->buf, uap->nbyte);
 
@@ -338,18 +336,18 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
       if (!pFD->headPB)
         pFD->headPB = pBuf;
 
-        pFD->bCNT++;
+      pFD->bCNT++;
 
-        td->td_retval[0] = nbytes;
+      td->td_retval[0] = nbytes;
 
-        break;
-      default:
-        kprintf("[]", uap->nbyte);
-        buffer = kmalloc(uap->nbyte);
-        memcpy(buffer, uap->buf, uap->nbyte);
-        kprintf("() %s", uap->fd, uap->buf);
-        kfree(buffer);
-        td->td_retval[0] = uap->nbyte;
+      break;
+    default:
+      kprintf("[]", uap->nbyte);
+      buffer = kmalloc(uap->nbyte);
+      memcpy(buffer, uap->buf, uap->nbyte);
+      kprintf("() %s", uap->fd, uap->buf);
+      kfree(buffer);
+      td->td_retval[0] = uap->nbyte;
     }
 
   }
@@ -359,13 +357,11 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
 int sys_access(struct thread *td, struct sys_access_args *args) {
   /* XXX - This is a temporary as it always returns true */
 
-
   td->td_retval[0] = 0;
   return (0);
 }
 
 int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
-
 
   struct file *fd = 0x0;
 
@@ -375,7 +371,6 @@ int sys_getdirentries(struct thread *td, struct sys_getdirentries_args *args) {
   struct dirent *d;
   char *s;
   ssize_t n;
-
 
   td->td_retval[0] = fread(args->buf, args->count, 1, fd->fd);
 
@@ -412,7 +407,7 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
     flags = FFLAGS(flags);
   }
 
-  error = falloc(td, &nfp, &fd);
+  error = falloc(thr, &nfp, &fd);
 
   if (error) {
     thr->td_retval[0] = -1;
@@ -424,18 +419,17 @@ int kern_openat(struct thread *thr, int afd, char *path, int flags, int mode) {
 
   nfp->f_flag = flags & FMASK;
 
-
-  nfp->fd = fopen(args->path, "rwb");
-
+  nfp->fd = fopen(path, "rwb");
 
   if (nfp->fd == 0x0) {
-    fdestroy(td, nfp, fd);
+    fdestroy(thr, nfp, fd);
 
-    td->td_retval[0] = -1;
+    thr->td_retval[0] = -1;
+
     error = -1;
   }
   else {
-    td->td_retval[0] = fd;
+    thr->td_retval[0] = fd;
   }
 
   //kprintf("sO: 0x%X:%s:", args->mode, args->path, td->td_retval[0]);
