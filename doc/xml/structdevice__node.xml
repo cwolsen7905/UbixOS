@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdevice__node" kind="struct" prot="public">
+    <compoundname>device_node</compoundname>
+    <includes refid="device_8h" local="no">device.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" prot="public" static="no" mutable="no">
+        <type><ref refid="structdevice__interface" kindref="compound">device_interface</ref> *</type>
+        <definition>struct device_interface* device_node::devInfo</definition>
+        <argsstring></argsstring>
+        <name>devInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="devfs_8c_1acec49d86336bd84c9feb9dea354381c" compoundref="devfs_8c" startline="71" endline="107">devfs_open</referencedby>
+        <referencedby refid="devfs_8c_1c6b73190c80703169760a556abafab22" compoundref="devfs_8c" startline="114" endline="151">devfs_read</referencedby>
+        <referencedby refid="devfs_8c_1ee16012227e22291c72d6f74258bb8a9" compoundref="devfs_8c" startline="160" endline="175">devfs_write</referencedby>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
+        <referencedby refid="ufs_8c_127a0276d7cf729f1a89bd46dac8a9650" compoundref="ufs_8c" startline="51" endline="54">dskread</referencedby>
+        <referencedby refid="fdc_8c_162847307f237f6b4240d1eb4718b13e7" compoundref="fdc_8c" startline="58" endline="61">fdcInit2</referencedby>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="ubixfs_8c_10ab17f87a44bc7bb7ee3c76262f80e94" compoundref="ubixfs_8c" startline="46" endline="116">openFileUbixFS</referencedby>
+        <referencedby refid="block_8c_199dfa2e54401fafb70357a6632c4ef10" compoundref="block_8c" startline="74" endline="77">syncBat</referencedby>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
+        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <referencedby refid="ubixfs_8c_1dfbafb62e063e24f4df09029862ba9d0" compoundref="ubixfs_8c" startline="309" endline="326">ubixFSUnlink</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__node_1d445e096509dce85b184a2a3d4f9a52f" prot="public" static="no" mutable="no">
+        <type><ref refid="structdevice__resource" kindref="compound">device_resource</ref> *</type>
+        <definition>struct device_resource* device_node::devRec</definition>
+        <argsstring></argsstring>
+        <name>devRec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int device_node::minor</definition>
+        <argsstring></argsstring>
+        <name>minor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" prot="public" static="no" mutable="no">
+        <type><ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
+        <definition>struct device_node* device_node::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+        <referencedby refid="device_8c_10002a4ec01ee11597c6751602f3e4c3d" compoundref="device_8c" startline="86" endline="100">device_find</referencedby>
+        <referencedby refid="device_8c_1b6cc746d95021f087eb5aef767050e71" compoundref="device_8c" startline="110" endline="145">device_remove</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__node_17ec9182b21c0911760a148ac77a7e2a2" prot="public" static="no" mutable="no">
+        <type><ref refid="structdevice__node" kindref="compound">device_node</ref> *</type>
+        <definition>struct device_node* device_node::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__node_1431c348cd0c27dceca9b3cd14ec6659d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char device_node::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="device_8c_124bac04b529afec40daa960bd7e7b8ee" compoundref="device_8c" startline="51" endline="73">device_add</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="413">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="412">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="413" relation="usage">
+          <edgelabel>devRec</edgelabel>
+        </childnode>
+        <childnode refid="414" relation="usage">
+          <edgelabel>devInfo</edgelabel>
+        </childnode>
+        <childnode refid="412" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="414">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/device.h" bodystart="35" bodyend="42"/>
+    <listofallmembers>
+      <member refid="structdevice__node_1588d09d5dabf1c8866d359aaac799b1c" prot="public" virt="non-virtual"><scope>device_node</scope><name>devInfo</name></member>
+      <member refid="structdevice__node_1d445e096509dce85b184a2a3d4f9a52f" prot="public" virt="non-virtual"><scope>device_node</scope><name>devRec</name></member>
+      <member refid="structdevice__node_13817327901b55e2ca15b2e4dfa20789f" prot="public" virt="non-virtual"><scope>device_node</scope><name>minor</name></member>
+      <member refid="structdevice__node_1747f88b0cd43b7b710d8fb86ea50fbaf" prot="public" virt="non-virtual"><scope>device_node</scope><name>next</name></member>
+      <member refid="structdevice__node_17ec9182b21c0911760a148ac77a7e2a2" prot="public" virt="non-virtual"><scope>device_node</scope><name>prev</name></member>
+      <member refid="structdevice__node_1431c348cd0c27dceca9b3cd14ec6659d" prot="public" virt="non-virtual"><scope>device_node</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

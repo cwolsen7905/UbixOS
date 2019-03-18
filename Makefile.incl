@@ -1,0 +1,19 @@
+# The System Makefile (C) 2002, 2017 The UbixOS Project
+# Global 'Source' Options
+
+# allow you to change your default compiler without affecting your other work
+#MrOlsen (2016-01-10) NOTE: I pass all this now
+#CFLAGS = -m32 
+#CC = cc
+#CXX = c++
+#LD = ld
+#AR = ar
+
+#Glogal Override And Defs
+_ARCH?=${MACHINE_ARCH}
+
+_ARCH=i386
+
+REMOVE = rm -rf
+
+FD_DEVICE = /dev/md0

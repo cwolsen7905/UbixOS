@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structelfDynSym" kind="struct" prot="public">
+    <compoundname>elfDynSym</compoundname>
+    <includes refid="elf_8h" local="no">elf.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structelfDynSym_1fe497b33dec9e19727d2fbd567a220fd" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfDynSym::dynInfo</definition>
+        <argsstring></argsstring>
+        <name>dynInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="147" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="147" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfDynSym_117fc1d5609c012ee49bc1f3d600eec8a" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfDynSym::dynName</definition>
+        <argsstring></argsstring>
+        <name>dynName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfDynSym_1b2687fa4d97621e5511c4afe6f58881d" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfDynSym::dynSize</definition>
+        <argsstring></argsstring>
+        <name>dynSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="146" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="146" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfDynSym_1406fd05272c66180875f97e99d2e988c" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfDynSym::dynValue</definition>
+        <argsstring></argsstring>
+        <name>dynValue</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="145" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="145" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="143" bodyend="148"/>
+    <listofallmembers>
+      <member refid="structelfDynSym_1fe497b33dec9e19727d2fbd567a220fd" prot="public" virt="non-virtual"><scope>elfDynSym</scope><name>dynInfo</name></member>
+      <member refid="structelfDynSym_117fc1d5609c012ee49bc1f3d600eec8a" prot="public" virt="non-virtual"><scope>elfDynSym</scope><name>dynName</name></member>
+      <member refid="structelfDynSym_1b2687fa4d97621e5511c4afe6f58881d" prot="public" virt="non-virtual"><scope>elfDynSym</scope><name>dynSize</name></member>
+      <member refid="structelfDynSym_1406fd05272c66180875f97e99d2e988c" prot="public" virt="non-virtual"><scope>elfDynSym</scope><name>dynValue</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structfstat__args" kind="struct" prot="public">
+    <compoundname>fstat_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfstat__args_11bebabe9301b24f1546f59fa60962a07" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fstat_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="151" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="151" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfstat__args_11b08f21c548c12ec57667bf54bcf7b50" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fstat_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="151" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfstat__args_191268beb78c26e9ab954671c622d57ba" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fstat_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="151" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="151" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfstat__args_168d8bd4f5caa652e218234d4375f6c13" prot="public" static="no" mutable="no">
+        <type><ref refid="structstat" kindref="compound">stat</ref> *</type>
+        <definition>struct stat* fstat_args::sb</definition>
+        <argsstring></argsstring>
+        <name>sb</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="152" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_17c76b4ddffdfc9064786782334a40291" compoundref="kern__descrip_8c" startline="112" endline="124">fstat</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfstat__args_1dc21fef9118e4721788eaccdcd9cf479" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fstat_args::sb_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>sb_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfstat__args_1102abf70e94e5bda9502b449c11dd33b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fstat_args::sb_r_[(sizeof(register_t)&lt;=sizeof(struct stat *)?0:sizeof(register_t)-sizeof(struct stat *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(struct stat *)?0:sizeof(register_t)-sizeof(struct stat *))]</argsstring>
+        <name>sb_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="492">
+        <label>fstat_args</label>
+        <link refid="structfstat__args"/>
+        <childnode refid="493" relation="usage">
+          <edgelabel>sb</edgelabel>
+        </childnode>
+      </node>
+      <node id="493">
+        <label>stat</label>
+        <link refid="structstat"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="150" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="150" bodyend="153"/>
+    <listofallmembers>
+      <member refid="structfstat__args_11bebabe9301b24f1546f59fa60962a07" prot="public" virt="non-virtual"><scope>fstat_args</scope><name>fd</name></member>
+      <member refid="structfstat__args_11b08f21c548c12ec57667bf54bcf7b50" prot="public" virt="non-virtual"><scope>fstat_args</scope><name>fd_l_</name></member>
+      <member refid="structfstat__args_191268beb78c26e9ab954671c622d57ba" prot="public" virt="non-virtual"><scope>fstat_args</scope><name>fd_r_</name></member>
+      <member refid="structfstat__args_168d8bd4f5caa652e218234d4375f6c13" prot="public" virt="non-virtual"><scope>fstat_args</scope><name>sb</name></member>
+      <member refid="structfstat__args_1dc21fef9118e4721788eaccdcd9cf479" prot="public" virt="non-virtual"><scope>fstat_args</scope><name>sb_l_</name></member>
+      <member refid="structfstat__args_1102abf70e94e5bda9502b449c11dd33b" prot="public" virt="non-virtual"><scope>fstat_args</scope><name>sb_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

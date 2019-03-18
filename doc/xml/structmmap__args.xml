@@ -1,0 +1,317 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structmmap__args" kind="struct" prot="public">
+    <compoundname>mmap_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmmap__args_113ec5b173a8fe6428cf3bf0a5f2d4fc2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1947150611d74d1400ef3f0af0776aadd" kindref="member">caddr_t</ref></type>
+        <definition>caddr_t mmap_args::addr</definition>
+        <argsstring></argsstring>
+        <name>addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="113" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="113" bodyend="-1"/>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1c455450f8117d242cf1a879587100dac" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::addr_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>addr_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="113" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_10cf888e64b413045db4005aa66aa84a4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::addr_r_[(sizeof(register_t)&lt;=sizeof(caddr_t)?0:sizeof(register_t)-sizeof(caddr_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(caddr_t)?0:sizeof(register_t)-sizeof(caddr_t))]</argsstring>
+        <name>addr_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="113" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="113" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1abfe32d5934305c27dd528bba990ae12" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int mmap_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="117" bodyend="-1"/>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_133bb79bfee9d496848f44b01aa318e36" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1d7125eedcf948a1dcb3bbc9ee6f59364" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_104b82aa69d28fc03e57632b7d524758d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int mmap_args::flags</definition>
+        <argsstring></argsstring>
+        <name>flags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="116" bodyend="-1"/>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1f451a487a2f18f708c777260760121b8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::flags_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>flags_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1a8c15c317c7877b7586507cbdeb40cb9" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::flags_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>flags_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_10b1dab766559d59a733fede0d3767c14" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t mmap_args::len</definition>
+        <argsstring></argsstring>
+        <name>len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="114" bodyend="-1"/>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_162304d5de202543f756dc40534efc5b8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::len_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>len_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1e2bfe987d0762a33a0398cb030a2fe7e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::len_r_[(sizeof(register_t)&lt;=sizeof(size_t)?0:sizeof(register_t)-sizeof(size_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t)?0:sizeof(register_t)-sizeof(size_t))]</argsstring>
+        <name>len_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_15ad4ee0f25f92b5a4da5a86ba40ee1e2" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int mmap_args::pad</definition>
+        <argsstring></argsstring>
+        <name>pad</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="118" bodyend="-1"/>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1e09614c8295232d667f79b5026f44ef6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::pad_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>pad_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_14eff2b82e74b82abbebd4f45ed1c287e" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::pad_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>pad_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_17cc0a114bae15892a406fa7196229e37" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t mmap_args::pos</definition>
+        <argsstring></argsstring>
+        <name>pos</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="119" bodyend="-1"/>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_12c3a767c42f60d59a146e81340066ce1" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::pos_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>pos_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_13739c833f8452e5dd610ccefe974dac4" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::pos_r_[(sizeof(register_t)&lt;=sizeof(off_t)?0:sizeof(register_t)-sizeof(off_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(off_t)?0:sizeof(register_t)-sizeof(off_t))]</argsstring>
+        <name>pos_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_1d6c74b2bf9e921cb4da0cbd508b2e21d" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int mmap_args::prot</definition>
+        <argsstring></argsstring>
+        <name>prot</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="115" bodyend="-1"/>
+        <referencedby refid="paging_8c_1b3070a217a42db69cd94b6217f0b361a" compoundref="paging_8c" startline="453" endline="476">mmap</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_10d6fc2e8fbdc54bca991f6f16c80acf6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::prot_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>prot_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmmap__args_190e0cf9986dd84c327f987a36058aade" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mmap_args::prot_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>prot_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="112" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="112" bodyend="120"/>
+    <listofallmembers>
+      <member refid="structmmap__args_113ec5b173a8fe6428cf3bf0a5f2d4fc2" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>addr</name></member>
+      <member refid="structmmap__args_1c455450f8117d242cf1a879587100dac" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>addr_l_</name></member>
+      <member refid="structmmap__args_10cf888e64b413045db4005aa66aa84a4" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>addr_r_</name></member>
+      <member refid="structmmap__args_1abfe32d5934305c27dd528bba990ae12" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>fd</name></member>
+      <member refid="structmmap__args_133bb79bfee9d496848f44b01aa318e36" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>fd_l_</name></member>
+      <member refid="structmmap__args_1d7125eedcf948a1dcb3bbc9ee6f59364" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>fd_r_</name></member>
+      <member refid="structmmap__args_104b82aa69d28fc03e57632b7d524758d" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>flags</name></member>
+      <member refid="structmmap__args_1f451a487a2f18f708c777260760121b8" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>flags_l_</name></member>
+      <member refid="structmmap__args_1a8c15c317c7877b7586507cbdeb40cb9" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>flags_r_</name></member>
+      <member refid="structmmap__args_10b1dab766559d59a733fede0d3767c14" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>len</name></member>
+      <member refid="structmmap__args_162304d5de202543f756dc40534efc5b8" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>len_l_</name></member>
+      <member refid="structmmap__args_1e2bfe987d0762a33a0398cb030a2fe7e" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>len_r_</name></member>
+      <member refid="structmmap__args_15ad4ee0f25f92b5a4da5a86ba40ee1e2" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>pad</name></member>
+      <member refid="structmmap__args_1e09614c8295232d667f79b5026f44ef6" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>pad_l_</name></member>
+      <member refid="structmmap__args_14eff2b82e74b82abbebd4f45ed1c287e" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>pad_r_</name></member>
+      <member refid="structmmap__args_17cc0a114bae15892a406fa7196229e37" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>pos</name></member>
+      <member refid="structmmap__args_12c3a767c42f60d59a146e81340066ce1" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>pos_l_</name></member>
+      <member refid="structmmap__args_13739c833f8452e5dd610ccefe974dac4" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>pos_r_</name></member>
+      <member refid="structmmap__args_1d6c74b2bf9e921cb4da0cbd508b2e21d" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>prot</name></member>
+      <member refid="structmmap__args_10d6fc2e8fbdc54bca991f6f16c80acf6" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>prot_l_</name></member>
+      <member refid="structmmap__args_190e0cf9986dd84c327f987a36058aade" prot="public" virt="non-virtual"><scope>mmap_args</scope><name>prot_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

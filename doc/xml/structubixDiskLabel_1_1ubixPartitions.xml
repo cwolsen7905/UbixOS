@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structubixDiskLabel_1_1ubixPartitions" kind="struct" prot="public">
+    <compoundname>ubixDiskLabel::ubixPartitions</compoundname>
+    <includes refid="ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structubixDiskLabel_1_1ubixPartitions_16a02392928bd127ff780dd656dc88203" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ubixDiskLabel::ubixPartitions::pBatSize</definition>
+        <argsstring></argsstring>
+        <name>pBatSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="80" bodyend="-1"/>
+        <referencedby refid="ubixfs_8c_132762e2563015d124909f3317c2a7423" compoundref="ubixfs_8c" startline="376" endline="442">ubixfs_initialize</referencedby>
+        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structubixDiskLabel_1_1ubixPartitions_1075ed7afefb5a3523a090971e3d3c3d9" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 ubixDiskLabel::ubixPartitions::pFrag</definition>
+        <argsstring></argsstring>
+        <name>pFrag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structubixDiskLabel_1_1ubixPartitions_13caf99d21233870afbcfe3062e249c8d" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ubixDiskLabel::ubixPartitions::pFsSize</definition>
+        <argsstring></argsstring>
+        <name>pFsSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structubixDiskLabel_1_1ubixPartitions_189ee9b3f4b6564feda17f3b6b9297135" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 ubixDiskLabel::ubixPartitions::pFsType</definition>
+        <argsstring></argsstring>
+        <name>pFsType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structubixDiskLabel_1_1ubixPartitions_1a4f5df0b0d915aae3fe2f53449395065" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ubixDiskLabel::ubixPartitions::pOffset</definition>
+        <argsstring></argsstring>
+        <name>pOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structubixDiskLabel_1_1ubixPartitions_16bad338fb9fa2f078c2e5d29024face4" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ubixDiskLabel::ubixPartitions::pSize</definition>
+        <argsstring></argsstring>
+        <name>pSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="76" bodyend="83"/>
+    <listofallmembers>
+      <member refid="structubixDiskLabel_1_1ubixPartitions_16a02392928bd127ff780dd656dc88203" prot="public" virt="non-virtual"><scope>ubixDiskLabel::ubixPartitions</scope><name>pBatSize</name></member>
+      <member refid="structubixDiskLabel_1_1ubixPartitions_1075ed7afefb5a3523a090971e3d3c3d9" prot="public" virt="non-virtual"><scope>ubixDiskLabel::ubixPartitions</scope><name>pFrag</name></member>
+      <member refid="structubixDiskLabel_1_1ubixPartitions_13caf99d21233870afbcfe3062e249c8d" prot="public" virt="non-virtual"><scope>ubixDiskLabel::ubixPartitions</scope><name>pFsSize</name></member>
+      <member refid="structubixDiskLabel_1_1ubixPartitions_189ee9b3f4b6564feda17f3b6b9297135" prot="public" virt="non-virtual"><scope>ubixDiskLabel::ubixPartitions</scope><name>pFsType</name></member>
+      <member refid="structubixDiskLabel_1_1ubixPartitions_1a4f5df0b0d915aae3fe2f53449395065" prot="public" virt="non-virtual"><scope>ubixDiskLabel::ubixPartitions</scope><name>pOffset</name></member>
+      <member refid="structubixDiskLabel_1_1ubixPartitions_16bad338fb9fa2f078c2e5d29024face4" prot="public" virt="non-virtual"><scope>ubixDiskLabel::ubixPartitions</scope><name>pSize</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

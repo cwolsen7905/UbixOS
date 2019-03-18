@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_cbd3b6f8ac372a007cdc756f615c76fe" kind="dir">
+    <compoundname>src/sys/ufs/</compoundname>
+    <innerfile refid="ffs_8c">ffs.c</innerfile>
+    <innerfile refid="ufs_8c">ufs.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ufs/"/>
+  </compounddef>
+</doxygen>

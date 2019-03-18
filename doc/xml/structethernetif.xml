@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structethernetif" kind="struct" prot="public">
+    <compoundname>ethernetif</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" prot="public" static="no" mutable="no">
+        <type><ref refid="structeth__addr" kindref="compound">eth_addr</ref> *</type>
+        <definition>struct eth_addr* ethernetif::ethaddr</definition>
+        <argsstring></argsstring>
+        <name>ethaddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="68" bodyend="-1"/>
+        <referencedby refid="ethernetif_8c_1687c1030eeb3939b9aa8e1a0811c301a" compoundref="ethernetif_8c" startline="275" endline="306">ethernetif_input</referencedby>
+        <referencedby refid="ethernetif_8c_1eb49a49ab62789d8e32fddf180d52ebf" compoundref="ethernetif_8c" startline="186" endline="263">ethernetif_output</referencedby>
+        <referencedby refid="ethernetif_8c_115915c49a70d85ff1c6af793cda34419" compoundref="ethernetif_8c" startline="81" endline="101">low_level_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="133">
+        <label>eth_addr</label>
+        <link refid="structeth__addr"/>
+      </node>
+      <node id="132">
+        <label>ethernetif</label>
+        <link refid="structethernetif"/>
+        <childnode refid="133" relation="usage">
+          <edgelabel>ethaddr</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/ethernetif.c" bodystart="67" bodyend="70"/>
+    <listofallmembers>
+      <member refid="structethernetif_18f3049366ffe182fd1d4e0e2ce4542d7" prot="public" virt="non-virtual"><scope>ethernetif</scope><name>ethaddr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

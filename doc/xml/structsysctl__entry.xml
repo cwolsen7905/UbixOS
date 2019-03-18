@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structsysctl__entry" kind="struct" prot="public">
+    <compoundname>sysctl_entry</compoundname>
+    <includes refid="kern__sysctl_8h" local="no">kern_sysctl.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" prot="public" static="no" mutable="no">
+        <type><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref> *</type>
+        <definition>struct sysctl_entry* sysctl_entry::children</definition>
+        <argsstring></argsstring>
+        <name>children</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="60" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+        <referencedby refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" compoundref="kern__sysctl_8c" startline="184" endline="203">sysctl_find</referencedby>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sysctl_entry::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="62" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+        <referencedby refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" compoundref="kern__sysctl_8c" startline="184" endline="203">sysctl_find</referencedby>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sysctl_entry::name[32]</definition>
+        <argsstring>[32]</argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" prot="public" static="no" mutable="no">
+        <type><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref> *</type>
+        <definition>struct sysctl_entry* sysctl_entry::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="59" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+        <referencedby refid="kern__sysctl_8c_1918bcbc96b27123dd871e3fa530f2d01" compoundref="kern__sysctl_8c" startline="184" endline="203">sysctl_find</referencedby>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" prot="public" static="no" mutable="no">
+        <type><ref refid="structsysctl__entry" kindref="compound">sysctl_entry</ref> *</type>
+        <definition>struct sysctl_entry* sysctl_entry::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+        <referencedby refid="kern__sysctl_8c_16d1146ba67c212252bb9699a7dc77cbf" compoundref="kern__sysctl_8c" startline="65" endline="151">sysctl_init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sysctl_entry::val_len</definition>
+        <argsstring></argsstring>
+        <name>val_len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="64" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* sysctl_entry::value</definition>
+        <argsstring></argsstring>
+        <name>value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="63" bodyend="-1"/>
+        <referencedby refid="kern__sysctl_8c_139f7224161f94ec8b8324bd4b51ea7a4" compoundref="kern__sysctl_8c" startline="153" endline="182">__sysctl</referencedby>
+        <referencedby refid="kern__sysctl_8c_12a55d33778f8774747841f23f4ff9f1f" compoundref="kern__sysctl_8c" startline="205" endline="248">sysctl_add</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="593">
+        <label>sysctl_entry</label>
+        <link refid="structsysctl__entry"/>
+        <childnode refid="593" relation="usage">
+          <edgelabel>prev
+next
+children</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/kern_sysctl.h" bodystart="57" bodyend="65"/>
+    <listofallmembers>
+      <member refid="structsysctl__entry_1239c611e035660fc8f16883c74cdffdc" prot="public" virt="non-virtual"><scope>sysctl_entry</scope><name>children</name></member>
+      <member refid="structsysctl__entry_1a59204308c5d65c292b5e76280dc4e2c" prot="public" virt="non-virtual"><scope>sysctl_entry</scope><name>id</name></member>
+      <member refid="structsysctl__entry_10209092e0d9a6dc9da8c5e072c30e9c8" prot="public" virt="non-virtual"><scope>sysctl_entry</scope><name>name</name></member>
+      <member refid="structsysctl__entry_17fe5c9ce75d56acee42c432e3e00321f" prot="public" virt="non-virtual"><scope>sysctl_entry</scope><name>next</name></member>
+      <member refid="structsysctl__entry_10e2e6c2769d6f630bcb94a51af41d132" prot="public" virt="non-virtual"><scope>sysctl_entry</scope><name>prev</name></member>
+      <member refid="structsysctl__entry_1bd8a485d90fa0bb76070a23e37c2a6aa" prot="public" virt="non-virtual"><scope>sysctl_entry</scope><name>val_len</name></member>
+      <member refid="structsysctl__entry_1ffd915637490eb2ec4674c4a13894a1a" prot="public" virt="non-virtual"><scope>sysctl_entry</scope><name>value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structsys__thread" kind="struct" prot="public">
+    <compoundname>sys_thread</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsys__thread_130bbf3f21718b4c9579777d2ba4d6528" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__thread" kindref="compound">sys_thread</ref> *</type>
+        <definition>struct sys_thread* sys_thread::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="122" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1c216bafdd6453f68ef27dc764b134e94" compoundref="sys__arch_8c" startline="135" endline="153">current_thread</referencedby>
+        <referencedby refid="sys__arch_8c_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__thread_1bf0a0f75b1958421416c879d8011413b" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__timeouts" kindref="compound">sys_timeouts</ref></type>
+        <definition>struct sys_timeouts sys_thread::timeouts</definition>
+        <argsstring></argsstring>
+        <name>timeouts</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="123" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_12ffdebd63f7a80c0233aa7460a816dff" compoundref="sys__arch_8c" startline="409" endline="413">sys_arch_timeouts</referencedby>
+        <referencedby refid="sys__arch_8c_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structsys__thread_1109a6dc4db2e0d62aa546ce36f3fbc1b" prot="public" static="no" mutable="no">
+        <type><ref refid="structtaskStruct" kindref="compound">kTask_t</ref> *</type>
+        <definition>kTask_t* sys_thread::ubthread</definition>
+        <argsstring></argsstring>
+        <name>ubthread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="124" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="124" bodyend="-1"/>
+        <referencedby refid="sys__arch_8c_1c216bafdd6453f68ef27dc764b134e94" compoundref="sys__arch_8c" startline="135" endline="153">current_thread</referencedby>
+        <referencedby refid="sys__arch_8c_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="337">
+        <label>i387Struct</label>
+        <link refid="structi387Struct"/>
+      </node>
+      <node id="351">
+        <label>tssStruct</label>
+        <link refid="structtssStruct"/>
+      </node>
+      <node id="339">
+        <label>tty_termNode</label>
+        <link refid="structtty__termNode"/>
+      </node>
+      <node id="347">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="346">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="347" relation="usage">
+          <edgelabel>devRec</edgelabel>
+        </childnode>
+        <childnode refid="348" relation="usage">
+          <edgelabel>devInfo</edgelabel>
+        </childnode>
+        <childnode refid="346" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="350">
+        <label>osInfo</label>
+        <link refid="structosInfo"/>
+      </node>
+      <node id="341">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="341" relation="usage">
+          <edgelabel>prev
+next
+parent
+fileListTail
+fileListHead</edgelabel>
+        </childnode>
+      </node>
+      <node id="344">
+        <label>ubixDiskLabel</label>
+        <link refid="structubixDiskLabel"/>
+        <childnode refid="345" relation="usage">
+          <edgelabel>partitions</edgelabel>
+        </childnode>
+      </node>
+      <node id="345">
+        <label>ubixDiskLabel::ubixPartitions</label>
+        <link refid="structubixDiskLabel_1_1ubixPartitions"/>
+      </node>
+      <node id="340">
+        <label>fileDescriptorStruct</label>
+        <link refid="structfileDescriptorStruct"/>
+        <childnode refid="341" relation="usage">
+          <edgelabel>cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="342" relation="usage">
+          <edgelabel>dmadat</edgelabel>
+        </childnode>
+        <childnode refid="343" relation="usage">
+          <edgelabel>mp</edgelabel>
+        </childnode>
+        <childnode refid="340" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="335">
+        <label>sys_thread</label>
+        <link refid="structsys__thread"/>
+        <childnode refid="335" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+        <childnode refid="336" relation="usage">
+          <edgelabel>ubthread</edgelabel>
+        </childnode>
+        <childnode refid="352" relation="usage">
+          <edgelabel>timeouts</edgelabel>
+        </childnode>
+      </node>
+      <node id="343">
+        <label>vfs_mountPoint</label>
+        <link refid="structvfs__mountPoint"/>
+        <childnode refid="344" relation="usage">
+          <edgelabel>diskLabel</edgelabel>
+        </childnode>
+        <childnode refid="346" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+        <childnode refid="349" relation="usage">
+          <edgelabel>fs</edgelabel>
+        </childnode>
+        <childnode refid="343" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="336">
+        <label>taskStruct</label>
+        <link refid="structtaskStruct"/>
+        <childnode refid="336" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+        <childnode refid="337" relation="usage">
+          <edgelabel>i387</edgelabel>
+        </childnode>
+        <childnode refid="338" relation="usage">
+          <edgelabel>td</edgelabel>
+        </childnode>
+        <childnode refid="339" relation="usage">
+          <edgelabel>term</edgelabel>
+        </childnode>
+        <childnode refid="340" relation="usage">
+          <edgelabel>imageFd</edgelabel>
+        </childnode>
+        <childnode refid="350" relation="usage">
+          <edgelabel>oInfo</edgelabel>
+        </childnode>
+        <childnode refid="351" relation="usage">
+          <edgelabel>tss</edgelabel>
+        </childnode>
+      </node>
+      <node id="348">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+      <node id="352">
+        <label>sys_timeouts</label>
+        <link refid="structsys__timeouts"/>
+        <childnode refid="353" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="342">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+      <node id="338">
+        <label>thread</label>
+        <link refid="structthread"/>
+      </node>
+      <node id="349">
+        <label>fileSystem</label>
+        <link refid="structfileSystem"/>
+        <childnode refid="349" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="353">
+        <label>sys_timeout</label>
+        <link refid="structsys__timeout"/>
+        <childnode refid="353" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" line="121" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/sys_arch.c" bodystart="121" bodyend="125"/>
+    <listofallmembers>
+      <member refid="structsys__thread_130bbf3f21718b4c9579777d2ba4d6528" prot="public" virt="non-virtual"><scope>sys_thread</scope><name>next</name></member>
+      <member refid="structsys__thread_1bf0a0f75b1958421416c879d8011413b" prot="public" virt="non-virtual"><scope>sys_thread</scope><name>timeouts</name></member>
+      <member refid="structsys__thread_1109a6dc4db2e0d62aa546ce36f3fbc1b" prot="public" virt="non-virtual"><scope>sys_thread</scope><name>ubthread</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

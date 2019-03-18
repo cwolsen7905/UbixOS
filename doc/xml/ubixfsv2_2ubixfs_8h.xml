@@ -1,0 +1,525 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="ubixfsv2_2ubixfs_8h" kind="file">
+    <compoundname>ubixfs.h</compoundname>
+    <includes local="no">sys/types.h</includes>
+    <includes local="no">unistd.h</includes>
+    <includes refid="fsAbstract_8h" local="yes">fsAbstract.h</includes>
+    <includes refid="ubixfsv2_2types_8h" local="yes">types.h</includes>
+    <includes refid="ubixfsv2_2file_8h" local="yes">file.h</includes>
+    <includedby refid="btree_8h" local="yes">src/sys/ubixfsv2/btree.h</includedby>
+    <includedby refid="ubixfsv2_2file_8h" local="yes">src/sys/ubixfsv2/file.h</includedby>
+    <includedby refid="btree_8cpp" local="yes">src/sys/ubixfsv2/btree.cpp</includedby>
+    <includedby refid="main_8cpp" local="yes">src/sys/ubixfsv2/main.cpp</includedby>
+    <includedby refid="ubixfs_8cpp" local="yes">src/sys/ubixfsv2/ubixfs.cpp</includedby>
+    <incdepgraph>
+      <node id="2039">
+        <label>src/sys/ubixfsv2/ubixfs.h</label>
+        <link refid="ubixfsv2/ubixfs.h"/>
+        <childnode refid="2040" relation="include">
+        </childnode>
+        <childnode refid="2041" relation="include">
+        </childnode>
+        <childnode refid="2042" relation="include">
+        </childnode>
+        <childnode refid="2046" relation="include">
+        </childnode>
+        <childnode refid="2047" relation="include">
+        </childnode>
+      </node>
+      <node id="2047">
+        <label>file.h</label>
+        <link refid="ubixfsv2_2file_8h"/>
+        <childnode refid="2039" relation="include">
+        </childnode>
+      </node>
+      <node id="2040">
+        <label>sys/types.h</label>
+      </node>
+      <node id="2042">
+        <label>fsAbstract.h</label>
+        <link refid="fsAbstract_8h"/>
+        <childnode refid="2043" relation="include">
+        </childnode>
+        <childnode refid="2044" relation="include">
+        </childnode>
+        <childnode refid="2040" relation="include">
+        </childnode>
+        <childnode refid="2045" relation="include">
+        </childnode>
+        <childnode refid="2047" relation="include">
+        </childnode>
+      </node>
+      <node id="2046">
+        <label>types.h</label>
+        <link refid="ubixfsv2_2types_8h"/>
+      </node>
+      <node id="2041">
+        <label>unistd.h</label>
+      </node>
+      <node id="2045">
+        <label>device.h</label>
+        <link refid="ubixfsv2_2device_8h"/>
+        <childnode refid="2040" relation="include">
+        </childnode>
+        <childnode refid="2046" relation="include">
+        </childnode>
+      </node>
+      <node id="2043">
+        <label>stdio.h</label>
+      </node>
+      <node id="2044">
+        <label>dirent.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="2052">
+        <label>src/sys/ubixfsv2/ubixfs.cpp</label>
+        <link refid="ubixfs_8cpp"/>
+      </node>
+      <node id="2049">
+        <label>src/sys/ubixfsv2/btree.h</label>
+        <link refid="btree_8h"/>
+        <childnode refid="2050" relation="include">
+        </childnode>
+        <childnode refid="2051" relation="include">
+        </childnode>
+        <childnode refid="2052" relation="include">
+        </childnode>
+      </node>
+      <node id="2048">
+        <label>src/sys/ubixfsv2/ubixfs.h</label>
+        <link refid="ubixfsv2/ubixfs.h"/>
+        <childnode refid="2049" relation="include">
+        </childnode>
+        <childnode refid="2053" relation="include">
+        </childnode>
+        <childnode refid="2050" relation="include">
+        </childnode>
+        <childnode refid="2051" relation="include">
+        </childnode>
+        <childnode refid="2052" relation="include">
+        </childnode>
+      </node>
+      <node id="2051">
+        <label>src/sys/ubixfsv2/main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="2053">
+        <label>src/sys/ubixfsv2/file.h</label>
+        <link refid="ubixfsv2_2file_8h"/>
+        <childnode refid="2054" relation="include">
+        </childnode>
+        <childnode refid="2048" relation="include">
+        </childnode>
+        <childnode refid="2049" relation="include">
+        </childnode>
+      </node>
+      <node id="2054">
+        <label>src/sys/ubixfsv2/fsAbstract.h</label>
+        <link refid="fsAbstract_8h"/>
+        <childnode refid="2048" relation="include">
+        </childnode>
+      </node>
+      <node id="2050">
+        <label>src/sys/ubixfsv2/btree.cpp</label>
+        <link refid="btree_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structblockRun" prot="public">blockRun</innerclass>
+    <innerclass refid="structdataStream" prot="public">dataStream</innerclass>
+    <innerclass refid="structdiskSuperBlock" prot="public">diskSuperBlock</innerclass>
+    <innerclass refid="classUbixFS" prot="public">UbixFS</innerclass>
+    <innerclass refid="structubixfsInode" prot="public">ubixfsInode</innerclass>
+    <innerclass refid="unionuPtr" prot="public">uPtr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_19f38cf12d4e70d9cef5393706fc8d3db" prot="public" static="no">
+        <name>ATTR_INODE</name>
+        <initializer>0x00000004</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="12" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1db9f76c64298fc8ef7eb7d8e8f66a036" prot="public" static="no">
+        <name>INODE_DELETED</name>
+        <initializer>0x00000010</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="14" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_103a6b271b2413595574aab2babfa1460" prot="public" static="no">
+        <name>INODE_DIRECTORY</name>
+        <initializer>0x00000002</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="11" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="11" bodyend="-1"/>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+        <referencedby refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" compoundref="ubixfs_8cpp" startline="891" endline="963">UbixFS::vfs_mkdir</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1d504541f19f75cb3df8050f13c0ef1ba" prot="public" static="no">
+        <name>INODE_IN_USE</name>
+        <initializer>0x00000001</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="10" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_124bf61f15edcdcd2e09f5e8413aa5120" prot="public" static="no">
+        <name>INODE_LOGGED</name>
+        <initializer>0x00000008</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="13" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1bc203925d6c1417aa1b88db455cd4266" prot="public" static="no">
+        <name>INODE_NO_CACHE</name>
+        <initializer>0x00010000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="16" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1d046759b859f12cf816647774e2878bf" prot="public" static="no">
+        <name>INODE_WAS_WRITTEN</name>
+        <initializer>0x00020000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="17" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_16773b93f3093658c3dcb569de3b4bdb2" prot="public" static="no">
+        <name>MAX_FILENAME_LENGTH</name>
+        <initializer>256</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="21" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="21" bodyend="-1"/>
+        <referencedby refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" compoundref="ubixfs_8cpp" startline="835" endline="888">UbixFS::mknod</referencedby>
+        <referencedby refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" compoundref="ubixfs_8cpp" startline="891" endline="963">UbixFS::vfs_mkdir</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1b7d75b046ffe6c6a2ac1b332bcd9b604" prot="public" static="no">
+        <name>NO_TRANSACTION</name>
+        <initializer>0x00040000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="18" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_130ca66da1223315f426910bd6de581f7" prot="public" static="no">
+        <name>NUM_DIRECT_BLOCKS</name>
+        <initializer>64</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="20" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="20" bodyend="-1"/>
+        <referencedby refid="classUbixFS_10fce9a3abd07c65fa9af38e51517310a" compoundref="ubixfs_8cpp" startline="321" endline="384">UbixFS::vfs_read</referencedby>
+        <referencedby refid="classUbixFS_1551d3daae6a65555a220de05eb619930" compoundref="ubixfs_8cpp" startline="387" endline="554">UbixFS::vfs_write</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_12dedee6fb1ebd29eeed03298db0c2417" prot="public" static="no">
+        <name>PERMANENT_FLAGS</name>
+        <initializer>0x0000ffff</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="15" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_149a8f9142d94b4472956c6d8f446d2ce" prot="public" static="no">
+        <name>UBIXFS_CLEAN</name>
+        <initializer>0x434C454E</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="33" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="33" bodyend="-1"/>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">UbixFS::vfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1a3791ef7af12c1d85019ecab02d612aa" prot="public" static="no">
+        <name>UBIXFS_DIRTY</name>
+        <initializer>0x44495254</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1c88e98d44093495af57d4a956b095b9d" prot="public" static="no">
+        <name>UBIXFS_INODE_MAGIC</name>
+        <initializer>0x3bbe0ad9</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="26" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="26" bodyend="-1"/>
+        <referencedby refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" compoundref="ubixfs_8cpp" startline="835" endline="888">UbixFS::mknod</referencedby>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_1b5c389bfe61bb5707916f2ac6d4d0c6a" prot="public" static="no">
+        <name>UBIXFS_MAGIC1</name>
+        <initializer>0xA0A0A0A</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="23" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="23" bodyend="-1"/>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">UbixFS::vfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_15dd83bc90fdb21a43a412d90b99f5704" prot="public" static="no">
+        <name>UBIXFS_MAGIC2</name>
+        <initializer>0xB0B0B0B</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="24" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="24" bodyend="-1"/>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">UbixFS::vfs_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ubixfsv2_2ubixfs_8h_17bc7bdfbc69287525c62286f77443b97" prot="public" static="no">
+        <name>UBIXFS_MAGIC3</name>
+        <initializer>0xC0C0C0C</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="25" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="25" bodyend="-1"/>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+        <referencedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" compoundref="ubixfs_8cpp" startline="50" endline="115">UbixFS::vfs_init</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="ubixfsv2_2ubixfs_8h_10f995f68f298607dc024babd47b99c98" prot="public" static="no">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref></type>
+        <definition>typedef struct blockRun  inodeAddr</definition>
+        <argsstring></argsstring>
+        <name>inodeAddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="41"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>UBIXFS_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UBIXFS_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;sys/types.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;unistd.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="fsAbstract_8h" kindref="compound">fsAbstract.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2types_8h" kindref="compound">types.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2file_8h" kindref="compound">file.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="ubixfsv2_2ubixfs_8h_1d504541f19f75cb3df8050f13c0ef1ba" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>INODE_IN_USE<sp/><sp/><sp/><sp/><sp/><sp/>0x00000001</highlight></codeline>
+<codeline lineno="11" refid="ubixfsv2_2ubixfs_8h_103a6b271b2413595574aab2babfa1460" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INODE_DIRECTORY<sp/><sp/><sp/>0x00000002</highlight></codeline>
+<codeline lineno="12" refid="ubixfsv2_2ubixfs_8h_19f38cf12d4e70d9cef5393706fc8d3db" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ATTR_INODE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00000004</highlight></codeline>
+<codeline lineno="13" refid="ubixfsv2_2ubixfs_8h_124bf61f15edcdcd2e09f5e8413aa5120" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INODE_LOGGED<sp/><sp/><sp/><sp/><sp/><sp/>0x00000008</highlight></codeline>
+<codeline lineno="14" refid="ubixfsv2_2ubixfs_8h_1db9f76c64298fc8ef7eb7d8e8f66a036" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INODE_DELETED<sp/><sp/><sp/><sp/><sp/>0x00000010</highlight></codeline>
+<codeline lineno="15" refid="ubixfsv2_2ubixfs_8h_12dedee6fb1ebd29eeed03298db0c2417" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PERMANENT_FLAGS<sp/><sp/><sp/>0x0000ffff</highlight></codeline>
+<codeline lineno="16" refid="ubixfsv2_2ubixfs_8h_1bc203925d6c1417aa1b88db455cd4266" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INODE_NO_CACHE<sp/><sp/><sp/><sp/>0x00010000</highlight></codeline>
+<codeline lineno="17" refid="ubixfsv2_2ubixfs_8h_1d046759b859f12cf816647774e2878bf" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>INODE_WAS_WRITTEN<sp/>0x00020000</highlight></codeline>
+<codeline lineno="18" refid="ubixfsv2_2ubixfs_8h_1b7d75b046ffe6c6a2ac1b332bcd9b604" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NO_TRANSACTION<sp/><sp/><sp/><sp/>0x00040000</highlight></codeline>
+<codeline lineno="19"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="ubixfsv2_2ubixfs_8h_130ca66da1223315f426910bd6de581f7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NUM_DIRECT_BLOCKS<sp/>64</highlight></codeline>
+<codeline lineno="21" refid="ubixfsv2_2ubixfs_8h_16773b93f3093658c3dcb569de3b4bdb2" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MAX_FILENAME_LENGTH<sp/>256</highlight></codeline>
+<codeline lineno="22"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23" refid="ubixfsv2_2ubixfs_8h_1b5c389bfe61bb5707916f2ac6d4d0c6a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UBIXFS_MAGIC1<sp/>0xA0A0A0A</highlight></codeline>
+<codeline lineno="24" refid="ubixfsv2_2ubixfs_8h_15dd83bc90fdb21a43a412d90b99f5704" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UBIXFS_MAGIC2<sp/>0xB0B0B0B</highlight></codeline>
+<codeline lineno="25" refid="ubixfsv2_2ubixfs_8h_17bc7bdfbc69287525c62286f77443b97" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UBIXFS_MAGIC3<sp/>0xC0C0C0C</highlight></codeline>
+<codeline lineno="26" refid="ubixfsv2_2ubixfs_8h_1c88e98d44093495af57d4a956b095b9d" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UBIXFS_INODE_MAGIC<sp/>0x3bbe0ad9</highlight></codeline>
+<codeline lineno="27"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>befs<sp/>magic<sp/>numbers</highlight></codeline>
+<codeline lineno="29"><highlight class="comment">#define<sp/>SUPER_BLOCK_MAGIC1<sp/>0x42465331<sp/>//<sp/>BFS1</highlight></codeline>
+<codeline lineno="30"><highlight class="comment">#define<sp/>SUPER_BLOCK_MAGIC2<sp/>0xdd121031</highlight></codeline>
+<codeline lineno="31"><highlight class="comment">#define<sp/>SUPER_BLOCK_MAGIC3<sp/>0x15b6830e</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="ubixfsv2_2ubixfs_8h_149a8f9142d94b4472956c6d8f446d2ce" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>UBIXFS_CLEAN<sp/>0x434C454E<sp/><sp/>//<sp/>CLEN</highlight></codeline>
+<codeline lineno="34" refid="ubixfsv2_2ubixfs_8h_1a3791ef7af12c1d85019ecab02d612aa" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UBIXFS_DIRTY<sp/>0x44495254<sp/><sp/>//<sp/>DIRT</highlight></codeline>
+<codeline lineno="35"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="structblockRun" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/>{</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>AG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structblockRun_117e8c5dc57b73a15cfa0259378b75e3d" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>start<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structblockRun_117e8c5dc57b73a15cfa0259378b75e3d" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>len<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structblockRun_117e8c5dc57b73a15cfa0259378b75e3d" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="41"><highlight class="normal">}<sp/><ref refid="structblockRun" kindref="compound">inodeAddr</ref>;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbNode" kindref="compound">bNode</ref>;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classbTree" kindref="compound">bTree</ref>;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="unionuPtr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/>{</highlight></codeline>
+<codeline lineno="48" refid="unionuPtr_1e47ada455978ad34d9323072ffe4411f" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">inodeAddr</ref><sp/><ref refid="unionuPtr_1e47ada455978ad34d9323072ffe4411f" kindref="member">iAddr</ref>;</highlight></codeline>
+<codeline lineno="49" refid="unionuPtr_1bb67f31e5a2f1b7348a84598f44bdfd9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structbNode" kindref="compound">bNode</ref><sp/>*<sp/><ref refid="unionuPtr_1bb67f31e5a2f1b7348a84598f44bdfd9" kindref="member">bPtr</ref>;</highlight></codeline>
+<codeline lineno="50" refid="unionuPtr_16b68f0ebac5ca4d3c3091984a59ec1e0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="classbTree" kindref="compound">bTree</ref><sp/>*<sp/><ref refid="unionuPtr_16b68f0ebac5ca4d3c3091984a59ec1e0" kindref="member">btPtr</ref>;</highlight></codeline>
+<codeline lineno="51" refid="unionuPtr_12c665149ed0616c55277166034ea6214" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>*<sp/><ref refid="unionuPtr_12c665149ed0616c55277166034ea6214" kindref="member">iPtr</ref>;</highlight></codeline>
+<codeline lineno="52" refid="unionuPtr_1950c9eb8913c9960c8e8937d8210a384" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><ref refid="unionuPtr_1950c9eb8913c9960c8e8937d8210a384" kindref="member">vPtr</ref>;</highlight></codeline>
+<codeline lineno="53" refid="unionuPtr_1fdf63e00719727b4957c0a7eefec6799" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><ref refid="unionuPtr_1fdf63e00719727b4957c0a7eefec6799" kindref="member">offset</ref>;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="structdiskSuperBlock" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdiskSuperBlock" kindref="compound">diskSuperBlock</ref><sp/>{</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[32]<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/>magic1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/>fsByteOrder<sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">//<sp/>blockSize<sp/>on<sp/>disk<sp/>(4096<sp/>for<sp/>UbixFS<sp/>v2)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/><ref refid="include_2ubixfs_2ubixfs_8h_1d4eebb29e7c75230c032b1e6f71e061d" kindref="member">blockSize</ref><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="comment">//<sp/>number<sp/>of<sp/>bits<sp/>needed<sp/>to<sp/>shift<sp/>a<sp/>block<sp/>number<sp/>to<sp/>get<sp/>a<sp/>byte<sp/>address</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/>blockShift<sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/>numBlocks<sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/>usedBlocks<sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="comment">//<sp/>BlockAllocationTable</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>batSectors<sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>inodeCount<sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>inodeSize<sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>magic2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>blocksPerAG<sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>AGShift<sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>numAGs<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/>lastUsedAG<sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight><highlight class="comment">//<sp/>flags<sp/>tells<sp/>whether<sp/>the<sp/>FS<sp/>is<sp/>clean<sp/>(0x434C454E)<sp/>or<sp/>dirty<sp/>(0x44495954)</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/>flags<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight><highlight class="comment">//<sp/>journal<sp/>information</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/><sp/>logBlocks<sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/>logStart<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/>logEnd<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/>magic3<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="comment">//<sp/>root<sp/>dir<sp/>of<sp/>the<sp/>SYS<sp/>container</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">inodeAddr</ref><sp/>rootDir<sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="comment">//<sp/>indicies</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">inodeAddr</ref><sp/>indicies<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>pad[368]<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal">}<sp/><ref refid="structdiskSuperBlock" kindref="compound">diskSuperBlock</ref>;</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"></highlight></codeline>
+<codeline lineno="100" refid="structdataStream" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdataStream" kindref="compound">dataStream</ref><sp/>{</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/>direct[<ref refid="ubixfsv2_2ubixfs_8h_130ca66da1223315f426910bd6de581f7" kindref="member">NUM_DIRECT_BLOCKS</ref>]<sp/><ref refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>maxDirectRange<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/>indirect<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>maxIndirectRange<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/>double_indirect<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>maxDoubleIndirectRange<sp/><sp/><sp/><sp/><ref refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>size<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="108"><highlight class="normal">}<sp/><ref refid="structdataStream" kindref="compound">dataStream</ref>;</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110" refid="structubixfsInode" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>{</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>magic1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">inodeAddr</ref><sp/><sp/><sp/>inodeNum<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[<ref refid="ubixfsv2_2ubixfs_8h_16773b93f3093658c3dcb569de3b4bdb2" kindref="member">MAX_FILENAME_LENGTH</ref>]<sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_11844226d778badcda0a21b28310830ea" kindref="member">uid_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>uid<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_19520fe38856d436aa8c5850ff21839ec" kindref="member">gid_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>gid<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/>flags<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>uInt64<sp/><sp/><sp/><sp/><sp/><sp/>createTime<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>__attribute__<sp/>((packed));</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/></highlight><highlight class="comment">//<sp/>uInt64<sp/><sp/><sp/><sp/><sp/><sp/>lastModifiedTime<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>__attribute__<sp/>(packed));</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">inodeAddr</ref><sp/><sp/><sp/>attributes<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/>type<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/>inodeSize<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>parent<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>next<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>prev<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>data<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><ref refid="structdataStream" kindref="compound">dataStream</ref><sp/><sp/>blocks<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/>refCount<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>smallData[3200]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structubixfsInode_1e94276342333c403dd0f4136f43bfa14" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="130"><highlight class="normal">}<sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref>;</highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight></codeline>
+<codeline lineno="132" refid="classUbixFS" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classUbixFS" kindref="compound">UbixFS</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref><sp/>{</highlight></codeline>
+<codeline lineno="133"><highlight class="normal"><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="134" refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">signed</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><ref refid="classUbixFS_1910425153882d145e2af0ae30bdec9a6" kindref="member">freeBlockList</ref>;</highlight></codeline>
+<codeline lineno="135" refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structdiskSuperBlock" kindref="compound">diskSuperBlock</ref><sp/>*<sp/><ref refid="classUbixFS_1e33fa6e8c047dfe567c22936460186f0" kindref="member">superBlock</ref>;</highlight></codeline>
+<codeline lineno="136" refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*<sp/><ref refid="classUbixFS_1d7a17314620c3031ee4d1868ea745222" kindref="member">root</ref>;</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"></highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1092741c58dade79091213126d592be65" kindref="member">getFreeBlock</ref>(<ref refid="structblockRun" kindref="compound">blockRun</ref>);</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1092741c58dade79091213126d592be65" kindref="member">getFreeBlock</ref>(<ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1092741c58dade79091213126d592be65" kindref="member">getFreeBlock</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><ref refid="structblockRun" kindref="compound">blockRun</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_12e0acd2fb08df1df4645ab91a69dc048" kindref="member">get8FreeBlocks</ref>(<ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1f16cc9199d1b438ccb1dae81974f6865" kindref="member">getNextAG</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_194e296e37c8176b5f5ba88a2251b70ab" kindref="member">mknod</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>*,<sp/><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref>);</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_12303eac53dcf539ad1db595b09e1568a" kindref="member">printSuperBlock</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_179445019036de9f0811426196299c46a" kindref="member">printFreeBlockList</ref>(<ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>);</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_10fe83377d78fbdc768054870fc8d4f3d" kindref="member">setFreeBlock</ref>(<ref refid="structblockRun" kindref="compound">blockRun</ref>);</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1a8411daf956e8ba4e129b3f26d7ecb45" kindref="member">UbixFS</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1a8411daf956e8ba4e129b3f26d7ecb45" kindref="member">UbixFS</ref>(<ref refid="structdevice__t" kindref="compound">device_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309" kindref="member">vfs_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1e1266337d259778b1404601184d75028" kindref="member">vfs_format</ref>(<ref refid="structdevice__t" kindref="compound">device_t</ref><sp/>*);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><sp/><sp/><ref refid="classUbixFS_1b1422145c6575f723179b60421a494aa" kindref="member">vfs_mknod</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref>);</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b" kindref="member">vfs_mkdir</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref>);</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1d3e28ccdb5cd84d63e5d6e9db2fc3e65" kindref="member">vfs_open</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,<sp/>...);</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><sp/><sp/><ref refid="classUbixFS_10fce9a3abd07c65fa9af38e51517310a" kindref="member">vfs_read</ref>(<ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,<sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>);</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><sp/><sp/><ref refid="classUbixFS_1551d3daae6a65555a220de05eb619930" kindref="member">vfs_write</ref>(<ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,<sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>);</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_15610078343779a3c5e3046283d482766" kindref="member">vfs_sync</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="158"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71" kindref="member">vfs_stop</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);<sp/></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classUbixFS_1c607e8f35afa1aca552a1dc24e777998" kindref="member">~UbixFS</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);<sp/></highlight></codeline>
+<codeline lineno="160" refid="classUbixFS_1d8e9bf5a5c42eabcce4ea4ab71c95528" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">friend</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classbTree" kindref="compound">bTree</ref>;</highlight></codeline>
+<codeline lineno="161"><highlight class="normal">};<sp/></highlight><highlight class="comment">//<sp/>UbixFS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight></codeline>
+<codeline lineno="163"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>!UBIXFS_H</highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h"/>
+  </compounddef>
+</doxygen>

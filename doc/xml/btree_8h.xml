@@ -1,0 +1,257 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="btree_8h" kind="file">
+    <compoundname>btree.h</compoundname>
+    <includes local="no">stdio.h</includes>
+    <includes refid="ubixfsv2_2ubixfs_8h" local="yes">ubixfs.h</includes>
+    <includes refid="btreeheader_8h" local="yes">btreeheader.h</includes>
+    <includes refid="ubixfsv2_2file_8h" local="yes">file.h</includes>
+    <includedby refid="btree_8cpp" local="yes">src/sys/ubixfsv2/btree.cpp</includedby>
+    <includedby refid="main_8cpp" local="yes">src/sys/ubixfsv2/main.cpp</includedby>
+    <includedby refid="ubixfs_8cpp" local="yes">src/sys/ubixfsv2/ubixfs.cpp</includedby>
+    <incdepgraph>
+      <node id="4530">
+        <label>src/sys/ubixfsv2/btree.h</label>
+        <link refid="btree.h"/>
+        <childnode refid="4531" relation="include">
+        </childnode>
+        <childnode refid="4532" relation="include">
+        </childnode>
+        <childnode refid="4540" relation="include">
+        </childnode>
+        <childnode refid="4539" relation="include">
+        </childnode>
+      </node>
+      <node id="4532">
+        <label>ubixfs.h</label>
+        <link refid="ubixfsv2_2ubixfs_8h"/>
+        <childnode refid="4533" relation="include">
+        </childnode>
+        <childnode refid="4534" relation="include">
+        </childnode>
+        <childnode refid="4535" relation="include">
+        </childnode>
+        <childnode refid="4538" relation="include">
+        </childnode>
+        <childnode refid="4539" relation="include">
+        </childnode>
+      </node>
+      <node id="4540">
+        <label>btreeheader.h</label>
+        <link refid="btreeheader_8h"/>
+      </node>
+      <node id="4539">
+        <label>file.h</label>
+        <link refid="ubixfsv2_2file_8h"/>
+        <childnode refid="4532" relation="include">
+        </childnode>
+      </node>
+      <node id="4533">
+        <label>sys/types.h</label>
+      </node>
+      <node id="4535">
+        <label>fsAbstract.h</label>
+        <link refid="fsAbstract_8h"/>
+        <childnode refid="4531" relation="include">
+        </childnode>
+        <childnode refid="4536" relation="include">
+        </childnode>
+        <childnode refid="4533" relation="include">
+        </childnode>
+        <childnode refid="4537" relation="include">
+        </childnode>
+        <childnode refid="4539" relation="include">
+        </childnode>
+      </node>
+      <node id="4538">
+        <label>types.h</label>
+        <link refid="ubixfsv2_2types_8h"/>
+      </node>
+      <node id="4534">
+        <label>unistd.h</label>
+      </node>
+      <node id="4537">
+        <label>device.h</label>
+        <link refid="ubixfsv2_2device_8h"/>
+        <childnode refid="4533" relation="include">
+        </childnode>
+        <childnode refid="4538" relation="include">
+        </childnode>
+      </node>
+      <node id="4531">
+        <label>stdio.h</label>
+      </node>
+      <node id="4536">
+        <label>dirent.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4544">
+        <label>src/sys/ubixfsv2/ubixfs.cpp</label>
+        <link refid="ubixfs_8cpp"/>
+      </node>
+      <node id="4541">
+        <label>src/sys/ubixfsv2/btree.h</label>
+        <link refid="btree.h"/>
+        <childnode refid="4542" relation="include">
+        </childnode>
+        <childnode refid="4543" relation="include">
+        </childnode>
+        <childnode refid="4544" relation="include">
+        </childnode>
+      </node>
+      <node id="4543">
+        <label>src/sys/ubixfsv2/main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="4542">
+        <label>src/sys/ubixfsv2/btree.cpp</label>
+        <link refid="btree_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structbNode" prot="public">bNode</innerclass>
+    <innerclass refid="classbTree" prot="public">bTree</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="btree_8h_16612d45a89119eb036b8f2f28c99205c" prot="public" static="no">
+        <name>B_MAX_CHILD_COUNT</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="15" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="15" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" prot="public" static="no">
+        <name>B_MAX_KEYS</name>
+        <initializer>15</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="13" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="13" bodyend="-1"/>
+        <referencedby refid="classbTree_18f732470e0bc0b0a5a0810c944c51122" compoundref="btree_8cpp" startline="389" endline="441">bTree::insertNode</referencedby>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">bTree::splitNode</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="btree_8h_14d914af1586d2b2c41b4427e9488decf" prot="public" static="no">
+        <name>B_MAX_NAME_LENGTH</name>
+        <initializer>240</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="14" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="14" bodyend="-1"/>
+        <referencedby refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" compoundref="btree_8cpp" startline="39" endline="71">bTree::bTree</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">bTree::Insert</referencedby>
+        <referencedby refid="classbTree_18f732470e0bc0b0a5a0810c944c51122" compoundref="btree_8cpp" startline="389" endline="441">bTree::insertNode</referencedby>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">bTree::splitNode</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="btree_8h_16068ceea0c729502fc2c30fb5fe68e75" prot="public" static="no">
+        <name>B_NODE_MAGIC_1</name>
+        <initializer>0xDEADBEEF</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="10" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="10" bodyend="-1"/>
+        <referencedby refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" compoundref="btree_8cpp" startline="444" endline="453">bTree::allocEmptyNode</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="btree_8h_16d1cceff07f71b93f2b82935353e3846" prot="public" static="no">
+        <name>B_NODE_MAGIC_2</name>
+        <initializer>0x1900BABE</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="11" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="11" bodyend="-1"/>
+        <referencedby refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" compoundref="btree_8cpp" startline="444" endline="453">bTree::allocEmptyNode</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>BTREE_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>BTREE_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2ubixfs_8h" kindref="compound">ubixfs.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="btreeheader_8h" kindref="compound">btreeheader.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2file_8h" kindref="compound">file.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="btree_8h_16068ceea0c729502fc2c30fb5fe68e75" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>B_NODE_MAGIC_1<sp/>0xDEADBEEF</highlight></codeline>
+<codeline lineno="11" refid="btree_8h_16d1cceff07f71b93f2b82935353e3846" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_NODE_MAGIC_2<sp/>0x1900BABE</highlight></codeline>
+<codeline lineno="12"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="13" refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>B_MAX_KEYS<sp/>15</highlight></codeline>
+<codeline lineno="14" refid="btree_8h_14d914af1586d2b2c41b4427e9488decf" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_MAX_NAME_LENGTH<sp/>240</highlight></codeline>
+<codeline lineno="15" refid="btree_8h_16612d45a89119eb036b8f2f28c99205c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_MAX_CHILD_COUNT<sp/>4</highlight></codeline>
+<codeline lineno="16"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17"><highlight class="normal"></highlight><highlight class="comment">//<sp/>if<sp/>any<sp/>of<sp/>these<sp/>structs<sp/>change<sp/>they<sp/>have<sp/>to<sp/>be<sp/>updated<sp/>in<sp/>the<sp/>format</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="18"><highlight class="normal"></highlight><highlight class="comment">//<sp/>utility<sp/>too</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="20" refid="structbNode" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structbNode" kindref="compound">bNode</ref><sp/>{<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/>magic1<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/>used<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/><sp/><sp/><sp/>parent<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/><ref refid="ubixfsv2_2types_8h_13eb5cd6e01deaee22057b8182b791bd3" kindref="member">uInt64</ref><sp/><sp/>tag<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>keys[<ref refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" kindref="member">B_MAX_KEYS</ref>][<ref refid="btree_8h_14d914af1586d2b2c41b4427e9488decf" kindref="member">B_MAX_NAME_LENGTH</ref>]<sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>present[<ref refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" kindref="member">B_MAX_KEYS</ref>+1]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/><sp/><sp/><sp/>head[<ref refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" kindref="member">B_MAX_KEYS</ref>+1]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><ref refid="unionuPtr" kindref="compound">uPtr</ref><sp/><sp/><sp/><sp/>tail[<ref refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" kindref="member">B_MAX_KEYS</ref>+1]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/>childCount[<ref refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" kindref="member">B_MAX_KEYS</ref>+1]<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/>magic2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>leaf<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>reserved[131]<sp/><ref refid="structbNode_18cd46327a348d2717169b3b5e0a51cf8" kindref="member">__attribute__</ref><sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="33"><highlight class="normal">}<sp/><ref refid="structbNode" kindref="compound">bNode</ref>;<sp/></highlight><highlight class="comment">//<sp/>bNode</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref>;</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="classbTree" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classbTree" kindref="compound">bTree</ref><sp/>{</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="39" refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structbNode" kindref="compound">bNode</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" kindref="member">root</ref>;</highlight></codeline>
+<codeline lineno="40" refid="classbTree_142e664483d5d3b81965fa4c8808c0f16" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="classUbixFS" kindref="compound">UbixFS</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/><ref refid="structfs" kindref="compound">fs</ref>;</highlight></codeline>
+<codeline lineno="41" refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structbTreeHeader" kindref="compound">bTreeHeader</ref><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" kindref="member">header</ref>;</highlight></codeline>
+<codeline lineno="42" refid="classbTree_1adb550cc0b77f9f3ed14a5f679dbd954" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*<sp/><ref refid="classbTree_1adb550cc0b77f9f3ed14a5f679dbd954" kindref="member">fd</ref>;</highlight></codeline>
+<codeline lineno="43" refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="include_2ubixos_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" kindref="member">tag</ref>;</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_1dddfb323e06a20e5f57896ad6de6430c" kindref="member">treeSearch</ref>(<ref refid="structbNode" kindref="compound">bNode</ref><sp/>*,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_1033edc7c078c7c90f59610ca8946cebe" kindref="member">inodeSearch</ref>(<ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>*,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_151f94e9190f4c21c66367932b22c10aa" kindref="member">splitNode</ref>(<ref refid="structbNode" kindref="compound">bNode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><ref refid="structbNode" kindref="compound">bNode</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" kindref="member">allocEmptyNode</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_18f732470e0bc0b0a5a0810c944c51122" kindref="member">insertNode</ref>(<ref refid="structbNode" kindref="compound">bNode</ref><sp/>*,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="structbNode" kindref="compound">bNode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="structbNode" kindref="compound">bNode</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_1757a2be70e2309d4bf0be2eff562a8b9" kindref="member">findLeafNode</ref>(<ref refid="structbNode" kindref="compound">bNode</ref><sp/>*,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_11c516c3e73c273ded54df841e8271954" kindref="member">Print</ref>(<ref refid="structbNode" kindref="compound">bNode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_19fec062b5b9f54ab6147cba2e92763c2" kindref="member">saveNode</ref>(FILE<sp/>*,<sp/><ref refid="structbNode" kindref="compound">bNode</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" kindref="member">bTree</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" kindref="member">bTree</ref>(<ref refid="classUbixFS" kindref="compound">UbixFS</ref><sp/>*,<sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_13e852a247447d5611a7e5cd7de53ecf9" kindref="member">Find</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_18d04e7d1bb555d157f32673af0977244" kindref="member">GetFirstNode</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/><sp/><sp/><sp/>*<sp/><ref refid="classbTree_18d04e7d1bb555d157f32673af0977244" kindref="member">GetFirstNode</ref>(<ref refid="structbNode" kindref="compound">bNode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_1ca63b57c49aed1565117d6de1d47036e" kindref="member">Delete</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" kindref="member">Info</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" kindref="member">Info</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="structbNode" kindref="compound">bNode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" kindref="member">Insert</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref><sp/>*);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" kindref="member">Save</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_180f234b61d3d99a44dba29f0754607dc" kindref="member">Load</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_11c516c3e73c273ded54df841e8271954" kindref="member">Print</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_1167dc542695e9e90d741dedb07a8fee4" kindref="member">PrintWholeTree</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_173a18a32abfb03fc233f35a237ad094f" kindref="member">Verify</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="classbTree_12daef081948bc350347520ca9781cc1b" kindref="member">~bTree</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="68" refid="classbTree_11760ad02c8a49e1b7df47d6f0d2a8234" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">friend</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classUbixFS" kindref="compound">UbixFS</ref>;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal">};<sp/></highlight><highlight class="comment">//<sp/>bTree</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>!BTREE_H</highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h"/>
+  </compounddef>
+</doxygen>

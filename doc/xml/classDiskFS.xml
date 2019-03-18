@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="classDiskFS" kind="class" prot="public">
+    <compoundname>DiskFS</compoundname>
+    <basecompoundref refid="classFileSystemAbstract" prot="public" virt="non-virtual">FileSystemAbstract</basecompoundref>
+    <includes refid="ubixfsv2_2vfs_8h" local="no">vfs.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classDiskFS_11bb2a92794cb2bb4f6409ba76fe6450b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>DiskFS::DiskFS</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>DiskFS</name>
+        <param>
+          <type>const char *</type>
+          <defname>filename</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="19" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.cpp" bodystart="4" bodyend="6"/>
+        <references refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" compoundref="ubixfsv2_2vfs_8h" startline="17">diskFile</references>
+        <references refid="include_2vfs_2file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
+      </memberdef>
+      <memberdef kind="function" id="classFileSystemAbstract_17b429977060959206ff6f741a063062d" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>int</type>
+        <definition>virtual int FileSystemAbstract::read</definition>
+        <argsstring>(char *, long, long)=0</argsstring>
+        <name>read</name>
+        <param>
+          <type>char *</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classDiskFS_1de8d72587494f9d7505574e9afe4ab0b" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int DiskFS::read</definition>
+        <argsstring>(void *, long, long)</argsstring>
+        <name>read</name>
+        <param>
+          <type>void *</type>
+          <defname>data</defname>
+        </param>
+        <param>
+          <type>long</type>
+          <defname>offset</defname>
+        </param>
+        <param>
+          <type>long</type>
+          <defname>size</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="21" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.cpp" bodystart="17" bodyend="22"/>
+        <references refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" compoundref="ubixfsv2_2vfs_8h" startline="17">diskFile</references>
+        <references refid="include_2vfs_2file_8h_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</references>
+        <references refid="include_2vfs_2file_8h_180528d8335cd52755f5d6a92e4f08391" compoundref="file_8c" startline="208" endline="211">fseek</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="include_2vfs_2file_8h_10d112bae8fd35be772185b6ec6bcbe64" compoundref="include_2vfs_2file_8h" startline="31">SEEK_SET</references>
+      </memberdef>
+      <memberdef kind="function" id="classFileSystemAbstract_12f1993d9e8bf9cde4e6f2d60cdccc58f" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>int</type>
+        <definition>virtual int FileSystemAbstract::write</definition>
+        <argsstring>(char *, long, long)=0</argsstring>
+        <name>write</name>
+        <param>
+          <type>char *</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classDiskFS_1921249f4fc1f479d9f15dd56b0187dc2" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>int</type>
+        <definition>int DiskFS::write</definition>
+        <argsstring>(const void *, long, long)</argsstring>
+        <name>write</name>
+        <param>
+          <type>const void *</type>
+          <defname>data</defname>
+        </param>
+        <param>
+          <type>long</type>
+          <defname>offset</defname>
+        </param>
+        <param>
+          <type>long</type>
+          <defname>size</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="20" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.cpp" bodystart="9" bodyend="14"/>
+        <references refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" compoundref="ubixfsv2_2vfs_8h" startline="17">diskFile</references>
+        <references refid="include_2vfs_2file_8h_180528d8335cd52755f5d6a92e4f08391" compoundref="file_8c" startline="208" endline="211">fseek</references>
+        <references refid="include_2vfs_2file_8h_1ca6c1e5b57dc9f5d8551b41ea98bfbb7" compoundref="file_8c" startline="200" endline="206">fwrite</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="include_2vfs_2file_8h_10d112bae8fd35be772185b6ec6bcbe64" compoundref="include_2vfs_2file_8h" startline="31">SEEK_SET</references>
+      </memberdef>
+      <memberdef kind="function" id="classDiskFS_1b25c392405c7e424d2033a18b335311c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>virtual</type>
+        <definition>virtual DiskFS::~DiskFS</definition>
+        <argsstring>(void)</argsstring>
+        <name>~DiskFS</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="22" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" bodystart="22" bodyend="22"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" prot="protected" static="no" mutable="no">
+        <type>FILE *</type>
+        <definition>FILE* DiskFS::diskFile</definition>
+        <argsstring></argsstring>
+        <name>diskFile</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="17" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" bodystart="17" bodyend="-1"/>
+        <referencedby refid="classDiskFS_11bb2a92794cb2bb4f6409ba76fe6450b" compoundref="vfs_8cpp" startline="4" endline="6">DiskFS</referencedby>
+        <referencedby refid="classDiskFS_1de8d72587494f9d7505574e9afe4ab0b" compoundref="vfs_8cpp" startline="17" endline="22">read</referencedby>
+        <referencedby refid="classDiskFS_1921249f4fc1f479d9f15dd56b0187dc2" compoundref="vfs_8cpp" startline="9" endline="14">write</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="118">
+        <label>DiskFS</label>
+        <link refid="classDiskFS"/>
+        <childnode refid="119" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="119">
+        <label>FileSystemAbstract</label>
+        <link refid="classFileSystemAbstract"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="120">
+        <label>DiskFS</label>
+        <link refid="classDiskFS"/>
+        <childnode refid="121" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="121">
+        <label>FileSystemAbstract</label>
+        <link refid="classFileSystemAbstract"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="15" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" bodystart="15" bodyend="23"/>
+    <listofallmembers>
+      <member refid="classDiskFS_1f1d6066bcbf639cdf16c255077e2fd83" prot="protected" virt="non-virtual"><scope>DiskFS</scope><name>diskFile</name></member>
+      <member refid="classDiskFS_11bb2a92794cb2bb4f6409ba76fe6450b" prot="public" virt="non-virtual"><scope>DiskFS</scope><name>DiskFS</name></member>
+      <member refid="classDiskFS_1de8d72587494f9d7505574e9afe4ab0b" prot="public" virt="virtual"><scope>DiskFS</scope><name>read</name></member>
+      <member refid="classFileSystemAbstract_17b429977060959206ff6f741a063062d" prot="public" virt="pure-virtual" ambiguityscope="FileSystemAbstract::"><scope>DiskFS</scope><name>read</name></member>
+      <member refid="classDiskFS_1921249f4fc1f479d9f15dd56b0187dc2" prot="public" virt="virtual"><scope>DiskFS</scope><name>write</name></member>
+      <member refid="classFileSystemAbstract_12f1993d9e8bf9cde4e6f2d60cdccc58f" prot="public" virt="pure-virtual" ambiguityscope="FileSystemAbstract::"><scope>DiskFS</scope><name>write</name></member>
+      <member refid="classDiskFS_1b25c392405c7e424d2033a18b335311c" prot="public" virt="virtual"><scope>DiskFS</scope><name>~DiskFS</name></member>
+      <member refid="classFileSystemAbstract_121f6597288d78e178e60eb6b55040ecf" prot="public" virt="virtual"><scope>DiskFS</scope><name>~FileSystemAbstract</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

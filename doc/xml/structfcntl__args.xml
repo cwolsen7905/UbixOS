@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structfcntl__args" kind="struct" prot="public">
+    <compoundname>fcntl_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structfcntl__args_1359ca968530c6ac026b226cc564cca0c" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long fcntl_args::arg</definition>
+        <argsstring></argsstring>
+        <name>arg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="88" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_19992a6b662b0d25721cd03dc62263429" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fcntl_args::arg_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>arg_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_1af3e83f65b3a98b08965f31dd96ee6fb" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fcntl_args::arg_r_[(sizeof(register_t)&lt;=sizeof(long)?0:sizeof(register_t)-sizeof(long))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(long)?0:sizeof(register_t)-sizeof(long))]</argsstring>
+        <name>arg_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="88" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_137d96e0fe66231dce7f61d06c19e259e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fcntl_args::cmd</definition>
+        <argsstring></argsstring>
+        <name>cmd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="87" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_177368a22d9cc698f4cd0503c2b4e87aa" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fcntl_args::cmd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>cmd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_10ab0757c9d16c0e4b5d2eec8bbdf9316" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fcntl_args::cmd_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>cmd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_1c51e9ffed7cc14ea6146d2fe50ae1028" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int fcntl_args::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="86" bodyend="-1"/>
+        <referencedby refid="kern__descrip_8c_14c1102e9a5b5c2be0c5e16d9b974a1a3" compoundref="kern__descrip_8c" startline="39" endline="65">fcntl</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_11eeb34a9ad364db425dc1c24b9ca6fa5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fcntl_args::fd_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>fd_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structfcntl__args_17a814dc6a9c0f146b5a16830f2bb91a6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char fcntl_args::fd_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>fd_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="85" bodyend="89"/>
+    <listofallmembers>
+      <member refid="structfcntl__args_1359ca968530c6ac026b226cc564cca0c" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>arg</name></member>
+      <member refid="structfcntl__args_19992a6b662b0d25721cd03dc62263429" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>arg_l_</name></member>
+      <member refid="structfcntl__args_1af3e83f65b3a98b08965f31dd96ee6fb" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>arg_r_</name></member>
+      <member refid="structfcntl__args_137d96e0fe66231dce7f61d06c19e259e" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>cmd</name></member>
+      <member refid="structfcntl__args_177368a22d9cc698f4cd0503c2b4e87aa" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>cmd_l_</name></member>
+      <member refid="structfcntl__args_10ab0757c9d16c0e4b5d2eec8bbdf9316" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>cmd_r_</name></member>
+      <member refid="structfcntl__args_1c51e9ffed7cc14ea6146d2fe50ae1028" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>fd</name></member>
+      <member refid="structfcntl__args_11eeb34a9ad364db425dc1c24b9ca6fa5" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>fd_l_</name></member>
+      <member refid="structfcntl__args_17a814dc6a9c0f146b5a16830f2bb91a6" prot="public" virt="non-virtual"><scope>fcntl_args</scope><name>fd_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

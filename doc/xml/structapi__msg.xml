@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structapi__msg" kind="struct" prot="public">
+    <compoundname>api_msg</compoundname>
+    <includes refid="api__msg_8h" local="no">api_msg.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structapi__msg_11f51adb48728605e630ee4fa986a5ff4" prot="public" static="no" mutable="no">
+        <type><ref refid="structapi__msg__msg" kindref="compound">api_msg_msg</ref></type>
+        <definition>struct api_msg_msg api_msg::msg</definition>
+        <argsstring></argsstring>
+        <name>msg</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" line="89" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" bodystart="89" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structapi__msg_14b35b792fdec3605f27155b9db84a0bc" prot="public" static="no" mutable="no">
+        <type>enum <ref refid="api__msg_8h_1f578a5487f9a3b529ed4617e52cad76d" kindref="member">api_msg_type</ref></type>
+        <definition>enum api_msg_type api_msg::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" line="88" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" bodystart="88" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="14">
+        <label>sys_mbox</label>
+        <link refid="structsys__mbox"/>
+        <childnode refid="15" relation="usage">
+          <edgelabel>mutex
+mail</edgelabel>
+        </childnode>
+      </node>
+      <node id="19">
+        <label>ip_addr</label>
+        <link refid="structip__addr"/>
+      </node>
+      <node id="16">
+        <label>ubthread_mutex</label>
+        <link refid="structubthread__mutex"/>
+      </node>
+      <node id="17">
+        <label>ubthread_cond</label>
+        <link refid="structubthread__cond"/>
+      </node>
+      <node id="23">
+        <label>tcp_seg</label>
+        <link refid="structtcp__seg"/>
+        <childnode refid="23" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+        <childnode refid="24" relation="usage">
+          <edgelabel>tcphdr</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>p</edgelabel>
+        </childnode>
+      </node>
+      <node id="18">
+        <label>pbuf</label>
+        <link refid="structpbuf"/>
+        <childnode refid="18" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="21">
+        <label>udp_pcb</label>
+        <link refid="structudp__pcb"/>
+        <childnode refid="19" relation="usage">
+          <edgelabel>remote_ip</edgelabel>
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="20">
+        <label>netconn</label>
+        <link refid="structnetconn"/>
+        <childnode refid="14" relation="usage">
+          <edgelabel>recvmbox
+acceptmbox
+mbox</edgelabel>
+        </childnode>
+        <childnode refid="15" relation="usage">
+          <edgelabel>sem</edgelabel>
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>udp</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>tcp</edgelabel>
+        </childnode>
+      </node>
+      <node id="13">
+        <label>api_msg_msg</label>
+        <link refid="structapi__msg__msg"/>
+        <childnode refid="14" relation="usage">
+          <edgelabel>mbox</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>p</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>ipaddr</edgelabel>
+        </childnode>
+        <childnode refid="20" relation="usage">
+          <edgelabel>conn</edgelabel>
+        </childnode>
+      </node>
+      <node id="15">
+        <label>sys_sem</label>
+        <link refid="structsys__sem"/>
+        <childnode refid="16" relation="usage">
+          <edgelabel>mutex</edgelabel>
+        </childnode>
+        <childnode refid="17" relation="usage">
+          <edgelabel>cond</edgelabel>
+        </childnode>
+      </node>
+      <node id="24">
+        <label>tcp_hdr</label>
+        <link refid="structtcp__hdr"/>
+      </node>
+      <node id="22">
+        <label>tcp_pcb</label>
+        <link refid="structtcp__pcb"/>
+        <childnode refid="23" relation="usage">
+          <edgelabel>unsent
+unacked</edgelabel>
+        </childnode>
+        <childnode refid="18" relation="usage">
+          <edgelabel>recv_data</edgelabel>
+        </childnode>
+        <childnode refid="19" relation="usage">
+          <edgelabel>local_ip
+remote_ip</edgelabel>
+        </childnode>
+        <childnode refid="22" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="12">
+        <label>api_msg</label>
+        <link refid="structapi__msg"/>
+        <childnode refid="13" relation="usage">
+          <edgelabel>msg</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api_msg.h" bodystart="87" bodyend="90"/>
+    <listofallmembers>
+      <member refid="structapi__msg_11f51adb48728605e630ee4fa986a5ff4" prot="public" virt="non-virtual"><scope>api_msg</scope><name>msg</name></member>
+      <member refid="structapi__msg_14b35b792fdec3605f27155b9db84a0bc" prot="public" virt="non-virtual"><scope>api_msg</scope><name>type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

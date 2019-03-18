@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_2f8fc94d4f17c865dd63167e45dee9cf" kind="dir">
+    <compoundname>src/sys/isa/</compoundname>
+    <innerfile refid="8259_8c">8259.c</innerfile>
+    <innerfile refid="atkbd_8c">atkbd.c</innerfile>
+    <innerfile refid="fdc_8c">fdc.c</innerfile>
+    <innerfile refid="mouse_8c">mouse.c</innerfile>
+    <innerfile refid="ne2k_8c">ne2k.c</innerfile>
+    <innerfile refid="pit_8c">pit.c</innerfile>
+    <innerfile refid="rs232_8c">rs232.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/isa/"/>
+  </compounddef>
+</doxygen>

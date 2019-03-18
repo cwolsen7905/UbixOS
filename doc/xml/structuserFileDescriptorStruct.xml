@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structuserFileDescriptorStruct" kind="struct" prot="public">
+    <compoundname>userFileDescriptorStruct</compoundname>
+    <includes refid="file_8h" local="no">file.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structuserFileDescriptorStruct_14dbfb1872dcf459d26d56e4c83916e84" prot="public" static="no" mutable="no">
+        <type><ref refid="structfileDescriptorStruct" kindref="compound">fileDescriptorStruct</ref> *</type>
+        <definition>struct fileDescriptorStruct* userFileDescriptorStruct::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="68" bodyend="-1"/>
+        <referencedby refid="file_8c_179ea7e7d939ab058bf2b53fdbfee42c6" compoundref="file_8c" startline="157" endline="171">sysFclose</referencedby>
+        <referencedby refid="file_8c_104b3a6449e24cc27188e1f4b9a9d8225" compoundref="file_8c" startline="59" endline="86">sysFgetc</referencedby>
+        <referencedby refid="file_8c_111af8c48fc1b1a08d97e8082d553c143" compoundref="file_8c" startline="122" endline="131">sysFopen</referencedby>
+        <referencedby refid="file_8c_158d31e6659ae90bb9a1a78e238110b08" compoundref="file_8c" startline="140" endline="148">sysFread</referencedby>
+        <referencedby refid="file_8c_16ff1131020b7a50805dc848fcd9c03b2" compoundref="file_8c" startline="92" endline="100">sysFseek</referencedby>
+        <referencedby refid="file_8c_11a17e9753f6c9d2b34c35a2b2e7d240e" compoundref="file_8c" startline="49" endline="57">sysFwrite</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structuserFileDescriptorStruct_149b5731913f50c40d0c12b8c8e89b020" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 userFileDescriptorStruct::fdSize</definition>
+        <argsstring></argsstring>
+        <name>fdSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="69" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="69" bodyend="-1"/>
+        <referencedby refid="file_8c_111af8c48fc1b1a08d97e8082d553c143" compoundref="file_8c" startline="122" endline="131">sysFopen</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="698">
+        <label>device_resource</label>
+        <link refid="structdevice__resource"/>
+      </node>
+      <node id="697">
+        <label>device_node</label>
+        <link refid="structdevice__node"/>
+        <childnode refid="698" relation="usage">
+          <edgelabel>devRec</edgelabel>
+        </childnode>
+        <childnode refid="699" relation="usage">
+          <edgelabel>devInfo</edgelabel>
+        </childnode>
+        <childnode refid="697" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="692">
+        <label>cacheNode</label>
+        <link refid="structcacheNode"/>
+        <childnode refid="692" relation="usage">
+          <edgelabel>prev
+next
+parent
+fileListTail
+fileListHead</edgelabel>
+        </childnode>
+      </node>
+      <node id="695">
+        <label>ubixDiskLabel</label>
+        <link refid="structubixDiskLabel"/>
+        <childnode refid="696" relation="usage">
+          <edgelabel>partitions</edgelabel>
+        </childnode>
+      </node>
+      <node id="696">
+        <label>ubixDiskLabel::ubixPartitions</label>
+        <link refid="structubixDiskLabel_1_1ubixPartitions"/>
+      </node>
+      <node id="691">
+        <label>fileDescriptorStruct</label>
+        <link refid="structfileDescriptorStruct"/>
+        <childnode refid="692" relation="usage">
+          <edgelabel>cacheNode</edgelabel>
+        </childnode>
+        <childnode refid="693" relation="usage">
+          <edgelabel>dmadat</edgelabel>
+        </childnode>
+        <childnode refid="694" relation="usage">
+          <edgelabel>mp</edgelabel>
+        </childnode>
+        <childnode refid="691" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="694">
+        <label>vfs_mountPoint</label>
+        <link refid="structvfs__mountPoint"/>
+        <childnode refid="695" relation="usage">
+          <edgelabel>diskLabel</edgelabel>
+        </childnode>
+        <childnode refid="697" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+        <childnode refid="700" relation="usage">
+          <edgelabel>fs</edgelabel>
+        </childnode>
+        <childnode refid="694" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="699">
+        <label>device_interface</label>
+        <link refid="structdevice__interface"/>
+      </node>
+      <node id="690">
+        <label>userFileDescriptorStruct</label>
+        <link refid="structuserFileDescriptorStruct"/>
+        <childnode refid="691" relation="usage">
+          <edgelabel>fd</edgelabel>
+        </childnode>
+      </node>
+      <node id="693">
+        <label>dmadat</label>
+        <link refid="structdmadat"/>
+      </node>
+      <node id="700">
+        <label>fileSystem</label>
+        <link refid="structfileSystem"/>
+        <childnode refid="700" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/vfs/file.h" bodystart="67" bodyend="70"/>
+    <listofallmembers>
+      <member refid="structuserFileDescriptorStruct_14dbfb1872dcf459d26d56e4c83916e84" prot="public" virt="non-virtual"><scope>userFileDescriptorStruct</scope><name>fd</name></member>
+      <member refid="structuserFileDescriptorStruct_149b5731913f50c40d0c12b8c8e89b020" prot="public" virt="non-virtual"><scope>userFileDescriptorStruct</scope><name>fdSize</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

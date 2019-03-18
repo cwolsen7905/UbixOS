@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_d26f37d6397a53073c964316867e8d67" kind="dir">
+    <compoundname>src/sys/include/sys/</compoundname>
+    <innerfile refid="__types_8h">_types.h</innerfile>
+    <innerfile refid="buf_8h">buf.h</innerfile>
+    <innerfile refid="cdefs_8h">cdefs.h</innerfile>
+    <innerfile refid="device_8h">device.h</innerfile>
+    <innerfile refid="device_8old_8h">device.old.h</innerfile>
+    <innerfile refid="dma_8h">dma.h</innerfile>
+    <innerfile refid="driver_8h">driver.h</innerfile>
+    <innerfile refid="gdt_8h">gdt.h</innerfile>
+    <innerfile refid="gen__calls_8h">gen_calls.h</innerfile>
+    <innerfile refid="idt_8h">idt.h</innerfile>
+    <innerfile refid="io_8h">io.h</innerfile>
+    <innerfile refid="kern__descrip_8h">kern_descrip.h</innerfile>
+    <innerfile refid="kern__sig_8h">kern_sig.h</innerfile>
+    <innerfile refid="kern__sysctl_8h">kern_sysctl.h</innerfile>
+    <innerfile refid="pipe_8h">pipe.h</innerfile>
+    <innerfile refid="signal_8h">signal.h</innerfile>
+    <innerfile refid="sysproto_8h">sysproto.h</innerfile>
+    <innerfile refid="thread_8h">thread.h</innerfile>
+    <innerfile refid="trap_8h">trap.h</innerfile>
+    <innerfile refid="tss_8h">tss.h</innerfile>
+    <innerfile refid="video_8h">video.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/"/>
+  </compounddef>
+</doxygen>

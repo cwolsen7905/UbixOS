@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_d9dcf62a8e8b4cc91cbf2445d76a799b" kind="dir">
+    <compoundname>src/sys/lib/</compoundname>
+    <innerfile refid="assert_8c">assert.c</innerfile>
+    <innerfile refid="atan_8c">atan.c</innerfile>
+    <innerfile refid="bcopy_8c">bcopy.c</innerfile>
+    <innerfile refid="divdi3_8c">divdi3.c</innerfile>
+    <innerfile refid="kmalloc_8c">kmalloc.c</innerfile>
+    <innerfile refid="kprintf_8c">kprintf.c</innerfile>
+    <innerfile refid="libcpp_8cc">libcpp.cc</innerfile>
+    <innerfile refid="memcpy_8c">memcpy.c</innerfile>
+    <innerfile refid="memset_8c">memset.c</innerfile>
+    <innerfile refid="net_8c">net.c</innerfile>
+    <innerfile refid="ogprintf_8cc">ogprintf.cc</innerfile>
+    <innerfile refid="sqrt_8c">sqrt.c</innerfile>
+    <innerfile refid="strcpy_8S">strcpy.S</innerfile>
+    <innerfile refid="string_8c">string.c</innerfile>
+    <innerfile refid="strlen_8S">strlen.S</innerfile>
+    <innerfile refid="strtok_8c">strtok.c</innerfile>
+    <innerfile refid="strtol_8c">strtol.c</innerfile>
+    <innerfile refid="vsprintf_8c">vsprintf.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/"/>
+  </compounddef>
+</doxygen>

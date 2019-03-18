@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structelfProgramHeader" kind="struct" prot="public">
+    <compoundname>elfProgramHeader</compoundname>
+    <includes refid="elf_8h" local="no">elf.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structelfProgramHeader_1818c3dde165f8cc3b389f6c38abc8638" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phAlign</definition>
+        <argsstring></argsstring>
+        <name>phAlign</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfProgramHeader_18a5809f3eae9863507db66786c2af3b0" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phFilesz</definition>
+        <argsstring></argsstring>
+        <name>phFilesz</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfProgramHeader_1a2896235f4362e24ef9542cede9f5a6c" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phFlags</definition>
+        <argsstring></argsstring>
+        <name>phFlags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="121" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="121" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phMemsz</definition>
+        <argsstring></argsstring>
+        <name>phMemsz</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="120" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="120" bodyend="-1"/>
+        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structelfProgramHeader_193a7c0296fe86a429cf58989956d28ff" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phOffset</definition>
+        <argsstring></argsstring>
+        <name>phOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="116" bodyend="-1"/>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structelfProgramHeader_17d03ba7115810979c58c4f2df8d3edba" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phPaddr</definition>
+        <argsstring></argsstring>
+        <name>phPaddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="118" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="118" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfProgramHeader_15212a5be2811b5095729cc7422364d7a" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phType</definition>
+        <argsstring></argsstring>
+        <name>phType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="115" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfProgramHeader_114f11176e999131fb9be875aeb500447" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfProgramHeader::phVaddr</definition>
+        <argsstring></argsstring>
+        <name>phVaddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="117" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="117" bodyend="-1"/>
+        <referencedby refid="elf_8c_1f11ec9e50bcff723428b0c911a177fd0" compoundref="elf_8c" startline="111" endline="185">elf_loadfile</referencedby>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+        <referencedby refid="exec_8c_1094c23346b6d226a03866a54b755ed64" compoundref="exec_8c" startline="552" endline="716">sys_exec</referencedby>
+        <referencedby refid="exec_8c_1219681612352232186a0f568457d851d" compoundref="exec_8c" startline="334" endline="546">sysExec</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="114" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="114" bodyend="123"/>
+    <listofallmembers>
+      <member refid="structelfProgramHeader_1818c3dde165f8cc3b389f6c38abc8638" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phAlign</name></member>
+      <member refid="structelfProgramHeader_18a5809f3eae9863507db66786c2af3b0" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phFilesz</name></member>
+      <member refid="structelfProgramHeader_1a2896235f4362e24ef9542cede9f5a6c" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phFlags</name></member>
+      <member refid="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phMemsz</name></member>
+      <member refid="structelfProgramHeader_193a7c0296fe86a429cf58989956d28ff" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phOffset</name></member>
+      <member refid="structelfProgramHeader_17d03ba7115810979c58c4f2df8d3edba" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phPaddr</name></member>
+      <member refid="structelfProgramHeader_15212a5be2811b5095729cc7422364d7a" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phType</name></member>
+      <member refid="structelfProgramHeader_114f11176e999131fb9be875aeb500447" prot="public" virt="non-virtual"><scope>elfProgramHeader</scope><name>phVaddr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

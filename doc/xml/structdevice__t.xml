@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdevice__t" kind="struct" prot="public">
+    <compoundname>device_t</compoundname>
+    <includes refid="ubixfsv2_2device_8h" local="no">device.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdevice__t_139cbbf79bddb63ef5d02d8694f636965" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* device_t::info</definition>
+        <argsstring></argsstring>
+        <name>info</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_1665edd8141f55340e3c687ae0902e342" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* device_t::init)(device_t *)</definition>
+        <argsstring>)(device_t *)</argsstring>
+        <name>init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="57"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_1e45ce7925f01ccb40f473dfe3e34de37" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* device_t::ioctl)(void *)</definition>
+        <argsstring>)(void *)</argsstring>
+        <name>ioctl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="58"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_1d03b23eb98c9f6f3befb7e3cdb015738" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int device_t::major</definition>
+        <argsstring></argsstring>
+        <name>major</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="ramdrive_8h_10d903e082fe2e6d8f1e06073560e5ab3" compoundref="ramdrive_8cpp" startline="66" endline="92">dev_ramDrive</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_19d3cb5a5fdcf892fe1a9683142174f7f" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* device_t::read)(device_t *, void *, off_t, size_t)</definition>
+        <argsstring>)(device_t *, void *, off_t, size_t)</argsstring>
+        <name>read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="54"/>
+        <referencedby refid="ramdrive_8h_10d903e082fe2e6d8f1e06073560e5ab3" compoundref="ramdrive_8cpp" startline="66" endline="92">dev_ramDrive</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_193774f38e97c7c4549f197aa4cf1bd67" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* device_t::reset)(void *)</definition>
+        <argsstring>)(void *)</argsstring>
+        <name>reset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="56"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_12f31531436aa42b8c47bd26d38f5247d" prot="public" static="no" mutable="no">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 device_t::sectors</definition>
+        <argsstring></argsstring>
+        <name>sectors</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="ramdrive_8h_10d903e082fe2e6d8f1e06073560e5ab3" compoundref="ramdrive_8cpp" startline="66" endline="92">dev_ramDrive</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_16408ad39168943b716db4be50fdaac07" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* device_t::standby)(void *)</definition>
+        <argsstring>)(void *)</argsstring>
+        <name>standby</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="61"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_1bcb4c8c9de98446599c10d8549f7fd93" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* device_t::start)(void *)</definition>
+        <argsstring>)(void *)</argsstring>
+        <name>start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="60"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_1d963baa17236fe4a29b1fbcbaf348022" prot="public" static="no" mutable="no">
+        <type>void(*</type>
+        <definition>void(* device_t::stop)(void *)</definition>
+        <argsstring>)(void *)</argsstring>
+        <name>stop</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="59"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdevice__t_13bbbd39c26ac540dbbb934faffe752fb" prot="public" static="no" mutable="no">
+        <type>int(*</type>
+        <definition>int(* device_t::write)(device_t *, void *, off_t, size_t)</definition>
+        <argsstring>)(device_t *, void *, off_t, size_t)</argsstring>
+        <name>write</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="55"/>
+        <referencedby refid="ramdrive_8h_10d903e082fe2e6d8f1e06073560e5ab3" compoundref="ramdrive_8cpp" startline="66" endline="92">dev_ramDrive</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/device.h" bodystart="50" bodyend="62"/>
+    <listofallmembers>
+      <member refid="structdevice__t_139cbbf79bddb63ef5d02d8694f636965" prot="public" virt="non-virtual"><scope>device_t</scope><name>info</name></member>
+      <member refid="structdevice__t_1665edd8141f55340e3c687ae0902e342" prot="public" virt="non-virtual"><scope>device_t</scope><name>init</name></member>
+      <member refid="structdevice__t_1e45ce7925f01ccb40f473dfe3e34de37" prot="public" virt="non-virtual"><scope>device_t</scope><name>ioctl</name></member>
+      <member refid="structdevice__t_1d03b23eb98c9f6f3befb7e3cdb015738" prot="public" virt="non-virtual"><scope>device_t</scope><name>major</name></member>
+      <member refid="structdevice__t_19d3cb5a5fdcf892fe1a9683142174f7f" prot="public" virt="non-virtual"><scope>device_t</scope><name>read</name></member>
+      <member refid="structdevice__t_193774f38e97c7c4549f197aa4cf1bd67" prot="public" virt="non-virtual"><scope>device_t</scope><name>reset</name></member>
+      <member refid="structdevice__t_12f31531436aa42b8c47bd26d38f5247d" prot="public" virt="non-virtual"><scope>device_t</scope><name>sectors</name></member>
+      <member refid="structdevice__t_16408ad39168943b716db4be50fdaac07" prot="public" virt="non-virtual"><scope>device_t</scope><name>standby</name></member>
+      <member refid="structdevice__t_1bcb4c8c9de98446599c10d8549f7fd93" prot="public" virt="non-virtual"><scope>device_t</scope><name>start</name></member>
+      <member refid="structdevice__t_1d963baa17236fe4a29b1fbcbaf348022" prot="public" virt="non-virtual"><scope>device_t</scope><name>stop</name></member>
+      <member refid="structdevice__t_13bbbd39c26ac540dbbb934faffe752fb" prot="public" virt="non-virtual"><scope>device_t</scope><name>write</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

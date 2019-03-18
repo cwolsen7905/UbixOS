@@ -1,0 +1,286 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="atkbd_8h" kind="file">
+    <compoundname>atkbd.h</compoundname>
+    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
+    <includedby refid="atkbd_8c" local="no">src/sys/isa/atkbd.c</includedby>
+    <invincdepgraph>
+      <node id="3202">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="3200">
+        <label>src/sys/include/isa/atkbd.h</label>
+        <link refid="atkbd.h"/>
+        <childnode refid="3201" relation="include">
+        </childnode>
+        <childnode refid="3203" relation="include">
+        </childnode>
+      </node>
+      <node id="3203">
+        <label>src/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="3201">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="3202" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="atkbd_8h_1e9291beaadb484f309dfccff3dce69ac" prot="public" static="no">
+        <name>altKey</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="atkbd_8h_108ce9ab0c3080d42109d5ed31d91e661" prot="public" static="no">
+        <name>controlKey</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" bodystart="34" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="atkbd_8h_171457dc5a79f320c24ad5e6c4c44c697" prot="public" static="no">
+        <name>ledCapslock</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="atkbd_8h_16ae8c35d97c9e5d6103564f33c65aa69" prot="public" static="no">
+        <name>ledNumlock</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="atkbd_8h_1503a751afb3f4f69cb56e86c2ca6c2fb" prot="public" static="no">
+        <name>ledScrolllock</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="atkbd_8h_1ac3515cd6c932a4ee8b51f00262dbd2d" prot="public" static="no">
+        <name>shiftKey</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="33" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" bodystart="33" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="atkbd_8h_1d67d988f6347d52a6dc9f28992521e37" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int atkbd_init</definition>
+        <argsstring>()</argsstring>
+        <name>atkbd_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/atkbd.c" bodystart="157" bodyend="175"/>
+        <references refid="atkbd_8h_1583a241acfdbcbe82f25db0f95b0c92d">atkbd_isr</references>
+        <references refid="atkbd_8c_155bc6540b1b12c4eb0dd00877a2d68c5" compoundref="atkbd_8c" startline="203" endline="214">atkbd_scan</references>
+        <references refid="gdt_8h_15ee8638767e24765a2690483745d60d0" compoundref="gdt_8h" startline="47">dDpl0</references>
+        <references refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" compoundref="gdt_8h" startline="37">dInt</references>
+        <references refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" compoundref="gdt_8h" startline="48">dPresent</references>
+        <references refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a">irqEnable</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="8259_8h_17d84962c1a1c225344a94545309f92fc" compoundref="8259_8h" startline="42">mVec</references>
+        <references refid="atkbd_8h_175680b4d84b721b03a3454677758a21e" compoundref="atkbd_8c" startline="321" endline="326">setLED</references>
+        <references refid="idt_8h_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</references>
+        <references refid="atkbd_8c_1c6bb52f207cbdd0b9d2cf79efb5863b0" compoundref="atkbd_8c" startline="50">stdinBuffer</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+      </memberdef>
+      <memberdef kind="function" id="atkbd_8h_1583a241acfdbcbe82f25db0f95b0c92d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void atkbd_isr</definition>
+        <argsstring>()</argsstring>
+        <name>atkbd_isr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="41"/>
+        <referencedby refid="atkbd_8c_1d67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="157" endline="175">atkbd_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="atkbd_8h_10a638d89ef3b126799ec1503c743a723" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void keyboardHandler</definition>
+        <argsstring>()</argsstring>
+        <name>keyboardHandler</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/atkbd.c" bodystart="216" bodyend="319"/>
+        <references refid="atkbd_8h_1e9291beaadb484f309dfccff3dce69ac" compoundref="atkbd_8h" startline="35">altKey</references>
+        <references refid="atkbd_8c_155bc6540b1b12c4eb0dd00877a2d68c5" compoundref="atkbd_8c" startline="203" endline="214">atkbd_scan</references>
+        <references refid="atkbd_8c_150761f7ef363e84e749457be8bf78eeb" compoundref="atkbd_8c" startline="54">atkbdSpinLock</references>
+        <references refid="video_8h_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</references>
+        <references refid="atkbd_8h_108ce9ab0c3080d42109d5ed31d91e661" compoundref="atkbd_8h" startline="34">controlKey</references>
+        <references refid="atkbd_8c_12ddb1c4b7754cef86c195c18c02179bc" compoundref="atkbd_8c" startline="52">controlKeys</references>
+        <references refid="structvitalsStruct_11f45a0348eac13344950507efaf565f8" compoundref="vitals_8h" startline="44">vitalsStruct::freePages</references>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="kpanic_8h_1a5193288597f00c4f8e3b2939aa6c0ce" compoundref="kpanic_8h" startline="33">K_PANIC</references>
+        <references refid="atkbd_8c_1eaa34e9c084c565217b4345bc956757b" compoundref="atkbd_8c" startline="56">keyboardMap</references>
+        <references refid="atkbd_8c_12e46ce87b96fbf716a81841212705273" compoundref="atkbd_8c" startline="48">keyMap</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="atkbd_8h_171457dc5a79f320c24ad5e6c4c44c697" compoundref="atkbd_8h" startline="38">ledCapslock</references>
+        <references refid="atkbd_8h_16ae8c35d97c9e5d6103564f33c65aa69" compoundref="atkbd_8h" startline="36">ledNumlock</references>
+        <references refid="atkbd_8h_1503a751afb3f4f69cb56e86c2ca6c2fb" compoundref="atkbd_8h" startline="37">ledScrolllock</references>
+        <references refid="atkbd_8c_1edc2079705488fa79315aa8d6eb336f7" compoundref="atkbd_8c" startline="49">ledStatus</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="atkbd_8h_175680b4d84b721b03a3454677758a21e" compoundref="atkbd_8c" startline="321" endline="326">setLED</references>
+        <references refid="atkbd_8h_1ac3515cd6c932a4ee8b51f00262dbd2d" compoundref="atkbd_8h" startline="33">shiftKey</references>
+        <references refid="spinlock_8h_18f9173fadeddafa01754d6cbcc630198" compoundref="spinlock_8c" startline="48" endline="54">spinTryLock</references>
+        <references refid="spinlock_8h_1dd996cbbb3b9826dd9c8cf02b66a4c65" compoundref="spinlock_8c" startline="37" endline="46">spinUnlock</references>
+        <references refid="structtty__termNode_139b59f0bd823a6c86eaac17a80d9c360" compoundref="tty_8h" startline="44">tty_termNode::stdin</references>
+        <references refid="atkbd_8c_1c6bb52f207cbdd0b9d2cf79efb5863b0" compoundref="atkbd_8c" startline="50">stdinBuffer</references>
+        <references refid="atkbd_8c_1c33139c9cf451e903c587a3cc29cca30" compoundref="atkbd_8c" startline="51">stdinSize</references>
+        <references refid="structtty__termNode_129b1eedda11ef5e0cc7e069c0324afd9" compoundref="tty_8h" startline="45">tty_termNode::stdinSize</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+        <references refid="tty_8h_1fb200d47095b1f878728403e9346cc33" compoundref="tty_8c" startline="87" endline="116">tty_change</references>
+        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
+      </memberdef>
+      <memberdef kind="function" id="atkbd_8h_175680b4d84b721b03a3454677758a21e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void setLED</definition>
+        <argsstring>()</argsstring>
+        <name>setLED</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/isa/atkbd.c" bodystart="321" bodyend="326"/>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="atkbd_8c_1edc2079705488fa79315aa8d6eb336f7" compoundref="atkbd_8c" startline="49">ledStatus</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <referencedby refid="atkbd_8c_1d67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="157" endline="175">atkbd_init</referencedby>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: atkbd_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_ATKBD_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_ATKBD_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33" refid="atkbd_8h_1ac3515cd6c932a4ee8b51f00262dbd2d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>shiftKey<sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="34" refid="atkbd_8h_108ce9ab0c3080d42109d5ed31d91e661" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>controlKey<sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="35" refid="atkbd_8h_1e9291beaadb484f309dfccff3dce69ac" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>altKey<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="36" refid="atkbd_8h_16ae8c35d97c9e5d6103564f33c65aa69" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ledNumlock<sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="37" refid="atkbd_8h_1503a751afb3f4f69cb56e86c2ca6c2fb" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ledScrolllock<sp/>1</highlight></codeline>
+<codeline lineno="38" refid="atkbd_8h_171457dc5a79f320c24ad5e6c4c44c697" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ledCapslock<sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="39"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><ref refid="atkbd_8h_1d67d988f6347d52a6dc9f28992521e37" kindref="member">atkbd_init</ref>();</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="atkbd_8h_1583a241acfdbcbe82f25db0f95b0c92d" kindref="member">atkbd_isr</ref>();</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="atkbd_8h_10a638d89ef3b126799ec1503c743a723" kindref="member">keyboardHandler</ref>();</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="atkbd_8h_175680b4d84b721b03a3454677758a21e" kindref="member">setLED</ref>();</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="47"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/>$Log: atkbd_8h.xml,v $
+<codeline lineno="49"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:50  reddawg
+<codeline lineno="49"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="49"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="51"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="52"><highlight class="comment"></highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:36<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"></highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:39<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"></highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/29<sp/>21:32:16<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>My<sp/>quick<sp/>lunchs<sp/>breaks<sp/>worth<sp/>of<sp/>updates....</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"></highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/07/09<sp/>13:34:51<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>keyboard:<sp/>keyboardInit<sp/>to<sp/>atkbd_init</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/>Adjusted<sp/>initialization<sp/>routines</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"></highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/05/21<sp/>14:57:16<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"></highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/atkbd.h"/>
+  </compounddef>
+</doxygen>

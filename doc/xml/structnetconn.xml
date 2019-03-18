@@ -1,0 +1,384 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structnetconn" kind="struct" prot="public">
+    <compoundname>netconn</compoundname>
+    <includes refid="api_8h" local="no">api.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structnetconn_19b59188f300828d2b5814e27ab27cad0" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
+        <definition>sys_mbox_t netconn::acceptmbox</definition>
+        <argsstring></argsstring>
+        <name>acceptmbox</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="85" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
+        <referencedby refid="api__lib_8c_1b1ef5f260ad8147a3b5b70b317b489d2" compoundref="api__lib_8c" startline="416" endline="427">netconn_accept</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_15da7386a373d51b886f0f6e5bbe50adb" prot="public" static="no" mutable="no">
+        <type><ref refid="err_8h_1b7190f3da5c85931fc059e0312bc1407" kindref="member">err_t</ref></type>
+        <definition>err_t netconn::err</definition>
+        <argsstring></argsstring>
+        <name>err</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="82" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_1cab3f82cc16d96db0db1f17b872613a4" compoundref="api__msg_8c" startline="243" endline="281">do_bind</referencedby>
+        <referencedby refid="api__msg_8c_19b56a6c9fb571348291027f09471890a" compoundref="api__msg_8c" startline="479" endline="501">do_close</referencedby>
+        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
+        <referencedby refid="api__msg_8c_117dd70d363c3f70a12d629bfdae64f97" compoundref="api__msg_8c" startline="284" endline="302">do_connected</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
+        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
+        <referencedby refid="api__lib_8c_1fcf7f4195b699c039de37b4dd3f563b7" compoundref="api__lib_8c" startline="306" endline="322">netconn_addr</referencedby>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
+        <referencedby refid="api__lib_8c_1b9eccae90351eb6c3d2ca690068445d4" compoundref="api__lib_8c" startline="640" endline="643">netconn_err</referencedby>
+        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
+        <referencedby refid="api__lib_8c_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+        <referencedby refid="api__msg_8c_15271a23a432de3322f8fa228a3f3a11f" compoundref="api__msg_8c" startline="47" endline="63">recv_tcp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_1d54529e379763409dae48a191c401def" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
+        <definition>sys_mbox_t netconn::mbox</definition>
+        <argsstring></argsstring>
+        <name>mbox</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="83" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_1cab3f82cc16d96db0db1f17b872613a4" compoundref="api__msg_8c" startline="243" endline="281">do_bind</referencedby>
+        <referencedby refid="api__msg_8c_19b56a6c9fb571348291027f09471890a" compoundref="api__msg_8c" startline="479" endline="501">do_close</referencedby>
+        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
+        <referencedby refid="api__msg_8c_117dd70d363c3f70a12d629bfdae64f97" compoundref="api__msg_8c" startline="284" endline="302">do_connected</referencedby>
+        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+        <referencedby refid="api__msg_8c_1e2a8fddd0b0f2a2b50c6e52281d37a67" compoundref="api__msg_8c" startline="438" endline="446">do_recv</referencedby>
+        <referencedby refid="api__msg_8c_1c47e25770a5c135b4ef043b8f9608d95" compoundref="api__msg_8c" startline="419" endline="435">do_send</referencedby>
+        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
+        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b917e0fc541447d966e5cf712ce24e58" compoundref="api__lib_8c" startline="389" endline="413">netconn_listen</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_1c4d4d10153d47c80a783c34b27c66238" compoundref="api__lib_8c" startline="509" endline="534">netconn_send</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_1182f4ff8950c8818ef67db1ff64e9c23" prot="public" static="no" mutable="no">
+        <type>netconn::@0</type>
+        <definition>union netconn::@0  netconn::pcb</definition>
+        <argsstring></argsstring>
+        <name>pcb</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="81"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_119262c4096bf0c095d44e08596d59fbf" compoundref="api__msg_8c" startline="401" endline="416">do_accept</referencedby>
+        <referencedby refid="api__msg_8c_1cab3f82cc16d96db0db1f17b872613a4" compoundref="api__msg_8c" startline="243" endline="281">do_bind</referencedby>
+        <referencedby refid="api__msg_8c_19b56a6c9fb571348291027f09471890a" compoundref="api__msg_8c" startline="479" endline="501">do_close</referencedby>
+        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
+        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+        <referencedby refid="api__msg_8c_1e2a8fddd0b0f2a2b50c6e52281d37a67" compoundref="api__msg_8c" startline="438" endline="446">do_recv</referencedby>
+        <referencedby refid="api__msg_8c_1c47e25770a5c135b4ef043b8f9608d95" compoundref="api__msg_8c" startline="419" endline="435">do_send</referencedby>
+        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
+        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
+        <referencedby refid="api__lib_8c_1fcf7f4195b699c039de37b4dd3f563b7" compoundref="api__lib_8c" startline="306" endline="322">netconn_addr</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+        <referencedby refid="api__msg_8c_1b5d697e0acb9e92139f177233cb42fbd" compoundref="api__msg_8c" startline="147" endline="157">setup_tcp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_19f2bf6a3865b6a22a8a71ec2f3e770da" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__mbox" kindref="compound">sys_mbox_t</ref></type>
+        <definition>sys_mbox_t netconn::recvmbox</definition>
+        <argsstring></argsstring>
+        <name>recvmbox</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="84" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_140e08b372ad246ec7d2a7c9b1a2bd8fb" compoundref="api__lib_8c" startline="355" endline="386">netconn_connect</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__msg_8c_15271a23a432de3322f8fa228a3f3a11f" compoundref="api__msg_8c" startline="47" endline="63">recv_tcp</referencedby>
+        <referencedby refid="api__msg_8c_19920c045f07d61ccb1022a0af7feb0ed" compoundref="api__msg_8c" startline="66" endline="93">recv_udp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_12524a19c868ae15196e6aab1141e8885" prot="public" static="no" mutable="no">
+        <type><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref></type>
+        <definition>sys_sem_t netconn::sem</definition>
+        <argsstring></argsstring>
+        <name>sem</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="86" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+        <referencedby refid="api__msg_8c_1cfa8c3089ec7810a74fea8d004197343" compoundref="api__msg_8c" startline="96" endline="107">poll_tcp</referencedby>
+        <referencedby refid="api__msg_8c_1603b715a121557dc45c821caab18efc2" compoundref="api__msg_8c" startline="110" endline="119">sent_tcp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_1936c33090ec35e5e8c0011be5515a589" prot="public" static="no" mutable="no">
+        <type>enum <ref refid="api_8h_12c6c9c1869f443c5ec7b31180a44fada" kindref="member">netconn_state</ref></type>
+        <definition>enum netconn_state netconn::state</definition>
+        <argsstring></argsstring>
+        <name>state</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="77" bodyend="-1"/>
+        <referencedby refid="api__lib_8c_125bb1c1c9928f91f53149a026e2e2624" compoundref="api__lib_8c" startline="612" endline="637">netconn_close</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+        <referencedby refid="api__msg_8c_1cfa8c3089ec7810a74fea8d004197343" compoundref="api__msg_8c" startline="96" endline="107">poll_tcp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_1d0c827630fdb7e427170600b5f177c95" prot="public" static="no" mutable="no">
+        <type><ref refid="structtcp__pcb" kindref="compound">tcp_pcb</ref> *</type>
+        <definition>struct tcp_pcb* netconn::tcp</definition>
+        <argsstring></argsstring>
+        <name>tcp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="79" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_119262c4096bf0c095d44e08596d59fbf" compoundref="api__msg_8c" startline="401" endline="416">do_accept</referencedby>
+        <referencedby refid="api__msg_8c_1cab3f82cc16d96db0db1f17b872613a4" compoundref="api__msg_8c" startline="243" endline="281">do_bind</referencedby>
+        <referencedby refid="api__msg_8c_19b56a6c9fb571348291027f09471890a" compoundref="api__msg_8c" startline="479" endline="501">do_close</referencedby>
+        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
+        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+        <referencedby refid="api__msg_8c_1e2a8fddd0b0f2a2b50c6e52281d37a67" compoundref="api__msg_8c" startline="438" endline="446">do_recv</referencedby>
+        <referencedby refid="api__msg_8c_1c47e25770a5c135b4ef043b8f9608d95" compoundref="api__msg_8c" startline="419" endline="435">do_send</referencedby>
+        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
+        <referencedby refid="api__msg_8c_14d2f6663cc266c48f4de67e730d7ea32" compoundref="api__msg_8c" startline="122" endline="144">err_tcp</referencedby>
+        <referencedby refid="api__lib_8c_1fcf7f4195b699c039de37b4dd3f563b7" compoundref="api__lib_8c" startline="306" endline="322">netconn_addr</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+        <referencedby refid="api__msg_8c_1b5d697e0acb9e92139f177233cb42fbd" compoundref="api__msg_8c" startline="147" endline="157">setup_tcp</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_161af908d1d2e4e7345ac65d3b390d7b6" prot="public" static="no" mutable="no">
+        <type>enum <ref refid="api_8h_1aba260d28d105fb4bce9185fd0300d91" kindref="member">netconn_type</ref></type>
+        <definition>enum netconn_type netconn::type</definition>
+        <argsstring></argsstring>
+        <name>type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="76" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1c34376c05c2532858367dbdc2eec6ba0" compoundref="api__msg_8c" startline="160" endline="200">accept_function</referencedby>
+        <referencedby refid="api__msg_8c_119262c4096bf0c095d44e08596d59fbf" compoundref="api__msg_8c" startline="401" endline="416">do_accept</referencedby>
+        <referencedby refid="api__msg_8c_1cab3f82cc16d96db0db1f17b872613a4" compoundref="api__msg_8c" startline="243" endline="281">do_bind</referencedby>
+        <referencedby refid="api__msg_8c_19b56a6c9fb571348291027f09471890a" compoundref="api__msg_8c" startline="479" endline="501">do_close</referencedby>
+        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
+        <referencedby refid="api__msg_8c_117dd70d363c3f70a12d629bfdae64f97" compoundref="api__msg_8c" startline="284" endline="302">do_connected</referencedby>
+        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
+        <referencedby refid="api__msg_8c_1c5f93428ba9863cd9b438edfd8715626" compoundref="api__msg_8c" startline="368" endline="398">do_listen</referencedby>
+        <referencedby refid="api__msg_8c_1e2a8fddd0b0f2a2b50c6e52281d37a67" compoundref="api__msg_8c" startline="438" endline="446">do_recv</referencedby>
+        <referencedby refid="api__msg_8c_1c47e25770a5c135b4ef043b8f9608d95" compoundref="api__msg_8c" startline="419" endline="435">do_send</referencedby>
+        <referencedby refid="api__msg_8c_1ad9b6e185b705c42c144f849b54fbf0e" compoundref="api__msg_8c" startline="449" endline="476">do_write</referencedby>
+        <referencedby refid="api__lib_8c_1fcf7f4195b699c039de37b4dd3f563b7" compoundref="api__lib_8c" startline="306" endline="322">netconn_addr</referencedby>
+        <referencedby refid="api__lib_8c_1dc842fc0f1de512895ef3cc9c657272a" compoundref="api__lib_8c" startline="325" endline="352">netconn_bind</referencedby>
+        <referencedby refid="api__lib_8c_1b411221f912a6d9e4c82ac3963989403" compoundref="api__lib_8c" startline="227" endline="278">netconn_delete</referencedby>
+        <referencedby refid="api__lib_8c_1b30ead34944094913a666250896ae95e" compoundref="api__lib_8c" startline="204" endline="224">netconn_new</referencedby>
+        <referencedby refid="api__lib_8c_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</referencedby>
+        <referencedby refid="api__lib_8c_1cbd0b5a0344c2c3fffe5a02445a2c2b3" compoundref="api__lib_8c" startline="430" endline="506">netconn_recv</referencedby>
+        <referencedby refid="api__lib_8c_15ab1d6bb5e45b28125312f1b3c840853" compoundref="api__lib_8c" startline="281" endline="284">netconn_type</referencedby>
+        <referencedby refid="api__lib_8c_19363929b6c680bc1dd3f302885128959" compoundref="api__lib_8c" startline="537" endline="609">netconn_write</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnetconn_1ffb33f27be14689a2fc9aa04a9dfa016" prot="public" static="no" mutable="no">
+        <type><ref refid="structudp__pcb" kindref="compound">udp_pcb</ref> *</type>
+        <definition>struct udp_pcb* netconn::udp</definition>
+        <argsstring></argsstring>
+        <name>udp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="80" bodyend="-1"/>
+        <referencedby refid="api__msg_8c_1cab3f82cc16d96db0db1f17b872613a4" compoundref="api__msg_8c" startline="243" endline="281">do_bind</referencedby>
+        <referencedby refid="api__msg_8c_18ad3068b45627dbe48440d4d6e1607d1" compoundref="api__msg_8c" startline="305" endline="365">do_connect</referencedby>
+        <referencedby refid="api__msg_8c_1351ca82b3580d84ee0d70f7ab033a236" compoundref="api__msg_8c" startline="208" endline="240">do_delconn</referencedby>
+        <referencedby refid="api__msg_8c_1c47e25770a5c135b4ef043b8f9608d95" compoundref="api__msg_8c" startline="419" endline="435">do_send</referencedby>
+        <referencedby refid="api__lib_8c_1fcf7f4195b699c039de37b4dd3f563b7" compoundref="api__lib_8c" startline="306" endline="322">netconn_addr</referencedby>
+        <referencedby refid="api__lib_8c_1afa4042fd63fd78a440006eb4da36eeb" compoundref="api__lib_8c" startline="287" endline="303">netconn_peer</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="260">
+        <label>sys_mbox</label>
+        <link refid="structsys__mbox"/>
+        <childnode refid="261" relation="usage">
+          <edgelabel>mutex
+mail</edgelabel>
+        </childnode>
+      </node>
+      <node id="265">
+        <label>ip_addr</label>
+        <link refid="structip__addr"/>
+      </node>
+      <node id="262">
+        <label>ubthread_mutex</label>
+        <link refid="structubthread__mutex"/>
+      </node>
+      <node id="263">
+        <label>ubthread_cond</label>
+        <link refid="structubthread__cond"/>
+      </node>
+      <node id="267">
+        <label>tcp_seg</label>
+        <link refid="structtcp__seg"/>
+        <childnode refid="267" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+        <childnode refid="268" relation="usage">
+          <edgelabel>tcphdr</edgelabel>
+        </childnode>
+        <childnode refid="269" relation="usage">
+          <edgelabel>p</edgelabel>
+        </childnode>
+      </node>
+      <node id="269">
+        <label>pbuf</label>
+        <link refid="structpbuf"/>
+        <childnode refid="269" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="264">
+        <label>udp_pcb</label>
+        <link refid="structudp__pcb"/>
+        <childnode refid="265" relation="usage">
+          <edgelabel>remote_ip</edgelabel>
+        </childnode>
+        <childnode refid="264" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="259">
+        <label>netconn</label>
+        <link refid="structnetconn"/>
+        <childnode refid="260" relation="usage">
+          <edgelabel>recvmbox
+acceptmbox
+mbox</edgelabel>
+        </childnode>
+        <childnode refid="261" relation="usage">
+          <edgelabel>sem</edgelabel>
+        </childnode>
+        <childnode refid="264" relation="usage">
+          <edgelabel>udp</edgelabel>
+        </childnode>
+        <childnode refid="266" relation="usage">
+          <edgelabel>tcp</edgelabel>
+        </childnode>
+      </node>
+      <node id="261">
+        <label>sys_sem</label>
+        <link refid="structsys__sem"/>
+        <childnode refid="262" relation="usage">
+          <edgelabel>mutex</edgelabel>
+        </childnode>
+        <childnode refid="263" relation="usage">
+          <edgelabel>cond</edgelabel>
+        </childnode>
+      </node>
+      <node id="268">
+        <label>tcp_hdr</label>
+        <link refid="structtcp__hdr"/>
+      </node>
+      <node id="266">
+        <label>tcp_pcb</label>
+        <link refid="structtcp__pcb"/>
+        <childnode refid="267" relation="usage">
+          <edgelabel>unsent
+unacked</edgelabel>
+        </childnode>
+        <childnode refid="269" relation="usage">
+          <edgelabel>recv_data</edgelabel>
+        </childnode>
+        <childnode refid="265" relation="usage">
+          <edgelabel>local_ip
+remote_ip</edgelabel>
+        </childnode>
+        <childnode refid="266" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/api.h" bodystart="75" bodyend="87"/>
+    <listofallmembers>
+      <member refid="structnetconn_19b59188f300828d2b5814e27ab27cad0" prot="public" virt="non-virtual"><scope>netconn</scope><name>acceptmbox</name></member>
+      <member refid="structnetconn_15da7386a373d51b886f0f6e5bbe50adb" prot="public" virt="non-virtual"><scope>netconn</scope><name>err</name></member>
+      <member refid="structnetconn_1d54529e379763409dae48a191c401def" prot="public" virt="non-virtual"><scope>netconn</scope><name>mbox</name></member>
+      <member refid="structnetconn_1182f4ff8950c8818ef67db1ff64e9c23" prot="public" virt="non-virtual"><scope>netconn</scope><name>pcb</name></member>
+      <member refid="structnetconn_19f2bf6a3865b6a22a8a71ec2f3e770da" prot="public" virt="non-virtual"><scope>netconn</scope><name>recvmbox</name></member>
+      <member refid="structnetconn_12524a19c868ae15196e6aab1141e8885" prot="public" virt="non-virtual"><scope>netconn</scope><name>sem</name></member>
+      <member refid="structnetconn_1936c33090ec35e5e8c0011be5515a589" prot="public" virt="non-virtual"><scope>netconn</scope><name>state</name></member>
+      <member refid="structnetconn_1d0c827630fdb7e427170600b5f177c95" prot="public" virt="non-virtual"><scope>netconn</scope><name>tcp</name></member>
+      <member refid="structnetconn_161af908d1d2e4e7345ac65d3b390d7b6" prot="public" virt="non-virtual"><scope>netconn</scope><name>type</name></member>
+      <member refid="structnetconn_1ffb33f27be14689a2fc9aa04a9dfa016" prot="public" virt="non-virtual"><scope>netconn</scope><name>udp</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

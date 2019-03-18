@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structreadlink__args" kind="struct" prot="public">
+    <compoundname>readlink_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structreadlink__args_1a7bafb5f9d59ccf62072fe531c58b8f0" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* readlink_args::buf</definition>
+        <argsstring></argsstring>
+        <name>buf</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_1c0b6355ba6d4fd499b127471e12d1d58" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char readlink_args::buf_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>buf_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_1cc03a2e4ee1130cb85844ca356c34588" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char readlink_args::buf_r_[(sizeof(register_t)&lt;=sizeof(char *)?0:sizeof(register_t)-sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *)?0:sizeof(register_t)-sizeof(char *))]</argsstring>
+        <name>buf_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_11c122ab73c591775ed283f58ac5c3019" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int readlink_args::count</definition>
+        <argsstring></argsstring>
+        <name>count</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="98" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1111a32074b3f5f68a4fa5585fe8ab3a4" compoundref="gen__calls_8c" startline="108" endline="116">readlink</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_1bf7c96099dede28d2729bfc159a72d94" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char readlink_args::count_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>count_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_10d3b906bd5ce2f725f92cc2b72333bed" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char readlink_args::count_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>count_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_14c97e5cd326ea78adb5c072e6de3c2a4" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* readlink_args::path</definition>
+        <argsstring></argsstring>
+        <name>path</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="96" bodyend="-1"/>
+        <referencedby refid="gen__calls_8c_1111a32074b3f5f68a4fa5585fe8ab3a4" compoundref="gen__calls_8c" startline="108" endline="116">readlink</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_14999f1b4dd792b77106ea929c3176fec" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char readlink_args::path_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>path_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structreadlink__args_14f35d8bc85986e17c8934f4cb3eb6f6c" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char readlink_args::path_r_[(sizeof(register_t)&lt;=sizeof(char *)?0:sizeof(register_t)-sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *)?0:sizeof(register_t)-sizeof(char *))]</argsstring>
+        <name>path_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="96" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="95" bodyend="99"/>
+    <listofallmembers>
+      <member refid="structreadlink__args_1a7bafb5f9d59ccf62072fe531c58b8f0" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>buf</name></member>
+      <member refid="structreadlink__args_1c0b6355ba6d4fd499b127471e12d1d58" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>buf_l_</name></member>
+      <member refid="structreadlink__args_1cc03a2e4ee1130cb85844ca356c34588" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>buf_r_</name></member>
+      <member refid="structreadlink__args_11c122ab73c591775ed283f58ac5c3019" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>count</name></member>
+      <member refid="structreadlink__args_1bf7c96099dede28d2729bfc159a72d94" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>count_l_</name></member>
+      <member refid="structreadlink__args_10d3b906bd5ce2f725f92cc2b72333bed" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>count_r_</name></member>
+      <member refid="structreadlink__args_14c97e5cd326ea78adb5c072e6de3c2a4" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>path</name></member>
+      <member refid="structreadlink__args_14999f1b4dd792b77106ea929c3176fec" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>path_l_</name></member>
+      <member refid="structreadlink__args_14f35d8bc85986e17c8934f4cb3eb6f6c" prot="public" virt="non-virtual"><scope>readlink_args</scope><name>path_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

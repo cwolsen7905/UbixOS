@@ -1,0 +1,941 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="lwipopts_8h" kind="file">
+    <compoundname>lwipopts.h</compoundname>
+    <includedby refid="memp_8h" local="yes">src/sys/include/net/memp.h</includedby>
+    <includedby refid="opt_8h" local="yes">src/sys/include/net/opt.h</includedby>
+    <invincdepgraph>
+      <node id="824">
+        <label>src/sys/net/net/udpecho.c</label>
+        <link refid="udpecho_8c"/>
+      </node>
+      <node id="831">
+        <label>src/sys/include/net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="820" relation="include">
+        </childnode>
+        <childnode refid="821" relation="include">
+        </childnode>
+        <childnode refid="826" relation="include">
+        </childnode>
+        <childnode refid="832" relation="include">
+        </childnode>
+        <childnode refid="817" relation="include">
+        </childnode>
+        <childnode refid="833" relation="include">
+        </childnode>
+        <childnode refid="827" relation="include">
+        </childnode>
+        <childnode refid="828" relation="include">
+        </childnode>
+      </node>
+      <node id="811">
+        <label>src/sys/include/net/stats.h</label>
+        <link refid="stats_8h"/>
+        <childnode refid="812" relation="include">
+        </childnode>
+        <childnode refid="813" relation="include">
+        </childnode>
+        <childnode refid="814" relation="include">
+        </childnode>
+      </node>
+      <node id="828">
+        <label>src/sys/net/netif/tcpdump.c</label>
+        <link refid="tcpdump_8c"/>
+      </node>
+      <node id="830">
+        <label>src/sys/include/net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="825" relation="include">
+        </childnode>
+        <childnode refid="831" relation="include">
+        </childnode>
+        <childnode refid="834" relation="include">
+        </childnode>
+        <childnode refid="836" relation="include">
+        </childnode>
+        <childnode refid="837" relation="include">
+        </childnode>
+      </node>
+      <node id="827">
+        <label>src/sys/net/netif/loopif.c</label>
+        <link refid="loopif_8c"/>
+      </node>
+      <node id="838">
+        <label>src/sys/include/net/ipv6/inet.h</label>
+        <link refid="ipv6_2inet_8h"/>
+      </node>
+      <node id="814">
+        <label>src/sys/net/net/sys_arch.c</label>
+        <link refid="sys__arch_8c"/>
+      </node>
+      <node id="832">
+        <label>src/sys/include/net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="820" relation="include">
+        </childnode>
+        <childnode refid="821" relation="include">
+        </childnode>
+        <childnode refid="817" relation="include">
+        </childnode>
+        <childnode refid="828" relation="include">
+        </childnode>
+      </node>
+      <node id="834">
+        <label>src/sys/include/netif/arp.h</label>
+        <link refid="arp_8h"/>
+        <childnode refid="833" relation="include">
+        </childnode>
+        <childnode refid="835" relation="include">
+        </childnode>
+      </node>
+      <node id="826">
+        <label>src/sys/include/net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="820" relation="include">
+        </childnode>
+        <childnode refid="821" relation="include">
+        </childnode>
+        <childnode refid="817" relation="include">
+        </childnode>
+        <childnode refid="827" relation="include">
+        </childnode>
+        <childnode refid="828" relation="include">
+        </childnode>
+      </node>
+      <node id="835">
+        <label>src/sys/net/netif/ethernetif.c</label>
+        <link refid="ethernetif_8c"/>
+      </node>
+      <node id="833">
+        <label>src/sys/net/netif/arp.c</label>
+        <link refid="arp_8c"/>
+      </node>
+      <node id="825">
+        <label>src/sys/include/net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="826" relation="include">
+        </childnode>
+      </node>
+      <node id="812">
+        <label>src/sys/net/net/bot.c</label>
+        <link refid="bot_8c"/>
+      </node>
+      <node id="817">
+        <label>src/sys/net/api/tcpip.c</label>
+        <link refid="tcpip_8c"/>
+      </node>
+      <node id="809">
+        <label>src/sys/include/net/lwipopts.h</label>
+        <link refid="lwipopts.h"/>
+        <childnode refid="810" relation="include">
+        </childnode>
+        <childnode refid="819" relation="include">
+        </childnode>
+      </node>
+      <node id="822">
+        <label>src/sys/include/net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="816" relation="include">
+        </childnode>
+        <childnode refid="817" relation="include">
+        </childnode>
+        <childnode refid="818" relation="include">
+        </childnode>
+      </node>
+      <node id="821">
+        <label>src/sys/include/net/api_msg.h</label>
+        <link refid="api__msg_8h"/>
+        <childnode refid="822" relation="include">
+        </childnode>
+        <childnode refid="815" relation="include">
+        </childnode>
+        <childnode refid="816" relation="include">
+        </childnode>
+      </node>
+      <node id="836">
+        <label>src/sys/include/netif/ethernetif.h</label>
+        <link refid="ethernetif_8h"/>
+        <childnode refid="818" relation="include">
+        </childnode>
+      </node>
+      <node id="813">
+        <label>src/sys/net/net/shell.c</label>
+        <link refid="shell_8c"/>
+      </node>
+      <node id="815">
+        <label>src/sys/net/api/api_lib.c</label>
+        <link refid="api__lib_8c"/>
+      </node>
+      <node id="839">
+        <label>src/sys/include/net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="826" relation="include">
+        </childnode>
+        <childnode refid="812" relation="include">
+        </childnode>
+        <childnode refid="818" relation="include">
+        </childnode>
+        <childnode refid="813" relation="include">
+        </childnode>
+        <childnode refid="835" relation="include">
+        </childnode>
+        <childnode refid="827" relation="include">
+        </childnode>
+      </node>
+      <node id="818">
+        <label>src/sys/net/net/init.c</label>
+        <link refid="init_8c"/>
+      </node>
+      <node id="810">
+        <label>src/sys/include/net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="811" relation="include">
+        </childnode>
+        <childnode refid="815" relation="include">
+        </childnode>
+        <childnode refid="816" relation="include">
+        </childnode>
+        <childnode refid="817" relation="include">
+        </childnode>
+        <childnode refid="818" relation="include">
+        </childnode>
+      </node>
+      <node id="820">
+        <label>src/sys/include/net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="821" relation="include">
+        </childnode>
+        <childnode refid="815" relation="include">
+        </childnode>
+        <childnode refid="823" relation="include">
+        </childnode>
+        <childnode refid="812" relation="include">
+        </childnode>
+        <childnode refid="813" relation="include">
+        </childnode>
+        <childnode refid="824" relation="include">
+        </childnode>
+      </node>
+      <node id="837">
+        <label>src/sys/include/netif/loopif.h</label>
+        <link refid="loopif_8h"/>
+        <childnode refid="818" relation="include">
+        </childnode>
+        <childnode refid="827" relation="include">
+        </childnode>
+      </node>
+      <node id="819">
+        <label>src/sys/include/net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="820" relation="include">
+        </childnode>
+        <childnode refid="821" relation="include">
+        </childnode>
+        <childnode refid="825" relation="include">
+        </childnode>
+        <childnode refid="829" relation="include">
+        </childnode>
+        <childnode refid="838" relation="include">
+        </childnode>
+        <childnode refid="839" relation="include">
+        </childnode>
+        <childnode refid="830" relation="include">
+        </childnode>
+        <childnode refid="811" relation="include">
+        </childnode>
+        <childnode refid="826" relation="include">
+        </childnode>
+        <childnode refid="817" relation="include">
+        </childnode>
+        <childnode refid="814" relation="include">
+        </childnode>
+        <childnode refid="835" relation="include">
+        </childnode>
+        <childnode refid="827" relation="include">
+        </childnode>
+      </node>
+      <node id="823">
+        <label>src/sys/net/api/sockets.c</label>
+        <link refid="sockets_8c"/>
+      </node>
+      <node id="816">
+        <label>src/sys/net/api/api_msg.c</label>
+        <link refid="api__msg_8c"/>
+      </node>
+      <node id="829">
+        <label>src/sys/include/net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="830" relation="include">
+        </childnode>
+        <childnode refid="832" relation="include">
+        </childnode>
+        <childnode refid="833" relation="include">
+        </childnode>
+        <childnode refid="828" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="lwipopts_8h_1924936a814564dbdb0bc950d255a83b9" prot="public" static="no">
+        <name>ARP_TABLE_SIZE</name>
+        <initializer>10</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="128" bodyend="-1"/>
+        <referencedby refid="arp_8c_1038bb8fc3bcc993d8b7724632e43ed0f" compoundref="arp_8c" startline="120" endline="178">add_arp_entry</referencedby>
+        <referencedby refid="arp_8c_1c8ad5a32790d172fcec2eac97a87ee9f" compoundref="arp_8c" startline="93" endline="101">arp_init</referencedby>
+        <referencedby refid="arp_8c_1eec8fff4f036cca2ac1b5635fa46d21b" compoundref="arp_8c" startline="253" endline="263">arp_lookup</referencedby>
+        <referencedby refid="arp_8c_12cc298ed4c68289160da1376faf20938" compoundref="arp_8c" startline="104" endline="117">arp_tmr</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1b2d91de7b2fce879b0a213682e1b0b69" prot="public" static="no">
+        <name>DHCP_DOES_ARP_CHECK</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="152" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1472ad3f6da741f5b287d66ad3051242b" prot="public" static="no">
+        <name>ICMP_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="165" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1e1533f2bc39a5843989909555f6ce0cf" prot="public" static="no">
+        <name>ICMP_TTL</name>
+        <initializer>255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="141" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="141" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1881d32ff5ee02af01f758953f1b51d59" prot="public" static="no">
+        <name>IP_FORWARD</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1c125a06d135555bed70eed821a697e66" prot="public" static="no">
+        <name>IP_OPTIONS</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="138" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1f50575a4895e26ea2c01d1f2269487be" prot="public" static="no">
+        <name>IP_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="164" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1e58b452782d0327ae728192686c5a84a" prot="public" static="no">
+        <name>LINK_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="163" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_18a6ec62dc121064ac591b1fd8567bee9" prot="public" static="no">
+        <name>LWIP_DHCP</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="148" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="148" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1a4ed98deb97b77c633cb8870f34c71e9" prot="public" static="no">
+        <name>LWIP_TCP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="101" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="101" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1b6030e96e72df649d2650fd32d7a67b3" prot="public" static="no">
+        <name>LWIP_UDP</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="155" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="155" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_197343214666ee6dcb18c0bd77b441ea7" prot="public" static="no">
+        <name>MEM_ALIGNMENT</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1092063cd8a3a133cb55ad623ee69f440" prot="public" static="no">
+        <name>MEM_RECLAIM</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_12dcf8c45f945dd0c4301a94700f2112c" prot="public" static="no">
+        <name>MEM_SIZE</name>
+        <initializer>1000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_161ec04a08c4fde690d10819e582656a7" prot="public" static="no">
+        <name>MEM_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="168" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="168" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_15a95abf3610c56e7c23cb035eb9c3444" prot="public" static="no">
+        <name>MEMP_NUM_API_MSG</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_15d99df65869ac101ed6a611fc85016be" prot="public" static="no">
+        <name>MEMP_NUM_NETBUF</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1cb40bd726b7e15593b20a628d298f456" prot="public" static="no">
+        <name>MEMP_NUM_NETCONN</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_192b30aed958ec59334d936d4ca725418" prot="public" static="no">
+        <name>MEMP_NUM_PBUF</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_14afbdca581a58d57bc7a81118a95327e" prot="public" static="no">
+        <name>MEMP_NUM_SYS_TIMEOUT</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_173beecc19cfbc3114768f9b32b2cd70e" prot="public" static="no">
+        <name>MEMP_NUM_TCP_PCB</name>
+        <initializer>5</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_104fba6a249123513271dccb4ec26aa5a" prot="public" static="no">
+        <name>MEMP_NUM_TCP_PCB_LISTEN</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1a35fb3a1a76661e3ffb9722a57092de3" prot="public" static="no">
+        <name>MEMP_NUM_TCP_SEG</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_10e484533571a0414bf08a6ce1337059d" prot="public" static="no">
+        <name>MEMP_NUM_TCPIP_MSG</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_12c416da481ab09bd1ba257b75a0707eb" prot="public" static="no">
+        <name>MEMP_NUM_UDP_PCB</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1c96d15536aaa9e0058d2e6e67bf1ac8b" prot="public" static="no">
+        <name>MEMP_RECLAIM</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1b8c2430be0e567a7499a95454aaa6041" prot="public" static="no">
+        <name>MEMP_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="169" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="169" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_135998a3d56af9940e6a80bb372597685" prot="public" static="no">
+        <name>PBUF_LINK_HLEN</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="98" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1e61f4491d56e805e79b79eb5d35a00e5" prot="public" static="no">
+        <name>PBUF_POOL_BUFSIZE</name>
+        <initializer>128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_150eaadc4cad0716410332691e382c38a" prot="public" static="no">
+        <name>PBUF_POOL_SIZE</name>
+        <initializer>6</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="91" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="91" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_15603346288157af5c6f0e01a08ad4000" prot="public" static="no">
+        <name>PBUF_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="170" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="170" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1d56ac02048a828d5401f884bbbe846ab" prot="public" static="no">
+        <name>STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="160" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_10173549afa76553583e5a02c6a791218" prot="public" static="no">
+        <name>SYS_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="171" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="171" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_10dee0911197855bdf19ef79778c241a6" prot="public" static="no">
+        <name>TCP_MAXRTX</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1f1ab7bb27860aa3677c387a2f3ba317b" prot="public" static="no">
+        <name>TCP_MSS</name>
+        <initializer>128</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_189ffd0d7d1529bdb26bfbad267d0ad75" prot="public" static="no">
+        <name>TCP_QUEUE_OOSEQ</name>
+        <initializer>1</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="106" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1871d111968d8c6c7880ff36b93c5c4dd" prot="public" static="no">
+        <name>TCP_SND_BUF</name>
+        <initializer>256</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="112" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="112" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_19beaa47832ead4180981bfbf71074904" prot="public" static="no">
+        <name>TCP_SND_QUEUELEN</name>
+        <initializer>4 * TCP_SND_BUF/TCP_MSS</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="116" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="116" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1a02ec5c5bc0edebe418680c54d044f58" prot="public" static="no">
+        <name>TCP_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="167" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_150b434a8541a4813f7b27f576c05d1b6" prot="public" static="no">
+        <name>TCP_SYNMAXRTX</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="125" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1cd5b25ea81d2894790d25da5393cdab4" prot="public" static="no">
+        <name>TCP_TTL</name>
+        <initializer>255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="102" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="102" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_17f535a6efb5cdf86c3210e35ece1d6a7" prot="public" static="no">
+        <name>TCP_WND</name>
+        <initializer>1024</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="119" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="119" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_1ef64b11bf71f0d6d5bafaf6092462276" prot="public" static="no">
+        <name>UDP_STATS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="166" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="lwipopts_8h_197908a317bcba89174b5d1ccbdca0096" prot="public" static="no">
+        <name>UDP_TTL</name>
+        <initializer>255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h" bodystart="156" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>$Id: lwipopts_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__LWIPOPTS_H__</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__LWIPOPTS_H__</highlight></codeline>
+<codeline lineno="37"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>Memory<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MEM_ALIGNMENT:<sp/>should<sp/>be<sp/>set<sp/>to<sp/>the<sp/>alignment<sp/>of<sp/>the<sp/>CPU<sp/>for<sp/>which</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/><sp/><sp/>lwIP<sp/>is<sp/>compiled.<sp/>4<sp/>byte<sp/>alignment<sp/>-&gt;<sp/>define<sp/>MEM_ALIGNMENT<sp/>to<sp/>4,<sp/>2</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/><sp/><sp/>byte<sp/>alignment<sp/>-&gt;<sp/>define<sp/>MEM_ALIGNMENT<sp/>to<sp/>2.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="lwipopts_8h_197343214666ee6dcb18c0bd77b441ea7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_ALIGNMENT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="43"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MEM_SIZE:<sp/>the<sp/>size<sp/>of<sp/>the<sp/>heap<sp/>memory.<sp/>If<sp/>the<sp/>application<sp/>will<sp/>send</highlight></codeline>
+<codeline lineno="45"><highlight class="comment">a<sp/>lot<sp/>of<sp/>data<sp/>that<sp/>needs<sp/>to<sp/>be<sp/>copied,<sp/>this<sp/>should<sp/>be<sp/>set<sp/>high.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="lwipopts_8h_12dcf8c45f945dd0c4301a94700f2112c" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1000</highlight></codeline>
+<codeline lineno="47"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_PBUF:<sp/>the<sp/>number<sp/>of<sp/>memp<sp/>struct<sp/>pbufs.<sp/>If<sp/>the<sp/>application</highlight></codeline>
+<codeline lineno="49"><highlight class="comment"><sp/><sp/><sp/>sends<sp/>a<sp/>lot<sp/>of<sp/>data<sp/>out<sp/>of<sp/>ROM<sp/>(or<sp/>other<sp/>static<sp/>memory),<sp/>this</highlight></codeline>
+<codeline lineno="50"><highlight class="comment"><sp/><sp/><sp/>should<sp/>be<sp/>set<sp/>high.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="lwipopts_8h_192b30aed958ec59334d936d4ca725418" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_PBUF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight></codeline>
+<codeline lineno="52"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_UDP_PCB:<sp/>the<sp/>number<sp/>of<sp/>UDP<sp/>protocol<sp/>control<sp/>blocks.<sp/>One</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/><sp/><sp/>per<sp/>active<sp/>UDP<sp/>&quot;connection&quot;.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="lwipopts_8h_12c416da481ab09bd1ba257b75a0707eb" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_UDP_PCB<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="55"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_TCP_PCB:<sp/>the<sp/>number<sp/>of<sp/>simulatenously<sp/>active<sp/>TCP</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"><sp/><sp/><sp/>connections.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="lwipopts_8h_173beecc19cfbc3114768f9b32b2cd70e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_TCP_PCB<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>5</highlight></codeline>
+<codeline lineno="58"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_TCP_PCB_LISTEN:<sp/>the<sp/>number<sp/>of<sp/>listening<sp/>TCP</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"><sp/><sp/><sp/>connections.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="lwipopts_8h_104fba6a249123513271dccb4ec26aa5a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_TCP_PCB_LISTEN<sp/>8</highlight></codeline>
+<codeline lineno="61"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_TCP_SEG:<sp/>the<sp/>number<sp/>of<sp/>simultaneously<sp/>queued<sp/>TCP</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/><sp/><sp/>segments.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="lwipopts_8h_1a35fb3a1a76661e3ffb9722a57092de3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_TCP_SEG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight></codeline>
+<codeline lineno="64"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_SYS_TIMEOUT:<sp/>the<sp/>number<sp/>of<sp/>simulateously<sp/>active</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/><sp/><sp/>timeouts.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="lwipopts_8h_14afbdca581a58d57bc7a81118a95327e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_SYS_TIMEOUT<sp/><sp/><sp/><sp/>3</highlight></codeline>
+<codeline lineno="67"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>following<sp/>four<sp/>are<sp/>used<sp/>only<sp/>with<sp/>the<sp/>sequential<sp/>API<sp/>and<sp/>can<sp/>be</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/><sp/><sp/>set<sp/>to<sp/>0<sp/>if<sp/>the<sp/>application<sp/>only<sp/>will<sp/>use<sp/>the<sp/>raw<sp/>API.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_NETBUF:<sp/>the<sp/>number<sp/>of<sp/>struct<sp/>netbufs.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="lwipopts_8h_15d99df65869ac101ed6a611fc85016be" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_NETBUF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>2</highlight></codeline>
+<codeline lineno="73"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_NETCONN:<sp/>the<sp/>number<sp/>of<sp/>struct<sp/>netconns.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="lwipopts_8h_1cb40bd726b7e15593b20a628d298f456" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_NETCONN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="75"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_APIMSG:<sp/>the<sp/>number<sp/>of<sp/>struct<sp/>api_msg,<sp/>used<sp/>for</highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/><sp/><sp/>communication<sp/>between<sp/>the<sp/>TCP/IP<sp/>stack<sp/>and<sp/>the<sp/>sequential</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/><sp/><sp/>programs.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78" refid="lwipopts_8h_15a95abf3610c56e7c23cb035eb9c3444" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_API_MSG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight></codeline>
+<codeline lineno="79"><highlight class="preprocessor"></highlight><highlight class="comment">/*<sp/>MEMP_NUM_TCPIPMSG:<sp/>the<sp/>number<sp/>of<sp/>struct<sp/>tcpip_msg,<sp/>which<sp/>is<sp/>used</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/><sp/><sp/>for<sp/>sequential<sp/>API<sp/>communication<sp/>and<sp/>incoming<sp/>packets.<sp/>Used<sp/>in</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"><sp/><sp/><sp/>src/api/tcpip.c.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82" refid="lwipopts_8h_10e484533571a0414bf08a6ce1337059d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEMP_NUM_TCPIP_MSG<sp/><sp/><sp/><sp/><sp/><sp/>8</highlight></codeline>
+<codeline lineno="83"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>These<sp/>two<sp/>control<sp/>is<sp/>reclaimer<sp/>functions<sp/>should<sp/>be<sp/>compiled</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/><sp/><sp/>in.<sp/>Should<sp/>always<sp/>be<sp/>turned<sp/>on<sp/>(1).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="86" refid="lwipopts_8h_1092063cd8a3a133cb55ad623ee69f440" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MEM_RECLAIM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="87" refid="lwipopts_8h_1c96d15536aaa9e0058d2e6e67bf1ac8b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEMP_RECLAIM<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="88"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>Pbuf<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="90"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>PBUF_POOL_SIZE:<sp/>the<sp/>number<sp/>of<sp/>buffers<sp/>in<sp/>the<sp/>pbuf<sp/>pool.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91" refid="lwipopts_8h_150eaadc4cad0716410332691e382c38a" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PBUF_POOL_SIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>6</highlight></codeline>
+<codeline lineno="92"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>PBUF_POOL_BUFSIZE:<sp/>the<sp/>size<sp/>of<sp/>each<sp/>pbuf<sp/>in<sp/>the<sp/>pbuf<sp/>pool.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94" refid="lwipopts_8h_1e61f4491d56e805e79b79eb5d35a00e5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PBUF_POOL_BUFSIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>128</highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>PBUF_LINK_HLEN:<sp/>the<sp/>number<sp/>of<sp/>bytes<sp/>that<sp/>should<sp/>be<sp/>allocated<sp/>for<sp/>a</highlight></codeline>
+<codeline lineno="97"><highlight class="comment"><sp/><sp/><sp/>link<sp/>level<sp/>header.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="lwipopts_8h_135998a3d56af9940e6a80bb372597685" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>PBUF_LINK_HLEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>16</highlight></codeline>
+<codeline lineno="99"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>TCP<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="101" refid="lwipopts_8h_1a4ed98deb97b77c633cb8870f34c71e9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_TCP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="102" refid="lwipopts_8h_1cd5b25ea81d2894790d25da5393cdab4" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_TTL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>255</highlight></codeline>
+<codeline lineno="103"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Controls<sp/>if<sp/>TCP<sp/>should<sp/>queue<sp/>segments<sp/>that<sp/>arrive<sp/>out<sp/>of</highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/><sp/><sp/>order.<sp/>Define<sp/>to<sp/>0<sp/>if<sp/>your<sp/>device<sp/>is<sp/>low<sp/>on<sp/>memory.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="lwipopts_8h_189ffd0d7d1529bdb26bfbad267d0ad75" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_QUEUE_OOSEQ<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="107"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>TCP<sp/>Maximum<sp/>segment<sp/>size.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="109" refid="lwipopts_8h_1f1ab7bb27860aa3677c387a2f3ba317b" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_MSS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>128</highlight></codeline>
+<codeline lineno="110"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>TCP<sp/>sender<sp/>buffer<sp/>space<sp/>(bytes).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="112" refid="lwipopts_8h_1871d111968d8c6c7880ff36b93c5c4dd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_SND_BUF<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>256</highlight></codeline>
+<codeline lineno="113"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>TCP<sp/>sender<sp/>buffer<sp/>space<sp/>(pbufs).<sp/>This<sp/>must<sp/>be<sp/>at<sp/>least<sp/>=<sp/>2<sp/>*</highlight></codeline>
+<codeline lineno="115"><highlight class="comment"><sp/><sp/><sp/>TCP_SND_BUF/TCP_MSS<sp/>for<sp/>things<sp/>to<sp/>work.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="lwipopts_8h_19beaa47832ead4180981bfbf71074904" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_SND_QUEUELEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4<sp/>*<sp/>TCP_SND_BUF/TCP_MSS</highlight></codeline>
+<codeline lineno="117"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>TCP<sp/>receive<sp/>window.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="119" refid="lwipopts_8h_17f535a6efb5cdf86c3210e35ece1d6a7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_WND<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1024</highlight></codeline>
+<codeline lineno="120"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Maximum<sp/>number<sp/>of<sp/>retransmissions<sp/>of<sp/>data<sp/>segments.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="lwipopts_8h_10dee0911197855bdf19ef79778c241a6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_MAXRTX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>12</highlight></codeline>
+<codeline lineno="123"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="124"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Maximum<sp/>number<sp/>of<sp/>retransmissions<sp/>of<sp/>SYN<sp/>segments.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="125" refid="lwipopts_8h_150b434a8541a4813f7b27f576c05d1b6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>TCP_SYNMAXRTX<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="126"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>ARP<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128" refid="lwipopts_8h_1924936a814564dbdb0bc950d255a83b9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ARP_TABLE_SIZE<sp/>10</highlight></codeline>
+<codeline lineno="129"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>IP<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Define<sp/>IP_FORWARD<sp/>to<sp/>1<sp/>if<sp/>you<sp/>wish<sp/>to<sp/>have<sp/>the<sp/>ability<sp/>to<sp/>forward</highlight></codeline>
+<codeline lineno="132"><highlight class="comment"><sp/><sp/><sp/>IP<sp/>packets<sp/>across<sp/>network<sp/>interfaces.<sp/>If<sp/>you<sp/>are<sp/>going<sp/>to<sp/>run<sp/>lwIP</highlight></codeline>
+<codeline lineno="133"><highlight class="comment"><sp/><sp/><sp/>on<sp/>a<sp/>device<sp/>with<sp/>only<sp/>one<sp/>network<sp/>interface,<sp/>define<sp/>this<sp/>to<sp/>0.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="lwipopts_8h_1881d32ff5ee02af01f758953f1b51d59" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_FORWARD<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="135"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>If<sp/>defined<sp/>to<sp/>1,<sp/>IP<sp/>options<sp/>are<sp/>allowed<sp/>(but<sp/>not<sp/>parsed).<sp/>If</highlight></codeline>
+<codeline lineno="137"><highlight class="comment"><sp/><sp/><sp/>defined<sp/>to<sp/>0,<sp/>all<sp/>packets<sp/>with<sp/>IP<sp/>options<sp/>are<sp/>dropped.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138" refid="lwipopts_8h_1c125a06d135555bed70eed821a697e66" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>IP_OPTIONS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="139"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>ICMP<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141" refid="lwipopts_8h_1e1533f2bc39a5843989909555f6ce0cf" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ICMP_TTL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>255</highlight></codeline>
+<codeline lineno="142"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>DHCP<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Define<sp/>LWIP_DHCP<sp/>to<sp/>1<sp/>if<sp/>you<sp/>want<sp/>DHCP<sp/>configuration<sp/>of</highlight></codeline>
+<codeline lineno="146"><highlight class="comment"><sp/><sp/><sp/>interfaces.<sp/>DHCP<sp/>is<sp/>not<sp/>implemented<sp/>in<sp/>lwIP<sp/>0.5.1,<sp/>however,<sp/>so</highlight></codeline>
+<codeline lineno="147"><highlight class="comment"><sp/><sp/><sp/>turning<sp/>this<sp/>on<sp/>does<sp/>currently<sp/>not<sp/>work.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="lwipopts_8h_18a6ec62dc121064ac591b1fd8567bee9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_DHCP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="149"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>1<sp/>if<sp/>you<sp/>want<sp/>to<sp/>do<sp/>an<sp/>ARP<sp/>check<sp/>on<sp/>the<sp/>offered<sp/>address</highlight></codeline>
+<codeline lineno="151"><highlight class="comment"><sp/><sp/><sp/>(recommended).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="lwipopts_8h_1b2d91de7b2fce879b0a213682e1b0b69" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>DHCP_DOES_ARP_CHECK<sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="153"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>UDP<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155" refid="lwipopts_8h_1b6030e96e72df649d2650fd32d7a67b3" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LWIP_UDP<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>1</highlight></codeline>
+<codeline lineno="156" refid="lwipopts_8h_197908a317bcba89174b5d1ccbdca0096" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UDP_TTL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>255</highlight></codeline>
+<codeline lineno="157"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158"><highlight class="normal"></highlight></codeline>
+<codeline lineno="159"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>----------<sp/>Statistics<sp/>options<sp/>----------<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="lwipopts_8h_1d56ac02048a828d5401f884bbbe846ab" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>STATS</highlight></codeline>
+<codeline lineno="161"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"></highlight><highlight class="preprocessor">#ifdef<sp/>STATS</highlight></codeline>
+<codeline lineno="163" refid="lwipopts_8h_1e58b452782d0327ae728192686c5a84a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>LINK_STATS</highlight></codeline>
+<codeline lineno="164" refid="lwipopts_8h_1f50575a4895e26ea2c01d1f2269487be" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>IP_STATS</highlight></codeline>
+<codeline lineno="165" refid="lwipopts_8h_1472ad3f6da741f5b287d66ad3051242b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ICMP_STATS</highlight></codeline>
+<codeline lineno="166" refid="lwipopts_8h_1ef64b11bf71f0d6d5bafaf6092462276" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>UDP_STATS</highlight></codeline>
+<codeline lineno="167" refid="lwipopts_8h_1a02ec5c5bc0edebe418680c54d044f58" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>TCP_STATS</highlight></codeline>
+<codeline lineno="168" refid="lwipopts_8h_161ec04a08c4fde690d10819e582656a7" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEM_STATS</highlight></codeline>
+<codeline lineno="169" refid="lwipopts_8h_1b8c2430be0e567a7499a95454aaa6041" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MEMP_STATS</highlight></codeline>
+<codeline lineno="170" refid="lwipopts_8h_15603346288157af5c6f0e01a08ad4000" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>PBUF_STATS</highlight></codeline>
+<codeline lineno="171" refid="lwipopts_8h_10173549afa76553583e5a02c6a791218" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SYS_STATS</highlight></codeline>
+<codeline lineno="172"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>STATS<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"></highlight></codeline>
+<codeline lineno="174"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__LWIPOPTS_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/lwipopts.h"/>
+  </compounddef>
+</doxygen>

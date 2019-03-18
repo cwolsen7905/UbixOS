@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdp__rcvhdr" kind="struct" prot="public">
+    <compoundname>dp_rcvhdr</compoundname>
+    <includes refid="ne2k_8h" local="no">ne2k.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdp__rcvhdr_1a0a5d988feb06cbcced2a0d35d55add9" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 dp_rcvhdr::dr_next</definition>
+        <argsstring></argsstring>
+        <name>dr_next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdp__rcvhdr_1860d92ae4272fa62b9bdc51f46e88e1c" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 dp_rcvhdr::dr_rbch</definition>
+        <argsstring></argsstring>
+        <name>dr_rbch</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdp__rcvhdr_18af6620ac2cc37aa6e5e50df90bd8ada" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 dp_rcvhdr::dr_rbcl</definition>
+        <argsstring></argsstring>
+        <name>dr_rbcl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdp__rcvhdr_1c5986aa8468f04c074e1402b59c78114" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 dp_rcvhdr::dr_status</definition>
+        <argsstring></argsstring>
+        <name>dr_status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="37" bodyend="43"/>
+    <listofallmembers>
+      <member refid="structdp__rcvhdr_1a0a5d988feb06cbcced2a0d35d55add9" prot="public" virt="non-virtual"><scope>dp_rcvhdr</scope><name>dr_next</name></member>
+      <member refid="structdp__rcvhdr_1860d92ae4272fa62b9bdc51f46e88e1c" prot="public" virt="non-virtual"><scope>dp_rcvhdr</scope><name>dr_rbch</name></member>
+      <member refid="structdp__rcvhdr_18af6620ac2cc37aa6e5e50df90bd8ada" prot="public" virt="non-virtual"><scope>dp_rcvhdr</scope><name>dr_rbcl</name></member>
+      <member refid="structdp__rcvhdr_1c5986aa8468f04c074e1402b59c78114" prot="public" virt="non-virtual"><scope>dp_rcvhdr</scope><name>dr_status</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

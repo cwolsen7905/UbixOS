@@ -1,0 +1,38 @@
+UbixOS VM -
+Preconfigured System To Run UbixOS
+Has RDP enabled on 3389 so you can see the desktop and launch with VBoxHeadless -s UbixOS
+
+UbixOS has a 2GB drive that is a shared drive so it can be used live in the UbixOS VM and the MrOlsen VM
+
+
+MrOlsen-BSD VM -
+Preconfigured System To Build UbixOS
+Has SSHD enabled and is on DHCP so you can launch with VBoxHeadless -s MrOlsen-BSD
+
+MrOlsen-BSD has the UbixOS.vdi attached and mapped at /ubixos
+
+
+BUILD -
+
+To build ubixos ssh in 
+
+username your username
+password your passwod
+
+su (root password)
+
+cd /ubixos/usr/src
+
+make;sync (that simple will compile everything and automatically copy to the right spaces)
+
+Press alt-c in the RDP for the UbixOS vm and it will reboot UbixOS VM (only reboot for kernel changes)
+
+
+NOTES -
+
+Now using git, when you want to get any changes from the MASTER in /ubixos/usr/src type git pull
+
+If you made changes you have to type git commit -a (the -a auto tracks files)
+If you create a new file you need to git add [filename] (this add a new file ex. git add ./src/kernel/kern_stuff.c) then git commit -a
+
+To push your changes to the MASTER for me and the rest of the devs to get you need to type git push.. Please make everything compiles before doing a git push

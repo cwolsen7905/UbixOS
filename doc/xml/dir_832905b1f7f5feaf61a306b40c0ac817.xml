@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_832905b1f7f5feaf61a306b40c0ac817" kind="dir">
+    <compoundname>src/sys/</compoundname>
+    <innerdir refid="dir_0af38c139db535004c17f658eecde1eb">src/sys/devfs/</innerdir>
+    <innerdir refid="dir_caf4200c438ae9601464168e21e8e4d8">src/sys/include/</innerdir>
+    <innerdir refid="dir_dffcdd1ad37a0b2305f9cf289deb8f95">src/sys/init/</innerdir>
+    <innerdir refid="dir_2f8fc94d4f17c865dd63167e45dee9cf">src/sys/isa/</innerdir>
+    <innerdir refid="dir_7efffd2b1fae7bb6f2aa85845c863494">src/sys/kernel/</innerdir>
+    <innerdir refid="dir_a0cadbe588a0f0b62517333d702e3cca">src/sys/kmods/</innerdir>
+    <innerdir refid="dir_d9dcf62a8e8b4cc91cbf2445d76a799b">src/sys/lib/</innerdir>
+    <innerdir refid="dir_bcb67723b759fa7c88f0f248d2c080de">src/sys/mpi/</innerdir>
+    <innerdir refid="dir_b683da389ddfd9a2385307147d6c30b8">src/sys/pci/</innerdir>
+    <innerdir refid="dir_7b0469299ccbf4a3a403496996173710">src/sys/sys/</innerdir>
+    <innerdir refid="dir_74196872fc832845f1a07f1162e5c554">src/sys/ubixfs/</innerdir>
+    <innerdir refid="dir_cbd3b6f8ac372a007cdc756f615c76fe">src/sys/ufs/</innerdir>
+    <innerdir refid="dir_366cae809cefebd9796e1be555536f38">src/sys/vfs/</innerdir>
+    <innerdir refid="dir_b87deefade4e886319aa926bd3ba1491">src/sys/vmm/</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/"/>
+  </compounddef>
+</doxygen>

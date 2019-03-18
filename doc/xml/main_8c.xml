@@ -1,0 +1,846 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="main_8c" kind="file">
+    <compoundname>main.c</compoundname>
+    <includes refid="init_8h" local="no">ubixos/init.h</includes>
+    <includes refid="gdt_8h" local="no">sys/gdt.h</includes>
+    <includes refid="video_8h" local="no">sys/video.h</includes>
+    <includes refid="tss_8h" local="no">sys/tss.h</includes>
+    <includes refid="exec_8h" local="no">ubixos/exec.h</includes>
+    <includes refid="kpanic_8h" local="no">ubixos/kpanic.h</includes>
+    <includes refid="systemtask_8h" local="no">ubixos/systemtask.h</includes>
+    <includes refid="mount_8h" local="no">vfs/mount.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <incdepgraph>
+      <node id="5057">
+        <label>ufs/ufs.h</label>
+        <link refid="ufs_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5034" relation="include">
+        </childnode>
+        <childnode refid="5054" relation="include">
+        </childnode>
+      </node>
+      <node id="5033">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5065">
+        <label>ubixos/kpanic.h</label>
+        <link refid="kpanic_8h"/>
+      </node>
+      <node id="5052">
+        <label>pci/pci.h</label>
+        <link refid="pci_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5041">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5042" relation="include">
+        </childnode>
+        <childnode refid="5035" relation="include">
+        </childnode>
+        <childnode refid="5043" relation="include">
+        </childnode>
+        <childnode refid="5033" relation="include">
+        </childnode>
+      </node>
+      <node id="5050">
+        <label>sys/device.old.h</label>
+        <link refid="device_8old_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5049">
+        <label>isa/ne2k.h</label>
+        <link refid="ne2k_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5050" relation="include">
+        </childnode>
+      </node>
+      <node id="5051">
+        <label>devfs/devfs.h</label>
+        <link refid="devfs_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5035" relation="include">
+        </childnode>
+      </node>
+      <node id="5061">
+        <label>ubixos/vitals.h</label>
+        <link refid="vitals_8h"/>
+        <childnode refid="5062" relation="include">
+        </childnode>
+        <childnode refid="5034" relation="include">
+        </childnode>
+      </node>
+      <node id="5066">
+        <label>ubixos/systemtask.h</label>
+        <link refid="systemtask_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5029">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5030" relation="include">
+        </childnode>
+      </node>
+      <node id="5030">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5063">
+        <label>sys/video.h</label>
+        <link refid="video_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5028">
+        <label>vmm/paging.h</label>
+        <link refid="paging_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5031" relation="include">
+        </childnode>
+        <childnode refid="5033" relation="include">
+        </childnode>
+      </node>
+      <node id="5046">
+        <label>ubixos/time.h</label>
+        <link refid="time_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5047" relation="include">
+        </childnode>
+      </node>
+      <node id="5035">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5036" relation="include">
+        </childnode>
+        <childnode refid="5037" relation="include">
+        </childnode>
+      </node>
+      <node id="5043">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5068">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5060">
+        <label>sys/kern_sysctl.h</label>
+        <link refid="kern__sysctl_8h"/>
+        <childnode refid="5031" relation="include">
+        </childnode>
+        <childnode refid="5033" relation="include">
+        </childnode>
+      </node>
+      <node id="5027">
+        <label>vmm/vmm.h</label>
+        <link refid="vmm_8h"/>
+        <childnode refid="5028" relation="include">
+        </childnode>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5055">
+        <label>mpi/mpi.h</label>
+        <link refid="mpi_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5041" relation="include">
+        </childnode>
+      </node>
+      <node id="5039">
+        <label>sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5040" relation="include">
+        </childnode>
+      </node>
+      <node id="5034">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5035" relation="include">
+        </childnode>
+        <childnode refid="5037" relation="include">
+        </childnode>
+        <childnode refid="5031" relation="include">
+        </childnode>
+        <childnode refid="5033" relation="include">
+        </childnode>
+      </node>
+      <node id="5037">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5067">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5025">
+        <label>src/sys/init/main.c</label>
+        <link refid="main.c"/>
+        <childnode refid="5026" relation="include">
+        </childnode>
+        <childnode refid="5040" relation="include">
+        </childnode>
+        <childnode refid="5063" relation="include">
+        </childnode>
+        <childnode refid="5043" relation="include">
+        </childnode>
+        <childnode refid="5064" relation="include">
+        </childnode>
+        <childnode refid="5065" relation="include">
+        </childnode>
+        <childnode refid="5066" relation="include">
+        </childnode>
+        <childnode refid="5037" relation="include">
+        </childnode>
+        <childnode refid="5067" relation="include">
+        </childnode>
+        <childnode refid="5068" relation="include">
+        </childnode>
+      </node>
+      <node id="5053">
+        <label>ubixfs/ubixfs.h</label>
+        <link refid="ubixfs_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5034" relation="include">
+        </childnode>
+        <childnode refid="5054" relation="include">
+        </childnode>
+        <childnode refid="5055" relation="include">
+        </childnode>
+        <childnode refid="5036" relation="include">
+        </childnode>
+      </node>
+      <node id="5045">
+        <label>isa/atkbd.h</label>
+        <link refid="atkbd_8h"/>
+      </node>
+      <node id="5040">
+        <label>sys/gdt.h</label>
+        <link refid="gdt_8h"/>
+      </node>
+      <node id="5048">
+        <label>net/net.h</label>
+      </node>
+      <node id="5044">
+        <label>isa/pit.h</label>
+        <link refid="pit_8h"/>
+      </node>
+      <node id="5062">
+        <label>ubixos/ubthread.h</label>
+        <link refid="ubthread_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5041" relation="include">
+        </childnode>
+        <childnode refid="5046" relation="include">
+        </childnode>
+      </node>
+      <node id="5036">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5064">
+        <label>ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+        <childnode refid="5041" relation="include">
+        </childnode>
+      </node>
+      <node id="5059">
+        <label>pci/hd.h</label>
+        <link refid="hd_8h"/>
+        <childnode refid="5053" relation="include">
+        </childnode>
+      </node>
+      <node id="5026">
+        <label>ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="5027" relation="include">
+        </childnode>
+        <childnode refid="5034" relation="include">
+        </childnode>
+        <childnode refid="5038" relation="include">
+        </childnode>
+        <childnode refid="5039" relation="include">
+        </childnode>
+        <childnode refid="5041" relation="include">
+        </childnode>
+        <childnode refid="5044" relation="include">
+        </childnode>
+        <childnode refid="5045" relation="include">
+        </childnode>
+        <childnode refid="5046" relation="include">
+        </childnode>
+        <childnode refid="5048" relation="include">
+        </childnode>
+        <childnode refid="5049" relation="include">
+        </childnode>
+        <childnode refid="5051" relation="include">
+        </childnode>
+        <childnode refid="5052" relation="include">
+        </childnode>
+        <childnode refid="5053" relation="include">
+        </childnode>
+        <childnode refid="5056" relation="include">
+        </childnode>
+        <childnode refid="5042" relation="include">
+        </childnode>
+        <childnode refid="5057" relation="include">
+        </childnode>
+        <childnode refid="5058" relation="include">
+        </childnode>
+        <childnode refid="5059" relation="include">
+        </childnode>
+        <childnode refid="5060" relation="include">
+        </childnode>
+        <childnode refid="5061" relation="include">
+        </childnode>
+      </node>
+      <node id="5056">
+        <label>isa/fdc.h</label>
+        <link refid="fdc_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5031">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="5032" relation="include">
+        </childnode>
+        <childnode refid="5033" relation="include">
+        </childnode>
+      </node>
+      <node id="5032">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5042">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5047">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+      <node id="5038">
+        <label>isa/8259.h</label>
+        <link refid="8259_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+      <node id="5058">
+        <label>ubixos/static.h</label>
+        <link refid="static_8h"/>
+      </node>
+      <node id="5054">
+        <label>sys/device.h</label>
+        <link refid="device_8h"/>
+        <childnode refid="5029" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="main_8c_1b92c162a9080b9c4112514027886c9aa" prot="public" static="no">
+        <name>B_ADAPTOR</name>
+        <param><defname>val</defname></param>
+        <initializer>(((val) &gt;&gt; B_ADAPTORSHIFT) &amp; B_ADAPTORMASK)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="43" bodyend="-1"/>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1f921ea6d044d9c201c0e226ea326aad5" prot="public" static="no">
+        <name>B_ADAPTORMASK</name>
+        <initializer>0x0f</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_151559a670a393f5106970bd330e35e55" prot="public" static="no">
+        <name>B_ADAPTORSHIFT</name>
+        <initializer>24</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1ed28ca8a4cbb1afd0efb24acc27c637c" prot="public" static="no">
+        <name>B_CONTROLLER</name>
+        <param><defname>val</defname></param>
+        <initializer>(((val)&gt;&gt;B_CONTROLLERSHIFT) &amp; B_CONTROLLERMASK)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="46" bodyend="-1"/>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_18904a61fb70a4e415a9079e66b2a1c6b" prot="public" static="no">
+        <name>B_CONTROLLERMASK</name>
+        <initializer>0xf</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_16eb2af607543a4b165ec24683128ba63" prot="public" static="no">
+        <name>B_CONTROLLERSHIFT</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1130cc4d8d831b007dff151a64bce5946" prot="public" static="no">
+        <name>B_PARTITION</name>
+        <param><defname>val</defname></param>
+        <initializer>(((val) &gt;&gt; B_PARTITIONSHIFT) &amp; B_PARTITIONMASK)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="55" bodyend="-1"/>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_14ec3b9af2fec01cc27e811dc8c27c82d" prot="public" static="no">
+        <name>B_PARTITIONMASK</name>
+        <initializer>0xff</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_18b92fffbfc22d7e499986a428fa0ab55" prot="public" static="no">
+        <name>B_PARTITIONSHIFT</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1bb3e38e306d89ebc417f8cede85671ab" prot="public" static="no">
+        <name>B_SLICE</name>
+        <param><defname>val</defname></param>
+        <initializer>(((val)&gt;&gt;B_SLICESHIFT) &amp; B_SLICEMASK)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="49" bodyend="-1"/>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_190967877afc3807bbe1b82219b88337d" prot="public" static="no">
+        <name>B_SLICEMASK</name>
+        <initializer>0xff</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1481ca7ef4223d24ad4d9d1a6758b43e8" prot="public" static="no">
+        <name>B_SLICESHIFT</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1001a03933a758f0930b5c26b0c00e50a" prot="public" static="no">
+        <name>B_TYPE</name>
+        <param><defname>val</defname></param>
+        <initializer>(((val) &gt;&gt; B_TYPESHIFT) &amp; B_TYPEMASK)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="58" bodyend="-1"/>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_143c1ba15038b0ac4bc7e0d521ffa57f5" prot="public" static="no">
+        <name>B_TYPEMASK</name>
+        <initializer>0xff</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_14bcb437e907c24b07dbc1d94bb0d6954" prot="public" static="no">
+        <name>B_TYPESHIFT</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1e7b63278ee65b6dfd6b5e2bc89d3945e" prot="public" static="no">
+        <name>B_UNIT</name>
+        <param><defname>val</defname></param>
+        <initializer>(((val) &gt;&gt; B_UNITSHIFT) &amp; B_UNITMASK)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="52" bodyend="-1"/>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_1a62f6a41c4e9aaa8441e129c13e6153b" prot="public" static="no">
+        <name>B_UNITMASK</name>
+        <initializer>0xf</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="main_8c_16b58a68c1e36e9f1efa48516f618cbf0" prot="public" static="no">
+        <name>B_UNITSHIFT</name>
+        <initializer>16</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="main_8c_1a099bb67b4698f94150184a0ee8ccffb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int kmain</definition>
+        <argsstring>(uInt32 rootdev)</argsstring>
+        <name>kmain</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>rootdev</declname>
+        </param>
+        <briefdescription>
+<para>This is the entry point into the os where all of the kernels sub systems are started up. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>rootdev</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>address of root device structure </para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="97" bodyend="152"/>
+        <references refid="main_8c_1b92c162a9080b9c4112514027886c9aa" compoundref="main_8c" startline="43">B_ADAPTOR</references>
+        <references refid="main_8c_1ed28ca8a4cbb1afd0efb24acc27c637c" compoundref="main_8c" startline="46">B_CONTROLLER</references>
+        <references refid="main_8c_1130cc4d8d831b007dff151a64bce5946" compoundref="main_8c" startline="55">B_PARTITION</references>
+        <references refid="main_8c_1bb3e38e306d89ebc417f8cede85671ab" compoundref="main_8c" startline="49">B_SLICE</references>
+        <references refid="main_8c_1001a03933a758f0930b5c26b0c00e50a" compoundref="main_8c" startline="58">B_TYPE</references>
+        <references refid="main_8c_1e7b63278ee65b6dfd6b5e2bc89d3945e" compoundref="main_8c" startline="52">B_UNIT</references>
+        <references refid="video_8h_19d7e8af417b6d543da691e9c0e2f6f9f" compoundref="video_8c" startline="115" endline="126">clearScreen</references>
+        <references refid="exec_8h_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</references>
+        <references refid="exec_8h_1e9945e606ad208cb00dc9166d06452b4" compoundref="exec_8c" startline="55" endline="125">execThread</references>
+        <references refid="structvitalsStruct_11f45a0348eac13344950507efaf565f8" compoundref="vitals_8h" startline="44">vitalsStruct::freePages</references>
+        <references refid="init_8h_1c2942ccd2cc88a56391dd2b836b38150" compoundref="init_8h" startline="56">init_tasks</references>
+        <references refid="init_8h_121f47c950626424757538f3419d77fa9" compoundref="init_8h" startline="79">init_tasksTotal</references>
+        <references refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a">irqEnable</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="video_8h_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+        <references refid="systemtask_8h_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</references>
+        <references refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" compoundref="timer_8S" startline="35">systemVitals</references>
+        <references refid="mount_8h_11255ebfdcd5f7048ffe187e836f8eb28" compoundref="mount_8c" startline="47" endline="94">vfs_mount</references>
+        <references refid="vmm_8h_189e87741958ee81f1811075b25af058a" compoundref="vmm__memory_8c" startline="45">vmmMemoryMap</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+        <references refid="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" compoundref="start_8S" startline="51">x2000</references>
+      </memberdef>
+      <memberdef kind="function" id="main_8c_1bc24c46464ccafa098c421ad858c742b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ubixDescriptorTable</definition>
+        <argsstring>(ubixGDT, 9)</argsstring>
+        <name>ubixDescriptorTable</name>
+        <param>
+          <type><ref refid="gdt_8h_1a53ed51ff9c7d95591f1fa5724195ce0" kindref="member">ubixGDT</ref></type>
+        </param>
+        <param>
+          <type>9</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" bodystart="76" bodyend="86"/>
+        <references refid="gdt_8h_16b595357c10a17c620edcbeeb1c7f6a1" compoundref="gdt_8h" startline="56">dBig</references>
+        <references refid="gdt_8h_1bc269d96e027bb39b828cadb2fc8660f" compoundref="gdt_8h" startline="57">dBiglim</references>
+        <references refid="gdt_8h_1f37890c8c59b0fd3d83cea8d6034a035" compoundref="gdt_8h" startline="35">dCode</references>
+        <references refid="gdt_8h_1fcbb50cc521f6214eda9bca84aaee513" compoundref="gdt_8h" startline="36">dData</references>
+        <references refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" compoundref="gdt_8h" startline="44">dDpl3</references>
+        <references refid="gdt_8h_15ebc94affcfbf066336ac0910680345e" compoundref="gdt_8h" startline="38">dLdt</references>
+        <references refid="gdt_8h_14427d6b09e5682b1c554a5a61e9bee55" compoundref="gdt_8h" startline="52">dRead</references>
+        <references refid="gdt_8h_14d5c962ea8bc3d8422e6c3b92ce4b74f" compoundref="gdt_8h" startline="41">dTss</references>
+        <references refid="gdt_8h_19785c919d49cacd1b0fa92590a7562c8" compoundref="gdt_8h" startline="51">dWrite</references>
+        <references refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" compoundref="gdt_8h" startline="85">ubixStandardDescriptor</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="main_8c_1ac0f90734a3334640d5e1a24e297fd9a" prot="public" static="no" mutable="no">
+        <type>@2</type>
+        <definition>struct @2  loadGDT</definition>
+        <argsstring></argsstring>
+        <name>loadGDT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c" line="90"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004,<sp/>2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: main_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="init_8h" kindref="compound">ubixos/init.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="gdt_8h" kindref="compound">sys/gdt.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="video_8h" kindref="compound">sys/video.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="tss_8h" kindref="compound">sys/tss.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="exec_8h" kindref="compound">ubixos/exec.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kpanic_8h" kindref="compound">ubixos/kpanic.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="systemtask_8h" kindref="compound">ubixos/systemtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mount_8h" kindref="compound">vfs/mount.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="main_8c_151559a670a393f5106970bd330e35e55" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>B_ADAPTORSHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>24</highlight></codeline>
+<codeline lineno="42" refid="main_8c_1f921ea6d044d9c201c0e226ea326aad5" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_ADAPTORMASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x0f</highlight></codeline>
+<codeline lineno="43" refid="main_8c_1b92c162a9080b9c4112514027886c9aa" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_ADAPTOR(val)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((val)<sp/>&gt;&gt;<sp/>B_ADAPTORSHIFT)<sp/>&amp;<sp/>B_ADAPTORMASK)</highlight></codeline>
+<codeline lineno="44" refid="main_8c_16eb2af607543a4b165ec24683128ba63" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_CONTROLLERSHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/>20</highlight></codeline>
+<codeline lineno="45" refid="main_8c_18904a61fb70a4e415a9079e66b2a1c6b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_CONTROLLERMASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xf</highlight></codeline>
+<codeline lineno="46" refid="main_8c_1ed28ca8a4cbb1afd0efb24acc27c637c" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_CONTROLLER(val)<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((val)&gt;&gt;B_CONTROLLERSHIFT)<sp/>&amp;<sp/>B_CONTROLLERMASK)</highlight></codeline>
+<codeline lineno="47" refid="main_8c_1481ca7ef4223d24ad4d9d1a6758b43e8" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_SLICESHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>20</highlight></codeline>
+<codeline lineno="48" refid="main_8c_190967877afc3807bbe1b82219b88337d" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_SLICEMASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xff</highlight></codeline>
+<codeline lineno="49" refid="main_8c_1bb3e38e306d89ebc417f8cede85671ab" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_SLICE(val)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((val)&gt;&gt;B_SLICESHIFT)<sp/>&amp;<sp/>B_SLICEMASK)</highlight></codeline>
+<codeline lineno="50" refid="main_8c_16b58a68c1e36e9f1efa48516f618cbf0" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_UNITSHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>16</highlight></codeline>
+<codeline lineno="51" refid="main_8c_1a62f6a41c4e9aaa8441e129c13e6153b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_UNITMASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xf</highlight></codeline>
+<codeline lineno="52" refid="main_8c_1e7b63278ee65b6dfd6b5e2bc89d3945e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_UNIT(val)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((val)<sp/>&gt;&gt;<sp/>B_UNITSHIFT)<sp/>&amp;<sp/>B_UNITMASK)</highlight></codeline>
+<codeline lineno="53" refid="main_8c_18b92fffbfc22d7e499986a428fa0ab55" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_PARTITIONSHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight></codeline>
+<codeline lineno="54" refid="main_8c_14ec3b9af2fec01cc27e811dc8c27c82d" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_PARTITIONMASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xff</highlight></codeline>
+<codeline lineno="55" refid="main_8c_1130cc4d8d831b007dff151a64bce5946" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_PARTITION(val)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((val)<sp/>&gt;&gt;<sp/>B_PARTITIONSHIFT)<sp/>&amp;<sp/>B_PARTITIONMASK)</highlight></codeline>
+<codeline lineno="56" refid="main_8c_14bcb437e907c24b07dbc1d94bb0d6954" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_TYPESHIFT<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="57" refid="main_8c_143c1ba15038b0ac4bc7e0d521ffa57f5" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_TYPEMASK<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0xff</highlight></codeline>
+<codeline lineno="58" refid="main_8c_1001a03933a758f0930b5c26b0c00e50a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>B_TYPE(val)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((val)<sp/>&gt;&gt;<sp/>B_TYPESHIFT)<sp/>&amp;<sp/>B_TYPEMASK)</highlight></codeline>
+<codeline lineno="59"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>Desc:<sp/>The<sp/>Kernels<sp/>Descriptor<sp/>table:</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x00<sp/>-<sp/>Dummy<sp/>Entry</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x08<sp/>-<sp/>Ring<sp/>0<sp/>CS</highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x10<sp/>-<sp/>Ring<sp/>0<sp/>DS<sp/></highlight></codeline>
+<codeline lineno="66"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x18<sp/>-<sp/>Dummy<sp/>LDT</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x20<sp/>-<sp/>Scheduler<sp/>TSS</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x28<sp/>-<sp/>Ring<sp/>3<sp/>CS</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x30<sp/>-<sp/>Ring<sp/>3<sp/>DS</highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x38<sp/>-<sp/>GPF<sp/>TSS</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0x40<sp/>-<sp/>Stack<sp/>Fault<sp/>TSS</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"></highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>Notes:<sp/></highlight></codeline>
+<codeline lineno="74"><highlight class="comment"></highlight></codeline>
+<codeline lineno="75"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="main_8c_1bc24c46464ccafa098c421ad858c742b" refkind="member"><highlight class="normal"><ref refid="gdt_8h_1f3cff64995ffb5584c82c7bf27ee802d" kindref="member">ubixDescriptorTable</ref>(ubixGDT,9)<sp/>{</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>{dummy:0},</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x0000,<sp/>0xFFFFF,<sp/>(<ref refid="gdt_8h_1f37890c8c59b0fd3d83cea8d6034a035" kindref="member">dCode</ref><sp/>+<sp/><ref refid="gdt_8h_14427d6b09e5682b1c554a5a61e9bee55" kindref="member">dRead</ref><sp/>+<sp/><ref refid="gdt_8h_16b595357c10a17c620edcbeeb1c7f6a1" kindref="member">dBig</ref><sp/>+<sp/><ref refid="gdt_8h_1bc269d96e027bb39b828cadb2fc8660f" kindref="member">dBiglim</ref>)),</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x0000,<sp/>0xFFFFF,<sp/>(<ref refid="gdt_8h_1fcbb50cc521f6214eda9bca84aaee513" kindref="member">dData</ref><sp/>+<sp/><ref refid="gdt_8h_19785c919d49cacd1b0fa92590a7562c8" kindref="member">dWrite</ref><sp/>+<sp/><ref refid="gdt_8h_16b595357c10a17c620edcbeeb1c7f6a1" kindref="member">dBig</ref><sp/>+<sp/><ref refid="gdt_8h_1bc269d96e027bb39b828cadb2fc8660f" kindref="member">dBiglim</ref>)),</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x0000,<sp/>0xFFFFF,<sp/>(<ref refid="gdt_8h_15ebc94affcfbf066336ac0910680345e" kindref="member">dLdt</ref>)),</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x4200,<sp/>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structtssStruct" kindref="compound">tssStruct</ref>)),<sp/>(<ref refid="gdt_8h_14d5c962ea8bc3d8422e6c3b92ce4b74f" kindref="member">dTss</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>)),</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x0000,<sp/>0xFFFFF,<sp/>(<ref refid="gdt_8h_1f37890c8c59b0fd3d83cea8d6034a035" kindref="member">dCode</ref><sp/>+<sp/><ref refid="gdt_8h_19785c919d49cacd1b0fa92590a7562c8" kindref="member">dWrite</ref><sp/>+<sp/><ref refid="gdt_8h_16b595357c10a17c620edcbeeb1c7f6a1" kindref="member">dBig</ref><sp/>+<sp/><ref refid="gdt_8h_1bc269d96e027bb39b828cadb2fc8660f" kindref="member">dBiglim</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>)),</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x0000,<sp/>0xFFFFF,<sp/>(<ref refid="gdt_8h_1fcbb50cc521f6214eda9bca84aaee513" kindref="member">dData</ref><sp/>+<sp/><ref refid="gdt_8h_19785c919d49cacd1b0fa92590a7562c8" kindref="member">dWrite</ref><sp/>+<sp/><ref refid="gdt_8h_16b595357c10a17c620edcbeeb1c7f6a1" kindref="member">dBig</ref><sp/>+<sp/><ref refid="gdt_8h_1bc269d96e027bb39b828cadb2fc8660f" kindref="member">dBiglim</ref><sp/>+<sp/><ref refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" kindref="member">dDpl3</ref>)),</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x4200,<sp/>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>tssStruct)),<sp/>(<ref refid="gdt_8h_14d5c962ea8bc3d8422e6c3b92ce4b74f" kindref="member">dTss</ref>)),</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" kindref="member">ubixStandardDescriptor</ref>(0x6200,<sp/>(</highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>tssStruct)),<sp/>(<ref refid="gdt_8h_14d5c962ea8bc3d8422e6c3b92ce4b74f" kindref="member">dTss</ref>)),</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>limit<sp/>__attribute__<sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref><sp/>*gdt<sp/>__attribute__<sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/>}<sp/><ref refid="main_8c_1ac0f90734a3334640d5e1a24e297fd9a" kindref="member">loadGDT</ref><sp/>=<sp/>{<sp/>(9<sp/>*<sp/></highlight><highlight class="keyword">sizeof</highlight><highlight class="normal">(</highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref>)<sp/>-<sp/>1),<sp/>ubixGDT<sp/>};</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97" refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" refkind="member"><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" kindref="member">kmain</ref>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>rootdev)<sp/>{</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>up<sp/>counter<sp/>for<sp/>startup<sp/>routine<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>*sysTask<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Do<sp/>A<sp/>Clear<sp/>Screen<sp/>Just<sp/>To<sp/>Make<sp/>The<sp/>TEXT<sp/>Buffer<sp/>Nice<sp/>And<sp/>Empty<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><ref refid="video_8h_19d7e8af417b6d543da691e9c0e2f6f9f" kindref="member">clearScreen</ref>();</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><ref refid="video_8h_15429378b96a24fadfd2d1f8d777eb95a" kindref="member">kprint</ref>(</highlight><highlight class="stringliteral">&quot;AAA&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><ref refid="video_8h_15429378b96a24fadfd2d1f8d777eb95a" kindref="member">kprint</ref>(</highlight><highlight class="stringliteral">&quot;BBB&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;TEST&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Modify<sp/>src/sys/include/ubixos/init.h<sp/>to<sp/>add<sp/>a<sp/>startup<sp/>routine<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i=0x0;i&lt;<ref refid="init_8h_121f47c950626424757538f3419d77fa9" kindref="member">init_tasksTotal</ref>;i++)<sp/>{</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="init_8h_1c2942ccd2cc88a56391dd2b836b38150" kindref="member">init_tasks</ref>[i]()<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" kindref="member">kpanic</ref>(</highlight><highlight class="stringliteral">&quot;Error:<sp/>Initializing<sp/>System.\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="112"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>New<sp/>Root<sp/>Mount<sp/>Point<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//Old<sp/>2<sp/>new<sp/>10</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;[0xX][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n&quot;</highlight><highlight class="normal">,<ref refid="main_8c_1b92c162a9080b9c4112514027886c9aa" kindref="member">B_ADAPTOR</ref>(rootdev),<ref refid="main_8c_1ed28ca8a4cbb1afd0efb24acc27c637c" kindref="member">B_CONTROLLER</ref>(rootdev),<ref refid="main_8c_1bb3e38e306d89ebc417f8cede85671ab" kindref="member">B_SLICE</ref>(rootdev),<ref refid="main_8c_1e7b63278ee65b6dfd6b5e2bc89d3945e" kindref="member">B_UNIT</ref>(rootdev),<ref refid="main_8c_1130cc4d8d831b007dff151a64bce5946" kindref="member">B_PARTITION</ref>(rootdev),<ref refid="main_8c_1001a03933a758f0930b5c26b0c00e50a" kindref="member">B_TYPE</ref>(rootdev));</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="mount_8h_11255ebfdcd5f7048ffe187e836f8eb28" kindref="member">vfs_mount</ref>(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>,<ref refid="main_8c_1130cc4d8d831b007dff151a64bce5946" kindref="member">B_PARTITION</ref>(rootdev)+2,0x0,0xAA,</highlight><highlight class="stringliteral">&quot;sys&quot;</highlight><highlight class="normal">,</highlight><highlight class="stringliteral">&quot;rw&quot;</highlight><highlight class="normal">)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Problem<sp/>Mounting<sp/>sys<sp/>Mount<sp/>Point\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"></highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Do<sp/>our<sp/>mounting<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/></highlight><highlight class="comment">/*<sp/></highlight></codeline>
+<codeline lineno="123"><highlight class="comment"><sp/><sp/>if<sp/>(vfs_mount(0x0,0x0,0x0,0x0,&quot;sys&quot;,&quot;rw&quot;)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="124"><highlight class="comment"><sp/><sp/><sp/><sp/>kprintf(&quot;Problem<sp/>Mounting<sp/>sys<sp/>Mount<sp/>Point\n&quot;);</highlight></codeline>
+<codeline lineno="125"><highlight class="comment"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="126"><highlight class="comment"><sp/><sp/>if<sp/>(vfs_mount(0x0,0x0,0x1,0x0,&quot;tmp&quot;,&quot;rw&quot;)<sp/>!=<sp/>0x0)<sp/>{</highlight></codeline>
+<codeline lineno="127"><highlight class="comment"><sp/><sp/><sp/><sp/>kprintf(&quot;Problem<sp/>Mounting<sp/>tmp<sp/>Mount<sp/>Point\n&quot;);</highlight></codeline>
+<codeline lineno="128"><highlight class="comment"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="129"><highlight class="comment"><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="131"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Initialize<sp/>the<sp/>system<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Free<sp/>Pages:<sp/>[%i]\n&quot;</highlight><highlight class="normal">,<ref refid="vitals_8h_167aae71be472453526fc1a0bfbf80280" kindref="member">systemVitals</ref>-&gt;<ref refid="structvitalsStruct_11f45a0348eac13344950507efaf565f8" kindref="member">freePages</ref>);<sp/></highlight></codeline>
+<codeline lineno="133"><highlight class="normal"></highlight></codeline>
+<codeline lineno="134"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;MemoryMap:<sp/><sp/>[0x%X]\n&quot;</highlight><highlight class="normal">,<ref refid="vmm_8h_189e87741958ee81f1811075b25af058a" kindref="member">vmmMemoryMap</ref>);</highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;Starting<sp/>OS\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="136"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>sysTask<sp/>=<sp/><ref refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" kindref="member">kmalloc</ref>(0<ref refid="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" kindref="member">x2000</ref>);</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal">(sysTask<sp/>==<sp/><ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>)</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;OS:<sp/>Unable<sp/>to<sp/>allocate<sp/>memory\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"></highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="exec_8h_1e9945e606ad208cb00dc9166d06452b4" kindref="member">execThread</ref>(<ref refid="systemtask_8h_1c7cc6a806237f8657fcdce169319fd7f" kindref="member">systemTask</ref>,<sp/>(<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref>)sysTask+0<ref refid="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" kindref="member">x2000</ref>,0x0);</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"></highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="exec_8h_1f80d4412d42ed1b5bf9a1b9774230f33" kindref="member">execFile</ref>(</highlight><highlight class="stringliteral">&quot;sys:/bin/init&quot;</highlight><highlight class="normal">,0x0,0x0,0x0);<sp/></highlight><highlight class="comment">/*<sp/>OS<sp/>Initializer<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="8259_8h_10ac079c4d770f02e505f4d8569a6960a" kindref="member">irqEnable</ref>(0x0);</highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>(0<ref refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" kindref="member">x1</ref>)</highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">asm</highlight><highlight class="normal">(</highlight><highlight class="stringliteral">&quot;hlt&quot;</highlight><highlight class="normal">);<sp/></highlight><highlight class="comment">/*<sp/>Keep<sp/>haulting<sp/>until<sp/>the<sp/>scheduler<sp/>reacts<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="149"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Return<sp/>to<sp/>start<sp/>however<sp/>we<sp/>should<sp/>never<sp/>get<sp/>this<sp/>far<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="152"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"></highlight></codeline>
+<codeline lineno="154"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="155"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="156"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/init/main.c"/>
+  </compounddef>
+</doxygen>

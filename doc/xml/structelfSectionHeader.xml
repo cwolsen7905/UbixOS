@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structelfSectionHeader" kind="struct" prot="public">
+    <compoundname>elfSectionHeader</compoundname>
+    <includes refid="elf_8h" local="no">elf.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structelfSectionHeader_16f825e4c27a07a0ea09d7f219f0a3028" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shAddr</definition>
+        <argsstring></argsstring>
+        <name>shAddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="129" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="129" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_14e415271587c80ff8f9c6c8cb2008603" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shAddralign</definition>
+        <argsstring></argsstring>
+        <name>shAddralign</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="134" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="134" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_17cc42511da161c23c1fc1c2b205f4625" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shEntsize</definition>
+        <argsstring></argsstring>
+        <name>shEntsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="135" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="135" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_13d738d7ebe3b6eed2b50147b42122d33" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shFlags</definition>
+        <argsstring></argsstring>
+        <name>shFlags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="128" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_11a4022dc1f0ea45729ebd64492df6e33" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shInfo</definition>
+        <argsstring></argsstring>
+        <name>shInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="133" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="133" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_151692e8503d83cbfdcbbe62c35d0fc0a" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shLink</definition>
+        <argsstring></argsstring>
+        <name>shLink</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="132" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="132" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_12e986e7bb61f39e9f8acb689d69288af" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shName</definition>
+        <argsstring></argsstring>
+        <name>shName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="126" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_1bdc6319f2f19c7c1c33bf2f0d86b6d58" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shOffset</definition>
+        <argsstring></argsstring>
+        <name>shOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="130" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="130" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_1285d41cc0ad6e460792b9524c6db5345" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shSize</definition>
+        <argsstring></argsstring>
+        <name>shSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="131" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="131" bodyend="-1"/>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structelfSectionHeader_192e73a5bceb23de152ec81934565616f" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 elfSectionHeader::shType</definition>
+        <argsstring></argsstring>
+        <name>shType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="127" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="127" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" line="125" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/elf.h" bodystart="125" bodyend="136"/>
+    <listofallmembers>
+      <member refid="structelfSectionHeader_16f825e4c27a07a0ea09d7f219f0a3028" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shAddr</name></member>
+      <member refid="structelfSectionHeader_14e415271587c80ff8f9c6c8cb2008603" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shAddralign</name></member>
+      <member refid="structelfSectionHeader_17cc42511da161c23c1fc1c2b205f4625" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shEntsize</name></member>
+      <member refid="structelfSectionHeader_13d738d7ebe3b6eed2b50147b42122d33" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shFlags</name></member>
+      <member refid="structelfSectionHeader_11a4022dc1f0ea45729ebd64492df6e33" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shInfo</name></member>
+      <member refid="structelfSectionHeader_151692e8503d83cbfdcbbe62c35d0fc0a" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shLink</name></member>
+      <member refid="structelfSectionHeader_12e986e7bb61f39e9f8acb689d69288af" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shName</name></member>
+      <member refid="structelfSectionHeader_1bdc6319f2f19c7c1c33bf2f0d86b6d58" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shOffset</name></member>
+      <member refid="structelfSectionHeader_1285d41cc0ad6e460792b9524c6db5345" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shSize</name></member>
+      <member refid="structelfSectionHeader_192e73a5bceb23de152ec81934565616f" prot="public" virt="non-virtual"><scope>elfSectionHeader</scope><name>shType</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

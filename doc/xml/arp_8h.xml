@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="arp_8h" kind="file">
+    <compoundname>arp.h</compoundname>
+    <includes local="yes">net/pbuf.h</includes>
+    <includes local="yes">net/ipv4/ip_addr.h</includes>
+    <includes local="yes">net/netif.h</includes>
+    <incdepgraph>
+      <node id="3413">
+        <label>src/sys/include/netif/arp.h</label>
+        <link refid="arp.h"/>
+        <childnode refid="3414" relation="include">
+        </childnode>
+        <childnode refid="3415" relation="include">
+        </childnode>
+        <childnode refid="3416" relation="include">
+        </childnode>
+      </node>
+      <node id="3414">
+        <label>net/pbuf.h</label>
+      </node>
+      <node id="3415">
+        <label>net/ipv4/ip_addr.h</label>
+      </node>
+      <node id="3416">
+        <label>net/netif.h</label>
+      </node>
+    </incdepgraph>
+    <innerclass refid="structeth__addr" prot="public">eth_addr</innerclass>
+    <innerclass refid="structeth__hdr" prot="public">eth_hdr</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="arp_8h_1aa3d8ed1eb1129f518345e37b38cfc37" prot="public" static="no">
+        <name>ARP_TMR_INTERVAL</name>
+        <initializer>10000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="arp_8h_1dbc208bed02b2900ca2639a25d3f6198" prot="public" static="no">
+        <name>ETHTYPE_ARP</name>
+        <initializer>0x0806</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="arp_8h_1392234c1299a5f5c264e511d88a66e56" prot="public" static="no">
+        <name>ETHTYPE_IP</name>
+        <initializer>0x0800</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" bodystart="61" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="arp_8h_157a25dd51cf73f048ad5364ecc2f040b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>pbuf *</type>
+        <definition>struct pbuf* arp_arp_input</definition>
+        <argsstring>(struct netif *netif, struct eth_addr *ethaddr, struct pbuf *p)</argsstring>
+        <name>arp_arp_input</name>
+        <param>
+          <type>struct netif *</type>
+          <declname>netif</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref> *</type>
+          <declname>ethaddr</declname>
+        </param>
+        <param>
+          <type>struct pbuf *</type>
+          <declname>p</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="82"/>
+      </memberdef>
+      <memberdef kind="function" id="arp_8h_1c8ad5a32790d172fcec2eac97a87ee9f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void arp_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>arp_init</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="64"/>
+      </memberdef>
+      <memberdef kind="function" id="arp_8h_1916d08dbb8f4a38e1e904a8a018b000c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void arp_ip_input</definition>
+        <argsstring>(struct netif *netif, struct pbuf *p)</argsstring>
+        <name>arp_ip_input</name>
+        <param>
+          <type>struct netif *</type>
+          <declname>netif</declname>
+        </param>
+        <param>
+          <type>struct pbuf *</type>
+          <declname>p</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="75"/>
+      </memberdef>
+      <memberdef kind="function" id="arp_8h_1eec8fff4f036cca2ac1b5635fa46d21b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structeth__addr" kindref="compound">eth_addr</ref> *</type>
+        <definition>struct eth_addr* arp_lookup</definition>
+        <argsstring>(struct ip_addr *ipaddr)</argsstring>
+        <name>arp_lookup</name>
+        <param>
+          <type>struct ip_addr *</type>
+          <declname>ipaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="87"/>
+      </memberdef>
+      <memberdef kind="function" id="arp_8h_19d1287b9a80c370797b2ac5c63f70e2e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>pbuf *</type>
+        <definition>struct pbuf* arp_query</definition>
+        <argsstring>(struct netif *netif, struct eth_addr *ethaddr, struct ip_addr *ipaddr)</argsstring>
+        <name>arp_query</name>
+        <param>
+          <type>struct netif *</type>
+          <declname>netif</declname>
+        </param>
+        <param>
+          <type>struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref> *</type>
+          <declname>ethaddr</declname>
+        </param>
+        <param>
+          <type>struct ip_addr *</type>
+          <declname>ipaddr</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="93"/>
+      </memberdef>
+      <memberdef kind="function" id="arp_8h_12cc298ed4c68289160da1376faf20938" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void arp_tmr</definition>
+        <argsstring>(void)</argsstring>
+        <name>arp_tmr</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="69"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="arp_8h_1a7f002f47b5fc16e9c8e866c7b1c525a" prot="public" static="no" mutable="no">
+        <type><ref refid="structeth__hdr" kindref="compound">eth_hdr</ref></type>
+        <definition>struct eth_hdr  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="56"/>
+      </memberdef>
+      <memberdef kind="variable" id="arp_8h_160f1dc6554771c253cfaf098c6c03db0" prot="public" static="no" mutable="no">
+        <type><ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+        <definition>struct eth_addr  PACK_STRUCT_STRUCT</definition>
+        <argsstring></argsstring>
+        <name>PACK_STRUCT_STRUCT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="50"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>*<sp/>Copyright<sp/>(c)<sp/>2001,<sp/>Swedish<sp/>Institute<sp/>of<sp/>Computer<sp/>Science.</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>*<sp/>All<sp/>rights<sp/>reserved.<sp/></highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>*<sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/></highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>*<sp/>modification,<sp/>are<sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/></highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>*<sp/>are<sp/>met:<sp/></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>*<sp/>1.<sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer.<sp/></highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>*<sp/>2.<sp/>Redistributions<sp/>in<sp/>binary<sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/></highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions<sp/>and<sp/>the<sp/>following<sp/>disclaimer<sp/>in<sp/>the<sp/></highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided<sp/>with<sp/>the<sp/>distribution.<sp/></highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>*<sp/>3.<sp/>All<sp/>advertising<sp/>materials<sp/>mentioning<sp/>features<sp/>or<sp/>use<sp/>of<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>must<sp/>display<sp/>the<sp/>following<sp/>acknowledgement:</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>This<sp/>product<sp/>includes<sp/>software<sp/>developed<sp/>by<sp/>the<sp/>Swedish<sp/>Institute</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/><sp/>of<sp/>Computer<sp/>Science<sp/>and<sp/>its<sp/>contributors.</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>*<sp/>4.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>Institute<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its<sp/>contributors<sp/></highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software<sp/></highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>*<sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>INSTITUTE<sp/>AND<sp/>CONTRIBUTORS<sp/>``AS<sp/>IS&apos;&apos;<sp/>AND<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>*<sp/>ANY<sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/></highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>*<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF<sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/></highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>*<sp/>ARE<sp/>DISCLAIMED.<sp/><sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL<sp/>THE<sp/>INSTITUTE<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/></highlight></codeline>
+<codeline lineno="25"><highlight class="comment"><sp/>*<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,<sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>*<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT<sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/></highlight></codeline>
+<codeline lineno="27"><highlight class="comment"><sp/>*<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)<sp/></highlight></codeline>
+<codeline lineno="28"><highlight class="comment"><sp/>*<sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/></highlight></codeline>
+<codeline lineno="29"><highlight class="comment"><sp/>*<sp/>LIABILITY,<sp/>OR<sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/></highlight></codeline>
+<codeline lineno="30"><highlight class="comment"><sp/>*<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS<sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/></highlight></codeline>
+<codeline lineno="31"><highlight class="comment"><sp/>*<sp/>SUCH<sp/>DAMAGE.<sp/></highlight></codeline>
+<codeline lineno="32"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="33"><highlight class="comment"><sp/>*<sp/>This<sp/>file<sp/>is<sp/>part<sp/>of<sp/>the<sp/>lwIP<sp/>TCP/IP<sp/>stack.</highlight></codeline>
+<codeline lineno="34"><highlight class="comment"><sp/>*<sp/></highlight></codeline>
+<codeline lineno="35"><highlight class="comment"><sp/>*<sp/>Author:<sp/>Adam<sp/>Dunkels<sp/>&lt;adam@sics.se&gt;</highlight></codeline>
+<codeline lineno="36"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="37"><highlight class="comment"><sp/>*<sp/>$Id: arp_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/>*</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>__NETIF_ARP_H__</highlight></codeline>
+<codeline lineno="42"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>__NETIF_ARP_H__</highlight></codeline>
+<codeline lineno="43"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;net/pbuf.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;net/ipv4/ip_addr.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;net/netif.h&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="structeth__addr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>{</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="structeth__addr_1659e6d94ddb0acdae1a3df46b0de80ed" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>addr[6]);</highlight></codeline>
+<codeline lineno="50"><highlight class="normal">}<sp/><ref refid="arp_8h_160f1dc6554771c253cfaf098c6c03db0" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="52" refid="structeth__hdr" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__hdr" kindref="compound">eth_hdr</ref><sp/>{</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="structeth__hdr_172f0a95244a7d946dba634721c0d20d4" kindref="member">PACK_STRUCT_FIELD</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>dest);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="structeth__hdr_172f0a95244a7d946dba634721c0d20d4" kindref="member">PACK_STRUCT_FIELD</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>src);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="structeth__hdr_172f0a95244a7d946dba634721c0d20d4" kindref="member">PACK_STRUCT_FIELD</ref>(<ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/>type);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal">}<sp/><ref refid="arp_8h_160f1dc6554771c253cfaf098c6c03db0" kindref="member">PACK_STRUCT_STRUCT</ref>;</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"></highlight></codeline>
+<codeline lineno="58" refid="arp_8h_1aa3d8ed1eb1129f518345e37b38cfc37" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ARP_TMR_INTERVAL<sp/>10000</highlight></codeline>
+<codeline lineno="59"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="arp_8h_1dbc208bed02b2900ca2639a25d3f6198" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ETHTYPE_ARP<sp/>0x0806</highlight></codeline>
+<codeline lineno="61" refid="arp_8h_1392234c1299a5f5c264e511d88a66e56" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ETHTYPE_IP<sp/><sp/>0x0800</highlight></codeline>
+<codeline lineno="62"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Initializes<sp/>ARP.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="arp_8h_1c8ad5a32790d172fcec2eac97a87ee9f" kindref="member">arp_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>The<sp/>arp_tmr()<sp/>function<sp/>should<sp/>be<sp/>called<sp/>every<sp/>ARP_TMR_INTERVAL</highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/><sp/><sp/>microseconds<sp/>(10<sp/>seconds).<sp/>This<sp/>function<sp/>is<sp/>responsible<sp/>for</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/><sp/><sp/>expiring<sp/>old<sp/>entries<sp/>in<sp/>the<sp/>ARP<sp/>table.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="arp_8h_12cc298ed4c68289160da1376faf20938" kindref="member">arp_tmr</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Should<sp/>be<sp/>called<sp/>for<sp/>all<sp/>incoming<sp/>packets<sp/>of<sp/>IP<sp/>kind.<sp/>The<sp/>function</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"><sp/><sp/><sp/>does<sp/>not<sp/>alter<sp/>the<sp/>packet<sp/>in<sp/>any<sp/>way,<sp/>it<sp/>just<sp/>updates<sp/>the<sp/>ARP</highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/><sp/><sp/>table.<sp/>After<sp/>this<sp/>function<sp/>has<sp/>been<sp/>called,<sp/>the<sp/>normal<sp/>TCP/IP<sp/>stack</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/><sp/><sp/>input<sp/>function<sp/>should<sp/>be<sp/>called.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="arp_8h_1916d08dbb8f4a38e1e904a8a018b000c" kindref="member">arp_ip_input</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>pbuf<sp/>*p);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Should<sp/>be<sp/>called<sp/>for<sp/>incoming<sp/>ARP<sp/>packets.<sp/>The<sp/>pbuf<sp/>in<sp/>the<sp/>argument</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/><sp/><sp/>is<sp/>freed<sp/>by<sp/>this<sp/>function.<sp/>If<sp/>the<sp/>function<sp/>returns<sp/>a<sp/>pbuf<sp/>(i.e.,</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/><sp/><sp/>returns<sp/>non-NULL),<sp/>that<sp/>pbuf<sp/>constitutes<sp/>an<sp/>ARP<sp/>reply<sp/>and<sp/>should<sp/>be</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/><sp/><sp/>sent<sp/>out<sp/>on<sp/>the<sp/>Ethernet.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">pbuf<sp/>*<ref refid="arp_8h_157a25dd51cf73f048ad5364ecc2f040b" kindref="member">arp_arp_input</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>*ethaddr,</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>pbuf<sp/>*p);</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>arp_loopup()<sp/>is<sp/>called<sp/>to<sp/>do<sp/>an<sp/>IP<sp/>address<sp/>-&gt;<sp/>Ethernet<sp/>address</highlight></codeline>
+<codeline lineno="85"><highlight class="comment"><sp/><sp/><sp/>translation.<sp/>If<sp/>the<sp/>function<sp/>returns<sp/>NULL,<sp/>there<sp/>is<sp/>no<sp/>mapping<sp/>and</highlight></codeline>
+<codeline lineno="86"><highlight class="comment"><sp/><sp/><sp/>the<sp/>arp_query()<sp/>function<sp/>should<sp/>be<sp/>called.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>*<ref refid="arp_8h_1eec8fff4f036cca2ac1b5635fa46d21b" kindref="member">arp_lookup</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>ip_addr<sp/>*ipaddr);</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Constructs<sp/>an<sp/>ARP<sp/>query<sp/>packet<sp/>for<sp/>the<sp/>given<sp/>IP<sp/>address.<sp/>The</highlight></codeline>
+<codeline lineno="90"><highlight class="comment"><sp/><sp/><sp/>function<sp/>returns<sp/>a<sp/>pbuf<sp/>that<sp/>contains<sp/>the<sp/>reply<sp/>and<sp/>that<sp/>should<sp/>be</highlight></codeline>
+<codeline lineno="91"><highlight class="comment"><sp/><sp/><sp/>sent<sp/>out<sp/>on<sp/>the<sp/>Ethernet.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal">pbuf<sp/>*<ref refid="arp_8h_19d1287b9a80c370797b2ac5c63f70e2e" kindref="member">arp_query</ref>(</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>netif<sp/>*netif,<sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structeth__addr" kindref="compound">eth_addr</ref><sp/>*ethaddr,</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/>ip_addr<sp/>*ipaddr);</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">/*<sp/>__NETIF_ARP_H__<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h"/>
+  </compounddef>
+</doxygen>

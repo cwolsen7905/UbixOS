@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structlncInfo" kind="struct" prot="public">
+    <compoundname>lncInfo</compoundname>
+    <includes refid="lnc_8h" local="no">lnc.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" prot="public" static="no" mutable="no">
+        <type><ref refid="structarpcom" kindref="compound">arpcom</ref></type>
+        <definition>struct arpcom lncInfo::arpcom</definition>
+        <argsstring></argsstring>
+        <name>arpcom</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="157" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="157" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_1e39a5151bfee43405df118538307a604" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int lncInfo::bdp</definition>
+        <argsstring></argsstring>
+        <name>bdp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="164" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="164" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1d560806451deb128b0e343a0caa8995f" compoundref="lnc_8c" startline="98" endline="101">readBcr</referencedby>
+        <referencedby refid="lnc_8c_1c77dcbd7df5a9a8cacc3f684fd59e389" compoundref="lnc_8c" startline="93" endline="96">writeBcr</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_1099769d9082a972c0b23a7e4b9fc1c77" prot="public" static="no" mutable="no">
+        <type><ref refid="structinitBlock" kindref="compound">initBlock</ref> *</type>
+        <definition>struct initBlock* lncInfo::initBloack</definition>
+        <argsstring></argsstring>
+        <name>initBloack</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="161" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="161" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" prot="public" static="no" mutable="no">
+        <type><ref refid="structnicInfo" kindref="compound">nicInfo</ref></type>
+        <definition>struct nicInfo lncInfo::nic</definition>
+        <argsstring></argsstring>
+        <name>nic</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="158" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="158" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_17520aa6929e2407573acaa5d408c7af4" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int lncInfo::nrdre</definition>
+        <argsstring></argsstring>
+        <name>nrdre</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="165" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="165" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int lncInfo::ntdre</definition>
+        <argsstring></argsstring>
+        <name>ntdre</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="166" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="166" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int lncInfo::rap</definition>
+        <argsstring></argsstring>
+        <name>rap</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="162" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="162" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1d560806451deb128b0e343a0caa8995f" compoundref="lnc_8c" startline="98" endline="101">readBcr</referencedby>
+        <referencedby refid="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</referencedby>
+        <referencedby refid="lnc_8c_1c77dcbd7df5a9a8cacc3f684fd59e389" compoundref="lnc_8c" startline="93" endline="96">writeBcr</referencedby>
+        <referencedby refid="lnc_8c_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int lncInfo::rdp</definition>
+        <argsstring></argsstring>
+        <name>rdp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="163" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="163" bodyend="-1"/>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="lnc_8c_1c698a392b34b41b9aa3eed6ec7c2f8db" compoundref="lnc_8c" startline="192" endline="206">lanceProbe</referencedby>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+        <referencedby refid="lnc_8c_1f2a608bc5f930aedcb878db277a6bad0" compoundref="lnc_8c" startline="88" endline="91">readCsr</referencedby>
+        <referencedby refid="lnc_8c_1af11bb0f1b848f3c3a5db96eec6d03bc" compoundref="lnc_8c" startline="83" endline="86">writeCsr</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_149f921775c4d249ce90af5afed331bd9" prot="public" static="no" mutable="no">
+        <type><ref refid="structhostRingEntry" kindref="compound">hostRingEntry</ref> *</type>
+        <definition>struct hostRingEntry* lncInfo::recvRing</definition>
+        <argsstring></argsstring>
+        <name>recvRing</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="159" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="159" bodyend="-1"/>
+        <referencedby refid="lnc_8c_186e977fd8113976b87da564f2b53a2d7" compoundref="lnc_8c" startline="246" endline="308">lncAttach</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structlncInfo_11e59ad4c4c8f75bfc8c19ba8b3f889ae" prot="public" static="no" mutable="no">
+        <type><ref refid="structhostRingEntry" kindref="compound">hostRingEntry</ref> *</type>
+        <definition>struct hostRingEntry* lncInfo::transRings</definition>
+        <argsstring></argsstring>
+        <name>transRings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="160" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="533">
+        <label>initBlock</label>
+        <link refid="structinitBlock"/>
+      </node>
+      <node id="532">
+        <label>mds</label>
+        <link refid="structmds"/>
+      </node>
+      <node id="528">
+        <label>lncInfo</label>
+        <link refid="structlncInfo"/>
+        <childnode refid="529" relation="usage">
+          <edgelabel>arpcom</edgelabel>
+        </childnode>
+        <childnode refid="530" relation="usage">
+          <edgelabel>nic</edgelabel>
+        </childnode>
+        <childnode refid="531" relation="usage">
+          <edgelabel>recvRing
+transRings</edgelabel>
+        </childnode>
+        <childnode refid="533" relation="usage">
+          <edgelabel>initBloack</edgelabel>
+        </childnode>
+      </node>
+      <node id="530">
+        <label>nicInfo</label>
+        <link refid="structnicInfo"/>
+      </node>
+      <node id="531">
+        <label>hostRingEntry</label>
+        <link refid="structhostRingEntry"/>
+        <childnode refid="532" relation="usage">
+          <edgelabel>md</edgelabel>
+        </childnode>
+      </node>
+      <node id="529">
+        <label>arpcom</label>
+        <link refid="structarpcom"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" line="156" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/lnc.h" bodystart="156" bodyend="167"/>
+    <listofallmembers>
+      <member refid="structlncInfo_16ab65edc0c5bba6523ed5b95f3a25fd5" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>arpcom</name></member>
+      <member refid="structlncInfo_1e39a5151bfee43405df118538307a604" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>bdp</name></member>
+      <member refid="structlncInfo_1099769d9082a972c0b23a7e4b9fc1c77" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>initBloack</name></member>
+      <member refid="structlncInfo_1eccb5006639cf653b6a42de7b4ae1555" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>nic</name></member>
+      <member refid="structlncInfo_17520aa6929e2407573acaa5d408c7af4" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>nrdre</name></member>
+      <member refid="structlncInfo_11ca5c65a2fbc6bc1cd56930eeec0b7eb" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>ntdre</name></member>
+      <member refid="structlncInfo_13aa36dce92c5b6f53b9d09ef02cf8f92" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>rap</name></member>
+      <member refid="structlncInfo_1c7ddba88874d67bc22ca36aa5a30ec9b" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>rdp</name></member>
+      <member refid="structlncInfo_149f921775c4d249ce90af5afed331bd9" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>recvRing</name></member>
+      <member refid="structlncInfo_11e59ad4c4c8f75bfc8c19ba8b3f889ae" prot="public" virt="non-virtual"><scope>lncInfo</scope><name>transRings</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

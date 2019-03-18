@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdevMethodType" kind="struct" prot="public">
+    <compoundname>devMethodType</compoundname>
+    <includes refid="driver_8h" local="no">driver.h</includes>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/driver.h" bodystart="38" bodyend="39"/>
+    <listofallmembers>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

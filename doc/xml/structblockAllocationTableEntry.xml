@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structblockAllocationTableEntry" kind="struct" prot="public">
+    <compoundname>blockAllocationTableEntry</compoundname>
+    <includes refid="ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long blockAllocationTableEntry::attributes</definition>
+        <argsstring></argsstring>
+        <name>attributes</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="96" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="96" bodyend="-1"/>
+        <referencedby refid="block_8c_1182b9be545371d2fcda6981134de2b44" compoundref="block_8c" startline="79" endline="94">freeBlocks</referencedby>
+        <referencedby refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long blockAllocationTableEntry::nextBlock</definition>
+        <argsstring></argsstring>
+        <name>nextBlock</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="98" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="98" bodyend="-1"/>
+        <referencedby refid="block_8c_1182b9be545371d2fcda6981134de2b44" compoundref="block_8c" startline="79" endline="94">freeBlocks</referencedby>
+        <referencedby refid="block_8c_1d2880707d0f942f5119f946db4e13e4e" compoundref="block_8c" startline="96" endline="124">getFreeBlocks</referencedby>
+        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
+        <referencedby refid="ubixfs_8c_14c7f9c50f698ab4cdde8655aaf6363aa" compoundref="ubixfs_8c" startline="118" endline="189">writeFileByte</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structblockAllocationTableEntry_147b0210bbfb05977d7d5fed3b24718b4" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long blockAllocationTableEntry::realSector</definition>
+        <argsstring></argsstring>
+        <name>realSector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="97" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="97" bodyend="-1"/>
+        <referencedby refid="ubixfs_8c_1ec127f9c4f26d2021e637f5f92ef8e12" compoundref="ubixfs_8c" startline="341" endline="364">ubixfs_loadData</referencedby>
+        <referencedby refid="directory_8c_119ed96e270f8c904857e2fe1651ea325" compoundref="directory_8c" startline="94" endline="127">ubixFSmkDir</referencedby>
+        <referencedby refid="ubixfs_8c_1ba0435c266346dd10ac3cbc68655b20c" compoundref="ubixfs_8c" startline="232" endline="307">writeUbixFS</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structblockAllocationTableEntry_1efc436025c53dd0dbfc412df01c35544" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long blockAllocationTableEntry::reserved</definition>
+        <argsstring></argsstring>
+        <name>reserved</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="99" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="99" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixfs/ubixfs.h" bodystart="95" bodyend="100"/>
+    <listofallmembers>
+      <member refid="structblockAllocationTableEntry_1b650496bc3011796ef8b6897f424601c" prot="public" virt="non-virtual"><scope>blockAllocationTableEntry</scope><name>attributes</name></member>
+      <member refid="structblockAllocationTableEntry_1db5281b505d283f4d43d09e327b63c63" prot="public" virt="non-virtual"><scope>blockAllocationTableEntry</scope><name>nextBlock</name></member>
+      <member refid="structblockAllocationTableEntry_147b0210bbfb05977d7d5fed3b24718b4" prot="public" virt="non-virtual"><scope>blockAllocationTableEntry</scope><name>realSector</name></member>
+      <member refid="structblockAllocationTableEntry_1efc436025c53dd0dbfc412df01c35544" prot="public" virt="non-virtual"><scope>blockAllocationTableEntry</scope><name>reserved</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

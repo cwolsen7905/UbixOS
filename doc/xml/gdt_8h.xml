@@ -1,0 +1,593 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="gdt_8h" kind="file">
+    <compoundname>gdt.h</compoundname>
+    <includedby refid="idt_8h" local="no">src/sys/include/sys/idt.h</includedby>
+    <includedby refid="main_8c" local="no">src/sys/init/main.c</includedby>
+    <includedby refid="atkbd_8c" local="no">src/sys/isa/atkbd.c</includedby>
+    <includedby refid="fdc_8c" local="no">src/sys/isa/fdc.c</includedby>
+    <includedby refid="mouse_8c" local="no">src/sys/isa/mouse.c</includedby>
+    <includedby refid="sched_8c" local="no">src/sys/kernel/sched.c</includedby>
+    <includedby refid="lnc_8c" local="no">src/sys/pci/lnc.c</includedby>
+    <includedby refid="idt_8c" local="no">src/sys/sys/idt.c</includedby>
+    <invincdepgraph>
+      <node id="3685">
+        <label>src/sys/pci/lnc.c</label>
+        <link refid="lnc_8c"/>
+      </node>
+      <node id="3684">
+        <label>src/sys/kernel/sched.c</label>
+        <link refid="sched_8c"/>
+      </node>
+      <node id="3677">
+        <label>src/sys/include/sys/idt.h</label>
+        <link refid="idt_8h"/>
+        <childnode refid="3678" relation="include">
+        </childnode>
+        <childnode refid="3680" relation="include">
+        </childnode>
+        <childnode refid="3681" relation="include">
+        </childnode>
+        <childnode refid="3682" relation="include">
+        </childnode>
+        <childnode refid="3683" relation="include">
+        </childnode>
+        <childnode refid="3684" relation="include">
+        </childnode>
+        <childnode refid="3685" relation="include">
+        </childnode>
+        <childnode refid="3686" relation="include">
+        </childnode>
+      </node>
+      <node id="3679">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="3676">
+        <label>src/sys/include/sys/gdt.h</label>
+        <link refid="gdt.h"/>
+        <childnode refid="3677" relation="include">
+        </childnode>
+        <childnode refid="3679" relation="include">
+        </childnode>
+        <childnode refid="3680" relation="include">
+        </childnode>
+        <childnode refid="3681" relation="include">
+        </childnode>
+        <childnode refid="3682" relation="include">
+        </childnode>
+        <childnode refid="3684" relation="include">
+        </childnode>
+        <childnode refid="3685" relation="include">
+        </childnode>
+        <childnode refid="3686" relation="include">
+        </childnode>
+      </node>
+      <node id="3683">
+        <label>src/sys/isa/ne2k.c</label>
+        <link refid="ne2k_8c"/>
+      </node>
+      <node id="3680">
+        <label>src/sys/isa/atkbd.c</label>
+        <link refid="atkbd_8c"/>
+      </node>
+      <node id="3678">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="3679" relation="include">
+        </childnode>
+      </node>
+      <node id="3686">
+        <label>src/sys/sys/idt.c</label>
+        <link refid="idt_8c"/>
+      </node>
+      <node id="3681">
+        <label>src/sys/isa/fdc.c</label>
+        <link refid="fdc_8c"/>
+      </node>
+      <node id="3682">
+        <label>src/sys/isa/mouse.c</label>
+        <link refid="mouse_8c"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="uniondescriptorTableUnion" prot="public">descriptorTableUnion</innerclass>
+    <innerclass refid="structgdtDescriptor" prot="public">gdtDescriptor</innerclass>
+    <innerclass refid="structgdtGate" prot="public">gdtGate</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="gdt_8h_1ad9c89b1e259b5cf08fd3610fd721402" prot="public" static="no">
+        <name>dAcc</name>
+        <initializer>0x100</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_16b595357c10a17c620edcbeeb1c7f6a1" prot="public" static="no">
+        <name>dBig</name>
+        <initializer>0x40</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="56" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1bc269d96e027bb39b828cadb2fc8660f" prot="public" static="no">
+        <name>dBiglim</name>
+        <initializer>0x80</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="57" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1bd5637ceae4810b07f63f34a6efe3af0" prot="public" static="no">
+        <name>dBusy</name>
+        <initializer>0xB00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_184806600e03a4a34f20aeb9cdacdb4f9" prot="public" static="no">
+        <name>dCall</name>
+        <initializer>0x0C00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1f37890c8c59b0fd3d83cea8d6034a035" prot="public" static="no">
+        <name>dCode</name>
+        <initializer>0x1800</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1a8b04f84cbfdce2f778108416f654650" prot="public" static="no">
+        <name>dConform</name>
+        <initializer>0x400</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1fcbb50cc521f6214eda9bca84aaee513" prot="public" static="no">
+        <name>dData</name>
+        <initializer>0x1000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="36" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_15ee8638767e24765a2690483745d60d0" prot="public" static="no">
+        <name>dDpl0</name>
+        <initializer>0x0000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="47" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_1d67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="157" endline="175">atkbd_init</referencedby>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1ace18aa461784b516613570ef3e369a8" prot="public" static="no">
+        <name>dDpl1</name>
+        <initializer>0x2000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1609771e14bb3788ff7586d3d7a58fb62" prot="public" static="no">
+        <name>dDpl2</name>
+        <initializer>0x4000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" prot="public" static="no">
+        <name>dDpl3</name>
+        <initializer>0x6000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_106255d29c48480c11a63195508ce39b5" prot="public" static="no">
+        <name>dEexdown</name>
+        <initializer>0x400</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" prot="public" static="no">
+        <name>dInt</name>
+        <initializer>0x0E00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_1d67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="157" endline="175">atkbd_init</referencedby>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_15ebc94affcfbf066336ac0910680345e" prot="public" static="no">
+        <name>dLdt</name>
+        <initializer>0x200</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_198924c500f63ccfe4e9566ee472490e2" prot="public" static="no">
+        <name>dNpresent</name>
+        <initializer>0x8000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" prot="public" static="no">
+        <name>dPresent</name>
+        <initializer>0x8000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="atkbd_8c_1d67d988f6347d52a6dc9f28992521e37" compoundref="atkbd_8c" startline="157" endline="175">atkbd_init</referencedby>
+        <referencedby refid="fdc_8c_12fad92b12d9ff56bf300b7e53875c75d" compoundref="fdc_8c" startline="63" endline="77">fdc_init</referencedby>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+        <referencedby refid="lnc_8c_10b7fb4f8833ed743dc1f3c4c90c28731" compoundref="lnc_8c" startline="104" endline="152">initLNC</referencedby>
+        <referencedby refid="mouse_8c_1ddd388f29d13c841d76dbab30cdfa756" compoundref="mouse_8c" startline="94" endline="130">mouseInit</referencedby>
+        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_14427d6b09e5682b1c554a5a61e9bee55" prot="public" static="no">
+        <name>dRead</name>
+        <initializer>0x200</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_11521354f2c1fc307021a9a75dfc805f8" prot="public" static="no">
+        <name>dTask</name>
+        <initializer>0x500</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1b566353a8383ed84a5d0328677dc05dd" prot="public" static="no">
+        <name>dTrap</name>
+        <initializer>0x0F00</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="idt_8c_1d2968ba244dc6df20e94c32861314906" compoundref="idt_8c" startline="63" endline="152">idt_init</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_14d5c962ea8bc3d8422e6c3b92ce4b74f" prot="public" static="no">
+        <name>dTss</name>
+        <initializer>0x900</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_19785c919d49cacd1b0fa92590a7562c8" prot="public" static="no">
+        <name>dWrite</name>
+        <initializer>0x200</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1f3cff64995ffb5584c82c7bf27ee802d" prot="public" static="no">
+        <name>ubixDescriptorTable</name>
+        <param><defname>name</defname></param>
+        <param><defname>length</defname></param>
+        <initializer>union <ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref> <ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[length] =</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_17eb57f465bcbf5080c587a469a3a5a08" prot="public" static="no">
+        <name>ubixGateDescriptor</name>
+        <param><defname>offset</defname></param>
+        <param><defname>selector</defname></param>
+        <param><defname>control</defname></param>
+        <initializer>{gate: {(offset &amp; 0xffff), selector, \
+                                                     (control+dPresent), (offset &gt;&gt; 16) }}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="94" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="93" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="gdt_8h_1c84a835fad3118c457254bf67013ad5b" prot="public" static="no">
+        <name>ubixStandardDescriptor</name>
+        <param><defname>base</defname></param>
+        <param><defname>limit</defname></param>
+        <param><defname>control</defname></param>
+        <initializer>{descriptor: \
+                                               {(limit &amp; 0xffff), \
+                                               (base &amp; 0xffff), \
+                                               ((base &gt;&gt; 16) &amp; 0xff), \
+                                               ((control+dPresent) &gt;&gt; 8), \
+                                               (limit &gt;&gt; 16), \
+                                               ((control &amp; 0xff) &gt;&gt; 4), \
+                                               (base &gt;&gt; 24)}}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="92" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="85" bodyend="-1"/>
+        <referencedby refid="main_8c_1bc24c46464ccafa098c421ad858c742b" compoundref="main_8c" startline="76" endline="86">ubixDescriptorTable</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" prot="public" static="no" mutable="no">
+        <type><ref refid="structgdtGate" kindref="compound">gdtGate</ref></type>
+        <definition>struct gdtGate packed</definition>
+        <argsstring></argsstring>
+        <name>packed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="75"/>
+      </memberdef>
+      <memberdef kind="variable" id="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" prot="public" static="no" mutable="no">
+        <type><ref refid="structgdtDescriptor" kindref="compound">gdtDescriptor</ref></type>
+        <definition>struct gdtDescriptor packed</definition>
+        <argsstring></argsstring>
+        <name>packed</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="68"/>
+      </memberdef>
+      <memberdef kind="variable" id="gdt_8h_1a53ed51ff9c7d95591f1fa5724195ce0" prot="public" static="no" mutable="no">
+        <type><ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref></type>
+        <definition>union descriptorTableUnion ubixGDT[9]</definition>
+        <argsstring>[9]</argsstring>
+        <name>ubixGDT</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="96"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: gdt_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_GDT_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_GDT_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Descriptor<sp/>Definitions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="gdt_8h_184806600e03a4a34f20aeb9cdacdb4f9" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dCall<sp/>0x0C00<sp/></highlight><highlight class="comment">/*<sp/>386<sp/>Call<sp/>Gate<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="gdt_8h_1f37890c8c59b0fd3d83cea8d6034a035" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dCode<sp/>0x1800<sp/></highlight><highlight class="comment">/*<sp/>Code<sp/>Segment<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="gdt_8h_1fcbb50cc521f6214eda9bca84aaee513" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dData<sp/>0x1000<sp/></highlight><highlight class="comment">/*<sp/>Data<sp/>Segment<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="gdt_8h_17eb6dc7004c613df58764da5df7d85d8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dInt<sp/><sp/>0x0E00<sp/></highlight><highlight class="comment">/*<sp/>386<sp/>Interrupt<sp/>Gate<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="gdt_8h_15ebc94affcfbf066336ac0910680345e" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dLdt<sp/><sp/>0x200<sp/><sp/></highlight><highlight class="comment">/*<sp/>Local<sp/>Descriptor<sp/>Table<sp/>(LDT)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="gdt_8h_11521354f2c1fc307021a9a75dfc805f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dTask<sp/>0x500<sp/><sp/></highlight><highlight class="comment">/*<sp/>Task<sp/>gate<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="gdt_8h_1b566353a8383ed84a5d0328677dc05dd" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dTrap<sp/>0x0F00<sp/></highlight><highlight class="comment">/*<sp/>386<sp/>Trap<sp/>Gate<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41" refid="gdt_8h_14d5c962ea8bc3d8422e6c3b92ce4b74f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dTss<sp/><sp/>0x900<sp/><sp/></highlight><highlight class="comment">/*<sp/>Task<sp/>State<sp/>Segment<sp/>(TSS)<sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Descriptor<sp/>Options<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="gdt_8h_12e29d1e158d5e81dc70dfae75f17d7f4" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dDpl3<sp/><sp/><sp/><sp/><sp/>0x6000<sp/></highlight><highlight class="comment">/*<sp/>DPL3<sp/>or<sp/>mask<sp/>for<sp/>DPL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45" refid="gdt_8h_1609771e14bb3788ff7586d3d7a58fb62" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dDpl2<sp/><sp/><sp/><sp/><sp/>0x4000<sp/></highlight><highlight class="comment">/*<sp/>DPL2<sp/>or<sp/>mask<sp/>for<sp/>DPL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46" refid="gdt_8h_1ace18aa461784b516613570ef3e369a8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dDpl1<sp/><sp/><sp/><sp/><sp/>0x2000<sp/></highlight><highlight class="comment">/*<sp/>DPL1<sp/>or<sp/>mask<sp/>for<sp/>DPL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="47" refid="gdt_8h_15ee8638767e24765a2690483745d60d0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dDpl0<sp/><sp/><sp/><sp/><sp/>0x0000<sp/></highlight><highlight class="comment">/*<sp/>DPL0<sp/>or<sp/>mask<sp/>for<sp/>DPL<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48" refid="gdt_8h_1be5eb76416aff1d9114e1cdb8b0797fe" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dPresent<sp/><sp/>0x8000<sp/></highlight><highlight class="comment">/*<sp/>Present<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49" refid="gdt_8h_198924c500f63ccfe4e9566ee472490e2" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dNpresent<sp/>0x8000<sp/></highlight><highlight class="comment">/*<sp/>Not<sp/>Present<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="gdt_8h_1ad9c89b1e259b5cf08fd3610fd721402" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dAcc<sp/><sp/><sp/><sp/><sp/><sp/>0x100<sp/><sp/></highlight><highlight class="comment">/*<sp/>Accessed<sp/>(Data<sp/>or<sp/>Code)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51" refid="gdt_8h_19785c919d49cacd1b0fa92590a7562c8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dWrite<sp/><sp/><sp/><sp/>0x200<sp/><sp/></highlight><highlight class="comment">/*<sp/>Writable<sp/>(Data<sp/>segments<sp/>only)<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="gdt_8h_14427d6b09e5682b1c554a5a61e9bee55" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dRead<sp/><sp/><sp/><sp/><sp/>0x200<sp/><sp/></highlight><highlight class="comment">/*<sp/>Readable<sp/>(Code<sp/>segments<sp/>only)<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="gdt_8h_1bd5637ceae4810b07f63f34a6efe3af0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dBusy<sp/><sp/><sp/><sp/><sp/>0xB00<sp/><sp/></highlight><highlight class="comment">/*<sp/>Busy<sp/>(TSS<sp/>only)<sp/><sp/><sp/><sp/>was<sp/>200<sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="54" refid="gdt_8h_106255d29c48480c11a63195508ce39b5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dEexdown<sp/><sp/>0x400<sp/><sp/></highlight><highlight class="comment">/*<sp/>Expand<sp/>down<sp/>(Data<sp/>segments<sp/>only)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55" refid="gdt_8h_1a8b04f84cbfdce2f778108416f654650" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dConform<sp/><sp/>0x400<sp/><sp/></highlight><highlight class="comment">/*<sp/>Conforming<sp/>(Code<sp/>segments<sp/>only)<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="56" refid="gdt_8h_16b595357c10a17c620edcbeeb1c7f6a1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dBig<sp/><sp/><sp/><sp/><sp/><sp/>0x40<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Default<sp/>to<sp/>32<sp/>bit<sp/>mode<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="57" refid="gdt_8h_1bc269d96e027bb39b828cadb2fc8660f" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>dBiglim<sp/><sp/><sp/>0x80<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Limit<sp/>is<sp/>in<sp/>4K<sp/>units<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>GDT<sp/>Descriptor<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60" refid="structgdtDescriptor" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdtDescriptor" kindref="compound">gdtDescriptor</ref><sp/>{</highlight></codeline>
+<codeline lineno="61" refid="structgdtDescriptor_13b6f25eeaf186c263985eabffb96cb1a" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structgdtDescriptor_13b6f25eeaf186c263985eabffb96cb1a" kindref="member">limitLow</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Limit<sp/>0..15<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="62" refid="structgdtDescriptor_1d8fb7196c3b0b2d15ebbc0d20006d0a8" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structgdtDescriptor_1d8fb7196c3b0b2d15ebbc0d20006d0a8" kindref="member">baseLow</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Base<sp/><sp/>0..15<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="63" refid="structgdtDescriptor_1ef125e8406580a85d2201c2d63245575" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><ref refid="structgdtDescriptor_1ef125e8406580a85d2201c2d63245575" kindref="member">baseMed</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Base<sp/><sp/>16..23<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="structgdtDescriptor_1e0bca342b5caa6d39826f21fc9ac4d56" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><ref refid="structgdtDescriptor_1e0bca342b5caa6d39826f21fc9ac4d56" kindref="member">access</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Access<sp/>Byte<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="65" refid="structgdtDescriptor_18f380d84a88a1982542a08fd9b53698f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structgdtDescriptor_18f380d84a88a1982542a08fd9b53698f" kindref="member">limitHigh</ref>:4;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Limit<sp/>16..19<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="structgdtDescriptor_11c5e6d9ddc74b0998b968a383e5f314c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><ref refid="structgdtDescriptor_11c5e6d9ddc74b0998b968a383e5f314c" kindref="member">granularity</ref>:4;<sp/></highlight><highlight class="comment">/*<sp/>Granularity<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="structgdtDescriptor_12cd45ddaee984e45ef519b5f96cb4151" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><ref refid="structgdtDescriptor_12cd45ddaee984e45ef519b5f96cb4151" kindref="member">baseHigh</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Base<sp/>24..31<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/>}<sp/>__attribute__<sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70" refid="structgdtGate" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdtGate" kindref="compound">gdtGate</ref><sp/>{</highlight></codeline>
+<codeline lineno="71" refid="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structgdtGate_1bc0d1d719871949fd4a56d71ba97076e" kindref="member">offsetLow</ref>;<sp/><sp/></highlight><highlight class="comment">/*<sp/>Offset<sp/>0..15<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="72" refid="structgdtGate_171d7780bce5bd08890088cab94d6c415" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structgdtGate_171d7780bce5bd08890088cab94d6c415" kindref="member">selector</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Selector<sp/><sp/><sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73" refid="structgdtGate_178486d8b9aa678859910a54e16ca043c" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structgdtGate_178486d8b9aa678859910a54e16ca043c" kindref="member">access</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Access<sp/>Flags<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/><ref refid="structgdtGate_1acfb0c1ac599c92b3aa941bbf146cab6" kindref="member">offsetHigh</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Offset<sp/>16..31<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/>}<sp/>__attribute__<sp/>((<ref refid="gdt_8h_1a8e25552752eade51544ff9e9fbd7bdf" kindref="member">packed</ref>));</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77" refid="uniondescriptorTableUnion" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref><sp/>{</highlight></codeline>
+<codeline lineno="78" refid="uniondescriptorTableUnion_15c0b66fcfd449657154ad846df5cf701" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdtDescriptor" kindref="compound">gdtDescriptor</ref><sp/><ref refid="uniondescriptorTableUnion_15c0b66fcfd449657154ad846df5cf701" kindref="member">descriptor</ref>;<sp/></highlight><highlight class="comment">/*<sp/>Normal<sp/>descriptor<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79" refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structgdtGate" kindref="compound">gdtGate</ref><sp/><ref refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" kindref="member">gate</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Gate<sp/>descriptor<sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="80" refid="uniondescriptorTableUnion_1088ef1c7d8872dc929903de980a91b86" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">long</highlight><highlight class="normal"><sp/><ref refid="uniondescriptorTableUnion_1088ef1c7d8872dc929903de980a91b86" kindref="member">dummy</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Any<sp/>other<sp/>info<sp/><sp/><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"></highlight></codeline>
+<codeline lineno="84" refid="gdt_8h_1f3cff64995ffb5584c82c7bf27ee802d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ubixDescriptorTable(name,length)<sp/>union<sp/>descriptorTableUnion<sp/>name[length]<sp/>=</highlight></codeline>
+<codeline lineno="85" refid="gdt_8h_1c84a835fad3118c457254bf67013ad5b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ubixStandardDescriptor(base,<sp/>limit,<sp/>control)<sp/>{descriptor:<sp/>\</highlight></codeline>
+<codeline lineno="86"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{(limit<sp/>&amp;<sp/>0xffff),<sp/>\</highlight></codeline>
+<codeline lineno="87"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(base<sp/>&amp;<sp/>0xffff),<sp/>\</highlight></codeline>
+<codeline lineno="88"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((base<sp/>&gt;&gt;<sp/>16)<sp/>&amp;<sp/>0xff),<sp/>\</highlight></codeline>
+<codeline lineno="89"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((control+dPresent)<sp/>&gt;&gt;<sp/>8),<sp/>\</highlight></codeline>
+<codeline lineno="90"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(limit<sp/>&gt;&gt;<sp/>16),<sp/>\</highlight></codeline>
+<codeline lineno="91"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((control<sp/>&amp;<sp/>0xff)<sp/>&gt;&gt;<sp/>4),<sp/>\</highlight></codeline>
+<codeline lineno="92"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(base<sp/>&gt;&gt;<sp/>24)}}</highlight></codeline>
+<codeline lineno="93" refid="gdt_8h_17eb57f465bcbf5080c587a469a3a5a08" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ubixGateDescriptor(offset,<sp/>selector,<sp/>control)<sp/>{gate:<sp/>{(offset<sp/>&amp;<sp/>0xffff),<sp/>selector,<sp/>\</highlight></codeline>
+<codeline lineno="94"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(control+dPresent),<sp/>(offset<sp/>&gt;&gt;<sp/>16)<sp/>}}</highlight></codeline>
+<codeline lineno="95"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight><highlight class="keyword">extern</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal"><ref refid="uniondescriptorTableUnion" kindref="compound">descriptorTableUnion</ref><sp/>ubixGDT[9];<sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="99"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="101"><highlight class="comment"><sp/>$Log: gdt_8h.xml,v $
+<codeline lineno="101"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
+<codeline lineno="101"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="101"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:15<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="104"><highlight class="comment"></highlight></codeline>
+<codeline lineno="105"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="106"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="107"><highlight class="comment"></highlight></codeline>
+<codeline lineno="108"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:52<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="109"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="110"><highlight class="comment"></highlight></codeline>
+<codeline lineno="111"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2004/08/15<sp/>16:47:49<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="112"><highlight class="comment"><sp/>Fixed</highlight></codeline>
+<codeline lineno="113"><highlight class="comment"></highlight></codeline>
+<codeline lineno="114"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/07/22<sp/>20:53:07<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="115"><highlight class="comment"><sp/>atkbd:<sp/>fixed<sp/>problem</highlight></codeline>
+<codeline lineno="116"><highlight class="comment"></highlight></codeline>
+<codeline lineno="117"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/05/21<sp/>15:12:17<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="118"><highlight class="comment"><sp/>Cleaned<sp/>up</highlight></codeline>
+<codeline lineno="119"><highlight class="comment"></highlight></codeline>
+<codeline lineno="120"><highlight class="comment"></highlight></codeline>
+<codeline lineno="121"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="122"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h"/>
+  </compounddef>
+</doxygen>

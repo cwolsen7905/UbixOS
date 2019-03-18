@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structkmod__struct" kind="struct" prot="public">
+    <compoundname>kmod_struct</compoundname>
+    <includes refid="kmod_8h" local="no">kmod.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structkmod__struct_1736b08d6ec5c2ad04f10052042ac57a0" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 kmod_struct::address</definition>
+        <argsstring></argsstring>
+        <name>address</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkmod__struct_162782743b8534001cf236c565fb034c9" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 kmod_struct::id</definition>
+        <argsstring></argsstring>
+        <name>id</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkmod__struct_1e04fcb1a692e52b3d690395cb3e10a57" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char kmod_struct::name[128]</definition>
+        <argsstring>[128]</argsstring>
+        <name>name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkmod__struct_1168192b10e715e81c5565b7098bb059e" prot="public" static="no" mutable="no">
+        <type><ref refid="structkmod__struct" kindref="compound">kmod_struct</ref> *</type>
+        <definition>struct kmod_struct* kmod_struct::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="38" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkmod__struct_1475f955814bba72a492d7c1912f38fb3" prot="public" static="no" mutable="no">
+        <type><ref refid="structkmod__struct" kindref="compound">kmod_struct</ref> *</type>
+        <definition>struct kmod_struct* kmod_struct::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="39" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structkmod__struct_1a024c071673a830463410639498e9e28" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 kmod_struct::refs</definition>
+        <argsstring></argsstring>
+        <name>refs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="526">
+        <label>kmod_struct</label>
+        <link refid="structkmod__struct"/>
+        <childnode refid="526" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="37" bodyend="44"/>
+    <listofallmembers>
+      <member refid="structkmod__struct_1736b08d6ec5c2ad04f10052042ac57a0" prot="public" virt="non-virtual"><scope>kmod_struct</scope><name>address</name></member>
+      <member refid="structkmod__struct_162782743b8534001cf236c565fb034c9" prot="public" virt="non-virtual"><scope>kmod_struct</scope><name>id</name></member>
+      <member refid="structkmod__struct_1e04fcb1a692e52b3d690395cb3e10a57" prot="public" virt="non-virtual"><scope>kmod_struct</scope><name>name</name></member>
+      <member refid="structkmod__struct_1168192b10e715e81c5565b7098bb059e" prot="public" virt="non-virtual"><scope>kmod_struct</scope><name>next</name></member>
+      <member refid="structkmod__struct_1475f955814bba72a492d7c1912f38fb3" prot="public" virt="non-virtual"><scope>kmod_struct</scope><name>prev</name></member>
+      <member refid="structkmod__struct_1a024c071673a830463410639498e9e28" prot="public" virt="non-virtual"><scope>kmod_struct</scope><name>refs</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

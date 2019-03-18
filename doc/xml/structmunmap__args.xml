@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structmunmap__args" kind="struct" prot="public">
+    <compoundname>munmap_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmunmap__args_18392e74205114bd929deeb68c76035dc" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* munmap_args::addr</definition>
+        <argsstring></argsstring>
+        <name>addr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="137" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmunmap__args_18b89f54741aa66465afa25db2e0e2a01" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char munmap_args::addr_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>addr_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="137" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmunmap__args_106fe035aeb5130966df22649d11a0355" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char munmap_args::addr_r_[(sizeof(register_t)&lt;=sizeof(void *)?0:sizeof(register_t)-sizeof(void *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(void *)?0:sizeof(register_t)-sizeof(void *))]</argsstring>
+        <name>addr_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="137" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="137" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmunmap__args_10daaf8cfeac90dc97056f79931a07b80" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>size_t munmap_args::len</definition>
+        <argsstring></argsstring>
+        <name>len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="138" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmunmap__args_18d5d8d299151e239ba9669e428b7180d" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char munmap_args::len_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>len_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="138" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structmunmap__args_1b006fd9e1b74c3488287a2205174d9c5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char munmap_args::len_r_[(sizeof(register_t)&lt;=sizeof(size_t)?0:sizeof(register_t)-sizeof(size_t))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(size_t)?0:sizeof(register_t)-sizeof(size_t))]</argsstring>
+        <name>len_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="138" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="138" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="136" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="136" bodyend="139"/>
+    <listofallmembers>
+      <member refid="structmunmap__args_18392e74205114bd929deeb68c76035dc" prot="public" virt="non-virtual"><scope>munmap_args</scope><name>addr</name></member>
+      <member refid="structmunmap__args_18b89f54741aa66465afa25db2e0e2a01" prot="public" virt="non-virtual"><scope>munmap_args</scope><name>addr_l_</name></member>
+      <member refid="structmunmap__args_106fe035aeb5130966df22649d11a0355" prot="public" virt="non-virtual"><scope>munmap_args</scope><name>addr_r_</name></member>
+      <member refid="structmunmap__args_10daaf8cfeac90dc97056f79931a07b80" prot="public" virt="non-virtual"><scope>munmap_args</scope><name>len</name></member>
+      <member refid="structmunmap__args_18d5d8d299151e239ba9669e428b7180d" prot="public" virt="non-virtual"><scope>munmap_args</scope><name>len_l_</name></member>
+      <member refid="structmunmap__args_1b006fd9e1b74c3488287a2205174d9c5" prot="public" virt="non-virtual"><scope>munmap_args</scope><name>len_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

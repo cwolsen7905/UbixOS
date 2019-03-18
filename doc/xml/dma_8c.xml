@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dma_8c" kind="file">
+    <compoundname>dma.c</compoundname>
+    <includes refid="dma_8h" local="no">sys/dma.h</includes>
+    <includes refid="io_8h" local="no">sys/io.h</includes>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <incdepgraph>
+      <node id="5856">
+        <label>sys/dma.h</label>
+        <link refid="dma_8h"/>
+        <childnode refid="5857" relation="include">
+        </childnode>
+      </node>
+      <node id="5857">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5858" relation="include">
+        </childnode>
+      </node>
+      <node id="5858">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5855">
+        <label>src/sys/sys/dma.c</label>
+        <link refid="dma.c"/>
+        <childnode refid="5856" relation="include">
+        </childnode>
+        <childnode refid="5859" relation="include">
+        </childnode>
+        <childnode refid="5857" relation="include">
+        </childnode>
+      </node>
+      <node id="5859">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="dma_8c_1d03cbb59aaf2eea05907807a12936e7f" prot="public" static="no">
+        <name>highByte</name>
+        <param><defname>x</defname></param>
+        <initializer>((x &amp; 0xFF00) &gt;&gt; 8)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="35" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="dma_8c_119a055e908717e6f71f285bc5c84ea45" prot="public" static="no">
+        <name>lowByte</name>
+        <param><defname>x</defname></param>
+        <initializer>(x &amp; 0x00FF)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="34" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void _dmaXfer</definition>
+        <argsstring>(uInt8 dmaChannel, uInt8 page, uInt offset, uInt length, uInt8 mode)</argsstring>
+        <name>_dmaXfer</name>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>dmaChannel</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>page</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
+          <declname>offset</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>mode</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="59" bodyend="71"/>
+        <references refid="dma_8c_186470f16b06e0b7c17961d074c124550" compoundref="dma_8c" startline="40">addrPort</references>
+        <references refid="dma_8c_10958d78130405d2a49b1daace7f59db7" compoundref="dma_8c" startline="38">clearReg</references>
+        <references refid="dma_8c_17856fd2b7ad20b0d7e189c8c52bd420e" compoundref="dma_8c" startline="42">countPort</references>
+        <references refid="dma_8c_1d03cbb59aaf2eea05907807a12936e7f" compoundref="dma_8c" startline="35">highByte</references>
+        <references refid="dma_8c_119a055e908717e6f71f285bc5c84ea45" compoundref="dma_8c" startline="34">lowByte</references>
+        <references refid="dma_8c_18c07d2b2e2c5790ec43ea5b534db08ae" compoundref="dma_8c" startline="37">maskReg</references>
+        <references refid="dma_8c_128967b638d408de9a6469f8501c2f60c" compoundref="dma_8c" startline="39">modeReg</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="dma_8c_19aa538f8203541a3c3bfc668a75d3e5f" compoundref="dma_8c" startline="41">pagePort</references>
+        <referencedby refid="dma_8c_17e2aa65e3e12777006ad192f7ff8bb5a" compoundref="dma_8c" startline="44" endline="57">dmaXfer</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="dma_8c_17e2aa65e3e12777006ad192f7ff8bb5a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void dmaXfer</definition>
+        <argsstring>(uInt8 channel, uInt32 address, uInt length, uInt8 read)</argsstring>
+        <name>dmaXfer</name>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>channel</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+          <declname>address</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref></type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+          <declname>read</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="44" bodyend="57"/>
+        <references refid="dma_8h_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="dma_8c_186470f16b06e0b7c17961d074c124550" prot="public" static="yes" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 addrPort[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>addrPort</name>
+        <initializer> { 0x00, 0x02, 0x04, 0x06, 0xC0, 0xC4, 0xC8, 0xCC }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="40" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="dma_8c_10958d78130405d2a49b1daace7f59db7" prot="public" static="yes" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 clearReg[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>clearReg</name>
+        <initializer> { 0x0C, 0x0C, 0x0C, 0x0C, 0xD8, 0xD8, 0xD8, 0xD8 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="38" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="dma_8c_17856fd2b7ad20b0d7e189c8c52bd420e" prot="public" static="yes" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 countPort[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>countPort</name>
+        <initializer> { 0x01, 0x03, 0x05, 0x07, 0xC2, 0xC6, 0xCA, 0xCE }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="42" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="dma_8c_18c07d2b2e2c5790ec43ea5b534db08ae" prot="public" static="yes" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 maskReg[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>maskReg</name>
+        <initializer> { 0x0A, 0x0A, 0x0A, 0x0A, 0xD4, 0xD4, 0xD4, 0xD4 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="37" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="dma_8c_128967b638d408de9a6469f8501c2f60c" prot="public" static="yes" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 modeReg[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>modeReg</name>
+        <initializer> { 0x0B, 0x0B, 0x0B, 0x0B, 0xD6, 0xD6, 0xD6, 0xD6 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="39" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="dma_8c_19aa538f8203541a3c3bfc668a75d3e5f" prot="public" static="yes" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pagePort[8]</definition>
+        <argsstring>[8]</argsstring>
+        <name>pagePort</name>
+        <initializer> { 0x87, 0x83, 0x81, 0x82, 0x8F, 0x8B, 0x89, 0x8A }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c" bodystart="41" bodyend="-1"/>
+        <referencedby refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" compoundref="dma_8c" startline="59" endline="71">_dmaXfer</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: dma_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="dma_8h" kindref="compound">sys/dma.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34" refid="dma_8c_119a055e908717e6f71f285bc5c84ea45" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>lowByte(x)<sp/><sp/>(x<sp/>&amp;<sp/>0x00FF)</highlight></codeline>
+<codeline lineno="35" refid="dma_8c_1d03cbb59aaf2eea05907807a12936e7f" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>highByte(x)<sp/>((x<sp/>&amp;<sp/>0xFF00)<sp/>&gt;&gt;<sp/>8)</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="normal"><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="37" refid="dma_8c_18c07d2b2e2c5790ec43ea5b534db08ae" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="dma_8c_18c07d2b2e2c5790ec43ea5b534db08ae" kindref="member">maskReg</ref>[8]<sp/><sp/><sp/>=<sp/>{<sp/>0x0A,<sp/>0x0A,<sp/>0x0A,<sp/>0x0A,<sp/>0xD4,<sp/>0xD4,<sp/>0xD4,<sp/>0xD4<sp/>};</highlight></codeline>
+<codeline lineno="38" refid="dma_8c_10958d78130405d2a49b1daace7f59db7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="dma_8c_10958d78130405d2a49b1daace7f59db7" kindref="member">clearReg</ref>[8]<sp/><sp/>=<sp/>{<sp/>0x0C,<sp/>0x0C,<sp/>0x0C,<sp/>0x0C,<sp/>0xD8,<sp/>0xD8,<sp/>0xD8,<sp/>0xD8<sp/>};</highlight></codeline>
+<codeline lineno="39" refid="dma_8c_128967b638d408de9a6469f8501c2f60c" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="dma_8c_128967b638d408de9a6469f8501c2f60c" kindref="member">modeReg</ref>[8]<sp/><sp/><sp/>=<sp/>{<sp/>0x0B,<sp/>0x0B,<sp/>0x0B,<sp/>0x0B,<sp/>0xD6,<sp/>0xD6,<sp/>0xD6,<sp/>0xD6<sp/>};</highlight></codeline>
+<codeline lineno="40" refid="dma_8c_186470f16b06e0b7c17961d074c124550" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="dma_8c_186470f16b06e0b7c17961d074c124550" kindref="member">addrPort</ref>[8]<sp/><sp/>=<sp/>{<sp/>0x00,<sp/>0x02,<sp/>0x04,<sp/>0x06,<sp/>0xC0,<sp/>0xC4,<sp/>0xC8,<sp/>0xCC<sp/>};</highlight></codeline>
+<codeline lineno="41" refid="dma_8c_19aa538f8203541a3c3bfc668a75d3e5f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="dma_8c_19aa538f8203541a3c3bfc668a75d3e5f" kindref="member">pagePort</ref>[8]<sp/><sp/>=<sp/>{<sp/>0x87,<sp/>0x83,<sp/>0x81,<sp/>0x82,<sp/>0x8F,<sp/>0x8B,<sp/>0x89,<sp/>0x8A<sp/>};</highlight></codeline>
+<codeline lineno="42" refid="dma_8c_17856fd2b7ad20b0d7e189c8c52bd420e" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="dma_8c_17856fd2b7ad20b0d7e189c8c52bd420e" kindref="member">countPort</ref>[8]<sp/>=<sp/>{<sp/>0x01,<sp/>0x03,<sp/>0x05,<sp/>0x07,<sp/>0xC2,<sp/>0xC6,<sp/>0xCA,<sp/>0xCE<sp/>};</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight></codeline>
+<codeline lineno="44" refid="dma_8c_17e2aa65e3e12777006ad192f7ff8bb5a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dma_8h_17e2aa65e3e12777006ad192f7ff8bb5a" kindref="member">dmaXfer</ref>(<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>channel,<ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>address,<ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref><sp/>length,<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/><ref refid="gen__calls_8h_15eff3a25d417fafce7c4f211db219ca2" kindref="member">read</ref>)<sp/>{</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>page=0,<sp/>mode=0;</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/>offset<sp/>=<sp/>0;</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(read)<sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>mode<sp/>=<sp/>0x48<sp/>+<sp/>channel;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">else</highlight><highlight class="normal"><sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/>mode<sp/>=<sp/>0x44<sp/>+<sp/>channel;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/>page<sp/>=<sp/>address<sp/>&gt;&gt;<sp/>16;</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/>offset<sp/>=<sp/>address<sp/>&amp;<sp/>0xFFFF;</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/>length--;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="dma_8h_1e136d2bd6481a13de8e96f5a583c45eb" kindref="member">_dmaXfer</ref>(channel,<sp/>page,<sp/>offset,<sp/>length,<sp/>mode);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="dma_8c_1e136d2bd6481a13de8e96f5a583c45eb" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="dma_8h_1e136d2bd6481a13de8e96f5a583c45eb" kindref="member">_dmaXfer</ref>(<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>dmaChannel,<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>page,<ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref><sp/>offset,<ref refid="types_8h_187d141052bcd5ec8a80812a565c70369" kindref="member">uInt</ref><sp/>length,<ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref><sp/>mode)<sp/>{</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//asm(&quot;cli&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_18c07d2b2e2c5790ec43ea5b534db08ae" kindref="member">maskReg</ref>[dmaChannel],<sp/>0x04<sp/>|<sp/>dmaChannel);</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_10958d78130405d2a49b1daace7f59db7" kindref="member">clearReg</ref>[dmaChannel],<sp/>0x00);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_128967b638d408de9a6469f8501c2f60c" kindref="member">modeReg</ref>[dmaChannel],<sp/>mode);</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_186470f16b06e0b7c17961d074c124550" kindref="member">addrPort</ref>[dmaChannel],<sp/><ref refid="dma_8c_119a055e908717e6f71f285bc5c84ea45" kindref="member">lowByte</ref>(offset));</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_186470f16b06e0b7c17961d074c124550" kindref="member">addrPort</ref>[dmaChannel],<sp/><ref refid="dma_8c_1d03cbb59aaf2eea05907807a12936e7f" kindref="member">highByte</ref>(offset));</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_19aa538f8203541a3c3bfc668a75d3e5f" kindref="member">pagePort</ref>[dmaChannel],<sp/>page);</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_17856fd2b7ad20b0d7e189c8c52bd420e" kindref="member">countPort</ref>[dmaChannel],<sp/><ref refid="dma_8c_119a055e908717e6f71f285bc5c84ea45" kindref="member">lowByte</ref>(length));</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_17856fd2b7ad20b0d7e189c8c52bd420e" kindref="member">countPort</ref>[dmaChannel],<sp/><ref refid="dma_8c_1d03cbb59aaf2eea05907807a12936e7f" kindref="member">highByte</ref>(length));</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(<ref refid="dma_8c_18c07d2b2e2c5790ec43ea5b534db08ae" kindref="member">maskReg</ref>[dmaChannel],<sp/>dmaChannel);</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//asm(&quot;sti&quot;);</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/dma.c"/>
+  </compounddef>
+</doxygen>

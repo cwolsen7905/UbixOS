@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="memcpy_8c" kind="file">
+    <compoundname>memcpy.c</compoundname>
+    <includes refid="bcopy_8c" local="yes">bcopy.c</includes>
+    <incdepgraph>
+      <node id="5709">
+        <label>src/sys/lib/memcpy.c</label>
+        <link refid="memcpy.c"/>
+        <childnode refid="5710" relation="include">
+        </childnode>
+      </node>
+      <node id="5711">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5712" relation="include">
+        </childnode>
+      </node>
+      <node id="5712">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5714">
+        <label>string.h</label>
+        <link refid="string_8h"/>
+        <childnode refid="5711" relation="include">
+        </childnode>
+      </node>
+      <node id="5713">
+        <label>strings.h</label>
+      </node>
+      <node id="5710">
+        <label>bcopy.c</label>
+        <link refid="bcopy_8c"/>
+        <childnode refid="5711" relation="include">
+        </childnode>
+        <childnode refid="5713" relation="include">
+        </childnode>
+        <childnode refid="5714" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="memcpy_8c_1a4b4166c6ce117355831210e0cda3fde" prot="public" static="no">
+        <name>MEMCOPY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/memcpy.c" line="1" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/lib/memcpy.c" bodystart="1" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1" refid="memcpy_8c_1a4b4166c6ce117355831210e0cda3fde" refkind="member"><highlight class="preprocessor">#define<sp/>MEMCOPY</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="bcopy_8c" kindref="compound">bcopy.c</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/lib/memcpy.c"/>
+  </compounddef>
+</doxygen>

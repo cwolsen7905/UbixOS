@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdos__partition" kind="struct" prot="public">
+    <compoundname>dos_partition</compoundname>
+    <includes refid="hd_8h" local="no">hd.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdos__partition_136e0dc33679a315c60056b2a8e865598" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_ecyl</definition>
+        <argsstring></argsstring>
+        <name>dp_ecyl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_1bb8315c288cd2fb600b593867f7fe9db" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_ehd</definition>
+        <argsstring></argsstring>
+        <name>dp_ehd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_17c867bf1f30a039de242889af824d188" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_esect</definition>
+        <argsstring></argsstring>
+        <name>dp_esect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_176754d1c9c64baa477f45dac3b258a40" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_flag</definition>
+        <argsstring></argsstring>
+        <name>dp_flag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="72" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_13a8d760608768cd64c6c5765aeac7a40" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_scyl</definition>
+        <argsstring></argsstring>
+        <name>dp_scyl</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_143c14b7f158728b75f4fa550ee7ec75f" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_shd</definition>
+        <argsstring></argsstring>
+        <name>dp_shd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="73" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_1f001423f7cab0f911f83d19906c9018f" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 dos_partition::dp_size</definition>
+        <argsstring></argsstring>
+        <name>dp_size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="81" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="81" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_1bd8bc367d5183d55902ab1175f63343b" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_ssect</definition>
+        <argsstring></argsstring>
+        <name>dp_ssect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="74" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_1b316e0e02d24902172d5edde412f3238" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 dos_partition::dp_start</definition>
+        <argsstring></argsstring>
+        <name>dp_start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="80" bodyend="-1"/>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdos__partition_1817b13493937968e878385eeede34f0b" prot="public" static="no" mutable="no">
+        <type>unsigned char</type>
+        <definition>unsigned char dos_partition::dp_type</definition>
+        <argsstring></argsstring>
+        <name>dp_type</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="76" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="76" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="71" bodyend="82"/>
+    <listofallmembers>
+      <member refid="structdos__partition_136e0dc33679a315c60056b2a8e865598" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_ecyl</name></member>
+      <member refid="structdos__partition_1bb8315c288cd2fb600b593867f7fe9db" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_ehd</name></member>
+      <member refid="structdos__partition_17c867bf1f30a039de242889af824d188" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_esect</name></member>
+      <member refid="structdos__partition_176754d1c9c64baa477f45dac3b258a40" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_flag</name></member>
+      <member refid="structdos__partition_13a8d760608768cd64c6c5765aeac7a40" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_scyl</name></member>
+      <member refid="structdos__partition_143c14b7f158728b75f4fa550ee7ec75f" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_shd</name></member>
+      <member refid="structdos__partition_1f001423f7cab0f911f83d19906c9018f" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_size</name></member>
+      <member refid="structdos__partition_1bd8bc367d5183d55902ab1175f63343b" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_ssect</name></member>
+      <member refid="structdos__partition_1b316e0e02d24902172d5edde412f3238" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_start</name></member>
+      <member refid="structdos__partition_1817b13493937968e878385eeede34f0b" prot="public" virt="non-virtual"><scope>dos_partition</scope><name>dp_type</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

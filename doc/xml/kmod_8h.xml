@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="kmod_8h" kind="file">
+    <compoundname>kmod.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includedby refid="kmod_8c" local="no">src/sys/kmods/kmod.c</includedby>
+    <incdepgraph>
+      <node id="4277">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="4278" relation="include">
+        </childnode>
+      </node>
+      <node id="4278">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="4276">
+        <label>src/sys/include/ubixos/kmod.h</label>
+        <link refid="kmod.h"/>
+        <childnode refid="4277" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4280">
+        <label>src/sys/kmods/kmod.c</label>
+        <link refid="kmod_8c"/>
+      </node>
+      <node id="4279">
+        <label>src/sys/include/ubixos/kmod.h</label>
+        <link refid="kmod.h"/>
+        <childnode refid="4280" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structkmod__struct" prot="public">kmod_struct</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" prot="public" static="no">
+        <name>LD_START</name>
+        <initializer>0x1000000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" bodystart="35" bodyend="-1"/>
+        <referencedby refid="kmod_8c_192b68dbf95bf5d651555a4c02ee1a74b" compoundref="kmod_8c" startline="75" endline="211">kmod_load</referencedby>
+        <referencedby refid="ld_8c_1b0622e93915d1824df770950e425875f" compoundref="ld_8c" startline="42" endline="176">ldEnable</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="kmod_8h_1f0d8af96157c2be80c94ddca48a8e274" prot="public" static="no">
+        <type><ref refid="structkmod__struct" kindref="compound">kmod_struct</ref></type>
+        <definition>typedef struct kmod_struct  kmod_t</definition>
+        <argsstring></argsstring>
+        <name>kmod_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="44"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="kmod_8h_106399dbabee4a7e746b17c66a343d38f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 kmod_add</definition>
+        <argsstring>(const char *, const char *name)</argsstring>
+        <name>kmod_add</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type>const char *</type>
+          <declname>name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" bodystart="46" bodyend="73"/>
+        <references refid="lists_8h_1ddb302e5cc32ff6fd65b02523e648764">CreateItem</references>
+        <references refid="struct__item__t_176139a34f13eb90a9bf203579870dbd2" compoundref="lists_8h" startline="11">_item_t::data</references>
+        <references refid="lists_8h_15f388b13396e1961b2a85720edf33712">InitializeList</references>
+        <references refid="lists_8h_1f4e720b926108dabb1a08d09798e76d0">InsertItemAtFront</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kmod_8h_1c9997cda5e69bc2c1fce8c8c343b3d4f" compoundref="kmod_8c" startline="75" endline="211">kmod_load</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="kmod_8c_1ef05a41ecb31fc37647810e583f3d37b" compoundref="kmod_8c" startline="44">List</references>
+        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="kmod_8h_1c9997cda5e69bc2c1fce8c8c343b3d4f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 kmod_load</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>kmod_load</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/kmods/kmod.c" bodystart="75" bodyend="211"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="structelfHeader_18ff3dd1b27053bc5a2f01afe5403e53b" compoundref="elf_8h" startline="102">elfHeader::eEntry</references>
+        <references refid="elf_8h_18d1ac0f35a8999a4a8a3350ca95ab54b" compoundref="elf_8h" startline="172">ELF32_R_SYM</references>
+        <references refid="elf_8h_1a4ffd69f2c1c03229686bfa3a898db00" compoundref="elf_8h" startline="173">ELF32_R_TYPE</references>
+        <references refid="elf_8h_118371af6e681af62767a92ac64af1ebb" compoundref="elf_8c" startline="107" endline="109">elfGetRelType</references>
+        <references refid="structelfHeader_14635401868104caa04fcb5bb60840df6" compoundref="elf_8h" startline="108">elfHeader::ePhnum</references>
+        <references refid="structelfHeader_1aff1ff2cb64932f1e1a1f6cf3b881787" compoundref="elf_8h" startline="103">elfHeader::ePhoff</references>
+        <references refid="structelfHeader_1a5b9594ecad96ed7448dbcf95da7895f" compoundref="elf_8h" startline="110">elfHeader::eShnum</references>
+        <references refid="structelfHeader_13d8c518903e5e4db018a336edb6ef204" compoundref="elf_8h" startline="104">elfHeader::eShoff</references>
+        <references refid="structelfHeader_18842d2d5aed087cd50914a46461d3f40" compoundref="elf_8h" startline="111">elfHeader::eShstrndx</references>
+        <references refid="file_8h_1872c22366b4c63f4bdb10cd3b7980b11" compoundref="file_8c" startline="398" endline="425">fclose</references>
+        <references refid="file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
+        <references refid="file_8h_13b06878a03209e88c008c77234b89359" compoundref="file_8c" startline="178" endline="198">fread</references>
+        <references refid="file_8h_180528d8335cd52755f5d6a92e4f08391" compoundref="file_8c" startline="208" endline="211">fseek</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="kmalloc_8h_1aa9ed6886459604cf73ccdbf6410e487" compoundref="kmalloc_8c" startline="351" endline="391">kfree</references>
+        <references refid="kmalloc_8h_1150eab2ac4ce4553e21ca10e7f441762" compoundref="kmalloc_8c" startline="247" endline="339">kmalloc</references>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" compoundref="kmod_8h" startline="35">LD_START</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="paging_8h_1f0fff7a38cd2c7a32d580787423b94ea" compoundref="paging_8h" startline="52">PAGE_DEFAULT</references>
+        <references refid="structelfProgramHeader_1b5a140ab0f0225a8459f88d905995dd0" compoundref="elf_8h" startline="120">elfProgramHeader::phMemsz</references>
+        <references refid="structelfProgramHeader_114f11176e999131fb9be875aeb500447" compoundref="elf_8h" startline="117">elfProgramHeader::phVaddr</references>
+        <references refid="elf_8h_12121a2f01c51e8462bfd4d47725649d8" compoundref="elf_8h" startline="81">PT_DYNAMIC</references>
+        <references refid="elf_8h_1f9283bc32e6d3e87d2bab2f55bc1949b" compoundref="elf_8h" startline="91">PT_GNU_STACK</references>
+        <references refid="elf_8h_184d7768fd6c6ece599d297090900cf92" compoundref="elf_8h" startline="80">PT_LOAD</references>
+        <references refid="elf_8h_17294b5e14e1cf5becf35236381698f48" compoundref="elf_8h" startline="93">PT_PAX_FLAGS</references>
+        <references refid="elf_8h_1f363b787459afd7e272677d7858572c0" compoundref="elf_8h" startline="40">R_386_32</references>
+        <references refid="elf_8h_1d55eb4ccb6e52c4c03f99b34cc8c690b" compoundref="elf_8h" startline="41">R_386_PC32</references>
+        <references refid="elf_8h_1ee5190154984e6176e1c6804ac13217d" compoundref="elf_8h" startline="47">R_386_RELATIVE</references>
+        <references refid="structelfSectionHeader_1285d41cc0ad6e460792b9524c6db5345" compoundref="elf_8h" startline="131">elfSectionHeader::shSize</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <references refid="paging_8h_1a05f8d8947fb5bcec87fc6661f83243e" compoundref="paging_8c" startline="160" endline="241">vmm_remapPage</references>
+        <references refid="vmm_8h_1976cf3919bf7c77c868021ec9374593b" compoundref="vmm__memory_8c" startline="186" endline="216">vmmFindFreePage</references>
+        <references refid="ap-boot_8S_1f78b91f02427adef14bb8b28aa93baa5" compoundref="ap-boot_8S" startline="52">x1000</references>
+        <referencedby refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="46" endline="73">kmod_add</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: kmod_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_KMOD_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_KMOD_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight></codeline>
+<codeline lineno="35" refid="kmod_8h_1f4d6f389174a00e0de80e1ea0e23e956" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>LD_START<sp/>0x1000000</highlight></codeline>
+<codeline lineno="36"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37" refid="structkmod__struct" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structkmod__struct" kindref="compound">kmod_struct</ref><sp/>{</highlight></codeline>
+<codeline lineno="38" refid="structkmod__struct_1168192b10e715e81c5565b7098bb059e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structkmod__struct" kindref="compound">kmod_struct</ref><sp/>*<ref refid="structkmod__struct_1168192b10e715e81c5565b7098bb059e" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="39" refid="structkmod__struct_1475f955814bba72a492d7c1912f38fb3" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structkmod__struct" kindref="compound">kmod_struct</ref><sp/>*<ref refid="structkmod__struct_1475f955814bba72a492d7c1912f38fb3" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="40" refid="structkmod__struct_162782743b8534001cf236c565fb034c9" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structkmod__struct_162782743b8534001cf236c565fb034c9" kindref="member">id</ref>;</highlight></codeline>
+<codeline lineno="41" refid="structkmod__struct_1a024c071673a830463410639498e9e28" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structkmod__struct_1a024c071673a830463410639498e9e28" kindref="member">refs</ref>;</highlight></codeline>
+<codeline lineno="42" refid="structkmod__struct_1736b08d6ec5c2ad04f10052042ac57a0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structkmod__struct_1736b08d6ec5c2ad04f10052042ac57a0" kindref="member">address</ref>;</highlight></codeline>
+<codeline lineno="43" refid="structkmod__struct_1e04fcb1a692e52b3d690395cb3e10a57" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structkmod__struct_1e04fcb1a692e52b3d690395cb3e10a57" kindref="member">name</ref>[128];</highlight></codeline>
+<codeline lineno="44"><highlight class="normal">}<sp/><ref refid="structkmod__struct" kindref="compound">kmod_t</ref>;</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="kmod_8h_1c9997cda5e69bc2c1fce8c8c343b3d4f" kindref="member">kmod_load</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*);</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/><ref refid="kmod_8h_106399dbabee4a7e746b17c66a343d38f" kindref="member">kmod_add</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*<ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="51"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="53"><highlight class="comment"><sp/>$Log: kmod_8h.xml,v $
+<codeline lineno="53"><highlight class="comment"><sp/>Revision 1.6  2006/12/19 14:12:51  reddawg
+<codeline lineno="53"><highlight class="comment"><sp/>rtld-elf almost workign
+<codeline lineno="53"><highlight class="comment"><sp/></highlight></codeline>
+<codeline lineno="54"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2006/06/01<sp/>12:46:14<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="55"><highlight class="comment"><sp/>ubix2</highlight></codeline>
+<codeline lineno="56"><highlight class="comment"></highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2005/10/12<sp/>00:13:37<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/>Removed</highlight></codeline>
+<codeline lineno="59"><highlight class="comment"></highlight></codeline>
+<codeline lineno="60"><highlight class="comment"><sp/>Revision<sp/>1.1.1.1<sp/><sp/>2005/09/26<sp/>17:23:55<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>no<sp/>message</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"></highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>Revision<sp/>1.5<sp/><sp/>2005/08/04<sp/>20:35:19<sp/><sp/>fsdfs</highlight></codeline>
+<codeline lineno="64"><highlight class="comment"></highlight></codeline>
+<codeline lineno="65"><highlight class="comment"><sp/>various<sp/>updates.<sp/>mostly<sp/>kprints,<sp/>tabbing<sp/>code<sp/>to<sp/>look<sp/>cleaner</highlight></codeline>
+<codeline lineno="66"><highlight class="comment"></highlight></codeline>
+<codeline lineno="67"><highlight class="comment"><sp/>Revision<sp/>1.4<sp/><sp/>2004/09/26<sp/>20:46:13<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="68"><highlight class="comment"><sp/>ok<sp/>time<sp/>for<sp/>bed<sp/>added<sp/>kmod_add<sp/>keeps<sp/>modules<sp/>listed<sp/>now</highlight></codeline>
+<codeline lineno="69"><highlight class="comment"></highlight></codeline>
+<codeline lineno="70"><highlight class="comment"><sp/>Revision<sp/>1.3<sp/><sp/>2004/09/26<sp/>20:40:51<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="71"><highlight class="comment"><sp/>Added<sp/>baseAddr<sp/>to<sp/>the<sp/>kmod_t</highlight></codeline>
+<codeline lineno="72"><highlight class="comment"></highlight></codeline>
+<codeline lineno="73"><highlight class="comment"><sp/>Revision<sp/>1.2<sp/><sp/>2004/09/26<sp/>20:39:19<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>Added<sp/>kmod<sp/>struct<sp/>type<sp/>kmod_t</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"></highlight></codeline>
+<codeline lineno="76"><highlight class="comment"><sp/>Revision<sp/>1.1<sp/><sp/>2004/09/20<sp/>07:33:10<sp/><sp/>reddawg</highlight></codeline>
+<codeline lineno="77"><highlight class="comment"><sp/>Start<sp/>of<sp/>kernel<sp/>modules<sp/>will<sp/>make<sp/>it<sp/>much<sp/>more<sp/>flexable<sp/>-<sp/>These<sp/>modules<sp/>can<sp/>be<sp/>either<sp/>in<sp/>kernel<sp/>threads<sp/>or<sp/>system<sp/>services...</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"></highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/kmod.h"/>
+  </compounddef>
+</doxygen>

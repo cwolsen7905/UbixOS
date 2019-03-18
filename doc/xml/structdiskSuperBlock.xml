@@ -1,0 +1,407 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdiskSuperBlock" kind="struct" prot="public">
+    <compoundname>diskSuperBlock</compoundname>
+    <includes refid="ubixfsv2_2ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structdiskSuperBlock_1dee2048b297cb9726f7ccc8621516658" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char pad[368]</type>
+        <definition>char pad [368] diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="96"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_11e77ff0650a97559b31b3d54febd6c68" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">inodeAddr</ref> indicies</type>
+        <definition>inodeAddr indicies diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="94"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1cb9bc066e5fdd6de2a0f2f515506a786" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">inodeAddr</ref> rootDir</type>
+        <definition>inodeAddr rootDir diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="91"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_13e32694e8b23998cb3fe8b213f260865" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> magic3</type>
+        <definition>int32 magic3 diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="88"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_10f112441738f350b3249db86d87e9138" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> logEnd</type>
+        <definition>off_t logEnd diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="86"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1e48fa625335c7b5444516161523e4735" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> logStart</type>
+        <definition>off_t logStart diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="85"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_10488e3815f000a4a4ea983f490f2bbf8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref> logBlocks</type>
+        <definition>blockRun logBlocks diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="84"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1dcf0abbca68ca057bbde5648935688db" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> flags</type>
+        <definition>int32 flags diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="81"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_193ad695661e911670e0a93e5c7700992" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> lastUsedAG</type>
+        <definition>uInt32 lastUsedAG diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="79"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1f37118ce8efed852dc687966452365af" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> numAGs</type>
+        <definition>uInt32 numAGs diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="78"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_110e2fd42499252bde7d59447f1f9fe8b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> AGShift</type>
+        <definition>uInt32 AGShift diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="77"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1120849d1cbf32005800aa33358e7e5ec" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> blocksPerAG</type>
+        <definition>uInt32 blocksPerAG diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="76"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_17b871494c46d34f041a3587c28841276" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> magic2</type>
+        <definition>uInt32 magic2 diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="75"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_12b9f00e1db27b2de5c438d57829741c4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> inodeSize</type>
+        <definition>uInt32 inodeSize diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="74"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_10c4e524dcf7eb9b1935a3c7e87825939" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> inodeCount</type>
+        <definition>uInt32 inodeCount diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="73"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_10bbdd106a622d79017c74e209fa7d3f1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> batSectors</type>
+        <definition>uInt32 batSectors diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="71"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1a2291bc52ea505c7ef9d4755974fcf8a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> usedBlocks</type>
+        <definition>off_t usedBlocks diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="68"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1fc3932ff81ba671b4b37b79036db3eae" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> numBlocks</type>
+        <definition>off_t numBlocks diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="67"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_109b540cbc4e036911591ac042131b2ed" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref> blockShift</type>
+        <definition>uInt32 blockShift diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="65"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_14d8c2348a878f484e40eb37a1cb84368" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> blockSize</type>
+        <definition>int32 blockSize diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="62"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1aff0a4dc98142d0f99a8ec82915775a6" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> fsByteOrder</type>
+        <definition>int32 fsByteOrder diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="59"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1cf1fc4b504baa65a221e1bd199c53278" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="ubixfsv2_2types_8h_156f1a81c92849566ae864511088eb7e8" kindref="member">int32</ref> magic1</type>
+        <definition>int32 magic1 diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="58"/>
+      </memberdef>
+      <memberdef kind="function" id="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>char <ref refid="pci_8c_18f8f80d37794cde9472343e4487ba3eb" kindref="member">name</ref>[32]</type>
+        <definition>char name [32] diskSuperBlock::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="57"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="56" bodyend="98"/>
+    <listofallmembers>
+      <member refid="structdiskSuperBlock_1f4ac9c82df126cc82d4afd0bc03b3bcc" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1cf1fc4b504baa65a221e1bd199c53278" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1aff0a4dc98142d0f99a8ec82915775a6" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_14d8c2348a878f484e40eb37a1cb84368" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_109b540cbc4e036911591ac042131b2ed" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1fc3932ff81ba671b4b37b79036db3eae" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1a2291bc52ea505c7ef9d4755974fcf8a" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_10bbdd106a622d79017c74e209fa7d3f1" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_10c4e524dcf7eb9b1935a3c7e87825939" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_12b9f00e1db27b2de5c438d57829741c4" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_17b871494c46d34f041a3587c28841276" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1120849d1cbf32005800aa33358e7e5ec" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_110e2fd42499252bde7d59447f1f9fe8b" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1f37118ce8efed852dc687966452365af" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_193ad695661e911670e0a93e5c7700992" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1dcf0abbca68ca057bbde5648935688db" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_10488e3815f000a4a4ea983f490f2bbf8" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1e48fa625335c7b5444516161523e4735" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_10f112441738f350b3249db86d87e9138" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_13e32694e8b23998cb3fe8b213f260865" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1cb9bc066e5fdd6de2a0f2f515506a786" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_11e77ff0650a97559b31b3d54febd6c68" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+      <member refid="structdiskSuperBlock_1dee2048b297cb9726f7ccc8621516658" prot="public" virt="non-virtual"><scope>diskSuperBlock</scope><name>__attribute__</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

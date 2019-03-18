@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_c1d11d251a83b2498f44d410b793c5eb" kind="dir">
+    <compoundname>src/sys/include/net/</compoundname>
+    <innerdir refid="dir_bdca170688007a80a8e983b8739e5b43">src/sys/include/net/arch/</innerdir>
+    <innerdir refid="dir_c3e84400a32e4fc888777536359ca22b">src/sys/include/net/ipv4/</innerdir>
+    <innerdir refid="dir_76136493e73439838033f413ae0f827f">src/sys/include/net/ipv6/</innerdir>
+    <innerfile refid="api_8h">api.h</innerfile>
+    <innerfile refid="api__msg_8h">api_msg.h</innerfile>
+    <innerfile refid="arch_8h">arch.h</innerfile>
+    <innerfile refid="debug_8h">debug.h</innerfile>
+    <innerfile refid="def_8h">def.h</innerfile>
+    <innerfile refid="err_8h">err.h</innerfile>
+    <innerfile refid="list_8h">list.h</innerfile>
+    <innerfile refid="lwipopts_8h">lwipopts.h</innerfile>
+    <innerfile refid="mem_8h">mem.h</innerfile>
+    <innerfile refid="memp_8h">memp.h</innerfile>
+    <innerfile refid="net_8h">net.h</innerfile>
+    <innerfile refid="netif_8h">netif.h</innerfile>
+    <innerfile refid="opt_8h">opt.h</innerfile>
+    <innerfile refid="pbuf_8h">pbuf.h</innerfile>
+    <innerfile refid="sockets_8h">sockets.h</innerfile>
+    <innerfile refid="stats_8h">stats.h</innerfile>
+    <innerfile refid="sys_8h">sys.h</innerfile>
+    <innerfile refid="tcp_8h">tcp.h</innerfile>
+    <innerfile refid="tcpip_8h">tcpip.h</innerfile>
+    <innerfile refid="udp_8h">udp.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="uniondescriptorTableUnion" kind="union" prot="public">
+    <compoundname>descriptorTableUnion</compoundname>
+    <includes refid="gdt_8h" local="no">gdt.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="uniondescriptorTableUnion_15c0b66fcfd449657154ad846df5cf701" prot="public" static="no" mutable="no">
+        <type><ref refid="structgdtDescriptor" kindref="compound">gdtDescriptor</ref></type>
+        <definition>struct gdtDescriptor descriptorTableUnion::descriptor</definition>
+        <argsstring></argsstring>
+        <name>descriptor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="78" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="uniondescriptorTableUnion_1088ef1c7d8872dc929903de980a91b86" prot="public" static="no" mutable="no">
+        <type>unsigned long</type>
+        <definition>unsigned long descriptorTableUnion::dummy</definition>
+        <argsstring></argsstring>
+        <name>dummy</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="80" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="80" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" prot="public" static="no" mutable="no">
+        <type><ref refid="structgdtGate" kindref="compound">gdtGate</ref></type>
+        <definition>struct gdtGate descriptorTableUnion::gate</definition>
+        <argsstring></argsstring>
+        <name>gate</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="79" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="79" bodyend="-1"/>
+        <referencedby refid="idt_8c_1ee676dc504a8f6498927c2d5fb5e4c88" compoundref="idt_8c" startline="174" endline="183">setTaskVector</referencedby>
+        <referencedby refid="idt_8c_1174a47ed653fc64fff6b5bb1b895c2cf" compoundref="idt_8c" startline="156" endline="164">setVector</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="399">
+        <label>gdtDescriptor</label>
+        <link refid="structgdtDescriptor"/>
+      </node>
+      <node id="398">
+        <label>gdtGate</label>
+        <link refid="structgdtGate"/>
+      </node>
+      <node id="397">
+        <label>descriptorTableUnion</label>
+        <link refid="uniondescriptorTableUnion"/>
+        <childnode refid="398" relation="usage">
+          <edgelabel>gate</edgelabel>
+        </childnode>
+        <childnode refid="399" relation="usage">
+          <edgelabel>descriptor</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" line="77" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/gdt.h" bodystart="77" bodyend="81"/>
+    <listofallmembers>
+      <member refid="uniondescriptorTableUnion_15c0b66fcfd449657154ad846df5cf701" prot="public" virt="non-virtual"><scope>descriptorTableUnion</scope><name>descriptor</name></member>
+      <member refid="uniondescriptorTableUnion_1088ef1c7d8872dc929903de980a91b86" prot="public" virt="non-virtual"><scope>descriptorTableUnion</scope><name>dummy</name></member>
+      <member refid="uniondescriptorTableUnion_16040720faa184813d93d2521a9558e5d" prot="public" virt="non-virtual"><scope>descriptorTableUnion</scope><name>gate</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

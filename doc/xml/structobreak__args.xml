@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structobreak__args" kind="struct" prot="public">
+    <compoundname>obreak_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structobreak__args_1b30a3d3c9186553a40d1b6e7c5714fb4" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* obreak_args::nsize</definition>
+        <argsstring></argsstring>
+        <name>nsize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="123" bodyend="-1"/>
+        <referencedby refid="paging_8c_16cdf3466734f2da5e258c9844d536295" compoundref="paging_8c" startline="478" endline="514">obreak</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structobreak__args_1ab92004970d8d3775780f477d57e7514" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char obreak_args::nsize_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>nsize_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structobreak__args_1a373949733bedd251be0431b0dec84f6" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char obreak_args::nsize_r_[(sizeof(register_t)&lt;=sizeof(char *)?0:sizeof(register_t)-sizeof(char *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(char *)?0:sizeof(register_t)-sizeof(char *))]</argsstring>
+        <name>nsize_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="123" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="122" bodyend="124"/>
+    <listofallmembers>
+      <member refid="structobreak__args_1b30a3d3c9186553a40d1b6e7c5714fb4" prot="public" virt="non-virtual"><scope>obreak_args</scope><name>nsize</name></member>
+      <member refid="structobreak__args_1ab92004970d8d3775780f477d57e7514" prot="public" virt="non-virtual"><scope>obreak_args</scope><name>nsize_l_</name></member>
+      <member refid="structobreak__args_1a373949733bedd251be0431b0dec84f6" prot="public" virt="non-virtual"><scope>obreak_args</scope><name>nsize_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

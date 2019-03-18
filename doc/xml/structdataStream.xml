@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdataStream" kind="struct" prot="public">
+    <compoundname>dataStream</compoundname>
+    <includes refid="ubixfsv2_2ubixfs_8h" local="no">ubixfs.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structdataStream_13c7c285e3362786527491d2521c83818" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> size</type>
+        <definition>off_t size dataStream::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="107"/>
+      </memberdef>
+      <memberdef kind="function" id="structdataStream_1628448f399ad957e9f686f06fa36e0a8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> maxDoubleIndirectRange</type>
+        <definition>off_t maxDoubleIndirectRange dataStream::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="106"/>
+      </memberdef>
+      <memberdef kind="function" id="structdataStream_15cd359acd98aa10edb732bcdfd76f0da" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref> double_indirect</type>
+        <definition>struct blockRun double_indirect dataStream::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="105"/>
+      </memberdef>
+      <memberdef kind="function" id="structdataStream_19f4a669837742709ad4d9912432e12de" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> maxIndirectRange</type>
+        <definition>off_t maxIndirectRange dataStream::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="104"/>
+      </memberdef>
+      <memberdef kind="function" id="structdataStream_1aa8f5130940fa3b5aa55198e87a66985" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref> indirect</type>
+        <definition>struct blockRun indirect dataStream::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="103"/>
+      </memberdef>
+      <memberdef kind="function" id="structdataStream_1f2f54aa9ce8ca681942d35b907b35e3b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref> maxDirectRange</type>
+        <definition>off_t maxDirectRange dataStream::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="102"/>
+      </memberdef>
+      <memberdef kind="function" id="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structblockRun" kindref="compound">blockRun</ref> direct[NUM_DIRECT_BLOCKS]</type>
+        <definition>struct blockRun direct [NUM_DIRECT_BLOCKS] dataStream::__attribute__</definition>
+        <argsstring>((packed))</argsstring>
+        <name>__attribute__</name>
+        <param>
+          <type>(<ref refid="gdt_8h_1392b4587dfb532ebef7fa06ca9a0740a" kindref="member">packed</ref>)</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="101"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" line="100" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/ubixfs.h" bodystart="100" bodyend="108"/>
+    <listofallmembers>
+      <member refid="structdataStream_1573ce7d4c6f0f860bead0d2412f1c7f4" prot="public" virt="non-virtual"><scope>dataStream</scope><name>__attribute__</name></member>
+      <member refid="structdataStream_1f2f54aa9ce8ca681942d35b907b35e3b" prot="public" virt="non-virtual"><scope>dataStream</scope><name>__attribute__</name></member>
+      <member refid="structdataStream_1aa8f5130940fa3b5aa55198e87a66985" prot="public" virt="non-virtual"><scope>dataStream</scope><name>__attribute__</name></member>
+      <member refid="structdataStream_19f4a669837742709ad4d9912432e12de" prot="public" virt="non-virtual"><scope>dataStream</scope><name>__attribute__</name></member>
+      <member refid="structdataStream_15cd359acd98aa10edb732bcdfd76f0da" prot="public" virt="non-virtual"><scope>dataStream</scope><name>__attribute__</name></member>
+      <member refid="structdataStream_1628448f399ad957e9f686f06fa36e0a8" prot="public" virt="non-virtual"><scope>dataStream</scope><name>__attribute__</name></member>
+      <member refid="structdataStream_13c7c285e3362786527491d2521c83818" prot="public" virt="non-virtual"><scope>dataStream</scope><name>__attribute__</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

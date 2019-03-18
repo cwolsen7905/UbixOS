@@ -1,0 +1,412 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="classogDisplay__UbixOS" kind="class" prot="public">
+    <compoundname>ogDisplay_UbixOS</compoundname>
+    <includes refid="ogDisplay__UbixOS_8h" local="no">ogDisplay_UbixOS.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classogDisplay__UbixOS_12613167bea21ce4c0cad14fb88ad3e72" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>virtual bool ogDisplay_UbixOS::ogAlias</definition>
+        <argsstring>(ogSurface &amp;, uInt32, uInt32, uInt32, uInt32)</argsstring>
+        <name>ogAlias</name>
+        <param>
+          <type>ogSurface &amp;</type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="76"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_1e217c45b05414d917da2c0a6756d2a81" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>virtual bool ogDisplay_UbixOS::ogClone</definition>
+        <argsstring>(ogSurface &amp;)</argsstring>
+        <name>ogClone</name>
+        <param>
+          <type>ogSurface &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="77"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_1085dea3e24bac877b3852c122726f6a5" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void ogDisplay_UbixOS::ogCopyPalette</definition>
+        <argsstring>(ogSurface &amp;)</argsstring>
+        <name>ogCopyPalette</name>
+        <param>
+          <type>ogSurface &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_1c957d77eace0d0da4ad42df3f5864aac" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>virtual bool ogDisplay_UbixOS::ogCreate</definition>
+        <argsstring>(uInt32, uInt32, ogPixelFmt)</argsstring>
+        <name>ogCreate</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type>ogPixelFmt</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="79"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_125d323f4811978e7ae91dc65fe2f65fd" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>ogDisplay_UbixOS::ogDisplay_UbixOS</definition>
+        <argsstring>(void)</argsstring>
+        <name>ogDisplay_UbixOS</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="75"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_1c4056893959f7c3cebb8fd9b9da22bc3" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type><ref refid="types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>virtual bool ogDisplay_UbixOS::ogLoadPalette</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>ogLoadPalette</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_1851567122ba1c39bc2d1ab23f756cbba" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void ogDisplay_UbixOS::ogSetPalette</definition>
+        <argsstring>(uInt8, uInt8, uInt8, uInt8, uInt8)</argsstring>
+        <name>ogSetPalette</name>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="83"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_13ee7b91077a266c75e22a8032b6fbaec" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void ogDisplay_UbixOS::ogSetPalette</definition>
+        <argsstring>(uInt8, uInt8, uInt8, uInt8)</argsstring>
+        <name>ogSetPalette</name>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="82"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_12358b8b9aa1d32c66a3ceb0cc831049f" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>void</type>
+        <definition>virtual void ogDisplay_UbixOS::ogSetPalette</definition>
+        <argsstring>(const ogRGBA8[])</argsstring>
+        <name>ogSetPalette</name>
+        <param>
+          <type>const </type>
+          <declname>ogRGBA8</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="81"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_1a2aa05c3487732c2557be6660f1378bb" prot="public" static="no" const="no" explicit="no" inline="no" virt="virtual">
+        <type>virtual</type>
+        <definition>virtual ogDisplay_UbixOS::~ogDisplay_UbixOS</definition>
+        <argsstring>(void)</argsstring>
+        <name>~ogDisplay_UbixOS</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="84"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classogDisplay__UbixOS_1a8a107e17d80061b7d747835e49f9ff7" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 ogDisplay_UbixOS::FindMode</definition>
+        <argsstring>(uInt32, uInt32, uInt32)</argsstring>
+        <name>FindMode</name>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <param>
+          <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="69"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_18c57cdc366ba8c2904b865124225a520" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_UbixOS::GetModeInfo</definition>
+        <argsstring>(uInt16)</argsstring>
+        <name>GetModeInfo</name>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="70"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_193552b3a106e40d37292eff9104d8eed" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_UbixOS::GetVESAInfo</definition>
+        <argsstring>(void)</argsstring>
+        <name>GetVESAInfo</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="71"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_13fb1ece94112604105efc94389428078" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_UbixOS::SetMode</definition>
+        <argsstring>(uInt16)</argsstring>
+        <name>SetMode</name>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="72"/>
+      </memberdef>
+      <memberdef kind="function" id="classogDisplay__UbixOS_17efbf741bacc04a07fc4ecb7d695c54f" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void ogDisplay_UbixOS::SetPal</definition>
+        <argsstring>(void)</argsstring>
+        <name>SetPal</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="73"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classogDisplay__UbixOS_1d8cc073e5db65ebd92112f623565c8a3" prot="protected" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ogDisplay_UbixOS::activePage</definition>
+        <argsstring></argsstring>
+        <name>activePage</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classogDisplay__UbixOS_1f5f94d1fe23624f84964cae04d8de95f" prot="protected" static="no" mutable="no">
+        <type><ref refid="structogModeInfo" kindref="compound">ogModeInfo</ref> *</type>
+        <definition>ogModeInfo* ogDisplay_UbixOS::modeInfo</definition>
+        <argsstring></argsstring>
+        <name>modeInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classogDisplay__UbixOS_1d17517e5f9f567029576489734396739" prot="protected" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* ogDisplay_UbixOS::pages[2]</definition>
+        <argsstring>[2]</argsstring>
+        <name>pages</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="63" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classogDisplay__UbixOS_144126ad0630147c9b4053e8e5edb8902" prot="protected" static="no" mutable="no">
+        <type><ref refid="structogVESAInfo" kindref="compound">ogVESAInfo</ref> *</type>
+        <definition>ogVESAInfo* ogDisplay_UbixOS::VESAInfo</definition>
+        <argsstring></argsstring>
+        <name>VESAInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classogDisplay__UbixOS_140b13e3c925a3b910cdcc0c68fbc15e2" prot="protected" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 ogDisplay_UbixOS::visualPage</definition>
+        <argsstring></argsstring>
+        <name>visualPage</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="560">
+        <label>ogModeInfo</label>
+        <link refid="structogModeInfo"/>
+      </node>
+      <node id="558">
+        <label>ogDisplay_UbixOS</label>
+        <link refid="classogDisplay__UbixOS"/>
+        <childnode refid="559" relation="usage">
+          <edgelabel>VESAInfo</edgelabel>
+        </childnode>
+        <childnode refid="560" relation="usage">
+          <edgelabel>modeInfo</edgelabel>
+        </childnode>
+      </node>
+      <node id="559">
+        <label>ogVESAInfo</label>
+        <link refid="structogVESAInfo"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sde/ogDisplay_UbixOS.h" bodystart="61" bodyend="85"/>
+    <listofallmembers>
+      <member refid="classogDisplay__UbixOS_1d8cc073e5db65ebd92112f623565c8a3" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>activePage</name></member>
+      <member refid="classogDisplay__UbixOS_1a8a107e17d80061b7d747835e49f9ff7" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>FindMode</name></member>
+      <member refid="classogDisplay__UbixOS_18c57cdc366ba8c2904b865124225a520" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>GetModeInfo</name></member>
+      <member refid="classogDisplay__UbixOS_193552b3a106e40d37292eff9104d8eed" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>GetVESAInfo</name></member>
+      <member refid="classogDisplay__UbixOS_1f5f94d1fe23624f84964cae04d8de95f" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>modeInfo</name></member>
+      <member refid="classogDisplay__UbixOS_12613167bea21ce4c0cad14fb88ad3e72" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogAlias</name></member>
+      <member refid="classogDisplay__UbixOS_1e217c45b05414d917da2c0a6756d2a81" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogClone</name></member>
+      <member refid="classogDisplay__UbixOS_1085dea3e24bac877b3852c122726f6a5" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogCopyPalette</name></member>
+      <member refid="classogDisplay__UbixOS_1c957d77eace0d0da4ad42df3f5864aac" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogCreate</name></member>
+      <member refid="classogDisplay__UbixOS_125d323f4811978e7ae91dc65fe2f65fd" prot="public" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>ogDisplay_UbixOS</name></member>
+      <member refid="classogDisplay__UbixOS_1c4056893959f7c3cebb8fd9b9da22bc3" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogLoadPalette</name></member>
+      <member refid="classogDisplay__UbixOS_12358b8b9aa1d32c66a3ceb0cc831049f" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogSetPalette</name></member>
+      <member refid="classogDisplay__UbixOS_13ee7b91077a266c75e22a8032b6fbaec" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogSetPalette</name></member>
+      <member refid="classogDisplay__UbixOS_1851567122ba1c39bc2d1ab23f756cbba" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>ogSetPalette</name></member>
+      <member refid="classogDisplay__UbixOS_1d17517e5f9f567029576489734396739" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>pages</name></member>
+      <member refid="classogDisplay__UbixOS_13fb1ece94112604105efc94389428078" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>SetMode</name></member>
+      <member refid="classogDisplay__UbixOS_17efbf741bacc04a07fc4ecb7d695c54f" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>SetPal</name></member>
+      <member refid="classogDisplay__UbixOS_144126ad0630147c9b4053e8e5edb8902" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>VESAInfo</name></member>
+      <member refid="classogDisplay__UbixOS_140b13e3c925a3b910cdcc0c68fbc15e2" prot="protected" virt="non-virtual"><scope>ogDisplay_UbixOS</scope><name>visualPage</name></member>
+      <member refid="classogDisplay__UbixOS_1a2aa05c3487732c2557be6660f1378bb" prot="public" virt="virtual"><scope>ogDisplay_UbixOS</scope><name>~ogDisplay_UbixOS</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

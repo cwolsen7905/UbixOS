@@ -1,0 +1,18 @@
+Directory Structure:
+
+  boot    - Contains boot strapping code
+  compile - Contains Information to build UbixOS kernel
+  devfs   - Contains the devfs code
+  include - All of the kernel include files
+  init    - Initialization code for kernel
+  isa     - ISA drivers
+  kernel  - Kernel code (things not directly connected with the system)
+  lib     - Kernel library
+  mpi     - Message passing interface code
+  net     - Networking subsystem code (LwIP)
+  pci     - PCI drivers and subsystem
+  sde     - Screen drawing engine code
+  sys     - System related code IDT etc.
+  ubixfs  - UbixFS code
+  vfs     - VFS subsystem code
+  vmm     - VMM subsystem code

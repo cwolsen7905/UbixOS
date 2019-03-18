@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structdriveInfo" kind="struct" prot="public">
+    <compoundname>driveInfo</compoundname>
+    <includes refid="hd_8h" local="no">hd.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structdriveInfo_116f2a2a3b5ea803c987edc8659d16559" prot="public" static="no" mutable="no">
+        <type>driveDiskLabel *</type>
+        <definition>struct driveDiskLabel* driveInfo::diskLabel</definition>
+        <argsstring></argsstring>
+        <name>diskLabel</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1877ef27dad0f84711aedbabb4ff71a2a" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long driveInfo::hdCalc</definition>
+        <argsstring></argsstring>
+        <name>hdCalc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="57" bodyend="-1"/>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char driveInfo::hdDev</definition>
+        <argsstring></argsstring>
+        <name>hdDev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1f385dccea1485233fc52351a8d7666aa" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char driveInfo::hdEnable</definition>
+        <argsstring></argsstring>
+        <name>hdEnable</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_10ede68cc430fe1c49e9c234bbbe5ec11" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char driveInfo::hdFlags</definition>
+        <argsstring></argsstring>
+        <name>hdFlags</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1a446858a696dafa8454b90a9d5087aae" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long driveInfo::hdMask</definition>
+        <argsstring></argsstring>
+        <name>hdMask</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1c6d14ed915761c07077af5d64fa0b83e" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long driveInfo::hdMulti</definition>
+        <argsstring></argsstring>
+        <name>hdMulti</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long driveInfo::hdPort</definition>
+        <argsstring></argsstring>
+        <name>hdPort</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1ce7d3b12f76a7f0b5dba53b1904be35a" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char driveInfo::hdSector[512]</definition>
+        <argsstring>[512]</argsstring>
+        <name>hdSector</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1cacd139e4cfe1037afbcf488f2f5d2c3" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char driveInfo::hdShift</definition>
+        <argsstring></argsstring>
+        <name>hdShift</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1da0977b5e57df10de593d1df22712af8" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long driveInfo::hdSize</definition>
+        <argsstring></argsstring>
+        <name>hdSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="56" bodyend="-1"/>
+        <referencedby refid="hd_8c_1b01b187dc277e089d0161315437fde41" compoundref="hd_8c" startline="145" endline="220">hdInit</referencedby>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structdriveInfo_1bbb3cbf508e4e7b866eeb658846bd44a" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long driveInfo::parOffset</definition>
+        <argsstring></argsstring>
+        <name>parOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="hd_8c_1c50b08b00d860d86356576d56650a025" compoundref="hd_8c" startline="222" endline="282">hdWrite</referencedby>
+        <referencedby refid="hd_8c_1a6ffe735243161c69ce0930999e02f88" compoundref="hd_8c" startline="39" endline="123">initHardDisk</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/hd.h" bodystart="46" bodyend="59"/>
+    <listofallmembers>
+      <member refid="structdriveInfo_116f2a2a3b5ea803c987edc8659d16559" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>diskLabel</name></member>
+      <member refid="structdriveInfo_1877ef27dad0f84711aedbabb4ff71a2a" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdCalc</name></member>
+      <member refid="structdriveInfo_1ef8c94d9c3cc8a71e23d8e63abbe38a5" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdDev</name></member>
+      <member refid="structdriveInfo_1f385dccea1485233fc52351a8d7666aa" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdEnable</name></member>
+      <member refid="structdriveInfo_10ede68cc430fe1c49e9c234bbbe5ec11" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdFlags</name></member>
+      <member refid="structdriveInfo_1a446858a696dafa8454b90a9d5087aae" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdMask</name></member>
+      <member refid="structdriveInfo_1c6d14ed915761c07077af5d64fa0b83e" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdMulti</name></member>
+      <member refid="structdriveInfo_1ad8076fe0ba9c5bdbbc23c79656619ab" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdPort</name></member>
+      <member refid="structdriveInfo_1ce7d3b12f76a7f0b5dba53b1904be35a" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdSector</name></member>
+      <member refid="structdriveInfo_1cacd139e4cfe1037afbcf488f2f5d2c3" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdShift</name></member>
+      <member refid="structdriveInfo_1da0977b5e57df10de593d1df22712af8" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>hdSize</name></member>
+      <member refid="structdriveInfo_1bbb3cbf508e4e7b866eeb658846bd44a" prot="public" virt="non-virtual"><scope>driveInfo</scope><name>parOffset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

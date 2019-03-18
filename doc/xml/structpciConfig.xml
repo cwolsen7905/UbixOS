@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structpciConfig" kind="struct" prot="public">
+    <compoundname>pciConfig</compoundname>
+    <includes refid="pci_8h" local="no">pci.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structpciConfig_1bb26815c9bf94949629d95ee37118a76" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 pciConfig::base[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>base</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="60" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_19bfd2d9a3ba40dd32ba4f453dd1d6783" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::baseClass</definition>
+        <argsstring></argsstring>
+        <name>baseClass</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="46" bodyend="-1"/>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_125432930e0aeee471b7a6152f5336180" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::bist</definition>
+        <argsstring></argsstring>
+        <name>bist</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_11c99eb7381df726aa6471208dc6a68e2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::bus</definition>
+        <argsstring></argsstring>
+        <name>bus</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_1995b791fa6ade24129754af9010c3a8c" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::cacheLineSize</definition>
+        <argsstring></argsstring>
+        <name>cacheLineSize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="48" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_1620dc11ca24ea3f4a293906ee1a87ef2" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 pciConfig::command</definition>
+        <argsstring></argsstring>
+        <name>command</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_189713ede4222cc50162ba85128f69fd0" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::dev</definition>
+        <argsstring></argsstring>
+        <name>dev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="55" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_14e80d873140cd94a6910dc9bafec1b16" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 pciConfig::deviceId</definition>
+        <argsstring></argsstring>
+        <name>deviceId</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_1a59a8089cfd6f27bb37c9b99e2e243a3" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::func</definition>
+        <argsstring></argsstring>
+        <name>func</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="56" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_15baa44abf78576c1282ee0b5d1420bd1" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::headerType</definition>
+        <argsstring></argsstring>
+        <name>headerType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="50" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_152862e778f41c948aa1fff00f7cbfaf1" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::interface</definition>
+        <argsstring></argsstring>
+        <name>interface</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="44" bodyend="-1"/>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_1e9f2db7fa0eb75fd4bddff056c2e921a" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::irq</definition>
+        <argsstring></argsstring>
+        <name>irq</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="57" bodyend="-1"/>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_13d2576570a3aad52528ee4a5d8bb6ca5" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::latencyTimer</definition>
+        <argsstring></argsstring>
+        <name>latencyTimer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="49" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_152115c6ea1c2d6ca75dbb63aa016d478" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::revisionId</definition>
+        <argsstring></argsstring>
+        <name>revisionId</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="43" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_1067dfa928c2cc4f1427ffb7f1e43ca81" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 pciConfig::size[6]</definition>
+        <argsstring>[6]</argsstring>
+        <name>size</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="61" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_1d8aa8608221f9729a7f609cb003dbc90" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 pciConfig::status</definition>
+        <argsstring></argsstring>
+        <name>status</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_1c7bc166ab3f2fc2cdc5ab88cf68e0a4d" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 pciConfig::subClass</definition>
+        <argsstring></argsstring>
+        <name>subClass</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="45" bodyend="-1"/>
+        <referencedby refid="pci_8c_15c450b9e2534226b162a16de0ef6b434" compoundref="pci_8c" startline="292" endline="312">pci_init</referencedby>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_12742d2e9d8bb1c62246993d890f47dd0" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 pciConfig::subsys</definition>
+        <argsstring></argsstring>
+        <name>subsys</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="64" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_126d5cecfcd18d8d9249a6e84bb778a17" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 pciConfig::subsysVendor</definition>
+        <argsstring></argsstring>
+        <name>subsysVendor</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="63" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structpciConfig_141aa6f820c11581dabb2664524e41a53" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 pciConfig::vendorId</definition>
+        <argsstring></argsstring>
+        <name>vendorId</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="37" bodyend="-1"/>
+        <referencedby refid="pci_8c_151fa422468461d6a5e06b3cea7ceb912" compoundref="pci_8c" startline="236" endline="290">pciProbe</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/pci/pci.h" bodystart="36" bodyend="66"/>
+    <listofallmembers>
+      <member refid="structpciConfig_1bb26815c9bf94949629d95ee37118a76" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>base</name></member>
+      <member refid="structpciConfig_19bfd2d9a3ba40dd32ba4f453dd1d6783" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>baseClass</name></member>
+      <member refid="structpciConfig_125432930e0aeee471b7a6152f5336180" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>bist</name></member>
+      <member refid="structpciConfig_11c99eb7381df726aa6471208dc6a68e2" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>bus</name></member>
+      <member refid="structpciConfig_1995b791fa6ade24129754af9010c3a8c" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>cacheLineSize</name></member>
+      <member refid="structpciConfig_1620dc11ca24ea3f4a293906ee1a87ef2" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>command</name></member>
+      <member refid="structpciConfig_189713ede4222cc50162ba85128f69fd0" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>dev</name></member>
+      <member refid="structpciConfig_14e80d873140cd94a6910dc9bafec1b16" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>deviceId</name></member>
+      <member refid="structpciConfig_1a59a8089cfd6f27bb37c9b99e2e243a3" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>func</name></member>
+      <member refid="structpciConfig_15baa44abf78576c1282ee0b5d1420bd1" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>headerType</name></member>
+      <member refid="structpciConfig_152862e778f41c948aa1fff00f7cbfaf1" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>interface</name></member>
+      <member refid="structpciConfig_1e9f2db7fa0eb75fd4bddff056c2e921a" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>irq</name></member>
+      <member refid="structpciConfig_13d2576570a3aad52528ee4a5d8bb6ca5" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>latencyTimer</name></member>
+      <member refid="structpciConfig_152115c6ea1c2d6ca75dbb63aa016d478" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>revisionId</name></member>
+      <member refid="structpciConfig_1067dfa928c2cc4f1427ffb7f1e43ca81" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>size</name></member>
+      <member refid="structpciConfig_1d8aa8608221f9729a7f609cb003dbc90" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>status</name></member>
+      <member refid="structpciConfig_1c7bc166ab3f2fc2cdc5ab88cf68e0a4d" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>subClass</name></member>
+      <member refid="structpciConfig_12742d2e9d8bb1c62246993d890f47dd0" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>subsys</name></member>
+      <member refid="structpciConfig_126d5cecfcd18d8d9249a6e84bb778a17" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>subsysVendor</name></member>
+      <member refid="structpciConfig_141aa6f820c11581dabb2664524e41a53" prot="public" virt="non-virtual"><scope>pciConfig</scope><name>vendorId</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

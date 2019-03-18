@@ -1,0 +1,6 @@
+#Debug Info
+
+##Defines
+DEBUG_EXEC - Exec Debug
+DEBUG_VFS  - VFS DEBUG
+DEBUG_SYSCTL - SYSCTL DEBUG

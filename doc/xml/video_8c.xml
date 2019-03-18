@@ -1,0 +1,298 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="video_8c" kind="file">
+    <compoundname>video.c</compoundname>
+    <includes refid="io_8h" local="no">sys/io.h</includes>
+    <includes refid="video_8h" local="no">sys/video.h</includes>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="spinlock_8h" local="no">ubixos/spinlock.h</includes>
+    <includes refid="tty_8h" local="no">ubixos/tty.h</includes>
+    <incdepgraph>
+      <node id="5894">
+        <label>ubixos/spinlock.h</label>
+        <link refid="spinlock_8h"/>
+        <childnode refid="5892" relation="include">
+        </childnode>
+      </node>
+      <node id="5892">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="5893" relation="include">
+        </childnode>
+      </node>
+      <node id="5893">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="5891">
+        <label>sys/video.h</label>
+        <link refid="video_8h"/>
+        <childnode refid="5892" relation="include">
+        </childnode>
+      </node>
+      <node id="5889">
+        <label>src/sys/sys/video.c</label>
+        <link refid="video.c"/>
+        <childnode refid="5890" relation="include">
+        </childnode>
+        <childnode refid="5891" relation="include">
+        </childnode>
+        <childnode refid="5892" relation="include">
+        </childnode>
+        <childnode refid="5894" relation="include">
+        </childnode>
+        <childnode refid="5895" relation="include">
+        </childnode>
+      </node>
+      <node id="5895">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="5892" relation="include">
+        </childnode>
+      </node>
+      <node id="5890">
+        <label>sys/io.h</label>
+        <link refid="io_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="video_8c_105d079fd6b2d61320ad423e5c918903c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void backSpace</definition>
+        <argsstring>()</argsstring>
+        <name>backSpace</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" bodystart="40" bodyend="59"/>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="video_8h_1a6d08b2dd961295607e6a5d52f1d471e" compoundref="video_8c" startline="37">printColor</references>
+        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
+        <references refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" compoundref="tty_8h" startline="41">tty_termNode::tty_x</references>
+        <references refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" compoundref="tty_8h" startline="42">tty_termNode::tty_y</references>
+        <references refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" compoundref="systemtask_8c" startline="45">videoBuffer</references>
+        <referencedby refid="atkbd_8c_10a638d89ef3b126799ec1503c743a723" compoundref="atkbd_8c" startline="216" endline="319">keyboardHandler</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="video_8c_19d7e8af417b6d543da691e9c0e2f6f9f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void clearScreen</definition>
+        <argsstring>()</argsstring>
+        <name>clearScreen</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" line="115" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" bodystart="115" bodyend="126"/>
+        <references refid="video_8h_12984c3db0ad3a4a571a8ee0b4d2fe90b" compoundref="video_8h" startline="35">defaultColor</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" compoundref="systemtask_8c" startline="45">videoBuffer</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="video_8c_15429378b96a24fadfd2d1f8d777eb95a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void kprint</definition>
+        <argsstring>(char *string)</argsstring>
+        <name>kprint</name>
+        <param>
+          <type>char *</type>
+          <declname>string</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" bodystart="62" bodyend="112"/>
+        <references refid="io_8h_177b934268de1b3ecdcf3f275413b3108" compoundref="io_8c" startline="39" endline="47">inportByte</references>
+        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+        <references refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" compoundref="io_8c" startline="73" endline="79">outportByte</references>
+        <references refid="video_8h_1a6d08b2dd961295607e6a5d52f1d471e" compoundref="video_8c" startline="37">printColor</references>
+        <references refid="tty_8h_14f96ccac7e60296ef496008d8cbed0ff" compoundref="tty_8c" startline="170" endline="172">tty_find</references>
+        <references refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" compoundref="tty_8c" startline="39">tty_foreground</references>
+        <references refid="tty_8h_1d96f57a7c113d3cfa76ee5fed6de33c0" compoundref="tty_8c" startline="118" endline="168">tty_print</references>
+        <references refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" compoundref="systemtask_8c" startline="45">videoBuffer</references>
+        <references refid="start_8S_162df326d54f8b2ece412319c4360ef3e" compoundref="start_8S" startline="51">x20</references>
+        <referencedby refid="fdc_8c_19d92103f483df5da1a07402347739e44" compoundref="fdc_8c" startline="129" endline="199">fdcRw</referencedby>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+        <referencedby refid="kprintf_8c_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="video_8c_1a6d08b2dd961295607e6a5d52f1d471e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int printColor</definition>
+        <argsstring></argsstring>
+        <name>printColor</name>
+        <initializer> defaultColor</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" bodystart="37" bodyend="-1"/>
+        <referencedby refid="video_8c_105d079fd6b2d61320ad423e5c918903c" compoundref="video_8c" startline="40" endline="59">backSpace</referencedby>
+        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="video_8c_147ec71507e9b790e7dfdd9e641c4541f" prot="public" static="yes" mutable="no">
+        <type>unsigned char *</type>
+        <definition>unsigned char* videoBuffer</definition>
+        <argsstring></argsstring>
+        <name>videoBuffer</name>
+        <initializer> (char *)0xB8000</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c" bodystart="36" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2005<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: video_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="io_8h" kindref="compound">sys/io.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="video_8h" kindref="compound">sys/video.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="spinlock_8h" kindref="compound">ubixos/spinlock.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="tty_8h" kindref="compound">ubixos/tty.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight></codeline>
+<codeline lineno="36" refid="video_8c_147ec71507e9b790e7dfdd9e641c4541f" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/>*<ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref><sp/>=<sp/>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)0xB8000;</highlight></codeline>
+<codeline lineno="37" refid="video_8c_1a6d08b2dd961295607e6a5d52f1d471e" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="video_8h_1a6d08b2dd961295607e6a5d52f1d471e" kindref="member">printColor</ref><sp/>=<sp/><ref refid="video_8h_12984c3db0ad3a4a571a8ee0b4d2fe90b" kindref="member">defaultColor</ref>;</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="video_8c_105d079fd6b2d61320ad423e5c918903c" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="video_8h_105d079fd6b2d61320ad423e5c918903c" kindref="member">backSpace</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref><sp/>bufferOffset<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3d4,<sp/>0x0e);</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x3d5);</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&lt;&lt;=<sp/>0x8;<sp/></highlight><highlight class="comment">/*<sp/>Shift<sp/>Address<sp/>Left<sp/>8<sp/>Bits<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3d4,<sp/>0x0f);</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>+=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x3d5);</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&lt;&lt;=<sp/>0x1;<sp/></highlight><highlight class="comment">/*<sp/>Shift<sp/>Address<sp/>Left<sp/>1<sp/>Bits<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[bufferOffset--]<sp/>=<sp/>0x20;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[bufferOffset--]<sp/>=<sp/><ref refid="video_8h_1a6d08b2dd961295607e6a5d52f1d471e" kindref="member">printColor</ref>;</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[bufferOffset]<sp/><sp/><sp/>=<sp/>0x20;</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&gt;&gt;=<sp/>0x1;</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref><sp/>=<sp/>(bufferOffset<sp/>&amp;<sp/><sp/>0xFF);</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref><sp/>=<sp/>(bufferOffset<sp/>&gt;&gt;<sp/>0x8);</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0f);</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_1b4da0597e471d572404510d113cf91a9" kindref="member">tty_x</ref>);</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0e);</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>-&gt;<ref refid="structtty__termNode_16c5b9052e1368205622f7dad04ab815b" kindref="member">tty_y</ref>);</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="62" refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" refkind="member"><highlight class="normal"><ref refid="video_8h_15429378b96a24fadfd2d1f8d777eb95a" kindref="member">kprint</ref>(</highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*string)</highlight></codeline>
+<codeline lineno="63"><highlight class="normal">{</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">unsigned</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>bufferOffset<sp/>=<sp/>0x0,<sp/>character<sp/>=<sp/>0x0,<sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Short<sp/>circuit<sp/>if<sp/>we&apos;re<sp/>in<sp/>tty<sp/>mode<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(<ref refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref><sp/>!=<sp/><ref refid="tty_8h_1afbb5679104334c34d7691b2de7d7a86" kindref="member">tty_foreground</ref>)</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="tty_8h_1d96f57a7c113d3cfa76ee5fed6de33c0" kindref="member">tty_print</ref>(string,<ref refid="tty_8h_14f96ccac7e60296ef496008d8cbed0ff" kindref="member">tty_find</ref>(0));</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>We<sp/>Need<sp/>To<sp/>Get<sp/>The<sp/>Y<sp/>Position<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0e);</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x3D5);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&lt;&lt;=<sp/>8;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Shift<sp/>Address<sp/>Left<sp/>8<sp/>Bits<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Then<sp/>We<sp/>Need<sp/>To<sp/>Add<sp/>The<sp/>X<sp/>Position<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0f);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>+=<sp/><ref refid="io_8h_177b934268de1b3ecdcf3f275413b3108" kindref="member">inportByte</ref>(0x3D5);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&lt;&lt;=<sp/>1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Shift<sp/>Address<sp/>Left<sp/>1<sp/>Bits<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">while</highlight><highlight class="normal"><sp/>((character<sp/>=<sp/>*string++))<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">switch</highlight><highlight class="normal"><sp/>(character)<sp/>{</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">case</highlight><highlight class="normal"><sp/></highlight><highlight class="charliteral">&apos;\n&apos;</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bufferOffset<sp/>=<sp/>(bufferOffset<sp/>/<sp/>160)<sp/>*<sp/>160<sp/>+<sp/>160;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[bufferOffset++]<sp/>=<sp/>character;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[bufferOffset++]<sp/>=<sp/><ref refid="video_8h_1a6d08b2dd961295607e6a5d52f1d471e" kindref="member">printColor</ref>;</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">break</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>switch<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Check<sp/>To<sp/>See<sp/>If<sp/>We<sp/>Are<sp/>Out<sp/>Of<sp/>Bounds<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(bufferOffset<sp/>&gt;=<sp/>160<sp/>*<sp/>25)<sp/>{</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>160<sp/>*<sp/>24;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[i]<sp/>=<sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[i<sp/>+<sp/>160];</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>for<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0;<sp/>i<sp/>&lt;<sp/>80;<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[(160<sp/>*<sp/>24)<sp/>+<sp/>(i<sp/>*<sp/>2)]<sp/>=<sp/>0<ref refid="start_8S_162df326d54f8b2ece412319c4360ef3e" kindref="member">x20</ref>;</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[(160<sp/>*<sp/>24)<sp/>+<sp/>(i<sp/>*<sp/>2)<sp/>+<sp/>1]<sp/>=<sp/><ref refid="video_8h_1a6d08b2dd961295607e6a5d52f1d471e" kindref="member">printColor</ref>;</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>for<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>bufferOffset<sp/>-=<sp/>160;</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>if<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/>}<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>while<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/>bufferOffset<sp/>&gt;&gt;=<sp/>1;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Set<sp/>the<sp/>new<sp/>cursor<sp/>position<sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0f);</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/>((bufferOffset<sp/>&amp;<sp/>0x0ff)<sp/>&amp;<sp/>0xFF));</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0e);</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/>((bufferOffset<sp/>&gt;&gt;<sp/>8)<sp/>&amp;<sp/>0xFF));</highlight></codeline>
+<codeline lineno="110"><highlight class="normal"></highlight></codeline>
+<codeline lineno="111"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="112"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="113"><highlight class="normal"></highlight></codeline>
+<codeline lineno="114"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>Clears<sp/>The<sp/>Screen<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115" refid="video_8c_19d7e8af417b6d543da691e9c0e2f6f9f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="video_8h_19d7e8af417b6d543da691e9c0e2f6f9f" kindref="member">clearScreen</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="116"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">short</highlight><highlight class="normal"><sp/>i<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="117"><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">for</highlight><highlight class="normal"><sp/>(i<sp/>=<sp/>0x0;<sp/>i<sp/>&lt;<sp/>(80<sp/>*<sp/>25);<sp/>i++)<sp/>{</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[i<sp/>*<sp/>2]<sp/>=<sp/>0<ref refid="start_8S_162df326d54f8b2ece412319c4360ef3e" kindref="member">x20</ref>;</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="systemtask_8c_147ec71507e9b790e7dfdd9e641c4541f" kindref="member">videoBuffer</ref>[i<sp/>*<sp/>2<sp/>+<sp/>1]<sp/>=<sp/><ref refid="video_8h_12984c3db0ad3a4a571a8ee0b4d2fe90b" kindref="member">defaultColor</ref>;</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0f);</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/>0);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D4,<sp/>0x0e);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><ref refid="io_8h_18acc1a06073db2e7b92ffbd00fbd0cf1" kindref="member">outportByte</ref>(0x3D5,<sp/>0);</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"></highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="129"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="130"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/sys/video.c"/>
+  </compounddef>
+</doxygen>

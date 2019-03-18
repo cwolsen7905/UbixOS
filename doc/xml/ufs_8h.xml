@@ -1,0 +1,1019 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="ufs_8h" kind="file">
+    <compoundname>ufs.h</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="vfs_8h" local="no">vfs/vfs.h</includes>
+    <includes refid="device_8h" local="no">sys/device.h</includes>
+    <includedby refid="init_8h" local="no">src/sys/include/ubixos/init.h</includedby>
+    <includedby refid="ffs_8c" local="no">src/sys/ufs/ffs.c</includedby>
+    <includedby refid="ufs_8c" local="no">src/sys/ufs/ufs.c</includedby>
+    <incdepgraph>
+      <node id="4762">
+        <label>src/sys/include/ufs/ufs.h</label>
+        <link refid="ufs.h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+        <childnode refid="4765" relation="include">
+        </childnode>
+        <childnode refid="4772" relation="include">
+        </childnode>
+      </node>
+      <node id="4771">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+      </node>
+      <node id="4763">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="4764" relation="include">
+        </childnode>
+      </node>
+      <node id="4764">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="4766">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+        <childnode refid="4767" relation="include">
+        </childnode>
+        <childnode refid="4768" relation="include">
+        </childnode>
+      </node>
+      <node id="4765">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+        <childnode refid="4766" relation="include">
+        </childnode>
+        <childnode refid="4768" relation="include">
+        </childnode>
+        <childnode refid="4769" relation="include">
+        </childnode>
+        <childnode refid="4771" relation="include">
+        </childnode>
+      </node>
+      <node id="4768">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+      </node>
+      <node id="4767">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+      </node>
+      <node id="4769">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="4770" relation="include">
+        </childnode>
+        <childnode refid="4771" relation="include">
+        </childnode>
+      </node>
+      <node id="4770">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+      </node>
+      <node id="4772">
+        <label>sys/device.h</label>
+        <link refid="device_8h"/>
+        <childnode refid="4763" relation="include">
+        </childnode>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4776">
+        <label>src/sys/ufs/ffs.c</label>
+        <link refid="ffs_8c"/>
+      </node>
+      <node id="4773">
+        <label>src/sys/include/ufs/ufs.h</label>
+        <link refid="ufs.h"/>
+        <childnode refid="4774" relation="include">
+        </childnode>
+        <childnode refid="4776" relation="include">
+        </childnode>
+        <childnode refid="4777" relation="include">
+        </childnode>
+      </node>
+      <node id="4777">
+        <label>src/sys/ufs/ufs.c</label>
+        <link refid="ufs_8c"/>
+      </node>
+      <node id="4775">
+        <label>src/sys/init/main.c</label>
+        <link refid="main_8c"/>
+      </node>
+      <node id="4774">
+        <label>src/sys/include/ubixos/init.h</label>
+        <link refid="init_8h"/>
+        <childnode refid="4775" relation="include">
+        </childnode>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="structcsum" prot="public">csum</innerclass>
+    <innerclass refid="structcsum__total" prot="public">csum_total</innerclass>
+    <innerclass refid="structdirent" prot="public">dirent</innerclass>
+    <innerclass refid="structfs" prot="public">fs</innerclass>
+    <innerclass refid="structufs1__dinode" prot="public">ufs1_dinode</innerclass>
+    <innerclass refid="structufs2__dinode" prot="public">ufs2_dinode</innerclass>
+      <sectiondef kind="define">
+      <memberdef kind="define" id="ufs_8h_1cd9d1b3e1eed7fc3850f8a78636dd5a7" prot="public" static="no">
+        <name>blkoff</name>
+        <param><defname>fs</defname></param>
+        <param><defname>loc</defname></param>
+        <initializer>/* calculates (loc % <ref refid="structfs" kindref="compound">fs</ref>-&gt;fs_bsize) */ \
+        ((loc) &amp; (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_qbmask)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="91" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="90" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1f7e946b674acc4ead5e3ae15317f52c0" prot="public" static="no">
+        <name>cgbase</name>
+        <param><defname>fs</defname></param>
+        <param><defname>c</defname></param>
+        <initializer>(((<ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref>)(<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_fpg) * (c))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="64" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_103cdc9c21f1412b107d85751f275c208" prot="public" static="no">
+        <name>cgdmin</name>
+        <param><defname>fs</defname></param>
+        <param><defname>c</defname></param>
+        <initializer>(cgstart(<ref refid="structfs" kindref="compound">fs</ref>, c) + (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_dblkno)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="65" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1f2bea0d775018173b6e6f5141f09bdd0" prot="public" static="no">
+        <name>cgimin</name>
+        <param><defname>fs</defname></param>
+        <param><defname>c</defname></param>
+        <initializer>(cgstart(<ref refid="structfs" kindref="compound">fs</ref>, c) + (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_iblkno)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="66" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_16ccbaf50dd709f99482cafcbc427d834" prot="public" static="no">
+        <name>cgsblock</name>
+        <param><defname>fs</defname></param>
+        <param><defname>c</defname></param>
+        <initializer>(cgstart(<ref refid="structfs" kindref="compound">fs</ref>, c) + (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_sblkno)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_11446925c904a61056fb611a539de03ca" prot="public" static="no">
+        <name>cgstart</name>
+        <param><defname>fs</defname></param>
+        <param><defname>c</defname></param>
+        <initializer>((<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_magic == FS_UFS2_MAGIC ? cgbase(<ref refid="structfs" kindref="compound">fs</ref>, c) :               \
+       (cgbase(<ref refid="structfs" kindref="compound">fs</ref>, c) + (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_old_cgoffset * ((c) &amp; ~((<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_old_cgmask))))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_15c527699eccebab4828fd122caea6cb7" prot="public" static="no">
+        <name>cgtod</name>
+        <param><defname>fs</defname></param>
+        <param><defname>c</defname></param>
+        <initializer>(cgstart(<ref refid="structfs" kindref="compound">fs</ref>, c) + (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_cblkno)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_17875100ca8ad379e53628cb7dec48ecd" prot="public" static="no">
+        <name>dbtofsb</name>
+        <param><defname>fs</defname></param>
+        <param><defname>b</defname></param>
+        <initializer>((b) &gt;&gt; (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_fsbtodb)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="75" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_19734470bf89968d142073fd334bf9cb6" prot="public" static="no">
+        <name>DEV_BSHIFT</name>
+        <initializer>9</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_19c8466b6111a11195a5cd2478c648e32" prot="public" static="no">
+        <name>DEV_BSIZE</name>
+        <initializer>(1&lt;&lt;DEV_BSHIFT)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="ufs_8c_1ccfc6cc8f916e7f58db4ac350bdc1e9b" compoundref="ufs_8c" startline="214" endline="233">fsfind</referencedby>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_11dcee67486bc4238096ecb61e2d9ffd1" prot="public" static="no">
+        <name>DT_DIR</name>
+        <initializer>4</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="ufs_8c_18b14c49128395a8745bc83cfcce7b9cf" compoundref="ufs_8c" startline="236" endline="269">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_19973595cf6775b1b29d7274ab4c0d623" prot="public" static="no">
+        <name>DT_REG</name>
+        <initializer>8</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="38" bodyend="-1"/>
+        <referencedby refid="ufs_8c_18b14c49128395a8745bc83cfcce7b9cf" compoundref="ufs_8c" startline="236" endline="269">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_11494995062a8a6dbbe60f8dc6a3e995d" prot="public" static="no">
+        <name>fragroundup</name>
+        <param><defname>fs</defname></param>
+        <param><defname>size</defname></param>
+        <initializer>/* calculates roundup(size, <ref refid="structfs" kindref="compound">fs</ref>-&gt;fs_fsize) */ \
+        (((size) + (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_qfmask) &amp; (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_fmask)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="95" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1ce25c7a73c514a8e575e1ba8c15c9a9e" prot="public" static="no">
+        <name>FS_UFS1_MAGIC</name>
+        <initializer>0x011954</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="51" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_10b73b7456fc1dee932dc0c1056c613fc" prot="public" static="no">
+        <name>FS_UFS2_MAGIC</name>
+        <initializer>0x19540119</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1e26526d0ac7505aae7345f0288c17fe6" prot="public" static="no">
+        <name>fsbtodb</name>
+        <param><defname>fs</defname></param>
+        <param><defname>b</defname></param>
+        <initializer>((<ref refid="ufs_8h_1b4b318e7a68f3cd77c42492443c59895" kindref="member">daddr_t</ref>)(b) &lt;&lt; (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_fsbtodb)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="74" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_104c33da6605e73954cf2ff32c3f0f15a" prot="public" static="no">
+        <name>FSMAXSNAP</name>
+        <initializer>20</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_122af882911b5ccb5c744257642089932" prot="public" static="no">
+        <name>ino_to_cg</name>
+        <param><defname>fs</defname></param>
+        <param><defname>x</defname></param>
+        <initializer>((x) / (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_ipg)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="83" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1ff52db23f4b31f920a657a75e0e5d58b" prot="public" static="no">
+        <name>ino_to_fsba</name>
+        <param><defname>fs</defname></param>
+        <param><defname>x</defname></param>
+        <initializer>((<ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref>)(cgimin(<ref refid="structfs" kindref="compound">fs</ref>, ino_to_cg(<ref refid="structfs" kindref="compound">fs</ref>, x)) +                  \
+            (blkstofrags((<ref refid="structfs" kindref="compound">fs</ref>), (((x) % (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_ipg) / INOPB(<ref refid="structfs" kindref="compound">fs</ref>))))))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="86" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="84" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1a318a9ca261ab408a6df7949a593fb57" prot="public" static="no">
+        <name>ino_to_fsbo</name>
+        <param><defname>fs</defname></param>
+        <param><defname>x</defname></param>
+        <initializer>((x) % INOPB(<ref refid="structfs" kindref="compound">fs</ref>))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="87" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="87" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_11ea09415cf1bc5de0d0d4a7158a5c736" prot="public" static="no">
+        <name>lblkno</name>
+        <param><defname>fs</defname></param>
+        <param><defname>loc</defname></param>
+        <initializer>/* calculates (loc / <ref refid="structfs" kindref="compound">fs</ref>-&gt;fs_bsize) */ \
+        ((loc) &gt;&gt; (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_bshift)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="93" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="92" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_16e852e863e63ab118ec196d1157a1dbd" prot="public" static="no">
+        <name>MAXBSIZE</name>
+        <initializer>65536</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="57" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_10beb14d415a358b818cec76550e4fad1" prot="public" static="no">
+        <name>MAXMNTLEN</name>
+        <initializer>468</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1b347d7e5c2fdca2d28e693b2a508d76a" prot="public" static="no">
+        <name>MAXNAMLEN</name>
+        <initializer>255</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="ufs_8c_18b14c49128395a8745bc83cfcce7b9cf" compoundref="ufs_8c" startline="236" endline="269">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1c5859c27029a47d17c1279cc197f05c3" prot="public" static="no">
+        <name>MAXVOLLEN</name>
+        <initializer>32</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="54" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_10c136d7ef3223bdd2b6e7c83c65bb508" prot="public" static="no">
+        <name>NDADDR</name>
+        <initializer>12</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="121" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="121" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_14916bc50cb5cd1deaffe2c749d1559f8" prot="public" static="no">
+        <name>NIADDR</name>
+        <initializer>3</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="122" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="122" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_16d58397786421684bb8db78f01e13ae6" prot="public" static="no">
+        <name>NINDIR</name>
+        <param><defname>fs</defname></param>
+        <initializer>((<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_nindir)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="58" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1ca816b354128719c1523e33152a13637" prot="public" static="no">
+        <name>NOCSPTRS</name>
+        <initializer>((128 / sizeof(void *)) - 4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="55" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_19515cc7f95937a2fc426cefaf6577cd5" prot="public" static="no">
+        <name>NXADDR</name>
+        <initializer>2</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="120" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_122c8ea96d09283ed6496347806cc72a0" prot="public" static="no">
+        <name>ROOTINO</name>
+        <initializer>((<ref refid="types_8h_173341b7381d39d6e5b80ff9f23379dbd" kindref="member">ino_t</ref>)2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="ufs_8c_18b14c49128395a8745bc83cfcce7b9cf" compoundref="ufs_8c" startline="236" endline="269">lookup</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1d35c4c33dc54a0b8db742e0b3b5f64aa" prot="public" static="no">
+        <name>sblksize</name>
+        <param><defname>fs</defname></param>
+        <param><defname>size</defname></param>
+        <param><defname>lbn</defname></param>
+        <initializer>(((lbn) &gt;= NDADDR || (size) &gt;= ((lbn) + 1) &lt;&lt; (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_bshift) \
+          ? (<ref refid="structfs" kindref="compound">fs</ref>)-&gt;fs_bsize \
+          : (fragroundup(<ref refid="structfs" kindref="compound">fs</ref>, blkoff(<ref refid="structfs" kindref="compound">fs</ref>, (size)))))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="101" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="98" bodyend="-1"/>
+        <referencedby refid="ufs_8c_103b001870aa568dcdcc44c1dc79a49dd" compoundref="ufs_8c" startline="77" endline="209">fsread</referencedby>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1b6b633b015b70b15317113908ccc0a17" prot="public" static="no">
+        <name>SBLOCK_FLOPPY</name>
+        <initializer>0</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1fa52e1b5081edc4bbc9c7e29556bfc92" prot="public" static="no">
+        <name>SBLOCK_PIGGY</name>
+        <initializer>262144</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="47" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1d25e0f8e55fba4f0d670b43361e6b61e" prot="public" static="no">
+        <name>SBLOCK_UFS1</name>
+        <initializer>8192</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="45" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_17376590d1dfaa886ae6ac77649aaea52" prot="public" static="no">
+        <name>SBLOCK_UFS2</name>
+        <initializer>65536</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="46" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_163f5b70b0dfe26fd775e89713f552e23" prot="public" static="no">
+        <name>SBLOCKSEARCH</name>
+        <initializer>{ SBLOCK_UFS2, SBLOCK_UFS1, SBLOCK_FLOPPY, SBLOCK_PIGGY, -1 }</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="define" id="ufs_8h_1b7ef7deca5409474c504d9c927e97249" prot="public" static="no">
+        <name>SBLOCKSIZE</name>
+        <initializer>8192</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="48" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="typedef">
+      <memberdef kind="typedef" id="ufs_8h_1b4b318e7a68f3cd77c42492443c59895" prot="public" static="no">
+        <type><ref refid="__types_8h_1ee0edd064977857105b173face02e89a" kindref="member">__int64_t</ref></type>
+        <definition>typedef __int64_t daddr_t</definition>
+        <argsstring></argsstring>
+        <name>daddr_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="110" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="110" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ufs_8h_16c4d2453c62592d30d9c981e4ee01323" prot="public" static="no">
+        <type><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref></type>
+        <definition>typedef int32_t ufs1_daddr_t</definition>
+        <argsstring></argsstring>
+        <name>ufs1_daddr_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="106" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="106" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" prot="public" static="no">
+        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>typedef int64_t ufs2_daddr_t</definition>
+        <argsstring></argsstring>
+        <name>ufs2_daddr_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="107" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ufs_8h_1cfdbacc42c74f81152f66f8f81316513" prot="public" static="no">
+        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>typedef int64_t ufs_lbn_t</definition>
+        <argsstring></argsstring>
+        <name>ufs_lbn_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="108" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="108" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" prot="public" static="no">
+        <type><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref></type>
+        <definition>typedef int64_t ufs_time_t</definition>
+        <argsstring></argsstring>
+        <name>ufs_time_t</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="109" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" bodystart="109" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="ufs_8h_1349e4b7ceea770cd630e0297b693d59e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_init</definition>
+        <argsstring>()</argsstring>
+        <name>ufs_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="293" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ufs/ufs.c" bodystart="314" bodyend="337"/>
+        <references refid="kpanic_8h_1db9a182aa071791a306163d50d653deb" compoundref="kpanic_8c" startline="42" endline="60">kpanic</references>
+        <references refid="types_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="types_8h" startline="36">NULL</references>
+        <references refid="ufs_8h_1b72f6c6236410bf9a029e7bc810eb609">ufs_initialize</references>
+        <references refid="ufs_8c_1e5b71ba2291b2d2ef07ece9e0de74a5d" compoundref="ufs_8c" startline="272" endline="289">ufs_openFile</references>
+        <references refid="ufs_8c_19272216384babc589471d4a8e538d372" compoundref="ufs_8c" startline="291" endline="293">ufs_readFile</references>
+        <references refid="ufs_8c_1c7d4e2f2c573b3657d8a7680131ba068" compoundref="ufs_8c" startline="295" endline="298">ufs_writeFile</references>
+        <references refid="vfs_8h_18652b1ccbcf7d2a872c5781640f7d59a" compoundref="vfs_8c" startline="81" endline="138">vfsRegisterFS</references>
+        <references refid="ap-boot_8S_11a3ac2137e21f6f0d400f1996914dd19" compoundref="ap-boot_8S" startline="6">x1</references>
+      </memberdef>
+      <memberdef kind="function" id="ufs_8h_1b72f6c6236410bf9a029e7bc810eb609" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int ufs_initialize</definition>
+        <argsstring>()</argsstring>
+        <name>ufs_initialize</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h" line="294"/>
+        <referencedby refid="ufs_8c_1349e4b7ceea770cd630e0297b693d59e" compoundref="ufs_8c" startline="314" endline="337">ufs_init</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: ufs_8h.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#ifndef<sp/>_UFS_H</highlight></codeline>
+<codeline lineno="31"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>_UFS_H</highlight></codeline>
+<codeline lineno="32"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="vfs_8h" kindref="compound">vfs/vfs.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="device_8h" kindref="compound">sys/device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38" refid="ufs_8h_19973595cf6775b1b29d7274ab4c0d623" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/>DT_REG<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>8</highlight></codeline>
+<codeline lineno="39" refid="ufs_8h_1b347d7e5c2fdca2d28e693b2a508d76a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/>MAXNAMLEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/>255</highlight></codeline>
+<codeline lineno="40" refid="ufs_8h_122c8ea96d09283ed6496347806cc72a0" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/>ROOTINO<sp/>((ino_t)2)</highlight></codeline>
+<codeline lineno="41" refid="ufs_8h_11dcee67486bc4238096ecb61e2d9ffd1" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/>DT_DIR<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>4</highlight></codeline>
+<codeline lineno="42" refid="ufs_8h_19734470bf89968d142073fd334bf9cb6" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/>DEV_BSHIFT<sp/><sp/><sp/><sp/><sp/><sp/>9<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>log2(DEV_BSIZE)<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="ufs_8h_19c8466b6111a11195a5cd2478c648e32" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/>DEV_BSIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>(1&lt;&lt;DEV_BSHIFT)</highlight></codeline>
+<codeline lineno="44" refid="ufs_8h_1b6b633b015b70b15317113908ccc0a17" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SBLOCK_FLOPPY<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>0</highlight></codeline>
+<codeline lineno="45" refid="ufs_8h_1d25e0f8e55fba4f0d670b43361e6b61e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SBLOCK_UFS1<sp/><sp/><sp/><sp/><sp/><sp/><sp/>8192</highlight></codeline>
+<codeline lineno="46" refid="ufs_8h_17376590d1dfaa886ae6ac77649aaea52" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SBLOCK_UFS2<sp/><sp/><sp/><sp/><sp/><sp/>65536</highlight></codeline>
+<codeline lineno="47" refid="ufs_8h_1fa52e1b5081edc4bbc9c7e29556bfc92" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SBLOCK_PIGGY<sp/><sp/><sp/><sp/>262144</highlight></codeline>
+<codeline lineno="48" refid="ufs_8h_1b7ef7deca5409474c504d9c927e97249" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SBLOCKSIZE<sp/><sp/><sp/><sp/><sp/><sp/>8192</highlight></codeline>
+<codeline lineno="49" refid="ufs_8h_163f5b70b0dfe26fd775e89713f552e23" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>SBLOCKSEARCH<sp/>\</highlight></codeline>
+<codeline lineno="50"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/>SBLOCK_UFS2,<sp/>SBLOCK_UFS1,<sp/>SBLOCK_FLOPPY,<sp/>SBLOCK_PIGGY,<sp/>-1<sp/>}</highlight></codeline>
+<codeline lineno="51" refid="ufs_8h_1ce25c7a73c514a8e575e1ba8c15c9a9e" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>FS_UFS1_MAGIC<sp/><sp/><sp/>0x011954<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>UFS1<sp/>fast<sp/>filesystem<sp/>magic<sp/>number<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="52" refid="ufs_8h_10b73b7456fc1dee932dc0c1056c613fc" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>FS_UFS2_MAGIC<sp/><sp/><sp/>0x19540119<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>UFS2<sp/>fast<sp/>filesystem<sp/>magic<sp/>number<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="ufs_8h_10beb14d415a358b818cec76550e4fad1" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>MAXMNTLEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/>468</highlight></codeline>
+<codeline lineno="54" refid="ufs_8h_1c5859c27029a47d17c1279cc197f05c3" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MAXVOLLEN<sp/><sp/><sp/><sp/><sp/><sp/><sp/>32</highlight></codeline>
+<codeline lineno="55" refid="ufs_8h_1ca816b354128719c1523e33152a13637" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NOCSPTRS<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((128<sp/>/<sp/>sizeof(void<sp/>*))<sp/>-<sp/>4)</highlight></codeline>
+<codeline lineno="56" refid="ufs_8h_104c33da6605e73954cf2ff32c3f0f15a" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>FSMAXSNAP<sp/>20</highlight></codeline>
+<codeline lineno="57" refid="ufs_8h_16e852e863e63ab118ec196d1157a1dbd" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>MAXBSIZE<sp/><sp/><sp/><sp/><sp/><sp/><sp/>65536</highlight></codeline>
+<codeline lineno="58" refid="ufs_8h_16d58397786421684bb8db78f01e13ae6" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>NINDIR(fs)<sp/><sp/><sp/><sp/><sp/><sp/>((fs)-&gt;fs_nindir)</highlight></codeline>
+<codeline lineno="59"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="61"><highlight class="comment"><sp/>*<sp/>Cylinder<sp/>group<sp/>macros<sp/>to<sp/>locate<sp/>things<sp/>in<sp/>cylinder<sp/>groups.</highlight></codeline>
+<codeline lineno="62"><highlight class="comment"><sp/>*<sp/>They<sp/>calc<sp/>filesystem<sp/>addresses<sp/>of<sp/>cylinder<sp/>group<sp/>data<sp/>structures.</highlight></codeline>
+<codeline lineno="63"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64" refid="ufs_8h_1f7e946b674acc4ead5e3ae15317f52c0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cgbase(fs,<sp/>c)<sp/><sp/><sp/>(((ufs2_daddr_t)(fs)-&gt;fs_fpg)<sp/>*<sp/>(c))</highlight></codeline>
+<codeline lineno="65" refid="ufs_8h_103cdc9c21f1412b107d85751f275c208" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>cgdmin(fs,<sp/>c)<sp/><sp/><sp/>(cgstart(fs,<sp/>c)<sp/>+<sp/>(fs)-&gt;fs_dblkno)<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>1st<sp/>data<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="ufs_8h_1f2bea0d775018173b6e6f5141f09bdd0" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cgimin(fs,<sp/>c)<sp/><sp/><sp/>(cgstart(fs,<sp/>c)<sp/>+<sp/>(fs)-&gt;fs_iblkno)<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inode<sp/>blk<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67" refid="ufs_8h_16ccbaf50dd709f99482cafcbc427d834" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cgsblock(fs,<sp/>c)<sp/>(cgstart(fs,<sp/>c)<sp/>+<sp/>(fs)-&gt;fs_sblkno)<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>super<sp/>blk<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="68" refid="ufs_8h_15c527699eccebab4828fd122caea6cb7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cgtod(fs,<sp/>c)<sp/><sp/><sp/><sp/>(cgstart(fs,<sp/>c)<sp/>+<sp/>(fs)-&gt;fs_cblkno)<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cg<sp/>block<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="69" refid="ufs_8h_11446925c904a61056fb611a539de03ca" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>cgstart(fs,<sp/>c)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="70"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((fs)-&gt;fs_magic<sp/>==<sp/>FS_UFS2_MAGIC<sp/>?<sp/>cgbase(fs,<sp/>c)<sp/>:<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="71"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(cgbase(fs,<sp/>c)<sp/>+<sp/>(fs)-&gt;fs_old_cgoffset<sp/>*<sp/>((c)<sp/>&amp;<sp/>~((fs)-&gt;fs_old_cgmask))))</highlight></codeline>
+<codeline lineno="72"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight></codeline>
+<codeline lineno="74" refid="ufs_8h_1e26526d0ac7505aae7345f0288c17fe6" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/>fsbtodb(fs,<sp/>b)<sp/><sp/>((daddr_t)(b)<sp/>&lt;&lt;<sp/>(fs)-&gt;fs_fsbtodb)</highlight></codeline>
+<codeline lineno="75" refid="ufs_8h_17875100ca8ad379e53628cb7dec48ecd" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/><sp/><sp/><sp/><sp/><sp/><sp/>dbtofsb(fs,<sp/>b)<sp/><sp/>((b)<sp/>&gt;&gt;<sp/>(fs)-&gt;fs_fsbtodb)</highlight></codeline>
+<codeline lineno="76"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="78"><highlight class="comment"><sp/>*<sp/>Macros<sp/>for<sp/>handling<sp/>inode<sp/>numbers:</highlight></codeline>
+<codeline lineno="79"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>inode<sp/>number<sp/>to<sp/>filesystem<sp/>block<sp/>offset.</highlight></codeline>
+<codeline lineno="80"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>inode<sp/>number<sp/>to<sp/>cylinder<sp/>group<sp/>number.</highlight></codeline>
+<codeline lineno="81"><highlight class="comment"><sp/>*<sp/><sp/><sp/><sp/><sp/>inode<sp/>number<sp/>to<sp/>filesystem<sp/>block<sp/>address.</highlight></codeline>
+<codeline lineno="82"><highlight class="comment"><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="83" refid="ufs_8h_122af882911b5ccb5c744257642089932" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>ino_to_cg(fs,<sp/>x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((x)<sp/>/<sp/>(fs)-&gt;fs_ipg)</highlight></codeline>
+<codeline lineno="84" refid="ufs_8h_1ff52db23f4b31f920a657a75e0e5d58b" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ino_to_fsba(fs,<sp/>x)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="85"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((ufs2_daddr_t)(cgimin(fs,<sp/>ino_to_cg(fs,<sp/>x))<sp/>+<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\</highlight></codeline>
+<codeline lineno="86"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(blkstofrags((fs),<sp/>(((x)<sp/>%<sp/>(fs)-&gt;fs_ipg)<sp/>/<sp/>INOPB(fs))))))</highlight></codeline>
+<codeline lineno="87" refid="ufs_8h_1a318a9ca261ab408a6df7949a593fb57" refkind="member"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>ino_to_fsbo(fs,<sp/>x)<sp/><sp/><sp/><sp/><sp/><sp/>((x)<sp/>%<sp/>INOPB(fs))</highlight></codeline>
+<codeline lineno="88"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"></highlight></codeline>
+<codeline lineno="90" refid="ufs_8h_1cd9d1b3e1eed7fc3850f8a78636dd5a7" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>blkoff(fs,<sp/>loc)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>calculates<sp/>(loc<sp/>%<sp/>fs-&gt;fs_bsize)<sp/>*/</highlight><highlight class="normal"><sp/>\</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((loc)<sp/>&amp;<sp/>(fs)-&gt;fs_qbmask)</highlight></codeline>
+<codeline lineno="92" refid="ufs_8h_11ea09415cf1bc5de0d0d4a7158a5c736" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>lblkno(fs,<sp/>loc)<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>calculates<sp/>(loc<sp/>/<sp/>fs-&gt;fs_bsize)<sp/>*/</highlight><highlight class="normal"><sp/>\</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>((loc)<sp/>&gt;&gt;<sp/>(fs)-&gt;fs_bshift)</highlight></codeline>
+<codeline lineno="94" refid="ufs_8h_11494995062a8a6dbbe60f8dc6a3e995d" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>fragroundup(fs,<sp/>size)<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>calculates<sp/>roundup(size,<sp/>fs-&gt;fs_fsize)<sp/>*/</highlight><highlight class="normal"><sp/>\</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((size)<sp/>+<sp/>(fs)-&gt;fs_qfmask)<sp/>&amp;<sp/>(fs)-&gt;fs_fmask)</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"></highlight></codeline>
+<codeline lineno="97"><highlight class="normal"></highlight></codeline>
+<codeline lineno="98" refid="ufs_8h_1d35c4c33dc54a0b8db742e0b3b5f64aa" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>sblksize(fs,<sp/>size,<sp/>lbn)<sp/>\</highlight></codeline>
+<codeline lineno="99"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(((lbn)<sp/>&gt;=<sp/>NDADDR<sp/>||<sp/>(size)<sp/>&gt;=<sp/>((lbn)<sp/>+<sp/>1)<sp/>&lt;&lt;<sp/>(fs)-&gt;fs_bshift)<sp/>\</highlight></codeline>
+<codeline lineno="100"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>?<sp/>(fs)-&gt;fs_bsize<sp/>\</highlight></codeline>
+<codeline lineno="101"><highlight class="preprocessor"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>:<sp/>(fragroundup(fs,<sp/>blkoff(fs,<sp/>(size)))))</highlight></codeline>
+<codeline lineno="102"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103"><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106" refid="ufs_8h_16c4d2453c62592d30d9c981e4ee01323" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><ref refid="ufs_8h_16c4d2453c62592d30d9c981e4ee01323" kindref="member">ufs1_daddr_t</ref>;</highlight></codeline>
+<codeline lineno="107" refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref>;</highlight></codeline>
+<codeline lineno="108" refid="ufs_8h_1cfdbacc42c74f81152f66f8f81316513" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="ufs_8h_1cfdbacc42c74f81152f66f8f81316513" kindref="member">ufs_lbn_t</ref>;</highlight></codeline>
+<codeline lineno="109" refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref>;</highlight></codeline>
+<codeline lineno="110" refid="ufs_8h_1b4b318e7a68f3cd77c42492443c59895" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">typedef</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="__types_8h_1ee0edd064977857105b173face02e89a" kindref="member">__int64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs_8h_1b4b318e7a68f3cd77c42492443c59895" kindref="member">daddr_t</ref>;</highlight></codeline>
+<codeline lineno="111"><highlight class="normal"></highlight></codeline>
+<codeline lineno="112" refid="structdirent" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structdirent" kindref="compound">dirent</ref><sp/>{</highlight></codeline>
+<codeline lineno="113" refid="structdirent_10aa21d56704896b87f8a39ecba4f3731" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="__types_8h_1caa96aed3d7fddac490800f166c2af02" kindref="member">__uint32_t</ref><sp/><ref refid="structdirent_10aa21d56704896b87f8a39ecba4f3731" kindref="member">d_fileno</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>file<sp/>number<sp/>of<sp/>entry<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="114" refid="structdirent_16ca250ead8b04b71ea787acbd29b6b75" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="__types_8h_128989c8f3e511d5c6a9fd46b1adc1ee0" kindref="member">__uint16_t</ref><sp/><ref refid="structdirent_16ca250ead8b04b71ea787acbd29b6b75" kindref="member">d_reclen</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>length<sp/>of<sp/>this<sp/>record<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="115" refid="structdirent_1a850909d0a98e07d0ccd6232d28ed133" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="__types_8h_125875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref><sp/><sp/><ref refid="structdirent_1a850909d0a98e07d0ccd6232d28ed133" kindref="member">d_type</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>file<sp/>type,<sp/>see<sp/>below<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="116" refid="structdirent_1fd25358244d313ebc9a76cf6cdb4f36a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="__types_8h_125875528640a3eee1a026956baa82249" kindref="member">__uint8_t</ref><sp/><sp/><ref refid="structdirent_1fd25358244d313ebc9a76cf6cdb4f36a" kindref="member">d_namlen</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>length<sp/>of<sp/>string<sp/>in<sp/>d_name<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="117" refid="structdirent_18cb13e39a90c43e6b180ff4f1614e4da" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="structdirent_18cb13e39a90c43e6b180ff4f1614e4da" kindref="member">d_name</ref>[<ref refid="ufs_8h_1b347d7e5c2fdca2d28e693b2a508d76a" kindref="member">MAXNAMLEN</ref><sp/>+<sp/>1];<sp/><sp/></highlight><highlight class="comment">/*<sp/>name<sp/>must<sp/>be<sp/>no<sp/>longer<sp/>than<sp/>this<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"></highlight></codeline>
+<codeline lineno="120" refid="ufs_8h_19515cc7f95937a2fc426cefaf6577cd5" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NXADDR<sp/><sp/>2<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>External<sp/>addresses<sp/>in<sp/>inode.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="121" refid="ufs_8h_10c136d7ef3223bdd2b6e7c83c65bb508" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NDADDR<sp/><sp/>12<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Direct<sp/>addresses<sp/>in<sp/>inode.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="122" refid="ufs_8h_14916bc50cb5cd1deaffe2c749d1559f8" refkind="member"><highlight class="normal"></highlight><highlight class="preprocessor">#define<sp/>NIADDR<sp/><sp/>3<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>Indirect<sp/>addresses<sp/>in<sp/>inode.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"></highlight></codeline>
+<codeline lineno="124" refid="structufs2__dinode" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structufs2__dinode" kindref="compound">ufs2_dinode</ref><sp/>{</highlight></codeline>
+<codeline lineno="125" refid="structufs2__dinode_1cb7ed3e4a81ba003ec405439d39a307c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1cb7ed3e4a81ba003ec405439d39a307c" kindref="member">di_mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>0:<sp/>IFMT,<sp/>permissions;<sp/>see<sp/>below.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="126" refid="structufs2__dinode_11398daf0dae2b3f39bc5f821e704ad89" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_11398daf0dae2b3f39bc5f821e704ad89" kindref="member">di_nlink</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>2:<sp/>File<sp/>link<sp/>count.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="127" refid="structufs2__dinode_11e7d5f15243f2c5cd9417275015133dc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_11e7d5f15243f2c5cd9417275015133dc" kindref="member">di_uid</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>4:<sp/>File<sp/>owner.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="128" refid="structufs2__dinode_1472290444109405d763fbe118772b04a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1472290444109405d763fbe118772b04a" kindref="member">di_gid</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>8:<sp/>File<sp/>group.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="129" refid="structufs2__dinode_12d42d866db3eb9d62bfdcf6b0ec3656e" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_12d42d866db3eb9d62bfdcf6b0ec3656e" kindref="member">di_blksize</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>12:<sp/>Inode<sp/>blocksize.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="130" refid="structufs2__dinode_1d5993494c57c494293c25dc81ec3b154" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1d5993494c57c494293c25dc81ec3b154" kindref="member">di_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>16:<sp/>File<sp/>byte<sp/>count.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="131" refid="structufs2__dinode_1d7506242ed5662a02fa2d5a56bc23d63" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1d7506242ed5662a02fa2d5a56bc23d63" kindref="member">di_blocks</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>24:<sp/>Bytes<sp/>actually<sp/>held.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="132" refid="structufs2__dinode_1884a0a3cb517902f2648b51782f713ed" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1884a0a3cb517902f2648b51782f713ed" kindref="member">di_atime</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>32:<sp/>Last<sp/>access<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="133" refid="structufs2__dinode_1891b9a4ebc71c40776c6af460ea8c5b6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1891b9a4ebc71c40776c6af460ea8c5b6" kindref="member">di_mtime</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>40:<sp/>Last<sp/>modified<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="134" refid="structufs2__dinode_17faf94a254583325c1de14b3eedc4672" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_17faf94a254583325c1de14b3eedc4672" kindref="member">di_ctime</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>48:<sp/>Last<sp/>inode<sp/>change<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="135" refid="structufs2__dinode_19f35ec73df44f2db3b400271930806dc" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_19f35ec73df44f2db3b400271930806dc" kindref="member">di_birthtime</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>56:<sp/>Inode<sp/>creation<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="136" refid="structufs2__dinode_16aa493a9beb9514ce29fab46c4dd9de2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_16aa493a9beb9514ce29fab46c4dd9de2" kindref="member">di_mtimensec</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>64:<sp/>Last<sp/>modified<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="137" refid="structufs2__dinode_1f66b1f8d1a7a8a8eeac1dceba64582f7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1f66b1f8d1a7a8a8eeac1dceba64582f7" kindref="member">di_atimensec</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>68:<sp/>Last<sp/>access<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="138" refid="structufs2__dinode_1264013dc040d9a1a4f940948bd78306d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1264013dc040d9a1a4f940948bd78306d" kindref="member">di_ctimensec</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>72:<sp/>Last<sp/>inode<sp/>change<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="139" refid="structufs2__dinode_1a62f9cdee1b9d4f5b437e3fbd6dcc33a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1a62f9cdee1b9d4f5b437e3fbd6dcc33a" kindref="member">di_birthnsec</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>76:<sp/>Inode<sp/>creation<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="140" refid="structufs2__dinode_14381e2835270fbbe32040beccd49453c" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_14381e2835270fbbe32040beccd49453c" kindref="member">di_gen</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>80:<sp/>Generation<sp/>number.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="141" refid="structufs2__dinode_1999f1d6844c5076d417dcd7eefd0c853" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1999f1d6844c5076d417dcd7eefd0c853" kindref="member">di_kernflags</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>84:<sp/>Kernel<sp/>flags.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="142" refid="structufs2__dinode_1679f34fcac6376db0f8307194a31de00" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1679f34fcac6376db0f8307194a31de00" kindref="member">di_flags</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>88:<sp/>Status<sp/>flags<sp/>(chflags).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="143" refid="structufs2__dinode_1ebd41a6fb817a7a04b6cf9664c5fc1dd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1ebd41a6fb817a7a04b6cf9664c5fc1dd" kindref="member">di_extsize</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>92:<sp/>External<sp/>attributes<sp/>block.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="144" refid="structufs2__dinode_1ea6f036f1e38b4645ac4a72aaa2e7585" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1ea6f036f1e38b4645ac4a72aaa2e7585" kindref="member">di_extb</ref>[<ref refid="ufs_8h_19515cc7f95937a2fc426cefaf6577cd5" kindref="member">NXADDR</ref>];</highlight><highlight class="comment">/*<sp/><sp/>96:<sp/>External<sp/>attributes<sp/>block.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="145" refid="structufs2__dinode_1667ab9837a0fd21d51108ca9dfd85f66" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1667ab9837a0fd21d51108ca9dfd85f66" kindref="member">di_db</ref>[<ref refid="ufs_8h_10c136d7ef3223bdd2b6e7c83c65bb508" kindref="member">NDADDR</ref>];<sp/><sp/></highlight><highlight class="comment">/*<sp/>112:<sp/>Direct<sp/>disk<sp/>blocks.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="146" refid="structufs2__dinode_19eb4d981d19dd77fbde21e84fd4e2d5d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_19eb4d981d19dd77fbde21e84fd4e2d5d" kindref="member">di_ib</ref>[<ref refid="ufs_8h_14916bc50cb5cd1deaffe2c749d1559f8" kindref="member">NIADDR</ref>];<sp/><sp/></highlight><highlight class="comment">/*<sp/>208:<sp/>Indirect<sp/>disk<sp/>blocks.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147" refid="structufs2__dinode_1f548961233457327ec8ae47cba34faed" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs2__dinode_1f548961233457327ec8ae47cba34faed" kindref="member">di_spare</ref>[3];<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>232:<sp/>Reserved;<sp/>currently<sp/>unused<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="149"><highlight class="normal"></highlight></codeline>
+<codeline lineno="150" refid="structufs1__dinode" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structufs1__dinode" kindref="compound">ufs1_dinode</ref><sp/>{</highlight></codeline>
+<codeline lineno="151" refid="structufs1__dinode_11194f04404015f7da26bd1932773df6a" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_11194f04404015f7da26bd1932773df6a" kindref="member">di_mode</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>0:<sp/>IFMT,<sp/>permissions;<sp/>see<sp/>below.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="structufs1__dinode_1588b5e9341bb7c148047efff0ee220a7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_13542c6a0490e65fc4fc407273126e64f" kindref="member">int16_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1588b5e9341bb7c148047efff0ee220a7" kindref="member">di_nlink</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>2:<sp/>File<sp/>link<sp/>count.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">union<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="154" refid="structufs1__dinode_173e877b335388dfd98354ded9cc2e5ac" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="types_8h_1f7b042408b9b104606f8a9b5035329f3" kindref="member">u_int16_t</ref><sp/><ref refid="structufs1__dinode_173e877b335388dfd98354ded9cc2e5ac" kindref="member">oldids</ref>[2];<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>4:<sp/>Ffs:<sp/>old<sp/>user<sp/>and<sp/>group<sp/>ids.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/><sp/><sp/>}<sp/><ref refid="structufs1__dinode_1a998fd67e30e27cbde8ec3cd82380390" kindref="member">di_u</ref>;</highlight></codeline>
+<codeline lineno="156" refid="structufs1__dinode_1eb1915f50d8bd4ef7e10fc68a965bdc7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1eb1915f50d8bd4ef7e10fc68a965bdc7" kindref="member">di_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/>8:<sp/>File<sp/>byte<sp/>count.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="structufs1__dinode_1595f269b878c850fbe7970292fbf0ec2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1595f269b878c850fbe7970292fbf0ec2" kindref="member">di_atime</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>16:<sp/>Last<sp/>access<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="158" refid="structufs1__dinode_1deba42b56bad1b46746b76a261a28ef1" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1deba42b56bad1b46746b76a261a28ef1" kindref="member">di_atimensec</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>20:<sp/>Last<sp/>access<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="159" refid="structufs1__dinode_1ddd8686290d360fe1ff97e47b25df5d6" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1ddd8686290d360fe1ff97e47b25df5d6" kindref="member">di_mtime</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>24:<sp/>Last<sp/>modified<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="160" refid="structufs1__dinode_1e1a12b1b2308f6feb92b210b3fd32c37" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1e1a12b1b2308f6feb92b210b3fd32c37" kindref="member">di_mtimensec</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>28:<sp/>Last<sp/>modified<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="161" refid="structufs1__dinode_1db27793d0c34f01326474401ddde1c43" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1db27793d0c34f01326474401ddde1c43" kindref="member">di_ctime</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>32:<sp/>Last<sp/>inode<sp/>change<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="162" refid="structufs1__dinode_10094b1e1cac8ca65a970968ad2ad0237" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_10094b1e1cac8ca65a970968ad2ad0237" kindref="member">di_ctimensec</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>36:<sp/>Last<sp/>inode<sp/>change<sp/>time.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="163" refid="structufs1__dinode_1fba310e16ff4dd802733e9ea57c7ce25" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_16c4d2453c62592d30d9c981e4ee01323" kindref="member">ufs1_daddr_t</ref><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1fba310e16ff4dd802733e9ea57c7ce25" kindref="member">di_db</ref>[<ref refid="ufs_8h_10c136d7ef3223bdd2b6e7c83c65bb508" kindref="member">NDADDR</ref>];<sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>40:<sp/>Direct<sp/>disk<sp/>blocks.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="164" refid="structufs1__dinode_1ea74a32cfbd55a50c23f779583bfb707" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ufs_8h_16c4d2453c62592d30d9c981e4ee01323" kindref="member">ufs1_daddr_t</ref><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1ea74a32cfbd55a50c23f779583bfb707" kindref="member">di_ib</ref>[<ref refid="ufs_8h_14916bc50cb5cd1deaffe2c749d1559f8" kindref="member">NIADDR</ref>];<sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/>88:<sp/>Indirect<sp/>disk<sp/>blocks.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="165" refid="structufs1__dinode_1de495b4b40c68ac16fa32c58befcd8c0" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1de495b4b40c68ac16fa32c58befcd8c0" kindref="member">di_flags</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>100:<sp/>Status<sp/>flags<sp/>(chflags).<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="166" refid="structufs1__dinode_109bff0a0b5a439618e8893b4f5790368" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_109bff0a0b5a439618e8893b4f5790368" kindref="member">di_blocks</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>104:<sp/>Blocks<sp/>actually<sp/>held.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="167" refid="structufs1__dinode_10c83844df5375d0d7e3bf70b1fd20762" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_10c83844df5375d0d7e3bf70b1fd20762" kindref="member">di_gen</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>108:<sp/>Generation<sp/>number.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="168" refid="structufs1__dinode_1f748891980bbd2bd0d3eb22abca89688" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_1f748891980bbd2bd0d3eb22abca89688" kindref="member">di_uid</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>112:<sp/>File<sp/>owner.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="169" refid="structufs1__dinode_13bead46ad3a23368d9986df416d5c7e2" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_1ba29fd78d95cce0ecb249c24b58d07da" kindref="member">uint32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_13bead46ad3a23368d9986df416d5c7e2" kindref="member">di_gid</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>116:<sp/>File<sp/>group.<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="170" refid="structufs1__dinode_191a277e4cb6f822b1bd692f5cd06fb97" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="structufs1__dinode_191a277e4cb6f822b1bd692f5cd06fb97" kindref="member">di_spare</ref>[2];<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>120:<sp/>Reserved;<sp/>currently<sp/>unused<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173" refid="structcsum" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcsum" kindref="compound">csum</ref><sp/>{</highlight></codeline>
+<codeline lineno="174" refid="structcsum_1910936b597b99baa5f64ddd5a15f6b70" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><ref refid="structcsum_1910936b597b99baa5f64ddd5a15f6b70" kindref="member">cs_ndir</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>directories<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="175" refid="structcsum_1c77b40fc2a8d65ec266e9471fb96ed99" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><ref refid="structcsum_1c77b40fc2a8d65ec266e9471fb96ed99" kindref="member">cs_nbfree</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>free<sp/>blocks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="176" refid="structcsum_1997edf4fbc43862abb72a4a7e411a51d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><ref refid="structcsum_1997edf4fbc43862abb72a4a7e411a51d" kindref="member">cs_nifree</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>free<sp/>inodes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="177" refid="structcsum_14725bcc5b848a377eb7aeb181018405d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><ref refid="structcsum_14725bcc5b848a377eb7aeb181018405d" kindref="member">cs_nffree</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>free<sp/>frags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="178"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="179" refid="structcsum__total" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structcsum__total" kindref="compound">csum_total</ref><sp/>{</highlight></codeline>
+<codeline lineno="180" refid="structcsum__total_1ce49dca16f94651c7e9b1df65d8197d9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="structcsum__total_1ce49dca16f94651c7e9b1df65d8197d9" kindref="member">cs_ndir</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>directories<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="181" refid="structcsum__total_1c41c6231e09b4ca0b7fd2fe16d73abee" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="structcsum__total_1c41c6231e09b4ca0b7fd2fe16d73abee" kindref="member">cs_nbfree</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>free<sp/>blocks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="182" refid="structcsum__total_1804f2ae79c647da155cbd6ea5952b3b3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="structcsum__total_1804f2ae79c647da155cbd6ea5952b3b3" kindref="member">cs_nifree</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>free<sp/>inodes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="183" refid="structcsum__total_16d734f6ae45524cb242fb899168cc1e6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="structcsum__total_16d734f6ae45524cb242fb899168cc1e6" kindref="member">cs_nffree</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>free<sp/>frags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="184" refid="structcsum__total_189edf9903e16183ddc371bbbc7756217" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="structcsum__total_189edf9903e16183ddc371bbbc7756217" kindref="member">cs_numclusters</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>free<sp/>clusters<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="185" refid="structcsum__total_16e76733a2d416280b344e40d33cf4e00" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><ref refid="structcsum__total_16e76733a2d416280b344e40d33cf4e00" kindref="member">cs_spare</ref>[3];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>future<sp/>expansion<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="186"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="187"><highlight class="normal"></highlight></codeline>
+<codeline lineno="188"><highlight class="normal"></highlight></codeline>
+<codeline lineno="189" refid="structfs" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structfs" kindref="compound">fs</ref><sp/>{</highlight></codeline>
+<codeline lineno="190" refid="structfs_1845f442a845714c10fff6d8b12c9eb9e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1845f442a845714c10fff6d8b12c9eb9e" kindref="member">fs_firstfield</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>historic<sp/>filesystem<sp/>linked<sp/>list,<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191" refid="structfs_17246de3f8042955f49127b1e656838f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_17246de3f8042955f49127b1e656838f5" kindref="member">fs_unused_1</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/><sp/><sp/><sp/><sp/>used<sp/>for<sp/>incore<sp/>super<sp/>blocks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="192" refid="structfs_1b96f2622ae5d8b12c0ca31a210b3c58e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1b96f2622ae5d8b12c0ca31a210b3c58e" kindref="member">fs_sblkno</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>offset<sp/>of<sp/>super-block<sp/>in<sp/>filesys<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="193" refid="structfs_1dedb82f28a6436a506aa3c47bdf49aa0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1dedb82f28a6436a506aa3c47bdf49aa0" kindref="member">fs_cblkno</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>offset<sp/>of<sp/>cyl-block<sp/>in<sp/>filesys<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="194" refid="structfs_1680d9067242a7b551779146d839997f4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1680d9067242a7b551779146d839997f4" kindref="member">fs_iblkno</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>offset<sp/>of<sp/>inode-blocks<sp/>in<sp/>filesys<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="195" refid="structfs_1fc80e8002a127f6e31ab675bc79d7466" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1fc80e8002a127f6e31ab675bc79d7466" kindref="member">fs_dblkno</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>offset<sp/>of<sp/>first<sp/>data<sp/>after<sp/>cg<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="196" refid="structfs_10e65a1457e48bf92c3ff9ed5de2d2f97" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_10e65a1457e48bf92c3ff9ed5de2d2f97" kindref="member">fs_old_cgoffset</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cylinder<sp/>group<sp/>offset<sp/>in<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="197" refid="structfs_13372db524b01604405d0736d4c76ed88" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_13372db524b01604405d0736d4c76ed88" kindref="member">fs_old_cgmask</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>used<sp/>to<sp/>calc<sp/>mod<sp/>fs_ntrak<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="198" refid="structfs_1948e2a387ab0a3cfd674e93db8e9faf0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1948e2a387ab0a3cfd674e93db8e9faf0" kindref="member">fs_old_time</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>last<sp/>time<sp/>written<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="199" refid="structfs_1d24dc27973a0594319921fe1aa0394d4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1d24dc27973a0594319921fe1aa0394d4" kindref="member">fs_old_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>blocks<sp/>in<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="200" refid="structfs_107a13bddf97b62b08ec62f12f788be8a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_107a13bddf97b62b08ec62f12f788be8a" kindref="member">fs_old_dsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>data<sp/>blocks<sp/>in<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="201" refid="structfs_106f4cbb13f8a47c87f53f5b3a7d86340" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_106f4cbb13f8a47c87f53f5b3a7d86340" kindref="member">fs_ncg</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>cylinder<sp/>groups<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="202" refid="structfs_1beaa37858276e7d7d7f8f4260bc53f6d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1beaa37858276e7d7d7f8f4260bc53f6d" kindref="member">fs_bsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>size<sp/>of<sp/>basic<sp/>blocks<sp/>in<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="203" refid="structfs_1c2a347c2b6170615954aee791991f94d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1c2a347c2b6170615954aee791991f94d" kindref="member">fs_fsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>size<sp/>of<sp/>frag<sp/>blocks<sp/>in<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="204" refid="structfs_113aa148271139d206d6b778ac9b3ed09" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_113aa148271139d206d6b778ac9b3ed09" kindref="member">fs_frag</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>frags<sp/>in<sp/>a<sp/>block<sp/>in<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="205"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>these<sp/>are<sp/>configuration<sp/>parameters<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="206" refid="structfs_13b39e3f97e0438ecbb1a953dec03a5c1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_13b39e3f97e0438ecbb1a953dec03a5c1" kindref="member">fs_minfree</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>minimum<sp/>percentage<sp/>of<sp/>free<sp/>blocks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="207" refid="structfs_131507b3bebe2528e83e9eecadea5fca0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_131507b3bebe2528e83e9eecadea5fca0" kindref="member">fs_old_rotdelay</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>num<sp/>of<sp/>ms<sp/>for<sp/>optimal<sp/>next<sp/>block<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="208" refid="structfs_1f615de722bf977da3bf0b21e99099358" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1f615de722bf977da3bf0b21e99099358" kindref="member">fs_old_rps</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>disk<sp/>revolutions<sp/>per<sp/>second<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>these<sp/>fields<sp/>can<sp/>be<sp/>computed<sp/>from<sp/>the<sp/>others<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="210" refid="structfs_19a6df636b99f001bb0fe96c2c567c3db" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_19a6df636b99f001bb0fe96c2c567c3db" kindref="member">fs_bmask</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>``blkoff&apos;&apos;<sp/>calc<sp/>of<sp/>blk<sp/>offsets<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="211" refid="structfs_1f447cdadaacd96c24c81f7e34c0059f5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1f447cdadaacd96c24c81f7e34c0059f5" kindref="member">fs_fmask</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>``fragoff&apos;&apos;<sp/>calc<sp/>of<sp/>frag<sp/>offsets<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="212" refid="structfs_1664686425d41a31c188000518c356682" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1664686425d41a31c188000518c356682" kindref="member">fs_bshift</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>``lblkno&apos;&apos;<sp/>calc<sp/>of<sp/>logical<sp/>blkno<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="213" refid="structfs_1c62c66d38fde6372b81e3cf8ef8ec6f2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1c62c66d38fde6372b81e3cf8ef8ec6f2" kindref="member">fs_fshift</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>``numfrags&apos;&apos;<sp/>calc<sp/>number<sp/>of<sp/>frags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="214"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>these<sp/>are<sp/>configuration<sp/>parameters<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="215" refid="structfs_178bdd388e46c8136e6f9e5b6b7a3f600" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_178bdd388e46c8136e6f9e5b6b7a3f600" kindref="member">fs_maxcontig</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>max<sp/>number<sp/>of<sp/>contiguous<sp/>blks<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216" refid="structfs_11236b6b674047859269b8df46a745aba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_11236b6b674047859269b8df46a745aba" kindref="member">fs_maxbpg</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>max<sp/>number<sp/>of<sp/>blks<sp/>per<sp/>cyl<sp/>group<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="217"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>these<sp/>fields<sp/>can<sp/>be<sp/>computed<sp/>from<sp/>the<sp/>others<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="218" refid="structfs_127f2b7e09b8716cf08237aba7529fbf7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_127f2b7e09b8716cf08237aba7529fbf7" kindref="member">fs_fragshift</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>block<sp/>to<sp/>frag<sp/>shift<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="219" refid="structfs_1420213fcd930d17a087a39fa48eab6bb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1420213fcd930d17a087a39fa48eab6bb" kindref="member">fs_fsbtodb</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>fsbtodb<sp/>and<sp/>dbtofsb<sp/>shift<sp/>constant<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="220" refid="structfs_160ddc7f4adc14ba5f09977808f93b124" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_160ddc7f4adc14ba5f09977808f93b124" kindref="member">fs_sbsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>actual<sp/>size<sp/>of<sp/>super<sp/>block<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="221" refid="structfs_1b3bce140bf4c56bf44bb2d19eed05a03" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1b3bce140bf4c56bf44bb2d19eed05a03" kindref="member">fs_spare1</ref>[2];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>old<sp/>fs_csmask<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>old<sp/>fs_csshift<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="223" refid="structfs_12d119c1181a7e3acad4d7705a589d20b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_12d119c1181a7e3acad4d7705a589d20b" kindref="member">fs_nindir</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>value<sp/>of<sp/>NINDIR<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="224" refid="structfs_109f5993f6a06c3a6543978b91da11826" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_109f5993f6a06c3a6543978b91da11826" kindref="member">fs_inopb</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>value<sp/>of<sp/>INOPB<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="225" refid="structfs_17262744877dac1c79e119fab7ee3d67d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_17262744877dac1c79e119fab7ee3d67d" kindref="member">fs_old_nspf</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>value<sp/>of<sp/>NSPF<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="226"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>yet<sp/>another<sp/>configuration<sp/>parameter<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="227" refid="structfs_1d2741b461acb83e521e8f094586e1f04" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1d2741b461acb83e521e8f094586e1f04" kindref="member">fs_optim</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>optimization<sp/>preference,<sp/>see<sp/>below<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="228" refid="structfs_1aefee9a806967afe881a50fcbe391ff5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1aefee9a806967afe881a50fcbe391ff5" kindref="member">fs_old_npsect</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>#<sp/>sectors/track<sp/>including<sp/>spares<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="229" refid="structfs_1ffe7e7f7fcff6fab9079d83220e3e1cc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1ffe7e7f7fcff6fab9079d83220e3e1cc" kindref="member">fs_old_interleave</ref>;<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>hardware<sp/>sector<sp/>interleave<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="230" refid="structfs_1b013e02a3dd43b54edb8d17a6303987e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1b013e02a3dd43b54edb8d17a6303987e" kindref="member">fs_old_trackskew</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sector<sp/>0<sp/>skew,<sp/>per<sp/>track<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="231" refid="structfs_1b656ef66b4edf79aaf8def4739d65aa2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1b656ef66b4edf79aaf8def4739d65aa2" kindref="member">fs_id</ref>[2];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>unique<sp/>filesystem<sp/>id<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="232"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>sizes<sp/>determined<sp/>by<sp/>number<sp/>of<sp/>cylinder<sp/>groups<sp/>and<sp/>their<sp/>sizes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="233" refid="structfs_11e5f3cc79f0589b713e56ae3f7892287" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_11e5f3cc79f0589b713e56ae3f7892287" kindref="member">fs_old_csaddr</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>blk<sp/>addr<sp/>of<sp/>cyl<sp/>grp<sp/>summary<sp/>area<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="234" refid="structfs_18eba877a723ca9b8f9c762a1d65878e9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_18eba877a723ca9b8f9c762a1d65878e9" kindref="member">fs_cssize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>size<sp/>of<sp/>cyl<sp/>grp<sp/>summary<sp/>area<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="235" refid="structfs_11a500c66d35a8ae7875ae00c2a953eea" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_11a500c66d35a8ae7875ae00c2a953eea" kindref="member">fs_cgsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cylinder<sp/>group<sp/>size<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="236" refid="structfs_17cebf2cb358cde121c29269dbc20a1f3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_17cebf2cb358cde121c29269dbc20a1f3" kindref="member">fs_spare2</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>old<sp/>fs_ntrak<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="237" refid="structfs_189b502e2bf515440bc150e8e4ebb12c9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_189b502e2bf515440bc150e8e4ebb12c9" kindref="member">fs_old_nsect</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sectors<sp/>per<sp/>track<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="238" refid="structfs_1ffb1c061e74f60407af46700f5394a0c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1ffb1c061e74f60407af46700f5394a0c" kindref="member">fs_old_spc</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>sectors<sp/>per<sp/>cylinder<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="239" refid="structfs_13b4d10d43d4175b9444ed73ddcf18140" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_13b4d10d43d4175b9444ed73ddcf18140" kindref="member">fs_old_ncyl</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cylinders<sp/>in<sp/>filesystem<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="240" refid="structfs_13059d11894848b96ae73618740f0dac6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_13059d11894848b96ae73618740f0dac6" kindref="member">fs_old_cpg</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cylinders<sp/>per<sp/>group<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="241" refid="structfs_1b9ac53ea2f7e8f218b48ce3d68245e12" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1b9ac53ea2f7e8f218b48ce3d68245e12" kindref="member">fs_ipg</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>inodes<sp/>per<sp/>group<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="242" refid="structfs_18231c53c394bf5c523584dbe87295b03" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_18231c53c394bf5c523584dbe87295b03" kindref="member">fs_fpg</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>blocks<sp/>per<sp/>group<sp/>*<sp/>fs_frag<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="243"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>this<sp/>data<sp/>must<sp/>be<sp/>re-computed<sp/>after<sp/>crashes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="244" refid="structfs_1987656a71ddd126654688a50477b4757" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal"><ref refid="structcsum" kindref="compound">csum</ref><sp/><ref refid="structfs_1987656a71ddd126654688a50477b4757" kindref="member">fs_old_cstotal</ref>;<sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cylinder<sp/>summary<sp/>information<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="245"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>these<sp/>fields<sp/>are<sp/>cleared<sp/>at<sp/>mount<sp/>time<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="246" refid="structfs_1685528bae5950f6dc8d7868ce1df2268" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref><sp/><sp/><sp/><ref refid="structfs_1685528bae5950f6dc8d7868ce1df2268" kindref="member">fs_fmod</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>super<sp/>block<sp/>modified<sp/>flag<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="247" refid="structfs_1d70b3b14f20ee12639f774ce0a6817b0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref><sp/><sp/><sp/><ref refid="structfs_1d70b3b14f20ee12639f774ce0a6817b0" kindref="member">fs_clean</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>filesystem<sp/>is<sp/>clean<sp/>flag<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="248" refid="structfs_1c4a00ffe190e24cf27323062dd3c4b04" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref><sp/><sp/><sp/><ref refid="structfs_1c4a00ffe190e24cf27323062dd3c4b04" kindref="member">fs_ronly</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>mounted<sp/>read-only<sp/>flag<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="249" refid="structfs_12eb4e28e41443e46d48f4b2d401fa61f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_106ffba8acf5d133104191f183e67ac8c" kindref="member">int8_t</ref><sp/><sp/><sp/><ref refid="structfs_12eb4e28e41443e46d48f4b2d401fa61f" kindref="member">fs_old_flags</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>old<sp/>FS_<sp/>flags<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="250" refid="structfs_1286576f62e4a544a73a65c880189b838" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1e2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref><sp/><sp/><sp/><ref refid="structfs_1286576f62e4a544a73a65c880189b838" kindref="member">fs_fsmnt</ref>[<ref refid="ufs_8h_10beb14d415a358b818cec76550e4fad1" kindref="member">MAXMNTLEN</ref>];<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>name<sp/>mounted<sp/>on<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="251" refid="structfs_19e02d1702d25282ad5ea637095372466" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1e2b02ed168fc99cff3851603910b1fb6" kindref="member">u_char</ref><sp/><sp/><sp/><ref refid="structfs_19e02d1702d25282ad5ea637095372466" kindref="member">fs_volname</ref>[<ref refid="ufs_8h_1c5859c27029a47d17c1279cc197f05c3" kindref="member">MAXVOLLEN</ref>];<sp/></highlight><highlight class="comment">/*<sp/>volume<sp/>name<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="252" refid="structfs_1582e900902af7c6ba9a7a837c61ce8b9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structfs_1582e900902af7c6ba9a7a837c61ce8b9" kindref="member">fs_swuid</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>system-wide<sp/>uid<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="253" refid="structfs_12cb27fb4a6379e89a430db9f9d51eda5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_12cb27fb4a6379e89a430db9f9d51eda5" kindref="member">fs_pad</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>due<sp/>to<sp/>alignment<sp/>of<sp/>fs_swuid<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="254"><highlight class="normal"></highlight><highlight class="comment">/*<sp/>these<sp/>fields<sp/>retain<sp/>the<sp/>current<sp/>block<sp/>allocation<sp/>info<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="255" refid="structfs_130411c307e72e31cec612a97b004453e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_130411c307e72e31cec612a97b004453e" kindref="member">fs_cgrotor</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>last<sp/>cg<sp/>searched<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="256" refid="structfs_1a917d7ad714b69f2bd80b5bde291828c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><sp/><sp/><sp/>*<ref refid="structfs_1a917d7ad714b69f2bd80b5bde291828c" kindref="member">fs_ocsp</ref>[<ref refid="ufs_8h_1ca816b354128719c1523e33152a13637" kindref="member">NOCSPTRS</ref>];<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>padding;<sp/>was<sp/>list<sp/>of<sp/>fs_cs<sp/>buffers<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="257" refid="structfs_1d7440c4ded770a821535ad723d30f74a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1c7c42f52639b9aca7da966a0783996d7" kindref="member">u_int8_t</ref><sp/>*<ref refid="structfs_1d7440c4ded770a821535ad723d30f74a" kindref="member">fs_contigdirs</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(u)<sp/>#<sp/>of<sp/>contig.<sp/>allocated<sp/>dirs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="258" refid="structfs_1ec267ea11a6dd319fb4b484d555c1ed8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal"><ref refid="structcsum" kindref="compound">csum</ref><sp/>*<ref refid="structfs_1ec267ea11a6dd319fb4b484d555c1ed8" kindref="member">fs_csp</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(u)<sp/>cg<sp/>summary<sp/>info<sp/>buffer<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="259" refid="structfs_150ffe84a85ce08275f6ca6f585cfe3c8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/>*<ref refid="structfs_150ffe84a85ce08275f6ca6f585cfe3c8" kindref="member">fs_maxcluster</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(u)<sp/>max<sp/>cluster<sp/>in<sp/>each<sp/>cyl<sp/>group<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="260" refid="structfs_1c1520bcda580bd3694fa7be346622285" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1c319c165d52643e43249fe003e18bdf3" kindref="member">u_int</ref><sp/><sp/><sp/>*<ref refid="structfs_1c1520bcda580bd3694fa7be346622285" kindref="member">fs_active</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(u)<sp/>used<sp/>by<sp/>snapshots<sp/>to<sp/>track<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="261" refid="structfs_1da2826b8126cd04502a8d106d97f2feb" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1da2826b8126cd04502a8d106d97f2feb" kindref="member">fs_old_cpc</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>cyl<sp/>per<sp/>cycle<sp/>in<sp/>postbl<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="262" refid="structfs_1133f70897ddd802936d9f15f9c4f7b1d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1133f70897ddd802936d9f15f9c4f7b1d" kindref="member">fs_maxbsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>maximum<sp/>blocking<sp/>factor<sp/>permitted<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="263" refid="structfs_1aafbb9b21699c2a5f5ec95503454212c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><ref refid="structfs_1aafbb9b21699c2a5f5ec95503454212c" kindref="member">fs_sparecon64</ref>[17];<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>old<sp/>rotation<sp/>block<sp/>list<sp/>head<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="264" refid="structfs_17f7bd1346fb9aa31b3509e7736b9c3c5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><ref refid="structfs_17f7bd1346fb9aa31b3509e7736b9c3c5" kindref="member">fs_sblockloc</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>byte<sp/>offset<sp/>of<sp/>standard<sp/>superblock<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="265" refid="structfs_185a5dbf3800d9a52f02efc0367cf87f2" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">struct<sp/><sp/></highlight><highlight class="normal"><ref refid="structcsum__total" kindref="compound">csum_total</ref><sp/><ref refid="structfs_185a5dbf3800d9a52f02efc0367cf87f2" kindref="member">fs_cstotal</ref>;<sp/><sp/></highlight><highlight class="comment">/*<sp/>(u)<sp/>cylinder<sp/>summary<sp/>information<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="266" refid="structfs_105c9a84e408e2f7898dd0a83f7859112" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs_8h_1ec5bc03f68bf810247d604821ad95bb7" kindref="member">ufs_time_t</ref><sp/><ref refid="structfs_105c9a84e408e2f7898dd0a83f7859112" kindref="member">fs_time</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>last<sp/>time<sp/>written<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="267" refid="structfs_14f95748c8c7cc9e3e9ed007405b99761" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><ref refid="structfs_14f95748c8c7cc9e3e9ed007405b99761" kindref="member">fs_size</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>blocks<sp/>in<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="268" refid="structfs_1a8e6378d3a6150f5a1dc264cf2e306e6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><ref refid="structfs_1a8e6378d3a6150f5a1dc264cf2e306e6" kindref="member">fs_dsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>data<sp/>blocks<sp/>in<sp/>fs<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="269" refid="structfs_1d43582016bfc00268dbd3de5bdf63c56" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="ufs_8h_1d1d47f60518d845f7e798fa0f3458753" kindref="member">ufs2_daddr_t</ref><sp/><ref refid="structfs_1d43582016bfc00268dbd3de5bdf63c56" kindref="member">fs_csaddr</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>blk<sp/>addr<sp/>of<sp/>cyl<sp/>grp<sp/>summary<sp/>area<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="270" refid="structfs_1716babdd931f0aae037a388a76fb0f5e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><ref refid="structfs_1716babdd931f0aae037a388a76fb0f5e" kindref="member">fs_pendingblocks</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(u)<sp/>blocks<sp/>being<sp/>freed<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="271" refid="structfs_12edcaaaf740c2737b958c8f0de0bafde" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_12edcaaaf740c2737b958c8f0de0bafde" kindref="member">fs_pendinginodes</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>(u)<sp/>inodes<sp/>being<sp/>freed<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="272" refid="structfs_1c6261d52facc413146d79821e88c2df4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1c6261d52facc413146d79821e88c2df4" kindref="member">fs_snapinum</ref>[<ref refid="ufs_8h_104c33da6605e73954cf2ff32c3f0f15a" kindref="member">FSMAXSNAP</ref>];</highlight><highlight class="comment">/*<sp/>list<sp/>of<sp/>snapshot<sp/>inode<sp/>numbers<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="273" refid="structfs_13d750fecfb70d46d78e3964c0fc62db0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_13d750fecfb70d46d78e3964c0fc62db0" kindref="member">fs_avgfilesize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>expected<sp/>average<sp/>file<sp/>size<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="274" refid="structfs_14e27ad3d243d1868c517c7f50db36c68" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_14e27ad3d243d1868c517c7f50db36c68" kindref="member">fs_avgfpdir</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>expected<sp/>#<sp/>of<sp/>files<sp/>per<sp/>directory<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="275" refid="structfs_1296f6ea58ab5171bb0cebf8d9e9759b9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1296f6ea58ab5171bb0cebf8d9e9759b9" kindref="member">fs_save_cgsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>save<sp/>real<sp/>cg<sp/>size<sp/>to<sp/>use<sp/>fs_bsize<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="276" refid="structfs_1eaac93a705f4c2c2f2b194cc8772cc80" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1eaac93a705f4c2c2f2b194cc8772cc80" kindref="member">fs_sparecon32</ref>[26];<sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>reserved<sp/>for<sp/>future<sp/>constants<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="277" refid="structfs_13036cb913215b8925934f2d87792e75b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_13036cb913215b8925934f2d87792e75b" kindref="member">fs_flags</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>see<sp/>FS_<sp/>flags<sp/>below<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="278" refid="structfs_1cdd52fe6ac532b73eb877c57b286dd93" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1cdd52fe6ac532b73eb877c57b286dd93" kindref="member">fs_contigsumsize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>size<sp/>of<sp/>cluster<sp/>summary<sp/>array<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="279" refid="structfs_1bc0a279ec4d6a3f7a70e7078c9def3d3" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1bc0a279ec4d6a3f7a70e7078c9def3d3" kindref="member">fs_maxsymlinklen</ref>;<sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>max<sp/>length<sp/>of<sp/>an<sp/>internal<sp/>symlink<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="280" refid="structfs_18fd0d606db522d961af347195bb59909" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_18fd0d606db522d961af347195bb59909" kindref="member">fs_old_inodefmt</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>format<sp/>of<sp/>on-disk<sp/>inodes<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="281" refid="structfs_180705fcf0b5478639af84da1d4c24e72" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_1250ac047bf3984b5dae755276a305d64" kindref="member">u_int64_t</ref><sp/><ref refid="structfs_180705fcf0b5478639af84da1d4c24e72" kindref="member">fs_maxfilesize</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>maximum<sp/>representable<sp/>file<sp/>size<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="282" refid="structfs_1a771c09702d1e51ee526fb822e7230a5" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><ref refid="structfs_1a771c09702d1e51ee526fb822e7230a5" kindref="member">fs_qbmask</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>~fs_bmask<sp/>for<sp/>use<sp/>with<sp/>64-bit<sp/>size<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="283" refid="structfs_1b48686a078d1a8410ec36696f0afeb05" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_196411d49619f50e635418ee57651b95d" kindref="member">int64_t</ref><sp/><sp/><ref refid="structfs_1b48686a078d1a8410ec36696f0afeb05" kindref="member">fs_qfmask</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>~fs_fmask<sp/>for<sp/>use<sp/>with<sp/>64-bit<sp/>size<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="284" refid="structfs_16c2e8cf33c773a90113fcc7fe9a75c51" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_16c2e8cf33c773a90113fcc7fe9a75c51" kindref="member">fs_state</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>validate<sp/>fs_clean<sp/>field<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="285" refid="structfs_1ff096e7b1228e1914b01a8b66e74b1b1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1ff096e7b1228e1914b01a8b66e74b1b1" kindref="member">fs_old_postblformat</ref>;<sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>format<sp/>of<sp/>positional<sp/>layout<sp/>tables<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="286" refid="structfs_1ef6eb7c95acad0463084fc855e91c73d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1ef6eb7c95acad0463084fc855e91c73d" kindref="member">fs_old_nrpos</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>number<sp/>of<sp/>rotational<sp/>positions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="287" refid="structfs_1a0a18ada28e13800a631dce1e2c4c54a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1a0a18ada28e13800a631dce1e2c4c54a" kindref="member">fs_spare5</ref>[2];<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>old<sp/>fs_postbloff<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="288"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>old<sp/>fs_rotbloff<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="289" refid="structfs_1acc2f0aa6f3902f165c563ce5ba76373" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="types_8h_16f6221103820f185abcc62b874665a93" kindref="member">int32_t</ref><sp/><sp/><ref refid="structfs_1acc2f0aa6f3902f165c563ce5ba76373" kindref="member">fs_magic</ref>;<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="comment">/*<sp/>magic<sp/>number<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="290"><highlight class="normal">};</highlight></codeline>
+<codeline lineno="291"><highlight class="normal"></highlight></codeline>
+<codeline lineno="292"><highlight class="normal"></highlight></codeline>
+<codeline lineno="293"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ufs_8h_1349e4b7ceea770cd630e0297b693d59e" kindref="member">ufs_init</ref>();</highlight></codeline>
+<codeline lineno="294"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="ufs_8h_1b72f6c6236410bf9a029e7bc810eb609" kindref="member">ufs_initialize</ref>();</highlight></codeline>
+<codeline lineno="295"><highlight class="normal"></highlight></codeline>
+<codeline lineno="296"><highlight class="normal"></highlight><highlight class="preprocessor">#endif</highlight></codeline>
+<codeline lineno="297"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="298"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="299"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="300"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="301"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ufs/ufs.h"/>
+  </compounddef>
+</doxygen>

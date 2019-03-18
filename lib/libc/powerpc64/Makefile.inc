@@ -1,0 +1,7 @@
+# $FreeBSD: releng/11.1/lib/libc/powerpc64/Makefile.inc 315044 2017-03-11 02:51:29Z brooks $
+
+SRCS+=	trivial-vdso_tc.c
+
+# Long double is 64-bits
+SRCS+=machdep_ldisd.c
+SYM_MAPS+=${LIBC_SRCTOP}/powerpc64/Symbol.map

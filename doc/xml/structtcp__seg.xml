@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structtcp__seg" kind="struct" prot="public">
+    <compoundname>tcp_seg</compoundname>
+    <includes refid="tcp_8h" local="no">tcp.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structtcp__seg_1ba9711261d2fb72c6ea14955f23de4f2" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* tcp_seg::dataptr</definition>
+        <argsstring></argsstring>
+        <name>dataptr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" line="283" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" bodystart="283" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtcp__seg_1cd56b9873ed54d5c717cff398765357d" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+        <definition>uInt16 tcp_seg::len</definition>
+        <argsstring></argsstring>
+        <name>len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" line="284" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" bodystart="284" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtcp__seg_13e1479b94a15c20a26bd0f0592cd5601" prot="public" static="no" mutable="no">
+        <type><ref refid="structtcp__seg" kindref="compound">tcp_seg</ref> *</type>
+        <definition>struct tcp_seg* tcp_seg::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" line="281" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" bodystart="281" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtcp__seg_13a0a6be553eb5cd5c641f519d3fa7f2f" prot="public" static="no" mutable="no">
+        <type><ref refid="structpbuf" kindref="compound">pbuf</ref> *</type>
+        <definition>struct pbuf* tcp_seg::p</definition>
+        <argsstring></argsstring>
+        <name>p</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" line="282" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" bodystart="282" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structtcp__seg_1699247f83271b1ca4434a30a376680ab" prot="public" static="no" mutable="no">
+        <type><ref refid="structtcp__hdr" kindref="compound">tcp_hdr</ref> *</type>
+        <definition>struct tcp_hdr* tcp_seg::tcphdr</definition>
+        <argsstring></argsstring>
+        <name>tcphdr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" line="285" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" bodystart="285" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="392">
+        <label>tcp_seg</label>
+        <link refid="structtcp__seg"/>
+        <childnode refid="392" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+        <childnode refid="393" relation="usage">
+          <edgelabel>tcphdr</edgelabel>
+        </childnode>
+        <childnode refid="394" relation="usage">
+          <edgelabel>p</edgelabel>
+        </childnode>
+      </node>
+      <node id="394">
+        <label>pbuf</label>
+        <link refid="structpbuf"/>
+        <childnode refid="394" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+      <node id="393">
+        <label>tcp_hdr</label>
+        <link refid="structtcp__hdr"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" line="280" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/tcp.h" bodystart="280" bodyend="286"/>
+    <listofallmembers>
+      <member refid="structtcp__seg_1ba9711261d2fb72c6ea14955f23de4f2" prot="public" virt="non-virtual"><scope>tcp_seg</scope><name>dataptr</name></member>
+      <member refid="structtcp__seg_1cd56b9873ed54d5c717cff398765357d" prot="public" virt="non-virtual"><scope>tcp_seg</scope><name>len</name></member>
+      <member refid="structtcp__seg_13e1479b94a15c20a26bd0f0592cd5601" prot="public" virt="non-virtual"><scope>tcp_seg</scope><name>next</name></member>
+      <member refid="structtcp__seg_13a0a6be553eb5cd5c641f519d3fa7f2f" prot="public" virt="non-virtual"><scope>tcp_seg</scope><name>p</name></member>
+      <member refid="structtcp__seg_1699247f83271b1ca4434a30a376680ab" prot="public" virt="non-virtual"><scope>tcp_seg</scope><name>tcphdr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

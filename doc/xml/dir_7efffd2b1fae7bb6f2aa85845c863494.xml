@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_7efffd2b1fae7bb6f2aa85845c863494" kind="dir">
+    <compoundname>src/sys/kernel/</compoundname>
+    <innerfile refid="ap-boot_8S">ap-boot.S</innerfile>
+    <innerfile refid="bioscall_8c">bioscall.c</innerfile>
+    <innerfile refid="elf_8c">elf.c</innerfile>
+    <innerfile refid="endtask_8c">endtask.c</innerfile>
+    <innerfile refid="exec_8c">exec.c</innerfile>
+    <innerfile refid="fork_8c">fork.c</innerfile>
+    <innerfile refid="gen__calls_8c">gen_calls.c</innerfile>
+    <innerfile refid="kern__descrip_8c">kern_descrip.c</innerfile>
+    <innerfile refid="kern__sig_8c">kern_sig.c</innerfile>
+    <innerfile refid="kern__sysctl_8c">kern_sysctl.c</innerfile>
+    <innerfile refid="kpanic_8c">kpanic.c</innerfile>
+    <innerfile refid="ld_8c">ld.c</innerfile>
+    <innerfile refid="pipe_8c">pipe.c</innerfile>
+    <innerfile refid="sched_8c">sched.c</innerfile>
+    <innerfile refid="schedyield_8S">schedyield.S</innerfile>
+    <innerfile refid="sem_8c">sem.c</innerfile>
+    <innerfile refid="smp_8c">smp.c</innerfile>
+    <innerfile refid="spinlock_8c">spinlock.c</innerfile>
+    <innerfile refid="sys__call_8S">sys_call.S</innerfile>
+    <innerfile refid="sys__call__new_8S">sys_call_new.S</innerfile>
+    <innerfile refid="syscall_8c">syscall.c</innerfile>
+    <innerfile refid="syscall__new_8c">syscall_new.c</innerfile>
+    <innerfile refid="systemtask_8c">systemtask.c</innerfile>
+    <innerfile refid="time_8c">time.c</innerfile>
+    <innerfile refid="timer_8S">timer.S</innerfile>
+    <innerfile refid="tty_8c">tty.c</innerfile>
+    <innerfile refid="ubthread_8c">ubthread.c</innerfile>
+    <innerfile refid="vitals_8c">vitals.c</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/kernel/"/>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,448 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="classvfs__abstract" kind="class" prot="public">
+    <compoundname>vfs_abstract</compoundname>
+    <derivedcompoundref refid="classUbixFS" prot="public" virt="non-virtual">UbixFS</derivedcompoundref>
+    <includes refid="fsAbstract_8h" local="no">fsAbstract.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classvfs__abstract_14d5773ba4f9449ca6f53a284e46319ba" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_close</definition>
+        <argsstring>(fileDescriptor *)</argsstring>
+        <name>vfs_close</name>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="18" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="18" bodyend="18"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1c051cfe1b772bc4340bf9218d28f1d10" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_closedir</definition>
+        <argsstring>(DIR *)</argsstring>
+        <name>vfs_closedir</name>
+        <param>
+          <type>DIR *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="26" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="26" bodyend="26"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1af0980013d73e232c27fc9c2dcb7f267" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_format</definition>
+        <argsstring>(device_t *)</argsstring>
+        <name>vfs_format</name>
+        <reimplementedby refid="classUbixFS_1e1266337d259778b1404601184d75028">vfs_format</reimplementedby>
+        <param>
+          <type><ref refid="structdevice__t" kindref="compound">device_t</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="33" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="33" bodyend="33"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1390e117f43e869e8413d73a7051f34c7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_init</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_init</name>
+        <reimplementedby refid="classUbixFS_1148aae4eb2ceb35ffcad9ff22b2f7309">vfs_init</reimplementedby>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="32" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="32" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1c9a165e1416056c3a96832c15bbff16e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_mkdir</definition>
+        <argsstring>(const char *, mode_t)</argsstring>
+        <name>vfs_mkdir</name>
+        <reimplementedby refid="classUbixFS_1f93fcff0825ffcdaf05ceefaeb48fd7b">vfs_mkdir</reimplementedby>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="27" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="27" bodyend="27"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1e6b9a9e65a16b1b473d64ebb09c8f5c4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void *</type>
+        <definition>virtual void* vfs_abstract::vfs_mknod</definition>
+        <argsstring>(const char *, mode_t)</argsstring>
+        <name>vfs_mknod</name>
+        <reimplementedby refid="classUbixFS_1b1422145c6575f723179b60421a494aa">vfs_mknod</reimplementedby>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="34" bodyend="34"/>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_15b83727e3be5c4df2c3b43ee01edf8d7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_open</definition>
+        <argsstring>(const char *, fileDescriptor *, int,...)</argsstring>
+        <name>vfs_open</name>
+        <reimplementedby refid="classUbixFS_1d3e28ccdb5cd84d63e5d6e9db2fc3e65">vfs_open</reimplementedby>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+        </param>
+        <param>
+          <type>int</type>
+        </param>
+        <param>
+          <type>...</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="17" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="17" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1f7f49919b29ae23be0b500691bd7489b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_opendir</definition>
+        <argsstring>(DIR *, const char *)</argsstring>
+        <name>vfs_opendir</name>
+        <param>
+          <type>DIR *</type>
+        </param>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="25" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="25" bodyend="25"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_144b94c11ccc71b299022b24e4810273f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_purge</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_purge</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="35" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="35" bodyend="35"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1de057292eb1e2e6a370d7c904e5de8a0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>virtual size_t vfs_abstract::vfs_read</definition>
+        <argsstring>(fileDescriptor *, void *, off_t, size_t)</argsstring>
+        <name>vfs_read</name>
+        <reimplementedby refid="classUbixFS_10fce9a3abd07c65fa9af38e51517310a">vfs_read</reimplementedby>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="20" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="19" bodyend="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1e0e736281f7a5c7f6ba6c2fcc1606537" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_readdir</definition>
+        <argsstring>(DIR *, struct dirent *)</argsstring>
+        <name>vfs_readdir</name>
+        <param>
+          <type>DIR *</type>
+        </param>
+        <param>
+          <type>struct <ref refid="structdirent" kindref="compound">dirent</ref> *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="29" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="29" bodyend="29"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1566f42818133f3151b79409bfcc0a086" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_rename</definition>
+        <argsstring>(const char *, const char *)</argsstring>
+        <name>vfs_rename</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="41" bodyend="41"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_12ad911bc4b4ad0867e0b1037a0bafd6e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_rmdir</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>vfs_rmdir</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="28" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="28" bodyend="28"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1ec448ee0b4a5b85c47cac5416baaeb37" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_stop</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_stop</name>
+        <reimplementedby refid="classUbixFS_1c2ccea3f574eaa7d4700748d0b4bde71">vfs_stop</reimplementedby>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="36" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1b3aa1f17380e950fdf7711cb21c53d60" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_sync</definition>
+        <argsstring>(void)</argsstring>
+        <name>vfs_sync</name>
+        <reimplementedby refid="classUbixFS_15610078343779a3c5e3046283d482766">vfs_sync</reimplementedby>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="37" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_10b409654c320cf8724e83d403bcf1099" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>int</type>
+        <definition>virtual int vfs_abstract::vfs_unlink</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>vfs_unlink</name>
+        <param>
+          <type>const char *</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="40" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_1aac0143052a6ba9c324f8909eb2d60d1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        <definition>virtual size_t vfs_abstract::vfs_write</definition>
+        <argsstring>(fileDescriptor *, void *, off_t, size_t)</argsstring>
+        <name>vfs_write</name>
+        <reimplementedby refid="classUbixFS_1551d3daae6a65555a220de05eb619930">vfs_write</reimplementedby>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+        </param>
+        <param>
+          <type>void *</type>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        </param>
+        <param>
+          <type><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="22" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="21" bodyend="22"/>
+      </memberdef>
+      <memberdef kind="function" id="classvfs__abstract_17dabc61aa4225bb9f281bcd4cb577795" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>virtual</type>
+        <definition>virtual vfs_abstract::~vfs_abstract</definition>
+        <argsstring>(void)</argsstring>
+        <name>~vfs_abstract</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="43" bodyend="43"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classvfs__abstract_1e10cade4827cea8db0f94e517d82dcfd" prot="protected" static="no" mutable="no">
+        <type><ref refid="structdevice__t" kindref="compound">device_t</ref> *</type>
+        <definition>device_t* vfs_abstract::device</definition>
+        <argsstring></argsstring>
+        <name>device</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="14" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="14" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvfs__abstract_145ce75cdedbdca884f4d7d965ce91802" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref> *</type>
+        <definition>vfs_abstract* vfs_abstract::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="13" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="13" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classvfs__abstract_1b766870262f3d41bbf21326abf40cad8" prot="protected" static="no" mutable="no">
+        <type><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref> *</type>
+        <definition>vfs_abstract* vfs_abstract::prev</definition>
+        <argsstring></argsstring>
+        <name>prev</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="12" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="12" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="532">
+        <label>UbixFS</label>
+        <link refid="classUbixFS"/>
+        <childnode refid="531" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="531">
+        <label>vfs_abstract</label>
+        <link refid="classvfs__abstract"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="533">
+        <label>vfs_abstract</label>
+        <link refid="classvfs__abstract"/>
+        <childnode refid="533" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+        <childnode refid="534" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+      </node>
+      <node id="534">
+        <label>device_t</label>
+        <link refid="structdevice__t"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" line="10" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h" bodystart="10" bodyend="44"/>
+    <listofallmembers>
+      <member refid="classvfs__abstract_1e10cade4827cea8db0f94e517d82dcfd" prot="protected" virt="non-virtual"><scope>vfs_abstract</scope><name>device</name></member>
+      <member refid="classvfs__abstract_145ce75cdedbdca884f4d7d965ce91802" prot="protected" virt="non-virtual"><scope>vfs_abstract</scope><name>next</name></member>
+      <member refid="classvfs__abstract_1b766870262f3d41bbf21326abf40cad8" prot="protected" virt="non-virtual"><scope>vfs_abstract</scope><name>prev</name></member>
+      <member refid="classvfs__abstract_14d5773ba4f9449ca6f53a284e46319ba" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_close</name></member>
+      <member refid="classvfs__abstract_1c051cfe1b772bc4340bf9218d28f1d10" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_closedir</name></member>
+      <member refid="classvfs__abstract_1af0980013d73e232c27fc9c2dcb7f267" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_format</name></member>
+      <member refid="classvfs__abstract_1390e117f43e869e8413d73a7051f34c7" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_init</name></member>
+      <member refid="classvfs__abstract_1c9a165e1416056c3a96832c15bbff16e" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_mkdir</name></member>
+      <member refid="classvfs__abstract_1e6b9a9e65a16b1b473d64ebb09c8f5c4" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_mknod</name></member>
+      <member refid="classvfs__abstract_15b83727e3be5c4df2c3b43ee01edf8d7" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_open</name></member>
+      <member refid="classvfs__abstract_1f7f49919b29ae23be0b500691bd7489b" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_opendir</name></member>
+      <member refid="classvfs__abstract_144b94c11ccc71b299022b24e4810273f" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_purge</name></member>
+      <member refid="classvfs__abstract_1de057292eb1e2e6a370d7c904e5de8a0" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_read</name></member>
+      <member refid="classvfs__abstract_1e0e736281f7a5c7f6ba6c2fcc1606537" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_readdir</name></member>
+      <member refid="classvfs__abstract_1566f42818133f3151b79409bfcc0a086" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_rename</name></member>
+      <member refid="classvfs__abstract_12ad911bc4b4ad0867e0b1037a0bafd6e" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_rmdir</name></member>
+      <member refid="classvfs__abstract_1ec448ee0b4a5b85c47cac5416baaeb37" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_stop</name></member>
+      <member refid="classvfs__abstract_1b3aa1f17380e950fdf7711cb21c53d60" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_sync</name></member>
+      <member refid="classvfs__abstract_10b409654c320cf8724e83d403bcf1099" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_unlink</name></member>
+      <member refid="classvfs__abstract_1aac0143052a6ba9c324f8909eb2d60d1" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>vfs_write</name></member>
+      <member refid="classvfs__abstract_17dabc61aa4225bb9f281bcd4cb577795" prot="public" virt="virtual"><scope>vfs_abstract</scope><name>~vfs_abstract</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structeth__hdr" kind="struct" prot="public">
+    <compoundname>eth_hdr</compoundname>
+    <includes refid="arp_8h" local="no">arp.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="structeth__hdr_1be181fdb429751f02634dbc530673199" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>eth_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(uInt16 type)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type><ref refid="types_8h_13b65128d2644e9b80cec9a69bfa7e094" kindref="member">uInt16</ref></type>
+          <declname>type</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="55"/>
+      </memberdef>
+      <memberdef kind="function" id="structeth__hdr_1acc59d511878ffbb0e4c1b5b1b6e2a23" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>eth_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(struct eth_addr src)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type>struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+          <declname>src</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="54"/>
+      </memberdef>
+      <memberdef kind="function" id="structeth__hdr_172f0a95244a7d946dba634721c0d20d4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>eth_hdr::PACK_STRUCT_FIELD</definition>
+        <argsstring>(struct eth_addr dest)</argsstring>
+        <name>PACK_STRUCT_FIELD</name>
+        <param>
+          <type>struct <ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+          <declname>dest</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="53"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/netif/arp.h" bodystart="52" bodyend="56"/>
+    <listofallmembers>
+      <member refid="structeth__hdr_172f0a95244a7d946dba634721c0d20d4" prot="public" virt="non-virtual"><scope>eth_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structeth__hdr_1acc59d511878ffbb0e4c1b5b1b6e2a23" prot="public" virt="non-virtual"><scope>eth_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+      <member refid="structeth__hdr_1be181fdb429751f02634dbc530673199" prot="public" virt="non-virtual"><scope>eth_hdr</scope><name>PACK_STRUCT_FIELD</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

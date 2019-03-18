@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structtimeval" kind="struct" prot="public">
+    <compoundname>timeval</compoundname>
+    <includes refid="time_8h" local="no">time.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structtimeval_13599199839a89e99a2ce29d45312b5cf" prot="public" static="no" mutable="no">
+        <type>long</type>
+        <definition>long timeval::tv_sec</definition>
+        <argsstring></argsstring>
+        <name>tv_sec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="73" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="73" bodyend="-1"/>
+        <referencedby refid="time_8c_1df30830f5265e55035171c301eb9c3fb" compoundref="time_8c" startline="110" endline="115">gettimeofday</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structtimeval_1810bf8fcd58e255a5c1896d19538b86a" prot="public" static="no" mutable="no">
+        <type><ref refid="time_8h_1e32f449456d5f1877a9e630e92422c01" kindref="member">suseconds_t</ref></type>
+        <definition>suseconds_t timeval::tv_usec</definition>
+        <argsstring></argsstring>
+        <name>tv_usec</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="74" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="74" bodyend="-1"/>
+        <referencedby refid="time_8c_1df30830f5265e55035171c301eb9c3fb" compoundref="time_8c" startline="110" endline="115">gettimeofday</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" line="72" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/time.h" bodystart="72" bodyend="75"/>
+    <listofallmembers>
+      <member refid="structtimeval_13599199839a89e99a2ce29d45312b5cf" prot="public" virt="non-virtual"><scope>timeval</scope><name>tv_sec</name></member>
+      <member refid="structtimeval_1810bf8fcd58e255a5c1896d19538b86a" prot="public" virt="non-virtual"><scope>timeval</scope><name>tv_usec</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

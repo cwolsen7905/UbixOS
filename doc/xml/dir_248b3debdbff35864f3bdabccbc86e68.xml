@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_248b3debdbff35864f3bdabccbc86e68" kind="dir">
+    <compoundname>src/sys/include/devfs/</compoundname>
+    <innerfile refid="devfs_8h">devfs.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/devfs/"/>
+  </compounddef>
+</doxygen>

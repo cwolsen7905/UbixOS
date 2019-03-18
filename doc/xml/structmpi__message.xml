@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structmpi__message" kind="struct" prot="public">
+    <compoundname>mpi_message</compoundname>
+    <includes refid="mpi_8h" local="no">mpi.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structmpi__message_10f190328e34c27044a954f9f088d5ca2" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char mpi_message::data[248]</definition>
+        <argsstring>[248]</argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 mpi_message::header</definition>
+        <argsstring></argsstring>
+        <name>header</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="40" bodyend="-1"/>
+        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+        <referencedby refid="thread_8c_1fb3cddd76d07e866207fefe920a5f76d" compoundref="thread_8c" startline="39" endline="59">ubixfs_thread</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" prot="public" static="no" mutable="no">
+        <type><ref refid="structmpi__message" kindref="compound">mpi_message</ref> *</type>
+        <definition>struct mpi_message* mpi_message::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <referencedby refid="system_8c_1806e9deddf18f8be353745a16e8f5e85" compoundref="system_8c" startline="108" endline="132">mpi_spam</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1e438ba74394b14d7b24b6df3b3b8c252" kindref="member">pidType</ref></type>
+        <definition>pidType mpi_message::pid</definition>
+        <argsstring></argsstring>
+        <name>pid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="system_8c_176ba344daaa7e476f1d23c4f23f31615" compoundref="system_8c" startline="189" endline="223">mpi_fetchMessage</referencedby>
+        <referencedby refid="system_8c_127f6a180049b096910c4ffd8b152fbb8" compoundref="system_8c" startline="143" endline="178">mpi_postMessage</referencedby>
+        <referencedby refid="systemtask_8c_1c7cc6a806237f8657fcdce169319fd7f" compoundref="systemtask_8c" startline="48" endline="118">systemTask</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="546">
+        <label>mpi_message</label>
+        <link refid="structmpi__message"/>
+        <childnode refid="546" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" line="38" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/mpi/mpi.h" bodystart="38" bodyend="43"/>
+    <listofallmembers>
+      <member refid="structmpi__message_10f190328e34c27044a954f9f088d5ca2" prot="public" virt="non-virtual"><scope>mpi_message</scope><name>data</name></member>
+      <member refid="structmpi__message_1218677ef8c9f6457e4008c20c79eed8d" prot="public" virt="non-virtual"><scope>mpi_message</scope><name>header</name></member>
+      <member refid="structmpi__message_1b0773f30b407ced06f0b52de72b7aebb" prot="public" virt="non-virtual"><scope>mpi_message</scope><name>next</name></member>
+      <member refid="structmpi__message_1ebe00f8f5a01ec8d4f56f8fab455ca8c" prot="public" virt="non-virtual"><scope>mpi_message</scope><name>pid</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

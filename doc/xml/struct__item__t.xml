@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="struct__item__t" kind="struct" prot="public">
+    <compoundname>_item_t</compoundname>
+    <includes refid="lists_8h" local="no">lists.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct__item__t_176139a34f13eb90a9bf203579870dbd2" prot="public" static="no" mutable="no">
+        <type>void *</type>
+        <definition>void* _item_t::data</definition>
+        <argsstring></argsstring>
+        <name>data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="11" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="11" bodyend="-1"/>
+        <referencedby refid="kmod_8c_1f2a085a786b2cf77d53da7f364948cd4" compoundref="kmod_8c" startline="46" endline="73">kmod_add</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="struct__item__t_17922bdca5aec571aecbe57e997abb6c9" prot="public" static="no" mutable="no">
+        <type><ref refid="struct__item__t" kindref="compound">Item_t</ref> *</type>
+        <definition>Item_t* _item_t::Next</definition>
+        <argsstring></argsstring>
+        <name>Next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="10" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct__item__t_1c48075950d3635b95f943f900580166f" prot="public" static="no" mutable="no">
+        <type><ref refid="struct__item__t" kindref="compound">Item_t</ref> *</type>
+        <definition>Item_t* _item_t::Previous</definition>
+        <argsstring></argsstring>
+        <name>Previous</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="9" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="9" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="365">
+        <label>_item_t</label>
+        <link refid="struct__item__t"/>
+        <childnode refid="365" relation="usage">
+          <edgelabel>Next
+Previous</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="8" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="7" bodyend="12"/>
+    <listofallmembers>
+      <member refid="struct__item__t_176139a34f13eb90a9bf203579870dbd2" prot="public" virt="non-virtual"><scope>_item_t</scope><name>data</name></member>
+      <member refid="struct__item__t_17922bdca5aec571aecbe57e997abb6c9" prot="public" virt="non-virtual"><scope>_item_t</scope><name>Next</name></member>
+      <member refid="struct__item__t_1c48075950d3635b95f943f900580166f" prot="public" virt="non-virtual"><scope>_item_t</scope><name>Previous</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

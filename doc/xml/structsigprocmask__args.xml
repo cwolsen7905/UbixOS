@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structsigprocmask__args" kind="struct" prot="public">
+    <compoundname>sigprocmask_args</compoundname>
+    <includes refid="sysproto_8h" local="no">sysproto.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsigprocmask__args_1a0d6a4a10171e13d733d9a2e4ea6868e" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int sigprocmask_args::how</definition>
+        <argsstring></argsstring>
+        <name>how</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="142" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_1c3045ce57a3c43a59726caff400bdb39" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sigprocmask_args::how_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>how_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="142" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_1c5c57ef328b59a465b6a836be10b1541" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sigprocmask_args::how_r_[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(int)?0:sizeof(register_t)-sizeof(int))]</argsstring>
+        <name>how_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="142" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_183e920e43b8f12aff29b1e0d24fce3e1" prot="public" static="no" mutable="no">
+        <type><ref refid="struct____sigset" kindref="compound">sigset_t</ref> *</type>
+        <definition>sigset_t* sigprocmask_args::oset</definition>
+        <argsstring></argsstring>
+        <name>oset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_1b78b139461117755b896dc064361258b" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sigprocmask_args::oset_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>oset_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_12e983bc4520c563125ea6661384676ab" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sigprocmask_args::oset_r_[(sizeof(register_t)&lt;=sizeof(sigset_t *)?0:sizeof(register_t)-sizeof(sigset_t *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(sigset_t *)?0:sizeof(register_t)-sizeof(sigset_t *))]</argsstring>
+        <name>oset_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="144" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="144" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_1c0f5a6d4da30a032dd0314d5c0c58c6f" prot="public" static="no" mutable="no">
+        <type>const <ref refid="struct____sigset" kindref="compound">sigset_t</ref> *</type>
+        <definition>const sigset_t* sigprocmask_args::set</definition>
+        <argsstring></argsstring>
+        <name>set</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_161bb4b3a37837f3f054eef2ad444b7f3" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sigprocmask_args::set_l_[0]</definition>
+        <argsstring>[0]</argsstring>
+        <name>set_l_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsigprocmask__args_1ff48ba5dbee34e65a200d1fcd18f7027" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sigprocmask_args::set_r_[(sizeof(register_t)&lt;=sizeof(const sigset_t *)?0:sizeof(register_t)-sizeof(const sigset_t *))]</definition>
+        <argsstring>[(sizeof(register_t)&lt;=sizeof(const sigset_t *)?0:sizeof(register_t)-sizeof(const sigset_t *))]</argsstring>
+        <name>set_r_</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="143" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="143" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="586">
+        <label>sigprocmask_args</label>
+        <link refid="structsigprocmask__args"/>
+        <childnode refid="587" relation="usage">
+          <edgelabel>oset
+set</edgelabel>
+        </childnode>
+      </node>
+      <node id="587">
+        <label>__sigset</label>
+        <link refid="struct____sigset"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" line="141" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/sys/sysproto.h" bodystart="141" bodyend="145"/>
+    <listofallmembers>
+      <member refid="structsigprocmask__args_1a0d6a4a10171e13d733d9a2e4ea6868e" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>how</name></member>
+      <member refid="structsigprocmask__args_1c3045ce57a3c43a59726caff400bdb39" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>how_l_</name></member>
+      <member refid="structsigprocmask__args_1c5c57ef328b59a465b6a836be10b1541" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>how_r_</name></member>
+      <member refid="structsigprocmask__args_183e920e43b8f12aff29b1e0d24fce3e1" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>oset</name></member>
+      <member refid="structsigprocmask__args_1b78b139461117755b896dc064361258b" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>oset_l_</name></member>
+      <member refid="structsigprocmask__args_12e983bc4520c563125ea6661384676ab" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>oset_r_</name></member>
+      <member refid="structsigprocmask__args_1c0f5a6d4da30a032dd0314d5c0c58c6f" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>set</name></member>
+      <member refid="structsigprocmask__args_161bb4b3a37837f3f054eef2ad444b7f3" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>set_l_</name></member>
+      <member refid="structsigprocmask__args_1ff48ba5dbee34e65a200d1fcd18f7027" prot="public" virt="non-virtual"><scope>sigprocmask_args</scope><name>set_r_</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

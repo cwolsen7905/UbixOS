@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="fsAbstract_8h" kind="file">
+    <compoundname>fsAbstract.h</compoundname>
+    <includes local="no">stdio.h</includes>
+    <includes local="no">dirent.h</includes>
+    <includes local="no">sys/types.h</includes>
+    <includes refid="ubixfsv2_2device_8h" local="no">device.h</includes>
+    <includes refid="ubixfsv2_2file_8h" local="yes">file.h</includes>
+    <includedby refid="ubixfsv2_2ubixfs_8h" local="yes">src/sys/ubixfsv2/ubixfs.h</includedby>
+    <incdepgraph>
+      <node id="4558">
+        <label>ubixfs.h</label>
+        <link refid="ubixfsv2_2ubixfs_8h"/>
+        <childnode refid="4554" relation="include">
+        </childnode>
+        <childnode refid="4559" relation="include">
+        </childnode>
+        <childnode refid="4551" relation="include">
+        </childnode>
+        <childnode refid="4556" relation="include">
+        </childnode>
+        <childnode refid="4557" relation="include">
+        </childnode>
+      </node>
+      <node id="4557">
+        <label>file.h</label>
+        <link refid="ubixfsv2_2file_8h"/>
+        <childnode refid="4558" relation="include">
+        </childnode>
+      </node>
+      <node id="4554">
+        <label>sys/types.h</label>
+      </node>
+      <node id="4551">
+        <label>src/sys/ubixfsv2/fsAbstract.h</label>
+        <link refid="fsAbstract.h"/>
+        <childnode refid="4552" relation="include">
+        </childnode>
+        <childnode refid="4553" relation="include">
+        </childnode>
+        <childnode refid="4554" relation="include">
+        </childnode>
+        <childnode refid="4555" relation="include">
+        </childnode>
+        <childnode refid="4557" relation="include">
+        </childnode>
+      </node>
+      <node id="4556">
+        <label>types.h</label>
+        <link refid="ubixfsv2_2types_8h"/>
+      </node>
+      <node id="4559">
+        <label>unistd.h</label>
+      </node>
+      <node id="4555">
+        <label>device.h</label>
+        <link refid="ubixfsv2_2device_8h"/>
+        <childnode refid="4554" relation="include">
+        </childnode>
+        <childnode refid="4556" relation="include">
+        </childnode>
+      </node>
+      <node id="4552">
+        <label>stdio.h</label>
+      </node>
+      <node id="4553">
+        <label>dirent.h</label>
+      </node>
+    </incdepgraph>
+    <invincdepgraph>
+      <node id="4565">
+        <label>src/sys/ubixfsv2/ubixfs.cpp</label>
+        <link refid="ubixfs_8cpp"/>
+      </node>
+      <node id="4562">
+        <label>src/sys/ubixfsv2/btree.h</label>
+        <link refid="btree_8h"/>
+        <childnode refid="4563" relation="include">
+        </childnode>
+        <childnode refid="4564" relation="include">
+        </childnode>
+        <childnode refid="4565" relation="include">
+        </childnode>
+      </node>
+      <node id="4561">
+        <label>src/sys/ubixfsv2/ubixfs.h</label>
+        <link refid="ubixfsv2_2ubixfs_8h"/>
+        <childnode refid="4562" relation="include">
+        </childnode>
+        <childnode refid="4566" relation="include">
+        </childnode>
+        <childnode refid="4563" relation="include">
+        </childnode>
+        <childnode refid="4564" relation="include">
+        </childnode>
+        <childnode refid="4565" relation="include">
+        </childnode>
+      </node>
+      <node id="4564">
+        <label>src/sys/ubixfsv2/main.cpp</label>
+        <link refid="main_8cpp"/>
+      </node>
+      <node id="4566">
+        <label>src/sys/ubixfsv2/file.h</label>
+        <link refid="ubixfsv2_2file_8h"/>
+        <childnode refid="4560" relation="include">
+        </childnode>
+        <childnode refid="4561" relation="include">
+        </childnode>
+        <childnode refid="4562" relation="include">
+        </childnode>
+      </node>
+      <node id="4560">
+        <label>src/sys/ubixfsv2/fsAbstract.h</label>
+        <link refid="fsAbstract.h"/>
+        <childnode refid="4561" relation="include">
+        </childnode>
+      </node>
+      <node id="4563">
+        <label>src/sys/ubixfsv2/btree.cpp</label>
+        <link refid="btree_8cpp"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="classvfs__abstract" prot="public">vfs_abstract</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#ifndef<sp/>FSABSTRACT_H</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#define<sp/>FSABSTRACT_H</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;stdio.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="5"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;dirent.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="6"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;sys/types.h&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="7"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ubixfsv2_2device_8h" kindref="compound">device.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="8"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="ubixfsv2_2file_8h" kindref="compound">file.h</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="9"><highlight class="normal"></highlight></codeline>
+<codeline lineno="10" refid="classvfs__abstract" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref><sp/>{</highlight></codeline>
+<codeline lineno="11"><highlight class="normal"><sp/></highlight><highlight class="keyword">protected</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="12" refid="classvfs__abstract_1b766870262f3d41bbf21326abf40cad8" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref><sp/>*<sp/><ref refid="classvfs__abstract_1b766870262f3d41bbf21326abf40cad8" kindref="member">prev</ref>;</highlight></codeline>
+<codeline lineno="13" refid="classvfs__abstract_145ce75cdedbdca884f4d7d965ce91802" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="classvfs__abstract" kindref="compound">vfs_abstract</ref><sp/>*<sp/><ref refid="classvfs__abstract_145ce75cdedbdca884f4d7d965ce91802" kindref="member">next</ref>;</highlight></codeline>
+<codeline lineno="14" refid="classvfs__abstract_1e10cade4827cea8db0f94e517d82dcfd" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="structdevice__t" kindref="compound">device_t</ref><sp/>*<sp/><ref refid="structdevice" kindref="compound">device</ref>;</highlight></codeline>
+<codeline lineno="15"><highlight class="normal"><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:<sp/></highlight></codeline>
+<codeline lineno="16"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>File<sp/>I/O<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="17" refid="classvfs__abstract_15b83727e3be5c4df2c3b43ee01edf8d7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_15b83727e3be5c4df2c3b43ee01edf8d7" kindref="member">vfs_open</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*,</highlight><highlight class="keywordtype">int</highlight><highlight class="normal">,...)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="18" refid="classvfs__abstract_14d5773ba4f9449ca6f53a284e46319ba" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_14d5773ba4f9449ca6f53a284e46319ba" kindref="member">vfs_close</ref>(<ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="19" refid="classvfs__abstract_1de057292eb1e2e6a370d7c904e5de8a0" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><sp/><ref refid="classvfs__abstract_1de057292eb1e2e6a370d7c904e5de8a0" kindref="member">vfs_read</ref>(<ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,<sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)<sp/></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;<sp/>};</highlight></codeline>
+<codeline lineno="21" refid="classvfs__abstract_1aac0143052a6ba9c324f8909eb2d60d1" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref><sp/><sp/><ref refid="classvfs__abstract_1aac0143052a6ba9c324f8909eb2d60d1" kindref="member">vfs_write</ref>(<ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref><sp/>*,<sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref>,<sp/><ref refid="include_2ubixos_2types_8h_17619b847aeded8a6d14cbfa212b2cdfb" kindref="member">size_t</ref>)<sp/></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>0;<sp/>};</highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Dir<sp/>I/O<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="classvfs__abstract_1f7f49919b29ae23be0b500691bd7489b" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1f7f49919b29ae23be0b500691bd7489b" kindref="member">vfs_opendir</ref>(DIR<sp/>*,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="26" refid="classvfs__abstract_1c051cfe1b772bc4340bf9218d28f1d10" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1c051cfe1b772bc4340bf9218d28f1d10" kindref="member">vfs_closedir</ref>(DIR<sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="27" refid="classvfs__abstract_1c9a165e1416056c3a96832c15bbff16e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1c9a165e1416056c3a96832c15bbff16e" kindref="member">vfs_mkdir</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref>)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="28" refid="classvfs__abstract_12ad911bc4b4ad0867e0b1037a0bafd6e" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_12ad911bc4b4ad0867e0b1037a0bafd6e" kindref="member">vfs_rmdir</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="29" refid="classvfs__abstract_1e0e736281f7a5c7f6ba6c2fcc1606537" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1e0e736281f7a5c7f6ba6c2fcc1606537" kindref="member">vfs_readdir</ref>(DIR<sp/>*,</highlight><highlight class="keyword">struct</highlight><highlight class="normal"><sp/><ref refid="structdirent" kindref="compound">dirent</ref><sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>FS<sp/>Functions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32" refid="classvfs__abstract_1390e117f43e869e8413d73a7051f34c7" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1390e117f43e869e8413d73a7051f34c7" kindref="member">vfs_init</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="33" refid="classvfs__abstract_1af0980013d73e232c27fc9c2dcb7f267" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1af0980013d73e232c27fc9c2dcb7f267" kindref="member">vfs_format</ref>(<ref refid="structdevice__t" kindref="compound">device_t</ref><sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="34" refid="classvfs__abstract_1e6b9a9e65a16b1b473d64ebb09c8f5c4" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*<sp/><sp/><ref refid="classvfs__abstract_1e6b9a9e65a16b1b473d64ebb09c8f5c4" kindref="member">vfs_mknod</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,<sp/><ref refid="kern__descrip_8h_1e9f148ba55d84268ecb6f8031ab45076" kindref="member">mode_t</ref>)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" kindref="member">NULL</ref>;<sp/>};</highlight></codeline>
+<codeline lineno="35" refid="classvfs__abstract_144b94c11ccc71b299022b24e4810273f" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_144b94c11ccc71b299022b24e4810273f" kindref="member">vfs_purge</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="36" refid="classvfs__abstract_1ec448ee0b4a5b85c47cac5416baaeb37" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1ec448ee0b4a5b85c47cac5416baaeb37" kindref="member">vfs_stop</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="37" refid="classvfs__abstract_1b3aa1f17380e950fdf7711cb21c53d60" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1b3aa1f17380e950fdf7711cb21c53d60" kindref="member">vfs_sync</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Misc<sp/>Functions<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40" refid="classvfs__abstract_10b409654c320cf8724e83d403bcf1099" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_10b409654c320cf8724e83d403bcf1099" kindref="member">vfs_unlink</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="41" refid="classvfs__abstract_1566f42818133f3151b79409bfcc0a086" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_1566f42818133f3151b79409bfcc0a086" kindref="member">vfs_rename</ref>(</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*,</highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">char</highlight><highlight class="normal"><sp/>*)<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>-1;<sp/>};</highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43" refid="classvfs__abstract_17dabc61aa4225bb9f281bcd4cb577795" refkind="member"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">virtual</highlight><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><ref refid="classvfs__abstract_17dabc61aa4225bb9f281bcd4cb577795" kindref="member">~vfs_abstract</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal">)<sp/>{<sp/>};</highlight></codeline>
+<codeline lineno="44"><highlight class="normal">};<sp/></highlight><highlight class="comment">//<sp/>vfs_FS</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/>//<sp/>!FSABSTRACT_H</highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/fsAbstract.h"/>
+  </compounddef>
+</doxygen>

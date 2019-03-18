@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="struct__list__t" kind="struct" prot="public">
+    <compoundname>_list_t</compoundname>
+    <includes refid="lists_8h" local="no">lists.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="struct__list__t_1002fd645ba9a686f095e1377c343a36e" prot="public" static="no" mutable="no">
+        <type><ref refid="struct__item__t" kindref="compound">Item_t</ref> *</type>
+        <definition>Item_t* _list_t::First</definition>
+        <argsstring></argsstring>
+        <name>First</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="16" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="16" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="struct__list__t_13c1619c294a4d2c0ba3a1b3d705f2fa0" prot="public" static="no" mutable="no">
+        <type><ref refid="struct__item__t" kindref="compound">Item_t</ref> *</type>
+        <definition>Item_t* _list_t::Last</definition>
+        <argsstring></argsstring>
+        <name>Last</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="17" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="17" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="367">
+        <label>_list_t</label>
+        <link refid="struct__list__t"/>
+        <childnode refid="368" relation="usage">
+          <edgelabel>Last
+First</edgelabel>
+        </childnode>
+      </node>
+      <node id="368">
+        <label>_item_t</label>
+        <link refid="struct__item__t"/>
+        <childnode refid="368" relation="usage">
+          <edgelabel>Next
+Previous</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" line="15" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/lists.h" bodystart="14" bodyend="18"/>
+    <listofallmembers>
+      <member refid="struct__list__t_1002fd645ba9a686f095e1377c343a36e" prot="public" virt="non-virtual"><scope>_list_t</scope><name>First</name></member>
+      <member refid="struct__list__t_13c1619c294a4d2c0ba3a1b3d705f2fa0" prot="public" virt="non-virtual"><scope>_list_t</scope><name>Last</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

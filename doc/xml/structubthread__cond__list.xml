@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structubthread__cond__list" kind="struct" prot="public">
+    <compoundname>ubthread_cond_list</compoundname>
+    <includes refid="ubthread_8h" local="no">ubthread.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structubthread__cond__list_1c6a0b68879515ad2121d705aa7571c7e" prot="public" static="no" mutable="no">
+        <type><ref refid="structubthread__cond" kindref="compound">ubthread_cond_t</ref> *</type>
+        <definition>ubthread_cond_t* ubthread_cond_list::cond</definition>
+        <argsstring></argsstring>
+        <name>cond</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structubthread__cond__list_1d5cf73bd503d8318feca31d8d3e86c89" prot="public" static="no" mutable="no">
+        <type><ref refid="structubthread__cond__list" kindref="compound">ubthread_cond_list</ref> *</type>
+        <definition>struct ubthread_cond_list* ubthread_cond_list::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="659">
+        <label>ubthread_cond_list</label>
+        <link refid="structubthread__cond__list"/>
+        <childnode refid="659" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+        <childnode refid="660" relation="usage">
+          <edgelabel>cond</edgelabel>
+        </childnode>
+      </node>
+      <node id="660">
+        <label>ubthread_cond</label>
+        <link refid="structubthread__cond"/>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/ubixos/ubthread.h" bodystart="66" bodyend="69"/>
+    <listofallmembers>
+      <member refid="structubthread__cond__list_1c6a0b68879515ad2121d705aa7571c7e" prot="public" virt="non-virtual"><scope>ubthread_cond_list</scope><name>cond</name></member>
+      <member refid="structubthread__cond__list_1d5cf73bd503d8318feca31d8d3e86c89" prot="public" virt="non-virtual"><scope>ubthread_cond_list</scope><name>next</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

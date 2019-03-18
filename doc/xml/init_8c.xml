@@ -1,0 +1,610 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="init_8c" kind="file">
+    <compoundname>init.c</compoundname>
+    <includes refid="types_8h" local="no">ubixos/types.h</includes>
+    <includes refid="sched_8h" local="no">ubixos/sched.h</includes>
+    <includes refid="endtask_8h" local="no">ubixos/endtask.h</includes>
+    <includes refid="sys_8h" local="no">net/sys.h</includes>
+    <includes refid="mem_8h" local="no">net/mem.h</includes>
+    <includes refid="memp_8h" local="no">net/memp.h</includes>
+    <includes refid="tcpip_8h" local="no">net/tcpip.h</includes>
+    <includes refid="loopif_8h" local="no">netif/loopif.h</includes>
+    <includes refid="tcpdump_8h" local="no">netif/tcpdump.h</includes>
+    <includes refid="ethernetif_8h" local="no">netif/ethernetif.h</includes>
+    <includes refid="exec_8h" local="no">ubixos/exec.h</includes>
+    <includes refid="kmalloc_8h" local="no">lib/kmalloc.h</includes>
+    <includes refid="kprintf_8h" local="no">lib/kprintf.h</includes>
+    <incdepgraph>
+      <node id="3983">
+        <label>sys/thread.h</label>
+        <link refid="thread_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="3999">
+        <label>net/ipv4/ip.h</label>
+        <link refid="ipv4_2ip_8h"/>
+        <childnode refid="3993" relation="include">
+        </childnode>
+        <childnode refid="4000" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+        <childnode refid="4002" relation="include">
+        </childnode>
+        <childnode refid="4003" relation="include">
+        </childnode>
+        <childnode refid="4004" relation="include">
+        </childnode>
+      </node>
+      <node id="4001">
+        <label>arch/lib.h</label>
+        <link refid="lib_8h"/>
+      </node>
+      <node id="3974">
+        <label>ubixos/sched.h</label>
+        <link refid="sched_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3975" relation="include">
+        </childnode>
+        <childnode refid="3976" relation="include">
+        </childnode>
+        <childnode refid="3977" relation="include">
+        </childnode>
+        <childnode refid="3984" relation="include">
+        </childnode>
+        <childnode refid="3983" relation="include">
+        </childnode>
+      </node>
+      <node id="4003">
+        <label>net/netif.h</label>
+        <link refid="netif_8h"/>
+        <childnode refid="3991" relation="include">
+        </childnode>
+        <childnode refid="4004" relation="include">
+        </childnode>
+        <childnode refid="4002" relation="include">
+        </childnode>
+        <childnode refid="4005" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+      </node>
+      <node id="3985">
+        <label>ubixos/endtask.h</label>
+        <link refid="endtask_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3974" relation="include">
+        </childnode>
+      </node>
+      <node id="4006">
+        <label>net/udp.h</label>
+        <link refid="udp_8h"/>
+        <childnode refid="3993" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+        <childnode refid="4005" relation="include">
+        </childnode>
+        <childnode refid="3999" relation="include">
+        </childnode>
+        <childnode refid="4004" relation="include">
+        </childnode>
+      </node>
+      <node id="3994">
+        <label>arch/cpu.h</label>
+        <link refid="cpu_8h"/>
+      </node>
+      <node id="3988">
+        <label>arch/sys_arch.h</label>
+        <link refid="sys__arch_8h"/>
+      </node>
+      <node id="4007">
+        <label>net/tcp.h</label>
+        <link refid="tcp_8h"/>
+        <childnode refid="3986" relation="include">
+        </childnode>
+        <childnode refid="3989" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+        <childnode refid="3991" relation="include">
+        </childnode>
+        <childnode refid="3999" relation="include">
+        </childnode>
+        <childnode refid="4008" relation="include">
+        </childnode>
+        <childnode refid="4004" relation="include">
+        </childnode>
+      </node>
+      <node id="3972">
+        <label>ubixos/types.h</label>
+        <link refid="types_8h"/>
+        <childnode refid="3973" relation="include">
+        </childnode>
+      </node>
+      <node id="3973">
+        <label>sys/_types.h</label>
+        <link refid="__types_8h"/>
+      </node>
+      <node id="3993">
+        <label>net/arch.h</label>
+        <link refid="arch_8h"/>
+        <childnode refid="3994" relation="include">
+        </childnode>
+        <childnode refid="3987" relation="include">
+        </childnode>
+      </node>
+      <node id="4008">
+        <label>net/ipv4/icmp.h</label>
+        <link refid="ipv4_2icmp_8h"/>
+        <childnode refid="3993" relation="include">
+        </childnode>
+        <childnode refid="3991" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+        <childnode refid="4003" relation="include">
+        </childnode>
+      </node>
+      <node id="3977">
+        <label>vfs/file.h</label>
+        <link refid="file_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3978" relation="include">
+        </childnode>
+        <childnode refid="3979" relation="include">
+        </childnode>
+      </node>
+      <node id="3984">
+        <label>sys/tss.h</label>
+        <link refid="tss_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="4014">
+        <label>lib/kmalloc.h</label>
+        <link refid="kmalloc_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="3992">
+        <label>net/lwipopts.h</label>
+        <link refid="lwipopts_8h"/>
+      </node>
+      <node id="3996">
+        <label>net/tcpip.h</label>
+        <link refid="tcpip_8h"/>
+        <childnode refid="3997" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+      </node>
+      <node id="3997">
+        <label>net/api_msg.h</label>
+        <link refid="api__msg_8h"/>
+        <childnode refid="3991" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+        <childnode refid="3986" relation="include">
+        </childnode>
+        <childnode refid="3999" relation="include">
+        </childnode>
+        <childnode refid="4006" relation="include">
+        </childnode>
+        <childnode refid="4007" relation="include">
+        </childnode>
+        <childnode refid="4009" relation="include">
+        </childnode>
+      </node>
+      <node id="4012">
+        <label>netif/ethernetif.h</label>
+        <link refid="ethernetif_8h"/>
+        <childnode refid="4003" relation="include">
+        </childnode>
+      </node>
+      <node id="4000">
+        <label>net/def.h</label>
+        <link refid="def_8h"/>
+        <childnode refid="4001" relation="include">
+        </childnode>
+      </node>
+      <node id="3989">
+        <label>net/mem.h</label>
+        <link refid="mem_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3990" relation="include">
+        </childnode>
+        <childnode refid="3991" relation="include">
+        </childnode>
+        <childnode refid="3993" relation="include">
+        </childnode>
+      </node>
+      <node id="3971">
+        <label>src/sys/net/net/init.c</label>
+        <link refid="init.c"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3974" relation="include">
+        </childnode>
+        <childnode refid="3985" relation="include">
+        </childnode>
+        <childnode refid="3986" relation="include">
+        </childnode>
+        <childnode refid="3989" relation="include">
+        </childnode>
+        <childnode refid="3995" relation="include">
+        </childnode>
+        <childnode refid="3996" relation="include">
+        </childnode>
+        <childnode refid="4010" relation="include">
+        </childnode>
+        <childnode refid="4011" relation="include">
+        </childnode>
+        <childnode refid="4012" relation="include">
+        </childnode>
+        <childnode refid="4013" relation="include">
+        </childnode>
+        <childnode refid="4014" relation="include">
+        </childnode>
+        <childnode refid="4015" relation="include">
+        </childnode>
+      </node>
+      <node id="3995">
+        <label>net/memp.h</label>
+        <link refid="memp_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3990" relation="include">
+        </childnode>
+        <childnode refid="3987" relation="include">
+        </childnode>
+        <childnode refid="3992" relation="include">
+        </childnode>
+      </node>
+      <node id="3980">
+        <label>vfs/vfs.h</label>
+        <link refid="vfs_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3977" relation="include">
+        </childnode>
+        <childnode refid="3979" relation="include">
+        </childnode>
+        <childnode refid="3981" relation="include">
+        </childnode>
+        <childnode refid="3983" relation="include">
+        </childnode>
+      </node>
+      <node id="3979">
+        <label>vfs/mount.h</label>
+        <link refid="mount_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3980" relation="include">
+        </childnode>
+      </node>
+      <node id="4015">
+        <label>lib/kprintf.h</label>
+        <link refid="kprintf_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="4002">
+        <label>net/ipv4/ip_addr.h</label>
+        <link refid="ipv4_2ip__addr_8h"/>
+        <childnode refid="3993" relation="include">
+        </childnode>
+      </node>
+      <node id="4004">
+        <label>net/err.h</label>
+        <link refid="err_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3990" relation="include">
+        </childnode>
+        <childnode refid="3987" relation="include">
+        </childnode>
+      </node>
+      <node id="4011">
+        <label>netif/tcpdump.h</label>
+        <link refid="tcpdump_8h"/>
+        <childnode refid="3998" relation="include">
+        </childnode>
+      </node>
+      <node id="4009">
+        <label>net/api.h</label>
+        <link refid="api_8h"/>
+        <childnode refid="3991" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+        <childnode refid="3986" relation="include">
+        </childnode>
+        <childnode refid="3999" relation="include">
+        </childnode>
+        <childnode refid="4006" relation="include">
+        </childnode>
+        <childnode refid="4007" relation="include">
+        </childnode>
+        <childnode refid="4004" relation="include">
+        </childnode>
+      </node>
+      <node id="3978">
+        <label>ubixfs/dirCache.h</label>
+        <link refid="dirCache_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="4010">
+        <label>netif/loopif.h</label>
+        <link refid="loopif_8h"/>
+        <childnode refid="4003" relation="include">
+        </childnode>
+      </node>
+      <node id="4013">
+        <label>ubixos/exec.h</label>
+        <link refid="exec_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+        <childnode refid="3974" relation="include">
+        </childnode>
+      </node>
+      <node id="3991">
+        <label>net/opt.h</label>
+        <link refid="opt_8h"/>
+        <childnode refid="3992" relation="include">
+        </childnode>
+      </node>
+      <node id="3981">
+        <label>sys/sysproto.h</label>
+        <link refid="sysproto_8h"/>
+        <childnode refid="3982" relation="include">
+        </childnode>
+        <childnode refid="3983" relation="include">
+        </childnode>
+      </node>
+      <node id="3975">
+        <label>ubixos/elf.h</label>
+        <link refid="elf_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="3982">
+        <label>sys/signal.h</label>
+        <link refid="signal_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="3986">
+        <label>net/sys.h</label>
+        <link refid="sys_8h"/>
+        <childnode refid="3987" relation="include">
+        </childnode>
+        <childnode refid="3988" relation="include">
+        </childnode>
+      </node>
+      <node id="3976">
+        <label>ubixos/tty.h</label>
+        <link refid="tty_8h"/>
+        <childnode refid="3972" relation="include">
+        </childnode>
+      </node>
+      <node id="3998">
+        <label>net/pbuf.h</label>
+        <link refid="pbuf_8h"/>
+        <childnode refid="3990" relation="include">
+        </childnode>
+        <childnode refid="3993" relation="include">
+        </childnode>
+      </node>
+      <node id="3990">
+        <label>net/debug.h</label>
+        <link refid="debug_8h"/>
+      </node>
+      <node id="4005">
+        <label>net/ipv4/inet.h</label>
+        <link refid="ipv4_2inet_8h"/>
+        <childnode refid="3993" relation="include">
+        </childnode>
+        <childnode refid="3991" relation="include">
+        </childnode>
+        <childnode refid="3998" relation="include">
+        </childnode>
+        <childnode refid="4002" relation="include">
+        </childnode>
+      </node>
+      <node id="3987">
+        <label>arch/cc.h</label>
+        <link refid="cc_8h"/>
+      </node>
+    </incdepgraph>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="init_8c_122b2914249628f6cba7d4e1f138c969f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int net_init</definition>
+        <argsstring>()</argsstring>
+        <name>net_init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/init.c" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/init.c" bodystart="50" bodyend="63"/>
+        <references refid="mem_8h_144a136e3b70c36abb6f8dc060c778113">mem_init</references>
+        <references refid="memp_8h_19693e5b1ac2c6b9c0e7870522d45efa2">memp_init</references>
+        <references refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" compoundref="init_8c" startline="66" endline="92">netMainThread</references>
+        <references refid="pbuf_8h_1a98d7fe8196cfd072a5c2b8de4ea5d1e">pbuf_init</references>
+        <references refid="sys_8h_1f411a8bc6b7ed4b0af9114e10c959448" compoundref="sys__arch_8c" startline="404" endline="407">sys_init</references>
+        <references refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" compoundref="sys__arch_8c" startline="172" endline="202">sys_thread_new</references>
+      </memberdef>
+      <memberdef kind="function" id="init_8c_1ced8bfa512e574c34b87586a3de7a94a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void netMainThread</definition>
+        <argsstring>()</argsstring>
+        <name>netMainThread</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/init.c" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/init.c" bodystart="66" bodyend="92"/>
+        <references refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" compoundref="sched_8c" startline="51">_current</references>
+        <references refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" compoundref="endtask_8c" startline="46" endline="67">endTask</references>
+        <references refid="ethernetif_8h_164753cb7324510825069062660f10926" compoundref="ethernetif_8c" startline="325" endline="341">ethernetif_init</references>
+        <references refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" compoundref="sched_8h" startline="55">taskStruct::id</references>
+        <references refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" compoundref="ipv4_2ip__addr_8h" startline="52">IP4_ADDR</references>
+        <references refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" compoundref="kprintf_8c" startline="38" endline="49">kprintf</references>
+        <references refid="loopif_8h_16a09bc9672b52ada560f16b66deb76a2" compoundref="loopif_8c" startline="71" endline="76">loopif_init</references>
+        <references refid="netif_8h_12270b418f2081615edf85d7186880229">netif_add</references>
+        <references refid="netif_8h_1ee2d169c9bbeb9dcfdb8bfc4e91bf2fc">netif_init</references>
+        <references refid="netif_8h_1c90f290edd005238d62aa94c4ac9dea3">netif_set_default</references>
+        <references refid="shell_8c_169b075ef7e4d7bcf5a903d3d75baac02" compoundref="shell_8c" startline="114" endline="116">shell_init</references>
+        <references refid="sys_8h_1f36773453b6a4db5ae71afef8bb77184">sys_sem_free</references>
+        <references refid="sys_8h_1adf2563f342b33ff6033eaa12f642e9d" compoundref="sys__arch_8c" startline="295" endline="297">sys_sem_new</references>
+        <references refid="sys_8h_16c4530613bd616e719a295779b87ae5c">sys_sem_wait</references>
+        <references refid="tcpip_8h_19a61ea92b584bd1c1c5e9d5c2a5cbc36" compoundref="tcpip_8c" startline="135" endline="141">tcpip_init</references>
+        <references refid="tcpip_8c_1696c6d03effd7dbc7615f2b7758b3ce2" compoundref="tcpip_8c" startline="54">tcpip_init_done</references>
+        <references refid="tcpip_8h_1e510f195171bed8499ae94e264a92717" compoundref="tcpip_8c" startline="101" endline="118">tcpip_input</references>
+        <referencedby refid="init_8c_122b2914249628f6cba7d4e1f138c969f" compoundref="init_8c" startline="50" endline="63">net_init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="init_8c_17e611c367a5df004912ea29854b871ec" prot="public" static="yes" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>static void tcpip_init_done</definition>
+        <argsstring>(void *arg)</argsstring>
+        <name>tcpip_init_done</name>
+        <param>
+          <type>void *</type>
+          <declname>arg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/init.c" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/net/init.c" bodystart="95" bodyend="99"/>
+        <references refid="sys_8h_1dcdd78b22487e983e7636c636292fbfa">sys_sem_signal</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment">Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment">permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment">Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment">conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment">form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment">disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment">with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment">contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment">without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment">THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment">EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment">MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment">THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment">SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment">OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment">HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment">TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment">SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: init_8c.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="types_8h" kindref="compound">ubixos/types.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sched_8h" kindref="compound">ubixos/sched.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="endtask_8h" kindref="compound">ubixos/endtask.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="sys_8h" kindref="compound">net/sys.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="35"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="mem_8h" kindref="compound">net/mem.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="memp_8h" kindref="compound">net/memp.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="tcpip_8h" kindref="compound">net/tcpip.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight></codeline>
+<codeline lineno="39"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="loopif_8h" kindref="compound">netif/loopif.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="tcpdump_8h" kindref="compound">netif/tcpdump.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="ethernetif_8h" kindref="compound">netif/ethernetif.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"></highlight></codeline>
+<codeline lineno="43"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="exec_8h" kindref="compound">ubixos/exec.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kmalloc_8h" kindref="compound">lib/kmalloc.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="45"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&lt;<ref refid="kprintf_8h" kindref="compound">lib/kprintf.h</ref>&gt;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="46"><highlight class="normal"></highlight></codeline>
+<codeline lineno="47"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" kindref="member">netMainThread</ref>();</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="tcpip_8c_1696c6d03effd7dbc7615f2b7758b3ce2" kindref="member">tcpip_init_done</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg);</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50" refid="init_8c_122b2914249628f6cba7d4e1f138c969f" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">int</highlight><highlight class="normal"><sp/><ref refid="net_8h_122b2914249628f6cba7d4e1f138c969f" kindref="member">net_init</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1f411a8bc6b7ed4b0af9114e10c959448" kindref="member">sys_init</ref>();</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="mem_8h_144a136e3b70c36abb6f8dc060c778113" kindref="member">mem_init</ref>();</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="memp_8h_19693e5b1ac2c6b9c0e7870522d45efa2" kindref="member">memp_init</ref>();</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="pbuf_8h_1a98d7fe8196cfd072a5c2b8de4ea5d1e" kindref="member">pbuf_init</ref>();</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"></highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*</highlight></codeline>
+<codeline lineno="57"><highlight class="comment"><sp/><sp/>*thread<sp/>=<sp/>(void<sp/>*)execThread((void<sp/>*)start_routine,0x0,arg);</highlight></codeline>
+<codeline lineno="58"><highlight class="comment"><sp/><sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/></highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1eb9b7d7cea295be85b0b0ddb7c9fe566" kindref="member">sys_thread_new</ref>((</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*)(<ref refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" kindref="member">netMainThread</ref>),<sp/>0x0);</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">(0x0);</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="64"><highlight class="normal"></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66" refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" refkind="member"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="init_8c_1ced8bfa512e574c34b87586a3de7a94a" kindref="member">netMainThread</ref>()<sp/>{</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">struct<sp/></highlight><highlight class="normal"><ref refid="structip__addr" kindref="compound">ip_addr</ref><sp/>ipaddr,<sp/>netmask,<sp/>gw;</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>sem;</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><ref refid="netif_8h_1ee2d169c9bbeb9dcfdb8bfc4e91bf2fc" kindref="member">netif_init</ref>();</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>sem<sp/>=<sp/><ref refid="sys_8h_1adf2563f342b33ff6033eaa12f642e9d" kindref="member">sys_sem_new</ref>(0);</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><ref refid="tcpip_8h_19a61ea92b584bd1c1c5e9d5c2a5cbc36" kindref="member">tcpip_init</ref>(<ref refid="tcpip_8c_1696c6d03effd7dbc7615f2b7758b3ce2" kindref="member">tcpip_init_done</ref>,<sp/>&amp;sem);</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_16c4530613bd616e719a295779b87ae5c" kindref="member">sys_sem_wait</ref>(sem);</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1f36773453b6a4db5ae71afef8bb77184" kindref="member">sys_sem_free</ref>(sem);</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/><ref refid="kprint_8h_1b2761bdf0cca73ad0fb5880895210cd8" kindref="member">kprintf</ref>(</highlight><highlight class="stringliteral">&quot;TCP/IP<sp/>initialized.\n&quot;</highlight><highlight class="normal">);</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"></highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" kindref="member">IP4_ADDR</ref>(&amp;gw,<sp/>10,4,0,1);</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" kindref="member">IP4_ADDR</ref>(&amp;ipaddr,<sp/>10,4,0,69);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" kindref="member">IP4_ADDR</ref>(&amp;netmask,<sp/>255,255,255,0);</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><ref refid="netif_8h_1c90f290edd005238d62aa94c4ac9dea3" kindref="member">netif_set_default</ref>(<ref refid="netif_8h_12270b418f2081615edf85d7186880229" kindref="member">netif_add</ref>(&amp;ipaddr,<sp/>&amp;netmask,<sp/>&amp;gw,<sp/><ref refid="ethernetif_8h_164753cb7324510825069062660f10926" kindref="member">ethernetif_init</ref>,<sp/><ref refid="tcpip_8h_1e510f195171bed8499ae94e264a92717" kindref="member">tcpip_input</ref>));</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"></highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" kindref="member">IP4_ADDR</ref>(&amp;gw,<sp/>127,0,0,1);</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" kindref="member">IP4_ADDR</ref>(&amp;ipaddr,<sp/>127,0,0,1);</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><ref refid="ipv4_2ip__addr_8h_158aee4166c466f9ac7035bf5cc9f9974" kindref="member">IP4_ADDR</ref>(&amp;netmask,<sp/>255,0,0,0);</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><ref refid="netif_8h_12270b418f2081615edf85d7186880229" kindref="member">netif_add</ref>(&amp;ipaddr,<sp/>&amp;netmask,<sp/>&amp;gw,<sp/><ref refid="loopif_8h_16a09bc9672b52ada560f16b66deb76a2" kindref="member">loopif_init</ref>,<sp/><ref refid="tcpip_8h_1e510f195171bed8499ae94e264a92717" kindref="member">tcpip_input</ref>);</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//udpecho_init();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><ref refid="shell_8c_169b075ef7e4d7bcf5a903d3d75baac02" kindref="member">shell_init</ref>();</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">//bot_init();</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="91"><highlight class="normal"><sp/><sp/><ref refid="endtask_8h_1152c1859ada097cc21071f471bfa2e67" kindref="member">endTask</ref>(<ref refid="sched_8h_154397bfe18d5da4d50ff03b15f540858" kindref="member">_current</ref>-&gt;<ref refid="structtaskStruct_130966587a60db6b40c8be6c387e11d81" kindref="member">id</ref>);</highlight></codeline>
+<codeline lineno="92"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="93"><highlight class="normal"></highlight></codeline>
+<codeline lineno="94"><highlight class="normal"></highlight></codeline>
+<codeline lineno="95" refid="init_8c_17e611c367a5df004912ea29854b871ec" refkind="member"><highlight class="normal"></highlight><highlight class="keyword">static</highlight><highlight class="normal"><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="tcpip_8c_1696c6d03effd7dbc7615f2b7758b3ce2" kindref="member">tcpip_init_done</ref>(</highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/>*arg)<sp/>{</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/><ref refid="structsys__sem" kindref="compound">sys_sem_t</ref><sp/>*sem<sp/>=<sp/>0x0;</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/>sem<sp/>=<sp/>arg;</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/><ref refid="sys_8h_1dcdd78b22487e983e7636c636292fbfa" kindref="member">sys_sem_signal</ref>(*sem);</highlight></codeline>
+<codeline lineno="99"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"></highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="102"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="103"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="104"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/net/init.c"/>
+  </compounddef>
+</doxygen>

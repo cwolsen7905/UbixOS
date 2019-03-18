@@ -1,0 +1,775 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="classbTree" kind="class" prot="public">
+    <compoundname>bTree</compoundname>
+    <includes refid="btree_8h" local="no">btree.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>bTree::bTree</definition>
+        <argsstring>(UbixFS *, fileDescriptor *)</argsstring>
+        <name>bTree</name>
+        <param>
+          <type><ref refid="classUbixFS" kindref="compound">UbixFS</ref> *</type>
+          <defname>filesystem</defname>
+        </param>
+        <param>
+          <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+          <defname>myfd</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="14" bodyend="37"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="classbTree_1adb550cc0b77f9f3ed14a5f679dbd954" compoundref="btree_8h" startline="42">fd</references>
+        <references refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" compoundref="btreeheader_8h" startline="8">bTreeHeader::firstNodeOffset</references>
+        <references refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" compoundref="btree_8h" startline="41">header</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <references refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" compoundref="btree_8h" startline="43">tag</references>
+        <references refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" compoundref="btreeheader_8h" startline="7">bTreeHeader::treeLeafCount</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1f6969b750661bc6859f3a1a5b60cca90" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>bTree::bTree</definition>
+        <argsstring>(const char *, ubixfsInode *)</argsstring>
+        <name>bTree</name>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <param>
+          <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+          <defname>inode</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="39" bodyend="71"/>
+        <references refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" compoundref="btree_8cpp" startline="444" endline="453">allocEmptyNode</references>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="btree_8h_14d914af1586d2b2c41b4427e9488decf" compoundref="btree_8h" startline="14">B_MAX_NAME_LENGTH</references>
+        <references refid="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" compoundref="btreeheader_8h" startline="9">bTreeHeader::firstDeleted</references>
+        <references refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" compoundref="btreeheader_8h" startline="8">bTreeHeader::firstNodeOffset</references>
+        <references refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" compoundref="btree_8h" startline="41">header</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <references refid="lib_2string_8h_12a6bedbfab350cd17b80849f5f9234e9" compoundref="string_8c" startline="105" endline="116">strncpy</references>
+        <references refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" compoundref="btree_8h" startline="43">tag</references>
+        <references refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" compoundref="btreeheader_8h" startline="5">bTreeHeader::treeDepth</references>
+        <references refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" compoundref="btreeheader_8h" startline="7">bTreeHeader::treeLeafCount</references>
+        <references refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" compoundref="btreeheader_8h" startline="6">bTreeHeader::treeWidth</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1ca63b57c49aed1565117d6de1d47036e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool bTree::Delete</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>Delete</name>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="726" bodyend="730"/>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_13e852a247447d5611a7e5cd7de53ecf9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+        <definition>ubixfsInode * bTree::Find</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>Find</name>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="545" bodyend="555"/>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <references refid="classbTree_1dddfb323e06a20e5f57896ad6de6430c" compoundref="btree_8cpp" startline="578" endline="600">treeSearch</references>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">Insert</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_16150d5508019569eab05f007285437aa" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+        <definition>ubixfsInode * bTree::GetFirstNode</definition>
+        <argsstring>(bNode *)</argsstring>
+        <name>GetFirstNode</name>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>node</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="608" bodyend="626"/>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_18d04e7d1bb555d157f32673af0977244" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+        <definition>ubixfsInode * bTree::GetFirstNode</definition>
+        <argsstring>(void)</argsstring>
+        <name>GetFirstNode</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="603" bodyend="605"/>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <referencedby refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" compoundref="main_8cpp" startline="12" endline="65">main</referencedby>
+        <referencedby refid="classbTree_11c516c3e73c273ded54df841e8271954" compoundref="btree_8cpp" startline="536" endline="542">Print</referencedby>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">splitNode</referencedby>
+        <referencedby refid="classbTree_1dddfb323e06a20e5f57896ad6de6430c" compoundref="btree_8cpp" startline="578" endline="600">treeSearch</referencedby>
+        <referencedby refid="classbTree_173a18a32abfb03fc233f35a237ad094f" compoundref="btree_8cpp" startline="733" endline="746">Verify</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1336aef73ec18ab2abdf76e451f01b983" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::Info</definition>
+        <argsstring>(const bNode *)</argsstring>
+        <name>Info</name>
+        <param>
+          <type>const <ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>node</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="456" bodyend="488"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::Info</definition>
+        <argsstring>(void)</argsstring>
+        <name>Info</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="491" bodyend="533"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" compoundref="btree_8h" startline="41">header</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <references refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" compoundref="btree_8h" startline="43">tag</references>
+        <references refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" compoundref="btreeheader_8h" startline="5">bTreeHeader::treeDepth</references>
+        <references refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" compoundref="btreeheader_8h" startline="7">bTreeHeader::treeLeafCount</references>
+        <references refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" compoundref="btreeheader_8h" startline="6">bTreeHeader::treeWidth</references>
+        <referencedby refid="classbTree_1af1aa66ce8e4d6b6ae3a50b66bc4b3e5" compoundref="btree_8cpp" startline="749" endline="756">Print</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool bTree::Insert</definition>
+        <argsstring>(const char *, ubixfsInode *)</argsstring>
+        <name>Insert</name>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <param>
+          <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+          <defname>inode</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="74" bodyend="285"/>
+        <references refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" compoundref="btree_8cpp" startline="444" endline="453">allocEmptyNode</references>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="btree_8h_14d914af1586d2b2c41b4427e9488decf" compoundref="btree_8h" startline="14">B_MAX_NAME_LENGTH</references>
+        <references refid="classbTree_13e852a247447d5611a7e5cd7de53ecf9" compoundref="btree_8cpp" startline="545" endline="555">Find</references>
+        <references refid="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" compoundref="btreeheader_8h" startline="9">bTreeHeader::firstDeleted</references>
+        <references refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" compoundref="btreeheader_8h" startline="8">bTreeHeader::firstNodeOffset</references>
+        <references refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" compoundref="btree_8h" startline="41">header</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <references refid="lib_2string_8h_12a6bedbfab350cd17b80849f5f9234e9" compoundref="string_8c" startline="105" endline="116">strncpy</references>
+        <references refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" compoundref="btreeheader_8h" startline="5">bTreeHeader::treeDepth</references>
+        <references refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" compoundref="btreeheader_8h" startline="7">bTreeHeader::treeLeafCount</references>
+        <references refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" compoundref="btreeheader_8h" startline="6">bTreeHeader::treeWidth</references>
+        <referencedby refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" compoundref="main_8cpp" startline="12" endline="65">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_180f234b61d3d99a44dba29f0754607dc" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool bTree::Load</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>Load</name>
+        <param>
+          <type>const char *</type>
+          <defname>filename</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="720" bodyend="723"/>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_11c516c3e73c273ded54df841e8271954" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::Print</definition>
+        <argsstring>(void)</argsstring>
+        <name>Print</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="64" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="536" bodyend="542"/>
+        <references refid="classbTree_18d04e7d1bb555d157f32673af0977244" compoundref="btree_8cpp" startline="603" endline="605">GetFirstNode</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <referencedby refid="classbTree_1af1aa66ce8e4d6b6ae3a50b66bc4b3e5" compoundref="btree_8cpp" startline="749" endline="756">Print</referencedby>
+        <referencedby refid="classbTree_1167dc542695e9e90d741dedb07a8fee4" compoundref="btree_8cpp" startline="759" endline="761">PrintWholeTree</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1167dc542695e9e90d741dedb07a8fee4" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::PrintWholeTree</definition>
+        <argsstring>(void)</argsstring>
+        <name>PrintWholeTree</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="759" bodyend="761"/>
+        <references refid="classbTree_11c516c3e73c273ded54df841e8271954" compoundref="btree_8cpp" startline="536" endline="542">Print</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_158a7211e172868c67ee7ed12e8015c4f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool bTree::Save</definition>
+        <argsstring>(const char *)</argsstring>
+        <name>Save</name>
+        <param>
+          <type>const char *</type>
+          <defname>filename</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="62" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="696" bodyend="717"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="include_2vfs_2file_8h_1872c22366b4c63f4bdb10cd3b7980b11" compoundref="file_8c" startline="398" endline="425">fclose</references>
+        <references refid="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" compoundref="btreeheader_8h" startline="9">bTreeHeader::firstDeleted</references>
+        <references refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" compoundref="btreeheader_8h" startline="8">bTreeHeader::firstNodeOffset</references>
+        <references refid="include_2vfs_2file_8h_1d6a41ac88a7d46d574e8a675fdde136c" compoundref="file_8c" startline="274" endline="389">fopen</references>
+        <references refid="include_2vfs_2file_8h_1ca6c1e5b57dc9f5d8551b41ea98bfbb7" compoundref="file_8c" startline="200" endline="206">fwrite</references>
+        <references refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" compoundref="btree_8h" startline="41">header</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <references refid="classbTree_19fec062b5b9f54ab6147cba2e92763c2" compoundref="btree_8cpp" startline="651" endline="693">saveNode</references>
+        <references refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" compoundref="btree_8h" startline="43">tag</references>
+        <referencedby refid="main_8cpp_1840291bc02cba5474a4cb46a9b9566fe" compoundref="main_8cpp" startline="12" endline="65">main</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_173a18a32abfb03fc233f35a237ad094f" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="include_2ubixos_2types_8h_1f6a258d8f3ee5206d682d799316314b1" kindref="member">bool</ref></type>
+        <definition>bool bTree::Verify</definition>
+        <argsstring>(void)</argsstring>
+        <name>Verify</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="66" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="733" bodyend="746"/>
+        <references refid="classbTree_18d04e7d1bb555d157f32673af0977244" compoundref="btree_8cpp" startline="603" endline="605">GetFirstNode</references>
+        <references refid="structfileSystem_1a53ac2dce5c23d729ca2e49907a542de" compoundref="include_2vfs_2vfs_8h" startline="58">fileSystem::next</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_12daef081948bc350347520ca9781cc1b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>bTree::~bTree</definition>
+        <argsstring>(void)</argsstring>
+        <name>~bTree</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="67" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="763" bodyend="767"/>
+        <references refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" compoundref="btree_8h" startline="41">header</references>
+        <references refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" compoundref="btreeheader_8h" startline="5">bTreeHeader::treeDepth</references>
+        <references refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" compoundref="btreeheader_8h" startline="7">bTreeHeader::treeLeafCount</references>
+        <references refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" compoundref="btreeheader_8h" startline="6">bTreeHeader::treeWidth</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classbTree_1ee13657d4417aaf2f772663fbbb3687c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+        <definition>bNode * bTree::allocEmptyNode</definition>
+        <argsstring>(void)</argsstring>
+        <name>allocEmptyNode</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="47" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="444" bodyend="453"/>
+        <references refid="btree_8h_16068ceea0c729502fc2c30fb5fe68e75" compoundref="btree_8h" startline="10">B_NODE_MAGIC_1</references>
+        <references refid="btree_8h_16d1cceff07f71b93f2b82935353e3846" compoundref="btree_8h" startline="11">B_NODE_MAGIC_2</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" compoundref="btree_8h" startline="43">tag</references>
+        <referencedby refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" compoundref="btree_8cpp" startline="39" endline="71">bTree</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">Insert</referencedby>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">splitNode</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1757a2be70e2309d4bf0be2eff562a8b9" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+        <definition>bNode * bTree::findLeafNode</definition>
+        <argsstring>(bNode *, const char *)</argsstring>
+        <name>findLeafNode</name>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>node</defname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="49" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="629" bodyend="648"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1033edc7c078c7c90f59610ca8946cebe" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+        <definition>ubixfsInode * bTree::inodeSearch</definition>
+        <argsstring>(ubixfsInode *, const char *)</argsstring>
+        <name>inodeSearch</name>
+        <param>
+          <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+          <defname>inode</defname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="45" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="558" bodyend="575"/>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <referencedby refid="classbTree_1dddfb323e06a20e5f57896ad6de6430c" compoundref="btree_8cpp" startline="578" endline="600">treeSearch</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_18f732470e0bc0b0a5a0810c944c51122" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::insertNode</definition>
+        <argsstring>(bNode *, const char *, bNode *)</argsstring>
+        <name>insertNode</name>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>node</defname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>headPtr</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="48" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="389" bodyend="441"/>
+        <references refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" compoundref="btree_8h" startline="13">B_MAX_KEYS</references>
+        <references refid="btree_8h_14d914af1586d2b2c41b4427e9488decf" compoundref="btree_8h" startline="14">B_MAX_NAME_LENGTH</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">splitNode</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <references refid="lib_2string_8h_12a6bedbfab350cd17b80849f5f9234e9" compoundref="string_8c" startline="105" endline="116">strncpy</references>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">splitNode</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1af1aa66ce8e4d6b6ae3a50b66bc4b3e5" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::Print</definition>
+        <argsstring>(bNode *)</argsstring>
+        <name>Print</name>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>node</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="50" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="749" bodyend="756"/>
+        <references refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" compoundref="btree_8cpp" startline="491" endline="533">Info</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_11c516c3e73c273ded54df841e8271954" compoundref="btree_8cpp" startline="536" endline="542">Print</references>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_19fec062b5b9f54ab6147cba2e92763c2" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::saveNode</definition>
+        <argsstring>(FILE *, bNode *, void *)</argsstring>
+        <name>saveNode</name>
+        <param>
+          <type>FILE *</type>
+          <defname>fd</defname>
+        </param>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>node</defname>
+        </param>
+        <param>
+          <type>void *</type>
+          <defname>tmpPtr</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="651" bodyend="693"/>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <referencedby refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" compoundref="btree_8cpp" startline="696" endline="717">Save</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_151f94e9190f4c21c66367932b22c10aa" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void bTree::splitNode</definition>
+        <argsstring>(bNode *)</argsstring>
+        <name>splitNode</name>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>oldNode</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="46" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="288" bodyend="386"/>
+        <references refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" compoundref="btree_8cpp" startline="444" endline="453">allocEmptyNode</references>
+        <references refid="assert_8h_1d6d5aaa966ca7424f7cb9bd01f2c838b" compoundref="assert_8h" startline="64">assert</references>
+        <references refid="btree_8h_1d0a8c9702b88c517fad6d76b2f2e837c" compoundref="btree_8h" startline="13">B_MAX_KEYS</references>
+        <references refid="btree_8h_14d914af1586d2b2c41b4427e9488decf" compoundref="btree_8h" startline="14">B_MAX_NAME_LENGTH</references>
+        <references refid="classbTree_18d04e7d1bb555d157f32673af0977244" compoundref="btree_8cpp" startline="603" endline="605">GetFirstNode</references>
+        <references refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" compoundref="btree_8h" startline="41">header</references>
+        <references refid="classbTree_18f732470e0bc0b0a5a0810c944c51122" compoundref="btree_8cpp" startline="389" endline="441">insertNode</references>
+        <references refid="lib_2string_8h_1e33b18edb618c656b9b795b9fce2316c">memcpy</references>
+        <references refid="lib_2string_8h_1ce4b911463887af5e748326323e99a23" compoundref="memset_8c" startline="37" endline="80">memset</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" compoundref="btree_8h" startline="39">root</references>
+        <references refid="lib_2string_8h_12a6bedbfab350cd17b80849f5f9234e9" compoundref="string_8c" startline="105" endline="116">strncpy</references>
+        <references refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" compoundref="btreeheader_8h" startline="5">bTreeHeader::treeDepth</references>
+        <referencedby refid="classbTree_18f732470e0bc0b0a5a0810c944c51122" compoundref="btree_8cpp" startline="389" endline="441">insertNode</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="classbTree_1dddfb323e06a20e5f57896ad6de6430c" prot="protected" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="structubixfsInode" kindref="compound">ubixfsInode</ref> *</type>
+        <definition>ubixfsInode * bTree::treeSearch</definition>
+        <argsstring>(bNode *, const char *)</argsstring>
+        <name>treeSearch</name>
+        <param>
+          <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+          <defname>bnode</defname>
+        </param>
+        <param>
+          <type>const char *</type>
+          <defname>key</defname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="44" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.cpp" bodystart="578" bodyend="600"/>
+        <references refid="classbTree_18d04e7d1bb555d157f32673af0977244" compoundref="btree_8cpp" startline="603" endline="605">GetFirstNode</references>
+        <references refid="classbTree_1033edc7c078c7c90f59610ca8946cebe" compoundref="btree_8cpp" startline="558" endline="575">inodeSearch</references>
+        <references refid="def_8h_1070d2ce7b6bb7e5c05602aa8c308d0c4" compoundref="def_8h" startline="41">NULL</references>
+        <references refid="lib_2string_8h_16f3dcb20ff11ff9db5904c3cfb61a38c" compoundref="string_8c" startline="32" endline="46">strcmp</references>
+        <referencedby refid="classbTree_13e852a247447d5611a7e5cd7de53ecf9" compoundref="btree_8cpp" startline="545" endline="555">Find</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classbTree_1adb550cc0b77f9f3ed14a5f679dbd954" prot="protected" static="no" mutable="no">
+        <type><ref refid="structfileDescriptor" kindref="compound">fileDescriptor</ref> *</type>
+        <definition>fileDescriptor* bTree::fd</definition>
+        <argsstring></argsstring>
+        <name>fd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="42" bodyend="-1"/>
+        <referencedby refid="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" compoundref="btree_8cpp" startline="14" endline="37">bTree</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="classbTree_142e664483d5d3b81965fa4c8808c0f16" prot="protected" static="no" mutable="no">
+        <type><ref refid="classUbixFS" kindref="compound">UbixFS</ref> *</type>
+        <definition>UbixFS* bTree::fs</definition>
+        <argsstring></argsstring>
+        <name>fs</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="40" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="40" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classbTree_18bef0f48cc7ace024ca327ce774185c8" prot="protected" static="no" mutable="no">
+        <type><ref refid="structbTreeHeader" kindref="compound">bTreeHeader</ref> *</type>
+        <definition>bTreeHeader* bTree::header</definition>
+        <argsstring></argsstring>
+        <name>header</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="41" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="41" bodyend="-1"/>
+        <referencedby refid="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" compoundref="btree_8cpp" startline="14" endline="37">bTree</referencedby>
+        <referencedby refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" compoundref="btree_8cpp" startline="491" endline="533">Info</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">Insert</referencedby>
+        <referencedby refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" compoundref="btree_8cpp" startline="696" endline="717">Save</referencedby>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">splitNode</referencedby>
+        <referencedby refid="classbTree_12daef081948bc350347520ca9781cc1b" compoundref="btree_8cpp" startline="763" endline="767">~bTree</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="classbTree_1136e55de9f7c2144aaa86729413bb0c6" prot="protected" static="no" mutable="no">
+        <type><ref refid="structbNode" kindref="compound">bNode</ref> *</type>
+        <definition>bNode* bTree::root</definition>
+        <argsstring></argsstring>
+        <name>root</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="39" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="39" bodyend="-1"/>
+        <referencedby refid="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" compoundref="btree_8cpp" startline="14" endline="37">bTree</referencedby>
+        <referencedby refid="classbTree_13e852a247447d5611a7e5cd7de53ecf9" compoundref="btree_8cpp" startline="545" endline="555">Find</referencedby>
+        <referencedby refid="classbTree_18d04e7d1bb555d157f32673af0977244" compoundref="btree_8cpp" startline="603" endline="605">GetFirstNode</referencedby>
+        <referencedby refid="classbTree_1336aef73ec18ab2abdf76e451f01b983" compoundref="btree_8cpp" startline="456" endline="488">Info</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">Insert</referencedby>
+        <referencedby refid="classbTree_1167dc542695e9e90d741dedb07a8fee4" compoundref="btree_8cpp" startline="759" endline="761">PrintWholeTree</referencedby>
+        <referencedby refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" compoundref="btree_8cpp" startline="696" endline="717">Save</referencedby>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">splitNode</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="classbTree_128b1926c127d65af730a534a3ca1a7a5" prot="protected" static="no" mutable="no">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 bTree::tag</definition>
+        <argsstring></argsstring>
+        <name>tag</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="43" bodyend="-1"/>
+        <referencedby refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" compoundref="btree_8cpp" startline="444" endline="453">allocEmptyNode</referencedby>
+        <referencedby refid="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" compoundref="btree_8cpp" startline="14" endline="37">bTree</referencedby>
+        <referencedby refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" compoundref="btree_8cpp" startline="491" endline="533">Info</referencedby>
+        <referencedby refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" compoundref="btree_8cpp" startline="696" endline="717">Save</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="friend">
+      <memberdef kind="friend" id="classbTree_11760ad02c8a49e1b7df47d6f0d2a8234" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>friend class</type>
+        <definition>friend class UbixFS</definition>
+        <argsstring></argsstring>
+        <name>UbixFS</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="68" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="68" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="61">
+        <label>UbixFS</label>
+        <link refid="classUbixFS"/>
+        <childnode refid="62" relation="public-inheritance">
+        </childnode>
+        <childnode refid="64" relation="usage">
+          <edgelabel>superBlock</edgelabel>
+        </childnode>
+        <childnode refid="65" relation="usage">
+          <edgelabel>root</edgelabel>
+        </childnode>
+      </node>
+      <node id="64">
+        <label>diskSuperBlock</label>
+        <link refid="structdiskSuperBlock"/>
+      </node>
+      <node id="67">
+        <label>bTreeHeader</label>
+        <link refid="structbTreeHeader"/>
+      </node>
+      <node id="66">
+        <label>bNode</label>
+        <link refid="structbNode"/>
+      </node>
+      <node id="65">
+        <label>fileDescriptor</label>
+        <link refid="structfileDescriptor"/>
+        <childnode refid="65" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+      </node>
+      <node id="62">
+        <label>vfs_abstract</label>
+        <link refid="classvfs__abstract"/>
+        <childnode refid="62" relation="usage">
+          <edgelabel>prev
+next</edgelabel>
+        </childnode>
+        <childnode refid="63" relation="usage">
+          <edgelabel>device</edgelabel>
+        </childnode>
+      </node>
+      <node id="63">
+        <label>device_t</label>
+        <link refid="structdevice__t"/>
+      </node>
+      <node id="60">
+        <label>bTree</label>
+        <link refid="classbTree"/>
+        <childnode refid="61" relation="usage">
+          <edgelabel>fs</edgelabel>
+        </childnode>
+        <childnode refid="65" relation="usage">
+          <edgelabel>fd</edgelabel>
+        </childnode>
+        <childnode refid="66" relation="usage">
+          <edgelabel>root</edgelabel>
+        </childnode>
+        <childnode refid="67" relation="usage">
+          <edgelabel>header</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" line="37" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btree.h" bodystart="37" bodyend="69"/>
+    <listofallmembers>
+      <member refid="classbTree_1ee13657d4417aaf2f772663fbbb3687c" prot="protected" virt="non-virtual"><scope>bTree</scope><name>allocEmptyNode</name></member>
+      <member refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" prot="public" virt="non-virtual"><scope>bTree</scope><name>bTree</name></member>
+      <member refid="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" prot="public" virt="non-virtual"><scope>bTree</scope><name>bTree</name></member>
+      <member refid="classbTree_1ca63b57c49aed1565117d6de1d47036e" prot="public" virt="non-virtual"><scope>bTree</scope><name>Delete</name></member>
+      <member refid="classbTree_1adb550cc0b77f9f3ed14a5f679dbd954" prot="protected" virt="non-virtual"><scope>bTree</scope><name>fd</name></member>
+      <member refid="classbTree_13e852a247447d5611a7e5cd7de53ecf9" prot="public" virt="non-virtual"><scope>bTree</scope><name>Find</name></member>
+      <member refid="classbTree_1757a2be70e2309d4bf0be2eff562a8b9" prot="protected" virt="non-virtual"><scope>bTree</scope><name>findLeafNode</name></member>
+      <member refid="classbTree_142e664483d5d3b81965fa4c8808c0f16" prot="protected" virt="non-virtual"><scope>bTree</scope><name>fs</name></member>
+      <member refid="classbTree_18d04e7d1bb555d157f32673af0977244" prot="public" virt="non-virtual"><scope>bTree</scope><name>GetFirstNode</name></member>
+      <member refid="classbTree_16150d5508019569eab05f007285437aa" prot="public" virt="non-virtual"><scope>bTree</scope><name>GetFirstNode</name></member>
+      <member refid="classbTree_18bef0f48cc7ace024ca327ce774185c8" prot="protected" virt="non-virtual"><scope>bTree</scope><name>header</name></member>
+      <member refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" prot="public" virt="non-virtual"><scope>bTree</scope><name>Info</name></member>
+      <member refid="classbTree_1336aef73ec18ab2abdf76e451f01b983" prot="public" virt="non-virtual"><scope>bTree</scope><name>Info</name></member>
+      <member refid="classbTree_1033edc7c078c7c90f59610ca8946cebe" prot="protected" virt="non-virtual"><scope>bTree</scope><name>inodeSearch</name></member>
+      <member refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" prot="public" virt="non-virtual"><scope>bTree</scope><name>Insert</name></member>
+      <member refid="classbTree_18f732470e0bc0b0a5a0810c944c51122" prot="protected" virt="non-virtual"><scope>bTree</scope><name>insertNode</name></member>
+      <member refid="classbTree_180f234b61d3d99a44dba29f0754607dc" prot="public" virt="non-virtual"><scope>bTree</scope><name>Load</name></member>
+      <member refid="classbTree_1af1aa66ce8e4d6b6ae3a50b66bc4b3e5" prot="protected" virt="non-virtual"><scope>bTree</scope><name>Print</name></member>
+      <member refid="classbTree_11c516c3e73c273ded54df841e8271954" prot="public" virt="non-virtual"><scope>bTree</scope><name>Print</name></member>
+      <member refid="classbTree_1167dc542695e9e90d741dedb07a8fee4" prot="public" virt="non-virtual"><scope>bTree</scope><name>PrintWholeTree</name></member>
+      <member refid="classbTree_1136e55de9f7c2144aaa86729413bb0c6" prot="protected" virt="non-virtual"><scope>bTree</scope><name>root</name></member>
+      <member refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" prot="public" virt="non-virtual"><scope>bTree</scope><name>Save</name></member>
+      <member refid="classbTree_19fec062b5b9f54ab6147cba2e92763c2" prot="protected" virt="non-virtual"><scope>bTree</scope><name>saveNode</name></member>
+      <member refid="classbTree_151f94e9190f4c21c66367932b22c10aa" prot="protected" virt="non-virtual"><scope>bTree</scope><name>splitNode</name></member>
+      <member refid="classbTree_128b1926c127d65af730a534a3ca1a7a5" prot="protected" virt="non-virtual"><scope>bTree</scope><name>tag</name></member>
+      <member refid="classbTree_1dddfb323e06a20e5f57896ad6de6430c" prot="protected" virt="non-virtual"><scope>bTree</scope><name>treeSearch</name></member>
+      <member refid="classbTree_11760ad02c8a49e1b7df47d6f0d2a8234" prot="public" virt="non-virtual"><scope>bTree</scope><name>UbixFS</name></member>
+      <member refid="classbTree_173a18a32abfb03fc233f35a237ad094f" prot="public" virt="non-virtual"><scope>bTree</scope><name>Verify</name></member>
+      <member refid="classbTree_12daef081948bc350347520ca9781cc1b" prot="public" virt="non-virtual"><scope>bTree</scope><name>~bTree</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

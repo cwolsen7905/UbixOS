@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structarp__entry" kind="struct" prot="public">
+    <compoundname>arp_entry</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structarp__entry_149945e8299d4bf7241c0fd2b5e4d84df" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 arp_entry::ctime</definition>
+        <argsstring></argsstring>
+        <name>ctime</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" line="85" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" bodystart="85" bodyend="-1"/>
+        <referencedby refid="arp_8c_1038bb8fc3bcc993d8b7724632e43ed0f" compoundref="arp_8c" startline="120" endline="178">add_arp_entry</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structarp__entry_14cd78dd42071f584f2b8a5ead9f70eaf" prot="public" static="no" mutable="no">
+        <type><ref refid="structeth__addr" kindref="compound">eth_addr</ref></type>
+        <definition>struct eth_addr arp_entry::ethaddr</definition>
+        <argsstring></argsstring>
+        <name>ethaddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" line="84" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" bodystart="84" bodyend="-1"/>
+        <referencedby refid="arp_8c_1038bb8fc3bcc993d8b7724632e43ed0f" compoundref="arp_8c" startline="120" endline="178">add_arp_entry</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structarp__entry_1b9ee1643a380bd563aac0dea83973459" prot="public" static="no" mutable="no">
+        <type><ref refid="structip__addr" kindref="compound">ip_addr</ref></type>
+        <definition>struct ip_addr arp_entry::ipaddr</definition>
+        <argsstring></argsstring>
+        <name>ipaddr</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" line="83" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" bodystart="83" bodyend="-1"/>
+        <referencedby refid="arp_8c_1038bb8fc3bcc993d8b7724632e43ed0f" compoundref="arp_8c" startline="120" endline="178">add_arp_entry</referencedby>
+        <referencedby refid="arp_8c_1c8ad5a32790d172fcec2eac97a87ee9f" compoundref="arp_8c" startline="93" endline="101">arp_init</referencedby>
+        <referencedby refid="arp_8c_12cc298ed4c68289160da1376faf20938" compoundref="arp_8c" startline="104" endline="117">arp_tmr</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="40">
+        <label>eth_addr</label>
+        <link refid="structeth__addr"/>
+      </node>
+      <node id="41">
+        <label>ip_addr</label>
+        <link refid="structip__addr"/>
+      </node>
+      <node id="39">
+        <label>arp_entry</label>
+        <link refid="structarp__entry"/>
+        <childnode refid="40" relation="usage">
+          <edgelabel>ethaddr</edgelabel>
+        </childnode>
+        <childnode refid="41" relation="usage">
+          <edgelabel>ipaddr</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" line="82" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/net/netif/arp.c" bodystart="82" bodyend="86"/>
+    <listofallmembers>
+      <member refid="structarp__entry_149945e8299d4bf7241c0fd2b5e4d84df" prot="public" virt="non-virtual"><scope>arp_entry</scope><name>ctime</name></member>
+      <member refid="structarp__entry_14cd78dd42071f584f2b8a5ead9f70eaf" prot="public" virt="non-virtual"><scope>arp_entry</scope><name>ethaddr</name></member>
+      <member refid="structarp__entry_1b9ee1643a380bd563aac0dea83973459" prot="public" virt="non-virtual"><scope>arp_entry</scope><name>ipaddr</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

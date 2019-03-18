@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structsockaddr" kind="struct" prot="public">
+    <compoundname>sockaddr</compoundname>
+    <includes refid="sockets_8h" local="no">sockets.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structsockaddr_1fd5d95d56d0f8959f5b56458b3b3c714" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char sockaddr::sa_data[14]</definition>
+        <argsstring>[14]</argsstring>
+        <name>sa_data</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="58" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsockaddr_11460d18ba1ab1ba525819c9a2bb79fc4" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 sockaddr::sa_family</definition>
+        <argsstring></argsstring>
+        <name>sa_family</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="57" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structsockaddr_1caec69be2220562fb105b1185e6039f4" prot="public" static="no" mutable="no">
+        <type><ref refid="types_8h_1a4e0f27a9aca905e340c06d2dcae843c" kindref="member">uInt8</ref></type>
+        <definition>uInt8 sockaddr::sa_len</definition>
+        <argsstring></argsstring>
+        <name>sa_len</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="56" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/net/sockets.h" bodystart="55" bodyend="59"/>
+    <listofallmembers>
+      <member refid="structsockaddr_1fd5d95d56d0f8959f5b56458b3b3c714" prot="public" virt="non-virtual"><scope>sockaddr</scope><name>sa_data</name></member>
+      <member refid="structsockaddr_11460d18ba1ab1ba525819c9a2bb79fc4" prot="public" virt="non-virtual"><scope>sockaddr</scope><name>sa_family</name></member>
+      <member refid="structsockaddr_1caec69be2220562fb105b1185e6039f4" prot="public" virt="non-virtual"><scope>sockaddr</scope><name>sa_len</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="Makefile_8inc" kind="file">
+    <compoundname>Makefile.inc</compoundname>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="preprocessor">#<sp/>$Id:</highlight></codeline>
+<codeline lineno="2"><highlight class="preprocessor"></highlight><highlight class="preprocessor">#<sp/>global<sp/>&apos;sys&apos;<sp/>options</highlight></codeline>
+<codeline lineno="3"><highlight class="preprocessor"></highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="4"><highlight class="normal">INCLUDES<sp/>=<sp/>-I../include</highlight></codeline>
+<codeline lineno="5"><highlight class="normal">CFLAGS<sp/>=<sp/>-Wall<sp/>-nostdlib<sp/>-nostdinc<sp/>-fno-builtin<sp/>-fno-exceptions<sp/>-O</highlight></codeline>
+<codeline lineno="6"><highlight class="normal">KERNEL<sp/>=<sp/>ubix.elf</highlight></codeline>
+    </programlisting>
+Makefile.incl"/>
+  </compounddef>
+</doxygen>

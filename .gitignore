@@ -1,0 +1,11 @@
+/Default/
+t
+t.c
+*.o
+*.so
+.depen*
+/sys/sde/objgfx40.cpp
+/sys/sde/ogFont.cpp
+/sys/sde/ogPixCon.cpp
+/sys/sde/ogPixelFmt.cpp
+/sys/sde/ogImage.cpp

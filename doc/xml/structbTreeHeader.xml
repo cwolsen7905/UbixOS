@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structbTreeHeader" kind="struct" prot="public">
+    <compoundname>bTreeHeader</compoundname>
+    <includes refid="btreeheader_8h" local="no">btreeheader.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t bTreeHeader::firstDeleted</definition>
+        <argsstring></argsstring>
+        <name>firstDeleted</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" line="9" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" bodystart="9" bodyend="-1"/>
+        <referencedby refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" compoundref="btree_8cpp" startline="39" endline="71">bTree::bTree</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">bTree::Insert</referencedby>
+        <referencedby refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" compoundref="btree_8cpp" startline="696" endline="717">bTree::Save</referencedby>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" prot="public" static="no" mutable="no">
+        <type><ref refid="include_2ubixos_2types_8h_1fa178be408981cc5edd64227b6332fc6" kindref="member">off_t</ref></type>
+        <definition>off_t bTreeHeader::firstNodeOffset</definition>
+        <argsstring></argsstring>
+        <name>firstNodeOffset</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" line="8" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" bodystart="8" bodyend="-1"/>
+        <referencedby refid="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" compoundref="btree_8cpp" startline="14" endline="37">bTree::bTree</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">bTree::Insert</referencedby>
+        <referencedby refid="classbTree_158a7211e172868c67ee7ed12e8015c4f" compoundref="btree_8cpp" startline="696" endline="717">bTree::Save</referencedby>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structbTreeHeader_127e8ebd33f79e514541924cca765f7da" prot="public" static="no" mutable="no">
+        <type>char</type>
+        <definition>char bTreeHeader::paddington[4068]</definition>
+        <argsstring>[4068]</argsstring>
+        <name>paddington</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" line="10" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" bodystart="10" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="structbTreeHeader_1ca6e142166a274565291bc425b80549f" prot="public" static="no" mutable="no">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 bTreeHeader::treeDepth</definition>
+        <argsstring></argsstring>
+        <name>treeDepth</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" line="5" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" bodystart="5" bodyend="-1"/>
+        <referencedby refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" compoundref="btree_8cpp" startline="39" endline="71">bTree::bTree</referencedby>
+        <referencedby refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" compoundref="btree_8cpp" startline="491" endline="533">bTree::Info</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">bTree::Insert</referencedby>
+        <referencedby refid="classbTree_151f94e9190f4c21c66367932b22c10aa" compoundref="btree_8cpp" startline="288" endline="386">bTree::splitNode</referencedby>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+        <referencedby refid="classbTree_12daef081948bc350347520ca9781cc1b" compoundref="btree_8cpp" startline="763" endline="767">bTree::~bTree</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" prot="public" static="no" mutable="no">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 bTreeHeader::treeLeafCount</definition>
+        <argsstring></argsstring>
+        <name>treeLeafCount</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" line="7" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" bodystart="7" bodyend="-1"/>
+        <referencedby refid="classbTree_1fcb9ea137c7c244e4fc23b95c7e48d48" compoundref="btree_8cpp" startline="14" endline="37">bTree::bTree</referencedby>
+        <referencedby refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" compoundref="btree_8cpp" startline="491" endline="533">bTree::Info</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">bTree::Insert</referencedby>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+        <referencedby refid="classbTree_12daef081948bc350347520ca9781cc1b" compoundref="btree_8cpp" startline="763" endline="767">bTree::~bTree</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" prot="public" static="no" mutable="no">
+        <type><ref refid="ubixfsv2_2types_8h_15847ea0262a5aa61eee48cbe95544a78" kindref="member">uInt32</ref></type>
+        <definition>uInt32 bTreeHeader::treeWidth</definition>
+        <argsstring></argsstring>
+        <name>treeWidth</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" line="6" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" bodystart="6" bodyend="-1"/>
+        <referencedby refid="classbTree_1f6969b750661bc6859f3a1a5b60cca90" compoundref="btree_8cpp" startline="39" endline="71">bTree::bTree</referencedby>
+        <referencedby refid="classbTree_1e095e3365ec7b4656efcf0889ff43a6c" compoundref="btree_8cpp" startline="491" endline="533">bTree::Info</referencedby>
+        <referencedby refid="classbTree_1fbaa745c86c8bfaa77d2196a0c1eb85b" compoundref="btree_8cpp" startline="74" endline="285">bTree::Insert</referencedby>
+        <referencedby refid="classUbixFS_1e1266337d259778b1404601184d75028" compoundref="ubixfs_8cpp" startline="118" endline="302">UbixFS::vfs_format</referencedby>
+        <referencedby refid="classbTree_12daef081948bc350347520ca9781cc1b" compoundref="btree_8cpp" startline="763" endline="767">bTree::~bTree</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" line="4" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/btreeheader.h" bodystart="4" bodyend="11"/>
+    <listofallmembers>
+      <member refid="structbTreeHeader_160d3496f588d01ff12f9e74288494f3b" prot="public" virt="non-virtual"><scope>bTreeHeader</scope><name>firstDeleted</name></member>
+      <member refid="structbTreeHeader_1fa2951c3806f5b1990da9f4f34d9fc10" prot="public" virt="non-virtual"><scope>bTreeHeader</scope><name>firstNodeOffset</name></member>
+      <member refid="structbTreeHeader_127e8ebd33f79e514541924cca765f7da" prot="public" virt="non-virtual"><scope>bTreeHeader</scope><name>paddington</name></member>
+      <member refid="structbTreeHeader_1ca6e142166a274565291bc425b80549f" prot="public" virt="non-virtual"><scope>bTreeHeader</scope><name>treeDepth</name></member>
+      <member refid="structbTreeHeader_1a9518218d48b68f08aa2406268faf8da" prot="public" virt="non-virtual"><scope>bTreeHeader</scope><name>treeLeafCount</name></member>
+      <member refid="structbTreeHeader_1d072fd3a177d2aa12a2ff3ebf1ccbcb7" prot="public" virt="non-virtual"><scope>bTreeHeader</scope><name>treeWidth</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

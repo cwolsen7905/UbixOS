@@ -1,0 +1,387 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="start_8S" kind="file">
+    <compoundname>start.S</compoundname>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="start_8S_1e156af68449fc98b19d9c86e6d5a54f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb</type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb lgdtl</definition>
+        <argsstring>(loadGDT) mov $0x10</argsstring>
+        <name>lgdtl</name>
+        <param>
+          <type><ref refid="main_8c_1ac0f90734a3334640d5e1a24e297fd9a" kindref="member">loadGDT</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="50"/>
+      </memberdef>
+      <memberdef kind="function" id="start_8S_16fd0743cb40e4a50dd125582729c67ea" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx</type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx movl</definition>
+        <argsstring>(__bss_start)</argsstring>
+        <name>movl</name>
+        <param>
+          <type>__bss_start</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="41"/>
+      </memberdef>
+      <memberdef kind="function" id="start_8S_1f569adb459dc2519e2776bd859579c84" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl</type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl movl</definition>
+        <argsstring>(_end)</argsstring>
+        <name>movl</name>
+        <param>
+          <type>_end</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="40"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="var">
+      <memberdef kind="variable" id="start_8S_1b2e5e08c6039d99c8bf03149d286e05b" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov $kStack</definition>
+        <argsstring></argsstring>
+        <name>$kStack</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="56" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_154202fcc33389bebd85b8846c6443316" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32</type>
+        <definition>globl _start text code32 _start</definition>
+        <argsstring></argsstring>
+        <name>_start</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="34" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_158a0e05dcde1aaad0d5b345293393545" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl eax mov edx mov esp mov eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="60" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_153452892f861d7f5dc4e119bfbde0db9" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl eax mov edx mov eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="59" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_1096f1f5300ea84f7c20893fb026a1125" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="55" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_195954cfc4f75ba2be10ca4169106b06a" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_1b95a699fcc0c30b409a5eb3d47e4ea28" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_13606a531643317388f0cc2a169d54a94" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_179a213037d6dd9286025fdfc6a925476" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_199c8741e5f964a3b896c5d21808dd942" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl</type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax</definition>
+        <argsstring></argsstring>
+        <name>eax</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="43" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_1f701de0cc799320aaf54092dda7b54d2" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl</type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl edi</definition>
+        <argsstring></argsstring>
+        <name>edi</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="42" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="42" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_1fba1069006eb01caca2f78a33f379594" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl eax mov esp</definition>
+        <argsstring></argsstring>
+        <name>esp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="58" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl</type>
+        <definition>globl _start text code32 x472 pushl ebp movl esp</definition>
+        <argsstring></argsstring>
+        <name>esp</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="36" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="34" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_1290ec7d8f899d042eb0e4bcb2d0d43c8" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ebp <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> lldt <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> ltr <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> ljmp $<ref refid="start_8S_1290ec7d8f899d042eb0e4bcb2d0d43c8" kindref="member">start_next</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl eax mov edx mov esp mov ebp mov ax lldt ax mov ax ltr ax ljmp $start_next start_next</definition>
+        <argsstring></argsstring>
+        <name>start_next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="71" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_1441ab5e5719c472d9d4a6c9ce910aa35" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ebp <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> lldt <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> ltr <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> ljmp</type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl eax mov edx mov esp mov ebp mov ax lldt ax mov ax ltr ax ljmp x08</definition>
+        <argsstring></argsstring>
+        <name>x08</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="65" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_10c48af311abb843beb7bb6c5e295d1db" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ebp <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl eax mov edx mov esp mov ebp mov x18</definition>
+        <argsstring></argsstring>
+        <name>x18</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="61" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+        <referencedby refid="exec_8c_1f80d4412d42ed1b5bf9a1b9774230f33" compoundref="exec_8c" startline="143" endline="323">execFile</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_162df326d54f8b2ece412319c4360ef3e" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="timer_8S_1aa1f83238047e62298e33bed5682d71c" kindref="member">edx</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="start_8S_1fba1069006eb01caca2f78a33f379594" kindref="member">esp</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ebp <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> lldt <ref refid="ap-boot_8S_108d253679ac458c016096d60a93f93b3" kindref="member">ax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl eax mov edx mov esp mov ebp mov ax lldt ax mov x20</definition>
+        <argsstring></argsstring>
+        <name>x20</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="63" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+        <referencedby refid="video_8c_19d7e8af417b6d543da691e9c0e2f6f9f" compoundref="video_8c" startline="115" endline="126">clearScreen</referencedby>
+        <referencedby refid="smp_8c_1452f210aee65a2a30cbc5cb8923a9881" compoundref="smp_8c" startline="182" endline="231">cpuInfo</referencedby>
+        <referencedby refid="fdc_8c_15042dfaf2327990b6d1e1a7d3e01751c" compoundref="fdc_8c" startline="98" endline="101">floppyIsrhndlr</referencedby>
+        <referencedby refid="hd_8c_167cfa382743c8440a3fe43738dfae598" compoundref="hd_8c" startline="284" endline="346">hdRead</referencedby>
+        <referencedby refid="video_8c_15429378b96a24fadfd2d1f8d777eb95a" compoundref="video_8c" startline="62" endline="112">kprint</referencedby>
+        <referencedby refid="lnc_8c_16fdabac3834c12782583e0a42f928295" compoundref="lnc_8c" startline="208" endline="226">lncInt</referencedby>
+        <referencedby refid="ne2k_8c_1033e069050ace667acb10ed9ffc8ac6c" compoundref="ne2k_8c" startline="70" endline="113">ne2k_init</referencedby>
+        <referencedby refid="fdc_8c_15886a896e5f0361f36b40d007db6e683" compoundref="fdc_8c" startline="222" endline="239">seek</referencedby>
+        <referencedby refid="tty_8c_1b8811ced5425e47e4c5b0c8f086700ca" compoundref="tty_8c" startline="118" endline="168">tty_print</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" prot="public" static="no" mutable="no">
+        <type>globl <ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref> text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx <ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref> subl ecx xorl <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> cld rep stosb <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ds <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> es <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="structfs" kindref="compound">fs</ref> <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> gs <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> ss <ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref> <ref refid="strlen_8S_10d9c430c9a9cb6a66e192946a5554e3b" kindref="member">eax</ref> <ref refid="strcpy_8S_1428eb946c210f4154699290a0cd9fb70" kindref="member">addl</ref></type>
+        <definition>globl _start text code32 x472 pushl ebp movl ebp pushl x00000002 popfl ecx edi subl ecx xorl eax cld rep stosb eax mov ds mov es mov fs mov gs mov ss mov eax addl x2000</definition>
+        <argsstring></argsstring>
+        <name>x2000</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" line="57" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/init/start.S" bodystart="51" bodyend="-1"/>
+        <referencedby refid="bioscall_8c_156a172d2268fc10811a0bb180d7c3f49" compoundref="bioscall_8c" startline="50" endline="97">biosCall</referencedby>
+        <referencedby refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" compoundref="main_8c" startline="97" endline="152">kmain</referencedby>
+        <referencedby refid="ubthread_8c_1a0af177ef44888f3c93883294207328e" compoundref="ubthread_8c" startline="76" endline="79">ubthread_create</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*****************************************************************************************</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>Copyright<sp/>(c)<sp/>2002-2004<sp/>The<sp/>UbixOS<sp/>Project</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>All<sp/>rights<sp/>reserved.</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"></highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>Redistribution<sp/>and<sp/>use<sp/>in<sp/>source<sp/>and<sp/>binary<sp/>forms,<sp/>with<sp/>or<sp/>without<sp/>modification,<sp/>are</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>permitted<sp/>provided<sp/>that<sp/>the<sp/>following<sp/>conditions<sp/>are<sp/>met:</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"></highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>Redistributions<sp/>of<sp/>source<sp/>code<sp/>must<sp/>retain<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>conditions,<sp/>the<sp/>following<sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors.<sp/><sp/>Redistributions<sp/>in<sp/>binary</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>form<sp/>must<sp/>reproduce<sp/>the<sp/>above<sp/>copyright<sp/>notice,<sp/>this<sp/>list<sp/>of<sp/>conditions,<sp/>the<sp/>following</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>disclaimer<sp/>and<sp/>the<sp/>list<sp/>of<sp/>authors<sp/>in<sp/>the<sp/>documentation<sp/>and/or<sp/>other<sp/>materials<sp/>provided</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>with<sp/>the<sp/>distribution.<sp/>Neither<sp/>the<sp/>name<sp/>of<sp/>the<sp/>UbixOS<sp/>Project<sp/>nor<sp/>the<sp/>names<sp/>of<sp/>its</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>contributors<sp/>may<sp/>be<sp/>used<sp/>to<sp/>endorse<sp/>or<sp/>promote<sp/>products<sp/>derived<sp/>from<sp/>this<sp/>software</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>without<sp/>specific<sp/>prior<sp/>written<sp/>permission.</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"></highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>THIS<sp/>SOFTWARE<sp/>IS<sp/>PROVIDED<sp/>BY<sp/>THE<sp/>COPYRIGHT<sp/>HOLDERS<sp/>AND<sp/>CONTRIBUTORS<sp/>&quot;AS<sp/>IS&quot;<sp/>AND<sp/>ANY</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>EXPRESS<sp/>OR<sp/>IMPLIED<sp/>WARRANTIES,<sp/>INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>THE<sp/>IMPLIED<sp/>WARRANTIES<sp/>OF</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>MERCHANTABILITY<sp/>AND<sp/>FITNESS<sp/>FOR<sp/>A<sp/>PARTICULAR<sp/>PURPOSE<sp/>ARE<sp/>DISCLAIMED.<sp/>IN<sp/>NO<sp/>EVENT<sp/>SHALL</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>THE<sp/>COPYRIGHT<sp/>OWNER<sp/>OR<sp/>CONTRIBUTORS<sp/>BE<sp/>LIABLE<sp/>FOR<sp/>ANY<sp/>DIRECT,<sp/>INDIRECT,<sp/>INCIDENTAL,</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>SPECIAL,<sp/>EXEMPLARY,<sp/>OR<sp/>CONSEQUENTIAL<sp/>DAMAGES<sp/>(INCLUDING,<sp/>BUT<sp/>NOT<sp/>LIMITED<sp/>TO,<sp/>PROCUREMENT</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>OF<sp/>SUBSTITUTE<sp/>GOODS<sp/>OR<sp/>SERVICES;<sp/>LOSS<sp/>OF<sp/>USE,<sp/>DATA,<sp/>OR<sp/>PROFITS;<sp/>OR<sp/>BUSINESS<sp/>INTERRUPTION)</highlight></codeline>
+<codeline lineno="22"><highlight class="comment"><sp/>HOWEVER<sp/>CAUSED<sp/>AND<sp/>ON<sp/>ANY<sp/>THEORY<sp/>OF<sp/>LIABILITY,<sp/>WHETHER<sp/>IN<sp/>CONTRACT,<sp/>STRICT<sp/>LIABILITY,<sp/>OR</highlight></codeline>
+<codeline lineno="23"><highlight class="comment"><sp/>TORT<sp/>(INCLUDING<sp/>NEGLIGENCE<sp/>OR<sp/>OTHERWISE)<sp/>ARISING<sp/>IN<sp/>ANY<sp/>WAY<sp/>OUT<sp/>OF<sp/>THE<sp/>USE<sp/>OF<sp/>THIS</highlight></codeline>
+<codeline lineno="24"><highlight class="comment"><sp/>SOFTWARE,<sp/>EVEN<sp/>IF<sp/>ADVISED<sp/>OF<sp/>THE<sp/>POSSIBILITY<sp/>OF<sp/>SUCH<sp/>DAMAGE.</highlight></codeline>
+<codeline lineno="25"><highlight class="comment"></highlight></codeline>
+<codeline lineno="26"><highlight class="comment"><sp/>$Id: start_8S.xml 88 2016-01-12 00:11:29Z reddawg $</highlight></codeline>
+<codeline lineno="27"><highlight class="comment"></highlight></codeline>
+<codeline lineno="28"><highlight class="comment">*****************************************************************************************/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal">.globl<sp/><ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref></highlight></codeline>
+<codeline lineno="31"><highlight class="normal">.text</highlight></codeline>
+<codeline lineno="32"><highlight class="normal">.code32</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><ref refid="start_8S_154202fcc33389bebd85b8846c6443316" kindref="member">_start</ref>:</highlight></codeline>
+<codeline lineno="34" refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" refkind="member"><highlight class="normal"><sp/><sp/>movw<sp/><sp/>$0x1234,0x472</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/>pushl<sp/>%ebp</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/>%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref>,%ebp</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/>pushl<sp/>$0x00000002</highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/>popfl</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Clear<sp/>the<sp/>BSS<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/>$(_end),%ecx</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><ref refid="timer_8S_1e987d7c277439abad5828bb7b0291042" kindref="member">movl</ref><sp/><sp/>$(__bss_start),%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref></highlight></codeline>
+<codeline lineno="42" refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" refkind="member"><highlight class="normal"><sp/><sp/>subl<sp/><sp/>%<ref refid="start_8S_1f701de0cc799320aaf54092dda7b54d2" kindref="member">edi</ref>,%ecx</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/>xorl<sp/><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref>,%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref></highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/>cld</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/>rep</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/>stosb</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*<sp/>Load<sp/>GDT<sp/>*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="49"><highlight class="normal"><sp/><sp/><ref refid="start_8S_1e156af68449fc98b19d9c86e6d5a54f8" kindref="member">lgdtl</ref><sp/>(<ref refid="main_8c_1ac0f90734a3334640d5e1a24e297fd9a" kindref="member">loadGDT</ref>)</highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>$0<ref refid="ap-boot_8S_17e98760dd541754f39aa9a0060176908" kindref="member">x10</ref>,%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref><sp/></highlight></codeline>
+<codeline lineno="51" refid="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%<ref refid="start_8S_199c8741e5f964a3b896c5d21808dd942" kindref="member">eax</ref>,%ds</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%eax,%es</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%eax,%<ref refid="structfs" kindref="compound">fs</ref></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%eax,%gs</highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%eax,%ss</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/><ref refid="start_8S_1b2e5e08c6039d99c8bf03149d286e05b" kindref="member">$kStack</ref>,%eax</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><ref refid="sys__call__new_8S_1bf8ddf6928259c0057aa3377e79b093e" kindref="member">addl</ref><sp/><sp/>$0<ref refid="start_8S_1d95bd4ee2ca78187e68aa0746a24e64d" kindref="member">x2000</ref>,%eax</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%<ref refid="start_8S_100530026cdfd3cedfaee7ac4ec46aa53" kindref="member">esp</ref>,%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref></highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%eax,%esp</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>%eax,%ebp<sp/></highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>$0<ref refid="start_8S_10c48af311abb843beb7bb6c5e295d1db" kindref="member">x18</ref>,%<ref refid="ap-boot_8S_1fe6e6cf4fb15afcba9890a66d0b89ffd" kindref="member">ax</ref></highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/>lldt<sp/><sp/>%<ref refid="ap-boot_8S_1fe6e6cf4fb15afcba9890a66d0b89ffd" kindref="member">ax</ref></highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><ref refid="ap-boot_8S_1ede772866220799485f4da9fc06e759d" kindref="member">mov</ref><sp/><sp/><sp/>$0<ref refid="start_8S_162df326d54f8b2ece412319c4360ef3e" kindref="member">x20</ref>,%<ref refid="ap-boot_8S_1fe6e6cf4fb15afcba9890a66d0b89ffd" kindref="member">ax</ref></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/>ltr<sp/><sp/><sp/>%<ref refid="ap-boot_8S_1fe6e6cf4fb15afcba9890a66d0b89ffd" kindref="member">ax</ref></highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/>ljmp<sp/><sp/>$0<ref refid="start_8S_1441ab5e5719c472d9d4a6c9ce910aa35" kindref="member">x08</ref>,$start_next</highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><ref refid="start_8S_1290ec7d8f899d042eb0e4bcb2d0d43c8" kindref="member">start_next</ref>:</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/>push<sp/>8(%<ref refid="timer_8S_115bdf6d1016b28a29ed53c35bcc6113b" kindref="member">edx</ref>)</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/>call<sp/><ref refid="main_8c_1a099bb67b4698f94150184a0ee8ccffb" kindref="member">kmain</ref></highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="70"><highlight class="normal">.data</highlight></codeline>
+<codeline lineno="71"><highlight class="normal">.comm<sp/>kStack,0x2000</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"></highlight></codeline>
+<codeline lineno="73"><highlight class="normal"></highlight><highlight class="comment">/***</highlight></codeline>
+<codeline lineno="74"><highlight class="comment"><sp/>END</highlight></codeline>
+<codeline lineno="75"><highlight class="comment"><sp/>***/</highlight><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/init/start.S"/>
+  </compounddef>
+</doxygen>

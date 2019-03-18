@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="structnicBuffer" kind="struct" prot="public">
+    <compoundname>nicBuffer</compoundname>
+    <includes refid="ne2k_8h" local="no">ne2k.h</includes>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="structnicBuffer_19679b6c2e76a7617884e422c11aa3eac" prot="public" static="no" mutable="no">
+        <type>char *</type>
+        <definition>char* nicBuffer::buffer</definition>
+        <argsstring></argsstring>
+        <name>buffer</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="54" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="54" bodyend="-1"/>
+        <referencedby refid="ne2k_8c_120e9fce07d30c847b2f794191f55e5ea" compoundref="ne2k_8c" startline="297" endline="311">dp_pkt2user</referencedby>
+        <referencedby refid="ne2k_8c_1dae239918a8091c31abf996cee262c92" compoundref="ne2k_8c" startline="313" endline="339">ne2kAllocBuffer</referencedby>
+        <referencedby refid="ne2k_8c_1deb7b37e43d9b5203408374d8d8ce586" compoundref="ne2k_8c" startline="353" endline="357">ne2kFreeBuffer</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnicBuffer_1959ee09a7a6fc875f3d5d651576f37c4" prot="public" static="no" mutable="no">
+        <type>int</type>
+        <definition>int nicBuffer::length</definition>
+        <argsstring></argsstring>
+        <name>length</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="53" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="53" bodyend="-1"/>
+        <referencedby refid="ne2k_8c_1dae239918a8091c31abf996cee262c92" compoundref="ne2k_8c" startline="313" endline="339">ne2kAllocBuffer</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="structnicBuffer_1b019ceba7f84eddae7d6b2abc538906a" prot="public" static="no" mutable="no">
+        <type><ref refid="structnicBuffer" kindref="compound">nicBuffer</ref> *</type>
+        <definition>struct nicBuffer* nicBuffer::next</definition>
+        <argsstring></argsstring>
+        <name>next</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="52" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="52" bodyend="-1"/>
+        <referencedby refid="ne2k_8c_1dae239918a8091c31abf996cee262c92" compoundref="ne2k_8c" startline="313" endline="339">ne2kAllocBuffer</referencedby>
+        <referencedby refid="ne2k_8c_1954f14d0270247855900254097728c57" compoundref="ne2k_8c" startline="341" endline="351">ne2kGetBuffer</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="552">
+        <label>nicBuffer</label>
+        <link refid="structnicBuffer"/>
+        <childnode refid="552" relation="usage">
+          <edgelabel>next</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" line="51" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/include/isa/ne2k.h" bodystart="51" bodyend="55"/>
+    <listofallmembers>
+      <member refid="structnicBuffer_19679b6c2e76a7617884e422c11aa3eac" prot="public" virt="non-virtual"><scope>nicBuffer</scope><name>buffer</name></member>
+      <member refid="structnicBuffer_1959ee09a7a6fc875f3d5d651576f37c4" prot="public" virt="non-virtual"><scope>nicBuffer</scope><name>length</name></member>
+      <member refid="structnicBuffer_1b019ceba7f84eddae7d6b2abc538906a" prot="public" virt="non-virtual"><scope>nicBuffer</scope><name>next</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

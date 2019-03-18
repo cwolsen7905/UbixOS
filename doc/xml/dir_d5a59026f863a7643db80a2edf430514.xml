@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_d5a59026f863a7643db80a2edf430514" kind="dir">
+    <compoundname>src/sys/include/vmm/</compoundname>
+    <innerfile refid="paging_8h">paging.h</innerfile>
+    <innerfile refid="vmm_8h">vmm.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/vmm/"/>
+  </compounddef>
+</doxygen>

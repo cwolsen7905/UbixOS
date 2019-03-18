@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="classFileSystemAbstract" kind="class" prot="public">
+    <compoundname>FileSystemAbstract</compoundname>
+    <derivedcompoundref refid="classDiskFS" prot="public" virt="non-virtual">DiskFS</derivedcompoundref>
+    <includes refid="ubixfsv2_2vfs_8h" local="no">vfs.h</includes>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classFileSystemAbstract_17b429977060959206ff6f741a063062d" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>int</type>
+        <definition>virtual int FileSystemAbstract::read</definition>
+        <argsstring>(char *, long, long)=0</argsstring>
+        <name>read</name>
+        <param>
+          <type>char *</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="10"/>
+      </memberdef>
+      <memberdef kind="function" id="classFileSystemAbstract_12f1993d9e8bf9cde4e6f2d60cdccc58f" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>int</type>
+        <definition>virtual int FileSystemAbstract::write</definition>
+        <argsstring>(char *, long, long)=0</argsstring>
+        <name>write</name>
+        <param>
+          <type>char *</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <param>
+          <type>long</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="11"/>
+      </memberdef>
+      <memberdef kind="function" id="classFileSystemAbstract_121f6597288d78e178e60eb6b55040ecf" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>virtual</type>
+        <definition>virtual FileSystemAbstract::~FileSystemAbstract</definition>
+        <argsstring>(void)</argsstring>
+        <name>~FileSystemAbstract</name>
+        <param>
+          <type>void</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="12" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" bodystart="12" bodyend="12"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="184">
+        <label>DiskFS</label>
+        <link refid="classDiskFS"/>
+        <childnode refid="183" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="183">
+        <label>FileSystemAbstract</label>
+        <link refid="classFileSystemAbstract"/>
+      </node>
+    </inheritancegraph>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" line="7" bodyfile="/usr/home/reddawg/source/ubix2/src/sys/ubixfsv2/vfs.h" bodystart="7" bodyend="13"/>
+    <listofallmembers>
+      <member refid="classFileSystemAbstract_17b429977060959206ff6f741a063062d" prot="public" virt="pure-virtual"><scope>FileSystemAbstract</scope><name>read</name></member>
+      <member refid="classFileSystemAbstract_12f1993d9e8bf9cde4e6f2d60cdccc58f" prot="public" virt="pure-virtual"><scope>FileSystemAbstract</scope><name>write</name></member>
+      <member refid="classFileSystemAbstract_121f6597288d78e178e60eb6b55040ecf" prot="public" virt="virtual"><scope>FileSystemAbstract</scope><name>~FileSystemAbstract</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

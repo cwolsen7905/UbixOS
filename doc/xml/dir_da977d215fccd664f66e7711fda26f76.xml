@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_da977d215fccd664f66e7711fda26f76" kind="dir">
+    <compoundname>src/sys/net/</compoundname>
+    <innerdir refid="dir_5377d826f41208e35c1e6ec985f139cd">src/sys/net/api/</innerdir>
+    <innerdir refid="dir_b2e9f53f507f0bb44cd3f7446945d199">src/sys/net/net/</innerdir>
+    <innerdir refid="dir_becc64c1c5cdfab2e137aa1ca4b91e6b">src/sys/net/netif/</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/net/"/>
+  </compounddef>
+</doxygen>

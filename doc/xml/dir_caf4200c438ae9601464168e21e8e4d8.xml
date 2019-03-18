@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='iso-8859-1' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.4.7">
+  <compounddef id="dir_caf4200c438ae9601464168e21e8e4d8" kind="dir">
+    <compoundname>src/sys/include/</compoundname>
+    <innerdir refid="dir_248b3debdbff35864f3bdabccbc86e68">src/sys/include/devfs/</innerdir>
+    <innerdir refid="dir_531e61b8e9b8982548f8f8f296b3206c">src/sys/include/isa/</innerdir>
+    <innerdir refid="dir_538938396c33f4585b2c9d510e98cbd2">src/sys/include/lib/</innerdir>
+    <innerdir refid="dir_d6c0de4141c0ef78b51cf518480fe588">src/sys/include/mpi/</innerdir>
+    <innerdir refid="dir_c0f81d69cde38683f3447d3343de50f4">src/sys/include/netif/</innerdir>
+    <innerdir refid="dir_912887cea1b4cb6e273c4527a2250d09">src/sys/include/pci/</innerdir>
+    <innerdir refid="dir_626404c379d6b1b237f0a541878d72c0">src/sys/include/sde/</innerdir>
+    <innerdir refid="dir_d26f37d6397a53073c964316867e8d67">src/sys/include/sys/</innerdir>
+    <innerdir refid="dir_0da430bc12a622a01803598a1e7c0e05">src/sys/include/ubixfs/</innerdir>
+    <innerdir refid="dir_9854bc9d2b9a2a73f32c73e97d31d0f7">src/sys/include/ubixos/</innerdir>
+    <innerdir refid="dir_4d4c8e7174efe8ad5ca8ab494abe072d">src/sys/include/ufs/</innerdir>
+    <innerdir refid="dir_77bb06880a0e48020cb00f59405a6b13">src/sys/include/vfs/</innerdir>
+    <innerdir refid="dir_d5a59026f863a7643db80a2edf430514">src/sys/include/vmm/</innerdir>
+    <innerfile refid="assert_8h">assert.h</innerfile>
+    <innerfile refid="math_8h">math.h</innerfile>
+    <innerfile refid="stdarg_8h">stdarg.h</innerfile>
+    <innerfile refid="string_8h">string.h</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/usr/home/reddawg/source/ubix2/src/sys/include/"/>
+  </compounddef>
+</doxygen>
