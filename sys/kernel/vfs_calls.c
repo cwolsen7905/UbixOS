@@ -32,7 +32,6 @@
 #include <sys/descrip.h>
 #include <sys/video.h>
 #include <sys/pipe.h>
-#include <sys/fcntl.h>
 #include <sys/errno.h>
 #include <string.h>
 #include <ufs/ufs.h>

@@ -37,7 +37,14 @@
 
 static const uuid_t freebsd_ufs_uuid = GPT_ENT_TYPE_FREEBSD_UFS;
 
+static hdC = 0;
+
 int initHardDisk() {
+  _initHardDisk(0xE0);
+  _initHardDisk(0xF0);
+}
+
+int _initHardDisk(int hdD) {
   int i = 0x0;
   int x = 0x0;
   int minor = 0x0;
@@ -57,7 +64,7 @@ int initHardDisk() {
   hdd = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
   hdd->ata_identify = (struct ata_identify_data *) kmalloc(sizeof(struct ata_identify_data));
   hdd->hdPort = 0x1F0;
-  hdd->hdDev = 0x40;
+  hdd->hdDev = hdD; //0x40;
   hdd->parOffset = 0x0;
   hdd->part = 0x2;
 
@@ -73,7 +80,7 @@ int initHardDisk() {
   devInfo->standby = (void *) &hdStandby;
   devInfo->info = hdd;
 
-  devInfo->major = 0x1;
+  devInfo->major = hdC + 0x1;
 
   data = (char *) kmalloc(512);
   d = (struct dos_partition *) (data + 0x1BE);
@@ -82,8 +89,9 @@ int initHardDisk() {
   bsdd = (struct bsd_disklabel *) data2;
 
   if (device_add(0, 'c', devInfo) == 0x0) {
-    kprintf("ad0 - Start: [0x0], Size: [0x%x/0x%X]\n", hdd->hdSize, hdd->hdSize * 512);
-    devfs_makeNode("ad0", 'b', 0x1, 0x0);
+    kprintf("ad%i - Start: [0x0], Size: [0x%x/0x%X]\n", hdC, hdd->hdSize, hdd->hdSize * 512);
+    sprintf(name, "ad%ip%i", hdC, hdd->part);
+    devfs_makeNode(name, 'b', 0x1, 0x0);
     hdRead(devInfo->info, data, 0x0, 0x1);
 
     if (d[0].dp_type == 0xEE) {
@@ -115,8 +123,8 @@ int initHardDisk() {
 //kprintf("[%i - %i]\n", hdd->parOffset, hdd2->parOffset);
 
         if (device_add(minor, 'c', devInfo2) == 0x0) {
-          sprintf(name, "ad0p%i", hdd->part);
-          kprintf("%s - Type: [0x%X - %s], Start: [%i], Offset: [%i], Size: [%i]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", hdd2->lba_start, hdd2->parOffset, hdd2->lba_end - hdd2->lba_start);
+          sprintf(name, "ad%ip%i", hdC, hdd->part);
+          kprintf("%s - Type: [0x%X - %s], Start: [%i], Offset: [%i], Size: [%i], MM: [%i:%i]\n", name, d[0].dp_type, (d[0].dp_type >= 0 && d[0].dp_type <= 255) ? part_types[d[0].dp_type] : "Unknown", hdd2->lba_start, hdd2->parOffset, hdd2->lba_end - hdd2->lba_start, devInfo->major, minor);
           devfs_makeNode(name, 'c', 0x1, minor);
         }
       }
@@ -142,8 +150,9 @@ int initHardDisk() {
           minor++;
 
           if (device_add(minor, 'c', devInfo2) == 0x0) {
-            sprintf(name, "ad0s%i", i + 1);
-            kprintf("%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X]\n", name, d[i].dp_type, (d[i].dp_type >= 0 && d[i].dp_type <= 255) ? part_types[d[i].dp_type] : "Unknown", d[i].dp_start, d[i].dp_size);
+            sprintf(name, "ad%is%i", hdC, i + 1);
+            kprintf("%s - Type: [0x%X - %s], Start: [0x%X], Size: [0x%X], MM: [%i:%i]\n", name, d[i].dp_type, (d[i].dp_type >= 0 && d[i].dp_type <= 255) ? part_types[d[i].dp_type] : "Unknown", d[i].dp_start, d[i].dp_size, devInfo->major, minor);
+
             devfs_makeNode(name, 'c', 0x1, minor);
 
             if (d[i].dp_type == 0xA5) {
@@ -152,7 +161,7 @@ int initHardDisk() {
 
               for (x = 0; x < bsdd->d_npartitions; x++) {
                 if (bsdd->d_partitions[x].p_size > 0) {
-                  sprintf(name, "ad0s%i%c", i + 1, 'a' + x);
+                  sprintf(name, "ad%is%i%c", hdC, i + 1, 'a' + x);
                   //New Nodes
                   devInfo2 = (struct device_interface *) kmalloc(sizeof(struct device_interface));
                   hdd2 = (struct driveInfo *) kmalloc(sizeof(struct driveInfo));
@@ -180,6 +189,7 @@ int initHardDisk() {
     }
   }
   kfree(data);
+  hdC++;
   return (0x0);
 }
 

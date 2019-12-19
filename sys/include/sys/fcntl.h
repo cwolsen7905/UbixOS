@@ -88,6 +88,8 @@
 #define FFLAGS(oflags)  ((oflags) & O_EXEC ? (oflags) : (oflags) + 1)
 #define OFLAGS(fflags)  ((fflags) & O_EXEC ? (fflags) : (fflags) - 1)
 
+#define FEXEC O_EXEC
+
 #define FMASK (FREAD|FWRITE|FAPPEND|FASYNC|FFSYNC|FNONBLOCK|O_DIRECT|FEXEC)
 
 #endif /* !_SYS_FCNTL_H_ */

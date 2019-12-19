@@ -136,6 +136,12 @@ static void def_ctls() {
   usPage_val = 1023;
   sysctl_add(name, name_len, "kern.ngroups", &page_val, sizeof(int32_t));
 
+  /* XXX 6, 1 */
+  name[0] = 2;
+  name[1] = 134516822;
+  char s62[2] = "\0";
+  sysctl_add(name, name_len, "kern.msgbuf", &s62, 1);
+
 }
 
 int sysctl_init() {
@@ -156,7 +162,8 @@ int sysctl_init() {
   ctls->id = CTL_UNSPEC;
   ctls->children = 0x0;
   sprintf(ctls->name, "unspec");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->prev = ctls;
@@ -164,7 +171,7 @@ int sysctl_init() {
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "kern");
   ctls->next = tmpCtl;
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -172,7 +179,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_VM;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "vm");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -180,7 +187,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_VFS;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "vfs");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -188,7 +195,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_NET;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "net");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -196,7 +203,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_DEBUG;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "debug");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -204,7 +211,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_HW;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "hw");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -212,7 +219,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_MACHDEP;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "machdep");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -220,7 +227,7 @@ int sysctl_init() {
   tmpCtl->id = CTL_USER;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "user");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -228,7 +235,8 @@ int sysctl_init() {
   tmpCtl->id = CTL_P1003_1B;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "p1003_1b");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   tmpCtl->next = (struct sysctl_entry *) kmalloc(sizeof(struct sysctl_entry));
   tmpCtl->next->prev = tmpCtl;
@@ -236,7 +244,8 @@ int sysctl_init() {
   tmpCtl->id = CTL_UBIX;
   tmpCtl->children = 0x0;
   sprintf(tmpCtl->name, "ubix");
-  insert_trieNode(&sysctl_headTrie, &ctls->name, ctls);
+
+  insert_trieNode(&sysctl_headTrie, ctls->name, ctls);
 
   def_ctls();
 
@@ -439,7 +448,8 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) 
 
     sprintf(tmpCtl->children->name, str_name);
 
-    insert_trieNode(&sysctl_headTrie, &tmpCtl->children->name, tmpCtl->children);
+    insert_trieNode(&sysctl_headTrie, tmpCtl->children->name, tmpCtl->children);
+
     tmpCtl->children->value = (void *) kmalloc(buf_size);
     memcpy(tmpCtl->children->value, buf, buf_size);
     tmpCtl->children->val_len = buf_size;
@@ -458,7 +468,9 @@ int sysctl_add(int *name, int namelen, char *str_name, void *buf, int buf_size) 
     newCtl->namelen = namelen;
 
     sprintf(newCtl->name, str_name);
-    insert_trieNode(&sysctl_headTrie, &newCtl->name, newCtl);
+
+    insert_trieNode(&sysctl_headTrie, newCtl->name, newCtl);
+
     newCtl->value = (void *) kmalloc(buf_size);
     memcpy(newCtl->value, buf, buf_size);
     newCtl->val_len = buf_size;

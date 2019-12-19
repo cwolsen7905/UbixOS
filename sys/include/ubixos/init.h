@@ -45,6 +45,7 @@
 #include <isa/fdc.h>
 #include <ubixos/tty.h>
 #include <ufs/ufs.h>
+#include <fat/fat.h>
 #include <ubixos/static.h>
 #include <pci/hd.h>
 #include <sys/kern_sysctl.h>
@@ -54,7 +55,7 @@
 
 typedef int (*intFunctionPTR)(void);
 
-intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init, pci_init, devfs_init, tty_init, ufs_init, initHardDisk, initLNC, net_init };
+intFunctionPTR init_tasks[] = { static_constructors, i8259_init, idt_init, vitals_init, sysctl_init, vfs_init, sched_init, pit_init, atkbd_init, time_init, pci_init, devfs_init, tty_init, ufs_init, fat_init, initHardDisk, initLNC, net_init };
 
 //ne2k_init,
 //ubixfs_init,

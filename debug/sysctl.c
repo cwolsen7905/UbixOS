@@ -18,14 +18,15 @@ int main() {
   int *sI;
 
 
-  mib[0] = 1;
-  mib[1] = 18;
+  mib[0] = 2;//1;
+  mib[1] = 134516811;//18;
 
   sysctl(mib, 2, NULL, &len, NULL, 0);
   p = malloc(len);
   sysctl(mib, 2, p, &len, NULL, 0);
 
   printf("[len: %i]\n", len); 
+
   if (len == 4) {
     sI = p;
     printf("[%i]\n", sI[0]);

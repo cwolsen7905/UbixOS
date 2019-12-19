@@ -154,6 +154,10 @@ int kmain(uint32_t rootdev) {
   else
     kprintf("Mounted sys\n");
 
+  if (vfs_mount(0x2,0x1,0x1,0xFA,"fat","rw") != 0x0) {
+    kprintf("Problem Mounting fat Mount Point\n");
+  }
+
   /* Do our mounting */
   /*
    if (vfs_mount(0x0,0x0,0x0,0x0,"sys","rw") != 0x0) {
@@ -173,6 +177,8 @@ int kmain(uint32_t rootdev) {
 
   /* kprintf("SDE Thread Start! [0x%X]\n", &sdeThread); */
   /* execThread(&sdeThread, 0x2000,0x0); */
+
+  while (1);
 
   kprintf("Kernel Name: [%s], Boot How To [0x%X], Boot Dev: [0x%X]\n", _kernelname, _boothowto, _bootdev);
   kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n", B_TYPE(_bootdev), B_SLICE(_bootdev), B_UNIT(_bootdev), B_PARTITION(_bootdev));
