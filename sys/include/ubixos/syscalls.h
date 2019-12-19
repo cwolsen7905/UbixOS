@@ -44,6 +44,7 @@
 #define SYSCALL_INVALID 0
 #define SYSCALL_VALID   1
 #define SYSCALL_DUMMY   2
+#define SYSCALL_NOTIMP  3
 
 typedef int sys_call_t(struct thread *, void *);
 

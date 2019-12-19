@@ -34,4 +34,22 @@
 
 int pipe(struct thread *, struct pipe_args *);
 
+struct pipeBuf {
+    struct pipeBuf *next;
+    char *buffer;
+    size_t nbytes;
+    off_t offset;
+
+};
+
+struct pipeInfo {
+    int rFD;
+    int rfdCNT;
+    int wFD;
+    int wfdCNT;
+    int bCNT;
+    struct pipeBuf *headPB;
+    struct pipeBuf *tailPB;
+};
+
 #endif /* END _SYS_PIPE_H */

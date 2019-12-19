@@ -61,11 +61,11 @@ int main(int argc, char **argv) {
   password[1].gid = 1;
   sprintf(password[2].username, "reddawg");
   sprintf(password[2].passwd, "temp123");
-  sprintf(password[2].shell, "sys:/bin/shell");
-  sprintf(password[2].realname, "Christopher");
+  sprintf(password[2].shell, "sys:/bin/sh");
+  sprintf(password[2].realname, "Christopher W. Olsen");
   sprintf(password[2].path, "reddawg");
   password[2].uid = 1000;
-  password[2].gid = 1000;
+  password[2].gid = 0;
   fwrite(password, 4096, 1, out);
   fclose(out);
   for (i = 0; i < 3; i++) {

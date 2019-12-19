@@ -1,4 +1,4 @@
-# The System Makefile (C) 2017 The UbixOS Project
+# Makefile (C) 2017 The UbixOS Project
 
 all: ld-bin #rtld-elf-bin
 

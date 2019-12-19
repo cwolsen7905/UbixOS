@@ -1,0 +1,13 @@
+# ttytab - terminals
+#
+# Device	Type	Program	Init
+console			hybos		getty
+ttyc1				hybos		getty
+ttyc2				hybos		getty
+ttyc3				hybos		getty
+tty00				unknown
+tty01				unknown
+ttyp0				network
+ttyp1				network
+ttyp2				network
+ttyp3				network

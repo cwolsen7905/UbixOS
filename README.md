@@ -1,6 +1,6 @@
 UbixOS
 ===============
-Build Information:
+Build Information: 1.1-CURRENT
 
 make          - Builds Kernel And World
 make kernel   - Build Kernel Only

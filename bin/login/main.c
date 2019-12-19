@@ -63,6 +63,20 @@ static char *pgets(char *string) {
 
 static char *argv_shell[2] = { "shell", NULL, }; // ARGV For Initial Proccess
 static char *envp_shell[6] = { "HOME=/", "PWD=/", "PATH=/bin:/sbin:/usr/bin:/usr/sbin", "USER=root", "GROUP=admin", NULL, }; //ENVP For Initial Proccess
+
+static char *envp_init[11] = {
+    "HOST=Dev.uBixOS.com",
+    "TERM=xterm",
+    "SHELL=/bin/sh",
+    "HOME=/",
+    "PWD=/",
+    "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
+    "USER=root",
+    "LOGNAME=root",
+    "GROUP=admin",
+    "LD_LIBRARY_PATH=/lib:/usr/lib",
+    NULL, }; //ENVP For Initial Proccess
+
   
 int main(int argc, char **argv, char **env) {
   FILE *fd;
@@ -140,7 +154,7 @@ int main(int argc, char **argv, char **env) {
           fclose(fd);          
           //chdir(data[i].path);
           chdir("sys:/bin/");
-          execve(data[i].shell,argv_shell,envp_shell);
+          execve(data[i].shell,argv_shell,envp_init);
           printf("Error: Problem Starting Shell\n");
           exit(-1);
           }

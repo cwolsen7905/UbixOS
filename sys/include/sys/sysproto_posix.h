@@ -26,12 +26,11 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef _SYS_SYSPROTO_POSIX_H
-#define _SYS_SYSPROTO_POSIX_H
+#ifndef _SYS_SYSPROTO_POSIX_H_
+#define _SYS_SYSPROTO_POSIX_H_
 
 #include <sys/signal.h>
 #include <sys/thread.h>
-
 
 /* TEMP */
 #include <vfs/file.h>
@@ -48,7 +47,6 @@ typedef int register_t;
 #define PADR_(t)        0
 #endif
 
-//Protos
 struct sys_exit_args {
     char status_l_[PADL_(int)];
     int status;
@@ -217,9 +215,15 @@ struct sys_fseek_args {
 };
 
 struct sys_lseek_args {
-        char fd_l_[PADL_(int)]; int fd; char fd_r_[PADR_(int)];
-        char offset_l_[PADL_(off_t)]; off_t offset; char offset_r_[PADR_(off_t)];
-        char whence_l_[PADL_(int)]; int whence; char whence_r_[PADR_(int)];
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char offset_l_[PADL_(off_t)];
+    off_t offset;
+    char offset_r_[PADR_(off_t)];
+    char whence_l_[PADL_(int)];
+    int whence;
+    char whence_r_[PADR_(int)];
 };
 
 struct sys_sysctl_args {
@@ -256,7 +260,6 @@ struct sys_fcntl_args {
     long arg;
     char arg_r_[PADR_(long)];
 };
-
 
 /* OLD */
 
@@ -684,24 +687,125 @@ struct sys_select_args {
 };
 
 struct sys_gettimeofday_args {
-        char tp_l_[PADL_(struct timeval *)]; struct timeval * tp; char tp_r_[PADR_(struct timeval *)];
-        char tzp_l_[PADL_(struct timezone *)]; struct timezone * tzp; char tzp_r_[PADR_(struct timezone *)];
+    char tp_l_[PADL_(struct timeval *)];
+    struct timeval * tp;
+    char tp_r_[PADR_(struct timeval *)];
+    char tzp_l_[PADL_(struct timezone *)];
+    struct timezone * tzp;
+    char tzp_r_[PADR_(struct timezone *)];
 };
 
-
 struct sys_sendto_args {
-        char s_l_[PADL_(int)]; int s; char s_r_[PADR_(int)];
-        char buf_l_[PADL_(caddr_t)]; caddr_t buf; char buf_r_[PADR_(caddr_t)];
-        char len_l_[PADL_(size_t)]; size_t len; char len_r_[PADR_(size_t)];
-        char flags_l_[PADL_(int)]; int flags; char flags_r_[PADR_(int)];
-        char to_l_[PADL_(caddr_t)]; caddr_t to; char to_r_[PADR_(caddr_t)];
-        char tolen_l_[PADL_(int)]; int tolen; char tolen_r_[PADR_(int)];
+    char s_l_[PADL_(int)];
+    int s;
+    char s_r_[PADR_(int)];
+    char buf_l_[PADL_(caddr_t)];
+    caddr_t buf;
+    char buf_r_[PADR_(caddr_t)];
+    char len_l_[PADL_(size_t)];
+    size_t len;
+    char len_r_[PADR_(size_t)];
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
+    char to_l_[PADL_(caddr_t)];
+    caddr_t to;
+    char to_r_[PADR_(caddr_t)];
+    char tolen_l_[PADL_(int)];
+    int tolen;
+    char tolen_r_[PADR_(int)];
 };
 
 struct sys_rename_args {
-        char from_l_[PADL_(char *)]; char * from; char from_r_[PADR_(char *)];
-        char to_l_[PADL_(char *)]; char * to; char to_r_[PADR_(char *)];
+    char from_l_[PADL_(char *)];
+    char * from;
+    char from_r_[PADR_(char *)];
+    char to_l_[PADL_(char *)];
+    char * to;
+    char to_r_[PADR_(char *)];
 };
+
+struct sys_pread_args {
+    char fd_l_[PADL_(int)];
+    int fd;
+    char fd_r_[PADR_(int)];
+    char buf_l_[PADL_(void *)];
+    void * buf;
+    char buf_r_[PADR_(void *)];
+    char nbyte_l_[PADL_(size_t)];
+    size_t nbyte;
+    char nbyte_r_[PADR_(size_t)];
+    char offset_l_[PADL_(off_t)];
+    off_t offset;
+    char offset_r_[PADR_(off_t)];
+};
+
+struct sys_readlink_args {
+    char path_l_[PADL_(char *)];
+    char * path;
+    char path_r_[PADR_(char *)];
+    char buf_l_[PADL_(char *)];
+    char * buf;
+    char buf_r_[PADR_(char *)];
+    char count_l_[PADL_(size_t)];
+    size_t count;
+    char count_r_[PADR_(size_t)];
+};
+
+int sys_readlink(struct thread *, struct sys_readlink_args *);
+
+struct sys_pipe2_args {
+    char fildes_l_[PADL_(int *)];
+    int * fildes;
+    char fildes_r_[PADR_(int *)];
+    char flags_l_[PADL_(int)];
+    int flags;
+    char flags_r_[PADR_(int)];
+};
+
+int sys_pipe2(struct thread *, struct sys_pipe2_args *);
+
+struct sys_getlogin_args {
+    char namebuf_l_[PADL_(char *)];
+    char * namebuf;
+    char namebuf_r_[PADR_(char *)];
+    char namelen_l_[PADL_(u_int)];
+    u_int namelen;
+    char namelen_r_[PADR_(u_int)];
+};
+
+int sys_getlogin(struct thread *, struct sys_getlogin_args *);
+
+struct sys_setlogin_args {
+    char namebuf_l_[PADL_(char *)];
+    char * namebuf;
+    char namebuf_r_[PADR_(char *)];
+};
+
+int sys_setlogin(struct thread *, struct sys_setlogin_args *);
+
+
+struct sys_getrlimit_args {
+    char which_l_[PADL_(u_int)];
+    u_int which;
+    char which_r_[PADR_(u_int)];
+    char rlp_l_[PADL_(struct rlimit *)];
+    struct rlimit * rlp;
+    char rlp_r_[PADR_(struct rlimit *)];
+};
+
+int sys_getrlimit(struct thread *, struct sys_getrlimit_args *);
+
+struct sys_setrlimit_args {
+    char which_l_[PADL_(u_int)];
+    u_int which;
+    char which_r_[PADR_(u_int)];
+    char rlp_l_[PADL_(struct rlimit *)];
+    struct rlimit * rlp;
+    char rlp_r_[PADR_(struct rlimit *)];
+};
+
+int sys_setrlimit(struct thread *, struct sys_setrlimit_args *);
 
 //Func Defs
 int sys_invalid(struct thread *, void *);
@@ -785,4 +889,7 @@ int sys_fcntl(struct thread *td, struct sys_fcntl_args *);
 
 int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *);
 int sys_sendto(struct thread *td, struct sys_sendto_args *);
-#endif /* END _SYS_SYSPROTO_POSIX_H */
+
+int sys_pread(struct thread *td, struct sys_pread_args *);
+
+#endif /* END _SYS_SYSPROTO_POSIX_H_ */

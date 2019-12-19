@@ -2,6 +2,7 @@
 t
 t.c
 *.o
+*.so
 .depen*
 /sys/sde/objgfx40.cpp
 /sys/sde/ogFont.cpp

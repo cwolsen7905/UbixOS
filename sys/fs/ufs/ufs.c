@@ -267,10 +267,14 @@ static ino_t lookup(const char *path, fileDescriptor_t *fd) {
 static int ufs_openFile(const char *file, fileDescriptor_t *fd) {
   char tmp[2];
   int ino = 0;
+
   fd->dmadat = (struct dmadat *) kmalloc(sizeof(struct dmadat));
+
   ino = lookup(file, fd);
+
   fd->offset = 0x0;
   fd->ino = ino;
+
   if (ino == 0x0) {
     kfree(fd->dmadat);
     return (-1);
@@ -279,6 +283,7 @@ static int ufs_openFile(const char *file, fileDescriptor_t *fd) {
   /* Quick Hack for file size */
   fsread(fd->ino, &tmp, 1, fd);
   fd->offset = 0;
+
   /* Return */
   fd->perms = 0x1;
   return (0x1);

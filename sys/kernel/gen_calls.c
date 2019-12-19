@@ -187,9 +187,9 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
   void **segbase = 0x0;
   uint32_t base_addr = 0x0;
   if (args->op == 10) {
-    kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
+    //kprintf("SETGSBASE: 0x%X:0x%X", args->parms, args->parms[0]);
     segbase = args->parms;
-    kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
+    //kprintf("SGS: [0x%X:0x%X]", segbase[0], segbase[1]);
     base_addr = (uint32_t) segbase[0];
     struct gdtDescriptor *tmpDesc = 0x0;
 
@@ -202,15 +202,16 @@ int sys_sysarch(struct thread *td, struct sys_sysarch_args *args) {
     tmpDesc->limitHigh = (0xFFFFF >> 16);
     tmpDesc->granularity = ((dData + dWrite + dBig + dBiglim + dDpl3) & 0xFF) >> 4;
     tmpDesc->baseHigh = base_addr >> 24;
-    /*
-     asm(
-     "push %eax\n"
-     "lgdtl (loadGDT)\n"
-     "mov $0xF,%eax\n"
-     "mov %eax,%gs\n"
-     "pop %eax\n"
-     );
-     */
+
+    asm(
+        "push %eax\n"
+        "mov $0x18,%ax\n"
+        "lldt %ax\n" /* "lgdtl (loadGDT)\n" */
+        "mov $0xF,%eax\n"
+        "mov %eax,%gs\n"
+        "pop %eax\n"
+    );
+
     td->td_retval[0] = 0;
   }
   else {
@@ -354,4 +355,166 @@ int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *args) {
   gettimeofday(args->tp, args->tzp);
   td->td_retval[0] = 0;
   return (0);
+}
+
+int sys_getlogin(struct thread *thr, struct sys_getlogin_args *args) {
+  int error = 0;
+
+  memcpy(args->namebuf, _current->username, args->namelen);
+
+  return (error);
+}
+
+int sys_setlogin(struct thread *thr, struct sys_setlogin_args *args) {
+  int error = 0;
+
+  memcpy(_current->username, args->namebuf, 256);
+
+  return (error);
+}
+
+int sys_getrlimit(struct thread *thr, struct sys_getrlimit_args *args) {
+  int error = 0;
+
+  struct rlimit *rlim = 0x0;
+
+  switch (args->which) {
+  case 0:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 1:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 2:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 3:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 4:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 5:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 6:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 7:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 8:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 9:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 10:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 11:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 12:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 13:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  case 14:
+    args->rlp->rlim_cur = thr->rlim[args->which].rlim_cur;
+    args->rlp->rlim_max = thr->rlim[args->which].rlim_max;
+    break;
+  default:
+    error = -1;
+    kprintf("[getrlimit: %i]", args->which);
+  }
+
+  return (error);
+}
+
+int sys_setrlimit(struct thread *thr, struct sys_setrlimit_args *args) {
+  int error = 0;
+
+  switch (args->which) {
+  case 0:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 1:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 2:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 3:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 4:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 5:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 6:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 7:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 8:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 9:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 10:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 11:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 12:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 13:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  case 14:
+    thr->rlim[args->which].rlim_cur = args->rlp->rlim_cur;
+    thr->rlim[args->which].rlim_max = args->rlp->rlim_max;
+    break;
+  default:
+    error = -1;
+    kprintf("[setrlimit: %i]", args->which);
+  }
+
+  return (error);
 }

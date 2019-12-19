@@ -42,7 +42,6 @@
 
  ************************************************************************/
 int sys_setUID(struct thread *td, struct sys_setUID_args *args) {
-  kprintf("Here?\n");
   if (_current->uid == 0x0) {
     _current->uid = args->uid;
     return (0);
