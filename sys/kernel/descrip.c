@@ -33,17 +33,12 @@
 #include <ubixos/endtask.h>
 #include <lib/kmalloc.h>
 #include <assert.h>
-#include <sys/ioctl.h>
 #include <sys/select.h>
 
 static struct file *kern_files = 0x0;
 
 int fcntl(struct thread *td, struct fcntl_args *uap) {
   struct file *fp = 0x0;
-
-#ifdef DEBUG
-  kprintf("[%s:%i]",__FILE__,__LINE__);
-#endif
 
   if (td->o_files[uap->fd] == 0x0) {
     kprintf("ERROR!!!\n");
@@ -98,6 +93,8 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
 
   return (0x0);
 }
+
+#include <sys/ioctl.h>
 
 int fdestroy(struct thread *td, struct file *fp, int fd) {
   int error = 0;

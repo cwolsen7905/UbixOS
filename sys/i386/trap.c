@@ -83,7 +83,7 @@ void die_if_kernel(char *str, struct trapframe *regs, long err) {
   kprintf("esi: %08lx   edi: %08lx   ebp: %08lx   esp: %08lx\n", regs->tf_esi, regs->tf_edi, regs->tf_ebp, esp);
   kprintf("cs:  0x%X ds: 0x%X  es:  0x%X fs: 0x%X gs: 0x%X ss: 0x%X\n", regs->tf_cs, regs->tf_ds, regs->tf_es, regs->tf_fs, regs->tf_gs, ss);
   kprintf("cr0: 0x%X, cr2: 0x%X, cr3: 0x%X, cr4: 0x%X\n", rcr0(), rcr2(), rcr3(), rcr4());
-  
+
   store_TR(i);
   kprintf("Process %s (pid: %i, process nr: %d, stackpage=%08lx)\nStack:", _current->name, _current->id, 0xffff & i, esp);
 
@@ -105,17 +105,18 @@ void trap(struct trapframe *frame) {
   trap_code = frame->tf_trapno;
 
   cr2 = rcr2();
-  kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2,_current->tss.eip,_current->tss.ldt);
+  kprintf("CR2: 0x%X(0x%X)[0x%X]", cr2, _current->tss.eip, _current->tss.ldt);
   if (_current->id == 7)
-    while(1) asm("nop");
+    while (1)
+      asm("nop");
 
   if ((frame->tf_eflags & PSL_I) == 0) {
     if (SEL_GET_PL(frame->tf_cs) == SEL_PL_USER || (frame->tf_eflags & PSL_VM)) {
-      kpanic( "INT OFF! USER" );
+      kpanic("INT OFF! USER");
       die_if_kernel("TEST", frame, 0x100);
     }
     else {
-      kpanic( "INT OFF! KERN[0x%X]", trap_code );
+      kpanic("INT OFF! KERN[0x%X]", trap_code);
       die_if_kernel("TEST", frame, 0x200);
     }
   }
