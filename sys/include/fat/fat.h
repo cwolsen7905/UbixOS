@@ -1,1 +1,3 @@
-void init_fat();
+ #define FAT_PRINTF(a)               kprintf a
+
+int fat_init();

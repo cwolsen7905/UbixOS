@@ -1,6 +1,7 @@
 #ifndef __FAT_DEFS_H__
 #define __FAT_DEFS_H__
 
+#include "fat/fat.h"
 #include "fat_opts.h"
 #include "fat_types.h"
 

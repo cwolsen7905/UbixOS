@@ -178,8 +178,6 @@ int kmain(uint32_t rootdev) {
   /* kprintf("SDE Thread Start! [0x%X]\n", &sdeThread); */
   /* execThread(&sdeThread, 0x2000,0x0); */
 
-  while (1);
-
   kprintf("Kernel Name: [%s], Boot How To [0x%X], Boot Dev: [0x%X]\n", _kernelname, _boothowto, _bootdev);
   kprintf("B_TYPE(0x%X), B_SLICE(0x%X), B_UNIT(0x%X), B_PARTITION(0x%X)\n", B_TYPE(_bootdev), B_SLICE(_bootdev), B_UNIT(_bootdev), B_PARTITION(_bootdev));
   kprintf("_bootinfo.bi_version: 0x%X\n", _bootinfo.bi_version);
@@ -187,7 +185,9 @@ int kmain(uint32_t rootdev) {
   kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
 
   execThread(systemTask, 0x2000, 0x0);
-  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+  //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+
+  execFile("fat:/shell", argv_init, envp_init, 0x0);
 
   irqEnable(0x0);
 
