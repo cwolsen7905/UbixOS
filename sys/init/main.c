@@ -187,7 +187,7 @@ int kmain(uint32_t rootdev) {
   execThread(systemTask, 0x2000, 0x0);
   //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 
-  execFile("fat:/shell", argv_init, envp_init, 0x0);
+  execFile("fat:/init", argv_init, envp_init, 0x0);
 
   irqEnable(0x0);
 

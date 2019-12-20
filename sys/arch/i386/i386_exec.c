@@ -291,13 +291,13 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* If We Dont Find the File Return */
   if (newProcess->files[0] == 0x0) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable1.\n");
     fclose(newProcess->files[0]);
     return;
   }
 
   if (newProcess->files[0]->perms == 0x0) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable2.\n");
     fclose(newProcess->files[0]);
     return;
   }
@@ -309,19 +309,19 @@ void execFile(char *file, char **argv, char **envp, int console) {
 
   /* Check If App Is A Real Application */
   if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable3.\n");
     kfree(binaryHeader);
     fclose(newProcess->files[0]);
     return;
   }
   else if (binaryHeader->e_type != 2) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable4.\n");
     kfree(binaryHeader);
     fclose(newProcess->files[0]);
     return;
   }
   else if (binaryHeader->e_entry == 0x300000) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable5.\n");
     kfree(binaryHeader);
     fclose(newProcess->files[0]);
     return;
@@ -532,7 +532,7 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   /* Test If Executable */
   if (fd->perms == 0) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable6.\n");
     fclose(fd);
     return (-1);
   }
@@ -573,19 +573,19 @@ int sys_exec(struct thread *td, char *file, char **argv, char **envp) {
 
   /* Check If App Is A Real Application */
   if ((binaryHeader->e_ident[1] != 'E') && (binaryHeader->e_ident[2] != 'L') && (binaryHeader->e_ident[3] != 'F')) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable7.\n");
     kfree(binaryHeader);
     fclose(fd);
     return (-1);
   }
   else if (binaryHeader->e_type != ET_EXEC) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable8.\n");
     kfree(binaryHeader);
     fclose(fd);
     return (-1);
   }
   else if (binaryHeader->e_entry == 0x300000) {
-    kprintf("Exec Format Error: Binary File Not Executable.\n");
+    kprintf("Exec Format Error: Binary File Not Executable9.\n");
     kfree(binaryHeader);
     fclose(fd);
     return (-1);
