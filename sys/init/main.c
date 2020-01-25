@@ -173,6 +173,8 @@ int kmain(uint32_t rootdev) {
   kprintf("MemoryMap:  [0x%X]\n", vmmMemoryMap);
   kprintf("Starting OS\n");
 
+while(1) asm("nop");
+
 
 
   /* kprintf("SDE Thread Start! [0x%X]\n", &sdeThread); */
@@ -185,9 +187,9 @@ int kmain(uint32_t rootdev) {
   kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
 
   execThread(systemTask, 0x2000, 0x0);
-  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+  //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 
-  //execFile("fat:/bin/init", argv_init, envp_init, 0x0);
+  execFile("fat:/bin/init", argv_init, envp_init, 0x0);
 
   irqEnable(0x0);
 
