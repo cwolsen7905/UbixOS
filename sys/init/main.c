@@ -148,13 +148,13 @@ int kmain(uint32_t rootdev) {
   /* Old 2 new 10 */
   kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR(rootdev), B_CONTROLLER(rootdev), B_SLICE(rootdev), B_UNIT(rootdev), B_PARTITION(rootdev), B_TYPE(rootdev));
   /* if ( vfs_mount( B_UNIT(_bootdev), B_PARTITION(_bootdev), 0x0, 0xAA, "sys", "rw" ) != 0x0 ) { */
-  if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "sys", "rw") != 0x0) {
+  if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "sys2", "rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
   }
   else
     kprintf("Mounted sys\n");
 
-  if (vfs_mount(0x2,0x1,0x1,0xFA,"fat","rw") != 0x0) {
+  if (vfs_mount(0x2,0x1,0x1,0xFA,"sys","rw") != 0x0) {
     kprintf("Problem Mounting fat Mount Point\n");
   }
 
@@ -185,9 +185,9 @@ int kmain(uint32_t rootdev) {
   kprintf("_bootinfo.bi_bios_dev: 0x%X\n", _bootinfo.bi_bios_dev);
 
   execThread(systemTask, 0x2000, 0x0);
-  //execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
+  execFile("sys:/bin/init", argv_init, envp_init, 0x0); /* OS Initializer    */
 
-  execFile("fat:/init", argv_init, envp_init, 0x0);
+  //execFile("fat:/bin/init", argv_init, envp_init, 0x0);
 
   irqEnable(0x0);
 
