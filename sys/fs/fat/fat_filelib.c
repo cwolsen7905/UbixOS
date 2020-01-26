@@ -366,10 +366,13 @@ static FL_FILE* _open_file(const char *path)
     }
   kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
     // Using dir cluster address search for filename
-    if (fatfs_get_file_entry(&_fs, file->parentcluster, file->filename,&sfEntry))
+  if (fatfs_get_file_entry(&_fs, file->parentcluster, file->filename,
+      &sfEntry)) {
+    kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
         // Make sure entry is file not dir!
         if (fatfs_entry_is_file(&sfEntry))
         {
+      kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
             // Initialise file details
             memcpy(file->shortfilename, sfEntry.Name, FAT_SFN_SIZE_FULL);
             file->filelength = FAT_HTONL(sfEntry.FileSize);
@@ -389,6 +392,7 @@ static FL_FILE* _open_file(const char *path)
 
             return file;
         }
+  }
   kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
     _free_file(file);
     return NULL;
