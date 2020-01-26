@@ -148,11 +148,14 @@ int kmain(uint32_t rootdev) {
   /* Old 2 new 10 */
   kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR(rootdev), B_CONTROLLER(rootdev), B_SLICE(rootdev), B_UNIT(rootdev), B_PARTITION(rootdev), B_TYPE(rootdev));
   /* if ( vfs_mount( B_UNIT(_bootdev), B_PARTITION(_bootdev), 0x0, 0xAA, "sys", "rw" ) != 0x0 ) { */
-  if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "sys2", "rw") != 0x0) {
+  if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "fat", "rw") != 0x0) {
     kprintf("Problem Mounting sys Mount Point\n");
   }
   else
     kprintf("Mounted sys\n");
+
+  while (1)
+    asm("nop");
 
   if (vfs_mount(0x2,0x1,0x1,0xFA,"sys","rw") != 0x0) {
     kprintf("Problem Mounting fat Mount Point\n");
