@@ -111,7 +111,7 @@ struct {
 
 static char *argv_init[2] = {
     "init",
-    NULL, }; /* ARGV For Initial Process */
+    0x0, }; /* ARGV For Initial Process */
 
 static char *envp_init[6] = {
     "HOME=/",
@@ -119,7 +119,7 @@ static char *envp_init[6] = {
     "PATH=/bin:/sbin:/usr/bin:/usr/sbin",
     "USER=root",
     "GROUP=admin",
-    NULL, }; /* ENVP For Initial Process */
+    0x0, }; /* ENVP For Initial Process */
 
 struct bootinfo _bootinfo;
 char _kernelname[512];
