@@ -338,6 +338,7 @@ static FL_FILE* _open_file(const char *path)
     // Split full path into filename and directory path
     if (fatfs_split_path((char*)path, file->path, sizeof(file->path), file->filename, sizeof(file->filename)) == -1)
     {
+    kprintf("fatfs_split_path failed!");
         _free_file(file);
         return NULL;
     }
@@ -779,7 +780,6 @@ void* fl_fopen(const char *path, const char *mode)
 
     // Read
   if (flags & FILE_READ) {
-    kprintf("READ");
     file = _open_file(path);
   }
 
