@@ -393,8 +393,7 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
   // Main cluster following loop
   while (1) {
     // Read sector
-    if (fatfs_sector_reader(fs, Cluster, x++, 0)) // If sector read was successfull
-        {
+    if (fatfs_sector_reader(fs, Cluster, x++, 0)) { // If sector read was successfull
       // Analyse Sector
       for (item = 0; item < FAT_DIR_ENTRIES_PER_SECTOR; item++) {
         // Create the multiplier for sector access
@@ -405,74 +404,72 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
 
 #if FATFS_INC_LFN_SUPPORT
 
-        // Long File Name Text Found
-        if (fatfs_entry_lfn_text(directoryEntry)) {
+        if (fatfs_entry_lfn_text(directoryEntry)) { // Long File Name Text Found
           kprintf("DB[%s:%i]", __FILE__, __LINE__);
           fatfs_lfn_cache_entry(&lfn, fs->currentsector.sector + recordoffset);
         }
-
-        // If Invalid record found delete any long file name information collated
-        else if (fatfs_entry_lfn_invalid(directoryEntry)) {
+        else if (fatfs_entry_lfn_invalid(directoryEntry)) { // If Invalid record found delete any long file name information collated
           kprintf("DB[%s:%i]", __FILE__, __LINE__);
 
           fatfs_lfn_cache_init(&lfn, 0);
         }
-        // Normal SFN Entry and Long text exists
-        else if (fatfs_entry_lfn_exists(&lfn, directoryEntry)) {
-          kprintf("DB[%s:%i]", __FILE__, __LINE__);
+        else if (fatfs_entry_lfn_exists(&lfn, directoryEntry)) { // Normal SFN Entry and Long text exists
           long_filename = fatfs_lfn_cache_get(&lfn);
+          kprintf("DB[%s:%i] directoryEntry->Name: %s\n", __FILE__, __LINE__, directoryEntry->Name);
+          kprintf("DB[%s:%i] directoryEntry->Attr: 0x%X\n", __FILE__, __LINE__, directoryEntry->Attr);
+          kprintf("DB[%s:%i] directoryEntry->FileSize: %i\n", __FILE__, __LINE__, directoryEntry->FileSize);
 
           // Compare names to see if they match
           if (fatfs_compare_names(long_filename, name_to_find)) {
-            kprintf("DB[%s:%i] directoryEntry->Name: %s\n", __FILE__, __LINE__, directoryEntry->Name);
-            kprintf("DB[%s:%i] directoryEntry->Attr: 0x%X\n", __FILE__, __LINE__, directoryEntry->Attr);
-            kprintf("DB[%s:%i] directoryEntry->FileSize: %i\n", __FILE__, __LINE__, directoryEntry->FileSize);
             memcpy(sfEntry, directoryEntry, sizeof(struct fat_dir_entry));
             return 1;
           }
 
           fatfs_lfn_cache_init(&lfn, 0);
         }
-        else
+        else {
 #endif
-        // Normal Entry, only 8.3 Text
-        if (fatfs_entry_sfn_only(directoryEntry)) {
-          kprintf("DB[%s:%i]", __FILE__, __LINE__);
-          memset(short_filename, 0, sizeof(short_filename));
+          if (fatfs_entry_sfn_only(directoryEntry)) { // Normal Entry, only 8.3 Text
+            kprintf("DB[%s:%i]", __FILE__, __LINE__);
+            memset(short_filename, 0, sizeof(short_filename));
 
-          // Copy name to string
-          for (i = 0; i < 8; i++)
-            short_filename[i] = directoryEntry->Name[i];
+            // Copy name to string
+            for (i = 0; i < 8; i++)
+              short_filename[i] = directoryEntry->Name[i];
 
-          // Extension
-          dotRequired = 0;
-          for (i = 8; i < 11; i++) {
-            short_filename[i + 1] = directoryEntry->Name[i];
-            if (directoryEntry->Name[i] != ' ')
-              dotRequired = 1;
-          }
+            // Extension
+            dotRequired = 0;
+            for (i = 8; i < 11; i++) {
+              short_filename[i + 1] = directoryEntry->Name[i];
+              if (directoryEntry->Name[i] != ' ')
+                dotRequired = 1;
+            }
 
-          // Dot only required if extension present
-          if (dotRequired) {
-            // If not . or .. entry
-            if (short_filename[0] != '.')
-              short_filename[8] = '.';
+            // Dot only required if extension present
+            if (dotRequired) {
+              // If not . or .. entry
+              if (short_filename[0] != '.')
+                short_filename[8] = '.';
+              else
+                short_filename[8] = ' ';
+            }
             else
               short_filename[8] = ' ';
-          }
-          else
-            short_filename[8] = ' ';
 
-          // Compare names to see if they match
-          if (fatfs_compare_names(short_filename, name_to_find)) {
-            kprintf("gfe[%s:%i]: %s:%s\n", __FILE__, __LINE__, short_filename, name_to_find);
-            memcpy(sfEntry, directoryEntry, sizeof(struct fat_dir_entry));
-            return 1;
-          }
+            // Compare names to see if they match
+            if (fatfs_compare_names(short_filename, name_to_find)) {
+              kprintf("gfe[%s:%i]: %s:%s\n", __FILE__, __LINE__, short_filename, name_to_find);
+              memcpy(sfEntry, directoryEntry, sizeof(struct fat_dir_entry));
+              return 1;
+            }
 
-          fatfs_lfn_cache_init(&lfn, 0);
+            fatfs_lfn_cache_init(&lfn, 0);
+          }
+#if FATFS_INC_LFN_SUPPORT
         }
-      } // End of if
+#endif
+
+      } // End of for
     }
     else
       break;
