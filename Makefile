@@ -17,6 +17,7 @@ WMAKE=${MAKE} ${WORLD_FLAGS} INCLUDE=${WORLD_INC} BUILD_DIR=${CURDIR}/build
 
 TMP_PATH=${PATH}
 ROOT=/ubixos
+ROOT_FAT=/ubixos_fat
 
 all: kernel world install-kernel install-world
 
@@ -67,24 +68,30 @@ install-world:
 	@echo "Step 1: Copy Binaries"
 	@echo "***************************************************************"
 	cp -pr build/bin/* ${ROOT}/bin/
+	cp -pr build/bin/* ${ROOT_FAT}/bin/
 	sync
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 2: Copy Libraries"
 	@echo "***************************************************************"
 	cp -pr build/lib/* ${ROOT}/lib/
+	cp -pr build/lib/* ${ROOT_FAT}/lib/
 	cp -pr build/libexec/* ${ROOT}/libexec/
+	cp -pr build/libexec/* ${ROOT_FAT}/libexec/
 	sync
 	@echo
 	@echo "***************************************************************"
 	@echo "Step 3: Copy Etc"
 	@echo "***************************************************************"
 	cp -pr etc/* ${ROOT}/etc/
+	cp -pr etc/* ${ROOT_FAT}/etc/
 	sync
 	@echo
 	@echo "***************************************************************"
 	@echo "World Install For ${_ARCH} Completed On `LC_ALL=C date`"
 	@echo "***************************************************************"
+	umount /ubixos_fat
+	mount /ubixos_fat
 
 clean-kernel:
 	(cd sys;${MAKE} clean)
