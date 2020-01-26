@@ -180,6 +180,8 @@ int fatfs_entry_is_dir(struct fat_dir_entry *entry)
 //-----------------------------------------------------------------------------
 int fatfs_entry_is_file(struct fat_dir_entry *entry)
 {
+  kprintf("DB[%s:%i]: 0x%X:0x%X", __FILE__, __LINE__, entry->Attr,
+      FILE_TYPE_FILE);
     if (entry->Attr & FILE_TYPE_FILE)
         return 1;
     else
