@@ -424,7 +424,7 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
 
           // Compare names to see if they match
           if (fatfs_compare_names(long_filename, name_to_find)) {
-            kprintf("DB[%s:%i] Name: %s\n", __FILE__, __LINE__, directoryEntry->name);
+            kprintf("DB[%s:%i] Name: %s\n", __FILE__, __LINE__, directoryEntry->Name);
             memcpy(sfEntry, directoryEntry, sizeof(struct fat_dir_entry));
             return 1;
           }
