@@ -328,7 +328,7 @@ static FL_FILE* _open_file(const char *path)
 
     // Allocate a new file handle
     file = _allocate_file();
-  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
+  kprintf("DB[%s:%i]: 0x%X\n", __FILE__, __LINE__, file);
     if (!file)
         return NULL;
   kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
