@@ -778,8 +778,11 @@ void* fl_fopen(const char *path, const char *mode)
     FL_LOCK(&_fs);
 
     // Read
-    if (flags & FILE_READ)
-        file = _open_file(path);
+  if (flags & FILE_READ) {
+    kprintf("READ");
+    file = _open_file(path);
+  }
+
 
     // Create New
 #if FATFS_INC_WRITE_SUPPORT
