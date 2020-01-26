@@ -402,19 +402,24 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
 
         // Overlay directory entry over buffer
         directoryEntry = (struct fat_dir_entry*) (fs->currentsector.sector + recordoffset);
-        kprintf("DB[%s:%i]", __FILE__, __LINE__);
+
 #if FATFS_INC_LFN_SUPPORT
-        kprintf("DB[%s:%i]", __FILE__, __LINE__);
+
         // Long File Name Text Found
-        if (fatfs_entry_lfn_text(directoryEntry))
+        if (fatfs_entry_lfn_text(directoryEntry)) {
+          kprintf("DB[%s:%i]", __FILE__, __LINE__);
           fatfs_lfn_cache_entry(&lfn, fs->currentsector.sector + recordoffset);
+        }
 
         // If Invalid record found delete any long file name information collated
-        else if (fatfs_entry_lfn_invalid(directoryEntry))
-          fatfs_lfn_cache_init(&lfn, 0);
+        else if (fatfs_entry_lfn_invalid(directoryEntry)) {
+          kprintf("DB[%s:%i]", __FILE__, __LINE__);
 
+          fatfs_lfn_cache_init(&lfn, 0);
+        }
         // Normal SFN Entry and Long text exists
         else if (fatfs_entry_lfn_exists(&lfn, directoryEntry)) {
+          kprintf("DB[%s:%i]", __FILE__, __LINE__);
           long_filename = fatfs_lfn_cache_get(&lfn);
 
           // Compare names to see if they match
@@ -429,6 +434,7 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
 #endif
         // Normal Entry, only 8.3 Text
         if (fatfs_entry_sfn_only(directoryEntry)) {
+          kprintf("DB[%s:%i]", __FILE__, __LINE__);
           memset(short_filename, 0, sizeof(short_filename));
 
           // Copy name to string
