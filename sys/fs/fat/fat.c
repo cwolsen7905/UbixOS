@@ -68,7 +68,7 @@ int fat_initialize(struct vfs_mountPoint *mp) {
     }
      
     // List root directory
-    fl_listdirectory("/");
+  fl_listdirectory("/bin/");
     // Create File
     /*
     file = fl_fopen("/file.bin", "w");
