@@ -328,8 +328,10 @@ static FL_FILE* _open_file(const char *path)
 
     // Allocate a new file handle
     file = _allocate_file();
+  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
     if (!file)
         return NULL;
+  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
 
     // Clear filename
     memset(file->path, '\0', sizeof(file->path));
@@ -338,10 +340,10 @@ static FL_FILE* _open_file(const char *path)
     // Split full path into filename and directory path
     if (fatfs_split_path((char*)path, file->path, sizeof(file->path), file->filename, sizeof(file->filename)) == -1)
     {
-    kprintf("fatfs_split_path failed!");
         _free_file(file);
         return NULL;
     }
+  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
 
     // Check if file already open
     if (_check_file_open(file))
@@ -349,7 +351,7 @@ static FL_FILE* _open_file(const char *path)
         _free_file(file);
         return NULL;
     }
-
+  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
     // If file is in the root dir
     if (file->path[0]==0)
         file->parentcluster = fatfs_get_root_cluster(&_fs);
@@ -362,7 +364,7 @@ static FL_FILE* _open_file(const char *path)
             return NULL;
         }
     }
-
+  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
     // Using dir cluster address search for filename
     if (fatfs_get_file_entry(&_fs, file->parentcluster, file->filename,&sfEntry))
         // Make sure entry is file not dir!
@@ -387,7 +389,7 @@ static FL_FILE* _open_file(const char *path)
 
             return file;
         }
-
+  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
     _free_file(file);
     return NULL;
 }
