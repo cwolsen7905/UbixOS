@@ -118,8 +118,19 @@ int read_fat(fileDescriptor_t *fd,char *data,uInt32 offset,long size) {
   }
 
 
-int write_fat() {
-  return(0);
+int write_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
+  FL_FILE *_file = (FL_FILE*) fd->res;
+
+  kprintf("Writing: %i[%i]\n", size, offset);
+  fl_fseek(_file, offset, 0);
+
+  if (fl_fwrite(data, 1, size, _file) != size)
+    kprintf("ERROR: Write file failed\n");
+
+  kprintf("Wrote: %i\n", size);
+
+  /* Return */
+  return (size);
 }
 
 int open_fat(const char *file, fileDescriptor_t *fd) {

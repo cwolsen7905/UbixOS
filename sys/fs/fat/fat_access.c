@@ -405,7 +405,6 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
 #if FATFS_INC_LFN_SUPPORT
 
         if (fatfs_entry_lfn_text(directoryEntry)) { // Long File Name Text Found
-          kprintf("DB[%s:%i]", __FILE__, __LINE__);
           fatfs_lfn_cache_entry(&lfn, fs->currentsector.sector + recordoffset);
         }
         else if (fatfs_entry_lfn_invalid(directoryEntry)) { // If Invalid record found delete any long file name information collated
@@ -415,9 +414,6 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
         }
         else if (fatfs_entry_lfn_exists(&lfn, directoryEntry)) { // Normal SFN Entry and Long text exists
           long_filename = fatfs_lfn_cache_get(&lfn);
-          kprintf("DB[%s:%i] directoryEntry->Name: %s\n", __FILE__, __LINE__, directoryEntry->Name);
-          kprintf("DB[%s:%i] directoryEntry->Attr: 0x%X\n", __FILE__, __LINE__, directoryEntry->Attr);
-          kprintf("DB[%s:%i] directoryEntry->FileSize: %i\n", __FILE__, __LINE__, directoryEntry->FileSize);
 
           // Compare names to see if they match
           if (fatfs_compare_names(long_filename, name_to_find)) {
@@ -430,7 +426,6 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
         else {
 #endif
           if (fatfs_entry_sfn_only(directoryEntry)) { // Normal Entry, only 8.3 Text
-            kprintf("DB[%s:%i]", __FILE__, __LINE__);
             memset(short_filename, 0, sizeof(short_filename));
 
             // Copy name to string
@@ -458,7 +453,6 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
 
             // Compare names to see if they match
             if (fatfs_compare_names(short_filename, name_to_find)) {
-              kprintf("gfe[%s:%i]: %s:%s\n", __FILE__, __LINE__, short_filename, name_to_find);
               memcpy(sfEntry, directoryEntry, sizeof(struct fat_dir_entry));
               return 1;
             }
@@ -576,6 +570,7 @@ int fatfs_update_timestamps(struct fat_dir_entry *directoryEntry, int create, in
     return 1;
 }
 #endif
+
 //-------------------------------------------------------------
 // fatfs_update_file_length: Find a SFN entry and update it
 // NOTE: shortname is XXXXXXXXYYY not XXXXXXXX.YYY
