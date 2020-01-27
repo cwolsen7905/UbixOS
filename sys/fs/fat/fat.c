@@ -143,11 +143,11 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->devInfo->read);
   assert(file);
 
-  kprintf(file);
+  kprintf("Mode: 0x%X\n", fd->mode);
 
     _file = fl_fopen(file, "r");
     if (!_file) {
-    kprintf("ERROR[%s:%i]: Open file failed\n", __FILE__, __LINE__);
+      kprintf("ERROR[%s:%i]: Open file [%s] failed\n", __FILE__, __LINE__, file);
         return(0x0);
     }
     else {

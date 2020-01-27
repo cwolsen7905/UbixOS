@@ -71,7 +71,6 @@ static void _fl_init();
 static FL_FILE* _allocate_file(void) {
   // Allocate free file
   struct fat_node *node = fat_list_pop_head(&_free_file_list);
-  kprintf("[%s:%i] 0x%X", __FILE__, __LINE__, node);
   // Add to open list
   if (node)
     fat_list_insert_last(&_open_file_list, node);
@@ -307,10 +306,8 @@ static FL_FILE* _open_file(const char *path) {
 
   // Allocate a new file handle
   file = _allocate_file();
-  kprintf("DB[%s:%i]: 0x%X\n", __FILE__, __LINE__, file);
   if (!file)
     return NULL;
-  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
 
   // Clear filename
   memset(file->path, '\0', sizeof(file->path));
@@ -321,14 +318,12 @@ static FL_FILE* _open_file(const char *path) {
     _free_file(file);
     return NULL;
   }
-  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
 
   // Check if file already open
   if (_check_file_open(file)) {
     _free_file(file);
     return NULL;
   }
-  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
   // If file is in the root dir
   if (file->path[0] == 0)
     file->parentcluster = fatfs_get_root_cluster(&_fs);
@@ -339,13 +334,10 @@ static FL_FILE* _open_file(const char *path) {
       return NULL;
     }
   }
-  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
   // Using dir cluster address search for filename
   if (fatfs_get_file_entry(&_fs, file->parentcluster, file->filename, &sfEntry)) {
-    kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
     // Make sure entry is file not dir!
     if (fatfs_entry_is_file(&sfEntry)) {
-      kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
       // Initialise file details
       memcpy(file->shortfilename, sfEntry.Name, FAT_SFN_SIZE_FULL);
       file->filelength = FAT_HTONL(sfEntry.FileSize);
@@ -366,7 +358,6 @@ static FL_FILE* _open_file(const char *path) {
       return file;
     }
   }
-  kprintf("DB[%s:%i]\n", __FILE__, __LINE__);
   _free_file(file);
   return NULL;
 }
