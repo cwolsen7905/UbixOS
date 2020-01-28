@@ -103,11 +103,11 @@ int fat_initialize(struct vfs_mountPoint *mp) {
 int read_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
 
-  kprintf("Reading: %i[%i]\n", size, offset);
+  //kprintf("Reading: %i[%i]\n", size, offset);
   fl_fseek(_file, offset, 0);
   size = fl_fread(data, size, 1, _file);
 
-  kprintf("Read: %i\n", size);
+  //kprintf("Read: %i\n", size);
 
   /* Return */
   return (size);
@@ -138,6 +138,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->devInfo->read);
   assert(file);
 
+  kprintf("File: %s, ", file);
   kprintf("Mode: 0x%X\n", fd->mode);
 
   _file = fl_fopen(file, "r");
