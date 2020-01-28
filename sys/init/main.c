@@ -147,10 +147,10 @@ int kmain(uint32_t rootdev) {
   /* New Root Mount Point */
   /* Old 2 new 10 */
   kprintf("[0x%X][0x%X:0x%X:0x%X:0x%X:0x%X:0x%X]\n", B_ADAPTOR(rootdev), B_CONTROLLER(rootdev), B_SLICE(rootdev), B_UNIT(rootdev), B_PARTITION(rootdev), B_TYPE(rootdev));
-  /* if ( vfs_mount( B_UNIT(_bootdev), B_PARTITION(_bootdev), 0x0, 0xAA, "sys", "rw" ) != 0x0 ) { */
+  /* if ( vfs_mount( B_UNIT(_bootdev), B_PARTITION(_bootdev), 0x0, 0xAA, "sys2", "rw" ) != 0x0 ) { */
 
   if (vfs_mount(0x1, 0x2, 0x0, 0xAA, "sys2", "rw") != 0x0) { //UFS FS
-    kprintf("Problem Mounting sys2 Mount Point\n");
+    kprintf("Problem Mounting sys Mount Point\n");
   }
   else
     kprintf("Mounted sys2\n");

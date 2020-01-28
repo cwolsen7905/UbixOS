@@ -138,7 +138,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->devInfo->read);
   assert(file);
 
-  kprintf(file);
+  kprintf("Mode: 0x%X\n", fd->mode);
 
   _file = fl_fopen(file, "r");
 

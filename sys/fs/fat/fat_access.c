@@ -408,7 +408,6 @@ uint32 fatfs_get_file_entry(struct fatfs *fs, uint32 Cluster, char *name_to_find
           fatfs_lfn_cache_entry(&lfn, fs->currentsector.sector + recordoffset);
         }
         else if (fatfs_entry_lfn_invalid(directoryEntry)) { // If Invalid record found delete any long file name information collated
-          kprintf("DB[%s:%i]", __FILE__, __LINE__);
 
           fatfs_lfn_cache_init(&lfn, 0);
         }
