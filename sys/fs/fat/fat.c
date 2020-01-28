@@ -107,7 +107,7 @@ int read_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
   fl_fseek(_file, offset, 0);
   size = fl_fread(data, size, 1, _file);
 
-  //kprintf("Read: %i\n", size);
+  kprintf("[Read:%i]", size);
 
   /* Return */
   return (size);
