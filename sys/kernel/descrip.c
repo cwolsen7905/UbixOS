@@ -114,6 +114,7 @@ int close(struct thread *td, struct close_args *uap) {
 #ifdef DEBUG
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
+  kprintf("[%s:%i]", __FILE__, __LINE__);
   kfree((void *) td->o_files[uap->fd]);
   td->o_files[uap->fd] = 0x0;
   td->td_retval[0] = 0x0;
