@@ -109,7 +109,7 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
     args->sb->st_uid = 0;
     args->sb->st_gid = 0;
 
-    kprintf("FSTAT DOS");
+    //kprintf("FSTAT DOS");
   }
   else {
     args->sb->st_dev = 0xDEADBEEF;
