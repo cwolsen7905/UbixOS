@@ -147,9 +147,9 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
     _file = fl_fopen(file, "r");
   else if ((fd->mode & 0x2) == 0x2) {
     if ((fd->mode & 0x8) == 0x8)
-      _file = fl_open(file, "a");
+      _file = fl_fopen(file, "a");
     else
-      _file = fl_open(file, "w");
+      _file = fl_fopen(file, "w");
   }
   else
     kprintf("Invalid Mode?");
