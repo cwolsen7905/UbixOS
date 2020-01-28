@@ -109,7 +109,7 @@ int read_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
 
   size = fl_fread(data, size, 1, _file);
 
-  kprintf("[Read:%i]", size);
+  //kprintf("[Read:%i]", size);
 
   /* Return */
   return (size);
@@ -140,8 +140,8 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   assert(fd->mp->device->devInfo->read);
   assert(file);
 
-  kprintf("File: %s, ", file);
-  kprintf("Mode: 0x%X\n", fd->mode);
+  //kprintf("File: %s, ", file);
+  //kprintf("Mode: 0x%X\n", fd->mode);
 
   _file = fl_fopen(file, "r");
 
@@ -154,7 +154,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
     fd->res = _file;
     fd->perms = 0x1;
     fd->size = _file->filelength;
-    kprintf("Size: %i\n", fd->size);
+    //kprintf("Size: %i\n", fd->size);
   }
 
   return (0x1);
@@ -173,7 +173,8 @@ int fat_init() {
   fl_init();
 
   /* Set up our file system structure */
-  struct fileSystem ubixFileSystem = { NULL, /* prev        */
+  struct fileSystem ubixFileSystem = {
+  NULL, /* prev        */
   NULL, /* next        */
   (void*) fat_initialize, /* vfsInitFS   */
   (void*) read_fat, /* vfsRead     */
