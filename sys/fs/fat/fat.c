@@ -131,7 +131,7 @@ int write_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
 }
 
 int open_fat(const char *file, fileDescriptor_t *fd) {
-  FL_FILE *_file;
+  FL_FILE *_file = 0x0;
 
   assert(fd);
   assert(fd->mp);
@@ -143,7 +143,16 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   //kprintf("File: %s, ", file);
   kprintf("Mode: 0x%X\n", fd->mode);
 
-  _file = fl_fopen(file, "r");
+  if ((fd->mode & 0x1) == 0x1)
+    _file = fl_fopen(file, "r");
+  else if ((fd->mode & 0x2) == 0x2) {
+    if ((fd->mode & 0x8) == 0x8)
+      _file = fl_open(file, "a");
+    else
+      _file = fl_open(file, "w");
+  }
+  else
+    kprintf("Invalid Mode?");
 
   if (!_file) {
     kprintf("ERROR[%s:%i]: Open file: [%s] failed\n", __FILE__, __LINE__, file);
