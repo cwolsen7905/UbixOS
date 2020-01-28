@@ -141,8 +141,9 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   kprintf(file);
 
   _file = fl_fopen(file, "r");
+
   if (!_file) {
-    kprintf("ERROR[%s:%i]: Open file failed\n", __FILE__, __LINE__);
+    kprintf("ERROR[%s:%i]: Open file: [%s] failed\n", __FILE__, __LINE__, file);
     return (0x0);
   }
   else {
