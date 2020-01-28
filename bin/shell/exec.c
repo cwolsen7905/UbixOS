@@ -33,7 +33,7 @@
 #include "shell.h"
 
 static char *argv_init[2] = {
-    "/bin/sh",
+    "/bin/shell",
     NULL, }; // ARGV For Initial Proccess
 
 static char *envp_init_old[12] = {
