@@ -33,7 +33,7 @@
 #include "shell.h"
 
 static char *argv_init[2] = {
-    "/bin/shell",
+    "1234567890123456789012345678901234567890",
     NULL, }; // ARGV For Initial Proccess
 
 static char *envp_init_old[12] = {
@@ -71,6 +71,7 @@ void execProgram(inputBuffer *data) {
 
   if (!cPid) {
     sprintf(file, "%s%s", cwd, data->argv[1]);
+    sprintf(argv_init[0], file);
     execve(file, argv_init, envp_init_old);
     printf("%s: Command Not Found.\n", data->argv[1]);
     exit(-1);
