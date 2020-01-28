@@ -25,7 +25,7 @@
 
  $Id: ubixfs.c 79 2016-01-11 16:21:27Z reddawg $
 
-*****************************************************************************************/
+ *****************************************************************************************/
 
 #include <vfs/vfs.h>
 #include <ubixos/sched.h>
@@ -42,70 +42,66 @@
 fileDescriptor_t *_fd;
 struct vfs_mountPoint *_mp;
 
-int media_read(unsigned long sector, unsigned char *buffer, unsigned long sector_count)
-{
-    _mp->device->devInfo->read(_mp->device->devInfo->info, buffer, sector, sector_count);
+int media_read(unsigned long sector, unsigned char *buffer, unsigned long sector_count) {
+  _mp->device->devInfo->read(_mp->device->devInfo->info, buffer, sector, sector_count);
 
-    return 1;
+  return 1;
 }
 
-int media_write(unsigned long sector, unsigned char *buffer, unsigned long sector_count)
-{
-    _mp->device->devInfo->write(_mp->device->devInfo->info, buffer, sector, sector_count);
+int media_write(unsigned long sector, unsigned char *buffer, unsigned long sector_count) {
+  _mp->device->devInfo->write(_mp->device->devInfo->info, buffer, sector, sector_count);
 
-    return 1;
+  return 1;
 }
-
 
 int fat_initialize(struct vfs_mountPoint *mp) {
-    FL_FILE *file;
-    _mp = mp;
-    // Attach media access functions to library
-    if (fl_attach_media(media_read, media_write) != FAT_INIT_OK)
-    {
-        kprintf("ERROR: Media attach failed\n");
-        return(0);
-    }
-     
-    // List root directory
+  FL_FILE *file;
+  _mp = mp;
+  // Attach media access functions to library
+  if (fl_attach_media(media_read, media_write) != FAT_INIT_OK) {
+    kprintf("ERROR: Media attach failed\n");
+    return (0);
+  }
+
+  // List root directory
   fl_listdirectory("/bin/");
-    // Create File
-    /*
-    file = fl_fopen("/file.bin", "w");
-        unsigned char data[] = { 1, 2, 3, 4 };
-    if (file)
-    {
-        // Write some data
-        if (fl_fwrite(data, 1, sizeof(data), file) != sizeof(data))
-            kprintf("ERROR: Write file failed\n");
-    }
-    else
-        kprintf("ERROR: Create file failed\n");
+  // Create File
+  /*
+   file = fl_fopen("/file.bin", "w");
+   unsigned char data[] = { 1, 2, 3, 4 };
+   if (file)
+   {
+   // Write some data
+   if (fl_fwrite(data, 1, sizeof(data), file) != sizeof(data))
+   kprintf("ERROR: Write file failed\n");
+   }
+   else
+   kprintf("ERROR: Create file failed\n");
 
-    // Close file
-    fl_fclose(file);
+   // Close file
+   fl_fclose(file);
 
-    fl_listdirectory("/");
+   fl_listdirectory("/");
 
-    // Delete File
-    if (fl_remove("/file.bin") < 0)
-        kprintf("ERROR: Delete file failed\n");
+   // Delete File
+   if (fl_remove("/file.bin") < 0)
+   kprintf("ERROR: Delete file failed\n");
 
-    // List root directory
-    fl_listdirectory("/");
+   // List root directory
+   fl_listdirectory("/");
 
-    size_t size;
+   size_t size;
 
    file = fl_fopen("/shell", "r");
    size = fl_fread(data, 1, sizeof(data), file);
    kprintf("READ: %i", size);
    fl_fclose(file);
-  */
-  return(1);
+   */
+  return (1);
 }
 
-int read_fat(fileDescriptor_t *fd,char *data,uInt32 offset,long size) {
-  FL_FILE *_file = (FL_FILE *)fd->res;
+int read_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
+  FL_FILE *_file = (FL_FILE*) fd->res;
 
   kprintf("Reading: %i[%i]\n", size, offset);
   fl_fseek(_file, offset, 0);
@@ -114,9 +110,8 @@ int read_fat(fileDescriptor_t *fd,char *data,uInt32 offset,long size) {
   kprintf("Read: %i\n", size);
 
   /* Return */
-  return(size);
-  }
-
+  return (size);
+}
 
 int write_fat(fileDescriptor_t *fd, char *data, uInt32 offset, long size) {
   FL_FILE *_file = (FL_FILE*) fd->res;
@@ -145,54 +140,53 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
 
   kprintf(file);
 
-    _file = fl_fopen(file, "r");
-    if (!_file) {
+  _file = fl_fopen(file, "r");
+  if (!_file) {
     kprintf("ERROR[%s:%i]: Open file failed\n", __FILE__, __LINE__);
-        return(0x0);
-    }
-    else {
-      fd->res = _file;
-      fd->perms = 0x1;
-    }
+    return (0x0);
+  }
+  else {
+    fd->offset = 0;
+    fd->res = _file;
+    fd->perms = 0x1;
+    fd->size = _file->filelength;
+  }
 
-  return(0x1);
+  return (0x1);
 }
 
-
-
 int unlink_fat() {
-  return(0);
+  return (0);
 }
 
 int mkdir_fat() {
-  return(0);
+  return (0);
 }
 
 int fat_init() {
-    // Initialise File IO Library
-    fl_init();
+  // Initialise File IO Library
+  fl_init();
 
   /* Set up our file system structure */
-  struct fileSystem ubixFileSystem = 
-   {NULL,                         /* prev        */
-    NULL,                         /* next        */
-    (void *)fat_initialize,    /* vfsInitFS   */
-    (void *)read_fat,           /* vfsRead     */
-    (void *)write_fat,          /* vfsWrite    */
-    (void *)open_fat,       /* vfsOpenFile */
-    (void *)unlink_fat,         /* vfsUnlink   */
-    (void *)mkdir_fat,          /* vfsMakeDir  */
-    NULL,                         /* vfsRemDir   */
-    NULL,                         /* vfsSync     */
-    0xFA                          /* vfsType     */
-   }; /* ubixFileSystem */
+  struct fileSystem ubixFileSystem = { NULL, /* prev        */
+  NULL, /* next        */
+  (void*) fat_initialize, /* vfsInitFS   */
+  (void*) read_fat, /* vfsRead     */
+  (void*) write_fat, /* vfsWrite    */
+  (void*) open_fat, /* vfsOpenFile */
+  (void*) unlink_fat, /* vfsUnlink   */
+  (void*) mkdir_fat, /* vfsMakeDir  */
+  NULL, /* vfsRemDir   */
+  NULL, /* vfsSync     */
+  0xFA /* vfsType     */
+  }; /* ubixFileSystem */
 
   /* Add UbixFS */
   if (vfsRegisterFS(ubixFileSystem) != 0x0) {
     kpanic("Unable To Enable UbixFS");
-    return(0x1);
-    }
+    return (0x1);
+  }
 
   /* Return */
-  return(0x0);
-  }
+  return (0x0);
+}
