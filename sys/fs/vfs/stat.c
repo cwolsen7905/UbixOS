@@ -102,7 +102,13 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
     error = -1;
   }
   else if (fd->res != 0x0) {
+    args->sb->st_dev = 0xDEADBEEF;
+    args->sb->st_ino = fd->ino;
+    args->sb->st_rdev = 0xBEEFDEAD;
     args->sb->st_size = fd->size;
+    args->sb->st_uid = 0;
+    args->sb->st_gid = 0;
+
     kprintf("FSTAT DOS");
   }
   else {
