@@ -114,7 +114,7 @@ int sys_fstat(struct thread *td, struct sys_fstat_args *args) {
   args->sb->st_atime = fd->inode.u.ufs2_i.di_atime;
   args->sb->st_mtime = fd->inode.u.ufs2_i.di_mtime;
   args->sb->st_ctime = fd->inode.u.ufs2_i.di_ctime;
-  //MrOlsen kprintf("FSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X:0x%X", args->fd, args->sb->st_ino, args->sb->st_mode, args->sb->st_uid, args->sb->st_gid, args->sb->st_size, fd->size);
+    kprintf("FSTAT(%i)=st_ino 0x%X, st_mode=0x%X, st_uid %i, st_gid %i, st_size=0x%X:0x%X", args->fd, args->sb->st_ino, args->sb->st_mode, args->sb->st_uid, args->sb->st_gid, args->sb->st_size, fd->size);
   }
 
   td->td_retval[0] = error;
