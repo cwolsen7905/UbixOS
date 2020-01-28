@@ -150,6 +150,7 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
     fd->res = _file;
     fd->perms = 0x1;
     fd->size = _file->filelength;
+    kprintf("Size: %i\n", fd->size);
   }
 
   return (0x1);
