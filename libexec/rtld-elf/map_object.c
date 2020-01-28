@@ -331,7 +331,7 @@ get_elf_header(int fd, const char *path, const struct stat *sbp)
 
 	/* Make sure file has enough data for the ELF header */
 	if (sbp != NULL && sbp->st_size < sizeof(Elf_Ehdr)) {
-		_rtld_error("%s: invalid file format", path);
+		_rtld_error("%s: invalid file format.", path);
 		return (NULL);
 	}
 
@@ -344,7 +344,7 @@ get_elf_header(int fd, const char *path, const struct stat *sbp)
 
 	/* Make sure the file is valid */
 	if (!IS_ELF(*hdr)) {
-		_rtld_error("%s: invalid file format", path);
+		_rtld_error("%s: invalid file format!", path);
 		goto error;
 	}
 	if (hdr->e_ident[EI_CLASS] != ELF_TARG_CLASS ||

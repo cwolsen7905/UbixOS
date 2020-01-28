@@ -87,6 +87,6 @@ beforeinstall:
 SUBDIR+=	tests
 .endif
 
-.include <bsd.prog.mk>
-${PROG_FULL}:	${VERSION_MAP}
-.include <bsd.symver.mk>
+#.include <bsd.prog.mk>
+#${PROG_FULL}:	${VERSION_MAP}
+#.include <bsd.symver.mk>
