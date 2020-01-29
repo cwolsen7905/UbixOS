@@ -138,8 +138,9 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
 
           kprintf("DESTROY: %i!", args->fd);
           if (!fdestroy(td, fd, args->fd))
-            kprintf("[%s:%i] fdestroy() failed!", __FILE__, __LINE__);
-            td->td_retval[0] = 0;
+            kprintf("[%s:%i] fdestroy(0x%X, 0x%X) failed\n", __FILE__, __LINE__, fd, td->o_files[args->fd]);
+
+          td->td_retval[0] = 0;
 
         }
     }

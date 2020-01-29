@@ -63,7 +63,7 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
 
           ((struct file*) td->o_files[uap->fd])->fd->dup++;
 
-          fclose((struct file*) td->o_files[uap->fd]->fd);
+          fclose(((struct file*) td->o_files[uap->fd])->fd);
 
           //td->o_files[uap->fd] = 0;
 
