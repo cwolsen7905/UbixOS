@@ -298,6 +298,8 @@ int sys_select(struct thread *td, struct sys_select_args *args) {
 
 int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
 
+  kprintf("DUP2: %i:%i", from, to);
+
   if (to > MAX_FILES) {
     kprintf("TO: %i > MAX_FILES: %i", to, MAX_FILES);
     return (-1);
@@ -306,8 +308,6 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
     kprintf("FD IN USE!");
     return (-1);
   }
-
-  kprintf("DUP2: %i:%i", from, to);
 
   return (0x0);
 }
