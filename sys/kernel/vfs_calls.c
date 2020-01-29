@@ -112,33 +112,33 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
   }
   else {
     switch (fd->fd_type) {
-    case 3:
-      pFD = fd->data;
-      if (args->fd == pFD->rFD) {
-        if (pFD->rfdCNT < 2)
-          fdestroy(td, fd, args->fd);
-        pFD->rfdCNT--;
-      }
-
-      if (args->fd == pFD->wFD) {
-        if (pFD->wfdCNT < 2)
-          fdestroy(td, fd, args->fd);
-        pFD->wfdCNT--;
-      }
-
-      break;
-    default:
-      if (args->fd < 3)
-        td->td_retval[0] = 0;
-      else {
-        if (!fclose(fd->fd))
-          td->td_retval[0] = -1;
-        else {
-          kprintf("DESTROY: !!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
-          fdestroy(td, fd, args->fd);
-          td->td_retval[0] = 0;
+      case 3:
+        pFD = fd->data;
+        if (args->fd == pFD->rFD) {
+          if (pFD->rfdCNT < 2)
+            fdestroy(td, fd, args->fd);
+          pFD->rfdCNT--;
         }
-      }
+
+        if (args->fd == pFD->wFD) {
+          if (pFD->wfdCNT < 2)
+            fdestroy(td, fd, args->fd);
+          pFD->wfdCNT--;
+        }
+
+        break;
+      default:
+        if (args->fd < 3)
+          td->td_retval[0] = 0;
+        else {
+          if (!fclose(fd->fd))
+            td->td_retval[0] = -1;
+          else {
+            kprintf("DESTROY: !!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
+            fdestroy(td, fd, args->fd);
+            td->td_retval[0] = 0;
+          }
+        }
     }
   }
   return (0);
@@ -163,36 +163,36 @@ int sys_read(struct thread *td, struct sys_read_args *args) {
 
   if (args->fd > 3) {
     switch (fd->fd_type) {
-    case 3: /* XXX - Pipe2 Handling */
-      pFD = fd->data;
-      while (pFD->bCNT == 0 && rpCNT < 100) {
-        sched_yield();
-        rpCNT++;
-      }
-
-      if (rpCNT >= 100 && pFD->bCNT == 0) {
-        td->td_retval[0] = 0;
-      }
-      else {
-        nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
-        //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
-        //kprintf("PR: []", nbytes);
-        memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
-        pFD->headPB->offset += nbytes;
-
-        if (pFD->headPB->offset >= pFD->headPB->nbytes) {
-          rpFD = pFD->headPB;
-          pFD->headPB = pFD->headPB->next;
-          kfree(rpFD);
-          pFD->bCNT--;
+      case 3: /* XXX - Pipe2 Handling */
+        pFD = fd->data;
+        while (pFD->bCNT == 0 && rpCNT < 100) {
+          sched_yield();
+          rpCNT++;
         }
 
-        td->td_retval[0] = nbytes;
-      }
-      break;
-    default:
-      //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
-      td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
+        if (rpCNT >= 100 && pFD->bCNT == 0) {
+          td->td_retval[0] = 0;
+        }
+        else {
+          nbytes = (args->nbyte - (pFD->headPB->nbytes - pFD->headPB->offset) <= 0) ? args->nbyte : (pFD->headPB->nbytes - pFD->headPB->offset);
+          //kprintf("[unb: , nbs: %i, bf: 0x%X]", args->nbyte, nbytes, fd->fd->buffer);
+          //kprintf("PR: []", nbytes);
+          memcpy(args->buf, pFD->headPB->buffer + pFD->headPB->offset, nbytes);
+          pFD->headPB->offset += nbytes;
+
+          if (pFD->headPB->offset >= pFD->headPB->nbytes) {
+            rpFD = pFD->headPB;
+            pFD->headPB = pFD->headPB->next;
+            kfree(rpFD);
+            pFD->bCNT--;
+          }
+
+          td->td_retval[0] = nbytes;
+        }
+        break;
+      default:
+        //kprintf("[r:0x%X::%i:%s]",fd->fd, args->fd, fd->fd_type, fd->fd->fileName);
+        td->td_retval[0] = fread(args->buf, args->nbyte, 1, fd->fd);
     }
   }
   else {
@@ -317,36 +317,40 @@ int sys_write(struct thread *td, struct sys_write_args *uap) {
     kprintf("[fd: :0x%X, fd_type: %i]", uap->fd, fd->fd_type);
 
     switch (fd->fd_type) {
-    case 3: /* XXX - Temp Pipe Stuff */
+      case 3: /* XXX - Temp Pipe Stuff */
 
-      pFD = fd->data;
-      pBuf = (struct pipeBuf *) kmalloc(sizeof(struct pipeBuf));
-      pBuf->buffer = kmalloc(uap->nbyte);
+        pFD = fd->data;
+        pBuf = (struct pipeBuf*) kmalloc(sizeof(struct pipeBuf));
+        pBuf->buffer = kmalloc(uap->nbyte);
 
-      memcpy(pBuf->buffer, uap->buf, uap->nbyte);
+        memcpy(pBuf->buffer, uap->buf, uap->nbyte);
 
-      pBuf->nbytes = uap->nbyte;
+        pBuf->nbytes = uap->nbyte;
 
-      if (pFD->tailPB)
-        pFD->tailPB->next = pBuf;
+        if (pFD->tailPB)
+          pFD->tailPB->next = pBuf;
 
-      pFD->tailPB = pBuf;
+        pFD->tailPB = pBuf;
 
-      if (!pFD->headPB)
-        pFD->headPB = pBuf;
+        if (!pFD->headPB)
+          pFD->headPB = pBuf;
 
-      pFD->bCNT++;
+        pFD->bCNT++;
 
-      td->td_retval[0] = nbytes;
+        td->td_retval[0] = nbytes;
 
-      break;
-    default:
-        kprintf("[%i]", uap->nbyte);
-      buffer = kmalloc(uap->nbyte);
-      memcpy(buffer, uap->buf, uap->nbyte);
-        kprintf("(%i) %s", uap->fd, uap->buf);
-      kfree(buffer);
-      td->td_retval[0] = uap->nbyte;
+        break;
+      default:
+        if (fd->fd)
+          td->td_retval[0] = fwrite(uap->buf, uap->nbyte, 1, fd->fd);
+        else {
+          kprintf("[%i]", uap->nbyte);
+          buffer = kmalloc(uap->nbyte);
+          memcpy(buffer, uap->buf, uap->nbyte);
+          kprintf("(%i) %s", uap->fd, uap->buf);
+          kfree(buffer);
+          td->td_retval[0] = uap->nbyte;
+        }
     }
 
   }
