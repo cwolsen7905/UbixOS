@@ -147,8 +147,10 @@ int open_fat(const char *file, fileDescriptor_t *fd) {
   else if ((fd->mode & 0x2) == 0x2) {
     if ((fd->mode & 0x8) == 0x8)
       _file = fl_fopen(file, "a");
-    else
+    else {
       _file = fl_fopen(file, "w");
+      kprintf("open for writing");
+    }
   }
   else
     kprintf("Invalid Mode?");

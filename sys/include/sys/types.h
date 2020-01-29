@@ -33,10 +33,10 @@
 #include <sys/select.h>
 
 #ifndef NULL
-#define NULL 0x0
+#define NULL ( (void *) 0)
 #endif
 
-typedef        __uintfptr_t    uintfptr_t;
+typedef __uintfptr_t uintfptr_t;
 
 typedef char *caddr_t;
 
@@ -115,7 +115,7 @@ typedef __int64_t int64_t;
 #endif
 
 typedef __ssize_t ssize_t;
-typedef char * caddr_t;
+typedef char *caddr_t;
 typedef __int64_t off_t;
 typedef __uint32_t vm_offset_t;
 
@@ -171,9 +171,8 @@ typedef unsigned int qshift_t;
 /* Combine two `digits' to make a single two-digit number. */
 #define COMBINE(a, b) (((u_long)(a) << HALF_BITS) | (b))
 
-
 #ifndef _MODE_T_DECLARED
-typedef __mode_t        mode_t;         /* permissions */
+typedef __mode_t mode_t; /* permissions */
 #define _MODE_T_DECLARED
 #endif
 

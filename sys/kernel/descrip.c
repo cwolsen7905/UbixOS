@@ -346,6 +346,7 @@ int sys_select(struct thread *td, struct sys_select_args *args) {
 }
 
 int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
+
   struct file *fp = 0x0;
   struct file *dup_fp = 0x0;
 
@@ -365,13 +366,10 @@ int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
 
   memcpy(dup_fp, fp, sizeof(struct file));
 
-  kprintf("DUP2.0: %i:%i [0x%X:0x%X]", from, to, td->o_files[from], td->o_files[to]);
-
   td->o_files[to] = (void*) dup_fp;
 
   ((struct file*) td->o_files[from])->fd->dup++;
 
-  kprintf("DUP2.1: %i:%i <%i> [0x%X:0x%X]", from, to, ((struct file*) td->o_files[from])->fd->dup, td->o_files[from], td->o_files[to]);
   return (0x0);
 }
 
