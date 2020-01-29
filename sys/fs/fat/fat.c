@@ -67,12 +67,12 @@ int fat_initialize(struct vfs_mountPoint *mp) {
   //fl_listdirectory("/bin/");
 
   // Delete File
-  if (fl_remove("/file.bin") < 0)
-    kprintf("ERROR: Delete file failed\n");
+  //if (fl_remove("/file.bin") < 0)
+  //  kprintf("ERROR: Delete file failed\n");
 
   // Create File
   file = fl_fopen("/file.bin", "w");
-  unsigned char data[] = { 1, 2, 3, 4 };
+  unsigned char data[] = { 'a', '\n', 'b', '\n', 'c', '\n' };
   if (file) {
     // Write some data
     if (fl_fwrite(data, 1, sizeof(data), file) != sizeof(data))
