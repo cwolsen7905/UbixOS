@@ -66,7 +66,7 @@ int fat_initialize(struct vfs_mountPoint *mp) {
   // List root directory
   fl_listdirectory("/bin/");
   // Create File
-  /*
+
    file = fl_fopen("/file.bin", "w");
    unsigned char data[] = { 1, 2, 3, 4 };
    if (file)
@@ -80,7 +80,7 @@ int fat_initialize(struct vfs_mountPoint *mp) {
 
    // Close file
    fl_fclose(file);
-
+  /*
    fl_listdirectory("/");
 
    // Delete File
