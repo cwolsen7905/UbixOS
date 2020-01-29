@@ -155,7 +155,6 @@ int fdestroy(struct thread *td, struct file *fp, int fd) {
     td->o_files[fd] = 0x0;
   }
 
-  kprintf("ERR: %i", error);
   return (error);
 }
 
