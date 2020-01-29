@@ -39,16 +39,28 @@ static struct file *kern_files = 0x0;
 
 int fcntl(struct thread *td, struct fcntl_args *uap) {
   struct file *fp = 0x0;
+  int i = 0;
 
-  if (uap->fd < 3)
-    kprintf("FD: %i, CMD: %i", uap->fd, uap->cmd);
-  else if (td->o_files[uap->fd] == 0x0) {
+  if (td->o_files[uap->fd] == 0x0) {
     kprintf("ERROR!!!\n");
     return (-1);
   }
-  else {
+
+
   fp = (struct file*) td->o_files[uap->fd];
+
   switch (uap->cmd) {
+    case 17:
+      /* First 5 Descriptors Are Reserved */
+      for (i = 5; i < MAX_FILES; i++) {
+        if (td->o_files[i] == 0x0) {
+          td->o_files[i] = (void*) fp;
+          td->td_retval[0] = i;
+          td->o_files[uap->fd] = 0;
+          break;
+        }
+      }
+      break;
     case 3:
       td->td_retval[0] = fp->f_flag;
       break;
@@ -59,7 +71,7 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
     default:
       kprintf("ERROR DEFAULT: [%i]", uap->fd);
   }
-  }
+
 
   return (0x0);
 }

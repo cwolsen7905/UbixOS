@@ -173,14 +173,12 @@ kTask_t *schedNewTask() {
   memcpy(tmpTask->username, "UbixOS", 6);
 
   /* HACK */
-  /* XXX MrOlsen (2020-01-28): This is not needed? Waste of memory I think
   for (i = 0; i < 3; i++) {
     fp = (void *) kmalloc(sizeof(struct file));
     //kprintf("DB: [0x%X]\n", (uint32_t) fp);
     tmpTask->td.o_files[i] = (void *) fp;
     fp->f_flag = 0x4;
   }
-   */
 
   spinLock(&schedulerSpinLock);
   tmpTask->id = nextID++;

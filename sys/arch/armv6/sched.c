@@ -146,13 +146,12 @@ kTask_t *schedNewTask() {
   tmpTask->state = NEW;
 
   /* HACK */
-  /* XXX MrOlsen (2020-01-28): Why did I allocate them? This is not needed just waste of memory?
   for (i = 0; i < 3; i++) {
     fp = (void *) kmalloc(sizeof(struct file));
     tmpTask->td.o_files[i] = (uint32_t) fp;
     fp->f_flag = 0x4;
   }
-   */
+
 
   spinLock(&schedulerSpinLock);
   tmpTask->id = nextID++;
