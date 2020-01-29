@@ -37,7 +37,7 @@
 #include <ufs/ufs.h>
 
 int sys_open(struct thread *td, struct sys_open_args *args) {
-
+  kprintf("sys_open?");
   return (kern_openat(td, AT_FDCWD, args->path, args->flags, args->mode));
 
 }
