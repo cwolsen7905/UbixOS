@@ -544,7 +544,7 @@ int fclose(fileDescriptor_t *fd) {
       if (fd->dup > 0)
         fd->dup--;
       else {
-
+        fd->dup = -2;
         if (fd->res != 0x0)
           fl_fclose(fd->res);
 

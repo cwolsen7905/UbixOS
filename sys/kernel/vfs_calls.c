@@ -136,7 +136,7 @@ int sys_close(struct thread *td, struct sys_close_args *args) {
           if (!fclose(fd->fd))
             td->td_retval[0] = -1;
 
-          if (fd->fd->dup > 0)
+          if (fd->fd->dup > 0 || fd->fd->dup == -2)
             td->td_retval[0] = 0;
           else {
             kprintf("DESTROY: !!!!!!!!!!!!!!!!!!!!!!!!!!!!", args->fd);
