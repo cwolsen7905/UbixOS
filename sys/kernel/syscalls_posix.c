@@ -482,10 +482,10 @@ struct syscall_entry systemCalls_posix[] = {
         sys_invalid,
         SYSCALL_NOTIMP }, /*  89 - gettablesize */
     {
-        0,
+        ARG_COUNT(sys_dup2_args),
         "dup2",
-        sys_invalid,
-        SYSCALL_NOTIMP }, /*  90 - dup2 */
+        sys_dup2,
+    SYSCALL_VALID }, /*  90 - dup2 */
     {
         0,
         "getdopt",

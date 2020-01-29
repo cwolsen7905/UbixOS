@@ -807,6 +807,17 @@ struct sys_setrlimit_args {
 
 int sys_setrlimit(struct thread *, struct sys_setrlimit_args *);
 
+struct sys_dup2_args {
+    char from_l_[PADL_(u_int)];
+    u_int from;
+    char from_r_[PADR_(u_int)];
+    char to_l_[PADL_(u_int)];
+    u_int to;
+    char to_r_[PADR_(u_int)];
+};
+
+int sys_dup2(struct thread*, struct sys_dup2_args*);
+
 //Func Defs
 int sys_invalid(struct thread *, void *);
 int sys_exit(struct thread *, struct sys_exit_args *);
@@ -891,5 +902,7 @@ int sys_gettimeofday(struct thread *td, struct sys_gettimeofday_args *);
 int sys_sendto(struct thread *td, struct sys_sendto_args *);
 
 int sys_pread(struct thread *td, struct sys_pread_args *);
+
+
 
 #endif /* END _SYS_SYSPROTO_POSIX_H_ */

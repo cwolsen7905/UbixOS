@@ -45,15 +45,15 @@ int fcntl(struct thread *td, struct fcntl_args *uap) {
     return (-1);
   }
 
-  fp = (struct file *) td->o_files[uap->fd];
+  fp = (struct file*) td->o_files[uap->fd];
   switch (uap->cmd) {
     case 3:
       td->td_retval[0] = fp->f_flag;
-    break;
+      break;
     case 4:
       fp->f_flag &= ~FCNTLFLAGS;
       fp->f_flag |= FFLAGS(uap->arg & ~O_ACCMODE) & FCNTLFLAGS;
-    break;
+      break;
     default:
       kprintf("ERROR DEFAULT: [%i]", uap->fd);
   }
@@ -70,12 +70,12 @@ int falloc(struct thread *td, struct file **resultfp, int *resultfd) {
   struct file *fp = 0x0;
   int i = 0;
 
-  fp = (struct file *) kmalloc(sizeof(struct file));
+  fp = (struct file*) kmalloc(sizeof(struct file));
 
   /* First 5 Descriptors Are Reserved */
   for (i = 5; i < MAX_FILES; i++) {
     if (td->o_files[i] == 0x0) {
-      td->o_files[i] = (void *) fp;
+      td->o_files[i] = (void*) fp;
       if (resultfd)
         *resultfd = i;
       if (resultfp)
@@ -115,7 +115,7 @@ int close(struct thread *td, struct close_args *uap) {
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
   kprintf("[%s:%i]", __FILE__, __LINE__);
-  kfree((void *) td->o_files[uap->fd]);
+  kfree((void*) td->o_files[uap->fd]);
   td->o_files[uap->fd] = 0x0;
   td->td_retval[0] = 0x0;
   return (0x0);
@@ -140,7 +140,7 @@ int fstat(struct thread *td, struct sys_fstat_args *uap) {
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
 
-  fp = (struct file *) _current->td.o_files[uap->fd];
+  fp = (struct file*) _current->td.o_files[uap->fd];
   uap->sb->st_mode = 0x2180;
   uap->sb->st_blksize = 0x1000;
   kprintf("fstat: %i", uap->fd);
@@ -169,7 +169,7 @@ int getfd(struct thread *td, struct file **fp, int fd) {
   kprintf("[%s:%i]",__FILE__,__LINE__);
 #endif
 
-  *fp = (struct file *) td->o_files[fd];
+  *fp = (struct file*) td->o_files[fd];
 
   if (fp == 0x0)
     error = -1;
@@ -181,7 +181,7 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
   switch (args->com) {
     case TIOCGETA:
       if (args->fd == 0 || args->fd == 1) {
-        struct termios *t = (struct termios *) args->data;
+        struct termios *t = (struct termios*) args->data;
 
         t->c_iflag = 0x2B02;
         t->c_oflag = 0x3;
@@ -217,16 +217,16 @@ int sys_ioctl(struct thread *td, struct sys_ioctl_args *args) {
       else {
         td->td_retval[0] = -1;
       }
-    break;
+      break;
     case TIOCGWINSZ:
       asm("nop");
-      struct winsize *win = (struct winsize *) args->data;
+      struct winsize *win = (struct winsize*) args->data;
       win->ws_row = 50;
       win->ws_col = 80;
-    break;
+      break;
     default:
       kprintf("ioFD:%i:0x%X!", args->fd, args->com);
-    break;
+      break;
   }
 
   td->td_retval[0] = 0x0;
@@ -291,6 +291,26 @@ int sys_select(struct thread *td, struct sys_select_args *args) {
    */
 
   if ((td->td_retval[0] = lwip_select(args->nd, args->in, args->ou, args->ex, args->tv)) == -1)
+    error = -1;
+
+  return (error);
+}
+
+int dup2(struct thread *td, u_int32_t from, u_int32_t to) {
+
+  if (td->o_files[to] != 0x0) {
+    kprintf("FD IN USE!");
+    return (-1);
+  }
+
+  return (0x0);
+}
+
+int sys_dup2(struct thread *td, struct sys_dup2_args *args) {
+
+  int error = 0x0;
+
+  if ((td->td_retval[0] = dup2(td, args->from, args->to)) == -1)
     error = -1;
 
   return (error);
